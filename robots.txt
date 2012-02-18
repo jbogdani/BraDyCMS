@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /error.log
+Disallow: /sites/default/images/
+Disallow: /config.ini
+Disallow: /js/
+Disallow: /loader.php
+Disallow: /includes/
+Disallow: /connect.ini
+Disallow: /css/
+Disallow: /sites/
+Disallow: /tiny_mce/
+Disallow: /admin.php
+Disallow: /upload.php
+Disallow: /sitemap.xml
+

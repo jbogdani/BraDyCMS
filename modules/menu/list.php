@@ -17,7 +17,7 @@ try
 
 	$menu = new Menu();
 
-	$res = $menu->get_menu_by_title($menu_name);
+	$res = $menu->get_menu_items($menu_name);
 
 	$res = $menu->format_value($res);
 	?>

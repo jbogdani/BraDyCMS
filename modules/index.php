@@ -9,7 +9,7 @@
 session_start();
 $root = '../';
 
-require_once $root . 'includes/globals.inc';
+require_once $root . 'lib/globals.inc';
 
 
 if(array_key_exists($_POST['username'], $cfg['users']) AND $cfg['users'][$_POST['username']] == $_POST['password']){

@@ -41,7 +41,7 @@ class Menu extends DB{
 	 * 
 	 * Returns array of items for a menu ($menu) or for an item menu ($item)
 	 * @param string $menu		main menu name
-	 * @param string $item		main menu item name
+	 * @param int $item			main menu item ID
 	 * @param string $lang		languiage
 	 * @throws MyExc
 	 */
@@ -49,11 +49,11 @@ class Menu extends DB{
 	{
 		if ($menu)
 		{
-			$where = " WHERE `menu`	= '{$menu}' ";
+			$where = " WHERE `menu`	= '{$menu}'";
 		}
 		else if ($item)
 		{
-			$where = " WHERE `subof`= '{$item}' ";
+			$where = " WHERE `subof`= {$item} ";
 		}
 		else 
 		{

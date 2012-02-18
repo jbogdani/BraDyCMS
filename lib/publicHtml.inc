@@ -327,7 +327,7 @@ class publicHtml extends ArticleRead implements frontend
 			. '>'
 			. $item_arr['item']
 			. '</a>'
-			. ($recursive ? $this->recursive_print_menu_items(false, $item_arr['item']) : '')
+			. ($recursive ? $this->recursive_print_menu_items(false, $item_arr['id']) : '')
 			. '</li>';
 		}
 

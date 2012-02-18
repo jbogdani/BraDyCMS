@@ -61,8 +61,8 @@ define ( 'ERR_LOG', 	$root . 'error.log');
 define ( 'TMP_DIR', 	$root . 'tmp/');
 
 
-require_once $root . 'includes/class.MyExc.inc';
-require_once $root . 'includes/ClassAutoloader.inc';
+require_once $root . 'lib/class.MyExc.inc';
+require_once $root . 'lib/ClassAutoloader.inc';
 
 new ClassAutoloader();
 

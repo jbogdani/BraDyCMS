@@ -8,7 +8,7 @@
 
 try
 {
-	require_once 'includes/class.tableAction.inc';
+	require_once 'lib/class.tableAction.inc';
 	
 	$tbA = new tableAction();
 	

@@ -150,7 +150,7 @@ class tableAction extends DB
 		{
 			throw new MyExc('Il file ' . $filename . ' non esiste!');
 		}
-		require_once 'includes/XLS/my_reader.inc';
+		require_once 'lib/XLS/my_reader.inc';
 		
 		$data = new myReader();
 		$data->setUTFEncoder('iconv');

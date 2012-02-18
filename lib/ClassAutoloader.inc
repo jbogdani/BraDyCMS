@@ -15,13 +15,13 @@ class ClassAutoloader
 	
 	private function loader($className)
 	{
-		if (file_exists('includes/class.' . $className . '.inc'))
+		if (file_exists('lib/class.' . $className . '.inc'))
 		{
-			require_once 'includes/class.' . $className . '.inc';
+			require_once 'lib/class.' . $className . '.inc';
 		}
-		else if (file_exists('includes/' . $className . '.inc'))
+		else if (file_exists('lib/' . $className . '.inc'))
 		{
-			require_once 'includes/' . $className . '.inc';
+			require_once 'lib/' . $className . '.inc';
 		}
 		else
 		{

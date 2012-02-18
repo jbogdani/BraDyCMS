@@ -6,7 +6,7 @@
  * @since			Nov 27, 2011
  */
 
-require_once 'includes/class.tableAction.inc';
+require_once 'lib/class.tableAction.inc';
 
 $tbA = new tableAction();
 

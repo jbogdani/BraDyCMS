@@ -5,7 +5,7 @@ Disallow: /sites/default/images/
 Disallow: /config.ini
 Disallow: /js/
 Disallow: /loader.php
-Disallow: /includes/
+Disallow: /lib/
 Disallow: /connect.ini
 Disallow: /css/
 Disallow: /sites/

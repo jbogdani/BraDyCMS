@@ -4,7 +4,7 @@ $root = './';
 
 try
 {
-	require_once $root . 'includes/globals.inc';
+	require_once $root . 'lib/globals.inc';
 
 	if ($_REQUEST['mod'])
 	{

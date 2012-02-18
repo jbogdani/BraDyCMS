@@ -6,7 +6,7 @@
  * @since			Nov 27, 2011
  */
 
-require_once 'includes/XLS/reader.php';
+require_once 'lib/XLS/reader.php';
 
 class myReader extends Spreadsheet_Excel_Reader
 {

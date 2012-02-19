@@ -36,6 +36,18 @@ class Menu extends DB{
 
 	}
 	
+	/**
+	 * 
+	 * Returns all menu items, main and subof
+	 * @param string $menu_name		menu name
+	 */
+	public function get_all_menu_items($menu_name)
+	{
+		$query = "SELECT * FROM `" . PREFIX . "__menu` WHERE `menu` = '{$menu_name}' ORDER BY `sort`";
+			
+		return $this->executeQuery($query, false, 'read');
+	}
+	
 	
 	/**
 	 * 
@@ -45,19 +57,17 @@ class Menu extends DB{
 	 * @param string $lang		languiage
 	 * @throws MyExc
 	 */
-	public function get_menu_items($menu = false, $item = false, $lang = false)
+	public function get_menu_items($menu, $item = false, $lang = false)
 	{
-		if ($menu)
+		$where = " WHERE `menu`	= '{$menu}' AND ";
+		
+		if ($item)
 		{
-			$where = " WHERE `menu`	= '{$menu}'";
-		}
-		else if ($item)
-		{
-			$where = " WHERE `subof`= {$item} ";
+			$where .= " `subof`= {$item} ";
 		}
 		else 
 		{
-			throw new MyExc('No menu or menu item specified!');
+			$where .= " ( `subof` = '' OR `subof` IS NULL)";
 		}
 		
 		if (!$lang)
@@ -116,28 +126,6 @@ class Menu extends DB{
 		}
 	}
 	
-	/*
-	 *
-	 * Returns array of (translated) menu items, filtered by item
-	 * @param string $menu		menu to get
-	 * @param string $lang		language
-
-	public function get_menu_by_title($menu, $lang = false)
-	{
-		return $this->get_menu_items($menu, false, $lang);
-	}
-	 */	
-	/*
-	 *
-	 * Returns array of (translated) sub menu items, filtered by an main menu item
-	 * @param string $item		main menu item to get submenuf for
-	 * @param string $lang		language
-	public function get_submenu($item, $lang)
-	{
-		return $this->get_menu_items(false, $item, $lang);
-	}
-	 */
-
 	/**
 	 *
 	 * Returns array with used menu list
@@ -177,9 +165,9 @@ class Menu extends DB{
 		{
 				
 			$statement = "INSERT INTO `" . PREFIX . "__menu` "
-			. " (`item`,	`href`,	`target`,	`title`,	`menu`,	`sort`) "
+			. " (`item`,	`href`,	`target`,	`title`,	`menu`,	`sort`,	`subof`) "
 			. " VALUES "
-			. " (:item,		:href,	:target,	:title,		:menu,	:sort)";
+			. " (:item,		:href,	:target,	:title,		:menu,	:sort,	:subof)";
 				
 			$values = array(
 				':item'		=> $post['item'],
@@ -187,8 +175,9 @@ class Menu extends DB{
 				':target'	=> $post['target'],
 				':title'	=> $post['title'],
 				':menu'		=> $post['menu'],
-				':sort'		=> $post['sort']
-
+				':sort'		=> $post['sort'],
+				':subof'	=> $post['subof']
+			
 			);
 				
 			return $this->executeQuery($statement, $values, 'lastId');
@@ -208,7 +197,8 @@ class Menu extends DB{
 		. " `target`= :target, "
 		. " `title`	= :title, "
 		. " `menu`	= :menu, "
-		. " `sort`	= :sort"
+		. " `sort`	= :sort, "
+		. " `subof` = :subof "
 		. " WHERE `id`	= :id";
 
 		$values = array(
@@ -218,6 +208,7 @@ class Menu extends DB{
 			':title'	=> $post['title'],
 			':menu'		=> $post['menu'],
 			':sort'		=> $post['sort'],
+			':subof'	=> $post['subof'],
 			':id'		=> $post['id']
 		);
 

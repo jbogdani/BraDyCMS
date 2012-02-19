@@ -17,7 +17,7 @@ try
 
 	$menu = new Menu();
 
-	$res = $menu->get_menu_items($menu_name);
+	$res = $menu->get_all_menu_items($menu_name);
 
 	$res = $menu->format_value($res);
 	?>
@@ -46,6 +46,7 @@ try
 			<th>title</th>
 			<th>menu</th>
 			<th>ordinamento</th>
+			<th>sottomenu di</th>
 			<th>&nbsp;</th>
 			<th>&nbsp;</th>
 		</tr>
@@ -61,8 +62,9 @@ try
 			<td><?php echo $arr['title']; ?></td>
 			<td><?php echo $arr['menu']; ?></td>
 			<td><?php echo $arr['sort']; ?></td>
+			<td><?php echo $arr['subof']; ?></td>
 			<td><button type="button"
-					onclick="menu.menu.edit('<?php echo $arr['id']; ?>')">modifica</button>
+					onclick="menu.menu.edit('<?php echo $arr['id']; ?>', '<?php echo $_GET['menu'];?>')">modifica</button>
 			</td>
 			<td><button type="button"
 					onclick="menu.menu.erase('<?php echo $arr['id']; ?>', '<?php echo $_GET['menu'];?>')">cancella</button>

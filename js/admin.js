@@ -148,9 +148,9 @@ menu = {
 		list: function (menu){
 			gui.openInTab('menu/list', 'menu=' + menu, 'Gestione menu');
 		},
-		edit: function(id){
+		edit: function(id, menu_name){
 			gui.openInDialog(
-				'menu/edit_form&id=' + id,
+				'menu/edit_form&id=' + id + '&menu=' + menu_name,
 				{
 					modal:true,
 					title: 'Modifica voce menu',

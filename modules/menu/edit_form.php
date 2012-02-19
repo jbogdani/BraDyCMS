@@ -71,12 +71,35 @@ else
 				<select name="menu">
 				<?php
 				$menus = $menu->getList();
-				foreach ($menus as $menu)
+				foreach ($menus as $menu_it)
 				{
-					echo '<option value="' . $menu . '" ' . (($menu==$data['menu']) ? ' selected="selected" ' : ''). '> ' . $menu . ' </option>';
+					echo '<option value="' . $menu_it . '" ' . (($menu_it == $data['menu']) ? ' selected="selected" ' : ''). '> ' . $menu_it . ' </option>';
 				}
 				?>
 			</select> <?php endif; ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Sottomenu di:</th>
+			<td>
+				<select name="subof">
+					<option></option>
+					<?php
+					$av_items = $menu->get_all_menu_items($_GET['menu']);
+					if ($av_items AND is_array($av_items))
+					{
+						foreach ($av_items as $arr)
+						{
+							echo '<option '
+								. 'value="' . $arr['id'] . '"' 
+								. ( ($data['subof'] == $arr['id']) ? 'selected="selected"' : '') 
+								. '>' . $arr['menu'] . ' > ' 
+								. $arr['item'] 
+								. '</option>';
+						}
+					}
+					?>
+				</select>
 			</td>
 		</tr>
 		<tr>

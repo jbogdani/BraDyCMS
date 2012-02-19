@@ -290,7 +290,7 @@ class publicHtml extends ArticleRead implements frontend
 	 * @param string $item			item name to show up submenu for
 	 * @param boolean $recursive	flag to controle submenu displaying
 	 */
-	private function recursive_print_menu_items($menu_to_show = false, $item = false, $recursive = false)
+	private function recursive_print_menu_items($menu_to_show, $item = false, $recursive = false)
 	{
 		$menu = new Menu();
 		
@@ -301,7 +301,7 @@ class publicHtml extends ArticleRead implements frontend
 			return false;
 		}
 		
-		$html = '<ul class="' . ($menu_to_show ? ' menu ' . $menu_to_show : 'submenu ' . $item) . '">';
+		$html = '<ul class="' . ($item ? 'submenu ' . $item : ' menu ' . $menu_to_show) . '">';
 		
 		foreach ( $res as $item_arr )
 		{
@@ -327,7 +327,7 @@ class publicHtml extends ArticleRead implements frontend
 			. '>'
 			. $item_arr['item']
 			. '</a>'
-			. ($recursive ? $this->recursive_print_menu_items(false, $item_arr['id']) : '')
+			. ($recursive ? $this->recursive_print_menu_items($menu_to_show, $item_arr['id'], true) : '')
 			. '</li>';
 		}
 

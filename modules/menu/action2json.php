@@ -62,6 +62,7 @@ try
 }
 catch (MyExc $e)
 {
+	$e->log();
 	$obj->type='error';
 	$obj->text = $e->getMessage();
 	echo json_encode($obj);

@@ -10,9 +10,8 @@
  * @since			26/mag/2011
  */
 
-class Menu extends DB{
-
-
+class Menu extends DB
+{
 	/**
 	 * 
 	 * Returns array of menu item by id.

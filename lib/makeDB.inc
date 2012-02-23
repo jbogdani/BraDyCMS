@@ -45,7 +45,8 @@ class makeDB
 			  `title` varchar(200) NOT NULL,
 			  `menu` varchar(100) NOT NULL,
 			  `sort` int(11) NOT NULL,
-			  `subof` int(11) NOT NULL,
+			  `subof` int(11),
+			  `updated` int(1) NOT NULL DEFAULT 0
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
 EOD;
@@ -117,7 +118,8 @@ EOD;
 				title varchar(200), 
 				menu varchar(100), 
 				sort int(11), 
-				subof int(11)
+				subof int(11) DEFAULT(NULL),
+				updated int(1) DEFAULT(0)
 			);
 EOD;
 		if ($lang AND is_array($lang))

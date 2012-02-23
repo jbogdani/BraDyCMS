@@ -21,7 +21,6 @@ $translate = new translate();
 foreach ($cfg['languages'] as $lang=>$language)
 {
 	$list = $translate->get_list($_GET['context'], $lang);
-
 	if ($list)
 	{
 		echo '<table class="tablesorter" colspan="5">'

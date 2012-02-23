@@ -12,7 +12,7 @@
 #		menu.order	  >	menu.sort
 #		article_{lang}.to_update	> article_{lang}.translated 
 #		menu_{lang}.to_update	> menu_{lang}.translated
-#		add: menu.subof int(11)
+#		add: menu.subof int(11) DEFAULT(null)
 # API changes
 #		class selected in menu items is applied to <li> not to <a> element
 #		publicHtml::printLangSelelect() changed in publicHtml::printLangSelect()

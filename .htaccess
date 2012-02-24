@@ -3,7 +3,7 @@ RewriteBase /
 
 ErrorDocument 404 /index.php?art_title=not_found
 
-# www 2 non www url syntax
+#  www 2 non www url syntax
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L] 
 

@@ -47,10 +47,8 @@ class ArticleEdit extends ArticleRead{
 
 		$flds = $this->getArticleFields();
 
-		$apices[] = '`id`';
-		$values[':id'] = '';
-
-		foreach ( $flds as $fld ){
+		foreach ( $flds as $fld )
+		{
 			$apices[] = '`' . $fld . '`';
 			$values[':' . $fld] = $data[$fld];
 		}
@@ -60,7 +58,7 @@ class ArticleEdit extends ArticleRead{
 		. "(" . implode(',', $apices). ")"
 		. " VALUES "
 		. "(" . implode ( ',', array_keys ( $values ) ) . ")";
-
+		
 		return $this->executeQuery($statement, $values, 'id' );
 
 	}

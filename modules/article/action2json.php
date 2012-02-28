@@ -15,23 +15,41 @@ try
 		case 'erase':
 			if (!$_REQUEST['id'])
 			{
-				throw new Exception('Nessun articolo indicato per la cancellazione');
+				throw new MyExc('Nessun articolo indicato per la cancellazione');
 			}
-
-			if (!$article_edit->delete( $_REQUEST['id'] ))
+			try
 			{
+				if (!$article_edit->delete( $_REQUEST['id'] ))
+				{
+					throw new MyExc("Non è stato possibile cancellare l'articolo " . $_REQUEST['id']);
+				}
+			}
+			catch (MyExc $e)
+			{
+				$e->log();
 				throw new Exception("Non è stato possibile cancellare l'articolo " . $_REQUEST['id']);
 			}
+
+			
 				
 			$out->type = 'success';
 			$out->text = "L'articolo è stato cancellato!";
 			break;
 				
 		case 'edit':
-			if (!$article_edit->update($_GET['id'], $_POST))
+			try
 			{
+				if (!$article_edit->update($_GET['id'], $_POST))
+				{
+					throw new MyExc("Errore! L'articolo non è stato salvato!");
+				}
+			}
+			catch (MyExc $e)
+			{
+				$e->log();
 				throw new MyExc("Errore! L'articolo non è stato salvato!");
 			}
+			
 				
 			$out->type = 'success';
 			$out->text = "L'articolo è stato salvato!";
@@ -43,11 +61,20 @@ try
 			{
 				throw new MyExc("Attenzione! I campi 'TITOLO' e 'ID TESTUALE' sono obbligatori<br />L'articolo <strong>NON</strong> è stato salvato");
 			}
-
-			if (!$article_edit->add($_POST))
+			
+			try
 			{
+				if (!$article_edit->add($_POST))
+				{
+					throw new MyExc("Errore! L'articolo non è stato salvato!");
+				}
+			}
+			catch (MyExc $e)
+			{
+				$e->log();
 				throw new MyExc("Errore! L'articolo non è stato salvato!");
 			}
+				
 			$out->type = 'success';
 			$out->text = "L'articolo è stato salvato!";
 			$out->id = $res;
@@ -63,6 +90,5 @@ catch (MyExc $e)
 {
 	$out->type = 'error';
 	$out->text = $e->getMessage();
-	$e->log();
 	echo json_encode($out);
 }

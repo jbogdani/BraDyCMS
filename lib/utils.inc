@@ -158,7 +158,7 @@ class utils
 		
 			"image"=>array(
 				"mime"=>array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/vnd.microsoft.icon", "image/tiff"), 
-				"ext"=>array("png", "jpeg", "jpg", "bmp", "ico", "tif", "tiff"), 
+				"ext"=>array("png", "jpeg", "jpg", "bmp", "ico", "tif", "tiff", "gif"), 
 				"icon"=>"image-x-generic.png"),
 		);
 		

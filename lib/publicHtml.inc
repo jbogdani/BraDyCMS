@@ -63,6 +63,8 @@ class publicHtml extends ArticleRead implements frontend
 			if ( $get['art'] OR $get['art_title'] )
 			{
 				$this->out['context'] = 'article';
+				
+				$this->out['get_id'] = $get['art']  ? $get['art'] : $get['art_title'];
 					
 				$this->out['article'] = $this->get_article_by_id ( $get['art'], $get['art_title'], $this->lang );
 			}
@@ -72,6 +74,8 @@ class publicHtml extends ArticleRead implements frontend
 			{
 				$this->out['context'] = 'section';
 					
+				$this->out['get_id'] = $get['section'];
+				
 				$this->out['section'] = $this->get_articles_by_section($get['section']);
 			}
 	
@@ -79,7 +83,9 @@ class publicHtml extends ArticleRead implements frontend
 			else if ($get['search'])
 			{
 				$this->out['context'] = 'search';
-					
+
+				$this->out['get_id'] = $get['search'];
+				
 				$this->out['search'] = $this->search($get['search']);
 					
 				$this->out['searchTerm'] = $get['search'];
@@ -107,6 +113,15 @@ class publicHtml extends ArticleRead implements frontend
 	public function getContext()
 	{
 		return $this->out['context'];
+	}
+	
+	/**
+	 * 
+	 * Returned requested string (article, section, or searched string)
+	 */
+	public function getId()
+	{
+		return $this->out['get_id'];
 	}
 
 	/**

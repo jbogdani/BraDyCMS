@@ -17,7 +17,6 @@ RewriteRule (css|sites|js|tiny_mce)/(.+) $1/$2
 #admin 
 RewriteRule ^admin/?$ admin.php 
 
-
 #safe home page 
 RewriteRule ^(it|en|es|fr|ar|de)/?$ index.php?lang=$1 
 

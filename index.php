@@ -2,7 +2,6 @@
 try
 {
 	session_start();
-	
 	require_once 'lib/globals.inc';
 	
 	$html = new publicHtml();

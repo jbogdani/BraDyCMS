@@ -5,16 +5,15 @@
  * @since			Mar 23, 2012
  * 
  * example:
- * <div	class="video" or class="video fancy"> 
- * 	{
- * 		"width" : "640px"						movie width
- * 		"height" : "272px" 						movie height
- * 		"path" : "./sites/default/images/video" movies path
- * 		"supplied" : "m4v,ogv,webmv"			movie available formats
- * 		"name" : "video-09"						movie name (all formats and poster must hanve the same name; poster must have JPG extension)
- * 		"text" : "some text"					this text will be used as the title of the fancybox
- * 		"html" : "some escaped html"			This html will be rendered on screen if fancybox is activated
- * }
+ * <div											start of div tag
+ * 		class="video" or class="video fancy"
+ * 		data-width="640px"						movie width
+ * 		data-height="272px" 					movie height
+ * 		data-path="./sites/default/images/video" movies path
+ * 		data-supplied="m4v,ogv,webmv"			movie available formats
+ * 		data-name="video-09"					movie name (all formats and poster must hanve the same name; poster must have JPG extension)
+ * 		data-text="some text">					this text will be used as the title of the fancybox
+ * 	some html									This html will be rendered on screen if fancybox is activated
  * 	</div>										end of div tag
  */
 
@@ -24,10 +23,13 @@
 		var index = 1;
 		$.each($(this), function(k, el){
 			//set variables
-			var opts = $.parseJSON($(el).text());
-			$(el).html('');
-			
-			opts.tmpId = 'tmp' + new Date().getTime() + Math.floor(Math.random()*100); 
+			var tmpId = 'tmp' + new Date().getTime() + Math.floor(Math.random()*100); 
+			var path = $(el).attr('data-path');
+			var width = $(el).attr('data-width');
+			var height = $(el).attr('data-height');
+			var supplied = $(el).attr('data-supplied');
+			var name = $(el).attr('data-name');
+			var text = $(el).attr('data-text');
 			
 			// chack if fancybox must be used
 			if ($(el).hasClass('fancy'))
@@ -35,39 +37,38 @@
 					var fancy_flag = true;
 				}
 			// make array of supplied
-			if (opts.supplied.indexOf(',') < 0)
+			if (supplied.indexOf(',') < 0)
 				{
 				var supplied_arr = [];
 				supplied_arr.push(supplied);
 				}
 			else
 				{
-				var supplied_arr = opts.supplied.split(',');
+				var supplied_arr = supplied.split(',');
 				}
 			
 			// set media object
 			var media = {};
 			$.each(supplied_arr, function(kk, vv){
-				media[vv] = (abslPath ? abslPath : window.location.protocol + '//' + window.location.hostname ) + '/' + opts.path + '/' + opts.name + '.' + ( (vv=='webmv') ? 'webm' : vv);
+				media[vv] = (abslPath ? abslPath : window.location.protocol + '//' + window.location.hostname ) + '/' + path + '/' + name + '.' + ( (vv=='webmv') ? 'webm' : vv);
 			});
-			media.poster = opts.path + '/' + opts.name + '.jpg';
+			media.poster = path + '/' + name + '.jpg';
 			
 			//write div placeholder
-			var div = $('<div id="' + opts.tmpId + '" />');
+			var div = $('<div id="' + tmpId + '" />');
 			
 			if (fancy_flag)
 				{
-				var a = $('<a></a>').attr('title', opts.text).attr('href', '#' + opts.tmpId);
-				if (opts.html)
-					{
-					a.html(opts.html);
-					}
+				var a = $('<a></a>').attr('title', text).attr('href', '#' + tmpId);
+				$($(el).html()).appendTo(a);
+				$(el).html('');
 				var hiddendiv = $('<div style="display:none" />').append(div);
 				
 				$(el).append(a).append(hiddendiv);	
 				}
 			else
 				{
+				$(el).html('');
 				$(el).append(div);
 				}
 			
@@ -99,7 +100,7 @@
 			+ '</div>';
 			
 			// set html to div placeholder
-			$('#' + opts.tmpId).html(html);
+			$('#' + tmpId).html(html);
 			
 			// format options
 			var jp_supplied = [];
@@ -117,8 +118,8 @@
 				supplied: jp_supplied.join(', '),
 				//solution:"flash, html",
 				size: {
-					width: opts.width,
-					height: opts.height
+					width: width,
+					height: height
 				},
 				cssSelectorAncestor: '#jp_container_' + index
 			});

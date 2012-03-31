@@ -85,7 +85,7 @@
 		</li>
 		
 		<li>
-			<a href="./admin.php"><img src="./css/view-refresh-3.png" alt="Reload" /><br />Ricarica</a>
+			<a href="./admin"><img src="./css/view-refresh-3.png" alt="Reload" /><br />Ricarica</a>
 		</li>
 		
 		<li>
@@ -94,7 +94,7 @@
 		</li>
 		
 		<li>
-			<a href="./admin.php?logout=1"><img src="./css/application-exit-3.png" alt="Log out" /><br />Log out</a>
+			<a href="./admin:logout"><img src="./css/application-exit-3.png" alt="Log out" /><br />Log out</a>
 		</li>
 	</ul>
 </article>

@@ -296,7 +296,7 @@ var layout = {
 				.ajaxStop(function(){	$(this).hide();	});
 		},
 		login: function(message){
-			gui.openInDialog('login_form&log_message=' + message, {
+			gui.openInDialog('../login_form&log_message=' + message, {
 				modal: true,
 				closeOnEscape: false,
 				resizable: false,

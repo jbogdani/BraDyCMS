@@ -5,6 +5,8 @@
 #		delete from ArticleRead
 #		delete from other source
 
+2.1[] = "Enhanced clean url support url # support"
+2.1[] = "Enhanced clean url support (format_link) with url language support"
 2.1[] = "Added jplayer support"
 2.1[] = "Added fancybox support"
 2.0[] = "SQLite support"

@@ -78,35 +78,5 @@ endif;
 			<li><a href="loader.php?mod=main">Home</a></li>
 		</ul>
 	</div>
-
-	<!-- 
-<div id="topmenu">
-	<ul id="nav">
-		<li class="current"><a href="./admin.php">Inizio</a></li>
-		<li><a href="javascript:void(0)">Articoli</a>
-			<ul>
-				<li><a href="javascript:void(0)" onclick="add_new_article()">Nuovo</a></li>
-				<li><a href="javascript:void(0)" onclick="show_art_list();">Mostra tutti</a></li>
-			</ul>
-		</li>
-		<li><a href="javascript:void(0)" onclick="show_img_list()">Immagini e files</a>
-		</li>
-		<li><a href="javascript:void(0)">Menu</a>
-			<ul>
-				<li><a href="javascript:void(0)" onclick="add_new_menu();">Aggiungi nuova voce</a></li>
-				<li><a href="javascript:void(0)">Modifica menu: </a>
-					<ul id="menu_ul"></ul>
-				</li>
-			</ul>
-		</li>
-		<li><a href="javascript:void(0)">Traduzioni</a>
-			<ul id="trad_ul"></ul>
-		</li>
-		<li><a href="./" target="_blank">Vedi sito</a></li>
-		<li><a href="admin.php?logout=1">Esci</a></li>
-	</ul>
-</div>
-<div id="main"></div>
- -->
 </body>
 </html>

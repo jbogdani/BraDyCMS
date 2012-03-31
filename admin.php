@@ -9,7 +9,6 @@ try
 {
 	session_start();
 	$root = './';
-	
 
 	require_once $root . 'lib/globals.inc';
 

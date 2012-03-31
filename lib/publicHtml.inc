@@ -96,6 +96,12 @@ class publicHtml extends ArticleRead implements frontend
 			{
 				$this->out['context'] = 'home';
 			}
+			
+			/**
+			 * flag to check if language is present in url
+			 */
+			$this->cfg['url_lang'] = $get['lang'] ? true : false;
+			
 		}
 		catch (MyExc $e)
 		{
@@ -226,11 +232,14 @@ class publicHtml extends ArticleRead implements frontend
 		}
 		if (!preg_match('/lang=/', $href) AND $_SESSION['lang'])
 		{
-			if (!preg_match('/\?/', $href))
+			if ($href != '#' AND !preg_match('/\?/', $href))
 			{
 				$href .= '?';
 			}
-			$href .= '&lang=' . $_SESSION['lang'];
+			if ($href != '#')
+			{
+				$href .= '&lang=' . $_SESSION['lang'];
+			}
 		}
 		if ( !$this->cfg['friendly_url'])
 		{
@@ -238,8 +247,10 @@ class publicHtml extends ArticleRead implements frontend
 		}
 		else
 		{
-				
+			
+			$path = $this->cfg['url_lang'] ? '..' : '.';
 			$pattern = array (
+			
 			//lang support
 				'/index\.php\?section=([0-9a-zA-Z_-]+)&lang=([a-zA-Z]{2})/',
 				'/\.?\/?\?section=([0-9a-zA-Z_-]+)&lang=([a-zA-Z]{2})/',
@@ -266,31 +277,32 @@ class publicHtml extends ArticleRead implements frontend
 				'/\.\/\?lang=([a-zA-Z]{2})/',
 				'/index\.php\?lang=([a-zA-Z]{2})/'
 				);
-					
-				$replacement = array (
-					
-				// lang support
-				'../$2/$1.all',
-				'../$2/$1.all',
-					
-				'../$2/id-$1',
-				'../$2/id-$1',
 
-				'../$2/$1', // ex: .html
-				'../$2/$1', // ex: .html
+				
+			$replacement = array (
+				
+				// lang support
+				$path . '/$2/$1.all', // ex.: ../en/news.all
+				$path . '/$2/$1.all', // ex.: ./en/news.all
+					
+				$path . '/$2/id-$1', // ex.: ../en/id-5
+				$path . '/$2/id-$1',	// ex.: ../en/id-5
+
+				$path . '/$2/$1', // ex: ../en/about
+				$path . '/$2/$1', // ex: ../en/about
 				
 				// no lang
-				'$1.all',
-				'$1.all',
+				'$1.all', // ex.: ../news.all
+				'$1.all', // ex.: ./news.all
 					
-				'id-$1',
-				'id-$1',
+				'id-$1', // ex.: ../id-5
+				'id-$1', // ex.: ./id-5
 
-				'$1', //ex: .html
-				'$1', //ex: .html
+				'$1', //ex: /about
+				'$1', //ex: /about
 					
-				'../$1/',
-				'../$1/'
+				$path . '/$1/', // ex.: ../en
+				$path . '/$1/' // ex.: ../en
 				);
 					
 				return preg_replace($pattern, $replacement, $href);

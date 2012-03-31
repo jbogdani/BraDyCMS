@@ -15,7 +15,8 @@ RewriteRule ^sitemap.xml$ sitemap.xml
 RewriteRule (css|sites|js|tiny_mce)/(.+) $1/$2
 
 #admin 
-RewriteRule ^admin/?$ admin.php 
+RewriteRule ^admin/?$ admin.php
+RewriteRule ^admin:logout?$ admin.php?logout=1
 
 #safe home page 
 RewriteRule ^(it|en|es|fr|ar|de)/?$ index.php?lang=$1 

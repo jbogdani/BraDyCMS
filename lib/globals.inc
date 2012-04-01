@@ -5,12 +5,10 @@
  * @license			All rights reserved
  * @since			05/mar/2011
  */
-
 if (!$root)
 {
 	$root = './';
 }
-
 ini_set('error_log', './error.log');
 
 ini_set('display_errors', 'off');
@@ -52,7 +50,6 @@ else
 {
 	date_default_timezone_set('Europe/Rome');
 }
-
 
 define ( 'PREFIX',		$cfg['prefix'] );
 define ( 'SYS_LANG',	$cfg['default_lang'] );

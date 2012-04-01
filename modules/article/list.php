@@ -15,7 +15,7 @@ $res_arr = $article_edit->get_all_articles();
 
 <p style="text-align: right;">
 	<a href="javascript:void(0);" onclick="menu.article.showall()"><img
-		src="../css/view-refresh-3.png" alt="Ricarica" /> </a>
+		src="./css/view-refresh-3.png" alt="Ricarica" /> </a>
 </p>
 
 <input name="filter" id="filter-box" value="" maxlength="30" style="width:200px;" type="text" placeholder="<?php echo utils::tr('search'); ?>..." >

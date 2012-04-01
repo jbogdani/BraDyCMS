@@ -7,16 +7,14 @@ ErrorDocument 404 /index.php?art_title=not_found
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L] 
 
-# site rules
-RewriteRule ^sitemap.xml$ sitemap.xml
-
-
-#safe site, js and css
+#safe site, js and css, tiny_mce
 RewriteRule (css|sites|js|tiny_mce)/(.+) $1/$2
 
 #admin 
 RewriteRule ^admin/?$ admin.php
 RewriteRule ^admin:logout?$ admin.php?logout=1
+RewriteRule ^admin:debug?$ admin.php?debug=1
+RewriteRule ^admin:mini?$ admin.php?mini=1
 
 #safe home page 
 RewriteRule ^(it|en|es|fr|ar|de)/?$ index.php?lang=$1 
@@ -24,7 +22,6 @@ RewriteRule ^(it|en|es|fr|ar|de)/?$ index.php?lang=$1
 #section
 RewriteRule ^(it|en|es|fr|ar|de)/([a-zA-Z0-9-_]+).all$ index.php?lang=$1&section=$2
 RewriteRule ^([a-zA-Z0-9-_]+).all$ index.php?section=$1
-
 
 #art_title no html
 RewriteRule ^(it|en|es|fr|ar|de)/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2
@@ -41,12 +38,6 @@ RewriteRule ^([a-zA-Z0-9-_]+).html$ index.php?art_title=$1
 #search
 RewriteRule ^(it|en|es|fr|ar|de)/search:([a-zA-Z0-1-_\.]+)$ index.php?lang=$1&search=$2
 RewriteRule ^search:([a-zA-Z0-9-_\.]+)$ index.php?search=$1
-
-# redirects
-RewriteRule ^books(.*)$ http://books.bradypus.net [L,R=301]
-RewriteRule ^laboratori(.*)$ http://www.bradypus.net/didattica_volumina.html [L,R=301]
-RewriteRule ^DB(.*)$ http://db.bradypus.net/ [L,R=301]
-RewriteRule ^db(.*)$ http://db.bradypus.net/ [L,R=301]
 
 <FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite)$">
 	order allow,deny

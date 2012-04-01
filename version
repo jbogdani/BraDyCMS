@@ -5,6 +5,13 @@
 #		delete from ArticleRead
 #		delete from other source
 
+2.2[] = "Implemented documentation (inline comment)"
+2.2[] = "admin:debug & admin:mini support added"
+2.2[] = ".htaccess cleanup"
+2.2[] = "TinyMCE updated to v.3.4.9"
+2.2[] = "Bug fixed with TinyMCE with subdomains"
+2.2[] = "Added public function frontend::getSection()"
+
 2.1[] = "Enhanced clean url support url # support"
 2.1[] = "Enhanced clean url support (format_link) with url language support"
 2.1[] = "Added jplayer support"

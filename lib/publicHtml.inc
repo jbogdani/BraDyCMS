@@ -35,10 +35,8 @@ class publicHtml extends ArticleRead implements frontend
 	private $out;
 
 	/**
-	 *
-	 * Gets GET data and populates $out with all context information
-	 * @param array $get 	art | art_title | section
-	 * @param string $lang	user language
+	 * (non-PHPdoc)
+	 * @see frontend::mainSetter()
 	 */
 	public function mainSetter( $get, $lang = false )
 	{
@@ -67,6 +65,8 @@ class publicHtml extends ArticleRead implements frontend
 				$this->out['get_id'] = $get['art']  ? $get['art'] : $get['art_title'];
 					
 				$this->out['article'] = $this->get_article_by_id ( $get['art'], $get['art_title'], $this->lang );
+				
+				$this->out['section_name'] = $this->out['article']['section'];
 			}
 	
 			// context = section
@@ -77,6 +77,8 @@ class publicHtml extends ArticleRead implements frontend
 				$this->out['get_id'] = $get['section'];
 				
 				$this->out['section'] = $this->get_articles_by_section($get['section']);
+				
+				$this->out['section_name'] = $get['section'];
 			}
 	
 			// search
@@ -111,10 +113,22 @@ class publicHtml extends ArticleRead implements frontend
 
 
 	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see frontend::getSection()
+	 */
+	public function getSection()
+	{
+		if ($this->out['section_name'])
+		{
+			return $this->out['section_name'];
+		}
+	}
 
 	/**
-	 *
-	 * Returns context (home | search | article | section)
+	 * (non-PHPdoc)
+	 * @see frontend::getContext()
 	 */
 	public function getContext()
 	{
@@ -131,10 +145,8 @@ class publicHtml extends ArticleRead implements frontend
 	}
 
 	/**
-	 *
-	 * Returns meta information about site, article or section blog
-	 * @param string $el meta element (title | description (or summary) | keywords)
-	 * @param boolean $html		if true html element will be returned
+	 * (non-PHPdoc)
+	 * @see frontend::getMeta()
 	 */
 	public function getMeta( $el, $html = false )
 	{
@@ -364,11 +376,8 @@ class publicHtml extends ArticleRead implements frontend
 	}
 
 	/**
-	 *
-	 * Echoes HTML menu forr $menu
-	 * for html structure see documentation of recursive_print_menu_items
-	 * @param string $menu	menu name to print
-	 * @param boolean $show_sub	boolean check to controle printing of submenus
+	 * (non-PHPdoc)
+	 * @see frontend::printMenu()
 	 */
 	public function printMenu( $menu_to_show, $show_sub = false )
 	{
@@ -384,11 +393,8 @@ class publicHtml extends ArticleRead implements frontend
 	}
 	
 	/**
-	 *
-	 * Echoes HTML submenu for $item
-	 * for html structure see documentation of recursive_print_menu_items
-	 * @param string $item	item menu to print submenu for
-	 * @param boolean $show_sub	boolean check to controle printing of submenus
+	 * (non-PHPdoc)
+	 * @see frontend::printsubMenu()
 	 */
 	public function printsubMenu($item, $show_sub = false)
 	{
@@ -406,13 +412,8 @@ class publicHtml extends ArticleRead implements frontend
 
 
 	/**
-	 *
-	 * Echoes list of articles for given section
-	 * HTML structure:
-	 * 		article > h1 (title)
-	 * 				> div [.content] > text (summary)
-	 * 				> div[.read_more] > a > text (read more)
-	 * @param string $section section name to retrieve articles for
+	 * (non-PHPdoc)
+	 * @see frontend::printSection()
 	 */
 	public function printSection( $section )
 	{
@@ -433,10 +434,8 @@ class publicHtml extends ArticleRead implements frontend
 	}
 
 	/**
-	 *
-	 * Echoes a single article specified as uid or title
-	 * @param int $art_id			article's uid
-	 * @param string $art_title		article's uniqui text title
+	 * (non-PHPdoc)
+	 * @see frontend::printArticleBody()
 	 */
 	public function printArticleBody( $art_id = false, $art_title = false )
 	{
@@ -489,8 +488,8 @@ class publicHtml extends ArticleRead implements frontend
 	}
 
 	/**
-	 *
-	 * Echoes page main content, depending on context (section or article)
+	 * (non-PHPdoc)
+	 * @see frontend::printBody()
 	 */
 	public function printBody ( )
 	{
@@ -542,8 +541,8 @@ class publicHtml extends ArticleRead implements frontend
 	}
 
 	/**
-	 *
-	 * Echoes section of article preview list with current article siblings
+	 * (non-PHPdoc)
+	 * @see frontend::printSiblings()
 	 */
 	public function printSiblings ()
 	{
@@ -566,12 +565,9 @@ class publicHtml extends ArticleRead implements frontend
 		}
 	}
 
-
 	/**
-	 *
-	 * Echoes HTML for search form
-	 * HTML structure
-	 * 		form > input[.search, name=search, type=text]
+	 * (non-PHPdoc)
+	 * @see frontend::printSearch()
 	 */
 	public function printSearch()
 	{
@@ -590,8 +586,8 @@ class publicHtml extends ArticleRead implements frontend
 	}
 
 	/**
-	 *
-	 * Prints out a list of items matching the searched term
+	 * (non-PHPdoc)
+	 * @see frontend::printSearchResult()
 	 */
 	public function printSearchResult()
 	{
@@ -618,9 +614,8 @@ class publicHtml extends ArticleRead implements frontend
 	}
 
 	/**
-	 * 
-	 * Prints a html div > a  element for language selection 
-	 * @param boolean $text flag to check if text will show up or only flags
+	 * (non-PHPdoc)
+	 * @see frontend::printLangSelect()
 	 */
 	public function printLangSelect($text = false)
 	{

@@ -144,9 +144,10 @@ else
 	//});
 	<?php endif; */?>
 	$( '#section' ).combobox();
-	
-	tinymce_load('#summary,#text');
 
+	tinyMCE.execCommand("mceAddControl", true, "summary");
+	tinyMCE.execCommand("mceAddControl", true, "text");
+	
 	$('#edit_form').submit( function(){
 
 		<?php if ($id): ?>

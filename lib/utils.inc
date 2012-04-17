@@ -291,6 +291,10 @@ class utils
 				{
 					echo "\n\t".'<script language="JavaScript" type="text/JavaScript" src="./' . $file .'"></script>';
 				}
+				else
+				{
+					echo "\n".'<!-- ./' . $file . '} -->';
+				}
 			}
 		}
 		else

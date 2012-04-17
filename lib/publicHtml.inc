@@ -238,7 +238,7 @@ class publicHtml extends ArticleRead implements frontend
 	 */
 	private function format_link( $href )
 	{
-		if ($href == './')
+		if ($href == './' || preg_match('/http:\/\/(.+)/', $href))
 		{
 			return $href;
 		}

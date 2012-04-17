@@ -44,7 +44,7 @@ else
 		<tr>
 			<th>Link</th>
 			<td><input type="text" name="href"
-				value="<?php echo $data['href']; ?>" /></td>
+				value="<?php echo $data['href'] ? $data['href'] : './?art_title='; ?>" /></td>
 		</tr>
 		<tr>
 			<th>Target</th>

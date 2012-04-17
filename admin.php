@@ -51,8 +51,8 @@ utils::js(array(
 	'jquery-1.7.min.js',
 	'jquery-ui-1.8.16.custom.min.js',
 	'fileuploader.js',
+	'tiny_mce/tiny_mce.js',
 	'jquery.toastmessage.js',
-	'tiny_mce/jquery.tinymce.js',
 	'jquery.tablesorter.js',
 	'jquery.tablesorter.filter.js',
 	'jquery.combobox.js',
@@ -74,9 +74,12 @@ utils::js(array(
 <?php else: ?>
 			layout.login('<?php echo $log_message; ?>');
 <?php endif; ?>
+			$('button').button();
 		});
-		$('button').button();
 	</script>
+<script type="text/javascript">
+</script>
+
 </head>
 
 <body>

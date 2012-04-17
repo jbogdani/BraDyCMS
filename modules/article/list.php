@@ -14,8 +14,12 @@ $res_arr = $article_edit->get_all_articles();
 <h1>Gestione Articoli</h1>
 
 <p style="text-align: right;">
-	<a href="javascript:void(0);" onclick="menu.article.showall()"><img
-		src="./css/view-refresh-3.png" alt="Ricarica" /> </a>
+	<a onclick="menu.article.form();" href="javascript:void(0);" title="Aggiungi nuovo"><img alt="add new" src="./css/list-add-font.png" alt="Aggiungi nuovo"></a>
+	
+	<a onclick="menu.translate.list('article')" href="javascript:void(0)" title="Traduci"><img alt="Translation" src="./css/applications-education-language.png" alt="Traduci"></a>
+
+	<a href="javascript:void(0);" onclick="menu.article.showall()" title="Ricarica"><img src="./css/view-refresh-3.png" alt="Ricarica" /></a>
+	
 </p>
 
 <input name="filter" id="filter-box" value="" maxlength="30" style="width:200px;" type="text" placeholder="<?php echo utils::tr('search'); ?>..." >

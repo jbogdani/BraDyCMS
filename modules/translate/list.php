@@ -11,7 +11,7 @@
 <p style="text-align: right;">
 	<a href="javascript:void(0);"
 		onclick="menu.translate.list('<?php echo $_GET['context']; ?>')"><img
-		src="../css/view-refresh-3.png" alt="Ricarica" /> </a>
+		src="./css/view-refresh-3.png" alt="Ricarica" /> </a>
 </p>
 
 <?php

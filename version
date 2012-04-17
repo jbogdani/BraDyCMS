@@ -5,6 +5,9 @@
 #		delete from ArticleRead
 #		delete from other source
 
+2.3[] = "Solved problem with tiny_mce in sites located in subfolders"
+2.3[] = "GUI enhanced: new icons (functions) in article list"
+2.3[] = "Minor bug fixing"
 2.2[] = "Implemented documentation (inline comment)"
 2.2[] = "admin:debug & admin:mini support added"
 2.2[] = ".htaccess cleanup"

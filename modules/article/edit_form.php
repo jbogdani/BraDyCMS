@@ -23,6 +23,7 @@ else
 {
 	echo '<h2>Aggiungi nuovo articolo</h2>';
 }
+$uid = str_replace('.', '', microtime(1));
 ?>
 
 <form action="javascript:void(0)" id="edit_form">
@@ -107,7 +108,7 @@ else
 			<td style="vertical-align: top;">
 				<p>
 					Sommario<br />
-					<textarea name="summary" id="summary" rows="5"
+					<textarea name="summary" id="summary<?php echo $uid; ?>" rows="5"
 						style="width: 100%; height: 150;">
 						<?php echo $res['summary']; ?>
 					</textarea>
@@ -115,7 +116,7 @@ else
 				<p>
 					Testo articolo<br />
 					<textarea name="text" rows="20" style="width: 100%; height: 400;"
-						id="text">
+						id="text<?php echo $uid; ?>">
 						<?php echo $res['text']; ?>
 					</textarea>
 				</p>
@@ -134,19 +135,11 @@ else
 	$('button').button();
 
 	$('input.date').datepicker({ dateFormat: 'yy-mm-dd' });
-	<?php
-	/*
-	$sections_arr = $article_edit->get_used_sections();
-	if ($sections_arr AND is_array($sections_arr)):
-	?>
-	//$( '#section' ).autocomplete({
-	//		source: ['<?php echo implode("','", $sections_arr);?>']
-	//});
-	<?php endif; */?>
+
 	$( '#section' ).combobox();
 
-	tinyMCE.execCommand("mceAddControl", true, "summary");
-	tinyMCE.execCommand("mceAddControl", true, "text");
+	tinyMCE.execCommand("mceAddControl", true, "summary<?php echo $uid; ?>");
+	tinyMCE.execCommand("mceAddControl", true, "text<?php echo $uid; ?>");
 	
 	$('#edit_form').submit( function(){
 

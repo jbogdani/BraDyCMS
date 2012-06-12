@@ -73,7 +73,9 @@
 			
 			
 			// write html for jplayer
-			var html = '<div id="jp_container_' + index + '" class="jp-video jp-video-360p">'
+			var html = '<div id="jp_container_' + index + '" class="jp-video jp-video-360p" '
+			+ (!fancy_flag ? 'style="width:' + opts.width + '; height:' + opts.height + ';"' : '')
+			+ ' >'
 					+ '<div class="jp-type-single">'
 						+ '<div id="jquery_jplayer_' + index + '" class="jp-jplayer"></div>'
 						+ '<div class="jp-gui">'
@@ -90,6 +92,10 @@
 									+ '<li><a href="javascript:;" class="jp-mute" tabindex="1" title="muto">muto</a></li>'
 									+ '<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="voce">voce</a></li>'
 								+ '</ul>'
+								+ (!fancy_flag ? '<ul class="jp-toggles">'
+									+ '<li><a href="javascript:;" class="jp-full-screen" tabindex="1" title="full screen">pieno schermo</a></li>'
+									+ '<li><a href="javascript:;" class="jp-restore-screen" tabindex="1" title="restore screen">rimpicciolisci video</a></li>'
+								+ '</ul>' : '' )
 								+ '<div class="jp-volume-bar"><div class="jp-volume-bar-value"></div></div>'
 							+ '</div>'
 						+ '</div>'
@@ -127,10 +133,10 @@
 			index++;
 			
 			// start fancybox
-			if (fancy_flag)
-				{
+			if (fancy_flag){
 				a.fancybox();
 				}
+				
 		});
 	};
 })(jQuery);

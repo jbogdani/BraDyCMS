@@ -27,19 +27,8 @@ div.jp-video {
 	background-color:#eee;
 	position:relative;
 }
-div.jp-audio {
-	width:420px;
-}
-div.jp-video-270p {
-	width:480px;
-}
-div.jp-video-360p {
-	width:640px;
-}
 div.jp-video-full {
-	/* Rules for IE6 (full-screen) */
-	width:480px;
-	height:270px;
+	/* Rules for IE6 (full-screen) 
 	/* Rules for IE7 (full-screen) - Otherwise the relative container causes other page items that are not position:static (default) to appear over the video/gui. */
 	position:static !important; position:relative
 }
@@ -260,7 +249,7 @@ div.jp-video a.jp-mute,
 div.jp-video a.jp-unmute {
 	left: 50px;
 }
-
+
 div.jp-video a.jp-volume-max {
 	left: 134px;
 }

@@ -9,8 +9,16 @@ try
 
 	$html->mainSetter($_GET, $_SESSION['lang']);
 	
-	require_once './sites/default/index.php';
+	$browser = new Browser();
 	
+	if ($cfg['only_mobile'] OR ($browser->isMobile() AND file_exists('./sites/default/mobile.php')))
+	{
+		require_once './sites/default/mobile.php';
+	}
+	else
+	{
+		require_once './sites/default/index.php';
+	}
 }
 catch (MyExc $e)
 {

@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /
+RewriteBase /git.bdusCMS
 
 ErrorDocument 404 /index.php?art_title=not_found
 

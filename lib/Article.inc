@@ -8,13 +8,14 @@
  * @since			23/mag/2011
  */
 
-class Article extends DB{
-
+class Article extends DB
+{
 	/**
 	 *
 	 * Returns array with article fields names
 	 */
-	protected function getArticleFields(){
+	protected function getArticleFields()
+	{
 
 		return array(
 			'title',

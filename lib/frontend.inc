@@ -43,8 +43,9 @@ interface frontend
 	 * for html structure see documentation of recursive_print_menu_items
 	 * @param string $menu	menu name to print
 	 * @param boolean $show_sub	boolean check to controle printing of submenus
+	 * @param array array containing tags to add to ul element
 	 */
-	function printMenu($menu_to_show, $show_sub = false );
+	function printMenu($menu_to_show, $show_sub = false, $tags = false );
 	
 	/**
 	 *

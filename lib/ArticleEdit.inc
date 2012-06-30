@@ -6,17 +6,16 @@
  * @since			Oct 30, 2011
  */
 
-class ArticleEdit extends ArticleRead{
-
-
+class ArticleEdit extends ArticleRead
+{
 	/**
 	 *
 	 * Updates article with given ID with array od $data
 	 * @param int $id		id of article to update
 	 * @param array $data	array of data to write
 	 */
-	public function update($id, $data){
-
+	public function update($id, $data)
+	{
 		$flds = $this->getArticleFields();
 
 		foreach ( $flds as $fld )
@@ -43,8 +42,8 @@ class ArticleEdit extends ArticleRead{
 	 * Add new article using array of $data
 	 * @param array $data array of data to write in DB
 	 */
-	public function add ( $data ) {
-
+	public function add ( $data )
+	{
 		$flds = $this->getArticleFields();
 
 		foreach ( $flds as $fld )
@@ -68,8 +67,8 @@ class ArticleEdit extends ArticleRead{
 	 * Deletes article from DB
 	 * @param int $id	article id
 	 */
-	public function delete( $id ){
-
+	public function delete( $id )
+	{
 		global $cfg;
 
 		$statement = "DELETE FROM `" . PREFIX . "__articles` WHERE `id` = " . $id;

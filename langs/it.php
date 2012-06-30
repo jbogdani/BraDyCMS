@@ -11,7 +11,7 @@ $_lang['read_more'] = 'leggi tutto....';
 $_lang['from_same_section'] = 'Dalla stessa sezione';
 $_lang['no_articles_in_section'] = 'Nessun articolo per questa sezione';
 $_lang['article_does_not_exist'] = 'L\'articolo richiesto non esite';
-$_lang['search'] = 'cerca nel sito...';
+$_lang['search_site'] = 'cerca nel sito...';
 $_lang['no_result_for_query'] = 'Spiacenti, la ricerca di `<mark>%s</mark>` non ha prodotto alcun risultato!';
 $_lang['x_results_for_query'] = 'La parola `<mark>%s</mark>` è stata trovata nei seguenti %s articoli:';
 $_lang['search'] = 'cerca';
@@ -23,6 +23,7 @@ $_lang['section_list_error'] = 'Errore nel visualizzare gli articoli della sezio
 $_lang['article_error'] = 'Errore nel visualizzare l\'articolo richesto';
 $_lang['siblings_error'] = 'Errore nel visualizzare la lista degli articolo correlati';
 $_lang['search_error'] = 'Errore nel visualizzare i risultati della ricerca';
+$_lang['back'] = 'Indietro';
 
 
 

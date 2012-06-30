@@ -162,14 +162,7 @@ class publicHtml extends ArticleRead implements frontend
 					$title = $this->cfg['title'];
 				}
 				
-				if ($html)
-				{
-					return ' <title>' . $title . ' </title>';
-				}
-				else
-				{
-					return $title;
-				}
+				return $html ? ' <title>' . $title . ' </title>' : $title;
 				break;
 
 			case 'description':
@@ -187,14 +180,7 @@ class publicHtml extends ArticleRead implements frontend
 					$description = $this->cfg['description'];
 				}
 				
-				if ($html)
-				{
-					return '<meta name="description" content="' . $description . '" />';
-				}
-				else
-				{
-					return $description;
-				}
+				return $html ? '<meta name="description" content="' . $description . '" />' : $description;
 				break;
 
 			case 'keywords':
@@ -207,14 +193,7 @@ class publicHtml extends ArticleRead implements frontend
 					$keywords = $this->cfg['keywords'];
 				}
 				
-				if ($html)
-				{
-					return '<meta name="keywords" content="' . $keywords . '" />';
-				}
-				else 
-				{
-					return $keywords;
-				}
+				return $html ? '<meta name="keywords" content="' . $keywords . '" />' : $keywords;
 				break;
 				
 			case 'lang':
@@ -328,8 +307,9 @@ class publicHtml extends ArticleRead implements frontend
 	 * @param string $menu_to_show	menu name to show up
 	 * @param string $item			item name to show up submenu for
 	 * @param boolean $recursive	flag to controle submenu displaying
+	 * @param array $tags			tags to add to ul element
 	 */
-	private function recursive_print_menu_items($menu_to_show, $item = false, $recursive = false)
+	private function recursive_print_menu_items($menu_to_show, $item = false, $recursive = false, $tags = false)
 	{
 		$menu = new Menu();
 		
@@ -340,7 +320,18 @@ class publicHtml extends ArticleRead implements frontend
 			return false;
 		}
 		
-		$html = '<ul class="' . ($item ? 'submenu ' . $item : ' menu ' . $menu_to_show) . '">';
+		$html = '<ul ';
+		if (is_array($tags))
+		{
+			foreach ($tags as $tag=>$value)
+			{
+				if ($tag != 'class')
+				{
+					$html .= ' ' . $tag . '="' . $value . '"';
+				}
+			}
+		} 
+		$html .= 'class="' . ($item ? 'submenu ' . $item : ' menu ' . $menu_to_show) . ' ' . $tag['class'] . '">';
 		
 		foreach ( $res as $item_arr )
 		{
@@ -379,11 +370,11 @@ class publicHtml extends ArticleRead implements frontend
 	 * (non-PHPdoc)
 	 * @see frontend::printMenu()
 	 */
-	public function printMenu( $menu_to_show, $show_sub = false )
+	public function printMenu( $menu_to_show, $show_sub = false, $tags = false )
 	{
 		try
 		{
-			echo $this->recursive_print_menu_items($menu_to_show, false, $show_sub);
+			echo $this->recursive_print_menu_items($menu_to_show, false, $show_sub, $tags);
 		}
 		catch (MyExc $e)
 		{
@@ -572,7 +563,7 @@ class publicHtml extends ArticleRead implements frontend
 	public function printSearch()
 	{
 		$html = '<form action="javascript:void(0);" id="searchForm">'
-		. '<input class="search" type="text" placeholder="' . utils::tr('search') . '" name="search" id="search" />'
+		. '<input class="search" type="text" placeholder="' . utils::tr('search_site') . '" name="search" id="search" />'
 		. '</form>'
 		. '<script type="text/javascript">'
 		. "$('#searchForm').submit(function(){"
@@ -650,6 +641,7 @@ class publicHtml extends ArticleRead implements frontend
 		foreach ($lang_arr as $code=>$string)
 		{
 			$html .= '<a '
+				. ' data-ajax="false" '
 				. ' href="' . $this->format_link($href . $code) . '" '
 				. ' title="' . $string. '"><img src="./css/flags/' . $code . '.png" '
 				. ' alt="' . $string . '"'

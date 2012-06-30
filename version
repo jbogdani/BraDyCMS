@@ -5,6 +5,7 @@
 #		delete from ArticleRead
 #		delete from other source
 
+2.4[] = "Added mobile theme support using jquerymobile"
 2.3[] = "Solved problem with tiny_mce in sites located in subfolders"
 2.3[] = "GUI enhanced: new icons (functions) in article list"
 2.3[] = "Minor bug fixing"

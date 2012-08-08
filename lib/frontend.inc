@@ -106,7 +106,15 @@ interface frontend
 	 * 
 	 * Prints a html div > a  element for language selection 
 	 * @param boolean $text flag to check if text will show up or only flags
+	 * @param boolean $button	flag to check if lenu should be prented ad JQM button
 	 */
-	function printLangSelect($text = false);
+	function printLangSelect($text = false, $button = false);
+	
+	/**
+	 * prints a un.menu lang with language selection
+	 * @param mixed $flag can be true | false | right | left
+	 * @param boolean $no_text if true no text (only icon) will be shown
+	 */
+	function printLangMenu($flag = false, $no_text = false);
 	
 }

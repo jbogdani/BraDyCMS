@@ -24,6 +24,7 @@ $_lang['article_error'] = 'Errore nel visualizzare l\'articolo richesto';
 $_lang['siblings_error'] = 'Errore nel visualizzare la lista degli articolo correlati';
 $_lang['search_error'] = 'Errore nel visualizzare i risultati della ricerca';
 $_lang['back'] = 'Indietro';
+$_lang['main_menu'] = 'Menu principale';
 
 
 

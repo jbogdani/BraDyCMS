@@ -365,6 +365,7 @@ class utils
 	public static function tr( $string, $esc = false )
 	{
 		global $_lang;
+		
 		$ret = $_lang[$string] ? $_lang[$string] : $string;
 		return $esc ? str_replace("'", "\'", $ret) : $ret;
 	}

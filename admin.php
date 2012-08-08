@@ -11,10 +11,22 @@ try
 	$root = './';
 
 	require_once $root . 'lib/globals.inc';
+	
+	$users_log = './sites/default/users.log';
+	
+	if (!file_exists($users_log))
+	{
+		$fh = @fopen($users_log, 'w');
+		@fclose($fh);
+	}
 
 	if(array_key_exists($_POST['username'], $cfg['users']) AND $cfg['users'][$_POST['username']] == $_POST['password'])
 	{
 		$_SESSION['user_confirmed'] = true;
+		
+		$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
+		
+		error_log('user:' . $_POST['username'] . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
 	}
 	else
 	{
@@ -28,6 +40,9 @@ try
 	{
 		$_SESSION['user_confirmed'] = false;
 		$log_message = 'out';
+		
+		error_log('user:' . $_POST['username'] . ' logged OUT on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . "\n", 3, $users_log);
+		
 	}
 	
 	utils::emptyTmp();

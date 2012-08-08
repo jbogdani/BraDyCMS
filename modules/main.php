@@ -5,7 +5,13 @@
  * @license			All rights reserved
  * @since			Oct 31, 2011
  */
+/*
+$sql = new makeDB();
 
+$a = $sql->buildSQL('qr', 'sqlite', 'all', 'en')->executeAll();
+
+echo '<textarea style="width:100%;height:300px">' . $sql->getSQL(true) . '</textarea>';
+*/
 ?>
 
 <article>

@@ -54,7 +54,7 @@ class ArticleRead extends Article{
 			. ' FROM `' . PREFIX . '__articles` WHERE '
 				. ' `id` <> ' . $id 
 				. ' AND '
-				. ' `section` = (SELECT `section` FROM `' . PREFIX . '__articles` WHERE `id`= ' . $id . ')'
+				. ' `section` = (SELECT section FROM `' . PREFIX . '__articles` WHERE `id`= ' . $id . ')'
 				. ' AND ' . $this->valid_art_stat()
 			. ' ORDER BY `sort`';
 
@@ -82,7 +82,7 @@ class ArticleRead extends Article{
 			. ' WHERE '
 				. " `{$main_tb}`.`id` <> " . $id 
 				. ' AND '
-				. ' `section` = (SELECT `section` FROM `' . PREFIX . '__articles` WHERE `' . PREFIX . '__articles`.`id`= ' . $id . ')'
+				. ' `section` = (SELECT section FROM `' . PREFIX . '__articles` WHERE `' . PREFIX . '__articles`.`id`= ' . $id . ')'
 				. ' AND ' . $this->valid_art_stat()
 			. ' ORDER BY `sort`';
 			$res = $this->executeQuery($statement, false, 'read');
@@ -178,7 +178,7 @@ class ArticleRead extends Article{
 	public function get_articles_by_section ( $section )
 	{
 
-		$query = 'SELECT `id`, `title`, `text_id`, `summary` '
+		$query = 'SELECT id, title, text_id, summary '
 		. 'FROM `' . PREFIX . '__articles` '
 		. " WHERE `section` = '" . $section . "' ";
 
@@ -204,7 +204,7 @@ class ArticleRead extends Article{
 	 */
 	public function get_used_sections(){
 
-		$query = "SELECT `section` FROM `" . PREFIX . "__articles` WHERE 1 GROUP BY ( `section` ) ORDER BY `section`";
+		$query = "SELECT section FROM `" . PREFIX . "__articles` WHERE 1 GROUP BY ( `section` ) ORDER BY `section`";
 
 		$arr = $this->executeQuery($query, false, 'read');
 

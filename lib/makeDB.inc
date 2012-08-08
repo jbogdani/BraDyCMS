@@ -8,147 +8,230 @@
 
 class makeDB
 {
+	private $sql, $driver;
+	
+	private function getArticlesFields()
+	{
+		$fields = array(
+			//field_name => array(0-type, 1-length, 2-is_null? 3-default 4-is_autoincrement? 5-is_primary)
+			'id'		=> array( 'INTEGER', false, false, false, true, true),
+			'title'		=> array('varchar', 255),
+			'text_id'	=> array('varchar', 100),
+			'sort'		=> array('int', 11),
+			'summary'	=> array('varchar', 255),
+			'text'		=> array('longtext'),
+			'keywords'	=> array('varchar', 255),
+			'author'	=> array('varchar', 200),
+			'status'	=> array('tinyint', 1),
+			'section'	=> array('varchar', 100),
+			'created'	=> array('date'),
+			'publish_on'=> array('date'),
+			'expires'	=> array('date'),
+			'expires'	=> array('date'),
+			'updated'	=> array('timestamp', false, false, 'CURRENT_TIMESTAMP')
+		);
+		return $fields;
+	}
+	
+	private function getTraslationArticleFields()
+	{
+		$fields = array(
+			'id'		=> array( 'INTEGER', false, false, false, true, true),
+			'id_art'	=> array('int', 11),
+			'translated'=> array('int', 1),
+			'title'		=> array('varchar', 255),
+			'summary'	=> array('varchar', 255),
+			'text'		=> array('longtext'),
+			'keywords'	=> array('varchar', 255)
+		);
+		return $fields;
+	}
+	
+	private function getMenuFields()
+	{
+		$fields = array(
+			//field_name => array(type, length, is_null? default is_autoincrement?)
+			'id'		=> array( 'INTEGER', false, false, false, true, true),
+			'item'		=> array('varchar', 100),
+			'href'		=> array('varchar', 255),
+			'target'	=> array('varchar', 20),
+			'title'		=> array('varchar', 200),
+			'menu'		=> array('varchar', 100),
+			'sort'		=> array('int', 11),
+			'subof'		=> array('int', 11, true)
+		);
+		return $fields;
+	}
+	
+	private function getTranslationMenuFields()
+	{
+		$fields = array(
+			'id'		=> array( 'INTEGER', false, false, false, true, true),
+			'id_menu'	=> array('int', 11),
+			'translated'=> array('int', 1),
+			'item'		=> array('varchar', 100),
+			'title'		=> array('varchar', 200)
+		);
+		return $fields;
+	}
+	
 	/**
 	 * 
-	 * Returns SQL test for mysql tables
-	 * @param string $prefix	tables prefix
-	 * @param array $lang		language array
+	 * Builds array of sql statement
+	 * Returns main object (chainable)
+	 * @param string $prefix		tables' prefix
+	 * @param string $driver		one of: mysql || sqlite
+	 * @param string $table			one of: all || article || translation_article || menu || translation_menu
+	 * @param string $lang			translation language
 	 */
-	public function make_mysql($prefix, $lang = false)
+	public function buildSQL($prefix, $driver, $table, $lang = false)
 	{
-		$sql = <<<EOD
-			CREATE TABLE IF NOT EXISTS `"$prefix"__articles` (
-			  `id` int(10) NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) NOT NULL,
-			  `text_id` varchar(100) NOT NULL,
-			  `sort` int(11) NOT NULL,
-			  `summary` varchar(255) NOT NULL,
-			  `text` longtext NOT NULL,
-			  `keywords` varchar(255) NOT NULL,
-			  `author` varchar(200) NOT NULL,
-			  `status` tinyint(1) NOT NULL,
-			  `section` varchar(100) NOT NULL,
-			  `created` date NOT NULL,
-			  `publish_on` date NOT NULL,
-			  `expires` date NOT NULL,
-			  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY (`id`),
-			UNIQUE KEY `text_id_no_dupl` (`text_id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
-
-
-			CREATE TABLE IF NOT EXISTS `"$prefix"__menu` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `item` varchar(100) NOT NULL,
-			  `href` varchar(255) NOT NULL,
-			  `target` varchar(20) NOT NULL,
-			  `title` varchar(200) NOT NULL,
-			  `menu` varchar(100) NOT NULL,
-			  `sort` int(11) NOT NULL,
-			  `subof` int(11),
-			  `updated` int(1) NOT NULL DEFAULT 0
-			PRIMARY KEY (`id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
-EOD;
-
-		if ($lang AND is_array($lang))
-		{
-			foreach($lang as $l)
-			{
-				$sql .= <<<EOD
-					
-					CREATE TABLE IF NOT EXISTS `"$prefix"__articles_"$l"` (
-					  `id` int(10) NOT NULL AUTO_INCREMENT,
-					  `id_art` int(11) NOT NULL,
-					  `translated` tinyint(1) NOT NULL DEFAULT '1',
-					  `title` varchar(255) NOT NULL,
-					  `summary` varchar(255) NOT NULL,
-					  `text` longtext NOT NULL,
-					  `keywords` varchar(255) NOT NULL,
-					PRIMARY KEY (`id`),
-					UNIQUE KEY `id_art` (`id_art`)
-					) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
+		$this->driver = $driver;
 		
-					
-					CREATE TABLE IF NOT EXISTS `"$prefix"__menu_"$l"` (
-					  `id` int(11) NOT NULL AUTO_INCREMENT,
-					  `id_menu` int(11) NOT NULL,
-					  `translated` tinyint(1) NOT NULL DEFAULT '1',
-					  `item` varchar(100) NOT NULL,
-					  `title` varchar(2200) NOT NULL,
-					PRIMARY KEY (`id`),
-					UNIQUE KEY `id_menu` (`id_menu`)
-					) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
-EOD;
+		switch($table)
+		{
+			case 'all':
+				$tb['articles'] = $this->getArticlesFields();
+				$tb['menu'] = $this->getMenuFields();
+				
+				if ($lang)
+				{
+					$tb['articles_' . $lang] = $this->getTraslationArticleFields();
+					$tb['menu_' . $lang] = $this->getTranslationMenuFields();
+				}
+				break;
+			
+			case 'article':
+				$tb['articles'] = $this->getArticlesFields();
+				break;
+				
+			case 'menu':
+				$tb['menu'] = $this->getMenuFields();
+				break;
+				
+			case 'translation_article':
+				if ($lang)
+				{
+					$tb['articles_' . $lang] = $this->getTraslationArticleFields();
+				}
+				break;
+				
+			case 'translation_menu':
+				if ($lang)
+				{
+					$tb['menu_' . $lang] = $this->getTranslationMenuFields();	
+				}
+				break;
+		}
+		
+		if (is_array($tb))
+		{
+			foreach ($tb as $tb_name => $tb_fields)
+			{
+				switch($driver)
+				{
+					case 'mysql':
+						$sql_fields = array();
+						foreach ($tb_fields as $name => $details)
+						{
+							//field_name => array(0-type, 1-length, 2-is_null? 3-default 4-is_autoincrement? 5-is_primary)
+							$sql_fields[] = '`' . $name . '` ' 
+								. $details[0] 
+								. ($details[1] ? '(' . $details[1] . ') ' : ' ')
+								. ($details[2] ? ' NULL ' : ' NOT NULL ')
+								. ($details[4] ? ' AUTO_INCREMENT ' : '')
+								. ($details[5] ? ' PRIMARY KEY ' : '')
+								. ($details[3] ? ' DEFAULT ' . $details[3] . ' ' : '');
+						}
+						$sql[] = 'CREATE TABLE `' . $prefix . '__' . $tb_name. "` (\n" . implode(", \n", $sql_fields) . "\n) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0;";
+						break;
+						
+					case 'sqlite':
+						$sql_fields = array();
+						foreach ($tb_fields as $name => $details)
+						{
+							$sql_fields[] = $name . ' ' 
+								. $details[0] 
+								. ($details[1] ? '(' . $details[1] . ')' : '')
+								. ($details[5] ? ' PRIMARY KEY' : '')
+								. ($details[3] ? ' DEFAULT ' . $details[3] : '');
+						}
+						$sql[]= 'CREATE TABLE ' . $prefix . '__' . $tb_name. " (\n" . implode(", \n", $sql_fields) . "\n);";
+						break;
+				}
 			}
+			$this->sql = $sql;
+			
+			return $this;
 		}
 	}
 	
 	/**
 	 * 
-	 * Returns SQL test for sqlite tables
-	 * @param string $prefix	tables prefix
-	 * @param array $lang		language array
+	 * Returns sql statement as array or as string
+	 * @param boolean $as_string	if true an imploded string will be returned
 	 */
-	public function make_sqlite($prefix, $lang)
+	public function getSQL($as_string = false)
 	{
-		$sql = <<<EOD
-			CREATE TABLE "$prefix"__articles	(
-				id INTEGER PRIMARY KEY AUTOINCREMENT, 
-				title varchar(255), 
-				text_id varchar(100) UNIQUE, 
-				sort int(11), 
-				summary varchar(255), 
-				text longtext, 
-				keywords varchar(255), 
-				author varchar(200), 
-				status tinyint(1), 
-				section varchar(100), 
-				created date, 
-				publish_on date, 
-				expires date, 
-				updated timestamp DEFAULT CURRENT_TIMESTAMP
-			);
-
-		CREATE TABLE "$prefix"__menu (
-				id INTEGER PRIMARY KEY AUTOINCREMENT, 
-				item varchar(100), 
-				href varchar(255), 
-				target varchar(20), 
-				title varchar(200), 
-				menu varchar(100), 
-				sort int(11), 
-				subof int(11) DEFAULT(NULL),
-				updated int(1) DEFAULT(0)
-			);
-EOD;
-		if ($lang AND is_array($lang))
+		if (!$this->sql OR !is_array($this->sql))
 		{
-			foreach($lang as $l)
-			{
-				$sql .= <<<EOD
-				CREATE TABLE "$prefix"__articles_"$l" (
-					id INTEGER PRIMARY KEY, 
-					id_art int(11) UNIQUE, 
-					translated tinyint(1), 
-					title varchar(255), 
-					summary varchar(255), 
-					text longtext, 
-					keywords varchar(255)
-				);
-				
-				CREATE TABLE "$prefix"__menu_"$l" (
-					id INTEGER PRIMARY KEY, 
-					id_menu int(11), 
-					translated tinyint(1), 
-					item varchar(100), 
-					title varchar(200)
-				);
-EOD;
-			}
+			return false;
 		}
-		return $sql;
+		
+		return $as_string ? implode("\n\n", $this->sql) : $this->sql;
 	}
+	
+	public function executeAll()
+	{
+		if (!$this->sql OR !is_array($this->sql))
+		{
+			return false;
+		}
+		
+		switch($this->driver)
+		{
+			case 'sqlite':
+				return $this->createSqlite();
+				break;
+				
+			case 'mysql':
+				return $this->createMysql();
+				break;
+				
+			default:
+				return false;
+				break;
+				
+		}
+	}
+	
+	private function createMysql()
+	{
+		// TODO: finire!
+		return $this->getSQL(true);
+	}
+	/**
+	 * 
+	 * Creates a new sql database, named tmp.sql with table structure
+	 */
+	private function createSqlite()
+	{
+		$pdo = new PDO('sqlite:' . ROOT . 'sites/default/cfg/tmp.sqlite' , false, false, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+		
+		$pdo->beginTransaction();
+		
+		foreach($this->sql as $query)
+		{
+			$stmt = $pdo->prepare($query);
+			$ret[] = $stmt->execute();	
+		}
+		
+		$pdo->commit();
+		
+		return $ret;
+			
+	}
+
 }
 
 

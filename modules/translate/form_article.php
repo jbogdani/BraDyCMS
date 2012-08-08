@@ -14,6 +14,7 @@ $res = $trans->get_translation('article', $_GET['id'], $_GET['lang']);
 $res = $res[0];
 
 if ($res):
+$uid = str_replace('.', '', microtime(1));
 ?>
 <form action="javascript:void(0)" id="translate_art">
 	<table style="width: 100%;">
@@ -61,7 +62,7 @@ if ($res):
 				<td class="tb"><button class="copy" type="button">&gt;&gt;</button>
 				</td>
 				<td class="tb"><textarea style="width: 100%; height: 200px;"
-						name="summary">
+						name="summary" id="summary<?php echo $uid; ?>">
 						<?php echo $res['t_summary'];?>
 					</textarea></td>
 			</tr>
@@ -71,7 +72,7 @@ if ($res):
 				<td class="tb"><button class="copy" type="button">&gt;&gt;</button>
 				</td>
 				<td class="tb"><textarea style="width: 100%; height: 500px;"
-						name="text">
+						name="text" id="text<?php echo $uid; ?>">
 						<?php echo $res['t_text'];?>
 					</textarea></td>
 			</tr>
@@ -100,7 +101,10 @@ $('#translate_art').submit(function(){
 		);
 });
 
-tinymce_load('#translate_art textarea');
+tinyMCE.execCommand("mceAddControl", true, "summary<?php echo $uid; ?>");
+tinyMCE.execCommand("mceAddControl", true, "text<?php echo $uid; ?>");
+
+
 
 $('td.tb, th.tb')
 	.attr('valign', 'top')
@@ -109,7 +113,10 @@ $('td.tb, th.tb')
 	
 $('button').button();
 
+<?php //TODO: i bottoni non funczionano più con tinymce!!! ?>
 $('button.copy').click(function(){
+
+	console.log($(this).parent().next().find(':input'));
 	$(this).parent().next().find(':input').val($(this).parent().prev().html());
 });
 //-->

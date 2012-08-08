@@ -608,7 +608,7 @@ class publicHtml extends ArticleRead implements frontend
 	 * (non-PHPdoc)
 	 * @see frontend::printLangSelect()
 	 */
-	public function printLangSelect($text = false)
+	public function printLangSelect($text = false, $button = false)
 	{
 		$html = '';
 
@@ -641,6 +641,7 @@ class publicHtml extends ArticleRead implements frontend
 		foreach ($lang_arr as $code=>$string)
 		{
 			$html .= '<a '
+				. ( $button ? ' data-role="button"' : '' )
 				. ' data-ajax="false" '
 				. ' href="' . $this->format_link($href . $code) . '" '
 				. ' title="' . $string. '"><img src="./css/flags/' . $code . '.png" '
@@ -651,6 +652,75 @@ class publicHtml extends ArticleRead implements frontend
 		}
 		$html .= '</div>';
 
+		echo $html;
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see frontend::printLangMenu()
+	 */
+	public function printLangMenu($flag = false, $no_text = false)
+	{
+		
+		$html = '';
+	
+		foreach ($_GET as $k=>$v)
+		{
+			if ($k != 'lang')
+			{
+				$str[] = $k . '=' .$v;
+			}
+		}
+		if (is_array($str))
+		{
+			$href = './?' . implode('&', $str) . '&lang=';
+		}
+		else
+		{
+			$href = './?lang=';
+		}
+	
+		$lang_arr = array($this->cfg['sys_lang']=>$this->cfg['sys_lang_string']);
+	
+	
+		foreach ($this->cfg['languages'] as $k=>$v)
+		{
+			$lang_arr[$k] = $v;
+		}
+	
+		$html = '<ul class="menu lang">';
+	
+		foreach ($lang_arr as $code=>$string)
+		{
+			$flag_html = '<img src="./css/flags/' . $code . '.png"  alt="' . $string . '"  /> ';
+			
+			$html .= '<li><a '
+			. ( $button ? ' data-role="button"' : '' )
+			. ' data-ajax="false" '
+			. ' href="' . $this->format_link($href . $code) . '" '
+			. ' title="' . $string. '">';
+			
+			if ($no_text)
+			{
+				$html .= $flag_html;
+			}
+			else if (!$flag)
+			{
+				$html .= $string;
+			}
+			else if ($flag == 'left')
+			{
+				$html .= $flag_html . ' ' . $string;
+			}
+			else if ($flag == 'right')
+			{
+				$html .= $string . ' ' . $flag_html;
+			}
+			
+			$html .= '</a></li>';
+		}
+		$html .= '</ul>';
+	
 		echo $html;
 	}
 

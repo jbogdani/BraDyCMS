@@ -10,7 +10,7 @@ class version
 {
 	private function parse()
 	{
-		$va = @parse_ini_file('version', 1);
+		$va = parse_ini_file('version', 1);
 		if (!$va)
 		{
 			throw new MyExc('Non è stato possibile processare il file version in ' . __FILE__ . ', ' . __LINE__);

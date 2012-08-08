@@ -11,7 +11,7 @@ $_lang['read_more'] = 'read more....';
 $_lang['from_same_section'] = 'More articles in this section';
 $_lang['no_articles_in_section'] = 'No article found in this section';
 $_lang['article_does_not_exist'] = 'Sorry, the requested article does not exist';
-$_lang['search'] = 'search...';
+$_lang['search_site'] = 'search...';
 $_lang['no_result_for_query'] = 'Sorry, the search for `<mark>%s</mark>` did not produce any result!';
 $_lang['x_results_for_query'] = 'The word(s) `<mark>%s</mark>` was found in the following %s articles:';
 $_lang['search'] = 'search';
@@ -23,6 +23,8 @@ $_lang['section_list_error'] = 'Error in showing the articoles of section <stron
 $_lang['article_error'] = 'Error in showing the requested article';
 $_lang['siblings_error'] = 'Error in showing the list of related articles';
 $_lang['search_error'] = 'Error in showing the query results';
+$_lang['back'] = 'Back';
+$_lang['main_menu'] = 'Main menu';
 
 
 

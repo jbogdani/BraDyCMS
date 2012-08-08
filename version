@@ -1,10 +1,13 @@
-# TODO
-# delete all referencec for id:(int); articles are retrieved only by text_id, not by numeric id!
-# 		deletefrom .htaccess
-#		delete from rewrite links system
-#		delete from ArticleRead
-#		delete from other source
+; TODO
+; delete all referencec for id:(int); articles are retrieved only by text_id, not by numeric id!
+; 		deletefrom .htaccess
+;		delete from rewrite links system
+;		delete from ArticleRead
+;		delete from other source
 
+2.5[] = "Added user access registry log (I/O)"
+2.5[] = "Added language: Albanian (al)"
+2.5[] = "New method: frontend::printLangMenu() to print language selector as a menu"
 2.4[] = "Added mobile theme support using jquerymobile"
 2.3[] = "Solved problem with tiny_mce in sites located in subfolders"
 2.3[] = "GUI enhanced: new icons (functions) in article list"
@@ -22,15 +25,15 @@
 2.1[] = "Added fancybox support"
 2.0[] = "SQLite support"
 2.0[] = "Sub menu support"
-# DB CHANGES:
-#		article.order > article.sort
-#		menu.order	  >	menu.sort
-#		article_{lang}.to_update	> article_{lang}.translated 
-#		menu_{lang}.to_update	> menu_{lang}.translated
-#		add: menu.subof int(11) DEFAULT(null)
-# API changes
-#		class selected in menu items is applied to <li> not to <a> element
-#		publicHtml::printLangSelelect() changed in publicHtml::printLangSelect()
+; DB CHANGES:
+;		article.order > article.sort
+;		menu.order	  >	menu.sort
+;		article_{lang}.to_update	> article_{lang}.translated 
+;		menu_{lang}.to_update	> menu_{lang}.translated
+;		add: menu.subof int(11) DEFAULT(null)
+; API changes
+;		class selected in menu items is applied to <li> not to <a> element
+;		publicHtml::printLangSelelect() changed in publicHtml::printLangSelect()
 
 1.7[] = "Cambiata struttura del changelog"
 1.7[] = "Aggiunto indicatore di caricamento generale"

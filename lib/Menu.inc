@@ -131,7 +131,7 @@ class Menu extends DB
 	 */
 	public function getList()
 	{
-		$query = "SELECT `menu` FROM `" . PREFIX . "__menu` WHERE 1 GROUP BY (`menu`) ORDER BY `menu`";
+		$query = "SELECT menu FROM `" . PREFIX . "__menu` WHERE 1 GROUP BY (`menu`) ORDER BY `menu`";
 
 		$res = $this->executeQuery($query, false, 'read');
 

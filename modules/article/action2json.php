@@ -32,8 +32,8 @@ try
 
 			
 				
-			$out->type = 'success';
-			$out->text = "L'articolo è stato cancellato!";
+			$out['type'] = 'success';
+			$out['text'] = "L'articolo è stato cancellato!";
 			break;
 				
 		case 'edit':
@@ -51,9 +51,9 @@ try
 			}
 			
 				
-			$out->type = 'success';
-			$out->text = "L'articolo è stato salvato!";
-			$out->id = $_GET['id'];
+			$out['type'] = 'success';
+			$out['text'] = "L'articolo è stato salvato!";
+			$out['id'] = $_GET['id'];
 			break;
 				
 		case 'add':
@@ -64,7 +64,8 @@ try
 			
 			try
 			{
-				if (!$article_edit->add($_POST))
+				$id = $article_edit->add($_POST); 
+				if (!$id)
 				{
 					throw new MyExc("Errore! L'articolo non è stato salvato!");
 				}
@@ -75,9 +76,9 @@ try
 				throw new MyExc("Errore! L'articolo non è stato salvato!");
 			}
 				
-			$out->type = 'success';
-			$out->text = "L'articolo è stato salvato!";
-			$out->id = $res;
+			$out['type'] = 'success';
+			$out['text'] = "L'articolo è stato salvato!";
+			$out['id'] = $id;
 			break;
 				
 		default:
@@ -88,7 +89,7 @@ try
 }
 catch (MyExc $e)
 {
-	$out->type = 'error';
-	$out->text = $e->getMessage();
+	$out['type'] = 'error';
+	$out['text'] = $e->getMessage();
 	echo json_encode($out);
 }

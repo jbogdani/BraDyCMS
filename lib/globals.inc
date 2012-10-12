@@ -5,7 +5,7 @@
  * @license			All rights reserved
  * @since			05/mar/2011
  */
-if (!$root)
+if (@!$root)
 {
 	$root = './';
 }

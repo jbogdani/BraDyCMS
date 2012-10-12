@@ -45,7 +45,7 @@ switch($_GET['log_message'])
 }
 -->
 </style>
-<form action="./admin.php" method="post" id="loginform"
+<form action="./admin" method="post" id="loginform"
 	style="margin: 20px 0;">
 	<input placeholder="username..." name="username" type="text" /> <input
 		placeholder="password..." name="password" type="password" />

@@ -31,8 +31,6 @@ if (preg_match('/sites\/default\/images\/\.\./', $upload_dir) ) {
 	$upload_dir = './sites/default/images/';
 }
 
-$handle = @opendir($upload_dir);
-
 $path_arr = explode('/', preg_replace("/^\.\/sites\/default\/images\/?/", null, $upload_dir));
 
 $path = '';
@@ -75,50 +73,70 @@ if ($path_arr[0])
 </script>
 
 <?php
-if ( $handle )
+$files = utils::dirContent($upload_dir);
+
+sort($files);
+
+foreach ($files as $file)
 {
-	while ( false !== ( $file = readdir ( $handle ) ) )
+	$html .= '<div class="img' . (is_file($upload_dir . '/'. $file ) ? ' draggable' : ' droppable') . '" data-path="' . $file . '">';
+	
+	if ( is_file($upload_dir . '/'. $file ) )
 	{
-		if ( $file != '.' && $file != '..' )
+		$ftype = utils::checkMimeExt($upload_dir . '/' . $file);
+	
+		if ($ftype[0] == 'image')
 		{
-			$html .= '<div class="img">';
-				
-			if ( is_file($upload_dir . '/'. $file ) )
-			{
-				$ftype = utils::checkMimeExt($upload_dir . '/' . $file);
-				
-				if ($ftype[0] == 'image')
-				{
-					$img_src = $upload_dir . '/' . $file;
-				}
-				else
-				{
-					$img_src = './css/ftype_icons/' . $ftype[1];
-				}
-				$html .= '<img src="' . $img_src .'" width="80px;" /><br />'
-				. 'url:<br />'
-				. '<input type="text" value="' . $upload_dir . '/'. $file .'" style="font-size:0.6em;" onfocus="this.select();" /><br />';
-			}
-			else
-			{
-				$html .= '<div onclick="menu.file.showall(\''. $upload_dir . '/' . $file .'\')">'
-				. '<img src="css/folder.png" />'
-				. '<p><strong>' . basename($file) . '</strong></p>'
-				. '</div>';
-			}
-				
-			$html .=''
-			. '<button onclick="menu.file.erase(\''. base64_encode($upload_dir . '/'. $file) .'\', \'' . $upload_dir . '\')"> cancella </button>'
-			. '</div>';
+			$img_src = $upload_dir . '/' . $file;
+			$html .= '<div class="ui-widget-header">'  . $file . '</div>';
 		}
+		else
+		{
+			$img_src = './css/ftype_icons/' . $ftype[1];
+		}
+		$html .= '<img src="' . $img_src .'" width="80px;" /><br />'
+		. 'url:<br />'
+		. '<input type="text" value="' . $upload_dir . '/'. $file .'" style="font-size:0.6em;" onfocus="this.select();" /><br />';
 	}
-	closedir($handle);
-
-	$html .= '<div style="clear:both;"></div>';
-
-	echo $html;
+	else
+	{
+		$html .= '<div onclick="menu.file.showall(\''. $upload_dir . '/' . $file .'\')">'
+		. '<img src="css/folder.png" />'
+		. '<p class="path"><strong>' . basename($file) . '</strong></p>'
+		. '</div>';
+	}
+	
+	$html .=''
+		. '<button onclick="menu.file.erase(\''. base64_encode($upload_dir . '/'. $file) .'\', \'' . $upload_dir . '\')"> cancella </button>'
+		. '</div>';
+	
 }
+
+$html .= '<div style="clear:both;"></div>';
+
+echo $html;
+
+
 ?>
 <script>
 $('button').button();
+$('div.draggable').draggable({revert:true});
+$('div.droppable').droppable({
+	accept: "div.draggable",
+    activeClass: "ui-state-highlight",
+    drop: function(event, ui){
+		$(this).addClass( "ui-state-highlight")
+		
+		var file = ui.draggable.data('path');
+		var newPath = $(this).data('path');
+
+		$.get('loader.php?obj=file_ctrl&method=move_file&param[]=<?php echo $upload_dir; ?>/' + file + '&param[]=<?php echo $upload_dir; ?>/' + newPath + '/' + file, function(data){
+			gui.message(data.text, data.status);
+			if (data.status == 'success'){
+				ui.draggable.remove();
+			}
+		},'json');
+		
+	}
+});
 </script>

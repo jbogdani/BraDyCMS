@@ -78,7 +78,7 @@ utils::js(array(
 	<script type="text/javascript">
 	tinyMCE.init({
 	    // General options
-	    mode : "none",
+	    mode : "exact",
 		theme : 'advanced',
 		plugins : 'pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist',
 

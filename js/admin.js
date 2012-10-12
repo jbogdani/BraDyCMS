@@ -1,4 +1,15 @@
 var gui = {
+		message: function(text, type, sticky){
+			
+			var opts = {
+					
+					type: ( type ? type : 'notice'),
+					text: text,
+					sticky: sticky
+			};
+			$().toastmessage('showToast', opts);
+		},
+		
 		loading : '<img src="../css/loader.gif"  alt="loading" />',
 		
 		openInTab: function(module, get, title){
@@ -114,7 +125,7 @@ menu = {
 			gui.openInTab('file/list', (upload_dir ? 'upload_dir=' + upload_dir : ''), 'Gestione file');
 		},
 		erase: function ( file, upload_dir ){
-			$('<div></div>')
+			$('<div />')
 			.html('<div class="ui-widget">'
 					+ '<div style="padding: 0 .7em;" class="ui-state-error ui-corner-all">'
 					+ '<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'
@@ -125,16 +136,15 @@ menu = {
 				modal:true,
 				buttons:{
 					Procedi: function(){
-						$.get('loader.php?nw=1&mod=file/erase&file=' + file,
-								function(data){
-									$().toastmessage('showToast', {text: data.text,type: data.type});
-									
-									if (data.type == 'success')
-										{
-										menu.file.showall(upload_dir);
-										}
-							},
-							'json');
+						$.get('loader.php?obj=file_ctrl&method=erase&param[]=' + file, function(data){
+							
+							gui.message(data.text, data.status);
+							
+							if (data.status == 'success'){
+								menu.file.showall(upload_dir);
+							}
+						},
+						'json');
 						$(this).dialog('close');
 					},
 					Annulla: function(){

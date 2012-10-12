@@ -8,7 +8,7 @@
 
 class version
 {
-	private function parse()
+	private static function parse()
 	{
 		$va = parse_ini_file('version', 1);
 		if (!$va)

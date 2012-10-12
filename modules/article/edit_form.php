@@ -109,37 +109,32 @@ $uid = str_replace('.', '', microtime(1));
 				<p>
 					Sommario<br />
 					<textarea name="summary" id="summary<?php echo $uid; ?>" rows="5"
-						style="width: 100%; height: 150;">
-						<?php echo $res['summary']; ?>
-					</textarea>
+						style="width: 100%; height: 150;"><?php echo $res['summary']; ?></textarea>
 				</p>
 				<p>
 					Testo articolo<br />
 					<textarea name="text" rows="20" style="width: 100%; height: 400;"
-						id="text<?php echo $uid; ?>">
-						<?php echo $res['text']; ?>
-					</textarea>
+						id="text<?php echo $uid; ?>"><?php echo $res['text']; ?></textarea>
 				</p>
 			</td>
 
 		</tr>
 	</table>
 
-
-
 	<button type="submit">Salva</button>
 	<button type="reset">Annulla</button>
 
 </form>
+
 <script type="text/javascript">
 	$('button').button();
 
 	$('input.date').datepicker({ dateFormat: 'yy-mm-dd' });
 
 	$( '#section' ).combobox();
-
-	tinyMCE.execCommand("mceAddControl", true, "summary<?php echo $uid; ?>");
-	tinyMCE.execCommand("mceAddControl", true, "text<?php echo $uid; ?>");
+	
+	tinyMCE.execCommand("mceAddControl", false, "summary<?php echo $uid; ?>");
+	tinyMCE.execCommand("mceAddControl", false, "text<?php echo $uid; ?>");
 	
 	$('#edit_form').submit( function(){
 
@@ -148,7 +143,8 @@ $uid = str_replace('.', '', microtime(1));
 		<?php else: ?>
 		var string = 'loader.php?nw=1&mod=article/action2json&a=add';		
 		<?php endif;?>
-		
+
+		tinyMCE.triggerSave();
 		
 		$.post(
 			string,
@@ -156,7 +152,6 @@ $uid = str_replace('.', '', microtime(1));
 			
 			function(data) {
 				$().toastmessage('showToast', {text: data.text,type: data.type});
-				
 				<?php if (!$id) :?>
 				if (data.type == 'success')
 					menu.article.form(data.id);

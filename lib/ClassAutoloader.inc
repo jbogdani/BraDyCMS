@@ -15,17 +15,40 @@ class ClassAutoloader
 	
 	private function loader($className)
 	{
-		if (file_exists('lib/class.' . $className . '.inc'))
+		if (class_exists($className))
 		{
-			require_once 'lib/class.' . $className . '.inc';
+			return true;
 		}
-		else if (file_exists('lib/' . $className . '.inc'))
+		
+		if (preg_match('/_ctrl/', $className))
 		{
-			require_once 'lib/' . $className . '.inc';
+			$mod = str_replace('_ctrl', null, $className);
+				
+			if(file_exists('modules/' . $mod . '/' . $mod . '.php'))
+			{
+				require_once 'modules/' . $mod . '/' . $mod . '.php';
+			}
+			else
+			{
+				return false;
+				//throw new myException('Error: Can not load class `' . $className . '` (file: ' . MOD_DIR . mod . '/' . $mod . '.php)');
+			}
 		}
 		else
 		{
-			throw new MyExc('Impossibile caricare la classe `' . $className . '`');
+			if (file_exists('lib/class.' . $className . '.inc'))
+			{
+				require_once 'lib/class.' . $className . '.inc';
+			}
+			else if (file_exists('lib/' . $className . '.inc'))
+			{
+				require_once 'lib/' . $className . '.inc';
+			}
+			else
+			{
+				return false;
+				//throw new MyExc('Impossibile caricare la classe `' . $className . '`');
+			}
 		}
 		
 	}

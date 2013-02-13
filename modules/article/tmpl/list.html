@@ -1,0 +1,80 @@
+<h1>{{ tr.get('manage_articles') }}</h1>
+
+<div class="btn-group" style="padding:20px 0;">
+	<a class="btn" href="#article/addNew" title="Aggiungi nuovo"><i class="icon-plus"></i> {{ tr.get('add_new_article') }}</a>
+	<a class="btn" href="#translate/article" title="Traduci"><i class="icon-globe"></i> {{ tr.get('translations') }}</a>
+	<a class="btn reload" title="Ricarica"><i class="icon-repeat"></i> {{ tr.get('reload') }}</a>
+</div>
+
+<table class="table table-striped table-bordered data_table">
+	<thead>
+		<tr>
+			<th>{{ tr.get('id') }}</th>
+			<th>{{ tr.get('title') }}</th>
+			<th>{{ tr.get('text_id') }}</th>
+			<th>{{ tr.get('status') }}</th>
+			<th>{{ tr.get('section') }}</th>
+			<th>{{ tr.get('sorting') }}</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+	{% for art in art_arr %}
+		<tr>
+			<td>{{ art.id }}</td>
+			<td>{{ art.title }}</td>
+			<td>{{ art.text_id }}</td>
+			<td>{{ art.status }}</td>
+			<td>{{ art.section }}</td>
+			<td>{{ art.sort }}</td>
+			<td><a href="#article/edit/{{ art.id }}" class="btn btn-primary">{{ tr.get('edit') }}</a></td>
+			<td><a href="#" class="btn btn-danger delete" data-id="{{ art.id }}">{{ tr.get('delete') }}</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+
+</table>
+
+<script>
+$('table.data_table').dataTable({
+	"iDisplayLength": 10,
+	"sPaginationType": "bootstrap",
+	"bDestroy": true
+});
+
+$('a.reload').click(function(){
+	admin.tabs.reloadActive();
+	return false;
+});
+
+$('a.delete').click(function(){
+	var $this = $(this);
+	admin.dialog({
+		title: '{{ tr.get('pay_attention_please') }}',
+		html: '{{ tr.get('confirm_delete_article') }}',
+		buttons:[
+		         {
+		        	 text: '{{ tr.get('close') }}',
+		        	 action: 'close'
+		         },
+		         {
+		        	 text: '{{ tr.get('delete') }}',
+		        	 addclass: 'btn-danger',
+		        	 action: 'close',
+		        	 click: function(){
+		        		 $.get('controller.php?obj=article_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
+		        			 admin.message(data.text, data.type);
+		        			 if (data.type == 'success'){
+		        				 
+		        				 admin.tabs.closeActive('article/all');
+		        			 }
+		        		 }, 'json')
+		        	 }
+		         }
+		         ]
+	});
+});
+</script>
+

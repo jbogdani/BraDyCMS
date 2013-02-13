@@ -1,0 +1,227 @@
+<h1>Template documentation</h1>
+
+<h2>class dressHtml</h2>
+<p class="lead">dressHtml functions return is build on the top <a href="#docs/tmpl/publicHtml">publicHtml</a> and returns ready to use, well formatted html.</p>
+
+<pre class="prettyprint">Template: {% raw %} {{ dress. }} {% endraw %}</pre>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th class="span2">Method</th>
+			<th class="span4">Return</th>
+			<th class="span6">Example</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th>metadata()</th>
+			<td>(string) Returns well-formatted html of page metadata</td>
+			<td>
+				<code>{% raw %}{{ dress.metadata() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;title&#62;Home Page&#60;/title&#62;
+&#60;meta name="description" content="Web sites main description" /&#62;
+&#60;meta name="keywords" content="home, page, keyword1, keyword2" /&#62;
+&#60;meta lang="en" /&#62;</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>menu('menuname', 'css_class_name')</th>
+			<td>(string) Returns well-formatted html of menu items</td>
+			<td>
+				<code>{% raw %}{{ dress.menu('main', 'nav') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;ul class="menu nav"&#62;
+  &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Home&#60;/a&#62;&#60;/li&#62;
+  &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Who we are&#60;/a&#62;&#60;/li&#62;
+  &#60;li class="menu-item dropdown"&#62;
+     &#60;a href="#" class="dropdown-toggle" data-toggle="dropdown"&#62;Portfolio&#60;/a&#62; &#60;b class="caret"&#62;&#60;/b&#62;
+   &#60;ul class="submenu dropdown-menu"&#62;
+    &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Web&#60;/a&#62;&#60;/li&#62;
+    &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Print&#60;/a&#62;&#60;/li&#62;
+  &#60;/ul&#62;
+  &#60;/li&#62;
+  &#60;li class="menu-item"&#62;&#60;a href="#" target="_blank"&#62;@Twitter&#60;/a&#62;&#60;/li&#62;
+ &#60;/ul&#62;</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>langMenu('flags', 'no_text')</th>
+			<td>(string) Returns well-formatted html of language menu
+			<p>If flags is true, flags icons will be shown</p>
+			<p>If not_text is true language text will not be shown</p>
+			<p>Current language li has class current</p></td>
+			<td>
+				<code>{% raw %}{{ dress.langMenu(true) }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;ul class="menu lang"&#62;
+  &#60;li class="current"&#62;
+  	&#60;a href="/it" data-ajax="false"&#62;$360;img src="./img/flags/it.png"  alt="italiano" /&#62; Italiano&#60;/a&#62;
+  &#60;/li&#62;
+  &#60;li&#62;
+  	&#60;a href="/en" data-ajax="false"&#62;$360;img src="./img/flags/en.png"  alt="english" /&#62; English&#60;/a&#62;
+  &#60;/li&#62;
+  &#60;li&#62;
+  	&#60;a href="/fr" data-ajax="false"&#62;$360;img src="./img/flags/fr.png"  alt="français" /&#62; Français&#60;/a&#62;
+  &#60;/li&#62;
+</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>searchForm()</th>
+			<td>(string) Returns well-formatted html of search form & input
+			<p>Form submission should be done with javascript:</p>
+			<pre class="prettyprint">$('#searchForm').submit(function(){
+  if($('#search').val() != '' ){
+    window.location = './search:' + $('#search').val();
+  }
+});</pre></td>
+			<td>
+				<code>{% raw %}{{ dress.searchForm() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;form action="javascript:void(0);" id="searchForm"&#62;
+  &#60;input class="search" type="search" placeholder="Search in web site" name="search" id="search" /&#62;
+&#60;/form&#62;</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>searchResults()</th>
+			<td>(string) Returns well-formatted html of list of articles found by search.
+			<p>THis function will return false if context is not search!</p></td>
+			<td>
+				<code>{% raw %}{{ dress.searchResults() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;h1&#62;10 articles found searching &#60;code&#62;web&#60;/code&#62;&#60;/h1&#62;
+&#60;section class="blog search"&#62;
+  &#60;article&#62;
+    &#60;h3&#62;&#60;a href="/en/web-design"&#62;Web design&#60;/a&#62;&#60;/h3&#62;
+    &#60;div class="content"&#62;
+      Some of our latest work on web design...
+    &#60;/div&#62;
+    &#60;div class="read_more"&#62;
+      &#60;a href="/en/web-design"&#62;Read more&#60;/a&#62;
+    &#60;/div&#62;
+  &#60;/article&#62;
+  
+  &#60;article&#62;
+    ...
+  &#60;/article&#62;
+  
+  ...
+&#60;/section&#62;
+</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>articleBody()</th>
+			<td>(string) Returns well-formatted html of article content.
+			<p>This function will return false if context is not article!</p></td>
+			<td>
+				<code>{% raw %}{{ dress.articleBody() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;section&#62;
+&#60;article&#62;
+  &#60;h1&#62;Web design&#60;/h1&#62;
+  &#60;div class="content"&#62;
+    Some of our latest work on web design...
+  &#60;/div&#62;
+&#60;/article&#62;
+&#60;/section&#62;
+</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>tagBlog(tag1, tag2, ...)</th>
+			<td>(string) Returns well-formatted html of list of articles found by tag search.
+			<p>If multiple tags are searched AND statement will be applied</p></td>
+			<td>
+				<code>{% raw %}{{ dress.tagBlog('web', 'latest') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;section class="blog tags"&#62;
+  &#60;article&#62;
+    &#60;h3&#62;&#60;a href="/en/web-design"&#62;Web design&#60;/a&#62;&#60;/h3&#62;
+    &#60;div class="content"&#62;
+      Some of our latest work on web design...
+    &#60;/div&#62;
+    &#60;div class="read_more"&#62;
+      &#60;a href="/en/web-design"&#62;Read more&#60;/a&#62;
+    &#60;/div&#62;
+  &#60;/article&#62;
+  
+  &#60;article&#62;
+    ...
+  &#60;/article&#62;
+  
+  ...
+&#60;/section&#62;
+</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>sectionBlog(section_name)</th>
+			<td>(string) Returns well-formatted html of list of section articles.
+			<p>This function will return false if context is not section!</p></td>
+			<td>
+				<code>{% raw %}{{ dress.sectionBlog('web') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;section class="blog section web"&#62;
+  &#60;article&#62;
+    &#60;h3&#62;&#60;a href="/en/web-design"&#62;Web design&#60;/a&#62;&#60;/h3&#62;
+    &#60;div class="content"&#62;
+      Some of our latest work on web design...
+    &#60;/div&#62;
+    &#60;div class="read_more"&#62;
+      &#60;a href="/en/web-design"&#62;Read more&#60;/a&#62;
+    &#60;/div&#62;
+  &#60;/article&#62;
+  
+  &#60;article&#62;
+    ...
+  &#60;/article&#62;
+  
+  ...
+&#60;/section&#62;
+</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>siblingsBlog()</th>
+			<td>(string) Returns well-formatted html of list of current article's siblings.
+			<p>This function will return false if context is not article!</p></td>
+			<td>
+				<code>{% raw %}{{ dress.siblingsBlog() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;section class="blog siblings"&#62;
+  &#60;article&#62;
+    &#60;h3&#62;&#60;a href="/en/web-design"&#62;Web design&#60;/a&#62;&#60;/h3&#62;
+    &#60;div class="content"&#62;
+      Some of our latest work on web design...
+    &#60;/div&#62;
+    &#60;div class="read_more"&#62;
+      &#60;a href="/en/web-design"&#62;Read more&#60;/a&#62;
+    &#60;/div&#62;
+  &#60;/article&#62;
+  
+  &#60;article&#62;
+    ...
+  &#60;/article&#62;
+  
+  ...
+&#60;/section&#62;
+</pre>
+			</td>
+		</tr>
+		
+	</tbody>
+</table>
+
+<script>window.prettyPrint && prettyPrint()</script>

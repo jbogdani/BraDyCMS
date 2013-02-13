@@ -1,0 +1,168 @@
+<h1>Template example</h1>
+<p>File: 
+<code>./sites/default/index.html</code></p>
+<pre class="prettyprint">
+{% raw %}
+&#60;!DOCTYPE html &#62;
+&#60;html&#62;
+&#60;head&#62;
+  &#60;meta http-equiv="content-type" content="text/html; charset=utf-8" /&#62;
+  &#60;meta name="robots" content="index, follow" /&#62;
+  
+  &#60;!-- Print metadata --&#62;
+  {{ dress.metadata|raw }}
+  
+  &#60;link rel="shortcut icon" href="./sites/default/css/favicon.ico"&#62;
+  
+  &#60;link href="./css/bootstrap.min.css" rel="stylesheet" /&#62;
+  &#60;link rel="stylesheet" href="./sites/default/css/styles.css" type="text/css" /&#62;
+  &#60;!-- HTML5 shim, for IE6-8 support of HTML5 elements --&#62;
+  &#60;!--[if lt IE 9]&#62;
+  &#60;script src="http://html5shim.googlecode.com/svn/trunk/html5.js"&#62;&#60;/script&#62;
+  &#60;![endif]--&#62;
+&#60;/head&#62;
+
+&#60;body&#62;
+  &#60;div&#62;
+  
+  &#60;!-- HEADER START --&#62;
+    &#60;header&#62;
+      &#60;div class="container"&#62;
+        &#60;div&#62;
+          &#60;h1&#62;E-REVIEW&#60;/h1&#62;
+          &#60;p class="lead"&#62;Rivista Degli Istituti Storici dell'Emilia-Romagna in Rete&#60;/p&#62;
+        &#60;/div&#62;
+      &#60;/div&#62;
+    &#60;/header&#62; &#60;!-- end of header--&#62;
+    
+    &#60;!-- MAIN MENU START --&#62;
+    &#60;div class="container"&#62;
+      &#60;div class="navbar"&#62;
+        &#60;div class="navbar-inner"&#62;
+          &#60;div class="container"&#62;
+            &#60;div class="nav"&#62;
+              {{ dress.menu('main', 'nav')|raw }}
+            &#60;/div&#62;&#60;!--/.nav-collapse --&#62;
+          &#60;/div&#62;
+        &#60;/div&#62;
+      &#60;/div&#62;
+    &#60;/div&#62;&#60;!-- end of main menu --&#62;
+    
+    
+    &#60;!-- MAIN BODY START --&#62;
+    &#60;div class="body container"&#62;
+    
+      &#60;!-- Two columns layout --&#62;
+      &#60;div class="row"&#62;
+      
+      &#60;!-- 1. Context is HOME --&#62;
+      {% if html.getContext == 'home' %}
+        &#60;div class="span9"&#62;
+          &#60;div class="carousel slide" id="carousel"&#62;
+            &#60;div class="carousel-inner"&#62;
+            {% for art in html.getArticlesByTag('carousel', 'home') %}
+              &#60;div class="item{% if loop.index == 1%} active{% endif %}"&#62;
+                &#60;img src="sites/default/images/articles/carousel/{{ art.id }}.jpg" /&#62;
+                &#60;div class="carousel-caption"&#62;
+                  &#60;h4&#62;&#60;a href="{{ art.link }}" title="{{ art.title }}"&#62;{{ art.title }}&#60;/a&#62;&#60;/h4&#62;
+                  {{ art.summary|raw }}
+                &#60;/div&#62;
+              &#60;/div&#62;
+            {% endfor %}
+            &#60;/div&#62;
+            &#60;a class="carousel-control left" href="#carousel" data-slide="prev"&#62;&lsaquo;&#60;/a&#62;
+            &#60;a class="carousel-control right" href="#carousel" data-slide="next"&#62;&rsaquo;&#60;/a&#62;
+          &#60;/div&#62;&#60;!-- end of carousel --&#62;
+          
+          
+          &#60;h1 style="text-align:center;"&#62;Etiam ornare pretium tristique&#60;/h1&#62;
+          
+          &#60;div class="media"&#62;
+            {% for art in html.getArticlesByTag('evidence') %}
+              &#60;div class="media-body"&#62;
+                &#60;img src="./sites/default/images/articles/thumb/{{ art.text_id }}.jpg" alt="{{ art.title }}" class="thumbnail pull-left" /&#62;
+                &#60;h4&#62;&#60;a href="{{ art.link }}"&#62;{{ art.title }}&#60;/a&#62;&#60;/h4&#62;
+                {{ art.summary|raw }}
+              &#60;/div&#62;
+              &#60;hr /&#62;
+            {% endfor %}
+          &#60;/div&#62;
+        &#60;/div&#62;&#60;!-- end of big column --&#62;
+        
+        &#60;div class="span3"&#62;
+          {% for art in html.getArticlesByTag('left') %}
+          &#60;div class="thumbnail media"&#62;
+            &#60;p&#62;&#60;strong&#62;{{ art.section|capitalize }}&#60;/strong&#62;&#60;/p&#62;
+            &#60;img src=".sites/default/images/articles/small/{{ art.text_id }}.jpg" alt="{{ art.title }}" /&#62;
+            &#60;div class="caption"&#62;
+              &#60;a href="{{ art.link }}"&#62;{{ art.summary|raw }}&#60;/a&#62;
+            &#60;/div&#62;
+          &#60;/div&#62;
+          {% endfor %}
+        &#60;/div&#62; &#60;!-- end of small column --&#62;
+        
+      &#60;!-- end context home --&#62;
+        
+      &#60;!-- 2. Context is ARTICLE --&#62;
+      {% elseif html.getContext == 'article' %}
+        &#60;div class="span9"&#62;
+          {{ dress.articleBody|raw }}
+        &#60;/div&#62;
+        
+        &#60;div class="span3"&#62;
+          &#60;div class="well"&#62;
+            &#60;dl&#62;
+              &#60;dt&#62;Sezione&#60;/dt&#62;
+              &#60;dd&#62;{{ html.getArticle('section')|capitalize }}&#60;/dd&#62;
+              &#60;dt&#62;Data pubblicazione&#60;/dt&#62;
+              &#60;dd&#62;{{ html.getArticle('publish_on') }}&#60;/dd&#62;
+              &#60;dt&#62;In breve&#60;/dt&#62;
+              &#60;dd&#62;{{ html.getArticle('summary')|raw }}&#60;/dd&#62;
+              
+              &#60;dt&#62;Tags&#60;/dt&#62;
+              &#60;dd&#62;&#60;code&#62;{{ html.getArticle('tags') }}&#60;/code&#62;&#60;/dd&#62;
+            &#60;/dl&#62;
+            &#60;/div&#62;
+        &#60;/div&#62;
+      &#60;/div&#62;&#60;!-- end of home-row --&#62;
+        
+        &#60;!-- 2. Context is SECTION --&#62;
+      {% elseif html.getContext == 'section' %}
+        {{ dress.sectionBlog|raw }}
+      
+      &#60;!-- 2. Context is SEARCH --&#62;
+      {% elseif html.getContext == 'search' %}
+        {{ dress.searchResults|raw }}
+      {% endif %}
+    &#60;/div&#62;
+  &#60;/div&#62; &#60;!-- Main body end --&#62;
+  
+  
+  &#60;!-- FOOTER START --&#62;
+  &#60;footer&#62;
+    &#60;div class="container"&#62;
+      &#60;p class="lead"&#62;Lorem ipsum dolor sit amet, consectetur adipiscing elit&#60;/p&#62;
+      {{ dress.menu('foot', 'inline')|raw }}
+      &#60;p&#62;Powered by &#60;a href="http://bradypus.net" target="_blank"&#62;BraDypUS &#60;small&#62;COMMUNICATING CULTURAL HERITAGE&#60;/small&#62;&#60;/a&#62;&#60;/p&#62;
+    &#60;/div&#62;
+  &#60;/footer&#62;&#60;!-- Footer end --&#62;
+
+  &#60;script src="./js/jquery-1.8.3.min.js"&#62;&#60;/script&#62;
+  &#60;script src="./js/bootstrap.min.js"&#62;&#60;/script&#62;
+  
+  &#60;!-- Search form submission script --&#62;
+  &#60;script &#62;
+    (function(){
+      $('#searchForm').submit(function(){
+        if($('#search').val() != '' ){
+          window.location = './search:' + $('#search').val();
+        }
+      });
+  })();
+  &#60;/script&#62;
+&#60;/body&#62;
+&#60;/html&#62;
+{% endraw %}
+</pre>
+
+<script>window.prettyPrint && prettyPrint()</script>

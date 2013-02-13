@@ -1,0 +1,98 @@
+<form action="javascript:void(0)" id="translate_art{{ uid }}">
+	<table style="width: 100%;" class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th style="width: 100px;"></th>
+				<th style="width: 300px;">Original</th>
+				<th style="width: 50px;">&nbsp;</th>
+				<th>Translation</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr>
+				<th class="tb">Status</th>
+				<td class="tb">&nbsp;</td>
+				<td class="tb">&nbsp;</td>
+				<td class="tb"><select name="translated">
+					<option value="1" {% if data.t_translated == 1%} selected="true" {% endif %}>translated</option>
+					<option value="0" {% if data.t_translated == 0 %} selected="true" {% endif %}>not translated</option>
+				</select></td>
+			</tr>
+			<tr>
+				<th class="tb">ID</th>
+				<td colspan="2" class="tb">{{ data.o_id }}</td>
+				<td class="tb">{% if data.t_id %}<input type="text" name="id" value="{{ data.t_id }}" readonly="true" />{% endif %}</td>
+			</tr>
+			<tr>
+				<th class="tb">Titolo</th>
+				<td class="tb">{{ data.o_title }}</td>
+				<td class="tb"><button class="btn copy" type="button">&gt;&gt;</button></td>
+				<td class="tb"><input type="text" name="title" value="{{ data.t_title }}" style="width:90%" /></td>
+			</tr>
+			<tr>
+				<th class="tb">Parole chiave</th>
+				<td class="tb">{{ data.o_keywords|raw }}</td>
+				<td class="tb"><button class="btn copy" type="button">&gt;&gt;</button>
+				</td>
+				<td class="tb"><input type="text" name="keywords" value="{{ data.t_keywords }}" style="width:90%" /></td>
+			</tr>
+			<tr>
+				<th class="tb">Sommario</th>
+				<td class="tb">{{ data.o_summary|raw }}</td>
+				<td class="tb"><button class="btn copy" type="button">&gt;&gt;</button></td>
+				<td class="tb"><textarea class="tiny" style="width: 100%; height: 200px;" 
+					name="summary" id="summary{{ uid }}">{{ data.t_summary }}</textarea></td>
+			</tr>
+			<tr>
+				<th class="tb">Testo</th>
+				<td class="tb">{{ o_text|raw }}</td>
+				<td class="tb"><button class="btn copy" type="button">&gt;&gt;</button></td>
+				<td class="tb"><textarea class="tiny" style="width: 100%; height: 500px;"
+						name="text" id="text{{ uid }}">{{data.t_text }}</textarea></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>
+		<button type="submit" class="btn btn-success">{{ tr.get('save') }}</button>
+		<button type="reset" class="btn">{{ tr.get('reset') }}</button>
+	</p>
+</form>
+<script type="text/javascript">
+<!--
+$('#translate_art{{ uid }}').submit(function(){
+	
+	tinyMCE.triggerSave();
+	
+	$.post(
+			'controller.php?obj=translate_ctrl&method=save&param[]=article&param[]={{ lang }}&param[]={{ data.o_id }}',
+			$('#translate_art{{ uid }}').serialize(),
+			function(data){
+				admin.message(data.text, data.type);
+				{% if data.t_id == false %}
+				admin.tabs.closeActive('translate/article/{{ data.o_id }}/{{ lang }}');
+				{% endif %}
+			},
+			'json'
+		);	
+});
+
+tinyMCE.execCommand("mceAddControl", true, "summary{{ uid }}");
+tinyMCE.execCommand("mceAddControl", true, "text{{ uid }}");
+
+
+
+
+$('button.copy').click(function(){
+	var text = $(this).parent('td').prev('td').html()
+	input = $(this).parent('td').next().find(':input');
+
+	if (input.hasClass('tiny')){
+		tinyMCE.get(input.attr('id')).setContent(text);
+	} else {
+		input.val(text);
+	}
+});
+//-->
+</script>

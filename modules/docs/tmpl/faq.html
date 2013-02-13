@@ -1,0 +1,131 @@
+<style>
+	dl.docs dt{
+		margin-top: 20px;
+	}
+</style>
+
+<div class="row" id="{{ uid }}">
+
+	<div class="span4 well">
+		<ul class="nav nav-list menu">
+			
+		</ul>
+	</div>
+	
+	<div class="span7">
+		<dl class="docs">
+			<dt>How to add a new article?</dt>
+			<dd><pre>Main menu > Articles > Add new Article</pre></dd>
+		
+			<dt>How to edit existing article?</dt>
+			<dd>
+				<pre>Main menu > Articles > Show all articles</pre>
+				Find in the list the article you want to edit. Also the serach filter can be used. Click on edit button.
+			</dd>
+			
+			<dt>How to create a new menu?</dt>
+			<dd>
+				<pre>Main menu > Menu > Add new menu item</pre>
+				Fill the field "Menu" with the name of the new menu. 
+			</dd>
+			
+			<dt>What information are needed to create a new menu item?</dt>
+			<dd>
+				To add a new menu item the following information is necessary:
+					<ul>
+						<li>Text: is the text that users will see</li>
+						<li>Link: the link the menu item will point to. For external links also the <code>http://</code> part is needed (eg.: <code>http://bradypus.net</code>). For internal links the following syntaxt should be used:
+						<ul>
+							<li><code>./art_title=article_text_id</code> for links to articles</li>
+							<li><code>./section=section_name</code> for links to section blogs</li>
+							<li><code>./</code> to link to the home page</li>
+							<li><code>#</code> do nothing link</li>
+						</ul>
+						Links to articles, section blogs and more can also be entred by using the widget on the left. Clicking on one article or section, etc, the input will be filled automatically.</li>
+						<li>Target: where the link will be opened:
+							<ul>
+								<li>if not set all links will be opened in the same window or tab</li>
+								<li><code>_blank</code> will open the link in a new window or tab</li>
+							</ul>
+						</li>
+						<li>Title: an explicative text that the user will see on hovering the menu text with the cursor</li>
+						<li>Menu: menu name. If choosen from the available list, the menu item will be added to that menu. If a new string is entered a new menu is created. <code>Attention:</code> No white spaces, upper case or special characters in this field, please!</li>
+						<li>Sub menu of: if an existing menu is select a list of the available menu items (siblings) will be shown. If one of them is selected this menu item bill be nested to the selected item. <code>Attention:</code> Please see the "How to manage menus?" section for easily nestins menu items</li>
+						<li>Sorting: Only integers are allowed in this field. Use this field to controle the order of appearance of the menu items. <code>Attention:</code> Please see the "How to manage menus?" section for easily sorting menu items</li>
+					</ul>
+			</dd>
+			
+			<dt>How to manage menus?</dt>
+			<dd>
+				<pre>Main menu > Menu > Show all menus</pre>
+				If menus are available will be listed here. Fot each available menu will be provided a list containing all items. Clicking on an item will open it in a new tab for editing (for detail see <code>What information are needed to create a new menu item?</code>).
+				<p>Menu items can be ordered bu dragging & dropping them. In the same way these items can be nested into one another. Settings are automatically saved.</p>
+			</dd>
+			
+			<dt>How to upload files?</dt>
+			<dd>
+				<pre>Main menu > Media</pre>
+				Click on "Upload a file" button, or drag& drop files from your folders to the "Upload a file" button. Multiple files can be loaded simultanously. 
+			</dd>
+			
+			<dt>Can I organize my files in folders?</dt>
+			<dd>
+				Yes. In the media folder you can create all the directories you need to beter organize your files. Creating a folder is easy as typing its name:
+				<pre>Main menu > Media</pre>
+				Simply click on one folder to enter in it and use the navigation bar to go back up to the root folder.
+			</dd>
+		
+			<dt>Can I navigate my files and folders?</dt>
+			<dd>
+				<pre>Main menu > Media</pre>
+				In the navigation bar enter in the input the name of the directory you want to create and click "Create & Go!". The new folder will be created and you will be durected there, ready to upload files.
+			</dd>
+			
+			<dt>Can I delete or rename my files?</dt>
+			<dd>
+				Yes you can!
+				<pre>Main menu > Media</pre>
+				Just click on the file and a popup will appear (click on the file to make it disappear again). In the popup you can fine the file URL to use in your articles, an input where you can enter the new name, to rename the file (<code>Attention:</code> make sure to use the same file extension), and the open / download and delete buttons.
+				<p><code>Tip:</code> in the new name input you can also use relative paths to move your file in other folder!</p>
+			</dd>
+			
+			<dt>How can I delete a a folder I dont't need anymore?</dt>
+			<dd>You can not delete folders that contains files. Thus, to delete a folder you must delete or move (see: <code>Can I delete or rename my files?</code>) all files inside. Once the folder is empty a button will appear and you can delete it.</dd>
+			
+			<dt>How can I translate an article?</dt>
+			<dd>
+				<pre>Main menu > Articles > Translations</pre>
+				Click in the language you want to translate in, a table showinf the translation status for each article will appear. To translate an article click on the edit button. It will open the article translation form for the article. The automatic copy & paste buttons (<code>>></code>) can help in copying the original text in the translation box, in order to import images and other tags in the translation. 
+			</dd>
+			
+			<dt>How can I translate a menu item?</dt>
+			<dd>
+				<pre>Main menu > Menu > Translations</pre>
+				Click in the language you want to translate in, a table showinf the translation status for each menu item will appear. To translate a menu item click on the edit button. It will open the menu translation form for the menu item. The automatic copy & paste buttons (<code>>></code>) can help in copying the original text in the translation box, in order to import images and other tags in the translation. 
+			</dd>
+			
+			<dt>Can I have nested articles?</dt>
+			<dd>BraDypUS CMS supports something similar to "Nested articles". It's a feature that permits to use an article as an introduction text for a list of articles, usually articles of the same section. To achieve this just create a new article having as <code>text id</code> the same string as the section name you want to use this article as introduction for. This article will be used as intro text for the section blog list!</dd>
+			
+			<dt>For DESIGNERS: How to create and edit a site template?</dt>
+			<dd>
+				<p>To edit the <strong>HTML</strong> of the main index file:</p>
+				<pre>Other > Template manager > Edit HTML</pre>
+				or follow <a href="#template/index">this link</a>. Plaese check the <a href="#docs/tmpl/intro">template documentation</a>.
+				
+				<p>To edit the <strong>CSS</strong>:</p>
+				<pre>Other > Template manager > Edit CSS</pre>
+				or follow <a href="#template/css">this link</a>.
+				
+			</dd>
+			
+		</dl>
+	</div>
+</div>
+
+<script>
+$('#{{ uid }} dl.docs dt').each(function(i, el){
+	$(el).attr('id', 'nt-' + i).prepend((i+1) + '. ');
+	$('#{{ uid }} ul.menu').append('<li><a href="#nt-' + (i) + '">' + $(el).text() + '</a></li');
+});
+</script>

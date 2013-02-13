@@ -1,0 +1,250 @@
+<form action="javascript: void(0)" id="menu_edit{{ uid }}">
+	<div class="span5">
+	<table cellpadding="5">
+	{% if menu.id %}
+		<tr>
+			<th>{{ tr.get('id') }}</th>
+			<td><input type="text" name="id" readonly="readonly"
+				value="{{ menu.id }}" /></td>
+		</tr>
+	{% endif %}
+		<tr>
+			<th>{{ tr.get('text') }}</th>
+			<td><input type="text" name="item"
+				value="{{ menu.item }}" /></td>
+		</tr>
+		<tr>
+			<th>{{ tr.get('link') }}</th>
+			<td><input type="text" name="href"
+				value="{% if menu.href %}{{ menu.href }}{% else %}./?art_title={% endif %}" /></td>
+		</tr>
+		<tr>
+			<th>{{ tr.get('target') }}</th>
+			<td>
+				<select name="target">
+					<option></option>
+					<option{% if menu.target == '_blank' %} selected="true"{% endif %}>_blank</option>
+				</select>
+			</td>
+		
+		</tr>
+		<tr>
+			<th>{{ tr.get('title') }}</th>
+			<td><input type="text" name="title"
+				value="{{ menu.title }}" /></td>
+		</tr>
+		<tr>
+			<th>{{ tr.get('menu') }}</th>
+			<td>
+				<input type="text" name="menu" value="{{ menu.menu }}" style="width:100%" />
+			</td>
+		</tr>
+		<tr>
+			<th>{{ tr.get('sub_of') }}:</th>
+			<td>
+				<select name="subof">
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>{{ tr.get('sorting') }}</th>
+			<td><input type="text" name="sort"
+				value="{{ menu.sort }}" /></td>
+		</tr>
+	</table>
+	
+	<button class="btn btn-success" type="submit"><i class="icon-white icon-ok"></i> {{ tr.get('save') }}</button>
+	{% if menu.id %}
+	<button class="btn btn-danger delete" type="button" data-id="{{ menu.id }}"><i class="icon-white icon-trash"></i> {{ tr.get('delete') }}</button>
+	{% endif %}
+	<button class="btn" type="reset">{{ tr.get('reset') }}</button>
+	
+	</div>
+	
+</form>
+
+<div class="span6">
+	<h3>Link help</h3>
+	<div class="accordion" id="accordion2">
+		
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
+					{{ tr.get('articles') }}
+				</a>
+			</div>
+			<div id="collapse2" class="accordion-body collapse">
+				<div class="accordion-inner">
+					{% if arts %}
+					<table class="table table-striped table-hover list">
+					<thead><tr><th>Id</th></tr></thead>
+					<tbody>
+					{% for art in arts %}
+						<tr><td class="art">{{ art.text_id }}</td></tr>
+					{% endfor %}
+					</tbody>
+					</table>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse3">
+				{{ tr.get('sections') }}
+				</a>
+			</div>
+			<div id="collapse3" class="accordion-body collapse">
+				<div class="accordion-inner">
+				{% if secs %}
+				<table class="table table-striped table-hover list">
+				<thead><tr><th>Id</th></tr></thead>
+				<tbody>
+				{% for sec in secs %}
+					<tr><td class="sec">{{ sec }}</td></tr>
+				{% endfor %}
+				</tbody>
+				</table>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+		
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse1">
+					{{ tr.get('other') }}
+				</a>
+			</div>
+			<div id="collapse1" class="accordion-body collapse">
+				<div class="accordion-inner">
+					<button class="btn home">{{ tr.get('link2home') }}</button>
+					<button class="btn none">{{ tr.get('link2none') }}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+		
+
+</div>
+	
+
+<script>
+	(function(){
+		$('td.art').click(function(){
+			$('#menu_edit{{ uid }} input[name="href"]').val('./art_title=' + $(this).text());
+		});
+		
+		$('button.home').click(function(){
+			$('#menu_edit{{ uid }} input[name="href"]').val('./');
+		});
+		
+		$('button.none').click(function(){
+			$('#menu_edit{{ uid }} input[name="href"]').val('#');
+		});
+
+		$('td.sec').click(function(){
+			$('#menu_edit{{ uid }} input[name="href"]').val('./section=' + $(this).text());
+		});
+		
+		$('table.list').dataTable({
+			"bPaginate": false,
+			"bInfo": false,
+			"bSort": false,
+//			"iDisplayLength": 10,
+			"sPaginationType": "bootstrap",
+			"bDestroy": true
+		});
+
+		
+		function setValue(){
+			var menu =$('#menu_edit{{ uid }}').find('input[name="menu"]').val(); 
+			
+			var subof = $('#menu_edit{{ uid }}').find('select[name="subof"]');
+			if (menu){
+				$.get('controller.php?obj=menu_ctrl&method=getMenuItems&param[]=' + menu, function(data){
+					subof.html('<option></option>');
+					$.each(data, function(i, el){
+						subof.append('<option value="' + el.id + '"{% if menu.subof %}' + (el.id == {{ menu.subof }} ? ' selected="true" ' : '') + '{% endif %}>' + el.item + '</option>');
+					});
+				}, 'json');
+			}
+		}
+		
+		setValue();
+		
+		{% if menu_list %}
+		$('#menu_edit{{ uid }} input[name="menu"]').select2({
+				placeholder: "{{ tr.get('select_menu') }}",
+				data: [
+				       {% for i, m in menu_list %}
+				       {id:'{{ m }}', text: '{{ m }}'},
+				       {% endfor %}
+				       ],
+				createSearchChoice: function(term){
+					return {id:term, text:term};
+				},
+				initSelection:function(el, callback){
+					var value = $(el).val();
+					callback({id: value, text:value});
+				}
+			});
+		{% endif %}
+		
+		$('#menu_edit{{ uid }} input[name="menu"]').change(function(){
+			setValue();
+		});
+		
+		
+		{% if menu.id %}
+		$('button.delete').click(function(){
+			var $this = $(this);
+			admin.dialog({
+				title: '{{ tr.get('pay_attention_please') }}',
+				html: '{{ tr.get('confirm_delete_menu_item') }}',
+				buttons:[
+				         {
+				        	 text: '{{ tr.get('close') }}',
+				        	 action: 'close'
+				         },
+				         {
+				        	 text: '{{ tr.get('delete') }}',
+				        	 addclass: 'btn-danger',
+				        	 action: 'close',
+				        	 click: function(){
+				        		 $.get('controller.php?obj=menu_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
+				        			 admin.message(data.text, data.type);
+				        			 if (data.type == 'success'){
+				        				 admin.tabs.closeActive();
+				        			 }
+				        		 }, 'json')
+				        	 }
+				         }
+				         ]
+			});
+		});
+		{% endif %}
+		$('#menu_edit{{ uid }}').submit( function(){
+
+			var url = 'controller.php?obj=menu_ctrl&method=save';
+
+			$.post(
+				url,
+				$('#menu_edit{{ uid }}').serialize(),
+				
+				function(data) {
+					admin.message(data.text, data.type);
+					{% if menu.id == false %}
+					if (data.type == 'success'){
+						admin.tabs.closeActive('menu/addNew');
+					}
+					{% endif %} 
+				},
+				'json'
+			);			
+		});
+	})();
+</script>

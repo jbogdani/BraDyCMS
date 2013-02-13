@@ -1,0 +1,146 @@
+<form action="javascript:void(0)" id="edit_form{{ uid }}">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<label>{{ tr.get('title') }}</label>
+				<input type="text" name="title" value="{{ art.title}}" />
+				
+				<label>{{ tr.get('text_id') }}</label>
+				<input type="text" name="text_id" value="{{ art.text_id }}" />
+				
+				<label>{{ tr.get('sorting') }}</label>
+				<input type="text" name="sort" value="{{ art.sort}}" />
+				
+				<label>{{ tr.get('keywords') }}</label>
+				<input type="text" name="keywords" value="{{ art.keywords }}" />
+				
+				<label>{{ tr.get('author') }}</label>
+				<input type="text" name="author" value="{{ art.author }}" />
+
+				<label>{{ tr.get('status') }}</label>
+				<select name="status">
+					<option value="0" {% if art.status == false %} selected="true" {% endif %}>Nascosto</option>
+					<option value="1" {% if art.status %} selected="true" {% endif %}>Visibile</option>
+				</select>
+
+				<label>{{ tr.get('section') }}</label>
+				<input type="text" name="section" value="{{ art.section }}" style="width:100%" />
+				
+				
+				<label>{{ tr.get('tags') }}</label>
+				<input type="text" name="tags" value="{{ art.tags }}" style="width:100%" />
+				
+				<label>{{ tr.get('creation_date') }}</label>
+				<input class="datepicker" type="text" name="created"
+						value="{% if art.created %}{{ art.created }}{% else %}{{ date }}{% endif %}" />
+				
+				<label>{{ tr.get('pubblication_date') }}</label>
+				<input class="datepicker" type="text" name="publish_on"
+						value="{% if art.publish_on %}{{ art.publish_on }}{% else %}{{ date }}{% endif %}" />
+				
+				<label>{{ tr.get('expiration_date') }}</label>
+				<input class="datepicker" type="text" name="expires"
+						value="{% if art.expires %}{{ art.expires }}{% else %}{{ date }}{% endif %}" />
+				
+				
+				<label> {{ tr.get('last_update') }}</label>
+				{{ art.updated }}
+			</div>
+			
+			<div class="span9">
+				<label>{{ tr.get('summary') }}</label>
+				<textarea name="summary" class="rich" id="summary{{ uid }}" rows="10"
+						style="width: 100%; height: 150px;">{{ art.summary }}</textarea>
+				
+				<label>{{ tr.get('text') }}</label>
+				<textarea name="text" class="rich" rows="20" style="width: 100%; height: 500px;"
+						id="text{{ uid }}">{{ art.text }}</textarea>
+			</div>
+		</div>
+		
+		{% if custom_fields %}
+		<hr />
+		<h4>{{ tr.get('custom_fields') }}</h4>
+		<div class="row-fluid">
+			{% for fld in custom_fields %}
+				<div class="span3">
+					<p>
+						<label>{{ fld|upper }}</label>
+						<input type="text" value="{{ art[fld] }}" name="{{ fld }}" />
+				</div>
+			{% endfor %}
+			</fieldset>
+		</div>
+		{% endif %}
+	</div>
+	
+
+	<button class="btn btn-success" type="submit">{{ tr.get('save') }}</button>
+	<button class="btn" type="reset">{{ tr.get('reset') }}</button>
+
+</form>
+<script>
+	tinyMCE.execCommand("mceAddControl", false, "summary{{ uid }}");
+	tinyMCE.execCommand("mceAddControl", false, "text{{ uid }}");
+	
+	$('#edit_form{{ uid }} input[name="text_id"]').on('change', function(){
+		$this = $(this);
+		
+		if ($this.val() != '{{ art.text_id }}'){
+			$.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val(), function(data){
+				if (data){
+					$this.focus();
+					admin.message(data, 'error');
+				}
+			});
+		}
+	});
+	
+	{% if sections %}
+	$('#edit_form{{ uid }} input[name="section"]').select2({
+		data: [
+		       {% for i, m in sections %}
+		       {id:'{{ m }}', text: '{{ m }}'},
+		       {% endfor %}
+		       ],
+		createSearchChoice: function(term){
+			return {id:term, text:term};
+		},
+		initSelection:function(el, callback){
+			var value = $(el).val();
+			callback({id: value, text:value});
+		}
+	});
+	{% endif %}
+	
+	{% if imploded_tags %}
+	$('#edit_form{{ uid }} input[name="tags"]').select2({
+		tags: [{{ imploded_tags|raw }}]
+	});
+	{% endif %}
+	
+	$('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
+
+	$('#edit_form{{ uid }}').submit( function(){
+
+		var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
+
+		tinyMCE.triggerSave();
+		
+		$.post(
+			url,
+			$('#edit_form{{ uid }}').serialize(),
+			
+			function(data) {
+				admin.message(data.text, data.type);
+				{% if art.id == false %}
+				if (data.type == 'success'){
+					admin.tabs.closeActive('article/edit/' + data.id);
+				}
+				{% endif %} 
+			},
+			'json'
+		);			
+	});
+	
+</script>

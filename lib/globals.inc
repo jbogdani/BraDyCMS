@@ -5,32 +5,41 @@
  * @license			All rights reserved
  * @since			05/mar/2011
  */
+
+session_start();
+
+$__debug = true;
+
+
+
 if (@!$root)
 {
 	$root = './';
 }
-ini_set('error_log', './error.log');
+define('MAIN_DIR', $root);
+
+ini_set('error_log', './logs/error.log');
 
 ini_set('display_errors', 'off');
 
-if (get_magic_quotes_gpc()) {
-
+if (get_magic_quotes_gpc())
+{
 	$process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
 
-	while (list($key, $val) = each($process)) {
-
-		foreach ($val as $k => $v) {
-				
+	while (list($key, $val) = each($process))
+	{
+		foreach ($val as $k => $v)
+		{
 			unset($process[$key][$k]);
 				
-			if (is_array($v)) {
-
+			if (is_array($v))
+			{
 				$process[$key][stripslashes($k)] = $v;
 
 				$process[] = &$process[$key][stripslashes($k)];
-					
-			} else {
-
+			}
+			else
+			{
 				$process[$key][stripslashes($k)] = stripslashes($v);
 			}
 		}
@@ -38,33 +47,36 @@ if (get_magic_quotes_gpc()) {
 	unset($process);
 }
 
-$cfg = parse_ini_file($root . 'sites/default/cfg/config.ini', 1);
+
+require_once $root . 'lib/ClassAutoloader.inc';
+new ClassAutoloader();
+
+require $root . 'lib/Twig/Autoloader.php';
+Twig_Autoloader::register();
 
 
 //set default date-zone
-if ($cfg['timezone'])
+if (cfg::get('timezone'))
 {
-	date_default_timezone_set($cfg['timezone']);
+	date_default_timezone_set(cfg::get('timezone'));
 }
 else
 {
 	date_default_timezone_set('Europe/Rome');
 }
 
-define ( 'PREFIX',		$cfg['prefix'] );
-define ( 'SYS_LANG',	$cfg['default_lang'] );
-define ( 'ROOT', 		$root);
-define ( 'ERR_LOG', 	$root . 'error.log');
-define ( 'TMP_DIR', 	$root . 'tmp/');
+define ( 'PREFIX',	cfg::get('prefix') );
+define ( 'SYS_LANG',cfg::get('default_lang') );
+define ( 'MOD_DIR', MAIN_DIR . 'modules/');
+define ( 'ERR_LOG',	MAIN_DIR . 'logs/error.log');
+define ( 'TMP_DIR', MAIN_DIR . 'tmp/');
 
-
-require_once $root . 'lib/class.MyExc.inc';
-require_once $root . 'lib/ClassAutoloader.inc';
-
-new ClassAutoloader();
-
-$lang_file = utils::getLang();
-
-if ($lang_file AND file_exists('langs/' . $lang_file . '.php'))
-	require_once 'langs/' . $lang_file . '.php';
-
+if ($__debug)
+{
+	define('CACHE', serialize(array('debug' => true)));
+}
+else
+{
+	define('CACHE', serialize(array('cache'=>'cache')));
+}
+tr::load_file($_GET['lang']);

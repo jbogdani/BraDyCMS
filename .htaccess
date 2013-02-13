@@ -15,6 +15,7 @@ RewriteRule ^admin/?$ admin.php
 RewriteRule ^admin:logout?$ admin.php?logout=1
 RewriteRule ^admin:debug?$ admin.php?debug=1
 RewriteRule ^admin:mini?$ admin.php?mini=1
+RewriteRule ^admin:lng-(it|en|es|fr|ar|de|al)?$ admin.php?lang=$1
 
 #safe home page 
 RewriteRule ^(it|en|es|fr|ar|de|al)/?$ index.php?lang=$1 

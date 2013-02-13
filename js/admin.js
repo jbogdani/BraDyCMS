@@ -1,304 +1,230 @@
-var gui = {
-		message: function(text, type, sticky){
+var admin = {
+		
+		/**
+		 * 
+		 * @param opts
+		 * 		title
+		 * 		html
+		 * 		buttons: []
+		 * 			text
+		 * 			href
+		 * 			click
+		 * 			action: 'close'
+		 * 			addclass
+		 */
+		dialog: function(opts){
+			var dialog =  $('<div />').addClass('modal hide fade')
+				.attr({'role':'dialog'})
+				.append(
+						(opts.title ? '<div class="modal-header"><h2>' + opts. title + '</h2></div>' : ''),
+						'<div class="modal-body">' + opts.html + '</div>'
+						);
 			
-			var opts = {
+			if (opts.buttons && typeof opts.buttons == 'object'){
+				
+				var footer = $('<div />').addClass('modal-footer');
+				
+				dialog.append(footer);
+				
+				$.each(opts.buttons, function(index, but){
+					var a = $('<a />').addClass('btn').html(but.text);
 					
-					type: ( type ? type : 'notice'),
-					text: text,
-					sticky: sticky
-			};
-			$().toastmessage('showToast', opts);
-		},
-		
-		loading : '<img src="../css/loader.gif"  alt="loading" />',
-		
-		openInTab: function(module, get, title){
-			title = '<span>&nbsp;</span>' + title;
-			
-			// write url to request with ajax
-			var url = 'loader.php?mod=' + module + ( get ? '&' + get : '' );
-			
-			
-			// define dialog id using module name + table
-			var mod_id = 'mod' + module.replace(/\//, '');
-
-			var $tabs = $('#tabs');
-			
-			if ( $('#' + mod_id).length) {
-				
-				var div_container = $('#' + mod_id).parent();
-				
-	
-				var index = $( "div.ui-tabs-panel", $tabs ).index( div_container );
-				
-				$tabs.tabs("select", index)
-					.tabs("url", index, url)
-					.tabs("load", index);
-				
-			} else {
-				
-				$tabs.tabs( "add", url, title);
+					if (but.href){
+						a.attr('href', but.href);
+					}
+					
+					if (but.click){
+						a.click(function(){ but.click(); });
+					}
+					
+					if (but.action == 'close'){
+						a.attr('data-dismiss', 'modal');
+						dialog.on('hidden', function(){
+							dialog.remove();
+						});
+					}
+					
+					if(but.addclass){
+						a.addClass(but.addclass);
+					}
+					
+					footer.append(a);
+				});
 				
 			}
+			dialog.modal();
 		},
-		openInDialog: function (url, opt) {
-			
-			if ( !opt ) {	var opt = {};	}
-			
-			// set default dialog dimensions: 600 x400
-			if ( !opt.width ) { opt.width = 600; }
-			if ( !opt.height ) { opt.height = 400; }
-
-			// defualt: on close dialog is killed
-			opt.close = function() {			$(this).remove();			};
-
-			// write url to request with ajax
-			url = 'loader.php?mod=' + url;
-			
-			var div = $('<div id="dialog">' + gui.loading + '</div>');
-				
-			// content is then loaded inside dialog
-			div.load(url).dialog(opt);
-		}
+		/**
+		 * 
+		 * @param text
+		 * @param title
+		 * @param type : false, info, success, error
+		 * @param sticky
+		 */
+		message: function(text, type, title, sticky){
+		    $.pnotify({
+		        title: title ?  title : false,
+		        text: text,
+		        type: type ? type : false,
+		        hide: sticky ? false : true
+		    });
+		},
 		
-}
-
-menu = {
-	article : {
-		form: function(id){
-			if (id)
-				{
-				gui.openInTab('article/edit_form', 'id=' + id, 'Modifica articolo');
-				}
-			else
-				{
-				gui.openInTab('article/edit_form', false, 'Aggiungi articolo');
-				}
-		},
-		erase: function(id){
-			$('<div></div>')
-				.html('<div class="ui-widget">'
-						+ '<div style="padding: 0 .7em;" class="ui-state-error ui-corner-all">'
-						+ '<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'
-						+ '<strong>Attenzione:</strong> Questa azione non può essere annullata!</p>'
-						+'</div></div')
-				.dialog({
-					title: 'Sei sicuro di volere cancellare questo articolo per sempre?',
-					modal:true,
-					buttons:{
-						Procedi: function(){
-							$.get('loader.php?nw=1&mod=article/action2json&a=erase&id=' + id,
-									function(data){
-										$().toastmessage('showToast', {text: data.text,type: data.type});
-										
-										if (data.type == 'success')
-											{
-											menu.article.showall();
-											}
-								},
-								'json');
-							$(this).dialog('close');
-						},
-						Annulla: function(){
-							$(this).dialog('close');
-						}
-					}
-				});
-		},
-		showall: function(){
-			gui.openInTab('article/list', false, 'Tutti gli articoli');
-		}
-	
-	},
-	
-	translate:{
-		list: function(context){
-			gui.openInTab('translate/list', 'context=' + context, 'Gestione traduzioni ' + ( (context == 'article') ? 'articoli' : 'menu') );
-		},
-		form: function(context, id, lang){
-			gui.openInTab('translate/form_' + context, 'id=' + id + '&lang=' + lang, 'Traduci');
-		}
-	},
-	
-	file: {
-		showall: function(upload_dir){
-			gui.openInTab('file/list', (upload_dir ? 'upload_dir=' + upload_dir : ''), 'Gestione file');
-		},
-		erase: function ( file, upload_dir ){
-			$('<div />')
-			.html('<div class="ui-widget">'
-					+ '<div style="padding: 0 .7em;" class="ui-state-error ui-corner-all">'
-					+ '<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'
-					+ '<strong>Attenzione:</strong> Questa azione non può essere annullata!</p>'
-					+'</div></div')
-			.dialog({
-				title: 'Sei sicuro di volere cancellare questo file/cartella per sempre?',
-				modal:true,
-				buttons:{
-					Procedi: function(){
-						$.get('loader.php?obj=file_ctrl&method=erase&param[]=' + file, function(data){
-							
-							gui.message(data.text, data.status);
-							
-							if (data.status == 'success'){
-								menu.file.showall(upload_dir);
-							}
-						},
-						'json');
-						$(this).dialog('close');
-					},
-					Annulla: function(){
-						$(this).dialog('close');
-					}
-				}
-			});
-		}
-	},
-	menu: {
-		list: function (menu){
-			gui.openInTab('menu/list', 'menu=' + menu, 'Gestione menu');
-		},
-		edit: function(id, menu_name){
-			gui.openInDialog(
-				'menu/edit_form&id=' + id + '&menu=' + menu_name,
-				{
-					modal:true,
-					title: 'Modifica voce menu',
-					buttons: {
-						Salva: function(){
-							var dia = this;
-							$.post(
-								'loader.php?nw=1&mod=menu/action2json&a=edit',
-								$('#menu_edit').serialize(),
-								function(data){
-									$().toastmessage('showToast', {text: data.text,type: data.type});
-									
-									if (data.type == 'success')
-										{
-										menu.menu.list($('#menu_edit :input[name=menu]').val());
-										$(dia).dialog('close');
-										}
-								},
-								'json'
-							);
-						},
-						Annulla: function(){
-							$(this).dialog('close');
-						}
-					}
-				}
-			);
-		},
-		add_new: function(menu_name){
-			gui.openInDialog(
-				'menu/edit_form' + (menu_name ? '&menu=' + menu_name : ''),
-				{
-					modal:true,
-					title: 'Aggiungi nuovo menu',
-					buttons: {
-						Salva: function(){
-							var dia = this;
-							$.post(
-								'loader.php?nw=1&mod=menu/action2json&a=add',
-								$('#menu_edit').serialize(),
-								function(data){
-									$().toastmessage('showToast', {text: data.text,type: data.type});
-									
-									if (data.type == 'success')
-										{
-										menu.menu.list($('#menu_edit :input[name=menu]').val());
-										$(dia).dialog('close');
-										}
-								},
-								'json'
-							);
-						},
-						Annulla: function(){
-							$(this).dialog('close');
-						}
-					}
-				}
-			);
-		},
-		erase: function(id, menu_name){
-			$('<div />')
-				.html('<div class="ui-widget">'
-						+ '<div style="padding: 0 .7em;" class="ui-state-error ui-corner-all">' 
-						+ '<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>' 
-						+ '<strong>Attenzione:</strong> Questa azione è irrevocabile</p>'
-					+ '</div>'
-				+ '</div>')
-				.dialog(
-				{
-					modal:true,
-					title: 'Sei sicuro di volere cancellare questa voce di menu?',
-					buttons: {
-						'Cancella voce': function(){
-							var dia = this;
-							$.post(
-								'loader.php?nw=1&mod=menu/action2json&a=erase&id=' + id,
-								$('#menu_edit').serialize(),
-								function(data){
-									$().toastmessage('showToast', {text: data.text,type: data.type});
-									
-									if (data.type == 'success')
-										{
-										menu.menu.list(menu_name);
-										$(dia).dialog('close');
-										}
-								},
-								'json'
-							);
-						},
-						Annulla: function(){
-							$(this).dialog('close');
-						}
-					}
-				}
-			);			
-		}
+	tabs : {
+	    tab: '',
+	    set: function(el){
+	        if (typeof el == 'string'){
+	            this.tab = $(el);
+	        } else {
+	            this.tab = el;
+	        }
+	    },
+	    start: function(){
+	        tab = this.tab;
+	        tab.find('a').click(function (e) {
+	            e.preventDefault();
+	            $(this).tab('show');
+	        });
+	        
+	        tab.find('button.close').click(function(e){
+	            var li = $(this).parents('li');
+	            admin.tabs.closeTab(li);
+	            return false;
+	        });
+	    },
+	    /**
+	     * 
+	     * @param opts object
+	     * 		title
+	     * 
+	     * 		html
+	     * 
+	     * 		obj
+	     * 		method
+	     */
+	    add: function(opts){
+	    	
+	    	var title = opts.title ? opts.title : '',
+	    	tab = this.tab,
+	    	id = Math.floor(Math.random()*1000) + '' + tab.find('li').length;
+	        
+	        this.tab.append('<li><a href="#added' + id + '">' + title + '<button class="close" type="button">×</button></a></li>');
+	        
+	        if (opts.html){
+	        	this.tab.next('div.tab-content').append('<div class="tab-pane" id="added' + id + '">' + opts.html + '</div>');
+	        	this.start(tab);
+        		this.tab.find('li a:last').tab('show');
+	        } else if (opts.obj && opts.method){
+	        	$.ajax({
+	        		'type': opts.post ? 'POST' : 'GET',
+	        		'url': 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
+	        		'data': opts.post
+	        	})
+	        	.done(function(data){
+	        		admin.tabs.tab.next('div.tab-content')
+	        			.append('<div class="tab-pane" id="added' + id + '">' 
+	        					+ (data ? data : 'No content found') 
+	        					+ '</div>');
+	        		admin.tabs.start(tab);
+	        		admin.tabs.tab.find('li a:last').tab('show');
+	        	});
+	        } else {
+	        	return false;
+	        }
+	    },
+	    
+	    reloadActive: function(){
+	    	var d_active = $('div.tab-content div.active'), 
+	    	a_state = tab.find('li.active a').text();
+	    	a_state = a_state.substring(0, a_state.length - 1).split('/');
+	    	
+	    	var url = 'controller.php?obj=' + a_state[0] + '_ctrl&method='+ a_state[1];
+	    	
+	    	if (a_state[2]){
+	    		url += '&param[]=' + a_state.slice(2).join('&param[]=');
+	    	}
+	    	d_active.html('<img src="img/spinner.gif" alt="loading..." />').load(url);
+	    	
+	    },
+	    
+	    closeActive: function(state){
+	    	var active = tab.find('li.active');
+	    	admin.tabs.closeTab(active, state);
+	    },
+	    
+	    closeTab: function(li, state){
+	    	$('#' + li.find('a').attr('href').replace('#', '')).remove();
+            if (li.hasClass('active')){
+            	if (state){
+            		var actualState = $.bbq.getState();
+                	if (actualState[state] == ''){
+                		$(window).trigger( "hashchange" );
+                	} else {
+                		$.bbq.pushState('#' + state);
+                		tab.find('li a:last').tab('show');
+                	}
+                	li.remove();
+                } else {
+                	li.remove();
+                	$.bbq.pushState('#');
+                	tab.find('li a:last').tab('show');
+                }
+            } else {
+            	li.remove();
+            }
+	    }
 	}
 };
 
-var layout = {
-		content: function(){
-			$('body').append('<div id="tabs">'
-					+ '<ul>'
-						+ '<li><a href="loader.php?mod=main">Home</a></li>'
-					+ '</ul>'
-					+ '</div>');
-			$('#tabs').tabs({
-				cache: true,
-				tabTemplate: "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Remove Tab</span></li>",
-				spinner: '<img src="./css/arrows-loader.gif"  alt="loading" />',
-				add: function(event, ui) {
-					$('#tabs').tabs('select', '#' + ui.panel.id);
-		 		}
-			});
-			$( "#tabs span.ui-icon-close" ).live("click", function() {
-				var tabs = $('#tabs');
-				var index = $( "li", tabs ).index( $( this ).parent() );
-				tabs.tabs( "remove", index );
-			});
-			$('<div id="waiting_main" />')
-				.appendTo($('body'))
-				.hide()
-				.ajaxStart(function(){	$(this).show(); })
-				.ajaxStop(function(){	$(this).hide();	});
-		},
-		login: function(message){
-			gui.openInDialog('./login_form&log_message=' + message, {
-				modal: true,
-				closeOnEscape: false,
-				resizable: false,
-				title: 'Log in',
-				height: 300,
-				buttons: {
-					Login: function(){ $('#loginform').submit(); },
-					'Vai al sito': function(){ window.location = './'} 
-					
-				}
-			});
-			$('a.ui-dialog-titlebar-close').remove();
-		}
-}
+
+
+
+$(function () {
+	admin.tabs.set('#tabs');
+	admin.tabs.start();
+
+
+    $(window).on( 'hashchange', function(e) {
+    	var url = $.param.fragment();
+    	
+    	if (!url){
+    		return;
+    	} else if (url.match(/nt-/)){
+			return;
+    	} else {
+    		var url_arr = url.split('/');
+    		
+    		admin.tabs.add({
+    			'title': url_arr[0] + '/' + url_arr[1] + (url_arr[2] ? '/' + url_arr[2] : ''),
+    			'obj': url_arr[0] + '_ctrl',
+    			'method': url_arr[1],
+    			'param': url_arr.slice(2)
+    		});
+    	}
+    }).trigger('hashchange');
+    
+    tinyMCE.init({
+    	// General options
+    	mode : "exact",
+    	theme : 'advanced',
+    	plugins : 'pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist',
+    	
+    	// Theme options
+    	theme_advanced_toolbar_location : 'top',
+    	theme_advanced_toolbar_align : 'left',
+    	extended_valid_elements : 'script[language|type]',
+    	theme_advanced_resizing : true,
+    	content_css : './css/bootstrap.min.css,./sites/default/css/styles.css',
+    	
+    	theme_advanced_statusbar_location : 'bottom',
+    	
+    	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
+    	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,preview,|,forecolor,backcolor",
+    	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,|,ltr,rtl,|,fullscreen,|,attribs"
+	});
+});
+
+
+jQuery.expr[':'].Contains = function(a,i,m){
+    return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+};

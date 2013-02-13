@@ -1,144 +1,32 @@
 @CHARSET "UTF-8";
 
 body {
-	font: normal 12px Arial, Helvetica, sans-serif;
-	background: #ebebeb;
-	color: #666;
-	margin: 0;
-	padding: 0;
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      
+button.close{
+    margin: -2px 0 0 10px;
+    font-size: 18px;
 }
 
-#tabs li .ui-icon-close {
-	cursor: pointer;
-	float: left;
-	margin: 0.4em 0.2em 0 0;
+li.img{
+	margin:10px;
+	width:128px;
+}
+li.openpop{
+	cursor:pointer;
+}
+section{
+	padding-top: 40px;
+}
+.affix{
+	top: 40px;
 }
 
-#modmain article {
-	float: left;
-	margin: 20px;
-	padding: 20px;
-	max-width: 250px;
-}
-
-#modmain article h3 {
-	border-bottom: 1px solid #ccc;
-}
-
-ul.home_menu {
-	list-style: none;
-	margin: 0;
-	padding: 0 0 0 5px;
-}
-
-ul.home_menu li {
-	text-align: center;
-	width: 70px;
-	height: 100px;
-	cursor: pointer;
-	float: left;
-	margin: 10px;
-	padding: 10px;
-	border: 1px dashed #ccc;
-	border-radius: 10px;
-}
-
-ul.home_menu li:hover {
-	border: 1px solid #ccc;
-	background: #fff;
-	box-shadow: 0 0 10px #ccc;
-}
-
-ul.home_menu a {
-	text-decoration: none;
-}
-
-a {
-	color: #333;
-}
-
-div.img {
-	display: inline-block;
-	margin: 5px;
-	padding: 10px;
-	border: 1px dotted;
-	text-align: center;
-}
-
-div.img:hover {
-	border: 2px dashed;
-}
-
-h1 {
-	border-bottom: 1px dotted;
-	padding: 5px;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
-}
-
-input,select {
-	width: 100%;
-	border-radius: 5px;
-	border: 1px solid #d3d3d3;
-	padding: 3px;
-}
-
-input:focus,select:focus {
-	border: 2px dashed #d3d3d3;
-}
-
-table.tablesorter {
-	margin: 10px 0pt 15px;
-	font-size: 8pt;
-	width: 100%;
-	text-align: left;
-}
-
-table.tablesorter tbody tr:nth-child(odd) {
-	background-color: #d3d3d3;
-}
-
-table.tablesorter tr:hover {
-	background-color: #baafff !important;
-}
-
-table.tablesorter thead tr th,table.tablesorter tfoot tr th {
-	background-color: #e6EEEE;
-	border: 1px solid #FFF;
-	font-size: 8pt;
-	padding: 4px 20px 4px 4px;
-}
-
-table.tablesorter thead tr .header {
-	background-image: url(bg.gif);
-	background-repeat: no-repeat;
-	background-position: center right;
-	cursor: pointer;
-}
-
-table.tablesorter thead tr .headerSortUp {
-	background-image: url(asc.gif);
-}
-
-table.tablesorter thead tr .headerSortDown {
-	background-image: url(desc.gif);
-}
-
-table.tablesorter thead tr .headerSortDown,table.tablesorter thead tr .headerSortUp
-	{
-	background-color: #8dbdd8;
-}
-
-div#waiting_main{
-	z-index: 99999;
-	position: absolute;
-	top: 0;
-	right: 0;
-	background:url(arrows-loader.gif) no-repeat center center #fff;
-	padding:5px;
-	border:1px solid grey;
-	margin:5px;
-	box-shadow: 0 0 5px red;
-	border-radius:5px;
-	width:14px;
-	height:14px;	
+.footer {
+    background-color: #F5F5F5;
+    border-top: 1px solid #E5E5E5;
+    margin-top: 70px;
+    padding: 30px 0;
+    text-align: center;
 }

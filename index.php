@@ -1,28 +1,35 @@
 <?php
+/**
+ * @author			Julian Bogdani <jbogdani@gmail.com>
+ * @copyright		BraDypUS 2007-2011
+ * @license			All rights reserved
+ * @since			Dec 1, 2012
+ */
+ 
 try
 {
 	session_start();
-	
-	require_once 'lib/globals.inc';
-	
-	$html = new publicHtml();
 
-	$html->mainSetter($_GET, $_SESSION['lang']);
+	require_once 'lib/globals.inc';
+
+	$str = './?art_title=comunismo-negato';
 	
-	$browser = new Browser();
+	$html = new publicHtml($_GET, $_SESSION['lang']);
 	
-	if ($cfg['only_mobile'] OR ($browser->isMobile() AND file_exists('./sites/default/mobile.php')))
+	$dress = new dressHtml($html);
+	
+	$twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), unserialize(CACHE));
+	if ($__debug)
 	{
-		require_once './sites/default/mobile.php';
+		$twig->addExtension(new Twig_Extension_Debug());
 	}
-	else
-	{
-		require_once './sites/default/index.php';
-	}
+	echo $twig->render('index.html', array(
+			'html'=>$html,
+			'dress'=>$dress
+	));
 }
-catch (MyExc $e)
+catch (Exception $e)
 {
-	echo utils::tr('Qualcosa è andato storto. Controllare contattare l\'amministrattore per maggiori informazioni');
-	$e->log();
+	echo tr::get('error_check_log');
+	error_log($e->getMessage());
 }
-?>

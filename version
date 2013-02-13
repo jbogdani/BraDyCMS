@@ -5,6 +5,7 @@
 ;		delete from ArticleRead
 ;		delete from other source
 
+3.0[] = "New GUI"
 2.5[] = "Added user access registry log (I/O)"
 2.5[] = "Added language: Albanian (al)"
 2.5[] = "New method: frontend::printLangMenu() to print language selector as a menu"

@@ -3,132 +3,234 @@
  * @author			Julian Bogdani <jbogdani@gmail.com>
  * @copyright		BraDypUS 2007-2011
  * @license			All rights reserved
- * @since			Oct 31, 2011
+ * @since			Dec 1, 2012
  */
 try
 {
-	session_start();
 	$root = './';
-
 	require_once $root . 'lib/globals.inc';
 	
-	$users_log = './sites/default/users.log';
+	$log_message = auth::check($_POST['username'], $_POST['password']);
 	
-	if (!file_exists($users_log))
-	{
-		$fh = @fopen($users_log, 'w');
-		@fclose($fh);
-	}
-
-	if(array_key_exists($_POST['username'], $cfg['users']) AND $cfg['users'][$_POST['username']] == $_POST['password'])
-	{
-		$_SESSION['user_confirmed'] = true;
-		
-		$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
-		
-		error_log('user:' . $_POST['username'] . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
-	}
-	else
-	{
-		if ($_POST['username'] AND $_POST['password'])
-		{
-			$log_message = 'denied';
-		}
-	}
-
 	if ( $_GET['logout'] )
 	{
-		$_SESSION['user_confirmed'] = false;
-		$log_message = 'out';
+		$log_message = auth::logout();
 		
-		error_log('user:' . $_POST['username'] . ' logged OUT on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . "\n", 3, $users_log);
-		
+		utils::emptyTmp();
 	}
-	
-	utils::emptyTmp();
-	?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta name="robots" content="index, follow" />
-
-	<title>Admin</title>
-<?php
-utils::css( array(
-	'jquery-ui-1.8.16.custom.css',
-	'fileuploader.css',
-	'jquery.toastmessage.css',
-	'admin.css'
-), $_GET);
-
-utils::js(array(
-	'jquery-1.7.min.js',
-	'jquery-ui-1.8.16.custom.min.js',
-	'fileuploader.js',
-	'jquery.toastmessage.js',
-	'jquery.tablesorter.js',
-	'jquery.tablesorter.filter.js',
-	'jquery.combobox.js',
-	'admin.js'
-), $_GET);
-?>
-
-	<script src="./tiny_mce/tiny_mce.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	tinyMCE.init({
-	    // General options
-	    mode : "exact",
-		theme : 'advanced',
-		plugins : 'pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist',
-
-	    // Theme options
-		theme_advanced_toolbar_location : 'top',
-		theme_advanced_toolbar_align : 'left',
-		extended_valid_elements : 'script[language|type]',
-		theme_advanced_resizing : true,
-	    content_css : './sites/default/css/styles.css',
-	    
-	    theme_advanced_statusbar_location : 'bottom',
-
-		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
-	    theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,preview,|,forecolor,backcolor",
-	    theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,|,ltr,rtl,|,fullscreen,|,attribs"
-	});
-	</script>
-
-<?php if ($cfg['modules']['tables']) :?>
-
-	<script src="./js/js/i18n/grid.locale-<?php echo $cfg['sys_lang']; ?>.js" type="text/javascript"></script>
-	<script src="./js/jquery.jqGrid.min.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="./css/ui.jqgrid.css" type="text/css" />
-
-<?php endif; ?>
-	<script type="text/javascript">
-		$(document).ready(function(){
-<?php if ( $_SESSION['user_confirmed'] ): ?>
-			layout.content();
-<?php else: ?>
-			layout.login('<?php echo $log_message; ?>');
-<?php endif; ?>
-			$('button').button();
-		});
-	</script>
-<script type="text/javascript">
-</script>
-
-</head>
-
-<body>
-
-</body>
-</html>
-<?php
 }
-catch (MyExc $e)
+catch (Exception $e)
 {
-	$e->log();
-	echo 'Qualcosa è andato storto: ' . $e->getMessage();
+	error_log($e->getMessage());
+	echo 'Something went wrong: ' . $e->getMessage();
 }
-
+	
 ?>
+<!DOCTYPE html>
+<html lang="en">
+ 	<head>
+ 	
+	 	<meta charset="utf-8" />
+	 	<title>bdus.CMS</title>
+	 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	 	<link href="./css/bootstrap.css" rel="stylesheet" />
+	 	<link href="./css/dataTable-bootstrap.css" rel="stylesheet" />
+	 	<link href="./css/jquery.pnotify.default.css" rel="stylesheet" />
+		<link href="./css/select2.css" rel="stylesheet" />
+		<link href="./css/datepicker.css" rel="stylesheet" />
+		<link href="./css/admin.css" rel="stylesheet" />
+		<link href="./css/fileuploader.css" rel="stylesheet" />
+		<link href="./css/prettify.css" rel="stylesheet" />
+	    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	    <!--[if lt IE 9]>
+	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+ 	</head>
+
+	<body>
+		<?php
+		if (!$_SESSION['user_confirmed'])
+		{
+		?>
+		<style type="text/css">
+			body {
+				padding-top: 40px;
+				padding-bottom: 40px;
+				background-color: #f5f5f5;
+			}
+			
+			.form-signin {
+				max-width: 300px;
+				padding: 19px 29px 29px;
+				margin: 0 auto 20px;
+				background-color: #fff;
+				border: 1px solid #e5e5e5;
+				-webkit-border-radius: 5px;
+					-moz-border-radius: 5px;
+					border-radius: 5px;
+				-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+					-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+					box-shadow: 0 1px 2px rgba(0,0,0,.05);
+			}
+			
+			.form-signin .form-signin-heading, .form-signin .checkbox {
+	      		margin-bottom: 10px;
+	      	}
+	      	
+	      	.form-signin input[type="text"],.form-signin input[type="password"] {
+	      		font-size: 16px;
+	      		height: auto;
+	      		margin-bottom: 15px;
+	      		padding: 7px 9px;
+      		}
+		</style>
+		<div class="container">
+			<?php if ($log_message) {?>
+			<div style="text-align:center" class="text-error"><?php echo $log_message; ?></div>
+			<?php }?>
+			<form class="form-signin" action="./admin" method="post">
+				<h2 class="muted">BDUS.CMS</h2>
+				<h2 class="form-signin-heading"><?php echo tr::get('please_sign_in'); ?></h2>
+				<input type="text" class="input-block-level" placeholder="<?php echo tr::get('email_address'); ?>" name="username">
+				<input type="password" class="input-block-level" placeholder="<?php echo tr::get('password'); ?>" name="password">
+				<button class="btn btn-large btn-primary" type="submit"><?php echo tr::get('sign_in'); ?></button>
+			</form>
+		</div>
+		<?php
+		}
+		else
+		{
+		?>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">    
+		
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+		
+					<a class="brand" href="#">bdus.CMS</a>
+		
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-edit"></i> <?php echo tr::get('articles'); ?> <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#article/addNew"><i class="icon-plus-sign"></i> <?php echo tr::get('add_new_article'); ?></a></li>
+									<li><a href="#article/all"><i class="icon-list-alt"></i> <?php echo tr::get('show_all_articles'); ?></a></li>
+									<li><a href="#translate/article"><i class="icon-globe"></i> <?php echo tr::get('translations'); ?></a></li>
+								</ul>
+							</li>
+							
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-align-justify"></i> <?php echo tr::get('menu'); ?> <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#menu/addNew"><i class="icon-plus-sign"></i> <?php echo tr::get('add_new_menu_item'); ?></a></li>
+									<li><a href="#menu/all"><i class="icon-list-alt"></i> <?php echo tr::get('show_all_menus'); ?></a></li>
+									<li><a href="#translate/menu"><i class="icon-globe"></i> <?php echo tr::get('translations'); ?></a></li>
+								</ul>
+							</li>
+							
+							<li><a href="#media/all"><i class="icon-picture"></i> <?php echo tr::get('media'); ?></a></li>
+							
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-cog"></i> <?php echo tr::get('other'); ?> <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#changelog/show"><i class="icon-asterisk"></i> <?php echo tr::get('changelog'); ?></a></li>
+									<li><a href="#error_log/show"><i class="icon-exclamation-sign"></i> <?php echo tr::get('error_log'); ?></a></li>
+									<li><a href="./" target="_blank"><i class="icon-share-alt"></i> <?php echo tr::get('view_site'); ?></a></li>
+									
+									<li class="dropdown-submenu">
+										<a href="#"><i class="icon-globe"></i> <?php echo tr::get('language'); ?> <b class="caret"></b></a>
+										<ul class="dropdown-menu">
+											<li><a href="./admin:lng-it"><i class="icon-play"></i> Italiano</a></li>
+											<li><a href="./admin:lng-en"><i class="icon-play"></i> English</a></li>
+										</ul>
+									</li>
+									
+									<li><a href="./admin"><i class="icon-repeat"></i> <?php echo tr::get('reload'); ?></a></li>
+									<li class="divider"></li>
+									<li class="dropdown-submenu">
+										<a href="#"><i class="icon icon-eye-open"></i> <?php echo tr::get('template_mng'); ?></a>
+										<ul class="dropdown-menu">
+											<li><a href="#template/index"><i class="icon icon-file"></i> <?php echo tr::get('edit_html'); ?></a></li>
+											<li><a href="#template/css"><i class="icon icon-adjust"></i> <?php echo tr::get('edit_css'); ?></a></li>
+										</ul>
+									</li>
+									
+									<li class="divider"></li>
+									<li><a href="#docs/tmpl/faq"><i class="icon-book"></i> FAQ</a></li>
+									
+									<li class="divider"></li>
+									<li class="dropdown-submenu">
+										<a href="#">Template documentation</a>
+										<ul class="dropdown-menu">
+											<li><a href="#docs/tmpl/intro"><i class="icon-book"></i> Intro</a></li>
+											<li><a href="#docs/tmpl/publicHtml"><i class="icon-book"></i> publicHtml</a></li>
+											<li><a href="#docs/tmpl/dressHtml"><i class="icon-book"></i> dressHtml</a></li>
+											<li><a href="#docs/tmpl/example"><i class="icon-file"></i> Template Example</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							
+							<li><a href="./admin:logout"><i class="icon-off"></i> <?php echo tr::get('logout'); ?></a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="tabbable">
+			
+				<ul class="nav nav-tabs" id="tabs" data-tabs="tabs">
+					<li class="active"><a href="#home">Welcome</a></li>
+				</ul>
+				
+				<div class="tab-content">
+					<div class="tab-pane active" id="home">
+						<div class="hero-unit">
+							<p>Welcome to</p>
+							<h1>BraDy.CMS</h1>
+							<p>An opensource, highly customizable, easy to setup & use php5 mysql/sqlite CMS</p>
+						</div>
+						
+						<div class="media">
+							<img src="./img/octocat.png" alt="octocats GITHUB" class="pull-left" style="width:150px" />
+							
+							<div class="media-body">
+								<h3 class="media-heading">BraDyCMS is on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">Github</a></h3>
+								<p>Fork it on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">https://github.com/jbogdani/BraDyCMS</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<footer class="footer">
+			<h4>by BraDypUS <small>COMMUNICATING CULTURAL HERITAGE</small></h4>
+		</footer>
+	<?php } ?>
+		
+	<script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
+	<script src="./js/jquery-1.9.0.min.js"></script>
+	<script src="./js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="./js/jquery.mjs.nestedSortable.js"></script>
+	<script src="./js/bootstrap.js"></script>
+	<script src="./js/jquery.dataTables.js"></script>
+	<script src="./js/dataTable-bootstrap.js"></script>
+	<script src="./js/admin.js"></script>
+	<script src="./js/jquery.ba-bbq.js"></script>
+	<script src="./js/jquery.pnotify.js"></script>
+	<script src="./js/bootstrap-datepicker.js"></script>
+	<script src="./js/select2.js"></script>
+	<script src="./tiny_mce/tiny_mce.js"></script>
+	<script src="./js/fileuploader.js"></script>
+	<script src="./js/prettify.js"></script>
+	
+  </body>
+</html>

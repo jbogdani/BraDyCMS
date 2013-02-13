@@ -23,15 +23,13 @@ class ClassAutoloader
 		if (preg_match('/_ctrl/', $className))
 		{
 			$mod = str_replace('_ctrl', null, $className);
-				
-			if(file_exists('modules/' . $mod . '/' . $mod . '.php'))
+			if(file_exists(MAIN_DIR . 'modules/' . $mod . '/' . $mod . '.php'))
 			{
-				require_once 'modules/' . $mod . '/' . $mod . '.php';
+				require_once MAIN_DIR . 'modules/' . $mod . '/' . $mod . '.php';
 			}
 			else
 			{
 				return false;
-				//throw new myException('Error: Can not load class `' . $className . '` (file: ' . MOD_DIR . mod . '/' . $mod . '.php)');
 			}
 		}
 		else
@@ -47,7 +45,6 @@ class ClassAutoloader
 			else
 			{
 				return false;
-				//throw new MyExc('Impossibile caricare la classe `' . $className . '`');
 			}
 		}
 		

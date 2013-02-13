@@ -24,9 +24,9 @@ class DB {
 	public function __construct()
 	{
 		// try to get mysql config (mysql is the default connection)
-		if (file_exists(ROOT . 'sites/default/cfg/connect.ini'))
+		if (file_exists(MAIN_DIR . 'sites/default/cfg/connect.ini'))
 		{
-			$conn_arr = parse_ini_file( ROOT . 'sites/default/cfg/connect.ini', true);
+			$conn_arr = parse_ini_file( MAIN_DIR . 'sites/default/cfg/connect.ini', true);
 
 			if (in_array($_SERVER['HTTP_HOST'], array_keys($conn_arr)))
 			{
@@ -38,22 +38,22 @@ class DB {
 			}
 			else
 			{
-				throw MyExc('Mancano i dati di connessione per l\'host: ' . $_SERVER['HTTP_HOST']);
+				throw Exception('Mancano i dati di connessione per l\'host: ' . $_SERVER['HTTP_HOST']);
 			}
 			
 			$conn_string = 'mysql:host=' . $conn_def_arr['host'] . ';dbname=' . $conn_def_arr['db'];
 		}
 		
 		// try to get sqlite config
-		else if (file_exists(ROOT . 'sites/default/cfg/database.sqlite'))
+		else if (file_exists(MAIN_DIR . 'sites/default/cfg/database.sqlite'))
 		{
-			$conn_string = 'sqlite:' . ROOT . 'sites/default/cfg/database.sqlite';
+			$conn_string = 'sqlite:' . MAIN_DIR . 'sites/default/cfg/database.sqlite';
 		}
 		
 		// no database found
 		else
 		{
-			throw new MyExc('Manca il file di configurazione del database per questo sito');
+			throw new Exception('Manca il file di configurazione del database per questo sito');
 		}
 		
 		try
@@ -67,7 +67,7 @@ class DB {
 			
 		catch (PDOException $e)
 		{
-			throw new myExc($e);
+			throw new Exception($e);
 		}
 	}
 
@@ -77,7 +77,6 @@ class DB {
 	 * @param string $query		query string to prepare & execute
 	 * @param array $values		array of values to use in execute statement
 	 * @param string $type		(id | read | false) if read query result will be returned (read query); if id last inserted id will be returned; if false boolean will be returned
-	 * @throws MyExc
 	 */
 	public function executeQuery( $query, $values = false, $type = false )
 	{
@@ -97,20 +96,21 @@ class DB {
 					return $sql->fetchAll(PDO::FETCH_ASSOC);
 					break;
 						
-				case false:
-					return $flag_ret;
-					break;
-						
 				case 'id':
+					return $this->db->lastInsertId();
+					break;
+				
+				case false:
 				default:
-					return $this->db->lastInsertId($type);
+					return $flag_ret;
 					break;
 			}
 				
 		}
 		catch (PDOException $e)
 		{
-			throw new MyExc($e);
+			error_log($e->getMessage() . ' :: ' . $query . ' :: ' . var_export($values, 1) . ' :: ' . $type);
+			throw new Exception($e);
 		}
 	}
 
@@ -134,6 +134,22 @@ class DB {
 			return htmlentities($text, ENT_QUOTES, 'UTF-8');
 		}
 	}
+	
+	public function commit()
+	{
+		$this->db->commit();
+	}
+	
+	public function rollBack()
+	{
+		$this->db->rollBack();
+	}
+	
+	public function beginTransaction()
+	{
+		$this->db->beginTransaction();
+	}
+	
 
 
 }

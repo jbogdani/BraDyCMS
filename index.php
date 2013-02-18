@@ -12,11 +12,9 @@ try
 
 	require_once 'lib/globals.inc';
 
-	$str = './?art_title=comunismo-negato';
+	$out = new Out($_GET, $_SESSION['lang']);
 	
-	$html = new publicHtml($_GET, $_SESSION['lang']);
-	
-	$dress = new dressHtml($html);
+	$htmlOut = new htmlOut($out);
 	
 	$twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), unserialize(CACHE));
 	if ($__debug)
@@ -24,8 +22,8 @@ try
 		$twig->addExtension(new Twig_Extension_Debug());
 	}
 	echo $twig->render('index.html', array(
-			'html'=>$html,
-			'dress'=>$dress
+			'out'=>$out,
+			'html'=>$htmlOut
 	));
 }
 catch (Exception $e)

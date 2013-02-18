@@ -6,22 +6,22 @@
  * @since			Dec 18, 2012
  */
  
-class dressHtml
+class htmlOut
 {
-	private $html;
+	private $out;
 	
 	
-	public function __construct(publicHtml $publicHtml)
+	public function __construct(Out $out)
 	{
-		$this->html = $publicHtml;
+		$this->out = $out;
 	}
 	
 	public function metadata()
 	{
-		$html = "\n\t" . '<title>' . $this->html->getPageData('title') . ' </title>'
-			. "\n\t" . '<meta name="description" content="' . $this->html->getPageData('description') . '" />'
-			. "\n\t" . '<meta name="keywords" content="' . $this->html->getPageData('keywords') . '" />'
-			. "\n\t" . '<meta lang="' . $this->html->getPageData('lang') . '" />';
+		$html = "\n\t" . '<title>' . $this->out->getPageData('title') . ' </title>'
+			. "\n\t" . '<meta name="description" content="' . $this->out->getPageData('description') . '" />'
+			. "\n\t" . '<meta name="keywords" content="' . $this->out->getPageData('keywords') . '" />'
+			. "\n\t" . '<meta lang="' . $this->out->getPageData('lang') . '" />';
 		
 		return $html;
 	}
@@ -30,7 +30,7 @@ class dressHtml
 	{
 		if ($menu)
 		{
-			$menu_arr = $this->html->getMenu($menu);
+			$menu_arr = $this->out->getMenu($menu);
 		}
 		else if ($data)
 		{
@@ -57,13 +57,13 @@ class dressHtml
 			}
 			else
 			{
-				$html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . '">'
+				$html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . ($menu['current'] ? 'active' : '') . '">'
 						. '<a href="' . utils::format_link($menu['href']) . '" ' 
 								. ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
 								. ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')
 								. ($menu['sub'] ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')
 								. '>' 
-								. $menu['item'] 
+								. $menu['item']
 								. ($menu['sub'] ? ' <b class="caret"></b>' : '')
 						. '</a>';
 			}
@@ -82,7 +82,7 @@ class dressHtml
 	
 	public function langMenu($flags = false, $no_text = false)
 	{
-		$lang_arr = $this->html->getLanguages();
+		$lang_arr = $this->out->getLanguages();
 		
 		$html = '<ul class="menu lang">';
 		
@@ -106,7 +106,7 @@ class dressHtml
 	public function searchForm()
 	{
 		$html = '<form action="javascript:void(0);" id="searchForm">'
-				. '<input class="search" type="search" placeholder="' . tr::get('search_site') . '" name="search" id="search" />'
+				. '<input class="search-query" type="search" placeholder="' . tr::get('search_site') . '" name="search" id="search" />'
 			. '</form>';
 
 		return $html;
@@ -114,21 +114,17 @@ class dressHtml
 	
 	public function searchResults()
 	{
-		if ($this->html->getContext() != 'search')
-		{
-			return false;
-		}
-		$art_list = $this->html->getArticleList();
+		$art_list = $this->out->getSearchResults();
 		
 		$tot_found = count($art_list);
 		
 		if ( $tot_found == 0 )
 		{
-			$html = '<h1>' . sprintf(tr::get('no_result_for_query'), $this->html->getSearchString()). '</h1>';
+			$html = '<h4>' . sprintf(tr::get('no_result_for_query'), $this->out->getSearchString()). '</h4>';
 		}
 		else
 		{
-			$html = '<h1>' . sprintf(tr::get('x_results_for_query'), $this->html->getSearchString(), $tot_found) . '</h1>';
+			$html = '<h4>' . sprintf(tr::get('x_results_for_query'), $this->out->getSearchString(), $tot_found) . '</h4>';
 			
 			$html .= '<section class="blog search">';
 				
@@ -144,14 +140,13 @@ class dressHtml
 			}
 			
 			$html .= '</section>';
-			
-			return $html;
 		}
+		return $html;
 	}
 	
 	public function articleBody($get = false)
 	{
-		$art = $this->html->getArticleBody($get = false);
+		$art = $this->out->getArticle();
 		
 		if ($art)
 		{
@@ -171,7 +166,7 @@ class dressHtml
 	
 	public function tagBlog()
 	{
-		$art_list = $this->html->getArticlesByTag(func_get_args());
+		$art_list = $this->out->getArticlesByTag(func_get_args());
 		
 		if (is_array($art_list))
 		{
@@ -195,20 +190,38 @@ class dressHtml
 	
 	public function sectionBlog($section = false)
 	{
-		if ($this->html->getContext() != 'section')
+		if ($this->out->getContext() != 'section')
 		{
 			return false;
 		}
 		
-		$art_list = $this->html->getArticleList($section);
+		$art_list = $this->out->getArticlesBySection($section);
 		
-		if (is_array($art_list))
+		$html = '';
+		
+		if ($art_list['head']['title'] && $art_list['head']['text'] && is_array($art_list['list']))
 		{
-			$html = '<section class="blog section ' . ( $section ? $section : $this->html->getSectionName() ) . '">';
-			
-			foreach ( $art_list as $art )
+			$html .= '<section class="section blog ' . ( $section ? $section : $this->out->getSectionName() ) . '">';
+			$close_section = true;
+		}
+		
+		if (is_array($art_list['head']))
+		{
+			if ($art_list['head']['title'] && $art_list['head']['text'])
 			{
-				$html .= '<article>'
+				$html .= '<article class="head">' 
+					. ( $art_list['head']['title'] ? '<h1>'  . $art_list['head']['title'] . '</h1>' : '')
+					. $art_list['head']['text'] 
+					. '</article>';
+			}
+			
+		}
+		
+		if (is_array($art_list['list']))
+		{
+			foreach ( $art_list['list'] as $art )
+			{
+				$html .= '<article class="list">'
 						. ($art['title'] ? ' <h3><a href="' . $art['link']  . '">' . $art['title'] . '</a></h3>' : '')
 						. '<div class="content">' . $art['summary'] . '</div>'
 						. '<div class="read_more">'
@@ -216,11 +229,15 @@ class dressHtml
 						. '</div>'
 					. '</article>';
 			}
-			$html .= '</section>';
 		}
 		else
 		{
-			$html = '<section class="error">' . tr::get('no_articles_in_section'). '</section>';
+			$html = '<div class="error">' . tr::get('no_articles_in_section'). '</div>';
+		}
+		
+		if ($close_section)
+		{
+			$html .= '</section>';
 		}
 		
 		return $html;
@@ -228,36 +245,58 @@ class dressHtml
 	
 	public function siblingsBlog()
 	{
-		if ($this->html->getContext() != 'article')
+		$art_list = $this->out->getArticleSiblings();
+	
+		if (!is_array($art_list))
 		{
 			return false;
 		}
-	
-		$art_list = $this->html->getArticleList();
-	
-		if (is_array($art_list))
-		{
-			$html = '<section class="blog siblings">'
-					. '<h1>' . tr::get('from_same_section') . '</h3>';
-				
-			foreach ( $art_list as $art )
-			{
-				$html .= '<article>'
-						. ($art['title'] ? ' <h3><a href="' . $art['link']  . '">' . $art['title'] . '</a></h3>' : '')
-						. '<div class="content">' . $art['summary'] . '</div>'
-						. '<div class="read_more">'
-							. '<a href="' . $art['link']  . '">' . tr::get('read_more') . '</a>'
-						. '</div>'
-					. '</article>';
-			}
-			$html .= '</section>';
+		
+		$html = '<section class="blog siblings">'
+				. '<h1>' . tr::get('from_same_section') . '</h3>';
 			
-			return $html;
-		}
-		else
+		foreach ( $art_list as $art )
 		{
-			return false;
+			$html .= '<article>'
+					. ($art['title'] ? ' <h3><a href="' . $art['link']  . '">' . $art['title'] . '</a></h3>' : '')
+					. '<div class="content">' . $art['summary'] . '</div>'
+					. '<div class="read_more">'
+						. '<a href="' . $art['link']  . '">' . tr::get('read_more') . '</a>'
+					. '</div>'
+				. '</article>';
 		}
+		$html .= '</section>';
+		
+		return $html;
+	}
+	
+	public function GA($id = false, $restrict_domain = false)
+	{
+		$cfg_ga= cfg::get('ga');
+		
+		$id = $id ?: $cfg_ga['id'];
+		
+		$restrict_domain = $restrict_domain ?: $cfg_ga['domain'];
+		
+		
+		if (
+				!$restrict_domain || 
+				(preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) )
+				)
+		{
+			$html = '<script type="text/javascript">'
+					. 'var _gaq = _gaq || [];'
+					. "_gaq.push(['_setAccount', '" . $id . "']);"
+					. " _gaq.push(['_trackPageview']);"
+					. "(function() {"
+					. "var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;"
+					. "ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';"
+					. "var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);"
+					. '})();'
+				. '</script>';
+		}
+		
+		return $html;
 	}
 		
 }

@@ -12,7 +12,7 @@ class template_ctrl
 	{
 		switch ($file)
 		{
-			case 'index':
+			case 'html':
 				$full_file = './sites/default/index.html';
 				break;
 				
@@ -37,7 +37,8 @@ class template_ctrl
 					'filename' => $full_file,
 					'content'=>$content,
 					'no_tab_content' => str_replace("\t", '   ', $content),
-					'lang' => $file
+					'lang' => $file,
+					'uid' => uniqid('uid')
 			));
 		
 		}
@@ -46,9 +47,10 @@ class template_ctrl
 	
 	public static function save($file, $post)
 	{
+		// TODO: translate
 		switch ($file)
 		{
-			case 'index':
+			case 'html':
 				$full_file = './sites/default/index.html';
 				break;
 		
@@ -79,7 +81,7 @@ class template_ctrl
 				
 				@fclose($f);
 				
-				$ret = array('status' => 'success', 'text' => 'File udated');
+				$ret = array('status' => 'success', 'text' => 'File updated');
 				
 			}
 			catch(Exception $e)
@@ -92,9 +94,9 @@ class template_ctrl
 		}
 	}
 	
-	public static function index()
+	public static function html()
 	{
-		self::edit('index');
+		self::edit('html');
 	}
 	
 	public static function css()

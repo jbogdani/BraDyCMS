@@ -270,7 +270,6 @@ class utils
 			);
 
 			$href = preg_replace($pattern, $replacement, $href);
-			
 			return $href;
 		}
 	}

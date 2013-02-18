@@ -255,13 +255,13 @@ class Article
 	}
 	
 	
-	public function getSiblings($id, $section, $lang = false)
+	public function getSiblings($text_id, $lang = false)
 	{
 		
 		$query = 'SELECT ' . $this->previewFlds()
 			. ' FROM `' . PREFIX . '__articles` WHERE '
-			. " `section` = '{$section}'"
-			. ' AND `id` != ' . $id
+			. " `section` = (SELECT `section` FROM `' . PREFIX . '__articles` WHERE `text_id` = `" . $text_id . "`)"
+			. " AND `text_id` != '" . $text_id . "'"
 			. ' AND ' . $this->valid_art_stat()
 			. ' ORDER BY `sort`';
 		
@@ -280,7 +280,7 @@ class Article
 	
 	public function search($string, $lang = false)
 	{
-		$statement = "SELECT ' . $this->previewFlds() . ' FROM `" . PREFIX . "__articles` WHERE "
+		$statement = "SELECT " . $this->previewFlds() . " FROM `" . PREFIX . "__articles` WHERE "
 				. " 	`title`		LIKE '%" . $string . "%' "
 				. " OR	`summary`	LIKE '%" . $string . "%' "
 				. " OR	`text`		LIKE '%" . $string . "%' "

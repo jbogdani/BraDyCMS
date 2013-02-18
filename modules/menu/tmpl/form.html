@@ -16,7 +16,7 @@
 		<tr>
 			<th>{{ tr.get('link') }}</th>
 			<td><input type="text" name="href"
-				value="{% if menu.href %}{{ menu.href }}{% else %}./?art_title={% endif %}" /></td>
+				value="{% if menu.href %}{{ menu.href }}{% else %}art_title={% endif %}" /></td>
 		</tr>
 		<tr>
 			<th>{{ tr.get('target') }}</th>
@@ -135,7 +135,7 @@
 <script>
 	(function(){
 		$('td.art').click(function(){
-			$('#menu_edit{{ uid }} input[name="href"]').val('./art_title=' + $(this).text());
+			$('#menu_edit{{ uid }} input[name="href"]').val('art_title=' + $(this).text());
 		});
 		
 		$('button.home').click(function(){
@@ -147,7 +147,7 @@
 		});
 
 		$('td.sec').click(function(){
-			$('#menu_edit{{ uid }} input[name="href"]').val('./section=' + $(this).text());
+			$('#menu_edit{{ uid }} input[name="href"]').val('section=' + $(this).text());
 		});
 		
 		$('table.list').dataTable({

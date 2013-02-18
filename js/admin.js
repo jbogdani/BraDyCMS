@@ -126,7 +126,7 @@ var admin = {
 	        					+ (data ? data : 'No content found') 
 	        					+ '</div>');
 	        		admin.tabs.start(tab);
-	        		admin.tabs.tab.find('li a:last').tab('show');
+	        		admin.tabs.tab.find('li a:last').data('opts', opts).tab('show');
 	        	});
 	        } else {
 	        	return false;
@@ -135,16 +135,11 @@ var admin = {
 	    
 	    reloadActive: function(){
 	    	var d_active = $('div.tab-content div.active'), 
-	    	a_state = tab.find('li.active a').text();
-	    	a_state = a_state.substring(0, a_state.length - 1).split('/');
+	    	opts = tab.find('li.active a').data('opts');
 	    	
-	    	var url = 'controller.php?obj=' + a_state[0] + '_ctrl&method='+ a_state[1];
+	    	var url = 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' );
 	    	
-	    	if (a_state[2]){
-	    		url += '&param[]=' + a_state.slice(2).join('&param[]=');
-	    	}
-	    	d_active.html('<img src="img/spinner.gif" alt="loading..." />').load(url);
-	    	
+	    	d_active.html('<img src="img/spinner.gif" alt="loading..." />').load(url, opts.data);
 	    },
 	    
 	    closeActive: function(state){

@@ -1,25 +1,12 @@
-[03-Feb-2013 16:56:14 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/bdusCMS-bs/lib/auth.inc on line 49
-[03-Feb-2013 16:56:14 UTC] PHP Stack trace:
-[03-Feb-2013 16:56:14 UTC] PHP   1. {main}() /Users/jbogdani/www/bdusCMS-bs/admin.php:0
-[03-Feb-2013 16:56:14 UTC] PHP   2. auth::logout() /Users/jbogdani/www/bdusCMS-bs/admin.php:17
-[03-Feb-2013 16:56:14 UTC] PHP   3. error_log() /Users/jbogdani/www/bdusCMS-bs/lib/auth.inc:49
-[04-Feb-2013 16:19:45 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/bdusCMS-bs/lib/auth.inc on line 49
-[04-Feb-2013 16:19:45 UTC] PHP Stack trace:
-[04-Feb-2013 16:19:45 UTC] PHP   1. {main}() /Users/jbogdani/www/bdusCMS-bs/admin.php:0
-[04-Feb-2013 16:19:45 UTC] PHP   2. auth::logout() /Users/jbogdani/www/bdusCMS-bs/admin.php:17
-[04-Feb-2013 16:19:45 UTC] PHP   3. error_log() /Users/jbogdani/www/bdusCMS-bs/lib/auth.inc:49
-[05-Feb-2013 16:44:16 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/bdusCMS-bs/lib/auth.inc on line 49
-[05-Feb-2013 16:44:16 UTC] PHP Stack trace:
-[05-Feb-2013 16:44:16 UTC] PHP   1. {main}() /Users/jbogdani/www/bdusCMS-bs/admin.php:0
-[05-Feb-2013 16:44:16 UTC] PHP   2. auth::logout() /Users/jbogdani/www/bdusCMS-bs/admin.php:17
-[05-Feb-2013 16:44:16 UTC] PHP   3. error_log() /Users/jbogdani/www/bdusCMS-bs/lib/auth.inc:49
-[13-Feb-2013 07:16:40 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/git.bdusCMS/lib/auth.inc on line 49
-[13-Feb-2013 07:16:40 UTC] PHP Stack trace:
-[13-Feb-2013 07:16:40 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/admin.php:0
-[13-Feb-2013 07:16:40 UTC] PHP   2. auth::logout() /Users/jbogdani/www/git.bdusCMS/admin.php:17
-[13-Feb-2013 07:16:40 UTC] PHP   3. error_log() /Users/jbogdani/www/git.bdusCMS/lib/auth.inc:49
-[13-Feb-2013 07:18:01 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/git.bdusCMS/lib/auth.inc on line 49
-[13-Feb-2013 07:18:01 UTC] PHP Stack trace:
-[13-Feb-2013 07:18:01 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/admin.php:0
-[13-Feb-2013 07:18:01 UTC] PHP   2. auth::logout() /Users/jbogdani/www/git.bdusCMS/admin.php:17
-[13-Feb-2013 07:18:01 UTC] PHP   3. error_log() /Users/jbogdani/www/git.bdusCMS/lib/auth.inc:49
+[18-Feb-2013 15:30:47 UTC] PHP Parse error:  syntax error, unexpected '';' (T_ENCAPSED_AND_WHITESPACE) in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 296
+[18-Feb-2013 15:30:47 UTC] PHP Stack trace:
+[18-Feb-2013 15:30:47 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[18-Feb-2013 15:30:47 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[18-Feb-2013 15:30:58 UTC] PHP Parse error:  syntax error, unexpected '';' (T_ENCAPSED_AND_WHITESPACE) in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 296
+[18-Feb-2013 15:30:58 UTC] PHP Stack trace:
+[18-Feb-2013 15:30:58 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[18-Feb-2013 15:30:58 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[18-Feb-2013 15:31:01 UTC] PHP Parse error:  syntax error, unexpected '';' (T_ENCAPSED_AND_WHITESPACE) in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 296
+[18-Feb-2013 15:31:01 UTC] PHP Stack trace:
+[18-Feb-2013 15:31:01 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[18-Feb-2013 15:31:01 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0

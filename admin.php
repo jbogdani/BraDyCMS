@@ -155,7 +155,7 @@ catch (Exception $e)
 									<li class="dropdown-submenu">
 										<a href="#"><i class="icon icon-eye-open"></i> <?php echo tr::get('template_mng'); ?></a>
 										<ul class="dropdown-menu">
-											<li><a href="#template/index"><i class="icon icon-file"></i> <?php echo tr::get('edit_html'); ?></a></li>
+											<li><a href="#template/html"><i class="icon icon-file"></i> <?php echo tr::get('edit_html'); ?></a></li>
 											<li><a href="#template/css"><i class="icon icon-adjust"></i> <?php echo tr::get('edit_css'); ?></a></li>
 										</ul>
 									</li>
@@ -168,8 +168,8 @@ catch (Exception $e)
 										<a href="#">Template documentation</a>
 										<ul class="dropdown-menu">
 											<li><a href="#docs/tmpl/intro"><i class="icon-book"></i> Intro</a></li>
-											<li><a href="#docs/tmpl/publicHtml"><i class="icon-book"></i> publicHtml</a></li>
-											<li><a href="#docs/tmpl/dressHtml"><i class="icon-book"></i> dressHtml</a></li>
+											<li><a href="#docs/tmpl/Out"><i class="icon-book"></i> Out</a></li>
+											<li><a href="#docs/tmpl/htmlOut"><i class="icon-book"></i> htmlOut</a></li>
 											<li><a href="#docs/tmpl/example"><i class="icon-file"></i> Template Example</a></li>
 										</ul>
 									</li>

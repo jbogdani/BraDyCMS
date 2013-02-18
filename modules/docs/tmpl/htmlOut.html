@@ -1,9 +1,9 @@
 <h1>Template documentation</h1>
 
-<h2>class dressHtml</h2>
-<p class="lead">dressHtml functions return is build on the top <a href="#docs/tmpl/publicHtml">publicHtml</a> and returns ready to use, well formatted html.</p>
+<h2>class htmlOut</h2>
+<p class="lead">htmlOut functions return is build on the top <a href="#docs/tmpl/Out">Out</a> and returns ready to use, well formatted html.</p>
 
-<pre class="prettyprint">Template: {% raw %} {{ dress. }} {% endraw %}</pre>
+<pre class="prettyprint">Template: {% raw %} {{ html. }} {% endraw %}</pre>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -17,7 +17,7 @@
 			<th>metadata()</th>
 			<td>(string) Returns well-formatted html of page metadata</td>
 			<td>
-				<code>{% raw %}{{ dress.metadata() }}{% endraw %}</code>
+				<code>{% raw %}{{ html.metadata() }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;title&#62;Home Page&#60;/title&#62;
 &#60;meta name="description" content="Web sites main description" /&#62;
@@ -30,7 +30,7 @@
 			<th>menu('menuname', 'css_class_name')</th>
 			<td>(string) Returns well-formatted html of menu items</td>
 			<td>
-				<code>{% raw %}{{ dress.menu('main', 'nav') }}{% endraw %}</code>
+				<code>{% raw %}{{ html.menu('main', 'nav') }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;ul class="menu nav"&#62;
   &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Home&#60;/a&#62;&#60;/li&#62;
@@ -54,7 +54,7 @@
 			<p>If not_text is true language text will not be shown</p>
 			<p>Current language li has class current</p></td>
 			<td>
-				<code>{% raw %}{{ dress.langMenu(true) }}{% endraw %}</code>
+				<code>{% raw %}{{ html.langMenu(true) }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;ul class="menu lang"&#62;
   &#60;li class="current"&#62;
@@ -72,7 +72,7 @@
 		
 		<tr>
 			<th>searchForm()</th>
-			<td>(string) Returns well-formatted html of search form & input
+			<td>(string) Returns well-formatted html of search form &nbsp; input
 			<p>Form submission should be done with javascript:</p>
 			<pre class="prettyprint">$('#searchForm').submit(function(){
   if($('#search').val() != '' ){
@@ -80,7 +80,7 @@
   }
 });</pre></td>
 			<td>
-				<code>{% raw %}{{ dress.searchForm() }}{% endraw %}</code>
+				<code>{% raw %}{{ html.searchForm() }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;form action="javascript:void(0);" id="searchForm"&#62;
   &#60;input class="search" type="search" placeholder="Search in web site" name="search" id="search" /&#62;
@@ -93,7 +93,7 @@
 			<td>(string) Returns well-formatted html of list of articles found by search.
 			<p>THis function will return false if context is not search!</p></td>
 			<td>
-				<code>{% raw %}{{ dress.searchResults() }}{% endraw %}</code>
+				<code>{% raw %}{{ html.searchResults() }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;h1&#62;10 articles found searching &#60;code&#62;web&#60;/code&#62;&#60;/h1&#62;
 &#60;section class="blog search"&#62;
@@ -122,7 +122,7 @@
 			<td>(string) Returns well-formatted html of article content.
 			<p>This function will return false if context is not article!</p></td>
 			<td>
-				<code>{% raw %}{{ dress.articleBody() }}{% endraw %}</code>
+				<code>{% raw %}{{ html.articleBody() }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;section&#62;
 &#60;article&#62;
@@ -142,7 +142,7 @@
 			<td>(string) Returns well-formatted html of list of articles found by tag search.
 			<p>If multiple tags are searched AND statement will be applied</p></td>
 			<td>
-				<code>{% raw %}{{ dress.tagBlog('web', 'latest') }}{% endraw %}</code>
+				<code>{% raw %}{{ html.tagBlog('web', 'latest') }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;section class="blog tags"&#62;
   &#60;article&#62;
@@ -170,10 +170,16 @@
 			<td>(string) Returns well-formatted html of list of section articles.
 			<p>This function will return false if context is not section!</p></td>
 			<td>
-				<code>{% raw %}{{ dress.sectionBlog('web') }}{% endraw %}</code>
+				<code>{% raw %}{{ html.sectionBlog('web') }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;section class="blog section web"&#62;
-  &#60;article&#62;
+  
+  &#60;article class="head" &#62;
+    &#60;h1&#62;Web design&#60;/h1&#62;
+    This section collects some of our best works....
+  &#60;/article&#62;
+    
+  &#60;article class="list" &#62;
     &#60;h3&#62;&#60;a href="/en/web-design"&#62;Web design&#60;/a&#62;&#60;/h3&#62;
     &#60;div class="content"&#62;
       Some of our latest work on web design...
@@ -198,7 +204,7 @@
 			<td>(string) Returns well-formatted html of list of current article's siblings.
 			<p>This function will return false if context is not article!</p></td>
 			<td>
-				<code>{% raw %}{{ dress.siblingsBlog() }}{% endraw %}</code>
+				<code>{% raw %}{{ html.siblingsBlog() }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;section class="blog siblings"&#62;
   &#60;article&#62;
@@ -217,6 +223,29 @@
   
   ...
 &#60;/section&#62;
+</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>GA(id, restrict_domain)</th>
+			<td>(string) Returns javascript code for Google Analytics Tracking.
+			<p>If id or restriced domain are not provided, the configuration options will be used.</p>
+			<p>If restricted domain is provided (as argument or in configuration file) the GA will be shown only if domain matches.</p>
+			</td>
+			<td>
+				<code>{% raw %}{{ html.GA }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;script&#62;
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'GA-ID']);
+	_gaq.push(['_trackPageview']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+&#60;/script&#62;
 </pre>
 			</td>
 		</tr>

@@ -1,0 +1,280 @@
+<h1>Template documentation</h1>
+
+<h2>class Out</h2>
+<p class="lead">Out functions return structured data (strings / arrays). If you are looking for ready to use, well formatted html
+please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
+
+<pre class="prettyprint">Template: {% raw %} {{ out. }} {% endraw %}</pre>
+
+<table class="table table-striped">
+
+	<thead>
+		<tr>
+			<th class="span2">Method</th>
+			<th class="span4">Returns</th>
+			<th class="span6">Example</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+	
+		<tr>
+			<th>getContext()</th>
+			<td>(string) Returns context of usage: article, section, search or home</td>
+			<td>
+				<code>{% raw %}{{ out.getContext() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">section</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getArticle(article-text-id)</th>
+			<td>(string|array) Returns element of article array data. If article-text-id is missing and context is article, current article array will be returned.</td>
+			<td>
+				<code>{% raw %}{{ out.getArticle() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   'id' => integer,
+   'title' => string,
+   'text_id' => string,
+   'sort' => integer,
+   'summary' => string,
+   'text' => string,
+   'keywords' => string,
+   'author' => string,
+   'status' => string,
+   'section' => string,
+   'tags' => string,
+   'created' => datestamp,
+   'publish_on' => datestamp,
+   'expires' => datestamp,
+   'updated' => boolean
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getArticlesBySection('section_name')</th>
+			<td>(array|false) Returns list of articles of section `section_name` as array of `list` array index. If an article with text id 'section_name' exists it will be returned as content of the `head` array index</td>
+			<td>
+				<code>{% raw %}{{ out.getArticlesByTag('news') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   'list' => array(		
+	   array(
+	     'id' => integer,
+	     'title' => string,
+	     'text_id' => string,
+	     'author' => string,
+	     'summary' => string,
+	     'section' => string,
+	     'tags' => string
+	   ),
+	   array(...),
+	   ...
+	),
+   'head' => array(
+      'id' => integer,
+      'title' => string,
+      'text_id' => string,
+      'sort' => integer,
+      'summary' => string,
+      'text' => string,
+      'keywords' => string,
+      'author' => string,
+      'status' => string,
+      'section' => string,
+      'tags' => string,
+      'created' => datestamp,
+      'publish_on' => datestamp,
+      'expires' => datestamp,
+      'updated' => boolean
+	)
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getArticleSiblings()</th>
+			<td>(array|false) If context is article returns array of article siblings (having same section)
+			<p>::Same as get('siblings'))</p></td>
+			<td>
+				<code>{% raw %}{{ out.getArticleSiblings() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   array(
+     'id' => integer,
+     'title' => string,
+     'text_id' => string,
+     'author' => string,
+     'summary' => string,
+     'section' => string,
+     'tags' => string
+   ),
+   array(...),
+   ...
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getArticlesByTag('tag1', 'tag2', ...)</th>
+			<td>(array|false) Returns list of articles tagged but tag. If multiple tags are requested AND statement is used</td>
+			<td>
+				<code>{% raw %}{{ out.getArticlesByTag('news', 'latest') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   array(
+     'id' => integer,
+     'title' => string,
+     'text_id' => string,
+     'author' => string,
+     'summary' => string,
+     'section' => string,
+     'tags' => string
+   ),
+   array(...),
+   ...
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getPageData(el)</th>
+			<td>(array|string) Returns document metadata array (all metadata) or string (single metadata). Available documenta metadata are
+			<ul>
+				<li>title</li>
+				<li>description</li>
+				<li>keywords</li>
+				<li>lang</li>
+			</ul></td>
+			<td>
+				<code>{% raw %}{{ out.getPageData('title') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">Home Page</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getMenu(menu_name)</th>
+			<td>(array) Returns structured (multi-dimension) array with menu data
+			<ul>
+				<li>title</li>
+				<li>description</li>
+				<li>keywords</li>
+				<li>lang</li>
+			</ul></td>
+			<td>
+				<code>{% raw %}{{ out.getMenu('main') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+  array(
+     'id' => integer,
+     'item' => string,
+     'href' => string,
+     'target' => string,
+     'title' => string,
+     'menu' => string,
+     'sort' => integer,
+     'subof' => integer,
+     'current' => boolean,
+     'sub' => array(
+       array(
+         'id' => integer,
+         'item' => string,
+         'href' => string,
+         'target' => string,
+         'title' => string,
+         'menu' => string,
+         'sort' => integer,
+         'subof' => string,
+         'sub' => array()
+       ),
+       array(...),
+       ...
+     )
+   )
+  ),
+  array(...),
+  ...
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getLanguages()</th>
+			<td>
+				(array) Returns array of available languages<br />
+				<ul>
+					<li>code</li>
+					<li>string</li>
+					<li>is_current</li>
+					<li>href</li>
+				</ul>
+			</td>
+			<td>
+				<code>{% raw %}{{ out.getLanguages() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   array(
+     'code'=>'it',
+     'string'=>'Italiano',
+     'is_current'=>true,
+     'href'=>'http://bradypus.net/it'
+   ),
+   array(...)
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getSearchResults()</th>
+			<td>(array|false) Returns list of articles matched by search string.</td>
+			<td>
+				<code>{% raw %}{{ out.getSearchResults() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   array(
+     'id' => integer,
+     'title' => string,
+     'text_id' => string,
+     'author' => string,
+     'summary' => string,
+     'section' => string,
+     'tags' => string
+   ),
+   array(...),
+   ...
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getSearchString()</th>
+			<td>(string|false) If context is search returns searched string</td>
+			<td>
+				<code>{% raw %}{{ out.getSearchString() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">bradypus</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>getSectionName()</th>
+			<td>(string|false) If context is section returns displayed section name.
+			<p>If context is article returns article's section</p></td>
+			<td>
+				<code>{% raw %}{{ out.getSectionName }}{% endraw %}</code>
+			
+				<pre class="prettyprint">about_us</pre>
+			</td>
+		</tr>
+		
+		
+	</tbody>
+	
+</table>
+
+<script>window.prettyPrint && prettyPrint()</script>

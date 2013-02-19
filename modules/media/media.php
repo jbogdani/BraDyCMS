@@ -14,8 +14,8 @@ class media_ctrl
 		
 		if ($path)
 		{
-			$upload_dir .= str_replace('-', '/', $path);
-			$path_arr = explode('-', $path);
+			$upload_dir .= str_replace('-@-', '/', $path);
+			$path_arr = explode('-@-', $path);
 			array_unshift($path_arr, '.');
 		}
 		else
@@ -50,14 +50,14 @@ class media_ctrl
 				
 			foreach ($files as $file)
 			{
-				$file_obj[$file]['href'] = $path ? $path . '-' . $file : $file;
+				$file_obj[$file]['href'] = $path ? $path . '-@-' . $file : $file;
 				$file_obj[$file]['name'] = $file;
 			
 				if ( is_file($upload_dir . '/'. $file ) )
 				{
 					$file_obj[$file]['type'] = 'file';
 			
-					$ftype = utils::checkMimeExt($upload_dir . '/' . $file);
+					$ftype = utils::checkMimeExt($upload_dir . '' . $file);
 						
 					if ($ftype[0] == 'image')
 					{
@@ -90,7 +90,26 @@ class media_ctrl
 		));
 	}
 	
-	public static function rename($dir, $ofile, $nfile)
+	public static function edit($file)
+	{
+		$file = str_replace('-@-', '/', $file);
+		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'media/tmpl'), unserialize(CACHE));
+		echo $twig->render('edit_form.html', array(
+				'file' => $file,
+				'uid' => uniqid(),
+				'finfo' => getimagesize($file),
+				'pathinfo' =>pathinfo($file),
+				'tr' => new tr()
+		));
+	}
+	
+	public static function copy($dir, $ofile, $nfile)
+	{
+		self::rename($dir, $ofile, $nfile, true);
+		
+	}
+	
+	public static function rename($dir, $ofile, $nfile, $copy = false)
 	{
 		$dir .= '/';
 		
@@ -106,15 +125,15 @@ class media_ctrl
 				throw new Exception(tr::sget('file_exists', $dir . $nfile));
 			}
 			
-			@rename($dir . $ofile, $dir . $nfile);
+			$copy ? @copy($dir . $ofile, $dir . $nfile) : @rename($dir . $ofile, $dir . $nfile);
 			
 			if (!file_exists($dir . $nfile))
 			{
-				throw new Exception(tr::sget('moving_file_error', $dir . $nfile));
+				throw new Exception(tr::sget($copy ? 'copying_file_error' : 'moving_file_error', $dir . $nfile));
 			}
 			
 			$out['status'] = 'success';
-			$out['text'] = tr::get('moving_file_ok');
+			$out['text'] = tr::get($copy ? 'copying_file_ok' : 'moving_file_ok');
 		}
 		catch (Exception $e)
 		{
@@ -129,7 +148,7 @@ class media_ctrl
 	{
 		if (!preg_match('/sites\/default\/images/', $ofile))
 		{
-			$file = './sites/default/images/' . str_replace('-', '/', $ofile);
+			$file = './sites/default/images/' . str_replace('-@-', '/', $ofile);
 		}
 		else
 		{
@@ -145,15 +164,15 @@ class media_ctrl
 					throw new Exception(tr::get('delete_dir_error'));
 				}
 				
-				if(preg_match('/-/', $ofile))
+				if(preg_match('/-@-/', $ofile))
 				{
-					$path_arr = explode('-', $ofile);
+					$path_arr = explode('-@-', $ofile);
 				
 					if (is_array($path_arr))
 					{
 						array_pop($path_arr);
 							
-						$out['new_path'] = implode('-', $path_arr);
+						$out['new_path'] = implode('-@-', $path_arr);
 					}
 				}
 			}
@@ -178,4 +197,70 @@ class media_ctrl
 		}
 		echo json_encode($out);
 	}
+	
+	public static function crop($ofile, $nfile, $crop)
+	{
+		self::convert($ofile, $nfile, 'crop', $crop);
+	}
+	
+	public static function convert($ofile, $nfile, $type = false, $details = false)
+	{
+		$type = $type ?: 'convert';
+		
+		try
+		{
+			if (file_exists($nfile))
+			{
+				throw new Exception(tr::sget('file_exists', $nfile));
+			}
+			
+			$exec_path = cfg::get('paths');
+			
+			switch($type)
+			{
+				case 'convert':
+					$convert = $exec_path['convert'] . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $ofile . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $nfile;
+					$ok = 'ok_converting_file';
+					$error = 'error_converting_file';
+					break;
+					
+				case 'crop':
+					$convert = $exec_path['convert'] . ($crop ? " -crop '" . $details . "' ": '') . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $ofile . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $nfile;
+					$ok = 'ok_cropping_file';
+					$error = 'error_cropping_file';
+					break;
+						
+				case 'resize':
+					$convert = $exec_path['convert'] . " -resize '" . $details . "'  " . $_SERVER['DOCUMENT_ROOT'] . '/' . $ofile . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $nfile;
+					$ok = 'ok_resizing_file';
+					$error = 'error_resizing_file';
+					break;
+					
+				default:
+					return;
+					break;
+			}
+			
+			@exec($convert, $a, $b);
+			
+			if (file_exists(!$nfile))
+			{
+				error_log($convert . ': ' . var_export($a, 1));
+				throw new Exception(tr::get($error));
+			}
+			
+			$out['status'] = 'success';
+			$out['text'] = tr::get($ok);
+		}
+		catch (Exception $e)
+		{
+			$out['status'] = 'error';
+			$out['text'] = $e->getMessage();
+		}
+		
+		echo json_encode($out);
+	}
+	
+	
+	
 }

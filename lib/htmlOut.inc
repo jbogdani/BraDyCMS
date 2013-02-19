@@ -280,9 +280,10 @@ class htmlOut
 		
 		
 		if (
-				!$restrict_domain || 
-				(preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) )
+				id && (
+				!$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) )
 				)
+			)
 		{
 			$html = '<script type="text/javascript">'
 					. 'var _gaq = _gaq || [];'

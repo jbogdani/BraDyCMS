@@ -17,7 +17,7 @@ var admin = {
 				.attr({'role':'dialog'})
 				.append(
 						(opts.title ? '<div class="modal-header"><h2>' + opts. title + '</h2></div>' : ''),
-						'<div class="modal-body">' + opts.html + '</div>'
+						'<div class="modal-body">' + ( opts.html ? opts.html : '') + '</div>'
 						);
 			
 			if (opts.buttons && typeof opts.buttons == 'object'){
@@ -53,6 +53,18 @@ var admin = {
 				
 			}
 			dialog.modal();
+			
+			if (opts.obj && opts.method){
+				dialog.find('.modal-body').html('<img src="./img/spinner.gif" />');
+				$.ajax({
+	        		'type': opts.post ? 'POST' : 'GET',
+	        		'url': 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
+	        		'data': opts.post
+	        	})
+	        	.done(function(data){
+	        		dialog.find('.modal-body').html(data);
+	        	});
+			}
 		},
 		/**
 		 * 
@@ -115,18 +127,17 @@ var admin = {
 	        	this.start(tab);
         		this.tab.find('li a:last').tab('show');
 	        } else if (opts.obj && opts.method){
+	        	admin.tabs.tab.next('div.tab-content')
+    				.append('<div class="tab-pane" id="added' + id + '"><img src="img/spinner.gif" alt="loading..." /></div>');
+	        	admin.tabs.start(tab);
+        		admin.tabs.tab.find('li a:last').data('opts', opts).tab('show');
 	        	$.ajax({
 	        		'type': opts.post ? 'POST' : 'GET',
 	        		'url': 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
 	        		'data': opts.post
 	        	})
 	        	.done(function(data){
-	        		admin.tabs.tab.next('div.tab-content')
-	        			.append('<div class="tab-pane" id="added' + id + '">' 
-	        					+ (data ? data : 'No content found') 
-	        					+ '</div>');
-	        		admin.tabs.start(tab);
-	        		admin.tabs.tab.find('li a:last').data('opts', opts).tab('show');
+	        		$('#added' + id).html(data);
 	        	});
 	        } else {
 	        	return false;
@@ -190,7 +201,7 @@ $(function () {
     		var url_arr = url.split('/');
     		
     		admin.tabs.add({
-    			'title': url_arr[0] + '/' + url_arr[1] + (url_arr[2] ? '/' + url_arr[2] : ''),
+    			'title': url_arr[0] + '/' + url_arr[1] + (url_arr[2] ? '/' + url_arr[2].substr(0, 5) + '...' : ''),
     			'obj': url_arr[0] + '_ctrl',
     			'method': url_arr[1],
     			'param': url_arr.slice(2)

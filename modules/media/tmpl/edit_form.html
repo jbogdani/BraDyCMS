@@ -1,0 +1,206 @@
+<div class="span6">
+	<div class="well well-small">
+		<form id="resize-{{ uid }}" action="javascript:void(0);">
+			<h4>{{ tr.get('resize') }}</h4>
+			<div class="input-prepend input-append">
+				<span class="add-on">{{ tr.get('width') }}</span>
+				<input class="span1" value="{{ finfo.0 }}" type="text" name="width" />
+				<span class="add-on"> px</span>
+				<button class="btn" type="submit">{{ tr.get('save') }}</button>
+				<button class="btn" type="reset">{{ tr.get('reset') }}</button>
+			</div>
+		</form>
+		
+	</div>
+		
+	<div class="well well-small">
+		<form id="crop-{{ uid }}" action="javascript:void(0);">
+			<h4>{{ tr.get('crop') }}</h4>
+			<div class="input-prepend input-append">
+				<span class="add-on">{{ tr.get('width') }}</span>
+				<input class="span1" value="{{ finfo.0 }}" type="text" name="width" />
+				<span class="add-on">{{ tr.get('height') }}</span>
+				<input class="span1" value="{{ finfo.1 }}" type="text" name="height" />
+			</div>
+			<div class="clearfix input-prepend input-append">
+			<span class="add-on">{{ tr.get('move_x') }}</span>
+				<input class="span1" value="0" type="text" name="move_x" />
+				<span class="add-on">{{ tr.get('move_y') }}</span>
+				<input class="span1" value="0" type="text" name="move_y" />
+				
+				<button class="btn" type="submit">{{ tr.get('save') }}</button>
+				<button class="btn" type="reset">{{ tr.get('reset') }}</button>
+			</div>
+		</form>
+		
+	</div>
+
+	<div class="well well-small">
+		<form id="convert-{{ uid }}" action="javascript:void(0);">
+		<h4>{{ tr.get('convert') }}</h4>
+			<div class="input-append">
+				<input class="span2" type="text" value="{{ pathinfo.extension }}" readonly="readonly" />
+				<span class="add-on"> » </span>
+				<select class="span2" name="format">
+					<option>jpg</option>
+					<option>png</option>
+					<option>tif</option>
+					<option>gif</option>
+				</select>
+				<button class="btn" type="submit">{{ tr.get('save') }}</button>
+			</div>
+		</form>
+	</div>
+	
+	<div class="well well-small">
+		<form id="rename-{{ uid }}" action="javascript:void(0);">
+			<h4>{{ tr.get('rename') }}</h4>
+			<div class="input-prepend input-append">
+				<span class="add-on">.{{ pathinfo.dirname }}</span>
+				<input class="span2" type="text" value="{{ pathinfo.filename }}" name="filename" />
+				<span class="add-on">.{{ pathinfo.extension }}</span>
+				<button class="btn" type="submit">{{ tr.get('save') }}</button>
+			</div>
+		</form>
+	</div>
+	
+	<div class="well well-small">
+		<form id="copy-{{ uid }}" action="javascript:void(0);">
+			<h4>{{ tr.get('copy') }}</h4>
+			<div class="input-prepend input-append">
+				<span class="add-on">.{{ pathinfo.dirname }}</span>
+				<input class="span2" type="text" value="{{ pathinfo.filename }}" name="filename" />
+				<span class="add-on">.{{ pathinfo.extension }}</span>
+				<button class="btn" type="submit">{{ tr.get('save') }}</button>
+			</div>
+		</form>
+	</div>
+	
+</div>
+<div class="span5">
+	<p>File: <code>{{ file }}</code></p>
+	<div id="img-{{ uid }}" style="width:{{ finfo.0 }}px; height:{{ finfo.1 }}px; background: url('{{ file }}') no-repeat 0, 0; border: 1px solid #ebebeb;"></div>
+</div>
+
+<script>
+
+$('#resize-{{ uid}} :input').on('keyup', function(){
+	
+	var val = $(this).val();
+	if (!val || val == '0' || val ==''){
+		return;
+	}
+	
+	$('#img-{{ uid }}').css({
+		'width':val,
+		'height': (val * {{ finfo.1 }} / {{ finfo.0 }}),
+		'background-size': val + 'px'
+	});
+});
+
+$('#crop-{{ uid}} :input').on('keyup', function(){
+	var what = $(this).attr('name'),
+	val = $(this).val(),
+	x_pos = $('#crop-{{ uid}} :input[name="move_x"]').val()
+	y_pos = $('#crop-{{ uid}} :input[name="move_y"]').val();
+	
+	if (!val || val == '0' || val ==''){
+		return;
+	}
+	if (what == 'width' || what == 'height'){
+		
+		$('#img-{{ uid }}').css(what, val + 'px');
+		
+	} else if (what =='move_x' || what == 'move_y'){
+		
+		$('#img-{{ uid }}').css('backgroundPosition', x_pos + 'px ' + y_pos + 'px');
+	}
+});
+
+$('#resize-{{ uid}} button[type="reset"], #crop-{{ uid}} button[type="reset"]').on('click', function(){
+	$('#img-{{ uid }}').css({
+		'background-size':'',
+		'width': {{ finfo.0 }},
+		'height': {{ finfo.1 }},
+		'backgroundPosition': '0, 0'
+	});
+});
+
+$('#resize-{{ uid}}').submit(function(){
+	var width = parseInt($(this).find(':input[name="width"]').val());
+	if (!width || width <= 0 ){
+		alert('Larghezza non valida');
+	} else if (width == '{{ finfo.0 }}'){
+		alert('Nessin cambiamento da eseguire');
+	} else {
+		console.log('TODO: convert -resize {{ file }} \'' + width + '\' {{ pathinfo.dirname }}/{{ pathinfo.filename }}.{{ pathinfo.extension }}');
+		admin.tabs.reloadActive();
+	}
+});
+
+
+$('#crop-{{ uid}}').submit(function(){
+	var width = parseInt($(this).find(':input[name="width"]').val()),
+	height = parseInt($(this).find(':input[name="height"]').val()),
+	move_x = parseInt($(this).find('input[name="move_x"]').val()),
+	move_y = parseInt($(this).find(':input[name="move_y"]').val())
+	
+	arguments = width + 'x' + height + (move_x >=0 ? '+' : '') + move_x + (move_y >= 0 ? '+' : '') + move_y;
+	
+	if (!width || width <= 0 || !height || height <= 0){
+		alert('Valori di larghezza e lunghezza non validi');
+	} else{
+		$.get('controller.php?obj=media_ctrl&method=crop&param[]={{ file }}&param[]={{ pathinfo.dirname }}/{{ pathinfo.filename }}_cropped.{{ pathinfo.extension }}&param[]=' + arguments, function(data){
+			admin.message(data.text, data.status);
+			if(data.status == 'success'){
+				admin.tabs.reloadActive();
+			}
+		}, 'json');
+	}
+});
+
+$('#convert-{{ uid}}').submit(function(){
+	var format = $(this).find(':input[name="format"]').val(); 
+	if (format == '{{ pathinfo.extension }}'){
+		admin.message('{{ tr.get('no_change_to_save') }}', 'error');
+	} else {
+		$.get('controller.php?obj=media_ctrl&method=convert&param[]={{ file }}&param[]={{ pathinfo.dirname }}/{{ pathinfo.filename }}.' + format, function(data){
+			admin.message(data.text, data.status);
+			if (data.status == 'success'){
+				admin.tabs.closeActive();
+			}
+		}, 'json');
+	}
+});
+
+$('#rename-{{ uid}}').submit(function(){
+	var filename = $(this).find('input[name="filename"]').val(); 
+	if (filename == '{{ pathinfo.filename }}'){
+		admin.message('{{ tr.get('no_change_to_save') }}', 'error');
+	} else if (!filename){
+		admin.message('{{ tr.get('invalid_name') }}', 'error');
+	} else {
+		$.get('controller.php?obj=media_ctrl&method=rename&param[]={{ pathinfo.dirname }}&param[]={{ pathinfo.filename }}.{{ pathinfo.extension }}&param[]=' + filename + '.{{ pathinfo.extension }}', function(data){
+			admin.message(data.text, data.status);
+			if (data.status == 'success'){
+				admin.tabs.closeActive();
+			}
+		}, 'json');
+	}
+});
+
+$('#copy-{{ uid}}').submit(function(){
+	var filename = $(this).find('input[name="filename"]').val(); 
+	if (filename == '{{ pathinfo.filename }}'){
+		admin.message('{{ tr.get('no_change_to_save') }}', 'error');
+	} else if (!filename){
+		admin.message('{{ tr.get('invalid_name') }}', 'error');
+	} else {
+		$.get('controller.php?obj=media_ctrl&method=copy&param[]={{ pathinfo.dirname }}&param[]={{ pathinfo.filename }}.{{ pathinfo.extension }}&param[]=' + filename + '.{{ pathinfo.extension }}', function(data){
+			admin.message(data.text, data.status);
+		}, 'json');
+	}
+});
+
+
+</script>

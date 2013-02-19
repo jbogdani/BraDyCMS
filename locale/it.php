@@ -94,7 +94,20 @@ $_lang['file_exists'] = 'Errore. il file %s esiste già! Non è permesso sovrasc
 $_lang['original_file_not_found'] = 'Errore. Il file originale %s non è stato trovato!';
 $_lang['moving_file_error'] = 'Errore. Non è stato possibile rinominare il file in %s';
 $_lang['moving_file_ok'] = 'Il file è stato rinominato';
+$_lang['copy'] = 'Copia';
+$_lang['copying_file_error'] = "Impossibile copiare il file in %s";
+$_lang['copying_file_ok'] = "Il file è stato copiato";
 $_lang['invalid_name'] = 'Errore. Nome file non valido';
+$_lang['no_change_to_save'] = 'Nessun cambiamento da salvare';
+$_lang['convert'] = 'Conversione tipo file';
+$_lang['error_converting_file'] = "Errore. Non è stato possibile convertire il file";
+$_lang['ok_converting_file'] = "Il file è stato convertito";
+$_lang['crop'] = "Ritaglia";
+$_lang['error_cropping_file'] = "Errore. Il file non è stato ritagliato";
+$_lang['ok_cropping_file'] = "Il file è stato ritagliato";
+$_lang['resize'] = "Ridimensiona";
+$_lang['error_reisizing_file'] = "Errore. Il file non è stato ridimensionato";
+$_lang['ok_resizing_file'] = "Il file è stato ridimensionato";
 
 $_lang['error_check_log'] = 'Errore. Qualcosa è andato storto! Consultare il log degli errori per maggiori dettagli.';
 

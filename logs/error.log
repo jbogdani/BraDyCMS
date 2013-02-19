@@ -1,12 +1,6 @@
-[18-Feb-2013 15:30:47 UTC] PHP Parse error:  syntax error, unexpected '';' (T_ENCAPSED_AND_WHITESPACE) in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 296
-[18-Feb-2013 15:30:47 UTC] PHP Stack trace:
-[18-Feb-2013 15:30:47 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
-[18-Feb-2013 15:30:47 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0
-[18-Feb-2013 15:30:58 UTC] PHP Parse error:  syntax error, unexpected '';' (T_ENCAPSED_AND_WHITESPACE) in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 296
-[18-Feb-2013 15:30:58 UTC] PHP Stack trace:
-[18-Feb-2013 15:30:58 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
-[18-Feb-2013 15:30:58 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0
-[18-Feb-2013 15:31:01 UTC] PHP Parse error:  syntax error, unexpected '';' (T_ENCAPSED_AND_WHITESPACE) in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 296
-[18-Feb-2013 15:31:01 UTC] PHP Stack trace:
-[18-Feb-2013 15:31:01 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
-[18-Feb-2013 15:31:01 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[19-Feb-2013 18:15:17 UTC] PHP Warning:  getimagesize(.\/sites\/default\/images\/test\/test.jpg): failed to open stream: No such file or directory in /Users/jbogdani/www/git.bdusCMS/modules/media/media.php on line 100
+[19-Feb-2013 18:15:17 UTC] PHP Stack trace:
+[19-Feb-2013 18:15:17 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-Feb-2013 18:15:17 UTC] PHP   2. call_user_func_array() /Users/jbogdani/www/git.bdusCMS/controller.php:19
+[19-Feb-2013 18:15:17 UTC] PHP   3. media_ctrl::edit() /Users/jbogdani/www/git.bdusCMS/controller.php:19
+[19-Feb-2013 18:15:17 UTC] PHP   4. getimagesize() /Users/jbogdani/www/git.bdusCMS/modules/media/media.php:100

@@ -6,8 +6,11 @@
 	<input type="text" placeholder="{{ tr.get('search') }}" id="input-{{ uniqid }}" class="search-query pull-right" />
 </div>
 <ul class="breadcrumb form-horizontal">
+	<li>
+		<button class="btn btn-success" title="{{ tr.get('reload') }}" onclick="admin.tabs.reloadActive();"><i class="icon-white icon-repeat"></i></button>
+		<span class="divider">|||</span>
+	</li>
 	{% for part in path_arr %}
-	
 	<li>
 		<a class="btn{% if loop.last %} btn-success{% endif %}" href="#media/all{% if part != '.'%}/{{part}}{% endif %}">{{ part }}</a> 
 	<span class="divider">/</span>
@@ -18,8 +21,8 @@
 			<input class="span3" type="text" placeholder="{{ tr.get('new_dir_name') }}" >
 			<button class="btn newFolder" type="button">{{ tr.get('create_go') }}</button>
 		</div>
-	
 </ul>
+
 
 <div id="file-uploader"></div>
 
@@ -34,8 +37,8 @@
 	{% if file.type == 'folder' %}
 	<li class="pull-left img">
 		<a class="" href="#media/all/{{ file.href }}">
-			<img class="media-object" src="{{ file.src }}" style="width:128px" />
-			<div class="alert">{{ file.name }}</div>
+			<img class="media-object" src="{{ file.src }}" style="width:128px;" />
+			<div style="text-align:center;">{{ file.name }}</div>
 		</a>
 	</li>
 	{% endif %}
@@ -48,7 +51,7 @@
 		<div style="width:128px; max-height:128px; ">
 			<img src="{{ file.src }}" style="max-height:100%; max-width: 100%;" />
 		</div>
-		<div class="alert">{{ file.name }}</div>
+		<div class="carousel-caption" style="position:relative; color:#fff;">{{ file.name }}</div>
 	</li>
 	{% endif%}
 		
@@ -78,51 +81,51 @@
 					'<h4>' + $(this).data('name') + '</h4>',
 					'File URL:',
 					'<input type="text" value="' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
-					$('<div />').addClass('input-append').append(
-							'<input type="text" class="span2" />',
-							$('<button />').addClass('btn').text('{{ tr.get('rename') }}').click(function(){
-								var new_name = $(this).prev('input').val();
-								if (new_name != ''){
-									$.get('controller.php?obj=media_ctrl&method=rename&param[]={{ upload_dir }}&param[]=' + name + '&param[]=' + new_name, function(data){
-										admin.message(data.text, data.status);
-										if (data.status == 'success' ){
-											admin.tabs.closeActive('media/all{% if path %}/{{ path }}{% endif %}');
-										}
-									}, 'json')
-								} else {
-									admin.message('{{ tr.get('invalid_name') }}', 'error');
-								}
-							})
-							),
-					'<a class="btn" target="_blank" href="' + file + '">{{ tr.get('open_download') }}</a>',
-					$('<button />')
-						.addClass('btn btn-danger')
-						.text('{{ tr.get('delete') }}')
-						.click(function(){
-							admin.dialog({
-								title: '{{ tr.get('pay_attention_please') }}',
-								html: '{{tr.get('confirm_delete_file') }}',
+					$('<div />').addClass('input-append'),
+					$('<div class="btn-group"></div>').append(
+						'<a class="btn" target="_blank" href="' + file + '" title="{{ tr.get('open_download') }}"><i class="icon icon-download-alt"></i></a>',
+						$('<a href="#media/edit/' + file.replace(/\//g, '-@-') + '" class="btn" title="{{ tr.get('edit_file') }}"><i class="icon icon-wrench"></i>').click(function(){
+							return;
+							admin.tabs.add({
+								title: '{{ tr.get('edit_file') }}',
+								obj: 'media_ctrl',
+								method: 'edit',
+								param: [file],
 								buttons:[
 								         {
 								        	 text: '{{ tr.get('close') }}',
 								        	 action: 'close'
-								         },
-								         {
-								        	 text: '{{ tr.get('delete') }}',
-								        	 addclass: 'btn-danger',
-								        	 action: 'close',
-								        	 click: function(){
-								        		 $.get('controller.php?obj=media_ctrl&method=delete&param[]=' + file, function(data){
-								        			 admin.message(data.text, data.status);
-								        			 if (data.status == 'success'){
-								        				 admin.tabs.closeActive('media/all{% if path %}/{{ path }}{% endif %}');
-								        			 }
-								        		 }, 'json')
-								        	 }
 								         }
 								         ]
 							});
-						})
+						}),
+						$('<a class="btn btn-danger" href="javascript:void(0);" title="{{ tr.get('delete') }}"><i class="icon-white icon-trash"></i>')
+							.click(function(){
+								admin.dialog({
+									title: '{{ tr.get('pay_attention_please') }}',
+									html: '{{tr.get('confirm_delete_file') }}',
+									buttons:[
+									         {
+									        	 text: '{{ tr.get('close') }}',
+									        	 action: 'close'
+									         },
+									         {
+									        	 text: '{{ tr.get('delete') }}',
+									        	 addclass: 'btn-danger',
+									        	 action: 'close',
+									        	 click: function(){
+									        		 $.get('controller.php?obj=media_ctrl&method=delete&param[]=' + file, function(data){
+									        			 admin.message(data.text, data.status);
+									        			 if (data.status == 'success'){
+									        				 admin.tabs.closeActive('media/all{% if path %}/{{ path }}{% endif %}');
+									        			 }
+									        		 }, 'json')
+									        	 }
+									         }
+									         ]
+								});
+							})
+							)
 						);
 		}
 	});
@@ -138,8 +141,8 @@
 			$(this).prev().focus();
 		} else {
 			val = val.replace(/\s|-|'|"/g, '_')
-			val = val.replace(/\//g, '-');
-			admin.tabs.closeActive('media/all/{% if path %}{{ path }}-{% endif %}' + val);
+			val = val.replace(/\//g, '-@-');
+			admin.tabs.closeActive('media/all/{% if path %}{{ path }}-@-{% endif %}' + val);
 		}
 	});
 	

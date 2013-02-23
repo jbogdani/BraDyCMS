@@ -322,4 +322,49 @@ class utils
 		return $lang_arr;
 	}
 	
+	public static function write_in_file ( $file, $text = false, $type = false )
+	{
+		if ( $type != 'gz' )
+		{
+			$f = @fopen($file, 'w');
+				
+			if (!$f) return false;
+				
+			if ($text)
+			{
+				if ( !@fwrite ( $f, ($type == 'json'  ?  json_encode($text, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : $text ) ) ) return false;
+			}
+				
+			@fclose($f);
+				
+			return true;
+		}
+		else
+		{
+			$file .= '.gz';
+				
+			$gzh = @gzopen($file,'w9');
+				
+			if ( !$gzh ) return false;
+	
+			if ( !@gzwrite($gzh, $text) ) return false;
+				
+			@gzclose($gzh);
+				
+			return true;
+		}
+	}
+	
+	public static function recursiveFilter($arr)
+	{
+		foreach ($arr as &$a)
+		{
+			if (is_array($a))
+			{
+				$a = self::recursiveFilter($a);
+			}
+		}
+		return array_filter($arr);
+	}
+	
 }

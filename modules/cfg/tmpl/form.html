@@ -1,0 +1,25 @@
+<form class="form-horizontal" action="javascript:void(0);" id="form-{{ uid }}">
+
+	{{ html|raw }}
+
+<button class="btn" type="submit">{{ save_text }}</button>
+</form>
+
+
+<script>
+
+$('#form-{{ uid }} .change').on('keyup', function(){
+	if ($(this).val()){
+		$(this).siblings('input').attr('name', $(this).data('main') + '[' + $(this).val() + ']');
+	} else {
+		$(this).siblings('input').removeAttr('name');
+	}
+});
+
+
+$('#form-{{ uid }}').on('submit', function(){
+	$.post('controller.php?obj=cfg_ctrl&method=save', $(this).serialize(), function(data){
+		admin.tabs.reloadActive();
+	});
+});
+</script>

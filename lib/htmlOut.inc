@@ -272,11 +272,9 @@ class htmlOut
 	
 	public function GA($id = false, $restrict_domain = false)
 	{
-		$cfg_ga= cfg::get('ga');
+		$id = $id ?: cfg::get('ga_id');
 		
-		$id = $id ?: $cfg_ga['id'];
-		
-		$restrict_domain = $restrict_domain ?: $cfg_ga['domain'];
+		$restrict_domain = $restrict_domain ?: cfg::get('ga_domain');
 		
 		
 		if (

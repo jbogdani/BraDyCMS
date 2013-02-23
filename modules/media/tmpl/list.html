@@ -164,7 +164,6 @@
 	      $('#media-{{ uniqid }} div.alert:not(:Contains(' + filter + '))').parents('li').fadeOut();
 	      $('#media-{{ uniqid }} div.alert:Contains(' + filter + ')').parents('li').fadeIn();
 	    } else {
-	    	console.log(filter);
 	      $('#media-{{ uniqid }} li').fadeIn();
 	    }
 	});

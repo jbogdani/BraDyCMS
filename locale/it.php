@@ -6,158 +6,177 @@
  * @since			Nov 3, 2011
  */
 
-//ADMIN
-//article
-$_lang['articles'] = 'Articoli';
-$_lang['add_new_article'] = 'Aggiungi nuovo articolo';
-$_lang['show_all_articles'] = 'Mostra tutti gli articoli';
-$_lang['translations'] = 'Traduzioni';
-//menu
-$_lang['menu'] = 'Menu';
-$_lang['add_new_menu_item'] = 'Aggiungi una nuova voce di menu';
-$_lang['show_all_menus'] = 'Mostra tutti i menu';
-$_lang['other'] = 'Altro';
-$_lang['link2home'] = "Link alla home page";
-$_lang['link2none'] = "Link a niente";
-//media
-$_lang['media'] = 'Media';
+$_lang = array(
 
-$_lang['other'] = 'Altro';
-$_lang['changelog'] = 'Cambiamenti';
-$_lang['error_log'] = 'Log degli errori';
-$_lang['view_site'] = 'Visualizza sito';
-$_lang['reload'] = 'Ricarica';
-$_lang['logout'] = 'Esci';
+	//ADMIN
+	//article
+	'articles' => 'Articoli',
+	'add_new_article' => 'Aggiungi nuovo articolo',
+	'show_all_articles' => 'Mostra tutti gli articoli',
+	'translations' => 'Traduzioni',
+	//menu
+	'menu' => 'Menu',
+	'add_new_menu_item' => 'Aggiungi una nuova voce di menu',
+	'show_all_menus' => 'Mostra tutti i menu',
+	'other' => 'Altro',
+	'link2home' => "Link alla home page",
+	'link2none' => "Link a niente",
+	//media
+	'media' => 'Media',
+	
+	'other' => 'Altro',
+	'changelog' => 'Cambiamenti',
+	'error_log' => 'Log degli errori',
+	'view_site' => 'Visualizza sito',
+	'reload' => 'Ricarica',
+	'logout' => 'Esci',
+	
+	//modules
+		//articles
+	'delete_article_ok' => 'L\'articolo è stato cancellato',
+	'delete_article_error' => 'Errore. L\'articolo id:%s non è stato cancellato.',
+	'update_article_ok' => 'L\'articolo è stato aggiornato.',
+	'update_article_error' => 'Errore. L\'articolo id:%s non è stato aggiorato.',
+	'save_article_ok' => 'L\'articolo è stato salvato.',
+	'save_article_error' => 'Errore. L\'articolo non è stato salvato.',
+	'manage_articles' => 'Gestione articoli',
+	'id' => 'ID',
+	'title' => 'Titolo',
+	'text_id' => 'ID Testuale (url)',
+	'status' => 'È pubblicato',
+	'section' => 'Sezione',
+	'sections' => "Sezioni",
+	'sorting' => 'Ordinamento',
+	'edit' => 'Modifica',
+	'delete' => 'Cancella',
+	'pay_attention_please' => 'Attenzione prego',
+	'confirm_delete_article' => 'Sei sicuro di volere definitivamente cancellare questo articolo?',
+	'close' => 'Chiudi',
+	'keywords' => 'Keywords',
+	'author' => 'Autore',
+	'tags' => 'Tag',
+	'creation_date' => 'Data creazione',
+	'pubblication_date' => 'Data Pubblicazione',
+	'expiration_date' => 'Data scadenza',
+	'last_update' => 'Ultimo aggiornamento',
+	'summary' => 'Sommario',
+	'text' => 'Testo',
+	'save' => 'Salva',
+	'reset' => 'Annulla',
+	'custom_fields' => "Campi personalizzati",
+	'duplicate_text_id' => "Il valore %s è già stato usato come ID testuale. Si prega di cambiarlo prima di procedere",
+			//menus
+	'manage_menus' => 'Gestione menu',
+	'item' => 'Testo',
+	'link' => 'Link',
+	'target' => 'Target',
+	'menu' => 'Menu',
+	'sub_of' => 'Sotto menu di',
+	'confirm_delete_menu_item' => 'Sei sicuro di vole cancellare questa voce di menu?',
+	'delete_menu_ok' => 'Voce di men cancellata',
+	'delete_menu_error' => 'Errore. La voce di menu id:%s non è stata cancellata.',
+	'update_menu_error' => 'Errore. La voce di menu id:%S non è stata aggiornata.',
+	'save_menu_ok' => 'La voce di menu è stata aggiornata.',
+	'save_menu_error' => 'Errore. La voce di menu non è stata salvata.',
+	'select_menu' => 'Seleziona il menu',
+	'error_update_sort' => "Errore nell'aggiornamento dell'ordine degli elementi menu",
+			//media
+	'create_dir_error' => 'Errore. Non è possibile creare la cartella <code>%s</code>',
+	'delete_dir_error' => 'Errore. La cartella non è stata cancellata! Probabilmente la cartella non è vuota!',
+	'delete_file_error' => 'Errore. Il file non è stato cancellato!',
+	'deletion_ok' => 'Cancellazione completata!',
+	'new_dir_name' => 'Nome della nuova cartella',
+	'create_go' => 'Crea & Vai!',
+	'delete_directory' => 'Cancella cartella',
+	'confirm_delete_file' => 'Sei sicuro di vole cancellare questo file?',
+	'missing_directory_name' => 'Il nome della cartella non può essere vuoto!',
+	'open_download' => 'Apri / Scarica',
+	'rename' => 'Rinomina',
+	'file_exists' => 'Errore. il file %s esiste già! Non è permesso sovrascrivere',
+	'original_file_not_found' => 'Errore. Il file originale %s non è stato trovato!',
+	'moving_file_error' => 'Errore. Non è stato possibile rinominare il file in %s',
+	'moving_file_ok' => 'Il file è stato rinominato',
+	'copy' => 'Copia',
+	'copying_file_error' => "Impossibile copiare il file in %s",
+	'copying_file_ok' => "Il file è stato copiato",
+	'invalid_name' => 'Errore. Nome file non valido',
+	'no_change_to_save' => 'Nessun cambiamento da salvare',
+	'convert' => 'Conversione tipo file',
+	'error_converting_file' => "Errore. Non è stato possibile convertire il file",
+	'ok_converting_file' => "Il file è stato convertito",
+	'crop' => "Ritaglia",
+	'offset_x' => "Offset x",
+	'offset_y' => "Offset y",
+	'error_cropping_file' => "Errore. Il file non è stato ritagliato",
+	'ok_cropping_file' => "Il file è stato ritagliato",
+	'resize' => "Ridimensiona",
+	'error_reisizing_file' => "Errore. Il file non è stato ridimensionato",
+	'ok_resizing_file' => "Il file è stato ridimensionato",
+	
+	'error_check_log' => 'Errore. Qualcosa è andato storto! Consultare il log degli errori per maggiori dettagli.',
+	
+	'please_sign_in' => 'Si prega di autenticarsi',
+	'email_address' => 'Indirizzo email',
+	'password' => 'Password',
+	'sign_in' => 'Autenticazione',
+	'access_denied' => 'Accesso negato. Username o password sbagliate',
+	'logged_out' => 'Sessione chusa',
+	'language' => 'Lingua',
+	
+		// translate
+	'transl_articles' => "Traduci articoli",
+	'original_title' => 'Titolo originale',
+	'translated_title' => 'Titolo tradotto',
+	'translation_status' => 'Stato traduzione',
+	'transl_yes' => 'Tradotto',
+	'transl_no' => 'Non tradotto',
+	'transl_menus' => "Traduci menu",
+	
+		//template manager
+	'template_mng' => "Gestore template",
+	'edit_html' => "Modifica HTML",
+	'edit_css' => "Modifica CSS",
+	
+	
+	// GUI
+	'read_more' => 'leggi tutto....',
+	'from_same_section' => 'Dalla stessa sezione',
+	'no_articles_in_section' => 'Nessun articolo per questa sezione',
+	'article_does_not_exist' => 'L\'articolo richiesto non esite',
+	'search_site' => 'cerca nel sito...',
+	'no_result_for_query' => 'Spiacenti, la ricerca di `<mark>%s</mark>` non ha prodotto alcun risultato!',
+	'x_results_for_query' => 'La parola `<mark>%s</mark>` è stata trovata nei seguenti %s articoli:',
+	'search' => 'cerca',
+	'clear' => 'pulisci',
+	'client_error' => 'Qualcosa è andato storto. Contattare l\'amministrattore per maggiori informazioni',
+	'menu_error' => 'Errore nel visualizzare il menu <strong>%s</strong>',
+	'sub_menu_error' => 'Errore nel visualizzare il sottomenu di <strong>%s</strong>',
+	'section_list_error' => 'Errore nel visualizzare gli articoli della sezione <strong>%s</strong>',
+	'article_error' => 'Errore nel visualizzare l\'articolo richesto',
+	'siblings_error' => 'Errore nel visualizzare la lista degli articolo correlati',
+	'search_error' => 'Errore nel visualizzare i risultati della ricerca',
+	'back' => 'Indietro',
+	'main_menu' => 'Menu principale',
+	
+	'cfg_editor' => 'Configurazione del sito',
+	'cfg-name' => 'Nome del sito',
+	'cfg-logo' => 'Sotto titolo del sito',
+	'cfg-title' => 'Titolo di default delle pagine del sito',
+	'cfg-description' => 'Descrizione del sito',
+	'cfg-keywords' => 'Parole chiavi',
+	'cfg-sys_lang' => 'Lingua del sistema',
+	'cfg-sys_lang_string' => 'Lingua del sistema',
+	'cfg-prefix' => 'Prefisso del database',
+	'cfg-friendly_url' => 'URL parlanti',
+	'cfg-timezone' => 'Fuso orario del sito',
+	'cfg-languages' => 'Lingue del sistema',
+	'cfg-ga_id' => 'Google analytics ID',
+	'cfg-ga_domain' => 'Limita GA al dominio',
+	'cfg-paths' => 'Percorsi del sistema',
+	'cfg-users' => 'Utenti',
+	
+	'select_lang_to_edit' => 'Seleziona lingue da modificare',
+	'show_incomplete_translations' => 'Mostra traduzioni incomplete',
+	'show_all_translations' => 'Mostra tutte le traduzioni'
 
-//modules
-	//articles
-$_lang['delete_article_ok'] = 'L\'articolo è stato cancellato';
-$_lang['delete_article_error'] = 'Errore. L\'articolo id:%s non è stato cancellato.';
-$_lang['update_article_ok'] = 'L\'articolo è stato aggiornato.';
-$_lang['update_article_error'] = 'Errore. L\'articolo id:%s non è stato aggiorato.';
-$_lang['save_article_ok'] = 'L\'articolo è stato salvato.';
-$_lang['save_article_error'] = 'Errore. L\'articolo non è stato salvato.';
-$_lang['manage_articles'] = 'Gestione articoli';
-$_lang['id'] = 'ID';
-$_lang['title'] = 'Titolo';
-$_lang['text_id'] = 'ID Testuale (url)';
-$_lang['status'] = 'È pubblicato';
-$_lang['section'] = 'Sezione';
-$_lang['sections'] = "Sezioni";
-$_lang['sorting'] = 'Ordinamento';
-$_lang['edit'] = 'Modifica';
-$_lang['delete'] = 'Cancella';
-$_lang['pay_attention_please'] = 'Attenzione prego';
-$_lang['confirm_delete_article'] = 'Sei sicuro di volere definitivamente cancellare questo articolo?';
-$_lang['close'] = 'Chiudi';
-$_lang['keywords'] = 'Keywords';
-$_lang['author'] = 'Autore';
-$_lang['tags'] = 'Tag';
-$_lang['creation_date'] = 'Data creazione';
-$_lang['pubblication_date'] = 'Data Pubblicazione';
-$_lang['expiration_date'] = 'Data scadenza';
-$_lang['last_update'] = 'Ultimo aggiornamento';
-$_lang['summary'] = 'Sommario';
-$_lang['text'] = 'Testo';
-$_lang['save'] = 'Salva';
-$_lang['reset'] = 'Annulla';
-$_lang['custom_fields'] = "Campi personalizzati";
-$_lang['duplicate_text_id'] = "Il valore %s è già stato usato come ID testuale. Si prega di cambiarlo prima di procedere";
-		//menus
-$_lang['manage_menus'] = 'Gestione menu';
-$_lang['item'] = 'Testo';
-$_lang['link'] = 'Link';
-$_lang['target'] = 'Target';
-$_lang['menu'] = 'Menu';
-$_lang['sub_of'] = 'Sotto menu di';
-$_lang['confirm_delete_menu_item'] = 'Sei sicuro di vole cancellare questa voce di menu?';
-$_lang['delete_menu_ok'] = 'Voce di men cancellata';
-$_lang['delete_menu_error'] = 'Errore. La voce di menu id:%s non è stata cancellata.';
-$_lang['update_menu_error'] = 'Errore. La voce di menu id:%S non è stata aggiornata.';
-$_lang['save_menu_ok'] = 'La voce di menu è stata aggiornata.';
-$_lang['save_menu_error'] = 'Errore. La voce di menu non è stata salvata.';
-$_lang['select_menu'] = 'Seleziona il menu';
-$_lang['error_update_sort'] = "Errore nell'aggiornamento dell'ordine degli elementi menu";
-		//media
-$_lang['create_dir_error'] = 'Errore. Non è possibile creare la cartella <code>%s</code>';
-$_lang['delete_dir_error'] = 'Errore. La cartella non è stata cancellata! Probabilmente la cartella non è vuota!';
-$_lang['delete_file_error'] = 'Errore. Il file non è stato cancellato!';
-$_lang['deletion_ok'] = 'Cancellazione completata!';
-$_lang['new_dir_name'] = 'Nome della nuova cartella';
-$_lang['create_go'] = 'Crea & Vai!';
-$_lang['delete_directory'] = 'Cancella cartella';
-$_lang['confirm_delete_file'] = 'Sei sicuro di vole cancellare questo file?';
-$_lang['missing_directory_name'] = 'Il nome della cartella non può essere vuoto!';
-$_lang['open_download'] = 'Apri / Scarica';
-$_lang['rename'] = 'Rinomina';
-$_lang['file_exists'] = 'Errore. il file %s esiste già! Non è permesso sovrascrivere';
-$_lang['original_file_not_found'] = 'Errore. Il file originale %s non è stato trovato!';
-$_lang['moving_file_error'] = 'Errore. Non è stato possibile rinominare il file in %s';
-$_lang['moving_file_ok'] = 'Il file è stato rinominato';
-$_lang['copy'] = 'Copia';
-$_lang['copying_file_error'] = "Impossibile copiare il file in %s";
-$_lang['copying_file_ok'] = "Il file è stato copiato";
-$_lang['invalid_name'] = 'Errore. Nome file non valido';
-$_lang['no_change_to_save'] = 'Nessun cambiamento da salvare';
-$_lang['convert'] = 'Conversione tipo file';
-$_lang['error_converting_file'] = "Errore. Non è stato possibile convertire il file";
-$_lang['ok_converting_file'] = "Il file è stato convertito";
-$_lang['crop'] = "Ritaglia";
-$_lang['error_cropping_file'] = "Errore. Il file non è stato ritagliato";
-$_lang['ok_cropping_file'] = "Il file è stato ritagliato";
-$_lang['resize'] = "Ridimensiona";
-$_lang['error_reisizing_file'] = "Errore. Il file non è stato ridimensionato";
-$_lang['ok_resizing_file'] = "Il file è stato ridimensionato";
-
-$_lang['error_check_log'] = 'Errore. Qualcosa è andato storto! Consultare il log degli errori per maggiori dettagli.';
-
-$_lang['please_sign_in'] = 'Si prega di autenticarsi';
-$_lang['email_address'] = 'Indirizzo email';
-$_lang['password'] = 'Password';
-$_lang['sign_in'] = 'Autenticazione';
-$_lang['access_denied'] = 'Accesso negato. Username o password sbagliate';
-$_lang['logged_out'] = 'Sessione chusa';
-$_lang['language'] = 'Lingua';
-
-	// translate
-$_lang['transl_articles'] = "Traduci articoli";
-$_lang['original_title'] = 'Titolo originale';
-$_lang['translated_title'] = 'Titolo tradotto';
-$_lang['translation_status'] = 'Stato traduzione';
-$_lang['transl_yes'] = 'Tradotto';
-$_lang['transl_no'] = 'Non tradotto';
-$_lang['transl_menus'] = "Traduci menu";
-
-	//template manager
-$_lang['template_mng'] = "Gestore template";
-$_lang['edit_html'] = "Modifica HTML";
-$_lang['edit_css'] = "Modifica CSS";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-
-
-// GUI
-$_lang['read_more'] = 'leggi tutto....';
-$_lang['from_same_section'] = 'Dalla stessa sezione';
-$_lang['no_articles_in_section'] = 'Nessun articolo per questa sezione';
-$_lang['article_does_not_exist'] = 'L\'articolo richiesto non esite';
-$_lang['search_site'] = 'cerca nel sito...';
-$_lang['no_result_for_query'] = 'Spiacenti, la ricerca di `<mark>%s</mark>` non ha prodotto alcun risultato!';
-$_lang['x_results_for_query'] = 'La parola `<mark>%s</mark>` è stata trovata nei seguenti %s articoli:';
-$_lang['search'] = 'cerca';
-$_lang['clear'] = 'pulisci';
-$_lang['client_error'] = 'Qualcosa è andato storto. Contattare l\'amministrattore per maggiori informazioni';
-$_lang['menu_error'] = 'Errore nel visualizzare il menu <strong>%s</strong>';
-$_lang['sub_menu_error'] = 'Errore nel visualizzare il sottomenu di <strong>%s</strong>';
-$_lang['section_list_error'] = 'Errore nel visualizzare gli articoli della sezione <strong>%s</strong>';
-$_lang['article_error'] = 'Errore nel visualizzare l\'articolo richesto';
-$_lang['siblings_error'] = 'Errore nel visualizzare la lista degli articolo correlati';
-$_lang['search_error'] = 'Errore nel visualizzare i risultati della ricerca';
-$_lang['back'] = 'Indietro';
-$_lang['main_menu'] = 'Menu principale';
-
-
-
-// ADMIN
+);

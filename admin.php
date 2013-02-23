@@ -151,6 +151,11 @@ catch (Exception $e)
 									</li>
 									
 									<li><a href="./admin"><i class="icon-repeat"></i> <?php echo tr::get('reload'); ?></a></li>
+									
+									<li class="divider"></li>
+									
+									<li><a href="#cfg/edit"><i class="icon icon-wrench"></i> <?php echo tr::get('cfg_editor'); ?></a></li>
+									
 									<li class="divider"></li>
 									<li class="dropdown-submenu">
 										<a href="#"><i class="icon icon-eye-open"></i> <?php echo tr::get('template_mng'); ?></a>
@@ -210,7 +215,7 @@ catch (Exception $e)
 				</div>
 			</div>
 		</div>
-	
+		
 		<footer class="footer">
 			<h4>by BraDypUS <small>COMMUNICATING CULTURAL HERITAGE</small></h4>
 		</footer>

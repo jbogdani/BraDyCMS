@@ -198,14 +198,25 @@ class media_ctrl
 		echo json_encode($out);
 	}
 	
-	public static function crop($ofile, $nfile, $crop)
+	public static function crop($ofile, $crop)
 	{
-		self::convert($ofile, $nfile, 'crop', $crop);
+		self::convert($ofile, false, 'crop', $crop);
+	}
+	
+	
+	public static function resize($ofile, $size)
+	{
+		self::convert($ofile, false, 'resize', $size);
 	}
 	
 	public static function convert($ofile, $nfile, $type = false, $details = false)
 	{
 		$type = $type ?: 'convert';
+		if (!$nfile)
+		{
+			$nfile = TMP_DIR . uniqid('file');
+			$overwriteOriginal = true;
+		}
 		
 		try
 		{
@@ -225,7 +236,7 @@ class media_ctrl
 					break;
 					
 				case 'crop':
-					$convert = $exec_path['convert'] . ($crop ? " -crop '" . $details . "' ": '') . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $ofile . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $nfile;
+					$convert = $exec_path['convert'] . " -crop '" . $details . "' " . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $ofile . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $nfile;
 					$ok = 'ok_cropping_file';
 					$error = 'error_cropping_file';
 					break;
@@ -249,6 +260,11 @@ class media_ctrl
 				throw new Exception(tr::get($error));
 			}
 			
+			if ($overwriteOriginal)
+			{
+				@rename($nfile, $ofile);
+			}
+			
 			$out['status'] = 'success';
 			$out['text'] = tr::get($ok);
 		}
@@ -260,7 +276,5 @@ class media_ctrl
 		
 		echo json_encode($out);
 	}
-	
-	
 	
 }

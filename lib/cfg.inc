@@ -8,17 +8,42 @@
  
 class cfg
 {
+	private static $data;
+	
 	public static function get($el = false)
 	{
-		$cfg = parse_ini_file(MAIN_DIR . 'sites/default/cfg/config.ini', 1);
+		if (!self::$data)
+		{
+			if (file_exists(MAIN_DIR . 'sites/default/cfg/config.json'))
+			{
+				self::$data = json_decode(file_get_contents(MAIN_DIR . 'sites/default/cfg/config.json'), true);
+			}
+			else if (file_exists(MAIN_DIR . 'sites/default/cfg/config.ini'))
+			{
+				$data = parse_ini_file(MAIN_DIR . 'sites/default/cfg/config.ini', 1);
+				self::save($data);
+				unlink(MAIN_DIR . 'sites/default/cfg/config.ini');
+			}
+			else
+			{
+				error_log("Missing configuration file for site");
+				return false;
+			}
+		}
 		
 		if ($el)
 		{
-			return $cfg[$el];
+			return self::$data[$el];
 		}
 		else
 		{
-			return $cfg;
+			return self::$data;
 		}
+	}
+	
+	public static function save($data)
+	{
+		self::$data = $data;
+		utils::write_in_file(MAIN_DIR . 'sites/default/cfg/config.json', self::$data, 'json');
 	}
 }

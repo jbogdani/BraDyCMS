@@ -1,5 +1,55 @@
-[23-Feb-2013 18:45:34 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/git.bdusCMS/lib/auth.inc on line 49
-[23-Feb-2013 18:45:34 UTC] PHP Stack trace:
-[23-Feb-2013 18:45:34 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/admin.php:0
-[23-Feb-2013 18:45:34 UTC] PHP   2. auth::logout() /Users/jbogdani/www/git.bdusCMS/admin.php:17
-[23-Feb-2013 18:45:34 UTC] PHP   3. error_log() /Users/jbogdani/www/git.bdusCMS/lib/auth.inc:49
+[06-Mar-2013 18:46:12 UTC] SQLSTATE[HY000]: General error: 1 no such table: pp__articles_ :: SELECT `pp__articles`.`id` as `o_id`, `pp__articles`.`title` as `o_title`, `pp__articles_`.`id` as `tr_id`, `pp__articles_`.`title` as `tr_title`, `pp__articles_`.`translated` as `tr_translated` FROM `pp__articles` LEFT JOIN `pp__articles_`  ON `pp__articles`.`id` = `pp__articles_`.`id_art` WHERE 1 :: array (
+) :: read
+[06-Mar-2013 18:46:12 UTC] exception 'PDOException' with message 'SQLSTATE[HY000]: General error: 1 no such table: pp__articles_' in /Users/jbogdani/www/git.bdusCMS/lib/DB.inc:87
+Stack trace:
+#0 /Users/jbogdani/www/git.bdusCMS/lib/DB.inc(87): PDO->prepare('SELECT `pp__art...')
+#1 /Users/jbogdani/www/git.bdusCMS/lib/Translate.inc(53): DB->executeQuery('SELECT `pp__art...', false, 'read')
+#2 /Users/jbogdani/www/git.bdusCMS/modules/translate/translate.php(91): Translate->get_article_list('')
+#3 [internal function]: translate_ctrl::article('', Array)
+#4 /Users/jbogdani/www/git.bdusCMS/controller.php(19): call_user_func_array(Array, Array)
+#5 {main}
+[06-Mar-2013 18:47:26 UTC] SQLSTATE[HY000]: General error: 1 no such table: pp__articles_ :: SELECT `pp__articles`.`id` as `o_id`, `pp__articles`.`title` as `o_title`, `pp__articles_`.`id` as `tr_id`, `pp__articles_`.`title` as `tr_title`, `pp__articles_`.`translated` as `tr_translated` FROM `pp__articles` LEFT JOIN `pp__articles_`  ON `pp__articles`.`id` = `pp__articles_`.`id_art` WHERE 1 :: array (
+) :: read
+[06-Mar-2013 18:47:26 UTC] exception 'PDOException' with message 'SQLSTATE[HY000]: General error: 1 no such table: pp__articles_' in /Users/jbogdani/www/git.bdusCMS/lib/DB.inc:87
+Stack trace:
+#0 /Users/jbogdani/www/git.bdusCMS/lib/DB.inc(87): PDO->prepare('SELECT `pp__art...')
+#1 /Users/jbogdani/www/git.bdusCMS/lib/Translate.inc(53): DB->executeQuery('SELECT `pp__art...', false, 'read')
+#2 /Users/jbogdani/www/git.bdusCMS/modules/translate/translate.php(92): Translate->get_article_list('')
+#3 [internal function]: translate_ctrl::article('', Array)
+#4 /Users/jbogdani/www/git.bdusCMS/controller.php(19): call_user_func_array(Array, Array)
+#5 {main}
+[06-Mar-2013 18:48:10 UTC] SQLSTATE[HY000]: General error: 1 no such table: pp__articles_ :: SELECT `pp__articles`.`id` as `o_id`, `pp__articles`.`title` as `o_title`, `pp__articles_`.`id` as `tr_id`, `pp__articles_`.`title` as `tr_title`, `pp__articles_`.`translated` as `tr_translated` FROM `pp__articles` LEFT JOIN `pp__articles_`  ON `pp__articles`.`id` = `pp__articles_`.`id_art` WHERE 1 :: array (
+) :: read
+[06-Mar-2013 18:48:10 UTC] exception 'PDOException' with message 'SQLSTATE[HY000]: General error: 1 no such table: pp__articles_' in /Users/jbogdani/www/git.bdusCMS/lib/DB.inc:87
+Stack trace:
+#0 /Users/jbogdani/www/git.bdusCMS/lib/DB.inc(87): PDO->prepare('SELECT `pp__art...')
+#1 /Users/jbogdani/www/git.bdusCMS/lib/Translate.inc(53): DB->executeQuery('SELECT `pp__art...', false, 'read')
+#2 /Users/jbogdani/www/git.bdusCMS/modules/translate/translate.php(91): Translate->get_article_list('')
+#3 [internal function]: translate_ctrl::article('', Array)
+#4 /Users/jbogdani/www/git.bdusCMS/controller.php(19): call_user_func_array(Array, Array)
+#5 {main}
+[06-Mar-2013 18:48:34 UTC] SQLSTATE[HY000]: General error: 1 no such table: pp__articles_ :: SELECT `pp__articles`.`id` as `o_id`, `pp__articles`.`title` as `o_title`, `pp__articles_`.`id` as `tr_id`, `pp__articles_`.`title` as `tr_title`, `pp__articles_`.`translated` as `tr_translated` FROM `pp__articles` LEFT JOIN `pp__articles_`  ON `pp__articles`.`id` = `pp__articles_`.`id_art` WHERE 1 :: array (
+) :: read
+[06-Mar-2013 18:48:34 UTC] exception 'PDOException' with message 'SQLSTATE[HY000]: General error: 1 no such table: pp__articles_' in /Users/jbogdani/www/git.bdusCMS/lib/DB.inc:87
+Stack trace:
+#0 /Users/jbogdani/www/git.bdusCMS/lib/DB.inc(87): PDO->prepare('SELECT `pp__art...')
+#1 /Users/jbogdani/www/git.bdusCMS/lib/Translate.inc(53): DB->executeQuery('SELECT `pp__art...', false, 'read')
+#2 /Users/jbogdani/www/git.bdusCMS/modules/translate/translate.php(92): Translate->get_article_list('')
+#3 [internal function]: translate_ctrl::article('', Array)
+#4 /Users/jbogdani/www/git.bdusCMS/controller.php(19): call_user_func_array(Array, Array)
+#5 {main}
+[06-Mar-2013 18:48:41 UTC] SQLSTATE[HY000]: General error: 1 no such table: pp__articles_ :: SELECT `pp__articles`.`id` as `o_id`, `pp__articles`.`title` as `o_title`, `pp__articles_`.`id` as `tr_id`, `pp__articles_`.`title` as `tr_title`, `pp__articles_`.`translated` as `tr_translated` FROM `pp__articles` LEFT JOIN `pp__articles_`  ON `pp__articles`.`id` = `pp__articles_`.`id_art` WHERE 1 :: array (
+) :: read
+[06-Mar-2013 18:48:41 UTC] exception 'PDOException' with message 'SQLSTATE[HY000]: General error: 1 no such table: pp__articles_' in /Users/jbogdani/www/git.bdusCMS/lib/DB.inc:87
+Stack trace:
+#0 /Users/jbogdani/www/git.bdusCMS/lib/DB.inc(87): PDO->prepare('SELECT `pp__art...')
+#1 /Users/jbogdani/www/git.bdusCMS/lib/Translate.inc(53): DB->executeQuery('SELECT `pp__art...', false, 'read')
+#2 /Users/jbogdani/www/git.bdusCMS/modules/translate/translate.php(92): Translate->get_article_list('')
+#3 [internal function]: translate_ctrl::article('', Array)
+#4 /Users/jbogdani/www/git.bdusCMS/controller.php(19): call_user_func_array(Array, Array)
+#5 {main}
+[07-Mar-2013 06:40:11 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'sys_ctrl' not found in /Users/jbogdani/www/git.bdusCMS/controller.php on line 19
+[07-Mar-2013 06:40:11 UTC] PHP Stack trace:
+[07-Mar-2013 06:40:11 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[07-Mar-2013 06:40:11 UTC] PHP   2. call_user_func_array() /Users/jbogdani/www/git.bdusCMS/controller.php:19
+[07-Mar-2013 06:59:19 UTC] The filter "capitalioze" does not exist. Did you mean "capitalize" in "list.html" at line 7

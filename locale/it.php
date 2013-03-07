@@ -170,13 +170,22 @@ $_lang = array(
 	'cfg-friendly_url' => 'URL parlanti',
 	'cfg-timezone' => 'Fuso orario del sito',
 	'cfg-languages' => 'Lingue del sistema',
+	'cfg-ga' => 'Google Analytics',
 	'cfg-ga_id' => 'Google analytics ID',
 	'cfg-ga_domain' => 'Limita GA al dominio',
 	'cfg-paths' => 'Percorsi del sistema',
 	'cfg-users' => 'Utenti',
 	
+	'sys_translate' => 'Traduzione sistema',
 	'select_lang_to_edit' => 'Seleziona lingue da modificare',
 	'show_incomplete_translations' => 'Mostra traduzioni incomplete',
-	'show_all_translations' => 'Mostra tutte le traduzioni'
+	'show_all_translations' => 'Mostra tutte le traduzioni',
+	'ok_language_update' => 'Il file di traduzione è stato aggiornato',
+	'error_language_update' => 'Errore. Non è stato possibile aggiornare il file di traduzione',
+	'ok_lang_create' => 'Il nuovo file di traduzione è stato creato',
+	'error_lang_create' => 'Errore. Non è stato possibile creare il nuovo file di traduzione',
+	'add_locale' => 'Aggiungi una nuova lingua',
+	'enter_locale' => 'Inserisci (due lettere) l\'identificativo della nuova lingua',
+	'new_locale_cant_be_empty' => "La sigla della nuova lingua non può essere vuota"
 
 );

@@ -287,9 +287,9 @@ class Menu
 		
 		if (is_array($sys_langs))
 		{
-			foreach ($sys_langs as $l=>$lang)
+			foreach ($sys_langs as $lang)
 			{
-				$this->db->executeQuery("DELETE FROM `" . PREFIX . "__menu_" . $l . "` WHERE `id_menu` = " . $id);
+				$this->db->executeQuery("DELETE FROM `" . PREFIX . "__menu_" . $lang['id'] . "` WHERE `id_menu` = " . $id);
 			}
 		}
 		

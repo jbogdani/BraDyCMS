@@ -14,35 +14,14 @@ class sys_translate_ctrl
 		
 		$uid = uniqid('transl');
 		
-		$html = '<h2>' . tr::get('select_lang_to_edit') . '</h2>';
+		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'sys_translate/tmpl'), unserialize(CACHE));
 		
-		$html .= '<div id="but_' . $uid . '">';
-		
-		foreach($langs as $l)
-		{
-			if ($l != 'it.php')
-			{
-				$ll = str_replace('.php', null, $l);
-				$html .= '<button type="button" data-lang="' . $ll . '" class="lang btn btn-info"><i class="icon-white icon-globe"></i> ' . strtoupper($ll) . '</button> ';
-			}
-		}
-		$html .= ' <button type="button" class="add btn btn-warning">' . tr::get('add') . '</button>';
-		
-				
-		$html .= '</div>'
-				. '<hr />'
-				. '<div id="cont_' . $uid . '" class="transl-content"></div>'
-				. '<script>'
-						. "$('#but_{$uid} button.lang').on('click', function(){"
-								. "$('#cont_{$uid}').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]=' + $(this).data('lang'));"
-						."});"
-						. "$('#but_{$uid} button.add').on('click', function(){"
-								. "translate.addLang('{$uid}'); "
-						."});"
-						. ($opened_lang ? "$('#cont_{$uid}').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={$opened_lang}')" : '')
-				. '</script>';
-		echo $html;
-		
+		echo $twig->render('list.html', array(
+				'opened_lang' => $opened_lang,
+				'langs' => $langs,
+				'uid' => $uid,
+				'tr' => new tr()
+		));
 	}
 	
 	public static function showForm($lng)
@@ -67,16 +46,20 @@ class sys_translate_ctrl
 		));
 	}
 	
-	public static function newLang($lang)
+	public static function add_locale($lang)
 	{
 		if (!file_exists(LOCALE_DIR . $lang . '.php') && utils::write_in_file(LOCALE_DIR . $lang . '.php', ''))
 		{
-			echo utils::response('ok_lang_create');
+			$msg['text'] = tr::get('ok_lang_create');
+			$msg['status'] = 'success';
 		}
 		else
 		{
-			echo utils::response('error_lang_create', 'error');
+			$msg['text'] = tr::get('error_lang_create');
+			$msg['status'] = 'error';
 		}
+		
+		echo json_encode($msg);
 	}
 	
 	public static function save($post)

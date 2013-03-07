@@ -133,9 +133,9 @@ class Article
 		
 		if (is_array($sys_langs))
 		{
-			foreach ($sys_langs as $l=>$lang)
+			foreach ($sys_langs as $lang)
 			{
-				$this->db->executeQuery("DELETE FROM `" . PREFIX . "__articles_" . $l . "` WHERE `id_art` = " . $id);
+				$this->db->executeQuery("DELETE FROM `" . PREFIX . "__articles_" . $lang['id'] . "` WHERE `id_art` = " . $id);
 			}
 		}
 			

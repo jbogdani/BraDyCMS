@@ -21,9 +21,20 @@ class tr
 		require_once 'locale/en.php';
 		$en = $_lang;
 		
-		if ($get_lang AND cfg::get('languages') AND ( (array_key_exists($get_lang, cfg::get('languages'))) OR $get_lang == cfg::get('sys_lang')) )
+		//if ($get_lang AND cfg::get('languages') AND ( (array_key_exists($get_lang, cfg::get('languages'))) OR $get_lang == cfg::get('sys_lang')) )
+		if ($get_lang && $get_lang == cfg::get('sys_lang'))
 		{
 			$_SESSION['adm_lang'] = $get_lang;
+		}
+		else if ($get_lang AND cfg::get('languages') )
+		{
+			foreach (cfg::get('languages') as $ll)
+			{
+				if ($ll['id'] == $get_lang )
+				{
+					$_SESSION['adm_lang'] = $get_lang;
+				}
+			}
 		}
 		
 		if (!$_SESSION['adm_lang'])

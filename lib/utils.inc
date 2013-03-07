@@ -284,16 +284,21 @@ class utils
 					)
 				);
 				
-			// other languages
-		if (is_array(cfg::get('languages')))
+		// other languages
+		$languages = cfg::get('languages');
+		
+		if (is_array($languages))
 		{
-			foreach(cfg::get('languages') as $code=>$str)
+			foreach($languages as $ll)
 			{
-				array_push($lang_arr, array(
-				'code'=> $code,
-				'string' => $str,
-				'is_current' => ( $code == $lang ?  true : false)
-				));
+				if ($ll['published'] == '1')
+				{
+					array_push($lang_arr, array(
+					'code'=> $ll['id'],
+					'string' => $ll['string'],
+					'is_current' => ( $ll['id'] == $lang ?  true : false)
+					));
+				}
 			}
 		}
 				

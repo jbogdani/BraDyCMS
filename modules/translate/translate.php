@@ -30,13 +30,13 @@ class translate_ctrl
 			if (is_array($langs))
 			{
 				$data = array();
-				foreach ($langs as $id => $string)
+				foreach ($langs as $ll)
 				{
 					array_push($data,
 					array(
-					'id' => $id,
-					'string' => $string,
-					'data' => $translate->get_menu_list($id)
+					'id' => $ll['id'],
+					'string' => $ll['string'],
+					'data' => $translate->get_menu_list($ll['id'])
 					)
 					);
 				}
@@ -82,13 +82,13 @@ class translate_ctrl
 			if (is_array($langs))
 			{
 				$data = array();
-				foreach ($langs as $id => $string)
+				foreach ($langs as $ll)
 				{
 					array_push($data,
 						array(
-							'id' => $id,
-							'string' => $string,
-							'data' => $translate->get_article_list($id)
+							'id' => $ll['id'],
+							'string' => $ll['string'],
+							'data' => $translate->get_article_list($ll['id'])
 						)
 					);
 				}

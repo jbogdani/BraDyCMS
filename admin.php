@@ -155,6 +155,7 @@ catch (Exception $e)
 									<li class="divider"></li>
 									
 									<li><a href="#cfg/edit"><i class="icon icon-wrench"></i> <?php echo tr::get('cfg_editor'); ?></a></li>
+									<li><a href="#sys_translate/showList"><i class="icon icon-wrench"></i> <?php echo tr::get('sys_translate'); ?></a></li>
 									
 									<li class="divider"></li>
 									<li class="dropdown-submenu">

@@ -26,19 +26,20 @@ class auth
 		
 		$cfg_users = cfg::get('users');
 		
-		if(array_key_exists($username, $cfg_users) AND $cfg_users[$username] == sha1($password))
+		foreach ($cfg_users as $user)
 		{
-			$_SESSION['user_confirmed'] = true;
-		
+			if($username == $user['name'] && sha1($password) == $user['pwd'])
+			{
+				$_SESSION['user_confirmed'] = $username;
+			}
 			$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
-		
+			
 			error_log('user:' . $username . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
+			
 			return false;
 		}
-		else
-		{
-			return tr::get('access_denied');
-		}
+		
+		return tr::get('access_denied');		
 		
 	}
 	

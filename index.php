@@ -9,7 +9,7 @@
 try
 {
 	session_start();
-
+	
 	require_once 'lib/globals.inc';
 
 	$out = new Out($_GET, $_SESSION['lang']);
@@ -28,6 +28,10 @@ try
 }
 catch (Exception $e)
 {
+	if ($__debug)
+	{
+		var_dump($e);
+	}
 	echo tr::get('error_check_log');
 	error_log($e->getMessage());
 }

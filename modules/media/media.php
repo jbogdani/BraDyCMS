@@ -159,6 +159,8 @@ class media_ctrl
 		{
 			if ( is_dir ( $file ) )
 			{
+				@unlink($file . '/.DS_Store');
+				@unlink($file . '/.Thumb.db');
 				if ( !@rmdir($file) )
 				{
 					throw new Exception(tr::get('delete_dir_error'));

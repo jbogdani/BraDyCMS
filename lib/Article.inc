@@ -30,7 +30,7 @@ class Article
 	 */
 	private function valid_art_stat()
 	{
-		return " ( `status` = 1 AND ( `expires` = '0000-00-00 00:00:00' OR `expires` = `publish_on` OR `expires` > DATE('now') ) ) ";
+		return " ( `status` = 1 AND ( `expires` = '0000-00-00 00:00:00' OR `expires` = '0000-00-00' OR `expires` = `publish_on` OR `expires` > DATE('now') ) ) ";
 	}
 	
 	/**

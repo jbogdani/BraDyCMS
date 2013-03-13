@@ -29,6 +29,12 @@ class cfg
 				error_log("Missing configuration file for site");
 				return false;
 			}
+			
+			if (!self::$data)
+			{
+				error_log("Error in reading config file! Maybe your JSON is invalid");
+				return false;
+			}
 		}
 		
 		if ($el)

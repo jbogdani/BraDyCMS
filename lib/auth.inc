@@ -31,12 +31,16 @@ class auth
 			if($username == $user['name'] && sha1($password) == $user['pwd'])
 			{
 				$_SESSION['user_confirmed'] = $username;
+				
+				$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
+					
+				error_log('user:' . $username . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
+					
+				return false;
+				
+			} else {
+				continue;
 			}
-			$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
-			
-			error_log('user:' . $username . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
-			
-			return false;
 		}
 		
 		return tr::get('access_denied');		

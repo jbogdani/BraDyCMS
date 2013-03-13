@@ -8,7 +8,7 @@ RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L] 
 
 #safe site, js and css, tiny_mce
-RewriteRule (css|sites|js|tiny_mce)/(.+) $1/$2
+RewriteRule (css|sites|js|tiny_mce|img)/(.+) $1/$2
 
 #admin 
 RewriteRule ^admin/?$ admin.php

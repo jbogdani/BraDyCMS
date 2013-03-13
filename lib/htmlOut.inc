@@ -190,10 +190,6 @@ class htmlOut
 	
 	public function sectionBlog($section = false)
 	{
-		if ($this->out->getContext() != 'section')
-		{
-			return false;
-		}
 		
 		$art_list = $this->out->getArticlesBySection($section);
 		

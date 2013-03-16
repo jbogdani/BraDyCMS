@@ -42,6 +42,7 @@ class Translate
 		
 		$query = 'SELECT'
 			. " `{$main_tb}`.`id` as `o_id`,"
+			. " `{$main_tb}`.`text_id` as `text_id`,"
 			. " `{$main_tb}`.`title` as `o_title`,"
 			. " `{$tr_tb}`.`id` as `tr_id`,"
 			. " `{$tr_tb}`.`title` as `tr_title`,"

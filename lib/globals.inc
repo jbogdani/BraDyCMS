@@ -8,6 +8,11 @@
 
 session_start();
 
+if ($_GET['lang'])
+{
+	$_SESSION['lang'] = $_GET['lang'];
+}
+
 $__debug = true;
 
 

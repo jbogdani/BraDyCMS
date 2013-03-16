@@ -201,22 +201,22 @@ class utils
 		}
 	}
 	
-	public static function format_link($href)
+	public static function format_link($href, $lang = false)
 	{
-		if ($href == './' || preg_match('/http:\/\/(.+)/', $href))
+		if ($href == '#' || $href == './' || preg_match('/http:\/\/(.+)/', $href))
 		{
 			return $href;
 		}
 		
-		if (!preg_match('/lang=/', $href) AND $_SESSION['lang'])
+		if (!preg_match('/lang=/', $href) AND $lang)
 		{
-			if ($href != '#' AND !preg_match('/\?/', $href))
+			if (!preg_match('/\?/', $href))
 			{
-				$href .= '?';
+				$href = './?' . $href;
 			}
 			if ($href != '#')
 			{
-				$href .= '&lang=' . $_SESSION['lang'];
+				$href .= '&lang=' . $lang;
 			}
 		}
 		
@@ -229,21 +229,27 @@ class utils
 			$href = str_replace(array('index.php?', './?'), null, $href);
 			
 			$word_patt = '[a-zA-Z0-9_-]+';
+			
 			$path = $_REQUEST['lang'] ? '..' : '.';
+			
 			$pattern = array (
 						
-					//lang support
+					//section + lang
 					'/^section=(' . $word_patt . ')&lang=([a-z]{2})$/',
 	
+					//art (id) + lang
 					'/^art=([0-9]+)&lang=([a-z]{2})$/',
 	
+					//art_title + lang
 					'/^art_title=(' . $word_patt . ')&lang=([a-z]{2})$/',
 	
-					// no lang
+					// secion, no lang
 					'/^section=(' . $word_patt . ')$/',
 	
+					// art (id), no lang
 					'/^art=([0-9]+)$/',
 	
+					// art_title, no lang
 					'/^art_title=(' . $word_patt . ')$/',
 	
 					// homepage
@@ -264,7 +270,7 @@ class utils
 						
 					'id-$1', // ex.: ./id-5
 	
-					'$1', //ex: /about
+					'/$1', //ex: /about
 						
 					$path . '/$1/' // ex.: ../en
 			);
@@ -294,32 +300,40 @@ class utils
 				if ($ll['published'] == '1')
 				{
 					array_push($lang_arr, array(
-					'code'=> $ll['id'],
-					'string' => $ll['string'],
-					'is_current' => ( $ll['id'] == $lang ?  true : false)
-					));
+						'code'=> $ll['id'],
+						'string' => $ll['string'],
+						'is_current' => ( $ll['id'] == $lang ?  true : false)
+						));
 				}
 			}
 		}
-				
-		foreach($lang_arr as &$lang)
+		
+		foreach($lang_arr as &$langThis)
 		{
 			if($lang)
 			{
-				$lang['href'] = str_replace(
-						array('/' . $lang, 'lang=' . $lang),
-						array('/' . $lang['code'], 'lang=' . $lang['code']),
-						$_SERVER['REQUEST_URI']);
+				if (preg_match('/\/' . $lang . '/', $_SERVER['REQUEST_URI']) || preg_match('/lang=' . $lang, $_SERVER['REQUEST_URI'] . '/'))
+				{
+					$langThis['href'] = str_replace(
+							array('/' . $lang, 'lang=' . $lang),
+							array('/' . $langThis['code'], 'lang=' . $langThis['code']),
+							$_SERVER['REQUEST_URI']);
+				}
+				else
+				{
+					$langThis['href'] = '/' . $langThis['code'] . $_SERVER['REQUEST_URI'];
+				}
+				
 			}
 			else
 			{
 				if (cfg::get('friendly_url'))
 				{
-					$lang['href'] = $_SERVER['REQUEST_URI'] . '' . $lang['code'];
+					$lang['href'] = $_SERVER['REQUEST_URI'] . '' . $langThis['code'];
 				}
 				else
 				{
-					$lang['href'] = $_SERVER['REQUEST_URI'] . '?lang=' . $lang['code'];
+					$lang['href'] = $_SERVER['REQUEST_URI'] . '?lang=' . $langThis['code'];
 				}
 			}
 		}
@@ -337,7 +351,7 @@ class utils
 				
 			if ($text)
 			{
-				if ( !@fwrite ( $f, ($type == 'json'  ?  json_encode($text, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : $text ) ) ) return false;
+				if ( !@fwrite ( $f, ($type == 'json'  ?  json_encode($text, ((phpversion() >= 5.4) ? JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT : false)) : $text ) ) ) return false;
 			}
 				
 			@fclose($f);

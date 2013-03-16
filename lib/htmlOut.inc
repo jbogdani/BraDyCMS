@@ -58,7 +58,7 @@ class htmlOut
 			else
 			{
 				$html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . ($menu['current'] ? 'active' : '') . '">'
-						. '<a href="' . utils::format_link($menu['href']) . '" ' 
+						. '<a href="' . utils::format_link($menu['href'], $this->out->lang) . '" ' 
 								. ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
 								. ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')
 								. ($menu['sub'] ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')
@@ -268,9 +268,9 @@ class htmlOut
 	
 	public function GA($id = false, $restrict_domain = false)
 	{
-		$id = $id ?: cfg::get('ga_id');
+		$id = $id ? $id : cfg::get('ga_id');
 		
-		$restrict_domain = $restrict_domain ?: cfg::get('ga_domain');
+		$restrict_domain = $restrict_domain ? $restrict_domain : cfg::get('ga_domain');
 		
 		
 		if (

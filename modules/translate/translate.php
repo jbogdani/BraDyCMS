@@ -92,10 +92,10 @@ class translate_ctrl
 						)
 					);
 				}
-
+				
 				$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'translate/tmpl'), unserialize(CACHE));
 				echo $twig->render('article_list.html', array(
-						'data'=>$data,
+						'data' => $data,
 						'uid' => uniqid(),
 						'tr' => new tr()
 				));

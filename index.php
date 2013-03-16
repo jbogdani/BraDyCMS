@@ -8,8 +8,6 @@
  
 try
 {
-	session_start();
-	
 	require_once 'lib/globals.inc';
 
 	$out = new Out($_GET, $_SESSION['lang']);

@@ -191,13 +191,13 @@ class Menu
 		
 		$translated = $this->db->executeQuery($query, false, 'read');
 		
-		if (!is_array($translated))
+		if (is_array($translated))
 		{
 			foreach($menu_arr as &$menu)
 			{
 				foreach ($translated as $tr_menu)
 				{
-					if ($menu['id'] == $tr_menu['menu_id'])
+					if ($menu['id'] == $tr_menu['id_menu'])
 					{
 						if($tr_menu['item'] != '')
 						{

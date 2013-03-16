@@ -151,6 +151,8 @@ class Article
 		
 		$res = $this->db->executeQuery($query, false, 'read');
 		
+		$res = $this->addHref2List($res, $lang);
+		
 		return $lang ? $this->translateList($res, $lang) : $res;
 	}
 	
@@ -165,6 +167,7 @@ class Article
 	 */
 	public function getArticle ( $art_id = false , $art_text_id = false, $lang = false, $admin = false )
 	{
+		
 		if ( !$art_id AND !$art_text_id )
 		{
 			throw new Exception('No article is defined');
@@ -179,6 +182,8 @@ class Article
 			. ' LIMIT 0, 1';
 	
 		$res = $this->db->executeQuery($query, false, 'read');
+		
+		$res = $this->addHref2List($res, $lang);
 		
 		if (count($res) == 0)
 		{
@@ -203,13 +208,15 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link('./?art_title=' . $art['text_id']);
+				$art['link'] = utils::format_link('./?art_title=' . $art['text_id'], $lang);
 			}
 		}
 		
 		$head = $this->getArticle(false, $section, $lang);
 		
 		$list = $lang ? $this->translateList($res, $lang) : $res;
+		
+		$list = $this->addHref2List($list, $lang);
 		
 		return array('list' => $list, 'head' => $head);
 		
@@ -247,9 +254,11 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link( './?art_title=' . $art['text_id']  );
+				$art['link'] = utils::format_link( './?art_title=' . $art['text_id'], $lang);
 			}
 		}
+		
+		$res = $this->addHref2List($res, $lang);
 		
 		return $lang ? $this->translateList($res, $lang) : $res;
 	}
@@ -271,9 +280,11 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link( './art_title=' . $art['text_id']  );
+				$art['link'] = utils::format_link( './art_title=' . $art['text_id'], $lang);
 			}
 		}
+		
+		$res = $this->addHref2List($res, $lang);
 		
 		return $lang ? $this->translateList($res, $lang) : $res;
 	}
@@ -293,11 +304,27 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link( './?art_title=' . $art['text_id']  );
+				$art['link'] = utils::format_link( './?art_title=' . $art['text_id'], $lang);
 			}
 		}
 		
+		$res = $this->addHref2List($res, $lang);
+		
 		return $lang ? $this->translateList($res, $lang) : $res;
+	}
+	
+	private function addHref2List($art_list = false, $lang = false)
+	{
+		if (is_array($art_list))
+		{
+			foreach ($art_list as &$art)
+			{
+				$art['url'] = utils::format_link('art_title=' . $art['text_id'], $lang);
+				$art['full_url'] = 'http://' . $_SERVER['HTTP_HOST'] . '/' . str_replace('./', null, $art['url']);
+			}
+		}
+		
+		return $art_list;
 	}
 	
 	/**
@@ -328,13 +355,14 @@ class Article
 		
 		$translated = $this->db->executeQuery($query, false, 'read');
 		
-		if (!is_array($translated))
+		
+		if (is_array($translated))
 		{
-			 foreach($art_array as &$art)
+			foreach($art_array as &$art)
 			{
 				foreach ($translated as $tr_art)
 				{
-					if ($art['id'] == $tr_art['art_id'])
+					if ($art['id'] == $tr_art['id_art'])
 					{
 						if($tr_art['title'] != '')
 						{

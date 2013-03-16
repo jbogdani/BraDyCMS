@@ -29,15 +29,15 @@ class Out
 	$article,	// article object
 	$cfg,		// cfg object
 	$get,		// GET data
-	$lang,		// current language
-	$url_lang,	// url lang
 	$context,	// context: article, section, search
 	$data	//
 	;
+	public $lang;		// current language ( = session['lang'] set in globals, same as get['lang'])
 	
 	
 	public function __construct($get, $lang = false)
 	{
+		
 		// initialize database object
 		$this->db = new DB();
 		
@@ -55,9 +55,6 @@ class Out
 			$this->lang = $lang;
 		}
 		
-		// Set url_lang
-		$this->url_lang = $get['lang'] ?: false;
-
 		// Set context
 		if ( $get['art'] OR $get['art_title'] )
 		{
@@ -100,7 +97,7 @@ class Out
 	
 	public function getArticle($article = false)
 	{
-		$article = $article ?: $this->get['art_title'];
+		$article = $article ? $article : $this->get['art_title'];
 		
 		if (!$article)
 		{
@@ -118,7 +115,7 @@ class Out
 	
 	public function getArticlesBySection($section = false)
 	{
-		$section = $section ?: $this->get['section'];
+		$section = $section ? $section : $this->get['section'];
 		
 		if (!$this->data['section'][$section])
 		{
@@ -151,7 +148,7 @@ class Out
 		if (!$this->data['page'])
 		{
 			// Title
-			$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ?: $this->cfg['title'];
+			$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ? $this->data['article'][$this->get['art_title']]['title'] : $this->cfg['title'];
 	
 			// Description
 			if ( $this->data['article'][$this->get['art_title']]['summary'] )
@@ -168,10 +165,10 @@ class Out
 			}
 	
 			// Keywords
-			$this->data['page']['keywords'] = $this->data['article'][$this->get['art_title']]['keywords'] ?: $this->cfg['keywords'];
+			$this->data['page']['keywords'] = $this->data['article'][$this->get['art_title']]['keywords'] ? $this->data['article'][$this->get['art_title']]['keywords'] : $this->cfg['keywords'];
 	
 			// Lang
-			$this->data['page']['lang'] = $this->lang ?: $this->cfg['sys_lang'];
+			$this->data['page']['lang'] = $this->lang ? $this->lang: $this->cfg['sys_lang'];
 		}
 	
 		return $el ? $this->data['page'][$el] : $this->data['page'];
@@ -182,8 +179,8 @@ class Out
 		if (!$this->data['menu'][$menu])
 		{
 			$menu = new Menu();
-				
-			$not_structured_menu = $menu->get_all_items_of_menu($menu_name, $this->data['lang']);
+			
+			$not_structured_menu = $menu->get_all_items_of_menu($menu_name, $this->lang);
 				
 			foreach($not_structured_menu as $item)
 			{
@@ -224,7 +221,7 @@ class Out
 	{
 		if (!$this->data['languages'])
 		{
-			$this->data['languages'] = utils::getLanguages($this->data['url_lang']);
+			$this->data['languages'] = utils::getLanguages($this->lang);
 		}
 		return $this->data['languages'];
 	}

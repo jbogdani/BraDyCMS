@@ -50,7 +50,7 @@
 						</li>
 						<li>Title: an explicative text that the user will see on hovering the menu text with the cursor</li>
 						<li>Menu: menu name. If choosen from the available list, the menu item will be added to that menu. If a new string is entered a new menu is created. <code>Attention:</code> No white spaces, upper case or special characters in this field, please!</li>
-						<li>Sub menu of: if an existing menu is select a list of the available menu items (siblings) will be shown. If one of them is selected this menu item bill be nested to the selected item. <code>Attention:</code> Please see the "How to manage menus?" section for easily nestins menu items</li>
+						<li>Sub menu of: if an existing menu is select a list of the available menu items (siblings) will be shown. If one of them is selected this menu item will be nested to the selected item. <code>Attention:</code> Please see the "How to manage menus?" section for easily nestins menu items</li>
 						<li>Sorting: Only integers are allowed in this field. Use this field to controle the order of appearance of the menu items. <code>Attention:</code> Please see the "How to manage menus?" section for easily sorting menu items</li>
 					</ul>
 			</dd>
@@ -60,6 +60,11 @@
 				<pre>Main menu > Menu > Show all menus</pre>
 				If menus are available will be listed here. Fot each available menu will be provided a list containing all items. Clicking on an item will open it in a new tab for editing (for detail see <code>What information are needed to create a new menu item?</code>).
 				<p>Menu items can be ordered bu dragging & dropping them. In the same way these items can be nested into one another. Settings are automatically saved.</p>
+			</dd>
+			
+			<dt>How to insert menu divider item</dt>
+			<dd>
+				To add menu divider just add a new menu item having as <strong>Text</strong> and as <strong>Link</strong> just a dot (.). This will output <code>&#60;li class="divider"&#62;&#60;/li&#62;</code>
 			</dd>
 			
 			<dt>How to upload files?</dt>
@@ -106,6 +111,7 @@
 			
 			<dt>Can I have nested articles?</dt>
 			<dd>BraDypUS CMS supports something similar to "Nested articles". It's a feature that permits to use an article as an introduction text for a list of articles, usually articles of the same section. To achieve this just create a new article having as <code>text id</code> the same string as the section name you want to use this article as introduction for. This article will be used as intro text for the section blog list!</dd>
+			
 			
 			<dt>For DESIGNERS: How to create and edit a site template?</dt>
 			<dd>

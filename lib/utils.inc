@@ -203,9 +203,11 @@ class utils
 	
 	public static function format_link($href, $lang = false)
 	{
+		$base = '.';
+		
 		if ($href == '#' || $href == './' || preg_match('/http:\/\/(.+)/', $href))
 		{
-			return $href;
+			return $base . $href;
 		}
 		
 		if (!preg_match('/lang=/', $href) AND $lang)
@@ -222,7 +224,7 @@ class utils
 		
 		if ( !cfg::get('friendly_url'))
 		{
-			return $href;
+			return $base . $href;
 		}
 		else
 		{
@@ -276,7 +278,7 @@ class utils
 			);
 
 			$href = preg_replace($pattern, $replacement, $href);
-			return $href;
+			return $base . $href;
 		}
 	}
 	

@@ -1,7 +1,7 @@
-#BraDyCMS
-###A highly customizable, easy to setup & use php5 mysql or sqlite driven Content Managing System
+# BraDyCMS
+### A highly customizable, easy to setup & use php5 mysql or sqlite driven Content Managing System
 
-##Features:
+## Features:
 
 * Multi-user administrator backend
 * Organize content in articles & sections

@@ -157,6 +157,20 @@ class Article
 	}
 	
 	/**
+	 * Returns array containg all articles
+	 */
+	public function getAllValid($lang = false)
+	{
+		$query = "SELECT * FROM `" . PREFIX . "__articles` WHERE " . $this->valid_art_stat() . " ORDER BY `section`, `sort`";
+	
+		$res = $this->db->executeQuery($query, false, 'read');
+	
+		$res = $this->addHref2List($res, $lang);
+	
+		return $lang ? $this->translateList($res, $lang) : $res;
+	}
+	
+	/**
 	 * Returns array witha rticle data
 	 * @param int $art_id
 	 * @param string $art_text_id

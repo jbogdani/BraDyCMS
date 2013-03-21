@@ -204,8 +204,17 @@ class utils
 	public static function format_link($href, $lang = false)
 	{
 		$base = '.';
+		if (preg_match('/^http:\/\/(.+)/', $href))
+		{
+			return $href;
+		}
 		
-		if ($href == '#' || $href == './' || preg_match('/http:\/\/(.+)/', $href))
+		if (preg_match('/^www\.(.+)/', $href))
+		{
+			return 'http://' . $href;
+		}
+		
+		if ($href == '#' || $href == './')
 		{
 			return $base . $href;
 		}

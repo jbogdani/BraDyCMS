@@ -30,7 +30,9 @@ class Out
 	$cfg,		// cfg object
 	$get,		// GET data
 	$context,	// context: article, section, search
-	$data	//
+	$data,	//
+	// different from $lang that if is the same of sys_lang is not set!
+	$session_lang
 	;
 	public $lang;		// current language ( = session['lang'] set in globals, same as get['lang'])
 	
@@ -53,6 +55,11 @@ class Out
 		if ($lang AND ( $lang != $this->cfg['sys_lang'] ) )
 		{
 			$this->lang = $lang;
+		}
+		
+		if ($lang)
+		{
+			$this->session_lang = $lang;
 		}
 		
 		// Set context
@@ -221,7 +228,7 @@ class Out
 	{
 		if (!$this->data['languages'])
 		{
-			$this->data['languages'] = utils::getLanguages($this->lang);
+			$this->data['languages'] = utils::getLanguages($this->session_lang);
 		}
 		return $this->data['languages'];
 	}

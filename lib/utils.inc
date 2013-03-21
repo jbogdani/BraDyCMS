@@ -291,7 +291,6 @@ class utils
 						'is_current' => (($lang == cfg::get('sys_lang')) || !$lang ? true : false)
 					)
 				);
-				
 		// other languages
 		$languages = cfg::get('languages');
 		
@@ -331,11 +330,11 @@ class utils
 			{
 				if (cfg::get('friendly_url'))
 				{
-					$lang['href'] = $_SERVER['REQUEST_URI'] . '' . $langThis['code'];
+					$langThis['href'] = $langThis['code'] . $_SERVER['REQUEST_URI'];
 				}
 				else
 				{
-					$lang['href'] = $_SERVER['REQUEST_URI'] . '?lang=' . $langThis['code'];
+					$langThis['href'] = $_SERVER['REQUEST_URI'] . '?lang=' . $langThis['code'];
 				}
 			}
 		}

@@ -213,7 +213,7 @@ class media_ctrl
 	
 	public static function convert($ofile, $nfile, $type = false, $details = false)
 	{
-		$type = $type ?: 'convert';
+		$type = $type ? $type : 'convert';
 		if (!$nfile)
 		{
 			$nfile = TMP_DIR . uniqid('file');

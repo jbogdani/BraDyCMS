@@ -60,7 +60,7 @@ class htmlOut
 			else
 			{
 				$html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . ($menu['current'] ? 'active' : '') . '">'
-						. '<a href="' . utils::format_link($menu['href'], $this->out->lang) . '" ' 
+						. '<a href="' . utils::format_link($menu['href'], $this->out->session_lang) . '" ' 
 								. ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
 								. ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')
 								. ($menu['sub'] ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')
@@ -110,7 +110,6 @@ class htmlOut
 		$html = '<form action="javascript:void(0);" id="searchForm">'
 				. '<input class="search-query" type="search" placeholder="' . tr::get('search_site') . '" name="search" id="search" />'
 			. '</form>';
-
 		return $html;
 	}
 	

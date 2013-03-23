@@ -204,23 +204,29 @@ class utils
 	public static function format_link($href, $lang = false)
 	{
 		$base = '.';
+		
+		// absolute url is not processed
 		if (preg_match('/^http:\/\/(.+)/', $href))
 		{
 			return $href;
 		}
 		
+		// incomplete absolute url is completed with http:// prefix and not processed further
 		if (preg_match('/^www\.(.+)/', $href))
 		{
 			return 'http://' . $href;
 		}
 		
+		// links to home page are not processed
 		if ($href == '#' || $href == './')
 		{
 			return $base . $href;
 		}
 		
+		// if language variable is not present in href string, it will be added!
 		if (!preg_match('/lang=/', $href) AND $lang)
 		{
+			// question mark is added to make href a wel formatted query string
 			if (!preg_match('/\?/', $href))
 			{
 				$href = './?' . $href;
@@ -231,64 +237,64 @@ class utils
 			}
 		}
 		
+		// if friendly url is turned off, the formatted string is returned
 		if ( !cfg::get('friendly_url'))
 		{
 			return $base . $href;
 		}
-		else
-		{
-			$href = str_replace(array('index.php?', './?'), null, $href);
-			
-			$word_patt = '[a-zA-Z0-9_-]+';
-			
-			$path = $_REQUEST['lang'] ? '..' : '.';
-			
-			$pattern = array (
-						
-					//section + lang
-					'/^section=(' . $word_patt . ')&lang=([a-z]{2})$/',
-	
-					//art (id) + lang
-					'/^art=([0-9]+)&lang=([a-z]{2})$/',
-	
-					//art_title + lang
-					'/^art_title=(' . $word_patt . ')&lang=([a-z]{2})$/',
-	
-					// secion, no lang
-					'/^section=(' . $word_patt . ')$/',
-	
-					// art (id), no lang
-					'/^art=([0-9]+)$/',
-	
-					// art_title, no lang
-					'/^art_title=(' . $word_patt . ')$/',
-	
-					// homepage
-					'/^lang=([a-z]{2})$/',
-			);
-	
-			$replacement = array (
-	
-					// lang support
-					$path . '/$2/$1.all', // ex.: ./en/news.all
-						
-					$path . '/$2/id-$1',	// ex.: ../en/id-5
-	
-					$path . '/$2/$1', // ex: ../en/about
-	
-					// no lang
-					'$1.all', // ex.: ./news.all
-						
-					'id-$1', // ex.: ./id-5
-	
-					'/$1', //ex: /about
-						
-					$path . '/$1/' // ex.: ../en
-			);
+		
+		$href = str_replace(array('index.php?', './?'), null, $href);
+		
+		$word_patt = '[a-zA-Z0-9_-]+';
+		
+		$path = $_REQUEST['lang'] ? '..' : '.';
+		
+		$pattern = array (
+					
+				//section + lang
+				'/^section=(' . $word_patt . ')&lang=([a-z]{2})$/',
 
-			$href = preg_replace($pattern, $replacement, $href);
-			return $base . $href;
-		}
+				//art (id) + lang
+				'/^art=([0-9]+)&lang=([a-z]{2})$/',
+
+				//art_title + lang
+				'/^art_title=(' . $word_patt . ')&lang=([a-z]{2})$/',
+
+				// secion, no lang
+				'/^section=(' . $word_patt . ')$/',
+
+				// art (id), no lang
+				'/^art=([0-9]+)$/',
+
+				// art_title, no lang
+				'/^art_title=(' . $word_patt . ')$/',
+
+				// homepage
+				'/^lang=([a-z]{2})$/',
+		);
+
+		$replacement = array (
+
+				// lang support
+				$path . '/$2/$1.all', // ex.: ./en/news.all
+					
+				$path . '/$2/id-$1',	// ex.: ../en/id-5
+
+				$path . '/$2/$1', // ex: ../en/about
+
+				// no lang
+				'$1.all', // ex.: ./news.all
+					
+				'id-$1', // ex.: ./id-5
+
+				'/$1', //ex: /about
+					
+				$path . '/$1/' // ex.: ../en
+		);
+
+		$href = preg_replace($pattern, $replacement, $href);
+		return $href;
+		
 	}
 	
 	public static function getLanguages($lang = false)

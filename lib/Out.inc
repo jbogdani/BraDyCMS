@@ -30,11 +30,11 @@ class Out
 	$cfg,		// cfg object
 	$get,		// GET data
 	$context,	// context: article, section, search
-	$data,	//
-	// different from $lang that if is the same of sys_lang is not set!
-	$session_lang
+	$data	//
 	;
-	public $lang;		// current language ( = session['lang'] set in globals, same as get['lang'])
+	public 
+	$session_lang, // different from $lang that if is the same of sys_lang is not set!
+	$lang;		// current language ( = session['lang'] set in globals, same as get['lang'])
 	
 	
 	public function __construct($get, $lang = false)
@@ -134,7 +134,7 @@ class Out
 	
 	public function getArticleSiblings()
 	{
-		if ($this->get != 'art_title')
+		if (!$this->get['art_title'])
 		{
 			return false;
 		}

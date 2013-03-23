@@ -283,7 +283,7 @@ class Article
 		
 		$query = 'SELECT ' . $this->previewFlds()
 			. ' FROM `' . PREFIX . '__articles` WHERE '
-			. " `section` = (SELECT `section` FROM `' . PREFIX . '__articles` WHERE `text_id` = `" . $text_id . "`)"
+			. " `section` = (SELECT `section` FROM `" . PREFIX . "__articles` WHERE `text_id` = '" . $text_id . "')"
 			. " AND `text_id` != '" . $text_id . "'"
 			. ' AND ' . $this->valid_art_stat()
 			. ' ORDER BY `sort`';
@@ -294,7 +294,7 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link( './art_title=' . $art['text_id'], $lang);
+				$art['link'] = utils::format_link( 'art_title=' . $art['text_id'], $lang);
 			}
 		}
 		

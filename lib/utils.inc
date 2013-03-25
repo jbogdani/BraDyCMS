@@ -203,7 +203,7 @@ class utils
 	
 	public static function format_link($href, $lang = false)
 	{
-		$base = '.';
+		$path = $_REQUEST['lang'] ? '..' : '.';
 		
 		// absolute url is not processed
 		if (preg_match('/^http:\/\/(.+)/', $href))
@@ -217,10 +217,16 @@ class utils
 			return 'http://' . $href;
 		}
 		
-		// links to home page are not processed
-		if ($href == '#' || $href == './')
+		// links to nothing is not processed
+		if ($href == '#')
 		{
-			return $base . $href;
+			return $path . $href;
+		}
+		
+		// links to home page is not processed
+		if ($href == './')
+		{
+			return $href;
 		}
 		
 		// if language variable is not present in href string, it will be added!
@@ -240,14 +246,12 @@ class utils
 		// if friendly url is turned off, the formatted string is returned
 		if ( !cfg::get('friendly_url'))
 		{
-			return $base . $href;
+			return $path . $href;
 		}
 		
 		$href = str_replace(array('index.php?', './?'), null, $href);
 		
 		$word_patt = '[a-zA-Z0-9_-]+';
-		
-		$path = $_REQUEST['lang'] ? '..' : '.';
 		
 		$pattern = array (
 					
@@ -283,16 +287,17 @@ class utils
 				$path . '/$2/$1', // ex: ../en/about
 
 				// no lang
-				'$1.all', // ex.: ./news.all
+				$path . '$1.all', // ex.: ./news.all
 					
-				'id-$1', // ex.: ./id-5
+				$path . 'id-$1', // ex.: ./id-5
 
-				'/$1', //ex: /about
+				$path . '/$1', //ex: /about
 					
 				$path . '/$1/' // ex.: ../en
 		);
 
 		$href = preg_replace($pattern, $replacement, $href);
+		
 		return $href;
 		
 	}

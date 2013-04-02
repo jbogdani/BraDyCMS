@@ -3,7 +3,7 @@
 <div class="alert alert-error">{{ error_create|raw }}</div>
 {% endif%}
 <div class="nav clearfix">
-	<input type="text" placeholder="{{ tr.get('search') }}" id="input-{{ uniqid }}" class="search-query pull-right" />
+	<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uniqid }}" class="search-query pull-right" />
 </div>
 <ul class="breadcrumb form-horizontal">
 	<li>
@@ -38,7 +38,7 @@
 	<li class="pull-left img">
 		<a class="" href="#media/all/{{ file.href }}">
 			<img class="media-object" src="{{ file.src }}" style="width:128px;" />
-			<div style="text-align:center;">{{ file.name }}</div>
+			<div style="text-align:center;" class="searcheable">{{ file.name }}</div>
 		</a>
 	</li>
 	{% endif %}
@@ -51,7 +51,7 @@
 		<div style="width:128px; max-height:128px; ">
 			<img src="{{ file.src }}" style="max-height:100%; max-width: 100%;" />
 		</div>
-		<div class="carousel-caption" style="position:relative; color:#fff;">{{ file.name }}</div>
+		<div class="carousel-caption searcheable" style="position:relative; color:#fff;">{{ file.name }}</div>
 	</li>
 	{% endif%}
 		
@@ -156,13 +156,16 @@
 		}, 'json');
 	});
 	
-	$('#input-{{ uniqid }}').on('keyup', function(){
+	$('#input_{{ uniqid }}').on('keyup', function(){
 		
 		var filter = $(this).val();
 		
+		console.log(filter);
+		
 		if (filter) {
-	      $('#media-{{ uniqid }} div.alert:not(:Contains(' + filter + '))').parents('li').fadeOut();
-	      $('#media-{{ uniqid }} div.alert:Contains(' + filter + ')').parents('li').fadeIn();
+			console.log()
+	      $('#media-{{ uniqid }} div.searcheable:not(:Contains(' + filter + '))').parents('li').fadeOut();
+	      $('#media-{{ uniqid }} div.searcheable:Contains(' + filter + ')').parents('li').fadeIn();
 	    } else {
 	      $('#media-{{ uniqid }} li').fadeIn();
 	    }

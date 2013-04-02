@@ -196,7 +196,7 @@ class htmlOut
 		
 		$html = '';
 		
-		if ($art_list['head']['title'] && $art_list['head']['text'] && is_array($art_list['list']))
+		if (($art_list['head']['title'] && $art_list['head']['text']) || is_array($art_list['list']))
 		{
 			$html .= '<section class="section blog ' . ( $section ? $section : $this->out->getSectionName() ) . '">';
 			$close_section = true;
@@ -293,6 +293,16 @@ class htmlOut
 		}
 		
 		return $html;
+	}
+	
+	public function gallery($gal, $rel = false, $class = false)
+	{
+		if (!file_exists('./sites/default/galleries/' . $gal . '/data.json'))
+		{
+			return;
+		}
+		
+		echo $this->out->gallery(array('content' => $gal, 'rel'=>$rel, 'class' => $class));
 	}
 		
 }

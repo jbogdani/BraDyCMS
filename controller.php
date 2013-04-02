@@ -6,23 +6,14 @@
  * @since			Dec 1, 2012
  */
  
-$root = './';
-
 try
 {
+	$root = './';
 	require_once $root . 'lib/globals.inc';
-
-	if ($_REQUEST['obj'])
-	{
-		$param = array_merge((array)$_GET['param'], array('post'=>$_POST));
-		
-		call_user_func_array(array($_GET['obj'], $_GET['method']), $param);
-	}
-	else
-	{
-		throw new Exception('No data to load');
-	}
-
+	
+	$controller = new Controller($_GET, $_POST, $_REQUEST);
+	
+	$controller->route();
 }
 catch (Exception $e)
 {

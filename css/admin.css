@@ -16,6 +16,18 @@ li.img{
 li.openpop{
 	cursor:pointer;
 }
+
+li.img{
+	height: 170px;
+	overflow: hidden;
+	width: 128px;
+}
+
+li.img div.carousel-caption{
+	position: relative;
+	bottom: 0;
+}
+
 section{
 	padding-top: 40px;
 }

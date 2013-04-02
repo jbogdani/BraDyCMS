@@ -116,6 +116,7 @@ class Out
 			$this->data['article'][$article] = $this->article->getArticle(false, $article, $this->lang);
 		}
 		
+		$this->data['article'][$article]['text'] = $this->parseContent($this->data['article'][$article]['text']);
 		return $this->data['article'][$article];
 	}
 	
@@ -243,4 +244,75 @@ class Out
 		return $this->get['search'];
 	}
 	
+	private function parseContent($html)
+	{
+		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
+		
+		foreach ($customTags as $customTag)
+		{
+			$originalTag = $customTag[0];
+		
+			$tag = $customTag[1];
+		
+			$rawAttributes = $customTag[2];
+		
+			$content = $customTag[3];
+		
+			preg_match_all('/([^=\s]+)="([^"]+)"/', $rawAttributes, $attributes, PREG_SET_ORDER);
+		
+			$formatedAttributes['content'] = $content;
+		
+			foreach ($attributes as $attribute)
+			{
+				$formatedAttributes[$attribute[1]] = $attribute[2];
+			}
+			
+			if (method_exists(get_class(), $tag))
+			{
+				$replace = call_user_func(array(get_class(), $tag), $formatedAttributes);
+		
+				$html = str_replace($originalTag, $replace, $html);
+			}
+		}
+			
+		return $html;
+	}
+	
+	
+	public function gallery($data)
+	{
+		$gal = $data['content'];
+		$rel = $data['rel'];
+		$class = $data['class'];
+		
+		if (!file_exists('./sites/default/galleries/' . $gal  . '/data.json'))
+		{
+			return tr::sget('gallery_does_not_exist', $gal);
+		}
+		
+		$data = @json_decode(file_get_contents('./sites/default/galleries/' . $gal  . '/data.json'), 1);
+		
+		if (!is_array($data))
+		{
+			return tr::sget('gallery_not_well_formatted', $gal);
+		}
+		
+		$html = '<div class="gallery-container"><ul class="gallery ' . $gal . ($class ? ' ' . $class : '') . '">';
+		
+		foreach ($data as $img => $dida)
+		{
+			$img = str_replace('__x__', '.', $img);
+			
+			$html .= '<li>'
+						.'<a href="./sites/default/galleries/' . $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>'
+							. '<img src="./sites/default/galleries/' . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />'
+						.'</a>'
+						. '<div class="caption">' . $dida . '</div>'
+					.'</li>';
+		}
+		
+		$html .='</ul></div>';
+		
+		return $html;
+	}
 }

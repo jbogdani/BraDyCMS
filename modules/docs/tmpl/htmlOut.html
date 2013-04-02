@@ -237,15 +237,42 @@
 				<code>{% raw %}{{ html.GA }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;script&#62;
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'GA-ID']);
-	_gaq.push(['_trackPageview']);
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'GA-ID']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 &#60;/script&#62;
+</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>gallery(name, single_gallery, class)</th>
+			<td>(string) Returns HTML code with gallery data.
+			<p><code>name</code>, string, required: name of the gallery to show</p>
+			<p><code>single_gallery</code>, boolean, optional (default false): if true all images will be part of the same gallery</p>
+			<p><code>class</code>, string, optional: css class to add to mail ul</p>
+			</td>
+			<td>
+				<code>{% raw %}{{ html.gallery('news', true, 'latest') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;ul class="gallery news latest"&#62;
+  &#60;li&#62;
+    &#60;a href="./sites/default/galleries/news/01.jpg" class="fancybox" title="Figure 01 caption" rel="news" &#62;
+      &#60;img src="./sites/default/galleries/news/thumbs/01.jpg" alt="Figure 01 caption" /&#62;
+    &#60;/a&#62;
+    &#60;div class="caption"&#62;Figure 01 caption&#60;/div&#62;
+  &#60;/li&#62;
+
+  &#60;li&#62;... &#60;/li&#62;
+  
+  ...
+&#60;/ul&#62;
+	
 </pre>
 			</td>
 		</tr>

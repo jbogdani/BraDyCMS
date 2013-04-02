@@ -133,7 +133,12 @@ catch (Exception $e)
 								</ul>
 							</li>
 							
-							<li><a href="#media/all"><i class="icon-picture"></i> <?php echo tr::get('media'); ?></a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-camera"></i> <?php echo tr::get('media'); ?> <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#media/all"><i class="icon-picture"></i> <?php echo tr::get('media'); ?></a></li>
+									<li><a href="#galleries/all"><i class="icon-facetime-video"></i> <?php echo tr::get('galleries'); ?></a></li>
+								</ul>
 							
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-cog"></i> <?php echo tr::get('other'); ?> <b class="caret"></b></a>

@@ -13,10 +13,10 @@ var admin = {
 		 * 			addclass
 		 */
 		dialog: function(opts){
-			var dialog =  $('<div />').addClass('modal hide fade')
+			var dialog =  $('<div />').addClass('modal hide fade').attr('id', 'modal')
 				.attr({'role':'dialog'})
 				.append(
-						(opts.title ? '<div class="modal-header"><h2>' + opts. title + '</h2></div>' : ''),
+						(opts.title ? '<div class="modal-header"><h2>' + opts.title + '</h2></div>' : ''),
 						'<div class="modal-body">' + ( opts.html ? opts.html : '') + '</div>'
 						);
 			
@@ -179,7 +179,12 @@ var admin = {
             	li.remove();
             }
 	    }
-	}
+	},
+	
+	tr: function (string) {
+		
+		return lang[string] ? lang[string] : string;
+	},
 };
 
 

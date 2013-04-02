@@ -15,6 +15,7 @@ try
 	$htmlOut = new htmlOut($out);
 	
 	$twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), unserialize(CACHE));
+	
 	if ($__debug)
 	{
 		$twig->addExtension(new Twig_Extension_Debug());

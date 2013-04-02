@@ -8,6 +8,42 @@
  
 class utils
 {
+	public static function recursive_delete($dir)
+	{
+		$files = self::dirContent($dir, true);
+		
+		if (is_array($files))
+		{
+			foreach($files as $file)
+			{
+				if (is_dir($dir . '/' . $file))
+				{
+					self::recursive_delete($dir . '/' . $file);
+				}
+				else
+				{
+					@unlink($dir . '/' . $file);
+					
+					if (file_exists($dir . '/' . $file))
+					{
+						$error[] = 'Can not delete file: ' . $dir . '/' . $file;
+						error_log('1. Can not delete file: ' . $dir . '/' . $file);
+					}
+				}
+			}
+		}
+		
+		rmdir($dir);
+		
+		if (file_exists($dir))
+		{
+			$error[] = 'Can not delete directory: ' . $dir;
+			error_log('2. Can not delete directory: ' . $dir);
+		}
+		
+		return $error;
+	}
+	
 	public static function emptyTmp()
 	{
 		$tmp_content = self::dirContent(TMP_DIR);
@@ -28,11 +64,16 @@ class utils
 		}
 	}
 	
-	public static function dirContent($dir)
+	public static function dirContent($dir, $dont_ignore_sys = false)
 	{
 		$handle = @opendir($dir);
 	
-		$dont_consider_array = array('.', '..', '.DS_Store', 'thumbs.db', '.svn');
+		$dont_consider_array = array('.', '..');
+		
+		if (!$dont_ignore_sys)
+		{
+			array_push($dont_consider_array,'.DS_Store', 'thumbs.db', '.svn');
+		}
 	
 		if($handle)
 		{
@@ -274,7 +315,7 @@ class utils
 				'/^art_title=(' . $word_patt . ')$/',
 
 				// homepage
-				'/^lang=([a-z]{2})$/',
+				'/^lang=([a-z]{2})$/'
 		);
 
 		$replacement = array (
@@ -287,9 +328,9 @@ class utils
 				$path . '/$2/$1', // ex: ../en/about
 
 				// no lang
-				$path . '$1.all', // ex.: ./news.all
+				$path . '/$1.all', // ex.: ./news.all
 					
-				$path . 'id-$1', // ex.: ./id-5
+				$path . '/id-$1', // ex.: ./id-5
 
 				$path . '/$1', //ex: /about
 					

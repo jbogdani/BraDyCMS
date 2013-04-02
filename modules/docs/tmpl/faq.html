@@ -69,27 +69,27 @@
 			
 			<dt>How to upload files?</dt>
 			<dd>
-				<pre>Main menu > Media</pre>
+				<pre>Main menu > Media > Media</pre>
 				Click on "Upload a file" button, or drag& drop files from your folders to the "Upload a file" button. Multiple files can be loaded simultanously. 
 			</dd>
 			
 			<dt>Can I organize my files in folders?</dt>
 			<dd>
 				Yes. In the media folder you can create all the directories you need to beter organize your files. Creating a folder is easy as typing its name:
-				<pre>Main menu > Media</pre>
+				<pre>Main menu > Media > Media</pre>
 				Simply click on one folder to enter in it and use the navigation bar to go back up to the root folder.
 			</dd>
 		
 			<dt>Can I navigate my files and folders?</dt>
 			<dd>
-				<pre>Main menu > Media</pre>
+				<pre>Main menu > Media > Media</pre>
 				In the navigation bar enter in the input the name of the directory you want to create and click "Create & Go!". The new folder will be created and you will be durected there, ready to upload files.
 			</dd>
 			
 			<dt>Can I delete or rename my files?</dt>
 			<dd>
 				Yes you can!
-				<pre>Main menu > Media</pre>
+				<pre>Main menu > Media > Media</pre>
 				Just click on the file and a popup will appear (click on the file to make it disappear again). In the popup you can fine the file URL to use in your articles, an input where you can enter the new name, to rename the file (<code>Attention:</code> make sure to use the same file extension), and the open / download and delete buttons.
 				<p><code>Tip:</code> in the new name input you can also use relative paths to move your file in other folder!</p>
 			</dd>
@@ -116,15 +116,50 @@
 			<dt>For DESIGNERS: How to create and edit a site template?</dt>
 			<dd>
 				<p>To edit the <strong>HTML</strong> of the main index file:</p>
-				<pre>Other > Template manager > Edit HTML</pre>
+				<pre>Main menu > Other > Template manager > Edit HTML</pre>
 				or follow <a href="#template/index">this link</a>. Plaese check the <a href="#docs/tmpl/intro">template documentation</a>.
 				
 				<p>To edit the <strong>CSS</strong>:</p>
-				<pre>Other > Template manager > Edit CSS</pre>
+				<pre>Main menu > Other > Template manager > Edit CSS</pre>
 				or follow <a href="#template/css">this link</a>.
 				
 			</dd>
 			
+			<dt>How can I create add an image gallery?</dt>
+			<dd>
+				<pre>Main menu > Media > Galleries</pre>
+				Will list all available image galleries. To add a new Gallery just click on the PLUS button, <code>Add new gallery</code>. You will be promped fot the gallery name. Be carefull: no spaces, special characters of commas (,), dashes (-), apices (') or double apices (") are allowed. If entered these characters will be automatically replaced with underscores (_). Gallery names must be lower case.
+			</dd>
+			
+			<dt>How can I create edit an image gallery?</dt>
+			<dd>
+				<pre>Main menu > Media > Galleries</pre>
+				Will list all available image galleries. Just click on the galley you want to edit.
+				<p>Images can be loaded by clicking, in the lower part of the page, the <code>Upload file</code> button. More images can be load simultaneously. An easier way to load more images is by simply dragging and dropping them from your computer to the button.</p>
+				<p>After the images are loaded you can entre the captions, bu writing in the <code>Description</code> column. Clicking on save will save all captions.</p>
+				<p>An easy way to create image thumbnails is by using the <code>(Re) create thumbnail</code> button in the Thumbnail column. This will create an image thumbnail measuring 200x200px.</p>
+				<p class="text-error"><strong>Pay attention</strong>: for the thumbnail creator to work is necessary to have a valid convert path in the system configuration!</p>
+				 
+			</dd>
+			
+			<dt>How can I create delete an image or a whole gallery?</dt>
+			<dd>
+				<pre>Main menu > Media > Galleries</pre>
+				<p>Click on the gallery you want to edit / delete</p>
+				<p>Clicking the <code>Delet</code> button in the image column will delete the original image, its thumbnail and captio if exist. This action can not be undone.</p>
+				<p>To delete a whole gallery all images must be deleted first. When no images are present a button <code>Delete gallery</code> will be shown and the gallery can be deleted. This action can not be undone.</p> 
+			</dd>
+			
+			<dt>How can I add a galley in in article body?</dt>
+			<dd>
+				<p>To add a gallery in the article body a special syntax is provided:</p>
+				<code>[[gallery]]gallery_name[[/gallery]]</code>
+				<p>Where <code>gallery_name</code> is the name (lower-case, no-spaces, no special characters) of the gallery. This will display a <code>div</code> having css class <code>gallery-container</code> and containing an unordered list (<code>ul</code>) with images and captions. For more details on output check <a href="#docs/tmpl/htmlOut">htmlOut.gallery()</a> documentation.</p>
+				<ul>Some formatting options are available:
+					<li><code>[[gallery class="my_css_class"]]gallery_name[[/gallery]]</code>: my_class_name is a css class that will be added to the unordered list containing the gallery</li>
+					<li><code>[[gallery class="my_css_class" rel="true"]]gallery_name[[/gallery]]</code>: if rel option is present (and set to true or anything else) the gallery elements will be linked to each other, otherwise each image will be considered as an indipendent gallery.</li>
+				</ul>
+			</dd>
 		</dl>
 	</div>
 </div>

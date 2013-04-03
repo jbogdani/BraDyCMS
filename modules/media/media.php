@@ -10,7 +10,7 @@ class media_ctrl
 {
 	public static function all($path = false)
 	{
-		$upload_dir = './sites/default/images/';
+		$upload_dir = IMG_DIR;
 		
 		if ($path)
 		{
@@ -30,13 +30,13 @@ class media_ctrl
 			if ( !mkdir($upload_dir, 0777, 1) )
 			{
 				$error_create = tr::sget('create_dir_error', $upload_dir);
-				$upload_dir = './sites/default/images';
+				$upload_dir = IMG_DIR;
 			}
 		}
 		
 		if (preg_match('/sites\/default\/images\/\.\./', $upload_dir) )
 		{
-			$upload_dir = './sites/default/images/';
+			$upload_dir = IMG_DIR;
 		}
 		
 		$files = utils::dirContent($upload_dir);
@@ -148,7 +148,7 @@ class media_ctrl
 	{
 		if (!preg_match('/sites\/default\/images/', $ofile))
 		{
-			$file = './sites/default/images/' . str_replace('-@-', '/', $ofile);
+			$file = IMG_DIR . str_replace('-@-', '/', $ofile);
 		}
 		else
 		{

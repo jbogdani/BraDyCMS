@@ -122,7 +122,6 @@ $_lang = array(
 	'thumbnail' => 'Anteprima',
 	're_create_thumb' => '(Ri) crea anteprima',
 	'img_dimensions' => 'Dimensioni immagine',
-	'thumb_dimensions' => 'Dimensioni anteprima',
 	'gallery_name' => 'Nome della galleria',
 	'gallery_name_cannot_be_empty' => 'Il nome della galleria non può essere vuoto',
 	'gallery_exists' => 'Esiste già una galleria con questo nome. Non è possibile sovrascrivere',
@@ -137,6 +136,13 @@ $_lang = array(
 	'thumbnail_not_created' => "Errore. L'anteprima non è stata creata",
 	'gallery_does_not_exist' => "Errore. La galleria %s non esiste",
 	'gallery_not_well_formatted' => "Errore. La galleria %s non è formattata bene",
+	'gallery_updated' => "La galleria è stata aggiornata",
+	'gallery_not_updated' => "Errore. La galleria non è stata aggiornata",
+	'img_not_deleted'	=> "Errore. Non è stato possibile cancellare l'immagine",
+	'img_deleted_thumb_not_deleted' => "Attenzione. L'immagine è stata cancellata, ma non è stato possibile cancellare l'anteprima",
+	'img_deleted_json_not_deleted' => "Attenzione. L'immagine è stata cancellata, ma non è stato possibile cancellare i dati",
+	'img_deleted_thumb_json_not_deleted' => "Attenzione. L'immagine è stata cancellata, ma non è stato possibile cancellare l'anteprima e i dati",
+	'img_thumb_data_deleted' => "L'immagine, l'anteprima e i dati sono stati cancellati",
 	
 	'error_check_log' => 'Errore. Qualcosa è andato storto! Consultare il log degli errori per maggiori dettagli.',
 	

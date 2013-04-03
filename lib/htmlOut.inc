@@ -297,7 +297,7 @@ class htmlOut
 	
 	public function gallery($gal, $rel = false, $class = false)
 	{
-		if (!file_exists('./sites/default/galleries/' . $gal . '/data.json'))
+		if (!file_exists(GALLERY_DIR . $gal . '/data.json'))
 		{
 			return;
 		}

@@ -8,7 +8,7 @@
  
 class galleries_ctrl extends Controller
 {
-	private $path = './sites/default/galleries/';
+	private $path = GALLERY_DIR;
 	 
 	public function all()
 	{
@@ -71,7 +71,16 @@ class galleries_ctrl extends Controller
 	{
 		$json_file = $this->get['param'][0] . '/data.json';
 		
-		utils::write_in_file($json_file, $this->post, 'json');
+		if (utils::write_in_file($json_file, $this->post, 'json'))
+		{
+			$ret = array('status' => 'success', 'text' => tr::get('gallery_updated')); 
+		}
+		else
+		{
+			$ret = array('status' => 'error', 'text' => tr::get('gallery_not_updated'));
+		}
+		
+		echo json_encode($ret);
 	}
 	
 	/**
@@ -102,6 +111,7 @@ class galleries_ctrl extends Controller
 		{
 			$msg['text'] = tr::get('thumbnail_created');
 			$msg['status'] = 'success';
+			$msg['thumb'] = $thumb_path;
 		}
 		else
 		{
@@ -159,26 +169,70 @@ class galleries_ctrl extends Controller
 	 */
 	public function deleteImg()
 	{
-		$file = $this->get['param'][0] . '/' . $this->get['param'][1];
-		
-		if(file_exists($file))
+		try
 		{
-			@unlink($file);
-		}
-		
-		if (file_exists($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]))
-		{
-			@unlink($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]);
-		}
-		
-		if (file_exists($this->get['param'][0] . '/data.json'))
-		{
-			$json = json_decode(file_get_contents($this->get['param'][0] . '/data.json'), true);
+			$file = $this->get['param'][0] . '/' . $this->get['param'][1];
 			
-			unset($json[str_replace('.', '__x__', $this->get['param'][1])]);
+			if(file_exists($file))
+			{
+				@unlink($file);
+				
+				if (file_exists($file))
+				{
+					throw new Exception(tr::get('img_not_deleted'));
+				}
+			}
 			
-			utils::write_in_file($this->get['param'][0] . '/data.json', $json, 'json');
+			if (file_exists($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]))
+			{
+				@unlink($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]);
+				
+				if (file_exists($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]))
+				{
+					$warning_thumb = true;
+				}
+			}
+			
+			if (file_exists($this->get['param'][0] . '/data.json'))
+			{
+				$json = json_decode(file_get_contents($this->get['param'][0] . '/data.json'), true);
+				
+				unset($json[str_replace('.', '__x__', $this->get['param'][1])]);
+				
+				if (!utils::write_in_file($this->get['param'][0] . '/data.json', $json, 'json'))
+				{
+					$warning_json = true;
+				}
+			}
+			
+			if (!$warning_thumb && !$warning_json)
+			{
+				$ret['status'] = 'success';
+				$ret['text'] = tr::get('img_thumb_data_deleted');
+			}
+			else if ($warning_thumb && $warning_json)
+			{
+				$ret['status'] = 'warning';
+				$ret['text'] = tr::get('img_deleted_thumb_json_not_deleted');
+			}
+			else if ($warning_thumb)
+			{
+				$ret['status'] = 'warning';
+				$ret['text'] = tr::get('img_deleted_thumb_not_deleted');
+			}
+			else if ($warning_json)
+			{
+				$ret['status'] = 'warning';
+				$ret['text'] = tr::get('img_deleted_json_not_deleted');
+			}
 		}
+		catch (Exception $e)
+		{
+			$ret['status'] = 'error';
+			$ret['text'] = $e->getMessage();
+		}
+		
+		echo json_encode($ret);
 	}
 	
 	/**

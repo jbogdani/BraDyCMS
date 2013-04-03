@@ -94,7 +94,7 @@
 				<p><code>Tip:</code> in the new name input you can also use relative paths to move your file in other folder!</p>
 			</dd>
 			
-			<dt>How can I delete a a folder I dont't need anymore?</dt>
+			<dt>How can I delete a a folder I don't need anymore?</dt>
 			<dd>You can not delete folders that contains files. Thus, to delete a folder you must delete or move (see: <code>Can I delete or rename my files?</code>) all files inside. Once the folder is empty a button will appear and you can delete it.</dd>
 			
 			<dt>How can I translate an article?</dt>
@@ -153,12 +153,16 @@
 			<dt>How can I add a galley in in article body?</dt>
 			<dd>
 				<p>To add a gallery in the article body a special syntax is provided:</p>
-				<code>[[gallery]]gallery_name[[/gallery]]</code>
+				<pre>[[gallery]]gallery_name[[/gallery]]</pre>
 				<p>Where <code>gallery_name</code> is the name (lower-case, no-spaces, no special characters) of the gallery. This will display a <code>div</code> having css class <code>gallery-container</code> and containing an unordered list (<code>ul</code>) with images and captions. For more details on output check <a href="#docs/tmpl/htmlOut">htmlOut.gallery()</a> documentation.</p>
 				<ul>Some formatting options are available:
-					<li><code>[[gallery class="my_css_class"]]gallery_name[[/gallery]]</code>: my_class_name is a css class that will be added to the unordered list containing the gallery</li>
-					<li><code>[[gallery class="my_css_class" rel="true"]]gallery_name[[/gallery]]</code>: if rel option is present (and set to true or anything else) the gallery elements will be linked to each other, otherwise each image will be considered as an indipendent gallery.</li>
+					<li><pre>[[gallery class="my_css_class"]]gallery_name[[/gallery]]</pre>
+					<code>my_class_name</code> is a css class that will be added to the unordered list containing the gallery. Manu class names can be added, separated by spaces.</li>
+					<li><pre>[[gallery rel="true"]]gallery_name[[/gallery]]</pre>
+					if <code>rel</code> option is present (and set to true or anything else) the gallery elements will be linked to each other, otherwise each image will be considered as an indipendent gallery.</li>
 				</ul>
+				A full example is as follows:
+				<pre>[[gallery class="class1 class2" rel="true"]]gallery_name[[/gallery]]</pre>
 			</dd>
 		</dl>
 	</div>

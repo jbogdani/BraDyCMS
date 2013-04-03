@@ -185,6 +185,32 @@ var admin = {
 		
 		return lang[string] ? lang[string] : string;
 	},
+	
+	media: {
+		go2dir: function(dir, basePath){
+			dir = dir.replace(/\s|-|'|"/g, '_')
+			dir = dir.replace(/\//g, '-@-');
+			admin.tabs.closeActive(basePath + dir);
+		},
+		
+		deleteDir: function(path){
+			$.get('controller.php?obj=media_ctrl&method=delete&param[]=' + path, function(data){
+				admin.message(data.text, data.status);
+				if(data.status == 'success'){
+					admin.tabs.closeActive('media/all' + (data.new_path ? '/' + data.new_path : ''));
+				}
+			}, 'json');
+		},
+		
+		filterDir: function(filter, uid){
+			if (filter) {
+		      $('#media-' + uid + ' div.searcheable:not(:Contains(' + filter + '))').parents('li').fadeOut();
+		      $('#media-' + uid + ' div.searcheable:Contains(' + filter + ')').parents('li').fadeIn();
+		    } else {
+		      $('#media-' + uid + ' li').fadeIn();
+		    }
+		}
+	}
 };
 
 

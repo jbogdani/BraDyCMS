@@ -33,13 +33,12 @@
 					</td>
 					
 					<td>
-					{% if file.thumb %}
-						<img src="{{ file.thumb }}" />
-						<pre>{{ tr.get('thumb_dimensions') }}: 200x200px</pre>
-					{% endif %}
-						<p>
-							<button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="icon-white icon-th-large"></i> {{ tr.get('re_create_thumb') }}</button>
-						</p>
+						<div class="img-thumb">
+						{% if file.thumb %}
+							<img src="{{ file.thumb }}" />
+						{% endif %}
+						</div>
+						<button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="icon-white icon-th-large"></i> {{ tr.get('re_create_thumb') }}</button>
 					</td>
 				</tr>
 				{% endfor %}
@@ -65,25 +64,36 @@
 	});
 	
 	$('#{{ uid }} button.create_thumb').on('click', function(){
+		var $this = $(this);
 		$.post('controller.php?obj=galleries_ctrl&method=makeThumbs&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
 			admin.message(data.text, data.status);
 			if (data.status == 'success'){
-				admin.tabs.reloadActive();
+				$this.parents('td').find('div.img-thumb').html('<img src="' + data.thumb + '" />');
+				//admin.tabs.reloadActive();
 			}
 		}, 'json');
 	});
 	
 	$('#{{ uid }} button.save').on('click', function(){
-		$.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ upload_dir }}', $('#{{ uid }} form').serializeArray(), function(){
-			admin.tabs.reloadActive();
+		$.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ upload_dir }}', $('#{{ uid }} form').serializeArray(), function(data){
+			admin.message(data.text, data.status);
 		}, 'json');
 	});
 	
 	
 	$('#{{ uid }} button.delete').on('click', function(){
-		$.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(){
-			admin.tabs.reloadActive();
-		});
+		$this = $(this);
+		$.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
+			admin.message(data.text, data.status);
+			
+			if (data.status != 'error'){
+				if ($this.parents('table').find('tr').length == 2){
+					admin.tabs.reloadActive();
+				} else {
+					$this.parents('tr').remove();
+				}
+			}
+		}, 'json');
 	});
 	
 	

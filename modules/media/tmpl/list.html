@@ -2,18 +2,24 @@
 {% if error_create %}
 <div class="alert alert-error">{{ error_create|raw }}</div>
 {% endif%}
+
+
 <div class="nav clearfix">
 	<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uniqid }}" class="search-query pull-right" />
 </div>
+
+
 <ul class="breadcrumb form-horizontal">
 	<li>
-		<button class="btn btn-success" title="{{ tr.get('reload') }}" onclick="admin.tabs.reloadActive();"><i class="icon-white icon-repeat"></i></button>
+		<button class="btn btn-success" title="{{ tr.get('reload') }}" onclick="admin.tabs.reloadActive();">
+			<i class="icon-white icon-repeat"></i>
+		</button>
 		<span class="divider">|||</span>
 	</li>
 	{% for part in path_arr %}
 	<li>
-		<a class="btn{% if loop.last %} btn-success{% endif %}" href="#media/all{% if part != '.'%}/{{part}}{% endif %}">{{ part }}</a> 
-	<span class="divider">/</span>
+		<a class="btn{% if loop.last %} btn-success{% endif %}" href="#media/all{% if part != '.'%}/{{ part }}{% endif %}">{{ part }}</a> 
+		<span class="divider">/</span>
 	</li>
 	{% endfor %}
 	<li>
@@ -21,6 +27,7 @@
 			<input class="span3" type="text" placeholder="{{ tr.get('new_dir_name') }}" >
 			<button class="btn newFolder" type="button">{{ tr.get('create_go') }}</button>
 		</div>
+	</li>
 </ul>
 
 
@@ -28,7 +35,9 @@
 
 {% if path and files|length ==0 %}
 <p style="text-align: center">
-	<button class="btn btn-danger btn-large deleteFolder"><i class="icon icon-white icon-trash"></i> {{ tr.get('delete_directory') }}</button>
+	<button class="btn btn-danger btn-large deleteFolder">
+		<i class="icon icon-white icon-trash"></i> {{ tr.get('delete_directory') }}
+	</button>
 </p>
 {% else %}
 <ul class="media-list" id="media-{{ uniqid }}">
@@ -60,6 +69,7 @@
 {% endfor %}
 </ul>
 {% endif %}
+
 
 <script>
 	new qq.FileUploader({
@@ -130,7 +140,7 @@
 		}
 	});
 	
-	$('ul.breadcrumb a, ul.media-list a').click(function(){
+	$('ul.breadcrumb a, ul.media-list a').click(function(event){
 		admin.tabs.closeActive();
 	});
 	
@@ -140,34 +150,16 @@
 			admin.message('{{ tr.get('missing_directory_name')}}', 'error');
 			$(this).prev().focus();
 		} else {
-			val = val.replace(/\s|-|'|"/g, '_')
-			val = val.replace(/\//g, '-@-');
-			admin.tabs.closeActive('media/all/{% if path %}{{ path }}-@-{% endif %}' + val);
+			admin.media.go2dir(val, 'media/all/{% if path %}{{ path }}-@-{% endif %}');
 		}
 	});
 	
 	
 	$('.deleteFolder').click(function(){
-		$.get('controller.php?obj=media_ctrl&method=delete&param[]={{ path }}', function(data){
-			admin.message(data.text, data.status);
-			if(data.status == 'success'){
-				admin.tabs.closeActive('media/all' + (data.new_path ? '/' + data.new_path : ''));
-			}
-		}, 'json');
+		admin.media.deleteDir('{{ path }}');
 	});
 	
 	$('#input_{{ uniqid }}').on('keyup', function(){
-		
-		var filter = $(this).val();
-		
-		console.log(filter);
-		
-		if (filter) {
-			console.log()
-	      $('#media-{{ uniqid }} div.searcheable:not(:Contains(' + filter + '))').parents('li').fadeOut();
-	      $('#media-{{ uniqid }} div.searcheable:Contains(' + filter + ')').parents('li').fadeIn();
-	    } else {
-	      $('#media-{{ uniqid }} li').fadeIn();
-	    }
+		admin.media.filterDir($(this).val(), '{{ uniqid }}');
 	});
 </script>

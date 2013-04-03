@@ -285,12 +285,12 @@ class Out
 		$rel = $data['rel'];
 		$class = $data['class'];
 		
-		if (!file_exists('./sites/default/galleries/' . $gal  . '/data.json'))
+		if (!file_exists(GALLERY_DIR . $gal  . '/data.json'))
 		{
 			return tr::sget('gallery_does_not_exist', $gal);
 		}
 		
-		$data = @json_decode(file_get_contents('./sites/default/galleries/' . $gal  . '/data.json'), 1);
+		$data = @json_decode(file_get_contents(GALLERY_DIR . $gal  . '/data.json'), 1);
 		
 		if (!is_array($data))
 		{
@@ -304,8 +304,8 @@ class Out
 			$img = str_replace('__x__', '.', $img);
 			
 			$html .= '<li>'
-						.'<a href="./sites/default/galleries/' . $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>'
-							. '<img src="./sites/default/galleries/' . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />'
+						.'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>'
+							. '<img src="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />'
 						.'</a>'
 						. '<div class="caption">' . $dida . '</div>'
 					.'</li>';

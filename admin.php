@@ -9,15 +9,6 @@ try
 {
 	$root = './';
 	require_once $root . 'lib/globals.inc';
-	
-	$log_message = auth::check($_POST['username'], $_POST['password']);
-	
-	if ( $_GET['logout'] )
-	{
-		$log_message = auth::logout();
-		
-		utils::emptyTmp();
-	}
 }
 catch (Exception $e)
 {
@@ -85,10 +76,10 @@ catch (Exception $e)
       		}
 		</style>
 		<div class="container">
-			<?php if ($log_message) {?>
-			<div style="text-align:center" class="text-error"><?php echo $log_message; ?></div>
-			<?php }?>
-			<form class="form-signin" action="./admin" method="post">
+			
+			<div style="text-align:center; display:none" class="text-error" id="logerror"></div>
+			
+			<form class="form-signin" id="signin" action="javascript:void(0);">
 				<h2 class="muted">BDUS.CMS</h2>
 				<h2 class="form-signin-heading"><?php echo tr::get('please_sign_in'); ?></h2>
 				<input type="text" class="input-block-level" placeholder="<?php echo tr::get('email_address'); ?>" name="username">
@@ -188,7 +179,7 @@ catch (Exception $e)
 							</li>
 							
 							
-							<li><a href="./admin:logout"><i class="icon-off"></i> <?php echo tr::get('logout'); ?></a></li>
+							<li><a href="#log/out"><i class="icon-off"></i> <?php echo tr::get('logout'); ?></a></li>
 						</ul>
 					</div><!--/.nav-collapse -->
 				</div>
@@ -243,5 +234,24 @@ catch (Exception $e)
 	<script src="./js/fileuploader.js"></script>
 	<script src="./js/prettify.js"></script>
 	
+	<?php
+	if (!$_SESSION['user_confirmed'])
+	{
+	?>
+	<script>
+	$('#signin').on('submit', function(){
+		$('#logerror').hide();
+		$.post('controller.php?obj=log_ctrl&method=in', $(this).serialize(), function(data){
+			if (data.status == 'success'){
+				window.location = './admin';
+			} else {
+				$('#logerror').html(data.text).show();
+			}
+		}, 'json');
+	});
+	</script>
+	<?php
+	}
+	?>
   </body>
 </html>

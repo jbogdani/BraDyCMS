@@ -15,7 +15,6 @@ RewriteRule ^feed/atom$ controller.php?obj=feeds_ctrl&method=atom
 
 #admin 
 RewriteRule ^admin/?$ admin.php
-RewriteRule ^admin:logout?$ admin.php?logout=1
 RewriteRule ^admin:debug?$ admin.php?debug=1
 RewriteRule ^admin:mini?$ admin.php?mini=1
 RewriteRule ^admin:lng-(it|en|es|fr|ar|de|al)?$ admin.php?lang=$1

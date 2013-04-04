@@ -206,6 +206,9 @@ $_lang = array(
 	'cfg-ga_domain' => 'Limita GA al dominio',
 	'cfg-paths' => 'Percorsi del sistema',
 	'cfg-users' => 'Utenti',
+	'cfg-debug' => 'Modalità debug',
+	'on' => 'attivata',
+	'off' => 'disattivata',
 	
 	'sys_translate' => 'Traduzione sistema',
 	'select_lang_to_edit' => 'Seleziona lingue da modificare',

@@ -209,6 +209,10 @@ $_lang = array(
 	'cfg-debug' => 'Modalità debug',
 	'on' => 'attivata',
 	'off' => 'disattivata',
+	'empty_cache' => 'Svuota cache',
+	'cache_help_text' => "La cache rende più veloce il caricamento delle pagine, ma se vengono effettuati cambaimenti nel layout del sito la cache deve essere svuotata per rendere effettive le modifiche. La cache verrà creata automaticamente alla prima visita della pagina.",
+	'cache_emptied' => "La cache è stata svuotata",
+	'cache_not_emptied' => "Errore. La cache non è stata svuotata",
 	
 	'sys_translate' => 'Traduzione sistema',
 	'select_lang_to_edit' => 'Seleziona lingue da modificare',

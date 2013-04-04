@@ -75,6 +75,7 @@ define ( 'TMP_DIR', MAIN_DIR . 'tmp/');
 define ( 'LOCALE_DIR', MAIN_DIR . 'locale/');
 define ( 'IMG_DIR', MAIN_DIR . 'sites/default/images/');
 define ( 'GALLERY_DIR', IMG_DIR . 'galleries/' );
+define ( 'CACHE_DIR', MAIN_DIR . 'cache/');
 
 $_SESSION['debug'] = cfg::get('debug');
 
@@ -84,6 +85,6 @@ if ($_SESSION['debug'])
 }
 else
 {
-	define('CACHE', serialize(array('cache'=>'cache')));
+	define('CACHE', serialize(array('cache' => CACHE_DIR)));
 }
 tr::load_file($_GET['lang']);

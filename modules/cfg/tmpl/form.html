@@ -179,9 +179,13 @@
 	</div>
 	
 
-<button class="btn" type="submit">{{ save_text }}</button>
+<button class="btn btn-success" type="submit">{{ tr.get('save') }}</button>
 </form>
 
+<hr />
+<p class="lead">{{ tr.get('empty_cache') }}</p>
+<button class="btn btn-warning btn-large" id="cache-{{ uid }}"><i class="icon-white icon-trash"></i> {{ tr.get('empty_cache')}}</button>
+<span class="help-block">{{ tr.get('cache_help_text') }}</span>
 
 <script>
 
@@ -189,6 +193,13 @@ $('#form-{{ uid }}').on('submit', function(){
 	$.post('controller.php?obj=cfg_ctrl&method=save', $(this).serialize(), function(data){
 		admin.tabs.reloadActive();
 	});
+});
+
+$('#cache-{{ uid }}').on('click', function(){
+	console.log($(this));
+	$.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
+		admin.message(data.text, data.status);
+	}, 'json');
 });
 
 $('button.add-custom_field').on('click', function(){});

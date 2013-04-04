@@ -8,7 +8,7 @@
  
 class utils
 {
-	public static function recursive_delete($dir)
+	public static function recursive_delete($dir, $dont_delete_self = false)
 	{
 		$files = self::dirContent($dir, true);
 		
@@ -33,12 +33,23 @@ class utils
 			}
 		}
 		
-		rmdir($dir);
-		
-		if (file_exists($dir))
+		if ($dont_delete_self)
 		{
-			$error[] = 'Can not delete directory: ' . $dir;
-			error_log('2. Can not delete directory: ' . $dir);
+			$check = self::dirContent($dir);
+		}
+		else
+		{
+			rmdir($dir);
+			$check = array($dir);
+		}
+		
+		foreach ($check as $f)
+		{
+			if (file_exists($f))
+			{
+				$error[] = 'Can not delete directory: ' . $f;
+				error_log('2. Can not delete directory: ' . $f);
+			}
 		}
 		
 		return $error;

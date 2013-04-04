@@ -16,8 +16,6 @@ class cfg_ctrl
 		echo $twig->render('form.html', array(
 				'data' => $data,
 				'tr' => new tr(),
-			//	'html' => $html,
-				'save_text' => tr::get('save'),
 				'uid' => uniqid('uid')
 		));
 	}
@@ -26,5 +24,21 @@ class cfg_ctrl
 	{
 		$post = utils::recursiveFilter($post);
 		cfg::save($post);
+	}
+	
+	public static function empty_cache()
+	{
+		$error = utils::recursive_delete(CACHE_DIR, true);
+		
+		if(count($error) > 0)
+		{
+			$ret = array('status' => 'error', 'text' => tr::get('cache_not_emptied') . '. ' . implode('; ', $error));
+		}
+		else
+		{
+			$ret = array('status' => 'success', 'text' => tr::get('cache_emptied'));
+		}
+		
+		echo json_encode($ret);
 	}
 }

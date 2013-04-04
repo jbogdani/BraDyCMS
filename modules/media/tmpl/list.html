@@ -55,6 +55,9 @@
 	<li class="pull-left openpop img"
 		data-file="{{ file.src }}"
 		data-name="{{ file.name }}" 
+		{% if file.image %}
+		data-image="true"
+		{% endif %}
 		>
 		
 		<div style="width:128px; max-height:128px; ">
@@ -74,18 +77,19 @@
 <script>
 	new qq.FileUploader({
 		element: $('#file-uploader')[0],
-		action: 'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}',
+		action: 'controller.php?obj=utils&method=upload&param[]={{ path }}',
 		sizeLimit: 0,
 		minSizeLimit: 0,
 		onComplete: function(){
-			admin.tabs.closeActive('media/all{% if path %}/{{ path }}{% endif %}');
+			admin.tabs.closeActive('media/all{% if rel_path %}/{{ rel_path }}{% endif %}');
 		}
 	});
 	$('li.openpop').popover({
 		html:true,
 		title: function(){
 			var file = $(this).data('file')
-				name = $(this).data('name');
+				name = $(this).data('name')
+				is_image = $(this).data('image');
 			
 			return $('<div />').append(
 					'<h4>' + $(this).data('name') + '</h4>',
@@ -93,47 +97,11 @@
 					'<input type="text" value="' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
 					$('<div />').addClass('input-append'),
 					$('<div class="btn-group"></div>').append(
-						'<a class="btn" target="_blank" href="' + file + '" title="{{ tr.get('open_download') }}"><i class="icon icon-download-alt"></i></a>',
-						$('<a href="#media/edit/' + file.replace(/\//g, '-@-') + '" class="btn" title="{{ tr.get('edit_file') }}"><i class="icon icon-wrench"></i>').click(function(){
-							return;
-							admin.tabs.add({
-								title: '{{ tr.get('edit_file') }}',
-								obj: 'media_ctrl',
-								method: 'edit',
-								param: [file],
-								buttons:[
-								         {
-								        	 text: '{{ tr.get('close') }}',
-								        	 action: 'close'
-								         }
-								         ]
-							});
-						}),
+						'<a class="btn" target="_blank" href="{{ path }}/' + name + '" title="{{ tr.get('open_download') }}"><i class="icon icon-download-alt"></i></a>',
+						( is_image ? $('<a href="#media/edit/{{ rel_path }}/' + name + '" class="btn" title="{{ tr.get('edit_file') }}"><i class="icon icon-wrench"></i>') : ''),
 						$('<a class="btn btn-danger" href="javascript:void(0);" title="{{ tr.get('delete') }}"><i class="icon-white icon-trash"></i>')
 							.click(function(){
-								admin.dialog({
-									title: '{{ tr.get('pay_attention_please') }}',
-									html: '{{tr.get('confirm_delete_file') }}',
-									buttons:[
-									         {
-									        	 text: '{{ tr.get('close') }}',
-									        	 action: 'close'
-									         },
-									         {
-									        	 text: '{{ tr.get('delete') }}',
-									        	 addclass: 'btn-danger',
-									        	 action: 'close',
-									        	 click: function(){
-									        		 $.get('controller.php?obj=media_ctrl&method=delete&param[]=' + file, function(data){
-									        			 admin.message(data.text, data.status);
-									        			 if (data.status == 'success'){
-									        				 admin.tabs.closeActive('media/all{% if path %}/{{ path }}{% endif %}');
-									        			 }
-									        		 }, 'json')
-									        	 }
-									         }
-									         ]
-								});
+								admin.media.deleteFile('{{ rel_path }}/' + name);
 							})
 							)
 						);
@@ -150,7 +118,7 @@
 			admin.message('{{ tr.get('missing_directory_name')}}', 'error');
 			$(this).prev().focus();
 		} else {
-			admin.media.go2dir(val, 'media/all/{% if path %}{{ path }}-@-{% endif %}');
+			admin.media.go2dir({% if rel_path %} '{{ rel_path }}/' + {% endif %}val);
 		}
 	});
 	

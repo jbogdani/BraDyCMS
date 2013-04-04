@@ -1,6 +1,0 @@
-[03-Apr-2013 15:08:53 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/git.bdusCMS/modules/log/log.php on line 16
-[03-Apr-2013 15:08:53 UTC] PHP Stack trace:
-[03-Apr-2013 15:08:53 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
-[03-Apr-2013 15:08:53 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
-[03-Apr-2013 15:08:53 UTC] PHP   3. log_ctrl->out() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:38
-[03-Apr-2013 15:08:53 UTC] PHP   4. error_log() /Users/jbogdani/www/git.bdusCMS/modules/log/log.php:16

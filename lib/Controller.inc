@@ -30,6 +30,13 @@ class Controller
 			$obj = $this->request['obj'];
 			$method = $this->request['method'];
 			
+			unset($this->request['obj']);
+			unset($this->request['method']);
+			unset($this->get['obj']);
+			unset($this->get['method']);
+			unset($this->post['obj']);
+			unset($this->post['method']);
+			
 			$param = array_merge((array)$this->get['param'], array('post'=>$this->post));
 	
 			if (get_parent_class($obj) == 'Controller')

@@ -187,10 +187,8 @@ var admin = {
 	},
 	
 	media: {
-		go2dir: function(dir, basePath){
-			dir = dir.replace(/\s|-|'|"/g, '_')
-			dir = dir.replace(/\//g, '-@-');
-			admin.tabs.closeActive(basePath + dir);
+		go2dir: function(dir){
+			admin.tabs.closeActive('media/all/' + dir);
 		},
 		
 		deleteDir: function(path){
@@ -200,6 +198,34 @@ var admin = {
 					admin.tabs.closeActive('media/all' + (data.new_path ? '/' + data.new_path : ''));
 				}
 			}, 'json');
+		},
+		
+		
+		deleteFile: function(full_path){
+			admin.dialog({
+				title: admin.tr('pay_attention_please'),
+				html: admin.tr('confirm_delete_file'),
+				buttons:[
+				         {
+				        	 text: admin.tr('close'),
+				        	 action: 'close'
+				         },
+				         {
+				        	 text: admin.tr('delete'),
+				        	 addclass: 'btn-danger',
+				        	 action: 'close',
+				        	 click: function(){
+				        		 $.get('controller.php?obj=media_ctrl&method=delete&param[]=' + full_path, function(data){
+				        			 admin.message(data.text, data.status);
+				        			 if (data.status == 'success'){
+				        				 admin.tabs.closeActive('media/all/' + data.new_path);
+				        			 }
+				        		 }, 'json')
+				        	 }
+				         }
+				         ]
+			});
+			
 		},
 		
 		filterDir: function(filter, uid){

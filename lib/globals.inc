@@ -13,9 +13,6 @@ if ($_GET['lang'])
 	$_SESSION['lang'] = $_GET['lang'];
 }
 
-$__debug = true;
-
-
 
 if (@!$root)
 {
@@ -76,10 +73,12 @@ define ( 'MOD_DIR', MAIN_DIR . 'modules/');
 define ( 'ERR_LOG',	MAIN_DIR . 'logs/error.log');
 define ( 'TMP_DIR', MAIN_DIR . 'tmp/');
 define ( 'LOCALE_DIR', MAIN_DIR . 'locale/');
-define ( 'IMG_DIR', MAIN_DIR . '/sites/default/images/');
+define ( 'IMG_DIR', MAIN_DIR . 'sites/default/images/');
 define ( 'GALLERY_DIR', IMG_DIR . 'galleries/' );
 
-if ($__debug)
+$_SESSION['debug'] = cfg::get('debug');
+
+if ($_SESSION['debug'])
 {
 	define('CACHE', serialize(array('debug' => true)));
 }

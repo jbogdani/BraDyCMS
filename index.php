@@ -16,7 +16,7 @@ try
 	
 	$twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), unserialize(CACHE));
 	
-	if ($__debug)
+	if ($_SESSION['debug'])
 	{
 		$twig->addExtension(new Twig_Extension_Debug());
 	}
@@ -27,7 +27,7 @@ try
 }
 catch (Exception $e)
 {
-	if ($__debug)
+	if ($_SESSION['debug'])
 	{
 		var_dump($e);
 	}

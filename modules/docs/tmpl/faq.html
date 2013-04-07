@@ -150,7 +150,7 @@
 				<p>To delete a whole gallery all images must be deleted first. When no images are present a button <code>Delete gallery</code> will be shown and the gallery can be deleted. This action can not be undone.</p> 
 			</dd>
 			
-			<dt>How can I add a galley in in article body?</dt>
+			<dt>How can I add a galley in an article's body?</dt>
 			<dd>
 				<p>To add a gallery in the article body a special syntax is provided:</p>
 				<pre>[[gallery]]gallery_name[[/gallery]]</pre>
@@ -164,6 +164,83 @@
 				A full example is as follows:
 				<pre>[[gallery class="class1 class2" rel="true"]]gallery_name[[/gallery]]</pre>
 			</dd>
+			
+			<dt>How to add a YouTube video in an article's body?</dt>
+			<dd>
+				<p>To add a gallery in the article body a special syntax is provided:</p>
+				<pre>[[youtube width="560" height="315"]]you_tube_id[[/youtube]]</pre>
+				<p>Where<br />
+					<code>you_tube_id</code> (*required) is the id of the video provided by YouTube;<br />
+					<code>width</code> is the width of the video (if not provided default value - 560 - will be used) and<br />
+					<code>height</code> is the height of the video (if not provided default value - 315 - will be used).</p>
+			</dd>
+			
+			<dt>How to add a Vimeo video in an article's body?</dt>
+			<dd>
+				<p>To add a gallery in the article body a special syntax is provided:</p>
+				<pre>[[vimeo width="560" height="315"]]vimeo_id[[/vimeo]]</pre>
+				<p>Where<br />
+					<code>vimeo</code> (*required) is the id of the video provided by Vimeo;<br />
+					<code>width</code> is the width of the video (if not provided default value - 560 - will be used) and<br />
+					<code>height</code> is the height of the video (if not provided default value - 315 - will be used).</p>
+			</dd>
+			
+			
+			<dt>How to add a Twitter widget in an article's body?</dt>
+			<dd>
+				<p>To add a Twitter widget you must create it before in Twitter website: <a href="https://twitter.com/settings/widgets" target="_blank">https://twitter.com/settings/widgets</a>. Afterwords you can add it in your content using this simple tag:</p>
+				<pre>[[twitter user="twitter_username" id="twitter_widget_id"]]Some intro text[[/twitter]]</pre>
+				<p>Where<br />
+					<code>twitter_username</code> (*required) is your Twitter username;<br />
+					<code>id</code> (*required) is your widget id, provided by Twitter and<br />
+					<code>some intro text</code> is the text that will be shown id something goes wrong nad Twitter widget is not initialized.</p>
+			</dd>
+			
+			<dt>How to add Facebook COMMENTS widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook comments widget use this simple tag:</p>
+				<pre>[[fb_comments width="470" posts="10" colorscheme="dark"]][[/fb_comments]]</pre>
+				<p>Where<br />
+					<code>width</code> is the widget's width (default value is 470);<br />
+					<code>num_posts</code> is the number of posts you want to show (default is 10)<br />
+					<code>colorscheme</code> dark or light</p>
+				<p>For a list of all available options: <a href="https://developers.facebook.com/docs/reference/plugins/comments/" target="_blank">https://developers.facebook.com/docs/reference/plugins/comments/</a></p>
+			</dd>
+			
+			<dt>How to add Facebook FOLLOW widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook follow widget use this simple tag:</p>
+				<pre>[[fb_follow]]http://facebook.com/rest_of_the_url_to_follow[[/fb_follow]]</pre>
+				<p>Where<br />
+					<code>http://facebook.com/rest_of_the_url_to_follow</code> is the Facebook page url to follow;</p>
+				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/follow/" target="_blank">https://developers.facebook.com/docs/reference/plugins/follow/</a></p>
+			</dd>
+			
+			<dt>How to add Facebook LIKE-box widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook like-box widget use this simple tag:</p>
+				<pre>[[fb_like_box]][[/fb_like_box]]</pre>
+				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/like-box/" target="_blank">https://developers.facebook.com/docs/reference/plugins/like-box/</a></p>
+			</dd>
+			
+			<dt>How to add Facebook LIKE widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook like widget use this simple tag:</p>
+				<pre>[[fb_like]][[/fb_like]]</pre>
+				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/like/" target="_blank">https://developers.facebook.com/docs/reference/plugins/like/</a></p>
+			</dd>
+			
+			
+			<dt>How to add Facebook SEND widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook send widget use this simple tag:</p>
+				<pre>[[fb_send]][[/fb_send]]</pre>
+				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/send/" target="_blank">https://developers.facebook.com/docs/reference/plugins/send/</a></p>
+			</dd>
+			
+			
+			
+			
 		</dl>
 	</div>
 </div>

@@ -244,6 +244,7 @@ class Out
 		return $this->get['search'];
 	}
 	
+	
 	private function parseContent($html)
 	{
 		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
@@ -267,9 +268,9 @@ class Out
 				$formatedAttributes[$attribute[1]] = $attribute[2];
 			}
 			
-			if (method_exists(get_class(), $tag))
+			if (method_exists('customTags', $tag))
 			{
-				$replace = call_user_func(array(get_class(), $tag), $formatedAttributes);
+				$replace = call_user_func(array('customTags', $tag), $formatedAttributes);
 		
 				$html = str_replace($originalTag, $replace, $html);
 			}
@@ -281,38 +282,6 @@ class Out
 	
 	public function gallery($data)
 	{
-		$gal = $data['content'];
-		$rel = $data['rel'];
-		$class = $data['class'];
-		
-		if (!file_exists(GALLERY_DIR . $gal  . '/data.json'))
-		{
-			return tr::sget('gallery_does_not_exist', $gal);
-		}
-		
-		$data = @json_decode(file_get_contents(GALLERY_DIR . $gal  . '/data.json'), 1);
-		
-		if (!is_array($data))
-		{
-			return tr::sget('gallery_not_well_formatted', $gal);
-		}
-		
-		$html = '<div class="gallery-container"><ul class="gallery ' . $gal . ($class ? ' ' . $class : '') . '">';
-		
-		foreach ($data as $img => $dida)
-		{
-			$img = str_replace('__x__', '.', $img);
-			
-			$html .= '<li>'
-						.'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>'
-							. '<img src="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />'
-						.'</a>'
-						. '<div class="caption">' . $dida . '</div>'
-					.'</li>';
-		}
-		
-		$html .='</ul></div>';
-		
-		return $html;
+		return customTags::gallery($data);
 	}
 }

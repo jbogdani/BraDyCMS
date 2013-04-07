@@ -3,99 +3,157 @@
  * @author			Julian Bogdani <jbogdani@gmail.com>
  * @copyright		BraDypUS 2007-2011
  * @license			All rights reserved
- * @since			Feb 22, 2013
- * 
- * $str = 'Lorem ipsum [link file="5"]capitolo5[/link] Lorem ipsum [fig name="0101.jpg" class="ciao"]didascalia[/fig] '
- * 			. 'Lorem ipsum[note]Note text[/note] '
- * 			. 'Lorem ipsum[note]Note text 2[/note]';
- * 
- * $twig = new Twig_Environment(new Twig_Loader_String());
- * $twig->addFilter(new Twig_SimpleFilter('parse', array('customTags', 'parseHtml')));
- * 
- * echo $twig->render('<strong>Original:</strong><pre>{{ string }}</pre>'
- * 		. '<strong>HTML output:</strong><pre>{{ string|parse|raw }}</pre>',
- * 		array('string' => $str));
- * 
+ * @since			Apr 7, 2013
  */
  
 class customTags
 {
-	private static $counter = 0;
-	
-	private static $notes = array();
-	
-	public static function parseHtml($html)
+	public static function gallery($data)
 	{
-		preg_match_all('/\[(\w+)\s*([^\]]*)\](.*?)\[\/\1\]/s', $html, $customTags, PREG_SET_ORDER);
-		
-		foreach ($customTags as $customTag)
+		$gal = $data['content'];
+		$rel = $data['rel'];
+		$class = $data['class'];
+	
+		if (!file_exists(GALLERY_DIR . $gal  . '/data.json'))
 		{
-			$originalTag = $customTag[0];
-	
-			$tag = $customTag[1];
-	
-			$rawAttributes = $customTag[2];
-	
-			$content = $customTag[3];
-				
-			preg_match_all('/([^=\s]+)="([^"]+)"/', $rawAttributes, $attributes, PREG_SET_ORDER);
-				
-			$formatedAttributes['content'] = $content;
-				
-			foreach ($attributes as $attribute)
-			{
-				$formatedAttributes[$attribute[1]] = $attribute[2];
-			}
-			
-			if (method_exists(get_class(), $tag))
-			{
-				$replace = call_user_func(array(get_class(), $tag), $formatedAttributes);
-				
-				$html = str_replace($originalTag, $replace, $html);
-			}
+			return tr::sget('gallery_does_not_exist', $gal);
 		}
-			
-		return $html . '<hr />' . self::renderFootNotes();
-	}
 	
+		$data = @json_decode(file_get_contents(GALLERY_DIR . $gal  . '/data.json'), 1);
 	
-	private static function link($attr)
-	{
-		return '<a href="' . $attr['file'] . '">' . $attr['content'] . '</a>';
-	}
-	
-	private static function fig($attr)
-	{
-		error_log('called: ' . microtime(1));
-		return '<figure' . ($attr['class'] ? ' class="' . $attr['class'] . '" ' : '') . '>'
-				. '<div>'
-					. '<img src="' . $attr['name'] . '" alt="' . ($attr['content'] ?  $attr['content'] : $attr['name']) . '" />'
-					. ($attr['content'] ? '<figcaption>' . $attr['content'] . '</figcaption>' : '')
-				. '</div>'
-			.'</figure>';
-	}
-	
-	private static function note($attr)
-	{
-		self::$notes[] = $attr['content'];
-		
-		return '<a href="#ft-note-' . count(self::$notes) . '" id="bd-note-' . count(self::$notes) . '" title="' . $attr['content'] . '">[' . count(self::$notes) . ']</a>';
-	}
-	
-	private static function renderFootNotes()
-	{
-		if (count(self::$notes) == 0)
+		if (!is_array($data))
 		{
-			return;
+			return tr::sget('gallery_not_well_formatted', $gal);
 		}
-		
-		$html = '<div class="footNotes">';
-		foreach(self::$notes as $k => $note)
+	
+		$html = '<div class="gallery-container"><ul class="gallery ' . $gal . ($class ? ' ' . $class : '') . '">';
+	
+		foreach ($data as $img => $dida)
 		{
-			$html .= '<p><a href="#bd-note=' . ($k + 1) . '">' . ($k + 1) . '</a>. ' . $note . '</p>';
+			$img = str_replace('__x__', '.', $img);
+				
+			$html .= '<li>' .
+					'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>' .
+						'<img src="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />' .
+					'</a>' .
+					'<div class="caption">' . $dida . '</div>' .
+				'</li>';
 		}
-		$html .= '</div>';
+	
+		$html .='</ul></div>';
+	
+		return $html;
+	}
+	
+	public static function youTube($data)
+	{
+		$code = $data['content'];
+		$width = $data['width'] ? $data['width'] : 560;
+		$height = $data['height'] ? $data['height'] : 315;
 		
-		return  $html;
+		return '<iframe width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $code . '?rel=0" frameborder="0" allowfullscreen></iframe>';
+	}
+	
+	public static function vimeo($data)
+	{
+		$code = $data['content'];
+		$width = $data['width'] ? $data['width'] : 560;
+		$height = $data['height'] ? $data['height'] : 315;
+		
+		return '<iframe src="http://player.vimeo.com/video/' . $code . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+	}
+	
+	
+	public static function twitter($data)
+	{
+		$user = $data['user'];
+		$widget_id = $data['id'];
+		$content = $data['content'] ? $data['content'] : 'Tweets by @' . $data['user'];
+		 
+		return '<a class="twitter-timeline"  href="https://twitter.com/' . $user . '"  data-widget-id="' . $widget_id . '">' . $content. '</a>' .
+			'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+	}
+	
+	
+	private static function fb_sdk()
+	{
+		return '<div id="fb-root"></div> ' .
+				'<script>(function(d, s, id) {' .
+					' var js, fjs = d.getElementsByTagName(s)[0];' .
+					' if (d.getElementById(id)) return;' .
+					' js = d.createElement(s); js.id = id;' .
+					' js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1";' .
+					' fjs.parentNode.insertBefore(js, fjs);' .
+					' }(document, \'script\', \'facebook-jssdk\'));</script>';
+	}
+	
+	
+	public static function fb_comments($data)
+	{
+		$width = $data['width'] ? $data['width'] : 470;
+		$num_posts = $data['num_posts'] ? $data['num_posts'] : 10;
+		$dark = $data['dark'];
+		
+		return self::fb_sdk() . '<div class="fb-comments" data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" data-width="' . $width . '" data-num-posts="' . $num_posts . '" data-colorscheme="' . ($data['colorscheme'] == 'darl' ? 'dark' : 'light') . '"></div>';
+	}
+	
+	
+	public static function fb_follow($data)
+	{
+		$width = $data['width'] ? $data['width'] : 470;
+		
+		return self::fb_sdk() . '<div class="fb-follow" ' .
+					' data-href="' . $data['content'] . '" ' .
+					' data-show-faces="' . ($data['show-faces'] ? 'true': 'false' ). '" ' .
+					' data-width="' . $width . '"' .
+					($data['layout'] ? ' data-layout="' . $data['layout'] . '" ' : '') .
+					($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
+					($data['font'] ? ' data-colorscheme="' . $data['font'] . '" ' : '') .
+					' ></div>';
+	}
+	
+	public static function fb_like_box($data)
+	{
+		$width = $data['width'] ? $data['width'] : 292;
+	
+		return self::fb_sdk() . '<div class="fb-like-box" ' .
+				' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
+				' data-show-faces="' . ($data['show-faces'] ? 'true': 'false' ). '" ' .
+				' data-width="' . $width . '"' .
+				($data['height'] ? ' data-height="' . $data['height'] . '" ' : '') .
+				($data['show_faces'] ? ' data-show_faces="' . $data['show_faces'] . '" ' : '') .
+				($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
+				($data['stream'] ? ' data-stream="' . $data['stream'] . '" ' : '') .
+				($data['header'] ? ' data-header="' . $data['header'] . '" ' : '') .
+				($data['border_color'] ? ' data-border_color="' . $data['border_color'] . '" ' : '') .
+				($data['force_wall'] ? ' data-force_wall="' . $data['force_wall'] . '" ' : '') .
+				' ></div>';
+	}
+	
+	public static function fb_like($data)
+	{
+		$width = $data['width'] ? $data['width'] : 450;
+	
+		return self::fb_sdk() . '<div class="fb-like" ' .
+				' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
+				($data['layout'] ? ' data-layout="' . $data['layout'] . '" ' : '') .
+				' data-show-faces="' . ($data['show-faces'] ? 'true': 'false' ). '" ' .
+				' data-width="' . $width . '"' .
+				
+				($data['action'] ? ' data-action="' . $data['action'] . '" ' : '') .
+				($data['font'] ? ' data-font="' . $data['font'] . '" ' : '') .
+				($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
+				($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
+				' ></div>';
+	}
+	
+	public static function fb_send($data)
+	{
+		return self::fb_sdk() . '<div class="fb-like" ' .
+				' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
+				($data['font'] ? ' data-font="' . $data['font'] . '" ' : '') .
+				($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
+				($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
+				' ></div>';
 	}
 }

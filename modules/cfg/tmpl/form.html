@@ -188,7 +188,6 @@
 <span class="help-block">{{ tr.get('cache_help_text') }}</span>
 
 <script>
-
 $('#form-{{ uid }}').on('submit', function(){
 	$.post('controller.php?obj=cfg_ctrl&method=save', $(this).serialize(), function(data){
 		admin.tabs.reloadActive();

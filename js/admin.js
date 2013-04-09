@@ -5,6 +5,7 @@ var admin = {
 		 * @param opts
 		 * 		title
 		 * 		html
+		 * 		loaded
 		 * 		buttons: []
 		 * 			text
 		 * 			href
@@ -19,7 +20,6 @@ var admin = {
 						(opts.title ? '<div class="modal-header"><h2>' + opts.title + '</h2></div>' : ''),
 						'<div class="modal-body">' + ( opts.html ? opts.html : '') + '</div>'
 						);
-			
 			if (opts.buttons && typeof opts.buttons == 'object'){
 				
 				var footer = $('<div />').addClass('modal-footer');
@@ -54,6 +54,12 @@ var admin = {
 			}
 			dialog.modal();
 			
+			if (opts.html && opts.loaded){
+				dialog.on('shown', function(){;
+					opts.loaded(dialog);
+				})
+			}
+			
 			if (opts.obj && opts.method){
 				dialog.find('.modal-body').html('<img src="./img/spinner.gif" />');
 				$.ajax({
@@ -63,6 +69,9 @@ var admin = {
 	        	})
 	        	.done(function(data){
 	        		dialog.find('.modal-body').html(data);
+	        		if (opts.loaded){
+	        			opts.loaded(dialog);
+	        		}
 	        	});
 			}
 		},

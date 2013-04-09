@@ -75,7 +75,7 @@ catch (Exception $e)
 	      		padding: 7px 9px;
       		}
 		</style>
-		<div class="container">
+		<div class="container-fluid">
 			
 			<div style="text-align:center; display:none" class="text-error" id="logerror"></div>
 			
@@ -94,7 +94,7 @@ catch (Exception $e)
 		?>
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="container">    
+				<div class="container-fluid">    
 		
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
@@ -185,7 +185,7 @@ catch (Exception $e)
 				</div>
 			</div>
 		</div>
-		<div class="container">
+		<div class="container-fluid">
 			<div class="tabbable">
 			
 				<ul class="nav nav-tabs" id="tabs" data-tabs="tabs">

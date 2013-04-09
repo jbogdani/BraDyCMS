@@ -1,55 +1,50 @@
 <div id="{{ uid }}">
 	<h2>{{ tr.get('edit_gallery') }}: {{ gallery|capitalize }}</h2>
 	
-	{% if files|length == 0 %}
-		<button class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
-	{% else %}
-	<form action="javascript:void(0)">
-		<table class="table table-striped table-bordered">
-			<thead>
-				<tr>
-					<th colspan="2">{{ tr.get('image') }}</th>
-					<th>{{ tr.get('description') }}</th>
-					<th>{{ tr.get('thumbnail') }}</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-				{% for file in files %}
-				
-				<tr>
-					<td>
-						<h4>{{ file.name }}</h4>
-						<p><button class="btn btn-danger delete" data-file="{{ file.name }}"><i class="icon-white icon-trash"></i> {{ tr.get('delete') }}</button></p>
-					</td>
-					<td>
-						<img src="{{ file.fullpath }}" style="max-width:300px;" />
-						<pre>{{ tr.get('img_dimensions') }}: {{ file.finfo.0 }}x{{ file.finfo.1 }}px</pre>
-					</td>
-					
-					<td>
-						<textarea data-file="{{ file.name }}" style="height:100px;" name="{{ file.formattedName }}">{{ file.description }}</textarea>
-						<p><button class="btn btn-success save" data-file="{{ file.name }}"><i class="icon-white icon-ok"></i> {{ tr.get('save') }}</button></p>
-					</td>
-					
-					<td>
-						<div class="img-thumb">
-						{% if file.thumb %}
-							<img src="{{ file.thumb }}" />
-						{% endif %}
+	
+	
+	<div class="row-fluid table">
+		<div class="span8">
+			{% if files|length == 0 %}
+				<button class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
+			{% else %}
+				<form action="javascript:void(0)">
+					{% for file in files %}
+						<div class="row-fluid tr{% if loop.index is divisibleby (2) %} well well-small {% endif %}">
+							<div class="span2 td">
+								<h4>{{ file.name }}</h4>
+								<p><button class="btn btn-danger delete" data-file="{{ file.name }}"><i class="icon-white icon-trash"></i> {{ tr.get('delete') }}</button></p>
+							</div>
+							
+							<div class="span3 td">
+								<img src="{{ file.fullpath }}" />
+								<pre>{{ tr.get('img_dimensions') }}: {{ file.finfo.0 }}x{{ file.finfo.1 }}px</pre>
+							</div>
+							
+							<div class="span3 td">
+								<textarea data-file="{{ file.name }}" class="span12" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
+								<p><button class="btn btn-success save" data-file="{{ file.name }}"><i class="icon-white icon-ok"></i> {{ tr.get('save') }}</button></p>
+							</div>
+							
+							<div class="span3 td">
+								<div class="img-thumb">
+								{% if file.thumb %}
+									<img src="{{ file.thumb }}" />
+								{% endif %}
+								</div>
+								<button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="icon-white icon-th-large"></i> {{ tr.get('re_create_thumb') }}</button>
+							</div>
+							
 						</div>
-						<button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="icon-white icon-th-large"></i> {{ tr.get('re_create_thumb') }}</button>
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</form>
-	{% endif %}
-	
-	<hr />
-	
-	<div class="uploader"></div>
+					{% endfor %}
+				</form>
+			{% endif %}
+		</div>
+		
+		<div class="span3">
+			<div class="uploader"></div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -68,7 +63,7 @@
 		$.post('controller.php?obj=galleries_ctrl&method=makeThumbs&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
 			admin.message(data.text, data.status);
 			if (data.status == 'success'){
-				$this.parents('td').find('div.img-thumb').html('<img src="' + data.thumb + '" />');
+				$this.parents('div.td').find('div.img-thumb').html('<img src="' + data.thumb + '" />');
 				//admin.tabs.reloadActive();
 			}
 		}, 'json');
@@ -87,10 +82,10 @@
 			admin.message(data.text, data.status);
 			
 			if (data.status != 'error'){
-				if ($this.parents('table').find('tr').length == 2){
+				if ($this.parents('div.table').find('div.tr').length == 1){
 					admin.tabs.reloadActive();
 				} else {
-					$this.parents('tr').remove();
+					$this.parents('div.tr').remove();
 				}
 			}
 		}, 'json');

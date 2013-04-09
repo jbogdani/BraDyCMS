@@ -32,6 +32,9 @@
 			html: '<input type="text" class="gal" placeholder="' + admin.tr('gallery_name') + '" />'
 				+ '<p class="text-error">' + admin.tr('gal_name_formatting') + '</p>',
 			title: admin.tr('new_gallery'),
+			loaded: function(modal){
+				modal.find('input.gal').focus();
+			},
 			buttons:[
 			         {
 			        	 text: admin.tr('save'),

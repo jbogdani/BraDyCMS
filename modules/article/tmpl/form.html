@@ -3,43 +3,43 @@
 		<div class="row-fluid">
 			<div class="span3">
 				<label>{{ tr.get('title') }}</label>
-				<input type="text" name="title" value="{{ art.title}}" />
+				<input type="text" name="title" value="{{ art.title}}" class="span12" />
 				
 				<label>{{ tr.get('text_id') }}</label>
-				<input type="text" name="text_id" value="{{ art.text_id }}" />
+				<input type="text" name="text_id" value="{{ art.text_id }}" class="span12" />
 				
 				<label>{{ tr.get('sorting') }}</label>
-				<input type="text" name="sort" value="{{ art.sort}}" />
+				<input type="text" name="sort" value="{{ art.sort}}" class="span12" />
 				
 				<label>{{ tr.get('keywords') }}</label>
-				<input type="text" name="keywords" value="{{ art.keywords }}" />
+				<input type="text" name="keywords" value="{{ art.keywords }}" class="span12" />
 				
 				<label>{{ tr.get('author') }}</label>
-				<input type="text" name="author" value="{{ art.author }}" />
+				<input type="text" name="author" value="{{ art.author }}" class="span12" />
 
 				<label>{{ tr.get('status') }}</label>
-				<select name="status">
+				<select name="status" class="span12">
 					<option value="0" {% if art.status == false %} selected="true" {% endif %}>Nascosto</option>
 					<option value="1" {% if art.status %} selected="true" {% endif %}>Visibile</option>
 				</select>
 
 				<label>{{ tr.get('section') }}</label>
-				<input type="text" name="section" value="{{ art.section }}" style="width:100%" />
+				<input type="text" name="section" value="{{ art.section }}" class="span12" />
 				
 				
 				<label>{{ tr.get('tags') }}</label>
-				<input type="text" name="tags" value="{{ art.tags }}" style="width:100%" />
+				<input type="text" name="tags" value="{{ art.tags }}" class="span12" />
 				
 				<label>{{ tr.get('creation_date') }}</label>
-				<input class="datepicker" type="text" name="created"
+				<input class="datepicker span12" type="text" name="created"
 						value="{% if art.created %}{{ art.created }}{% else %}{{ date }}{% endif %}" />
 				
 				<label>{{ tr.get('pubblication_date') }}</label>
-				<input class="datepicker" type="text" name="publish_on"
+				<input class="datepicker span12" type="text" name="publish_on"
 						value="{% if art.publish_on %}{{ art.publish_on }}{% else %}{{ date }}{% endif %}" />
 				
 				<label>{{ tr.get('expiration_date') }}</label>
-				<input class="datepicker" type="text" name="expires"
+				<input class="datepicker span12" type="text" name="expires"
 						value="{% if art.expires %}{{ art.expires }}{% else %}{{ date }}{% endif %}" />
 				
 				
@@ -47,13 +47,13 @@
 				{{ art.updated }}
 			</div>
 			
-			<div class="span9">
+			<div class="span6">
 				<label>{{ tr.get('summary') }}</label>
-				<textarea name="summary" class="rich" id="summary{{ uid }}" rows="10"
+				<textarea name="summary" class="rich stan12" id="summary{{ uid }}" rows="10"
 						style="width: 100%; height: 150px;">{{ art.summary }}</textarea>
 				
 				<label>{{ tr.get('text') }}</label>
-				<textarea name="text" class="rich" rows="20" style="width: 100%; height: 500px;"
+				<textarea name="text" class="rich span12" rows="20" style="width: 100%; height: 500px;"
 						id="text{{ uid }}">{{ art.text }}</textarea>
 			</div>
 		</div>
@@ -66,7 +66,7 @@
 				<div class="span3">
 					<p>
 						<label>{{ fld|upper }}</label>
-						<input type="text" value="{{ art[fld] }}" name="{{ fld }}" />
+						<input type="text" value="{{ art[fld] }}" name="{{ fld }}"  class="span12" />
 				</div>
 			{% endfor %}
 			</fieldset>

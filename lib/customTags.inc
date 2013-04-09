@@ -8,7 +8,17 @@
  
 class customTags
 {
+	public static function cl_gallery($data)
+	{
+		return self::format_gallery($data, true);
+	}
+	
 	public static function gallery($data)
+	{
+		return self::format_gallery($data);
+	}
+	
+	private static function format_gallery($data, $responsive = false)
 	{
 		$gal = $data['content'];
 		$rel = $data['rel'];
@@ -25,23 +35,50 @@ class customTags
 		{
 			return tr::sget('gallery_not_well_formatted', $gal);
 		}
-	
-		$html = '<div class="gallery-container"><ul class="gallery ' . $gal . ($class ? ' ' . $class : '') . '">';
-	
-		foreach ($data as $img => $dida)
+		
+		$html = '<div class="gallery-container">';
+		
+		if ($responsive)
 		{
-			$img = str_replace('__x__', '.', $img);
-				
-			$html .= '<li>' .
-					'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>' .
-						'<img src="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />' .
-					'</a>' .
-					'<div class="caption">' . $dida . '</div>' .
-				'</li>';
+			/**
+			 * <ul data-rel="sth" class="a b c cl_gallery">
+			 * 	<li data-img="img_src" data-thumb="thumb_img_src">caption text</li>
+			 * 	...
+			 * </ul>
+			 */
+			$html .= '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . ( $rel ? 'data-rel="' . $rel . '"' : '') . '>';
+			
+			foreach ($data as $img => $dida)
+			{
+				$img = str_replace('__x__', '.', $img);
+			
+				$html .= '<li data-img="' . GALLERY_DIR .  $gal . '/' . $img . '" data-thumb="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '">' .
+							$dida . 
+						'</li>';
+			}
+			
+			$html .='</ul>';
 		}
-	
-		$html .='</ul></div>';
-	
+		else
+		{
+			$html .= '<ul class="gallery ' . $gal . ($class ? ' ' . $class : '') . '">';
+			
+			foreach ($data as $img => $dida)
+			{
+				$img = str_replace('__x__', '.', $img);
+			
+				$html .= '<li>' .
+						'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>' .
+						'<img src="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />' .
+						'</a>' .
+						'<div class="caption">' . $dida . '</div>' .
+						'</li>';
+			}
+			
+			$html .='</ul>';
+		}
+		
+		$html .= '</div>';
 		return $html;
 	}
 	

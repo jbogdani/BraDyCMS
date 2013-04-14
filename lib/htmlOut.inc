@@ -18,12 +18,18 @@ class htmlOut
 	
 	public function metadata()
 	{
-		$html = "\n\t" . '<title>' . $this->out->getPageData('title') . ' </title>'
-			. "\n\t" . '<meta name="description" content="' . $this->out->getPageData('description') . '" />'
-			. "\n\t" . '<meta name="keywords" content="' . $this->out->getPageData('keywords') . '" />'
-			. "\n\t" . '<meta lang="' . $this->out->getPageData('lang') . '" />'
-			. "\n\t" . '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />'
-			. "\n\t" . '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />';
+		$html = "\n\t" . '<title>' . $this->out->getPageData('title') . '</title>' .
+				"\n\t" . '<meta name="description" content="' . $this->out->getPageData('description') . '" />' .
+				"\n\t" . '<meta name="keywords" content="' . $this->out->getPageData('keywords') . '" />' .
+				"\n\t" . '<meta lang="' . $this->out->getPageData('lang') . '" />' .
+				
+				"\n\t" . '<meta property="og:title" content="' . $this->out->getPageData('title') . '" />' .
+				"\n\t" . '<meta property="og:description" content="' . $this->out->getPageData('description') . '" />' .
+				"\n\t" . '<meta property="og:url" content="' . $this->out->getPageData('url') . '" />' .
+				( $this->out->getPageData('image') ? "\n\t" . '<meta property="og:image" content="' . $this->out->getPageData('image') . '" />' : '' ).
+				
+				"\n\t" . '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />' .
+				"\n\t" . '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />';
 		
 		return $html;
 	}

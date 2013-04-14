@@ -18,6 +18,8 @@
  * 			description
  * 			keywords
  * 			lang
+ * 			url
+ * 			image
  * 		menu
  * 		languages
  * 		sectionName
@@ -66,10 +68,12 @@ class Out
 		if ( $get['art'] OR $get['art_title'] )
 		{
 			$this->context = 'article';
+			$this->getArticle($ge['art_title']);
 		}
 		else if ( $get['section'] )
 		{
 			$this->context = 'section';
+			$this->getArticlesBySection($get['section']);
 		}
 		else if ($get['search'])
 		{
@@ -161,15 +165,20 @@ class Out
 			// Description
 			if ( $this->data['article'][$this->get['art_title']]['summary'] )
 			{
-				$this->data['page']['description'] = strip_tags($this->data['article']['summary']);
+				$this->data['page']['description'] = trim(strip_tags($this->data['article'][$this->get['art_title']]['summary']));
 			}
 			else if ( $this->data['article'][$this->get['art_title']]['section'])
 			{
-				$this->data['page']['description'] = $this->data['article']['section'];
+				$this->data['page']['description'] = $this->data['article'][$this->get['art_title']]['section'];
 			}
 			else
 			{
 				$this->data['page']['description'] = $this->cfg['description'];
+			}
+			
+			if (strlen($this->data['page']['description']) > 500)
+			{
+				$this->data['page']['description'] = substr($this->data['page']['description'], 0, 497) . '...';
 			}
 	
 			// Keywords
@@ -177,6 +186,17 @@ class Out
 	
 			// Lang
 			$this->data['page']['lang'] = $this->lang ? $this->lang: $this->cfg['sys_lang'];
+			
+			$this->data['page']['url']  = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			
+			if ($this->data['article'][$this->get['art_title']]['text'])
+			{
+				$xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->get['art_title']]['text']));
+				$src = $xpath->evaluate("string(//img/@src)");
+				
+				$this->data['page']['image'] = ( !preg_match('/http/', $src) ? 'http://' . $_SERVER['HTTP_HOST'] . '/' : '') . $src;
+				
+			}
 		}
 	
 		return $el ? $this->data['page'][$el] : $this->data['page'];

@@ -8,10 +8,14 @@ RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L] 
 
 #safe site, js and css, tiny_mce
-RewriteRule (css|sites|js|tiny_mce|img)/(.+) $1/$2
+RewriteRule (css|sites|js|tiny_mce|img|xsl)/(.+) $1/$2
 
 RewriteRule ^feed/rss$ controller.php?obj=feeds_ctrl&method=rss2
 RewriteRule ^feed/atom$ controller.php?obj=feeds_ctrl&method=atom
+
+#OAI
+RewriteRule ^OAI$ controller.php?obj=OAI_ctrl&method=run [QSA]
+
 
 #admin 
 RewriteRule ^admin/?$ admin.php

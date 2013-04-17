@@ -224,6 +224,9 @@ $_lang = array(
 	'error_lang_create' => 'Errore. Non è stato possibile creare il nuovo file di traduzione',
 	'add_locale' => 'Aggiungi una nuova lingua',
 	'enter_locale' => 'Inserisci (due lettere) l\'identificativo della nuova lingua',
-	'new_locale_cant_be_empty' => "La sigla della nuova lingua non può essere vuota"
+	'new_locale_cant_be_empty' => "La sigla della nuova lingua non può essere vuota",
+			
+	// OAI
+	'no_oai_config_for_site' => "L'interfaccia OAI non è configurato per questo sito"
 
 );

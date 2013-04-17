@@ -159,6 +159,11 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 				<li>description</li>
 				<li>keywords</li>
 				<li>lang</li>
+				<li>url</li>
+				<li>image (may be false. It's the src of the first image of article's content)</li>
+				<li>author (may be false. It's article's author)</li>
+				<li>date (may be false. It's article's publish_on date)</li>
+				<li>publisher (may be false. It's OAI config publisher parameter)</li>
 			</ul></td>
 			<td>
 				<code>{% raw %}{{ out.getPageData('title') }}{% endraw %}</code>

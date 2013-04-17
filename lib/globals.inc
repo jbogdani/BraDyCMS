@@ -70,6 +70,7 @@ else
 define ( 'PREFIX',	cfg::get('prefix') );
 define ( 'SYS_LANG',cfg::get('default_lang') );
 define ( 'MOD_DIR', MAIN_DIR . 'modules/');
+define ( 'LIB_DIR', MAIN_DIR . 'lib/');
 define ( 'ERR_LOG',	MAIN_DIR . 'logs/error.log');
 define ( 'TMP_DIR', MAIN_DIR . 'tmp/');
 define ( 'LOCALE_DIR', MAIN_DIR . 'locale/');

@@ -18,8 +18,11 @@
  * 			description
  * 			keywords
  * 			lang
- * 			url
- * 			image
+ * 			url	(page URL)
+ * 			image* (article's body first image src)
+ * 			author* (article's author)
+ * 			publisher* (OAI data publisher)
+ * 			date* (article's publish_on)
  * 		menu
  * 		languages
  * 		sectionName
@@ -163,17 +166,13 @@ class Out
 			$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ? $this->data['article'][$this->get['art_title']]['title'] : $this->cfg['title'];
 	
 			// Description
-			if ( $this->data['article'][$this->get['art_title']]['summary'] )
+			if ( $this->data['article'][$this->get['art_title']]['summary'] && trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])) != '' )
 			{
 				$this->data['page']['description'] = trim(strip_tags($this->data['article'][$this->get['art_title']]['summary']));
 			}
-			else if ( $this->data['article'][$this->get['art_title']]['section'])
-			{
-				$this->data['page']['description'] = $this->data['article'][$this->get['art_title']]['section'];
-			}
 			else
 			{
-				$this->data['page']['description'] = $this->cfg['description'];
+				$this->data['page']['description'] = ($this->data['article'][$this->get['art_title']]['section'] ? $this->data['article'][$this->get['art_title']]['section'] . ' :: ' : '') . $this->cfg['description'];
 			}
 			
 			if (strlen($this->data['page']['description']) > 500)
@@ -195,8 +194,18 @@ class Out
 				$src = $xpath->evaluate("string(//img/@src)");
 				
 				$this->data['page']['image'] = ( !preg_match('/http/', $src) ? 'http://' . $_SERVER['HTTP_HOST'] . '/' : '') . $src;
-				
 			}
+			
+			if ($this->data['article'][$this->get['art_title']]['author'] && $this->data['article'][$this->get['art_title']]['author'] != '')
+			{
+				$this->data['page']['author'] = $this->data['article'][$this->get['art_title']]['author'];
+			}
+			
+			if ($this->data['article'][$this->get['art_title']]['publish_on'] && $this->data['article'][$this->get['art_title']]['publish_on'] != '0000-00-00')
+			$oai_data = cfg::getOAI();
+			
+			$this->data['page']['date'] = $oai_data['publish_on'];
+			
 		}
 	
 		return $el ? $this->data['page'][$el] : $this->data['page'];

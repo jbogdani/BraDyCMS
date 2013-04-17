@@ -8,26 +8,66 @@
 	<thead>
 		<tr>
 			<th class="span2">Method</th>
+			<th class="span2">Parameters</th>
 			<th class="span4">Return</th>
 			<th class="span6">Example</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<th>metadata()</th>
-			<td>(string) Returns well-formatted html of page metadata</td>
+			<th>metadata(no_og)</th>
+			<td><strong>no_og</strong>: (boolean) if no_og parameters is true (default is false) the open graph metadata will not be shown</td>
+			<td>(string) Returns well-formatted html code of page html and open graph metadata and links to feeds</td>
 			<td>
 				<code>{% raw %}{{ html.metadata() }}{% endraw %}</code>
 			
 				<pre class="prettyprint">&#60;title&#62;Home Page&#60;/title&#62;
 &#60;meta name="description" content="Web sites main description" /&#62;
 &#60;meta name="keywords" content="home, page, keyword1, keyword2" /&#62;
-&#60;meta lang="en" /&#62;</pre>
+&#60;meta lang="en" /&#62;
+&#60;!-- Open Graph metadata --&#62;
+&#60;meta property="og:title" content="Home Page" /&#62;
+&#60;meta property="og:description" content="Web sites main description" /&#62;
+&#60;meta property="og:url" content="http://thishost/thispage" /&#62;
+&#60;meta property="og:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" /&#62;
+
+&#60;!-- Feed links --&#62;
+&#60;link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" /&#62;
+&#60;link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" /&#62;
+</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>metadata_dc()</th>
+			<td></td>
+			<td>(string) Returns well-formatted html code with Dublin Core html metadata.
+				<p>Title, description, languale, identifier (url), subject (keywords) are the same as html &amp; og metadata</p>
+				<p>Date is the publish_on date of the article</p>
+				<p>publisher is the publsher name as defined in OAI module configuration</p>
+			</td>
+			<td>
+				<code>{% raw %}{{ html.metadata_dc() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;!-- Dublin Core metadata --&#62;
+&#60;meta name="DC.type" content="Text" /&#62;
+&#60;meta name="DC.format" content="text/html" /&#60;
+&#60;meta name="DC.identifier" scheme="URI" content="http://thishost/thispage_url" /&#60;
+&#60;meta name="DC.title" content="Home Page" /&#60;
+&#60;meta name="DC.description" content="Web sites main description" /&#60;
+&#60;meta name="DC.language" scheme="RFC3066" content="en" /&#60;
+&#60;meta name="DC.creator" content="John Doe" /&#60;
+&#60;meta name="DC.publisher" content="John Doe publishing" /&#60;
+&#60;meta name="DC.subject" scheme="RFC3066" content="home, page, keyword1, keyword2" /&#60;
+&#60;meta name="DC.date" scheme="W3CDTF" content="2013-04-17" /&#60;
+</pre>
 			</td>
 		</tr>
 		
 		<tr>
 			<th>menu('menuname', 'css_class_name')</th>
+			<td><strong>menuname</strong>, (string) textual id of the menu to show<br />
+				<strong>css_class_name</strong>, (string|false, default false) css class, or space-separated css classes of the menu's unordered list (ul)</td>
 			<td>(string) Returns well-formatted html of menu items</td>
 			<td>
 				<code>{% raw %}{{ html.menu('main', 'nav') }}{% endraw %}</code>
@@ -49,10 +89,10 @@
 		
 		<tr>
 			<th>langMenu('flags', 'no_text')</th>
+			<td><strong>flags</strong>, (boolean, default false) if true image flags will be shown<br />
+				<strong>no_text</strong>, (boolean, default false) if true no language text will be shown</td>
 			<td>(string) Returns well-formatted html of language menu
-			<p>If flags is true, flags icons will be shown</p>
-			<p>If not_text is true language text will not be shown</p>
-			<p>Current language li has class current</p></td>
+			<p>Current language's list item (li) has class <em>current</em></p></td>
 			<td>
 				<code>{% raw %}{{ html.langMenu(true) }}{% endraw %}</code>
 			
@@ -72,6 +112,7 @@
 		
 		<tr>
 			<th>searchForm()</th>
+			<td></td>
 			<td>(string) Returns well-formatted html of search form &nbsp; input
 			<p>Form submission should be done with javascript:</p>
 			<pre class="prettyprint">$('#searchForm').submit(function(){
@@ -90,8 +131,9 @@
 		
 		<tr>
 			<th>searchResults()</th>
+			<td></td>
 			<td>(string) Returns well-formatted html of list of articles found by search.
-			<p>THis function will return false if context is not search!</p></td>
+			<p>This function will return false if context is not search!</p></td>
 			<td>
 				<code>{% raw %}{{ html.searchResults() }}{% endraw %}</code>
 			
@@ -119,6 +161,7 @@
 		
 		<tr>
 			<th>articleBody()</th>
+			<td></td>
 			<td>(string) Returns well-formatted html of article content.
 			<p>This function will return false if context is not article!</p></td>
 			<td>
@@ -139,6 +182,8 @@
 		
 		<tr>
 			<th>tagBlog(tag1, tag2, ...)</th>
+			<td><strong>tag1</strong>, (string|false, default false) Tag to search<br />
+				...</td>
 			<td>(string) Returns well-formatted html of list of articles found by tag search.
 			<p>If multiple tags are searched AND statement will be applied</p></td>
 			<td>
@@ -167,6 +212,7 @@
 		
 		<tr>
 			<th>sectionBlog(section_name)</th>
+			<td><strong>section_name</strong>, (string) The text id of the section to show</td>
 			<td>(string) Returns well-formatted html of list of section articles.
 			<p>This function will return false if context is not section!</p></td>
 			<td>
@@ -201,6 +247,7 @@
 		
 		<tr>
 			<th>siblingsBlog()</th>
+			<td></td>
 			<td>(string) Returns well-formatted html of list of current article's siblings.
 			<p>This function will return false if context is not article!</p></td>
 			<td>
@@ -229,6 +276,8 @@
 		
 		<tr>
 			<th>GA(id, restrict_domain)</th>
+			<td><strong>id</strong>, (string, default false) Google Analytics ID. If false the site configuration setting will be used<br />
+				<strong>restrict_domain</strong>, (string, default false) Domain resctriction policy. If false the site configuration setting will be used</td>
 			<td>(string) Returns javascript code for Google Analytics Tracking.
 			<p>If id or restriced domain are not provided, the configuration options will be used.</p>
 			<p>If restricted domain is provided (as argument or in configuration file) the GA will be shown only if domain matches.</p>
@@ -252,11 +301,10 @@
 		
 		<tr>
 			<th>gallery(name, single_gallery, class)</th>
-			<td>(string) Returns HTML code with gallery data.
-			<p><code>name</code>, string, required: name of the gallery to show</p>
-			<p><code>single_gallery</code>, boolean, optional (default false): if true all images will be part of the same gallery</p>
-			<p><code>class</code>, string, optional: css class to add to mail ul</p>
-			</td>
+			<td><strong>name</strong>, (string) textual id of the gallery to show<br />
+				<strong>single_gallery</strong>, (boolean, default false) if true all images will be part of the same gallery<br />
+				<strong>class</strong>, (string, default false) css class to add to main unordered list (ul)</td>
+			<td>(string) Returns HTML code with gallery data.</td>
 			<td>
 				<code>{% raw %}{{ html.gallery('news', true, 'latest') }}{% endraw %}</code>
 			

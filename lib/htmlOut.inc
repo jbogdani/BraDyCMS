@@ -16,21 +16,43 @@ class htmlOut
 		$this->out = $out;
 	}
 	
-	public function metadata()
+	public function metadata($no_og = false)
 	{
 		$html = "\n\t" . '<title>' . $this->out->getPageData('title') . '</title>' .
 				"\n\t" . '<meta name="description" content="' . $this->out->getPageData('description') . '" />' .
 				"\n\t" . '<meta name="keywords" content="' . $this->out->getPageData('keywords') . '" />' .
-				"\n\t" . '<meta lang="' . $this->out->getPageData('lang') . '" />' .
+				"\n\t" . '<meta lang="' . $this->out->getPageData('lang') . '" />';
+
+		if (!$no_og)
+		{
+			$html .= "\n\n\t<!-- Open Graph metadata -->" .
+					"\n\t" . '<meta property="og:title" content="' . $this->out->getPageData('title') . '" />' .
+					"\n\t" . '<meta property="og:description" content="' . $this->out->getPageData('description') . '" />' .
+					"\n\t" . '<meta property="og:url" content="' . $this->out->getPageData('url') . '" />' .
+					( $this->out->getPageData('image') ? "\n\t" . '<meta property="og:image" content="' . $this->out->getPageData('image') . '" />' : '' );
+		}
 				
-				"\n\t" . '<meta property="og:title" content="' . $this->out->getPageData('title') . '" />' .
-				"\n\t" . '<meta property="og:description" content="' . $this->out->getPageData('description') . '" />' .
-				"\n\t" . '<meta property="og:url" content="' . $this->out->getPageData('url') . '" />' .
-				( $this->out->getPageData('image') ? "\n\t" . '<meta property="og:image" content="' . $this->out->getPageData('image') . '" />' : '' ).
-				
+		$html .= "\n\n\t<!-- Feed links -->" .
 				"\n\t" . '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />' .
 				"\n\t" . '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />';
 		
+		return $html;
+	}
+	
+	public function metadata_dc()
+	{
+		$html =  "\n\t<!-- Dublin Core metadata -->" .
+				"\n\t" . '<meta name="DC.type" content="Text" />' .
+				"\n\t" . '<meta name="DC.format" content="text/html" />' .
+				"\n\t" . '<meta name="DC.identifier" scheme="URI" content="' . $this->out->getPageData('url') . '" />' .
+				"\n\t" . '<meta name="DC.title" content="' . $this->out->getPageData('title') . '" />' .
+				"\n\t" . '<meta name="DC.description" content="' . $this->out->getPageData('description') . '" />' .
+				"\n\t" . '<meta name="DC.language" scheme="RFC3066" content="' . $this->out->getPageData('lang') . '" />' .
+				( $this->out->getPageData('author') ? "\n\n" . '<meta name="DC.creator" content="' . $this->out->getPageData('author') . '" />' : '') .
+				( $this->out->getPageData('publisher') ? "\n\n" . '<meta name="DC.publisher" content="' . $this->out->getPageData('publisher') . '" />' : '') .
+				"\n\t" . '<meta name="DC.subject" scheme="RFC3066" content="' . $this->out->getPageData('keywords') . '" />' . 
+				( $this->out->getPageData('date') ? "\n\n" . '<meta name="DC.date" scheme="W3CDTF" content="' . $this->out->getPageData('date') . '" />' : '')
+				;
 		return $html;
 	}
 	
@@ -256,7 +278,7 @@ class htmlOut
 		}
 		
 		$html = '<section class="blog siblings">'
-				. '<h1>' . tr::get('from_same_section') . '</h3>';
+				. '<h3>' . tr::get('from_same_section') . '</h3>';
 			
 		foreach ( $art_list as $art )
 		{

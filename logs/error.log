@@ -1,12 +1,8 @@
-[08-Apr-2013 06:54:03 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/git.bdusCMS/modules/log/log.php on line 16
-[08-Apr-2013 06:54:03 UTC] PHP Stack trace:
-[08-Apr-2013 06:54:03 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
-[08-Apr-2013 06:54:03 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
-[08-Apr-2013 06:54:03 UTC] PHP   3. log_ctrl->out() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
-[08-Apr-2013 06:54:03 UTC] PHP   4. error_log() /Users/jbogdani/www/git.bdusCMS/modules/log/log.php:16
-[09-Apr-2013 07:44:16 UTC] PHP Warning:  error_log(): Filename cannot be empty in /Users/jbogdani/www/git.bdusCMS/modules/log/log.php on line 16
-[09-Apr-2013 07:44:16 UTC] PHP Stack trace:
-[09-Apr-2013 07:44:16 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
-[09-Apr-2013 07:44:16 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
-[09-Apr-2013 07:44:16 UTC] PHP   3. log_ctrl->out() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
-[09-Apr-2013 07:44:16 UTC] PHP   4. error_log() /Users/jbogdani/www/git.bdusCMS/modules/log/log.php:16
+[17-Apr-2013 10:56:18 UTC] PHP Parse error:  syntax error, unexpected ';' in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 53
+[17-Apr-2013 10:56:18 UTC] PHP Stack trace:
+[17-Apr-2013 10:56:18 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[17-Apr-2013 10:56:18 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[17-Apr-2013 10:56:24 UTC] PHP Parse error:  syntax error, unexpected ';' in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 53
+[17-Apr-2013 10:56:24 UTC] PHP Stack trace:
+[17-Apr-2013 10:56:24 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[17-Apr-2013 10:56:24 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0

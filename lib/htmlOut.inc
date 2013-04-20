@@ -21,7 +21,8 @@ class htmlOut
 		$html = "\n\t" . '<title>' . $this->out->getPageData('title') . '</title>' .
 				"\n\t" . '<meta name="description" content="' . $this->out->getPageData('description') . '" />' .
 				"\n\t" . '<meta name="keywords" content="' . $this->out->getPageData('keywords') . '" />' .
-				"\n\t" . '<meta lang="' . $this->out->getPageData('lang') . '" />';
+				"\n\t" . '<meta lang="' . $this->out->getPageData('lang') . '" />' .
+				"\n\t" . '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
 
 		if (!$no_og)
 		{

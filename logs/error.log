@@ -1,8 +1,7 @@
-[17-Apr-2013 10:56:18 UTC] PHP Parse error:  syntax error, unexpected ';' in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 53
-[17-Apr-2013 10:56:18 UTC] PHP Stack trace:
-[17-Apr-2013 10:56:18 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
-[17-Apr-2013 10:56:18 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0
-[17-Apr-2013 10:56:24 UTC] PHP Parse error:  syntax error, unexpected ';' in /Users/jbogdani/www/git.bdusCMS/lib/htmlOut.inc on line 53
-[17-Apr-2013 10:56:24 UTC] PHP Stack trace:
-[17-Apr-2013 10:56:24 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/index.php:0
-[17-Apr-2013 10:56:24 UTC] PHP   2. ClassAutoloader->loader() /Users/jbogdani/www/git.bdusCMS/index.php:0
+[20-Apr-2013 14:54:34 UTC] PHP Warning:  Invalid argument supplied for foreach() in /Users/jbogdani/www/git.bdusCMS/lib/utils.inc on line 46
+[20-Apr-2013 14:54:34 UTC] PHP Stack trace:
+[20-Apr-2013 14:54:34 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[20-Apr-2013 14:54:34 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[20-Apr-2013 14:54:34 UTC] PHP   3. call_user_func_array() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:49
+[20-Apr-2013 14:54:34 UTC] PHP   4. cfg_ctrl::empty_cache() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:49
+[20-Apr-2013 14:54:34 UTC] PHP   5. utils::recursive_delete() /Users/jbogdani/www/git.bdusCMS/modules/cfg/cfg.php:31

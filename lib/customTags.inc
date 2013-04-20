@@ -52,7 +52,7 @@ class customTags
 			{
 				$img = str_replace('__x__', '.', $img);
 			
-				$html .= '<li data-img="' . GALLERY_DIR .  $gal . '/' . $img . '" data-thumb="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '">' .
+				$html .= '<li data-id="' . $img . '" data-img="' . GALLERY_DIR .  $gal . '/' . $img . '" data-thumb="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '">' .
 							$dida . 
 						'</li>';
 			}
@@ -67,7 +67,7 @@ class customTags
 			{
 				$img = str_replace('__x__', '.', $img);
 			
-				$html .= '<li>' .
+				$html .= '<li data-id="' . $img . '">' .
 						'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>' .
 						'<img src="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />' .
 						'</a>' .

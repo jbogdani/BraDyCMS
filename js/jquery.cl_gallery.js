@@ -38,9 +38,10 @@
 			var text = $(el).text()
 				oSrc = $(el).data('img')
 				thSrc = $(el).data('thumb')
-				rel = ul.data('rel');
+				rel = ul.data('rel')
+				id = $(el).data('id');
 			
-			tmp.append('<li>' +
+			tmp.append('<li data-id="' + id + '">' +
 					'<a href="' + oSrc + '" class="fancybox" ' + (rel ? ' rel="' + rel + '"' : '') + ' title="' + text + '">' +
 					'<img src="' + thSrc + '" alt="' + text + '" />' +
 					'</a>' +

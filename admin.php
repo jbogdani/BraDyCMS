@@ -194,18 +194,33 @@ catch (Exception $e)
 				
 				<div class="tab-content">
 					<div class="tab-pane active" id="home">
-						<div class="hero-unit">
-							<p>Welcome to</p>
-							<h1>BraDy.CMS</h1>
-							<p>An opensource, highly customizable, easy to setup & use php5 mysql/sqlite CMS</p>
-						</div>
-						
-						<div class="media">
-							<img src="./img/octocat.png" alt="octocats GITHUB" class="pull-left" style="width:150px" />
+						<div class="row-fluid">
+							<div class="span8">
+								<?php
+								if (file_exists('./sites/default/welcome.html')){
+									require_once './sites/default/welcome.html';
+								}
+								else
+								{
+								?>
+								<div class="hero-unit">
+									<p>Welcome to</p>
+									<h1>BraDy.CMS</h1>
+									<p>An opensource, highly customizable, easy to setup & use php5 mysql/sqlite CMS</p>
+								</div>
+								<?php
+								}
+								?>
+							</div>
 							
-							<div class="media-body">
-								<h3 class="media-heading">BraDyCMS is on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">Github</a></h3>
-								<p>Fork it on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">https://github.com/jbogdani/BraDyCMS</a></p>
+							<div class="span4">
+								<img src="./img/octocat.png" alt="octocats GITHUB" class="pull-left" style="width:150px" />
+								
+								<div class="media-body">
+									<h3 class="media-heading">BraDyCMS </h3>
+									<p class="lead">is an open source project available for download on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">GitHub</a></p>
+									<p>Fork it now: <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">https://github.com/jbogdani/BraDyCMS</a></p>
+								</div>
 							</div>
 						</div>
 					</div>

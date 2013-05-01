@@ -236,14 +236,43 @@ class Article
 		
 	}
 	
+	public function getArticlesBySectionAndTag($section, $tags, $lang = false)
+	{
+		foreach ($tags as $tag)
+		{
+			$part[] = " `tags` LIKE '%{$tag}%' ";
+		}
+		
+		$query = 'SELECT ' . $this->previewFlds() .
+			' FROM `' . PREFIX . '__articles` ' .
+			" WHERE `section` = '" . $section . "' " .
+			' AND (' . implode(' AND ', $part) . ')' .
+			' AND ' . $this->valid_art_stat() .
+			' ORDER BY `sort`';
+		
+		$res = $this->db->executeQuery($query, false, 'read');
+		
+		if (is_array($res))
+		{
+			foreach($res as &$art)
+			{
+				$art['link'] = utils::format_link( './?art_title=' . $art['text_id'], $lang);
+			}
+		}
+		
+		$res = $this->addHref2List($res, $lang);
+		
+		return $lang ? $this->translateList($res, $lang) : $res;
+	}
 	
 	/**
 	 * 
 	 * @param array $tags
 	 * @param string $lang
+	 * @param boolean $lax if true articles must share all articles!
 	 * @return Ambigous <boolean, multitype:, array, multitype:multitype: , unknown>
 	 */
-	public function getArticlesByTag($tags, $lang = false)
+	public function getArticlesByTag($tags, $lang = false, $lax = false)
 	{
 		if (!is_array($tags))
 		{
@@ -258,7 +287,7 @@ class Article
 		$query = 'SELECT ' . $this->previewFlds()
 				. ' FROM `' . PREFIX . '__articles` '
 				. " WHERE "
-				. ' (' . implode(' AND ', $part) . ')'
+				. ' (' . implode(' ' . ($lax ? 'OR' : 'AND') . ' ', $part) . ')'
 				. ' AND ' . $this->valid_art_stat()
 				. ' ORDER BY `sort`';
 		
@@ -275,6 +304,24 @@ class Article
 		$res = $this->addHref2List($res, $lang);
 		
 		return $lang ? $this->translateList($res, $lang) : $res;
+	}
+	
+	
+	public function getTagSiblings($tags, $text_id = false, $lang = false)
+	{
+		
+		$res = $this->getArticlesByTag($tags, $lang, true);
+	
+		foreach ($res as $r)
+		{
+			if ($text_id && $r['text_id'] != $text_id)
+			{
+				$new[count(array_intersect($tags, utils::csv_explode($r['tags'])))] = $r;
+			}
+		}
+		asort($new);
+	
+		return $new;
 	}
 	
 	

@@ -103,9 +103,32 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 		</tr>
 		
 		<tr>
+			<th>getArticlesTagSiblings()</th>
+			<td>(array|false) If context is article returns array of articles sharing the same tags with current article. The articles are listed in a relevance order.</td>
+			<td>
+				<code>{% raw %}{{ out.getArticlesTagSiblings() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   array(
+     'id' => integer,
+     'title' => string,
+     'text_id' => string,
+     'author' => string,
+     'summary' => string,
+     'section' => string,
+     'tags' => string,
+     'url' => string,
+     'full_url' => string
+   ),
+   array(...),
+   ...
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
 			<th>getArticleSiblings()</th>
-			<td>(array|false) If context is article returns array of article siblings (having same section)
-			<p>::Same as get('siblings'))</p></td>
+			<td>(array|false) If context is article returns array of article siblings (having same section)</td>
 			<td>
 				<code>{% raw %}{{ out.getArticleSiblings() }}{% endraw %}</code>
 			
@@ -129,9 +152,34 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 		
 		<tr>
 			<th>getArticlesByTag('tag1', 'tag2', ...)</th>
-			<td>(array|false) Returns list of articles tagged but tag. If multiple tags are requested AND statement is used</td>
+			<td>(array|false) Returns list of articles tagged by tag. If multiple tags are requested AND statement is used</td>
 			<td>
 				<code>{% raw %}{{ out.getArticlesByTag('news', 'latest') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   array(
+     'id' => integer,
+     'title' => string,
+     'text_id' => string,
+     'author' => string,
+     'summary' => string,
+     'section' => string,
+     'tags' => string,
+     'url' => string,
+     'full_url' => string
+   ),
+   array(...),
+   ...
+)</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>getArticlesBySectionAndTags('section', 'tag1', 'tag2', ...)</th>
+			<td>(array|false) Returns list of articles belonging to section and tagged by tags. If multiple tags are requested AND statement is used</td>
+			<td>
+				<code>{% raw %}{{ out.getArticlesBySectionAndTags('news', 'php', 'javascript') }}{% endraw %}</code>
 			
 				<pre class="prettyprint">array(
    array(

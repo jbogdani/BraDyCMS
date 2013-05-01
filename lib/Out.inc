@@ -13,6 +13,7 @@
  * 			section-name
  * 				...
  * 		siblings		array
+ * 		tag_siblings	array
  * 		page
  * 			title
  * 			description
@@ -127,7 +128,6 @@ class Out
 		return $this->data['article'][$article];
 	}
 	
-	
 	public function getArticlesBySection($section = false)
 	{
 		$section = $section ? $section : $this->get['section'];
@@ -151,6 +151,49 @@ class Out
 			$this->data['siblings'] = $this->article->getSiblings($this->get['art_title'], $this->lang);
 		}
 		return $this->data['siblings'];
+	}
+	
+	public function getArticlesTagSiblings()
+	{
+		if (!$this->get['art_title'])
+		{
+			return false;
+		}
+		if (!$this->data['tag_siblings'])
+		{
+			if (!$this->data['article'][$this->get['art_title']])
+			{
+				$this->getArticle();
+			}
+			$art_tags = utils::csv_explode($this->data['article'][$this->get['art_title']]['tags']);
+			
+			if (is_array($art_tags))
+			{
+				$this->data['tag_siblings'] = $this->article->getTagSiblings($art_tags, $this->get['art_title'], $this->lang);
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return $this->data['tag_siblings'];
+	}
+	
+	
+	public function getArticlesBySectionAndTags()
+	{
+		$args = func_get_args();
+		
+		$section = $args[0];
+		unset($args[0]);
+		$tags = $args;
+		
+		if (!is_array($tags))
+		{
+			return false;
+		}
+		
+		return $this->article->getArticlesBySectionAndTag($section, $tags, $this->lang);
 	}
 	
 	public function getArticlesByTag()
@@ -221,18 +264,36 @@ class Out
 				
 			foreach($not_structured_menu as $item)
 			{
-				if ($this->get['art_title'] AND preg_match('/art_title=' . $this->get['art_title'] . '/', $item['href']))
+				/**
+				 * Current is true if:
+				 * 	1. The menu points to the article I'm viewing
+				 * 	2. The menu point to the section blog I'm actually viewing
+				 * 	3. The menu point to a section blog and the current section name of the article I'm viewing is the same
+				 * 	4. The menu point to the home page and I'm actually on the home page
+				 */
+				
+				if ($this->get['art_title'] && preg_match('/art_title=' . $this->get['art_title'] . '/', $item['href']))
 				{
 					$item['current'] = true;
 				}
-				else if ($this->get['section'] AND preg_match('/section=' . $this->get['section'] . '/', $item['href']))
+				else if ($this->get['section'] && preg_match('/section=' . $this->get['section'] . '/', $item['href']))
 				{
 					$item['current'] = true;
 				}
+				else if ($this->context == 'article' && preg_match('/section=' . $this->getSectionName() . '/', $item['href']))
+				{
+					$item['current'] = true;
+				}
+				else if ($this->context == 'home' && $item['href'] == './')
+				{
+					$item['current'] = true;
+				}
+				/*
 				else if (!$this->get['search'] && !$this->get['art_title'] && !$this->get['section'] && $item['href'] == './')
 				{
 					$item['current'] = true;
 				}
+				*/
 	
 				if (empty($item['subof']))
 				{

@@ -65,15 +65,15 @@
 
 <div class="span6">
 	<h3>Link help</h3>
-	<div class="accordion" id="accordion2">
+	<div class="accordion" id="accordion2{{ uid }}">
 		
 		<div class="accordion-group">
 			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2{{ uid }}" href="#collapse2{{ uid }}">
 					{{ tr.get('articles') }}
 				</a>
 			</div>
-			<div id="collapse2" class="accordion-body collapse">
+			<div id="collapse2{{ uid }}" class="accordion-body collapse">
 				<div class="accordion-inner">
 					{% if arts %}
 					<table class="table table-striped table-hover list">
@@ -91,11 +91,11 @@
 		
 		<div class="accordion-group">
 			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse3">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2{{ uid }}" href="#collapse3{{ uid }}">
 				{{ tr.get('sections') }}
 				</a>
 			</div>
-			<div id="collapse3" class="accordion-body collapse">
+			<div id="collapse3{{ uid }}" class="accordion-body collapse">
 				<div class="accordion-inner">
 				{% if secs %}
 				<table class="table table-striped table-hover list">
@@ -113,11 +113,11 @@
 		
 		<div class="accordion-group">
 			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse1">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2{{ uid }}" href="#collapse1{{ uid }}">
 					{{ tr.get('other') }}
 				</a>
 			</div>
-			<div id="collapse1" class="accordion-body collapse">
+			<div id="collapse1{{ uid }}" class="accordion-body collapse">
 				<div class="accordion-inner">
 					<button class="btn home">{{ tr.get('link2home') }}</button>
 					<button class="btn none">{{ tr.get('link2none') }}</button>

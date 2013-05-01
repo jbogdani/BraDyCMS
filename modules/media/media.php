@@ -100,11 +100,8 @@ class media_ctrl extends Controller
 	
 	public function copy()
 	{
-		$dir = $this->request['param'][0];
-		$ofile = $this->request['param'][1];
-		$nfile = $this->request['param'][2];
-		
-		self::rename($dir, $ofile, $nfile, true);
+		$this->request['param'][3] = true;
+		self::rename();
 		
 	}
 	

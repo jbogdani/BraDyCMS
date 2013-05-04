@@ -364,6 +364,14 @@ class Out
 		
 				$html = str_replace($originalTag, $replace, $html);
 			}
+			else if (file_exists('sites/default/modules/' . $tag . '.inc'))
+			{
+				require_once 'sites/default/modules/' . $tag . '.inc';
+				
+				$replace = call_user_func(array($tag, 'init'), $formatedAttributes);
+				
+				$html = str_replace($originalTag, $replace, $html);
+			}
 		}
 			
 		return $html;

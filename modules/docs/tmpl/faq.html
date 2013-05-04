@@ -241,7 +241,6 @@
 				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/like/" target="_blank">https://developers.facebook.com/docs/reference/plugins/like/</a></p>
 			</dd>
 			
-			
 			<dt>How to add Facebook SEND widget in an article's body?</dt>
 			<dd>
 				<p>To add a Facebook send widget use this simple tag:</p>
@@ -249,7 +248,18 @@
 				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/send/" target="_blank">https://developers.facebook.com/docs/reference/plugins/send/</a></p>
 			</dd>
 			
-			
+			<dt>For DEVELOPERS: how to create custom modules?</dt>
+			<dd>
+				<p>BraDyCMS allows users to create custom modules that can be called and loaded directly form articles content.</p>
+				<p>Modules can contain PHP and/or HTML and/or JAVASCRIPT code and are simple to build just as creating PHP class with static functions</p>
+				<p>To create a module called <code>my_module</code> just create a PHP file in <code>./sites/default/modules</code> (if this folder does not exist it can be created by the user). The file must have the same name of the module followed bu the extension <code>.inc</code>, eg. <code>./sites/default/modules/my_module.inc</code>. This file must contain a PHP class having the same name as the module and the file itself, eg. <code>my_module</code>. The class can hame many methods, all the methods you need, but one method is mandatory, the public, static method <code>init</code>. The <code>init</code> method will be run automatically when the module is called.</p>
+				<p>Calling a user module from inside an articles is as simple as including in the content a simple tag with the name of the module, eg.:</p>
+				<pre>[[my_module param1="param1_value" param2="param2_value"]][[/my_module]]</pre>
+				
+				<p>You can add all the parameters you need to your module, adding attributes to your tags. These parameters will be available in the <code>init</code> method of your module class as an associative array. You can include any PHP code in your init method, call other methods of the same class or use system functions. You can include HTML, CSS and JAVASCRIPT.</p>
+				<p class="text-error"><strong>Warning:</strong> The init method shoud <strong>NEVER</strong> echo or print content. The HTML, CSS, JAVASCRIPT to include in the page should be returned!</p>
+				<p>You're done!</p>
+			</dd>
 			
 			
 		</dl>

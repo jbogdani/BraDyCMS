@@ -220,15 +220,26 @@ class galleries_ctrl extends Controller
 				}
 			}
 			
-			if (file_exists($this->get['param'][0] . '/data.json'))
+			$data_file[] = $this->get['param'][0] . '/data.json';
+			
+			foreach (cfg::get('languages') as $lng)
 			{
-				$json = json_decode(file_get_contents($this->get['param'][0] . '/data.json'), true);
-				
-				unset($json[str_replace('.', '__x__', $this->get['param'][1])]);
-				
-				if (!utils::write_in_file($this->get['param'][0] . '/data.json', $json, 'json'))
+				$data_file[] = $this->get['param'][0] . '/data_' . $lng['id']. '.json';
+			}
+			
+			
+			foreach ($data_file as $d_file)
+			{
+				if (file_exists($d_file))
 				{
-					$warning_json = true;
+					$json = json_decode(file_get_contents($d_file), true);
+				
+					unset($json[str_replace('.', '__x__', $this->get['param'][1])]);
+				
+					if (!utils::write_in_file($d_file, $json, 'json'))
+					{
+						$warning_json = true;
+					}
 				}
 			}
 			

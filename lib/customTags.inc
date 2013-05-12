@@ -29,12 +29,15 @@ class customTags
 			return tr::sget('gallery_does_not_exist', $gal);
 		}
 	
-		$data = @json_decode(file_get_contents(GALLERY_DIR . $gal  . '/data.json'), 1);
+		$captions = @json_decode(file_get_contents(GALLERY_DIR . $gal  . '/data.json'), 1);
 	
-		if (!is_array($data))
+		if (!is_array($captions))
 		{
 			return tr::sget('gallery_not_well_formatted', $gal);
 		}
+		
+		
+		krsort($captions);
 		
 		$html = '<div class="gallery-container">';
 		
@@ -48,7 +51,7 @@ class customTags
 			 */
 			$html .= '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . ( $rel ? 'data-rel="' . $rel . '"' : '') . '>';
 			
-			foreach ($data as $img => $dida)
+			foreach ($captions as $img => $dida)
 			{
 				$img = str_replace('__x__', '.', $img);
 			
@@ -63,7 +66,7 @@ class customTags
 		{
 			$html .= '<ul class="gallery ' . $gal . ($class ? ' ' . $class : '') . '">';
 			
-			foreach ($data as $img => $dida)
+			foreach ($captions as $img => $dida)
 			{
 				$img = str_replace('__x__', '.', $img);
 			

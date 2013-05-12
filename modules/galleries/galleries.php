@@ -14,6 +14,8 @@ class galleries_ctrl extends Controller
 	{
 		$all_galls = utils::dirContent($this->path);
 		
+		asort($all_galls);
+		
 		$this->render('galleries', 'listAllGalleries', array(
 				'tr' => new tr(),
 				'galleries' => $all_galls,
@@ -27,6 +29,8 @@ class galleries_ctrl extends Controller
 	public function edit()
 	{
 		$gal_content = utils::dirContent($this->path . $this->get['param'][0]);
+		
+		arsort($gal_content);
 		
 		if (is_dir($this->path . $this->get['param'][0] . '/thumbs'))
 		{

@@ -25,10 +25,15 @@ class galleries_ctrl extends Controller
 	
 	/**
 	 * Displays GUI for gallery editing
+	 * available parameters:
+	 * 	gallery_name (string)
+	 * 	lang (string|false)
 	 */
 	public function edit()
 	{
 		$gal_content = utils::dirContent($this->path . $this->get['param'][0]);
+		
+		$lang = $this->get['param'][1];
 		
 		arsort($gal_content);
 		
@@ -42,9 +47,21 @@ class galleries_ctrl extends Controller
 			$data = json_decode(file_get_contents($this->path . $this->get['param'][0] . '/data.json'), true);
 		}
 		
+		if ($lang)
+		{
+			$orig = $data;
+			
+			unset($data);
+			
+			if (file_exists($this->path . $this->get['param'][0] . '/data_' . $lang . '.json'))
+			{
+				$data = json_decode(file_get_contents($this->path . $this->get['param'][0] . '/data_' . $lang . '.json'), true);
+			}
+		}
+		
 		foreach ($gal_content as $file)
 		{
-			if ($file != 'thumbs' && $file != 'data.json')
+			if ($file != 'thumbs' && $file != 'data.json' && !preg_match('/\.json/', $file))
 			{
 				$files[] = array(
 						'name' => $file,
@@ -52,7 +69,8 @@ class galleries_ctrl extends Controller
 						'fullpath' => $this->path . $this->get['param'][0] . '/' . $file,
 						'thumb' => (file_exists($this->path . $this->get['param'][0] . '/thumbs/' . $file) ? $this->path . $this->get['param'][0] . '/thumbs/' . $file : ''),
 						'description' => $data[str_replace('.', '__x__', $file)],
-						'finfo' => getimagesize($this->path . $this->get['param'][0] . '/' . $file)
+						'finfo' => getimagesize($this->path . $this->get['param'][0] . '/' . $file),
+						'orig_descr' => ($orig ? $orig[str_replace('.', '__x__', $file)] : false)
 						); 
 			}
 		}
@@ -63,17 +81,22 @@ class galleries_ctrl extends Controller
 				'files'	=> $files,
 				'thumbs'=> $thumbs,
 				'uid'	=> uniqid('gals'),
-				'upload_dir'=> $this->path . $this->get['param'][0]
+				'upload_dir'=> $this->path . $this->get['param'][0],
+				'langs' => cfg::get('languages'),
+				'translation' => $lang
 				));
 		
 	}
 	
 	/**
 	 * Writes $post data in data.json file in $gallery folder
+	 * available parameters:
+	 * 	gallery_name (string)
+	 * 	lang (string|false)
 	 */
 	public function saveData()
 	{
-		$json_file = $this->get['param'][0] . '/data.json';
+		$json_file = $this->get['param'][0] . '/data' . ($this->get['param'][1] ? '_' . $this->get['param'][1] : '') . '.json';
 		
 		if (utils::write_in_file($json_file, $this->post, 'json'))
 		{

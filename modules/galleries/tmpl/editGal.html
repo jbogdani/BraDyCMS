@@ -1,6 +1,15 @@
 <div id="{{ uid }}">
 	<h2>{{ tr.get('edit_gallery') }}: {{ gallery }}</h2>
 	
+	<div class="btn-group" style="padding:20px 0;">
+		<a class="btn reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="icon-repeat"></i> {{ tr.get('reload') }}</a>
+		{% for lng in langs %}
+		<a class="btn" href="#galleries/edit/{{ gallery }}/{{ lng.id }}" title="{{ tr.get('translations') }}"><i class="icon-globe"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}</a>
+		{% endfor %}
+	</div>
+
+	
+	
 	
 	
 	<div class="row-fluid table">
@@ -22,6 +31,9 @@
 							</div>
 							
 							<div class="span3 td">
+								{% if file.orig_descr %}
+									<pre>{{ file.orig_descr }}</pre>
+								{% endif %}
 								<textarea data-file="{{ file.name }}" class="span12" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
 								<p><button class="btn btn-success save" data-file="{{ file.name }}"><i class="icon-white icon-ok"></i> {{ tr.get('save') }}</button></p>
 							</div>
@@ -70,7 +82,7 @@
 	});
 	
 	$('#{{ uid }} button.save').on('click', function(){
-		$.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ upload_dir }}', $('#{{ uid }} form').serializeArray(), function(data){
+		$.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ upload_dir }}{% if translation %}&param[]={{ translation }}{% endif %}', $('#{{ uid }} form').serializeArray(), function(data){
 			admin.message(data.text, data.status);
 		}, 'json');
 	});

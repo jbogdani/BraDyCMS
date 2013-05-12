@@ -335,7 +335,7 @@ class Out
 	}
 	
 	
-	private function parseContent($html)
+	public function parseContent($html)
 	{
 		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
 		
@@ -357,6 +357,8 @@ class Out
 			{
 				$formatedAttributes[$attribute[1]] = $attribute[2];
 			}
+			
+			$formatedAttributes['lang'] = $this->lang;
 			
 			if (method_exists('customTags', $tag))
 			{

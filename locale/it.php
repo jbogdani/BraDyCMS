@@ -75,7 +75,7 @@ $_lang = array(
 	'confirm_delete_menu_item' => 'Sei sicuro di vole cancellare questa voce di menu?',
 	'delete_menu_ok' => 'Voce di men cancellata',
 	'delete_menu_error' => 'Errore. La voce di menu id:%s non è stata cancellata.',
-	'update_menu_error' => 'Errore. La voce di menu id:%S non è stata aggiornata.',
+	'update_menu_error' => 'Errore. La voce di menu id:%s non è stata aggiornata.',
 	'save_menu_ok' => 'La voce di menu è stata aggiornata.',
 	'save_menu_error' => 'Errore. La voce di menu non è stata salvata.',
 	'select_menu' => 'Seleziona il menu',
@@ -143,6 +143,7 @@ $_lang = array(
 	'img_deleted_json_not_deleted' => "Attenzione. L'immagine è stata cancellata, ma non è stato possibile cancellare i dati",
 	'img_deleted_thumb_json_not_deleted' => "Attenzione. L'immagine è stata cancellata, ma non è stato possibile cancellare l'anteprima e i dati",
 	'img_thumb_data_deleted' => "L'immagine, l'anteprima e i dati sono stati cancellati",
+	'translation_in_lang' => "Traduci in %s",
 	
 	'error_check_log' => 'Errore. Qualcosa è andato storto! Consultare il log degli errori per maggiori dettagli.',
 	

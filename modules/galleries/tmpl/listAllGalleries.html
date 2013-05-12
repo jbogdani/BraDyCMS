@@ -1,17 +1,12 @@
 <div id="{{ uid }}">
 	<h2>{{ tr.get('galleries') }}</h2>
 	
-	<p>
-		<button class="btn btn-success" title="{{ tr.get('reload') }}" onclick="admin.tabs.reloadActive();"><i class="icon-white icon-repeat"></i></button>
-	</p>
-	<ul class="media-list" id="media-{{ uniqid }}">
+	<div class="btn-group" style="padding:20px 0;">
+		<a class="btn add_new" href="#" title="{{ tr.get('new_gallery') }}"><i class="icon-plus"></i> {{ tr.get('new_gallery') }}</a>
+		<a class="btn reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="icon-repeat"></i> {{ tr.get('reload') }}</a>
+	</div>
 	
-		<li class="pull-left img">
-			<a class="add_new" href="#">
-				<img class="media-object" src="./img/add_item.png" style="width:128px;" />
-				<div style="text-align:center;">{{ tr.get('new_gallery') }}</div>
-			</a>
-		</li>
+	<ul class="media-list" id="media-{{ uniqid }}">
 		
 	{% for gal in galleries %}
 		<li class="pull-left img">

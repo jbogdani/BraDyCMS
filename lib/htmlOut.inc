@@ -235,10 +235,11 @@ class htmlOut
 		{
 			if ($art_list['head']['title'] && $art_list['head']['text'])
 			{
-				$html .= '<article class="head">' 
-					. ( $art_list['head']['title'] ? '<h1>'  . $art_list['head']['title'] . '</h1>' : '')
-					. $art_list['head']['text'] 
-					. '</article>';
+				$html .= '<article class="head">' .
+					( $art_list['head']['title'] ? '<h1>'  . $art_list['head']['title'] . '</h1>' : '') .
+					
+					$this->out->parseContent($art_list['head']['text']) . 
+					'</article>';
 			}
 			
 		}

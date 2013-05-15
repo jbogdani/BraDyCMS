@@ -225,15 +225,14 @@ class utils
 	}
 	
 	
-	public static function upload($upload_dir)
+	public static function upload($upload_dir, $removeSpaces = false)
 	{
-		
 		$allowedExtensions = array();
 		
 		$sizeLimit = 8 * 1024 * 1024;
 		
 		$uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-		$result = $uploader->handleUpload($upload_dir . '/');
+		$result = $uploader->handleUpload($upload_dir . '/', false, $removeSpaces);
 		
 		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 	}

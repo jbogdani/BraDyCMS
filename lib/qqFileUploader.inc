@@ -110,8 +110,9 @@ class qqFileUploader {
 
 	/**
 	 * Returns array('success'=>true) or array('error'=>'error message')
+	 * ADDED BY JBOGDANI: $removeSpaces parameter
 	 */
-	function handleUpload($uploadDirectory, $replaceOldFile = FALSE){
+	function handleUpload($uploadDirectory, $replaceOldFile = FALSE, $remove_spaces = false){
 		if (!is_writable($uploadDirectory)){
 			return array('error' => "Server error. Upload directory isn't writable.");
 		}
@@ -131,7 +132,8 @@ class qqFileUploader {
 		}
 
 		$pathinfo = pathinfo($this->file->getName());
-		$filename = $pathinfo['filename'];
+		$filename = $remove_spaces ? str_replace(' ', '_', $pathinfo['filename']) : $pathinfo['filename'];
+		
 		//$filename = md5(uniqid());
 		$ext = $pathinfo['extension'];
 

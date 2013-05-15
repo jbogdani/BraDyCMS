@@ -62,7 +62,7 @@
 <script>
 	new qq.FileUploader({
 		element: $('#{{ uid }} div.uploader')[0],
-		action: 'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}',
+		action: 'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=removeSpaces',
 		sizeLimit: 0,
 		minSizeLimit: 0,
 		onComplete: function(){

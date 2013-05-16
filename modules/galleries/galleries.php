@@ -130,7 +130,8 @@ class galleries_ctrl extends Controller
 		//convert -resize 256x256 infile.jpg -background none -gravity center -extent 256x256 outfile.jpg
 		
 		$exec_path = cfg::get('paths');
-		$convert = $exec_path['convert'] . ' -resize ' . $thumbs_dimensions . '^ ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $path . '/' . $file . ' -background none -gravity center -extent ' . $thumbs_dimensions . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $thumb_path;
+		//$convert = $exec_path['convert'] . ' -resize ' . $thumbs_dimensions . '^ ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $path . '/' . $file . ' -background none -gravity center -extent ' . $thumbs_dimensions . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $thumb_path;
+		$convert = $exec_path['convert'] . ' -resize ' . $thumbs_dimensions . '^ /' . $path . '/' . $file . ' -background none -gravity center -extent ' . $thumbs_dimensions . ' /' . $thumb_path;
 		
 		@exec($convert);
 		

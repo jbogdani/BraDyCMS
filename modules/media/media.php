@@ -173,18 +173,6 @@ class media_ctrl extends Controller
 				{
 					throw new Exception(tr::get('delete_dir_error'));
 				}
-				
-				if(preg_match('/\//', $ofile))
-				{
-					$path_arr = explode('/', $ofile);
-				
-					if (is_array($path_arr))
-					{
-						array_pop($path_arr);
-							
-						$out['new_path'] = implode('/', $path_arr);
-					}
-				}
 			}
 			else if ( is_file ( $ofile ) )
 			{

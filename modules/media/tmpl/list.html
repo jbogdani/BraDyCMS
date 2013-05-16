@@ -124,7 +124,7 @@
 	
 	
 	$('.deleteFolder').click(function(){
-		admin.media.deleteDir('{{ path }}');
+		admin.media.deleteDir('{{ rel_path }}');
 	});
 	
 	$('#input_{{ uniqid }}').on('keyup', function(){

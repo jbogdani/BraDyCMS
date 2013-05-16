@@ -204,7 +204,7 @@ var admin = {
 			$.get('controller.php?obj=media_ctrl&method=delete&param[]=' + path, function(data){
 				admin.message(data.text, data.status);
 				if(data.status == 'success'){
-					admin.tabs.closeActive('media/all' + (data.new_path ? '/' + data.new_path : ''));
+					admin.media.go2dir(data.new_path);
 				}
 			}, 'json');
 		},

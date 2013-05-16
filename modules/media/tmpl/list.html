@@ -31,7 +31,7 @@
 </ul>
 
 
-<div id="file-uploader"></div>
+<div id="file-uploader_{{ uniqid }}"></div>
 
 {% if path and files|length ==0 %}
 <p style="text-align: center">
@@ -76,7 +76,7 @@
 
 <script>
 	new qq.FileUploader({
-		element: $('#file-uploader')[0],
+		element: $('#file-uploader_{{ uniqid }}')[0],
 		action: 'controller.php?obj=utils&method=upload&param[]={{ path }}',
 		sizeLimit: 0,
 		minSizeLimit: 0,

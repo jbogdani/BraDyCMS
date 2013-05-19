@@ -23,8 +23,6 @@ class OAI_ctrl extends Controller
 		require_once LIB_DIR . 'OAIprovider/endpoint.php';
 		require_once MOD_DIR . 'OAI/myRepository.php';
 		
-		date_default_timezone_set('Europe/Rome');
-		
-		\oaiprovider\handleRequest($this->get, new myRepository($config, new DB()), false, 'xsl/oai2.xsl');
+		\oaiprovider\handleRequest($this->get, new myRepository($config, new DB()), null, 'xsl/oai2.xsl');
 	}
 }

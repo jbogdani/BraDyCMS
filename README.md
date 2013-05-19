@@ -10,3 +10,22 @@
 * Multilanguage content
 * Customizable layout, both Desktop and Mobile
 * Image slideshows, galleries and videos
+
+
+## Websites already using BraDyCMS
+
+* [bradypus.net](http://bradypus.net)
+* [belightproject.com](http://belightproject.com)
+* [belightproject.com](http://belightproject.com) 
+* [e-review.it](http://e-review.it)
+* [fabriziolapalombara.com](http://fabriziolapalombara.com)
+* [costruzioniartigiane.it](http://costruzioniartigiane.it)
+* [iraq.routes-assn.org](http://iraq.routes-assn.org)
+* [iraq.routes-assn.org](http://iraq.routes-assn.org)
+* [pastandpresent.al](http://pastandpresent.al)
+
+### Comming soon
+* [artemusa.it]
+* ghazni-project
+* [http://cliffyoungltd.com](http://cliffyoungltd.com)
+* [www.santamariainportuno.it](http://www.santamariainportuno.it)

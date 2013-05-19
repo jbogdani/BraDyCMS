@@ -1,0 +1,3 @@
+[submodule "lib/OAIprovider"]
+	path = lib/OAIprovider
+	url = https://github.com/martijnvogten/oaiprovider-php.git

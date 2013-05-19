@@ -19,18 +19,12 @@ class OAI_ctrl extends Controller
 		
 		$config = json_decode(file_get_contents('./sites/default/oai/config.json'), true);
 		
-		//namespace example;
-		
-//		use oaiprovider\xml\NS;
 		
 		require_once LIB_DIR . 'OAIprovider/endpoint.php';
-		require_once LIB_DIR . 'OAIprovider/example/DB.php';
-		require_once LIB_DIR . 'OAIprovider/example/myRepository.php';
+		require_once MOD_DIR . 'OAI/myRepository.php';
 		
 		date_default_timezone_set('Europe/Rome');
 		
-		$info = json_decode(file_get_contents('./sites/default/oai/config.json'), true);
-		
-		\oaiprovider\handleRequest($this->get, new myRepository($info, new DB()));
+		\oaiprovider\handleRequest($this->get, new myRepository($config, new DB()), false, 'xsl/oai2.xsl');
 	}
 }

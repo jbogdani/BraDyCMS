@@ -1,0 +1,94 @@
+[19-May-2013 08:50:33 UTC] PHP Warning:  require_once(./lib/OAIprovider/example/DB.php): failed to open stream: No such file or directory in /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php on line 27
+[19-May-2013 08:50:33 UTC] PHP Stack trace:
+[19-May-2013 08:50:33 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:50:33 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:50:33 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:50:33 UTC] PHP Fatal error:  require_once(): Failed opening required './lib/OAIprovider/example/DB.php' (include_path='.:/usr/local/share/pear') in /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php on line 27
+[19-May-2013 08:50:33 UTC] PHP Stack trace:
+[19-May-2013 08:50:33 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:50:33 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:50:33 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:52:30 UTC] PHP Warning:  Illegal string offset 'id' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 131
+[19-May-2013 08:52:30 UTC] PHP Stack trace:
+[19-May-2013 08:52:30 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:52:30 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:52:30 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:52:30 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:52:30 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:38
+[19-May-2013 08:52:30 UTC] PHP Warning:  Illegal string offset 'updated' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 133
+[19-May-2013 08:52:30 UTC] PHP Stack trace:
+[19-May-2013 08:52:30 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:52:30 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:52:30 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:52:30 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:52:30 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:38
+[19-May-2013 08:52:30 UTC] PHP Warning:  Illegal string offset 'category' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 135
+[19-May-2013 08:52:30 UTC] PHP Stack trace:
+[19-May-2013 08:52:30 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:52:30 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:52:30 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:52:30 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:52:30 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:38
+[19-May-2013 08:52:30 UTC] PHP Warning:  Illegal string offset 'status' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 140
+[19-May-2013 08:52:30 UTC] PHP Stack trace:
+[19-May-2013 08:52:30 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:52:30 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:52:30 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:52:30 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:52:31 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:38
+[19-May-2013 08:53:44 UTC] PHP Warning:  Illegal string offset 'id' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 131
+[19-May-2013 08:53:44 UTC] PHP Stack trace:
+[19-May-2013 08:53:44 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:53:44 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:53:44 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:53:44 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:53:44 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:39
+[19-May-2013 08:53:44 UTC] PHP Warning:  Illegal string offset 'updated' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 133
+[19-May-2013 08:53:44 UTC] PHP Stack trace:
+[19-May-2013 08:53:44 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:53:44 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:53:44 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:53:44 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:53:44 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:39
+[19-May-2013 08:53:44 UTC] PHP Warning:  Illegal string offset 'category' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 135
+[19-May-2013 08:53:44 UTC] PHP Stack trace:
+[19-May-2013 08:53:44 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:53:44 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:53:44 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:53:44 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:53:44 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:39
+[19-May-2013 08:53:44 UTC] PHP Warning:  Illegal string offset 'status' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 140
+[19-May-2013 08:53:44 UTC] PHP Stack trace:
+[19-May-2013 08:53:44 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:53:44 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:53:44 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:53:44 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:53:44 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:39
+[19-May-2013 08:54:53 UTC] PHP Warning:  Illegal string offset 'id' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 131
+[19-May-2013 08:54:53 UTC] PHP Stack trace:
+[19-May-2013 08:54:53 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:54:53 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:54:53 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:54:53 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:54:53 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:39
+[19-May-2013 08:54:53 UTC] PHP Warning:  Illegal string offset 'updated' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 133
+[19-May-2013 08:54:53 UTC] PHP Stack trace:
+[19-May-2013 08:54:53 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:54:53 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:54:53 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:54:53 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:54:53 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:39
+[19-May-2013 08:54:53 UTC] PHP Warning:  Illegal string offset 'category' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 135
+[19-May-2013 08:54:53 UTC] PHP Stack trace:
+[19-May-2013 08:54:53 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:54:53 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:54:53 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:54:53 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:54:53 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:39
+[19-May-2013 08:54:53 UTC] PHP Warning:  Illegal string offset 'status' in /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/example/myRepository.php on line 140
+[19-May-2013 08:54:53 UTC] PHP Stack trace:
+[19-May-2013 08:54:53 UTC] PHP   1. {main}() /Users/jbogdani/www/git.bdusCMS/controller.php:0
+[19-May-2013 08:54:53 UTC] PHP   2. Controller->route() /Users/jbogdani/www/git.bdusCMS/controller.php:16
+[19-May-2013 08:54:53 UTC] PHP   3. OAI_ctrl->run() /Users/jbogdani/www/git.bdusCMS/lib/Controller.inc:45
+[19-May-2013 08:54:53 UTC] PHP   4. oaiprovider\handleRequest() /Users/jbogdani/www/git.bdusCMS/modules/OAI/OAI.php:34
+[19-May-2013 08:54:53 UTC] PHP   5. myRepository->getHeader() /Users/jbogdani/www/git.bdusCMS/lib/OAIprovider/endpoint.php:39

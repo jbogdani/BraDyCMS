@@ -118,7 +118,7 @@ class galleries_ctrl extends Controller
 		$path = $this->get['param'][0];
 		$file = $this->get['param'][1];
 		
-		$thumbs_dimensions = '200x200';
+		$thumbs_dimensions = cfg::get('thumbs_dimensions') ? cfg::get('thumbs_dimensions') : '200x200';
 		
 		if (!is_dir($path . '/thumbs'))
 		{
@@ -127,21 +127,14 @@ class galleries_ctrl extends Controller
 		
 		$thumb_path = $path . '/thumbs/' . $file;
 		
-		//convert -resize 256x256 infile.jpg -background none -gravity center -extent 256x256 outfile.jpg
-		
-		$exec_path = cfg::get('paths');
-		//$convert = $exec_path['convert'] . ' -resize ' . $thumbs_dimensions . '^ ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $path . '/' . $file . ' -background none -gravity center -extent ' . $thumbs_dimensions . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $thumb_path;
-		$convert = $exec_path['convert'] . ' -resize ' . $thumbs_dimensions . '^ /' . $path . '/' . $file . ' -background none -gravity center -extent ' . $thumbs_dimensions . ' /' . $thumb_path;
-		
-		@exec($convert);
-		
-		if (file_exists($thumb_path))
-		{
+		try{
+			imgMng::thumb($path . '/' . $file, $thumb_path, $thumbs_dimensions);
+			
 			$msg['text'] = tr::get('thumbnail_created');
 			$msg['status'] = 'success';
 			$msg['thumb'] = $thumb_path;
 		}
-		else
+		catch (Exception $e)
 		{
 			$msg['text'] = tr::get('thumbnail_not_created');
 			$msg['status'] = 'error';

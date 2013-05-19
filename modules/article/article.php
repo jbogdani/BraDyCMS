@@ -43,6 +43,19 @@ class article_ctrl
 			$art = $article->getArticle($id, false, false, true);
 		}
 		
+		// check if art_img files exist
+		$art_img = cfg::get('art_img');
+		if (is_array($art_img))
+		{
+			foreach($art_img as $dimension)
+			{
+				if (file_exists(IMG_DIR . 'articles/' . $dimension . '/' . $id . '.jpg'))
+				{
+					$article_images[$dimension] = IMG_DIR . 'articles/' . $dimension . '/' . $id . '.jpg';
+				}
+			}
+		}
+		
 		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'article/tmpl'), unserialize(CACHE));
 		echo $twig->render('form.html', array(
 				'art'=>$art,
@@ -51,7 +64,9 @@ class article_ctrl
 				'uid' => uniqid('id'),
 				'imploded_tags' => '"' . implode('","', $article->getTags()) . '"',
 				'sections' => $article->getSections(),
-				'tr' => new tr
+				'tr' => new tr,
+				'art_imgs' => $article_images,
+				'tmp_path' => TMP_DIR
 		));
 	}
 	
@@ -71,6 +86,14 @@ class article_ctrl
 			if (!$article->delete( $id ))
 			{
 				throw new Exception(tr::sget('delete_article_error', $id));
+			}
+			try
+			{
+				self::delete_art_img($id, true);
+			}
+			catch(Exception $e)
+			{
+				
 			}
 			$out['type'] = 'success';
 			$out['text'] = tr::get('delete_article_ok');
@@ -119,5 +142,123 @@ class article_ctrl
 			$out['text'] = $e->getMessage();
 		}
 		echo json_encode($out);
+	}
+	
+	public static function delete_art_img($id, $return = false)
+	{
+		try
+		{
+			$dimensions = cfg::get('art_img');
+			
+			// check if cfg::art_img is available
+			if (!is_array($dimensions))
+			{
+				throw new Exception(tr::get('cfg_art_img_missing'));
+			}
+			foreach($dimensions as $dim)
+			{
+				$file = IMG_DIR . 'articles/' . $dim . '/' . $id . '.jpg';
+				
+				if (file_exists($file))
+				{
+					@unlink($file);
+					
+					if (file_exists($file))
+					{
+						$error[] = $file;
+					}
+					else
+					{
+						$ok = $file;
+					}
+				}
+			}
+		}
+		catch(Exception $e)
+		{
+			if ($return)
+			{
+				throw new Exception($e);
+			}
+			else
+			{
+				$msg['status'] = 'error';
+				$msg['text'] = $e->getMessage();
+			}
+		}
+		
+		if ($return)
+		{
+			return array('ok'=> $ok, 'error' => $error);
+		}
+		else
+		{
+			if (count($error) > 0 && count($ok) > 0)
+			{
+				$msg['status'] = 'error';
+				$msg['text'] = tr::sget('art_img_partially_deleted', implode(', ', $error));
+			}
+			else if (count($error) > 0 && count($ok) == 0)
+			{
+				$msg['status'] = 'error';
+				$msg['text'] = tr::get('art_img_not_deleted');
+			}
+			else if (count($error) == 0 && count($ok) > 0)
+			{
+				$msg['status'] = 'success';
+				$msg['text'] = tr::get('art_img_deleted');
+			}
+		}
+		
+		echo json_encode($msg);
+	}
+	
+	
+	public static function attachImage($id, $file)
+	{
+		try{
+			$dimensions = cfg::get('art_img');
+			
+			// check if cfg::art_img is available
+			if (!is_array($dimensions))
+			{
+				throw new Exception(tr::get('cfg_art_img_missing'));
+			}
+			
+			// loop in dimensions
+			foreach($dimensions as $dim)
+			{
+				$dir = IMG_DIR . 'articles/' . $dim;
+				if(!is_dir($dir))
+				{
+					@mkdir($dir, 0777, true);
+				}
+				
+				if(!is_dir($dir))
+				{
+					throw new Exception(tr::sget('create_dir_error', $dir));
+				}
+				
+				if(!is_writable($dir))
+				{
+					throw new Exception(tr::sget('dir_is_not_writable', $dir));
+				}
+				
+				
+				//make thumbnails in jpg format
+				$output = $dir . '/' . $id . '.jpg';
+				
+				imgMng::thumb(TMP_DIR . $file, $output, $dim);
+			}
+			
+			$msg['status'] = 'success';
+			$msg['text'] = tr::get('art_images_created');
+		}
+		catch (Exception $e)
+		{
+			$msg['status'] = 'error';
+			$msg['text'] = $e->getMessage();
+		}
+		echo json_encode($msg);
 	}
 }

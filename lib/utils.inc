@@ -232,10 +232,12 @@ class utils
 		$sizeLimit = 8 * 1024 * 1024;
 		
 		$uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+		
 		$result = $uploader->handleUpload($upload_dir . '/', false, $removeSpaces);
 		
 		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 	}
+	
 	
 	public static function csv_explode($string, $delimiter = ',') {
 	
@@ -457,5 +459,6 @@ class utils
 		}
 		return array_filter($arr);
 	}
+	
 	
 }

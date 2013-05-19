@@ -291,8 +291,9 @@ $(function () {
     	theme_advanced_statusbar_location : 'bottom',
     	
     	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
-    	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,preview,|,forecolor,backcolor",
-    	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,|,ltr,rtl,|,fullscreen,|,attribs",
+    	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,",
+    	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup",
+    	theme_advanced_buttons4 : "charmap,iespell,media,|,ltr,rtl,|,fullscreen,|,attribs,|,link,unlink,anchor,image,cleanup,code,|,preview,|,forecolor,backcolor",
     	
     	forced_root_block: '',
     	force_p_newlines: true

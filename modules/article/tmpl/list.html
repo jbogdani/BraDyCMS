@@ -30,7 +30,7 @@
 			<td>{{ art.section }}</td>
 			<td>{{ art.sort }}</td>
 			<td><a href="#article/edit/{{ art.id }}" class="btn btn-primary">{{ tr.get('edit') }}</a></td>
-			<td><a href="#" class="btn btn-danger delete" data-id="{{ art.id }}">{{ tr.get('delete') }}</a></td>
+			<td><a href="#" class="btn btn-danger delete_article" data-id="{{ art.id }}">{{ tr.get('delete') }}</a></td>
 		</tr>
 		{% endfor %}
 	</tbody>
@@ -38,18 +38,12 @@
 </table>
 
 <script>
-$('table.data_table').dataTable({
-	"iDisplayLength": 10,
-	"sPaginationType": "bootstrap",
-	"bDestroy": true
-});
-
 $('a.reload').click(function(){
 	admin.tabs.reloadActive();
 	return false;
 });
 
-$('a.delete').click(function(){
+$('a.delete_article').click(function(){
 	var $this = $(this);
 	admin.dialog({
 		title: '{{ tr.get('pay_attention_please') }}',
@@ -76,5 +70,12 @@ $('a.delete').click(function(){
 		         ]
 	});
 });
+
+$('table.data_table').dataTable({
+	"iDisplayLength": 10,
+	"sPaginationType": "bootstrap",
+	"bDestroy": true
+});
+
 </script>
 

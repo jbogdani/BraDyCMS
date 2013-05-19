@@ -224,67 +224,10 @@ class media_ctrl extends Controller
 	
 	private function process_convert($ofile, $nfile, $type = false, $details = false)
 	{
-		$type = $type ? $type : 'convert';
-		if (!$nfile)
-		{
-			$nfile = TMP_DIR . uniqid('file');
-			$overwriteOriginal = true;
-		}
-		
-		
-		if (!$nfile)
-		{
-			$nfile = TMP_DIR . uniqid('file');
-			$overwriteOriginal = true;
-		}
-		
 		try
 		{
-			if (file_exists($nfile))
-			{
-				throw new Exception(tr::sget('file_exists', $nfile));
-			}
-			
-			$exec_path = cfg::get('paths');
-			
-			switch($type)
-			{
-				case 'convert':
-					$convert = $exec_path['convert'] . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $ofile . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $nfile;
-					$ok = 'ok_converting_file';
-					$error = 'error_converting_file';
-					break;
-					
-				case 'crop':
-					$convert = $exec_path['convert'] . " -crop '" . $details . "' " . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/' . $ofile . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $nfile;
-					$ok = 'ok_cropping_file';
-					$error = 'error_cropping_file';
-					break;
-						
-				case 'resize':
-					$convert = $exec_path['convert'] . " -resize '" . $details . "'  " . $_SERVER['DOCUMENT_ROOT'] . '/' . $ofile . ' ' .$_SERVER['DOCUMENT_ROOT'] . '/' . $nfile;
-					$ok = 'ok_resizing_file';
-					$error = 'error_resizing_file';
-					break;
-					
-				default:
-					return;
-					break;
-			}
-			
-			@exec($convert, $a, $b);
-			
-			if (file_exists(!$nfile))
-			{
-				error_log($convert . ': ' . var_export($a, 1));
-				throw new Exception(tr::get($error));
-			}
-			
-			if ($overwriteOriginal)
-			{
-				@rename($nfile, $ofile);
-			}
-			
+			$ok = imgMng::process_convert($ofile, $nfile, $type, $details);
+		
 			$out['status'] = 'success';
 			$out['text'] = tr::get($ok);
 		}

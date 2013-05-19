@@ -197,4 +197,14 @@ class customTags
 				($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
 				' ></div>';
 	}
+	
+	public static function addThis($data)
+	{
+		return '<!-- AddThis Button BEGIN -->' .
+				'<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-4d8b051f4951c18f">' .
+					( $data['content'] ? $data['content'] : '<img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/>') .
+				'</a>' .
+				'<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d8b051f4951c18f"></script>' .
+			'<!-- AddThis Button END -->';
+	}
 }

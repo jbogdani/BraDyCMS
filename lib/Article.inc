@@ -222,7 +222,7 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link('./?art_title=' . $art['text_id'], $lang);
+				$art['link'] = link::to_article($art['text_id'], $lang);
 			}
 		}
 		
@@ -256,7 +256,7 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link( './?art_title=' . $art['text_id'], $lang);
+				$art['link'] = link::to_article($art['text_id'], $lang);
 			}
 		}
 		
@@ -297,7 +297,7 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link( './?art_title=' . $art['text_id'], $lang);
+				$art['link'] = link::to_article($art['text_id'], $lang);
 			}
 		}
 		
@@ -341,7 +341,7 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link( 'art_title=' . $art['text_id'], $lang);
+				$art['link'] = link::to_article($art['text_id'], $lang);
 			}
 		}
 		
@@ -365,7 +365,7 @@ class Article
 		{
 			foreach($res as &$art)
 			{
-				$art['link'] = utils::format_link( './?art_title=' . $art['text_id'], $lang);
+				$art['link'] = link::to_article($art['text_id'], $lang);
 			}
 		}
 		
@@ -380,7 +380,7 @@ class Article
 		{
 			foreach ($art_list as &$art)
 			{
-				$art['url'] = utils::format_link('art_title=' . $art['text_id'], $lang);
+				$art['url'] = link::to_article($art['text_id'], $lang);
 				$art['full_url'] = 'http://' . $_SERVER['HTTP_HOST'] . '/' . str_replace('./', null, $art['url']);
 			}
 		}

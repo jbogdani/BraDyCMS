@@ -58,6 +58,11 @@ class Out
 		//Set get
 		$this->get = $get;
 		
+		if ($this->get['tags'])
+		{
+			$this->get['tags'] = utils::csv_explode($this->get['tags'], '-');
+		}
+		
 		if ($lang AND ( $lang != $this->cfg['sys_lang'] ) )
 		{
 			$this->lang = $lang;
@@ -87,6 +92,11 @@ class Out
 		{
 			$this->context = 'home';
 		}
+	}
+	
+	public function sectionHasTags()
+	{
+		return ($this->get['tags'] && $this->context == 'section');
 	}
 	
 	public function getContext()
@@ -184,9 +194,19 @@ class Out
 	{
 		$args = func_get_args();
 		
-		$section = $args[0];
-		unset($args[0]);
-		$tags = $args;
+		if (is_array($args) && !empty($args))
+		{
+			$section = $args[0];
+		
+			unset($args[0]);
+		
+			$tags = $args;
+		}
+		else
+		{
+			$section = $this->get['section'];
+			$tags = $this->get['tags'];
+		}
 		
 		if (!is_array($tags))
 		{
@@ -259,6 +279,13 @@ class Out
 		if (!$this->data['menu'][$menu])
 		{
 			$menu = new Menu();
+			$tmp = $menu->get_structured_menu($menu_name, $this->lang);
+			
+			
+			//var_dump($tmp); return;
+			$this->data['menu'][$menu_name] = $this->recursiveRichMenu($tmp);
+			
+			return $this->data['menu'][$menu_name];
 			
 			$not_structured_menu = $menu->get_all_items_of_menu($menu_name, $this->lang);
 				
@@ -313,6 +340,36 @@ class Out
 			}
 		}
 		return $this->data['menu'][$menu_name];
+	}
+	
+	
+	private function recursiveRichMenu($menu)
+	{
+		foreach ($menu as $item)
+		{
+			if ($this->get['art_title'] && preg_match('/art_title=' . $this->get['art_title'] . '/', $item['href']))
+			{
+				$item['current'] = true;
+			}
+			else if ($this->get['section'] && preg_match('/section=' . $this->get['section'] . '/', $item['href']))
+			{
+				$item['current'] = true;
+			}
+			else if ($this->context == 'article' && preg_match('/section=' . $this->getSectionName() . '/', $item['href']))
+			{
+				$item['current'] = true;
+			}
+			else if ($this->context == 'home' && $item['href'] == './')
+			{
+				$item['current'] = true;
+			}
+			
+			if (is_array($item['sub']))
+			{
+				$item['sub'] = $this->recursiveRichMenu($item['sub']);
+			}
+		}
+		return $menu;
 	}
 	
 	public function getLanguages()
@@ -383,5 +440,28 @@ class Out
 	public function gallery($data)
 	{
 		return customTags::gallery($data);
+	}
+	
+	public function ct($method, $param = false)
+	{
+		if ($param)
+		{
+			$param = json_decode($param, true);
+		}
+		if (method_exists('customTags', $method))
+		{
+			$html = call_user_func(array('customTags', $method), $param);
+		
+		}
+		else if (file_exists('sites/default/modules/' . $param . '.inc'))
+		{
+			require_once 'sites/default/modules/' . $param . '.inc';
+		
+			$html = call_user_func(array($method, 'init'), $param);
+		
+		}
+		
+		return $html;
+		 
 	}
 }

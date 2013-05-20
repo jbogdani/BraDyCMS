@@ -147,28 +147,36 @@ class Menu
 	{
 		$not_structured_menu = $this->get_all_items_of_menu($menu_name, $lang);
 		
-		$structured = array();
+		$structured = $not_structured_menu;
 		
-		foreach($not_structured_menu as $item)
+		foreach($not_structured_menu as $key => $item)
 		{
-			if (empty($item['subof']))
+			if (!empty($item['subof']))
 			{
-				if (is_array($structured[$item['id']]))
-				{
-					$structured[$item['id']] = array_merge($structured[$item['id']], $item);
-				}
-				else
-				{
-					$structured[$item['id']] = $item;
-				}
-			}
-			else
-			{
-				$structured[$item['subof']]['sub'][] = $item;
+				unset($structured[$key]);
+				
+				$structured = $this->recursiveStr($structured, $item);
 			}
 		}
 		
 		return $structured;
+	}
+	
+	private function recursiveStr($array, $item)
+	{
+		foreach($array as $k=>&$v)
+		{
+			if ($v['id'] == $item['subof'])
+			{
+				$v['sub'][] = $item;
+				break;
+			}
+			if (is_array($v['sub']))
+			{
+				$v['sub'] = $this->recursiveStr($v['sub'], $item);
+			}
+		}
+		return $array;
 	}
 	
 	private function translate($menu_arr, $lang)

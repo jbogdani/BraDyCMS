@@ -79,7 +79,9 @@ class htmlOut
 			return false;
 		}
 		
+		
 		$html = '<ul class="' . ( $menu ? 'menu ' . $class . ' ' . $menu : 'submenu dropdown-menu' ) . '">';
+		
 		foreach ($menu_arr as $menu)
 		{
 			if ($menu['item'] == '.' && $menu['href'] == '.')
@@ -89,7 +91,7 @@ class htmlOut
 			else
 			{
 				$html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . ($menu['current'] ? 'active' : '') . '">'
-						. '<a href="' . utils::format_link($menu['href'], $this->out->session_lang) . '" ' 
+						. '<a href="' . link::format($menu['href'], $this->out->session_lang) . '" ' 
 								. ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
 								. ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')
 								. ($menu['sub'] ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')
@@ -109,7 +111,6 @@ class htmlOut
 		
 		return $html;
 	}
-	
 	
 	public function langMenu($flags = false, $no_text = false)
 	{
@@ -218,10 +219,17 @@ class htmlOut
 		return $html;
 	}
 	
-	public function sectionBlog($section = false)
+	public function sectionBlog($section = false, $tags = false)
 	{
 		
-		$art_list = $this->out->getArticlesBySection($section);
+		if (is_array($this->out->get['tags']))
+		{
+			$this->art_list = $this->out->getArticlesBySectionAndTags($section, $tags);
+		}
+		else 
+		{
+			$art_list = $this->out->getArticlesBySection($section);
+		}
 		
 		$html = '';
 		

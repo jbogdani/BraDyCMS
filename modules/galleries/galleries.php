@@ -151,7 +151,7 @@ class galleries_ctrl extends Controller
 	{
 		try{
 			
-			$gal = strtolower(str_replace(array(' ', '-', "'", '"'), '_', $this->get['param'][0]));
+			$gal = strtolower(str_replace(array(' ', "'", '"'), '_', $this->get['param'][0]));
 			
 			$gal_name = $this->path . $gal;
 			

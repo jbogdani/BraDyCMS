@@ -10,7 +10,8 @@
 * Multilanguage content
 * Customizable layout, both Desktop and Mobile
 * Image slideshows, galleries and videos
-
+* Easy integration social network
+* Fully customizable OAI-PMH interface for metadata exposing
 
 ## Websites already using BraDyCMS
 

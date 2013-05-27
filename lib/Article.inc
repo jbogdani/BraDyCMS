@@ -21,7 +21,7 @@ class Article
 	
 	private function previewFlds()
 	{
-		return '`id`, `title`, `text_id`, `author`, `summary`, `section`, `tags`';
+		return '`id`, `title`, `sort`, `text_id`, `author`, `summary`, `section`, `tags`';
 	}
 	
 	/**
@@ -147,7 +147,7 @@ class Article
 	 */
 	public function getAll($lang = false)
 	{
-		$query = "SELECT * FROM `" . PREFIX . "__articles` WHERE 1 ORDER BY `section`, `sort`";
+		$query = "SELECT * FROM `" . PREFIX . "__articles` WHERE 1 ORDER BY `section` ASC, `sort` DESC";
 		
 		$res = $this->db->executeQuery($query, false, 'read');
 		
@@ -161,7 +161,7 @@ class Article
 	 */
 	public function getAllValid($lang = false)
 	{
-		$query = "SELECT * FROM `" . PREFIX . "__articles` WHERE " . $this->valid_art_stat() . " ORDER BY `section`, `sort`";
+		$query = "SELECT * FROM `" . PREFIX . "__articles` WHERE " . $this->valid_art_stat() . " ORDER BY `section` ASC, `sort` DESC";
 	
 		$res = $this->db->executeQuery($query, false, 'read');
 	
@@ -214,7 +214,7 @@ class Article
 			. ' FROM `' . PREFIX . '__articles` '
 			. " WHERE `section` = '" . $section . "' "
 			. ' AND ' . $this->valid_art_stat()
-			. ' ORDER BY `sort`';
+			. ' ORDER BY `sort` DESC';
 	
 		$res = $this->db->executeQuery($query, false, 'read');
 		
@@ -248,7 +248,7 @@ class Article
 			" WHERE `section` = '" . $section . "' " .
 			' AND (' . implode(' AND ', $part) . ')' .
 			' AND ' . $this->valid_art_stat() .
-			' ORDER BY `sort`';
+			' ORDER BY `sort` DESC';
 		
 		$res = $this->db->executeQuery($query, false, 'read');
 		
@@ -289,7 +289,7 @@ class Article
 				. " WHERE "
 				. ' (' . implode(' ' . ($lax ? 'OR' : 'AND') . ' ', $part) . ')'
 				. ' AND ' . $this->valid_art_stat()
-				. ' ORDER BY `sort`';
+				. ' ORDER BY `sort` DESC';
 		
 		$res = $this->db->executeQuery($query, false, 'read');
 		
@@ -327,13 +327,12 @@ class Article
 	
 	public function getSiblings($text_id, $lang = false)
 	{
-		
 		$query = 'SELECT ' . $this->previewFlds()
 			. ' FROM `' . PREFIX . '__articles` WHERE '
 			. " `section` = (SELECT `section` FROM `" . PREFIX . "__articles` WHERE `text_id` = '" . $text_id . "')"
 			. " AND `text_id` != '" . $text_id . "'"
 			. ' AND ' . $this->valid_art_stat()
-			. ' ORDER BY `sort`';
+			. ' ORDER BY `sort` DESC';
 		
 		$res = $this->db->executeQuery($query, false, 'read');
 		

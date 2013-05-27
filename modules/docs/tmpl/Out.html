@@ -20,16 +20,6 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 	<tbody>
 	
 		<tr>
-			<th>getContext()</th>
-			<td>(string) Returns context of usage: article, section, search or home</td>
-			<td>
-				<code>{% raw %}{{ out.getContext() }}{% endraw %}</code>
-			
-				<pre class="prettyprint">section</pre>
-			</td>
-		</tr>
-		
-		<tr>
 			<th>getArticle(article-text-id)</th>
 			<td>(string|array) Returns element of article array data. If article-text-id is missing and context is article, current article array will be returned.</td>
 			<td>
@@ -58,6 +48,32 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 		</tr>
 		
 		<tr>
+			<th>getArticlesByTag('tag1', 'tag2', ...)</th>
+			<td>(array|false) Returns list of articles tagged by tag. If multiple tags are requested AND statement is used</td>
+			<td>
+				<code>{% raw %}{{ out.getArticlesByTag('news', 'latest') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   array(
+     'id' => integer,
+     'title' => string,
+     'text_id' => string,
+     'sort' => integer,
+     'author' => string,
+     'summary' => string,
+     'section' => string,
+     'tags' => string,
+     'url' => string,
+     'full_url' => string
+   ),
+   array(...),
+   ...
+)</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
 			<th>getArticlesBySection('section_name')</th>
 			<td>(array|false) Returns list of articles of section `section_name` as array of `list` array index. If an article with text id 'section_name' exists it will be returned as content of the `head` array index</td>
 			<td>
@@ -69,6 +85,7 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 	     'id' => integer,
 	     'title' => string,
 	     'text_id' => string,
+	     'sort' => integer,
 	     'author' => string,
 	     'summary' => string,
 	     'section' => string,
@@ -103,6 +120,31 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 		</tr>
 		
 		<tr>
+			<th>getArticlesBySectionAndTags('section', 'tag1', 'tag2', ...)</th>
+			<td>(array|false) Returns list of articles belonging to section and tagged by tags. If multiple tags are requested AND statement is used</td>
+			<td>
+				<code>{% raw %}{{ out.getArticlesBySectionAndTags('news', 'php', 'javascript') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">array(
+   array(
+     'id' => integer,
+     'title' => string,
+     'text_id' => string,
+     'sort' => integer,
+     'author' => string,
+     'summary' => string,
+     'section' => string,
+     'tags' => string,
+     'url' => string,
+     'full_url' => string
+   ),
+   array(...),
+   ...
+)</pre>
+			</td>
+		</tr>
+		
+		<tr>
 			<th>getArticlesTagSiblings()</th>
 			<td>(array|false) If context is article returns array of articles sharing the same tags with current article. The articles are listed in a relevance order.</td>
 			<td>
@@ -113,6 +155,7 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
      'id' => integer,
      'title' => string,
      'text_id' => string,
+     'sort' => integer,
      'author' => string,
      'summary' => string,
      'section' => string,
@@ -137,6 +180,7 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
      'id' => integer,
      'title' => string,
      'text_id' => string,
+     'sort' => integer,
      'author' => string,
      'summary' => string,
      'section' => string,
@@ -151,72 +195,39 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 		</tr>
 		
 		<tr>
-			<th>getArticlesByTag('tag1', 'tag2', ...)</th>
-			<td>(array|false) Returns list of articles tagged by tag. If multiple tags are requested AND statement is used</td>
+			<th>getContext()</th>
+			<td>(string) Returns context of usage: article, section, search or home</td>
 			<td>
-				<code>{% raw %}{{ out.getArticlesByTag('news', 'latest') }}{% endraw %}</code>
+				<code>{% raw %}{{ out.getContext() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">section</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>getLanguages()</th>
+			<td>
+				(array) Returns array of available languages<br />
+				<ul>
+					<li>code</li>
+					<li>string</li>
+					<li>is_current</li>
+					<li>href</li>
+				</ul>
+			</td>
+			<td>
+				<code>{% raw %}{{ out.getLanguages() }}{% endraw %}</code>
 			
 				<pre class="prettyprint">array(
    array(
-     'id' => integer,
-     'title' => string,
-     'text_id' => string,
-     'author' => string,
-     'summary' => string,
-     'section' => string,
-     'tags' => string,
-     'url' => string,
-     'full_url' => string
+     'code'=>'it',
+     'string'=>'Italiano',
+     'is_current'=>true,
+     'href'=>'http://bradypus.net/it'
    ),
-   array(...),
-   ...
+   array(...)
 )</pre>
-			</td>
-		</tr>
-		
-		
-		<tr>
-			<th>getArticlesBySectionAndTags('section', 'tag1', 'tag2', ...)</th>
-			<td>(array|false) Returns list of articles belonging to section and tagged by tags. If multiple tags are requested AND statement is used</td>
-			<td>
-				<code>{% raw %}{{ out.getArticlesBySectionAndTags('news', 'php', 'javascript') }}{% endraw %}</code>
-			
-				<pre class="prettyprint">array(
-   array(
-     'id' => integer,
-     'title' => string,
-     'text_id' => string,
-     'author' => string,
-     'summary' => string,
-     'section' => string,
-     'tags' => string,
-     'url' => string,
-     'full_url' => string
-   ),
-   array(...),
-   ...
-)</pre>
-			</td>
-		</tr>
-		
-		<tr>
-			<th>getPageData(el)</th>
-			<td>(array|string) Returns document metadata array (all metadata) or string (single metadata). Available documenta metadata are
-			<ul>
-				<li>title</li>
-				<li>description</li>
-				<li>keywords</li>
-				<li>lang</li>
-				<li>url</li>
-				<li>image (may be false. It's the src of the first image of article's content)</li>
-				<li>author (may be false. It's article's author)</li>
-				<li>date (may be false. It's article's publish_on date)</li>
-				<li>publisher (may be false. It's OAI config publisher parameter)</li>
-			</ul></td>
-			<td>
-				<code>{% raw %}{{ out.getPageData('title') }}{% endraw %}</code>
-			
-				<pre class="prettyprint">Home Page</pre>
 			</td>
 		</tr>
 		
@@ -267,28 +278,23 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 		</tr>
 		
 		<tr>
-			<th>getLanguages()</th>
+			<th>getPageData(el)</th>
+			<td>(array|string) Returns document metadata array (all metadata) or string (single metadata). Available documenta metadata are
+			<ul>
+				<li>title</li>
+				<li>description</li>
+				<li>keywords</li>
+				<li>lang</li>
+				<li>url</li>
+				<li>image (may be false. It's the src of the first image of article's content)</li>
+				<li>author (may be false. It's article's author)</li>
+				<li>date (may be false. It's article's publish_on date)</li>
+				<li>publisher (may be false. It's OAI config publisher parameter)</li>
+			</ul></td>
 			<td>
-				(array) Returns array of available languages<br />
-				<ul>
-					<li>code</li>
-					<li>string</li>
-					<li>is_current</li>
-					<li>href</li>
-				</ul>
-			</td>
-			<td>
-				<code>{% raw %}{{ out.getLanguages() }}{% endraw %}</code>
+				<code>{% raw %}{{ out.getPageData('title') }}{% endraw %}</code>
 			
-				<pre class="prettyprint">array(
-   array(
-     'code'=>'it',
-     'string'=>'Italiano',
-     'is_current'=>true,
-     'href'=>'http://bradypus.net/it'
-   ),
-   array(...)
-)</pre>
+				<pre class="prettyprint">Home Page</pre>
 			</td>
 		</tr>
 		
@@ -303,6 +309,7 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
      'id' => integer,
      'title' => string,
      'text_id' => string,
+     'sort' => integer,
      'author' => string,
      'summary' => string,
      'section' => string,
@@ -334,6 +341,26 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 				<code>{% raw %}{{ out.getSectionName }}{% endraw %}</code>
 			
 				<pre class="prettyprint">about_us</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>link2(article)</th>
+			<td>(string) Returns relative link string article (<code>article</code> is articles textual ID) or to site homepage (if <code>article</code> is home), depending on current url</td>
+			<td>
+				<code>{% raw %}{{ out.link2('home') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">./</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>sectionHasTags()</th>
+			<td>(boolean) Returns true if context is section and some filtering by tags is active, otherwise returns false.</td>
+			<td>
+				<code>{% raw %}{{ out.sectionHasTags }}{% endraw %}</code>
 			</td>
 		</tr>
 		

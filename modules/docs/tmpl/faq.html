@@ -257,11 +257,23 @@
 			
 			<dt>How to add AddThis sharing button?</dt>
 			<dd>
-				<p>To add a Facebook send widget use this simple tag:</p>
+				<p>To add a AddThis share widget use this simple tag:</p>
 				<pre>[[addThis]]some_html_or_text[[/addThis]]</pre>
 				<p>Where<br />
 					<code>some_html_or_text</code> is the html or text that will be shown in your page. If not provided the default AddThis image will be shown: <img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/>
 				</p>
+			</dd>
+			
+			<dt>How to add Skype button?</dt>
+			<dd>
+				<p>To add a Skype call, chat or both widget use this simple tag:</p>
+				<pre>[[skype type="call" imageSize="32"]]skype_username[[/skype]]</pre>
+				<p>Where<br />
+					<code>skype_username</code> is the skype username of the person you want to be contacted. This value is required<br />
+					<code>type</code> is the action you want skype to perform. This can be "call", "chat" or "dropbox". Dropbox includes both chat and call actions. This value is optional; if missing the default value of "call" will be used.<br />
+					<code>imageSize</code> is the size in pixel of the skype image that will be shown. The following sizes are allowed: "10", "12", "14", "16", "24, "32"; if missing the default value "32" will be used<br /> 
+				</p>
+				<p><code>Attention!</code> You'll need to update your Skype setting to allow incoming calls or messages from people who are not on your contact list.</p>
 			</dd>
 			
 			<dt>For DEVELOPERS: how to create custom modules?</dt>

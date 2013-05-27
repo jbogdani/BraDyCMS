@@ -14,6 +14,143 @@
 		</tr>
 	</thead>
 	<tbody>
+	
+	
+		<tr>
+			<th>articleBody()</th>
+			<td></td>
+			<td>(string) Returns well-formatted html of article content.
+			<p>This function will return false if context is not article!</p></td>
+			<td>
+				<code>{% raw %}{{ html.articleBody() }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;section&#62;
+&#60;article&#62;
+  &#60;h1&#62;Web design&#60;/h1&#62;
+  &#60;div class="content"&#62;
+    Some of our latest work on web design...
+  &#60;/div&#62;
+&#60;/article&#62;
+&#60;/section&#62;
+</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>ct(method, json_object_params)</th>
+			<td>(string) Returns html prodiced by custom tag or user module.</td>
+			<td>
+				<code>{% raw %}{{ html.ct('addThis', '{"content": "share"}') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-4d8b051f4951c18f"&#62;share&#60;/a&#62;
+&#60;script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d8b051f4951c18f"&#62;&#60;/script&#62;</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>GA(id, restrict_domain)</th>
+			<td><strong>id</strong>, (string, default false) Google Analytics ID. If false the site configuration setting will be used<br />
+				<strong>restrict_domain</strong>, (string, default false) Domain resctriction policy. If false the site configuration setting will be used</td>
+			<td>(string) Returns javascript code for Google Analytics Tracking.
+			<p>If id or restriced domain are not provided, the configuration options will be used.</p>
+			<p>If restricted domain is provided (as argument or in configuration file) the GA will be shown only if domain matches.</p>
+			</td>
+			<td>
+				<code>{% raw %}{{ html.GA }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;script&#62;
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'GA-ID']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+&#60;/script&#62;
+</pre>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>gallery(name, single_gallery, class)</th>
+			<td><strong>name</strong>, (string) textual id of the gallery to show<br />
+				<strong>single_gallery</strong>, (boolean, default false) if true all images will be part of the same gallery<br />
+				<strong>class</strong>, (string, default false) css class to add to main unordered list (ul)</td>
+			<td>(string) Returns HTML code with gallery data.</td>
+			<td>
+				<code>{% raw %}{{ html.gallery('news', true, 'latest') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;div class="gallery-container"&#62;
+  &#60;ul class="gallery news latest"&#62;
+    &#60;li&#62;
+      &#60;a href="./sites/default/images/galleries/news/01.jpg" class="fancybox" title="Figure 01 caption" rel="news" &#62;
+        &#60;img src="./sites/default/images/galleries/news/thumbs/01.jpg" alt="Figure 01 caption" /&#62;
+      &#60;/a&#62;
+      &#60;div class="caption"&#62;Figure 01 caption&#60;/div&#62;
+    &#60;/li&#62;
+
+    &#60;li&#62;... &#60;/li&#62;
+  
+    ...
+  &#60;/ul&#62;
+&#60;/div&#62;
+</pre>
+			</td>
+		</tr>
+		
+		
+		
+		<tr>
+			<th>langMenu('flags', 'no_text')</th>
+			<td><strong>flags</strong>, (boolean, default false) if true image flags will be shown<br />
+				<strong>no_text</strong>, (boolean, default false) if true no language text will be shown</td>
+			<td>(string) Returns well-formatted html of language menu
+			<p>Current language's list item (li) has class <em>current</em></p></td>
+			<td>
+				<code>{% raw %}{{ html.langMenu(true) }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;ul class="menu lang"&#62;
+  &#60;li class="current"&#62;
+  	&#60;a href="/it" data-ajax="false"&#62;$360;img src="./img/flags/it.png"  alt="italiano" /&#62; Italiano&#60;/a&#62;
+  &#60;/li&#62;
+  &#60;li&#62;
+  	&#60;a href="/en" data-ajax="false"&#62;$360;img src="./img/flags/en.png"  alt="english" /&#62; English&#60;/a&#62;
+  &#60;/li&#62;
+  &#60;li&#62;
+  	&#60;a href="/fr" data-ajax="false"&#62;$360;img src="./img/flags/fr.png"  alt="français" /&#62; Français&#60;/a&#62;
+  &#60;/li&#62;
+</pre>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>menu('menuname', 'css_class_name')</th>
+			<td><strong>menuname</strong>, (string) textual id of the menu to show<br />
+				<strong>css_class_name</strong>, (string|false, default false) css class, or space-separated css classes of the menu's unordered list (ul)</td>
+			<td>(string) Returns well-formatted html of menu items</td>
+			<td>
+				<code>{% raw %}{{ html.menu('main', 'nav') }}{% endraw %}</code>
+			
+				<pre class="prettyprint">&#60;ul class="menu nav"&#62;
+  &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Home&#60;/a&#62;&#60;/li&#62;
+  &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Who we are&#60;/a&#62;&#60;/li&#62;
+  &#60;li class="menu-item dropdown"&#62;
+     &#60;a href="#" class="dropdown-toggle" data-toggle="dropdown"&#62;Portfolio&#60;/a&#62; &#60;b class="caret"&#62;&#60;/b&#62;
+   &#60;ul class="submenu dropdown-menu"&#62;
+    &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Web&#60;/a&#62;&#60;/li&#62;
+    &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Print&#60;/a&#62;&#60;/li&#62;
+  &#60;/ul&#62;
+  &#60;/li&#62;
+  &#60;li class="menu-item"&#62;&#60;a href="#" target="_blank"&#62;@Twitter&#60;/a&#62;&#60;/li&#62;
+ &#60;/ul&#62;</pre>
+			</td>
+		</tr>
+		
+		
 		<tr>
 			<th>metadata(no_og)</th>
 			<td><strong>no_og</strong>: (boolean) if no_og parameters is true (default is false) the open graph metadata will not be shown</td>
@@ -60,52 +197,6 @@
 &#60;meta name="DC.publisher" content="John Doe publishing" /&#60;
 &#60;meta name="DC.subject" scheme="RFC3066" content="home, page, keyword1, keyword2" /&#60;
 &#60;meta name="DC.date" scheme="W3CDTF" content="2013-04-17" /&#60;
-</pre>
-			</td>
-		</tr>
-		
-		<tr>
-			<th>menu('menuname', 'css_class_name')</th>
-			<td><strong>menuname</strong>, (string) textual id of the menu to show<br />
-				<strong>css_class_name</strong>, (string|false, default false) css class, or space-separated css classes of the menu's unordered list (ul)</td>
-			<td>(string) Returns well-formatted html of menu items</td>
-			<td>
-				<code>{% raw %}{{ html.menu('main', 'nav') }}{% endraw %}</code>
-			
-				<pre class="prettyprint">&#60;ul class="menu nav"&#62;
-  &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Home&#60;/a&#62;&#60;/li&#62;
-  &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Who we are&#60;/a&#62;&#60;/li&#62;
-  &#60;li class="menu-item dropdown"&#62;
-     &#60;a href="#" class="dropdown-toggle" data-toggle="dropdown"&#62;Portfolio&#60;/a&#62; &#60;b class="caret"&#62;&#60;/b&#62;
-   &#60;ul class="submenu dropdown-menu"&#62;
-    &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Web&#60;/a&#62;&#60;/li&#62;
-    &#60;li class="menu-item"&#62;&#60;a href="#"&#62;Print&#60;/a&#62;&#60;/li&#62;
-  &#60;/ul&#62;
-  &#60;/li&#62;
-  &#60;li class="menu-item"&#62;&#60;a href="#" target="_blank"&#62;@Twitter&#60;/a&#62;&#60;/li&#62;
- &#60;/ul&#62;</pre>
-			</td>
-		</tr>
-		
-		<tr>
-			<th>langMenu('flags', 'no_text')</th>
-			<td><strong>flags</strong>, (boolean, default false) if true image flags will be shown<br />
-				<strong>no_text</strong>, (boolean, default false) if true no language text will be shown</td>
-			<td>(string) Returns well-formatted html of language menu
-			<p>Current language's list item (li) has class <em>current</em></p></td>
-			<td>
-				<code>{% raw %}{{ html.langMenu(true) }}{% endraw %}</code>
-			
-				<pre class="prettyprint">&#60;ul class="menu lang"&#62;
-  &#60;li class="current"&#62;
-  	&#60;a href="/it" data-ajax="false"&#62;$360;img src="./img/flags/it.png"  alt="italiano" /&#62; Italiano&#60;/a&#62;
-  &#60;/li&#62;
-  &#60;li&#62;
-  	&#60;a href="/en" data-ajax="false"&#62;$360;img src="./img/flags/en.png"  alt="english" /&#62; English&#60;/a&#62;
-  &#60;/li&#62;
-  &#60;li&#62;
-  	&#60;a href="/fr" data-ajax="false"&#62;$360;img src="./img/flags/fr.png"  alt="français" /&#62; Français&#60;/a&#62;
-  &#60;/li&#62;
 </pre>
 			</td>
 		</tr>
@@ -158,27 +249,6 @@
 </pre>
 			</td>
 		</tr>
-		
-		<tr>
-			<th>articleBody()</th>
-			<td></td>
-			<td>(string) Returns well-formatted html of article content.
-			<p>This function will return false if context is not article!</p></td>
-			<td>
-				<code>{% raw %}{{ html.articleBody() }}{% endraw %}</code>
-			
-				<pre class="prettyprint">&#60;section&#62;
-&#60;article&#62;
-  &#60;h1&#62;Web design&#60;/h1&#62;
-  &#60;div class="content"&#62;
-    Some of our latest work on web design...
-  &#60;/div&#62;
-&#60;/article&#62;
-&#60;/section&#62;
-</pre>
-			</td>
-		</tr>
-		
 		
 		<tr>
 			<th>tagBlog(tag1, tag2, ...)</th>
@@ -274,57 +344,7 @@
 			</td>
 		</tr>
 		
-		<tr>
-			<th>GA(id, restrict_domain)</th>
-			<td><strong>id</strong>, (string, default false) Google Analytics ID. If false the site configuration setting will be used<br />
-				<strong>restrict_domain</strong>, (string, default false) Domain resctriction policy. If false the site configuration setting will be used</td>
-			<td>(string) Returns javascript code for Google Analytics Tracking.
-			<p>If id or restriced domain are not provided, the configuration options will be used.</p>
-			<p>If restricted domain is provided (as argument or in configuration file) the GA will be shown only if domain matches.</p>
-			</td>
-			<td>
-				<code>{% raw %}{{ html.GA }}{% endraw %}</code>
-			
-				<pre class="prettyprint">&#60;script&#62;
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'GA-ID']);
-  _gaq.push(['_trackPageview']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-&#60;/script&#62;
-</pre>
-			</td>
-		</tr>
 		
-		<tr>
-			<th>gallery(name, single_gallery, class)</th>
-			<td><strong>name</strong>, (string) textual id of the gallery to show<br />
-				<strong>single_gallery</strong>, (boolean, default false) if true all images will be part of the same gallery<br />
-				<strong>class</strong>, (string, default false) css class to add to main unordered list (ul)</td>
-			<td>(string) Returns HTML code with gallery data.</td>
-			<td>
-				<code>{% raw %}{{ html.gallery('news', true, 'latest') }}{% endraw %}</code>
-			
-				<pre class="prettyprint">&#60;div class="gallery-container"&#62;
-  &#60;ul class="gallery news latest"&#62;
-    &#60;li&#62;
-      &#60;a href="./sites/default/images/galleries/news/01.jpg" class="fancybox" title="Figure 01 caption" rel="news" &#62;
-        &#60;img src="./sites/default/images/galleries/news/thumbs/01.jpg" alt="Figure 01 caption" /&#62;
-      &#60;/a&#62;
-      &#60;div class="caption"&#62;Figure 01 caption&#60;/div&#62;
-    &#60;/li&#62;
-
-    &#60;li&#62;... &#60;/li&#62;
-  
-    ...
-  &#60;/ul&#62;
-&#60;/div&#62;
-</pre>
-			</td>
-		</tr>
 		
 	</tbody>
 </table>

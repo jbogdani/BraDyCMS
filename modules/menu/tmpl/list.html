@@ -52,7 +52,7 @@ ol.sortable li i.icon{
 		handle: '.icon',
 		helper: 'clone',
 		items: 'li',
-		maxLevels: 3,
+		maxLevels: 4,
 		update: function(event, ui){
 			$.post('controller.php?obj=menu_ctrl&method=nestSort', $(this).nestedSortable('serialize'), function(data){
 				if(data){

@@ -80,7 +80,7 @@ class myRepository implements Repository
 		
 		if ($set)
 		{
-			$where[] = "category = :category";
+			$where[] = $this->info['table']['category'] . " = :category";
 			$values[':category'] = $set;
 		}
 		
@@ -176,7 +176,11 @@ class myRepository implements Repository
 				$dcrec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				
 				$dcrec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['text_id']);
-				$dcrec->addNS(NS::DC, 'identifier', $row[$this->info['table']['id']]);
+				
+				$dcrec->addNS(NS::DC, 'identifier', $this->info['doi_prefix'] . '/' . $this->info['journal_suffix'] . '.' . $row[$this->info['table']['id']]);
+				
+				$dcrec->addNS(NS::DC, 'identifier', $this->info['issn']);
+				
 				return $dcrec->toXml();
 			case 'ese':
 				$eserec = new EuropeanaRecord();
@@ -190,7 +194,10 @@ class myRepository implements Repository
 				$eserec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				
 				$eserec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['text_id']);
-				$eserec->addNS(NS::DC, 'identifier', $row[$this->info['table']['id']]);
+				$eserec->addNS(NS::DC, 'identifier', $this->info['doi_prefix'] . '/' . $row[$this->info['table']['id']]);
+				$eserec->addNS(NS::DC, 'identifier', $this->info['doi_prefix'] . '/' . $this->info['journal_suffix'] . '.' . $row[$this->info['table']['id']]);
+				$eserec->addNS(NS::DC, 'identifier', $this->info['issn']);
+				
 				return $eserec->toXml();
 		}
 	}

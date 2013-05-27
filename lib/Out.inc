@@ -94,10 +94,16 @@ class Out
 		}
 	}
 	
+	public function 	($art)
+	{
+		return link::to_article($art == 'home' ? './' : $art, $this->lang);
+	}
+	
 	public function sectionHasTags()
 	{
 		return ($this->get['tags'] && $this->context == 'section');
 	}
+	
 	
 	public function getContext()
 	{
@@ -251,7 +257,12 @@ class Out
 			
 			$this->data['page']['url']  = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			
-			if ($this->data['article'][$this->get['art_title']]['text'])
+			$art_img_paths = cfg::get('art_img');
+			if (file_exists('./sites/default/images/articles/' . $art_img_paths[0] . '.jpg'))
+			{
+				$this->data['page']['image'] = './sites/default/images/articles/' . $art_img_paths[0] . '.jpg';
+			}
+			else if ($this->data['article'][$this->get['art_title']]['text'])
 			{
 				$xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->get['art_title']]['text']));
 				$src = $xpath->evaluate("string(//img/@src)");
@@ -281,8 +292,6 @@ class Out
 			$menu = new Menu();
 			$tmp = $menu->get_structured_menu($menu_name, $this->lang);
 			
-			
-			//var_dump($tmp); return;
 			$this->data['menu'][$menu_name] = $this->recursiveRichMenu($tmp);
 			
 			return $this->data['menu'][$menu_name];
@@ -430,9 +439,21 @@ class Out
 				$replace = call_user_func(array($tag, 'init'), $formatedAttributes);
 				
 				$html = str_replace($originalTag, $replace, $html);
+				
+				$pending[] = $tag;
 			}
 		}
-			
+		
+		if (is_array($pending) && !empty($pending))
+		{
+			foreach ($pending as $obj)
+			{
+				if (method_exists($obj, 'end'))
+				{
+					$html .= call_user_func(array($obj, 'end'));
+				}
+			}
+		}
 		return $html;
 	}
 	
@@ -440,28 +461,5 @@ class Out
 	public function gallery($data)
 	{
 		return customTags::gallery($data);
-	}
-	
-	public function ct($method, $param = false)
-	{
-		if ($param)
-		{
-			$param = json_decode($param, true);
-		}
-		if (method_exists('customTags', $method))
-		{
-			$html = call_user_func(array('customTags', $method), $param);
-		
-		}
-		else if (file_exists('sites/default/modules/' . $param . '.inc'))
-		{
-			require_once 'sites/default/modules/' . $param . '.inc';
-		
-			$html = call_user_func(array($method, 'init'), $param);
-		
-		}
-		
-		return $html;
-		 
 	}
 }

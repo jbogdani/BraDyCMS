@@ -222,7 +222,7 @@ class htmlOut
 	public function sectionBlog($section = false, $tags = false)
 	{
 		
-		if (is_array($this->out->get['tags']))
+		if (is_array($this->out->sectionHasTags))
 		{
 			$this->art_list = $this->out->getArticlesBySectionAndTags($section, $tags);
 		}
@@ -340,7 +340,30 @@ class htmlOut
 			return;
 		}
 		
-		echo $this->out->gallery(array('content' => $gal, 'rel'=>$rel, 'class' => $class));
+		echo customTags::gallery(array('content' => $gal, 'rel'=>$rel, 'class' => $class));
+	}
+	
+	public function ct($method, $param = false)
+	{
+		if ($param)
+		{
+			$param = json_decode($param, true);
+		}
+		if (method_exists('customTags', $method))
+		{
+			$html = call_user_func(array('customTags', $method), $param);
+	
+		}
+		else if (file_exists('sites/default/modules/' . $param . '.inc'))
+		{
+			require_once 'sites/default/modules/' . $param . '.inc';
+	
+			$html = call_user_func(array($method, 'init'), $param);
+	
+		}
+	
+		return $html;
+			
 	}
 		
 }

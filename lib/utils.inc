@@ -300,14 +300,7 @@ class utils
 			}
 			else
 			{
-				if (cfg::get('friendly_url'))
-				{
-					$langThis['href'] = $langThis['code'] . $_SERVER['REQUEST_URI'];
-				}
-				else
-				{
-					$langThis['href'] = $_SERVER['REQUEST_URI'] . '?lang=' . $langThis['code'];
-				}
+				$langThis['href'] = $langThis['code'] . $_SERVER['REQUEST_URI'];
 			}
 		}
 				

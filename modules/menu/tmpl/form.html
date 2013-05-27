@@ -135,11 +135,11 @@
 <script>
 	(function(){
 		$('td.art').click(function(){
-			$('#menu_edit{{ uid }} input[name="href"]').val('art_title=' + $(this).text());
+			$('#menu_edit{{ uid }} input[name="href"]').val('' + $(this).text());
 		});
 		
 		$('button.home').click(function(){
-			$('#menu_edit{{ uid }} input[name="href"]').val('./');
+			$('#menu_edit{{ uid }} input[name="href"]').val('');
 		});
 		
 		$('button.none').click(function(){
@@ -147,7 +147,7 @@
 		});
 
 		$('td.sec').click(function(){
-			$('#menu_edit{{ uid }} input[name="href"]').val('section=' + $(this).text());
+			$('#menu_edit{{ uid }} input[name="href"]').val($(this).text() + '.all');
 		});
 		
 		$('table.list').dataTable({

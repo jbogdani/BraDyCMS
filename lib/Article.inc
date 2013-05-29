@@ -218,14 +218,6 @@ class Article
 	
 		$res = $this->db->executeQuery($query, false, 'read');
 		
-		if (is_array($res))
-		{
-			foreach($res as &$art)
-			{
-				$art['link'] = link::to_article($art['text_id'], $lang);
-			}
-		}
-		
 		$head = $this->getArticle(false, $section, $lang);
 		
 		$list = $lang ? $this->translateList($res, $lang) : $res;
@@ -251,14 +243,6 @@ class Article
 			' ORDER BY `sort` DESC';
 		
 		$res = $this->db->executeQuery($query, false, 'read');
-		
-		if (is_array($res))
-		{
-			foreach($res as &$art)
-			{
-				$art['link'] = link::to_article($art['text_id'], $lang);
-			}
-		}
 		
 		$res = $this->addHref2List($res, $lang);
 		
@@ -292,14 +276,6 @@ class Article
 				. ' ORDER BY `sort` DESC';
 		
 		$res = $this->db->executeQuery($query, false, 'read');
-		
-		if (is_array($res))
-		{
-			foreach($res as &$art)
-			{
-				$art['link'] = link::to_article($art['text_id'], $lang);
-			}
-		}
 		
 		$res = $this->addHref2List($res, $lang);
 		
@@ -336,14 +312,6 @@ class Article
 		
 		$res = $this->db->executeQuery($query, false, 'read');
 		
-		if (is_array($res))
-		{
-			foreach($res as &$art)
-			{
-				$art['link'] = link::to_article($art['text_id'], $lang);
-			}
-		}
-		
 		$res = $this->addHref2List($res, $lang);
 		
 		return $lang ? $this->translateList($res, $lang) : $res;
@@ -359,14 +327,6 @@ class Article
 				. " OR	`tags`		LIKE '%" . $string . "%'";
 		
 		$res = $this->db->executeQuery($statement, false, 'read');
-		
-		if (is_array($res))
-		{
-			foreach($res as &$art)
-			{
-				$art['link'] = link::to_article($art['text_id'], $lang);
-			}
-		}
 		
 		$res = $this->addHref2List($res, $lang);
 		

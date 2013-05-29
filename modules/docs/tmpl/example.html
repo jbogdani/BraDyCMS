@@ -65,7 +65,7 @@
               &#60;div class="item{% if loop.index == 1%} active{% endif %}"&#62;
                 &#60;img src="sites/default/images/articles/carousel/{{ art.id }}.jpg" /&#62;
                 &#60;div class="carousel-caption"&#62;
-                  &#60;h4&#62;&#60;a href="{{ art.link }}" title="{{ art.title }}"&#62;{{ art.title }}&#60;/a&#62;&#60;/h4&#62;
+                  &#60;h4&#62;&#60;a href="{{ art.url }}" title="{{ art.title }}"&#62;{{ art.title }}&#60;/a&#62;&#60;/h4&#62;
                   {{ art.summary }}
                 &#60;/div&#62;
               &#60;/div&#62;
@@ -82,7 +82,7 @@
             {% for art in out.getArticlesByTag('evidence') %}
               &#60;div class="media-body"&#62;
                 &#60;img src="./sites/default/images/articles/thumb/{{ art.text_id }}.jpg" alt="{{ art.title }}" class="thumbnail pull-left" /&#62;
-                &#60;h4&#62;&#60;a href="{{ art.link }}"&#62;{{ art.title }}&#60;/a&#62;&#60;/h4&#62;
+                &#60;h4&#62;&#60;a href="{{ art.url }}"&#62;{{ art.title }}&#60;/a&#62;&#60;/h4&#62;
                 {{ art.summary }}
               &#60;/div&#62;
               &#60;hr /&#62;
@@ -96,7 +96,7 @@
             &#60;p&#62;&#60;strong&#62;{{ art.section|capitalize }}&#60;/strong&#62;&#60;/p&#62;
             &#60;img src=".sites/default/images/articles/small/{{ art.text_id }}.jpg" alt="{{ art.title }}" /&#62;
             &#60;div class="caption"&#62;
-              &#60;a href="{{ art.link }}"&#62;{{ art.summary }}&#60;/a&#62;
+              &#60;a href="{{ art.url }}"&#62;{{ art.summary }}&#60;/a&#62;
             &#60;/div&#62;
           &#60;/div&#62;
           {% endfor %}

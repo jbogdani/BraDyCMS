@@ -94,7 +94,7 @@ class Out
 		}
 	}
 	
-	public function 	($art)
+	public function link2($art)
 	{
 		return link::to_article($art == 'home' ? './' : $art, $this->lang);
 	}

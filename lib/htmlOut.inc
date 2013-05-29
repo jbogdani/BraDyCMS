@@ -162,10 +162,10 @@ class htmlOut
 			foreach ( $art_list as $art )
 			{
 				$html .= '<article>'
-						. ($art['title'] ? ' <h1><a href="' . $art['link']  . '">' . $art['title'] . '</a></h1>' : '')
+						. ($art['title'] ? ' <h1><a href="' . $art['url']  . '">' . $art['title'] . '</a></h1>' : '')
 						. '<div class="content">' . $art['summary'] . '</div>'
 						. '<div class="read_more">'
-							. '<a href="' . $art['link']  . '">' . tr::get('read_more') . '</a>'
+							. '<a href="' . $art['url']  . '">' . tr::get('read_more') . '</a>'
 						. '</div>'
 					. '</article>';
 			}
@@ -206,10 +206,10 @@ class htmlOut
 			foreach ( $art_list as $art )
 			{
 				$html .= '<article>'
-						. ($art['title'] ? ' <h3><a href="' . $art['link']  . '">' . $art['title'] . '</a></h3>' : '')
+						. ($art['title'] ? ' <h3><a href="' . $art['url']  . '">' . $art['title'] . '</a></h3>' : '')
 						. '<div class="content">' . $art['summary'] . '</div>'
 						. '<div class="read_more">'
-							. '<a href="' . $art['link']  . '">' . tr::get('read_more') . '</a>'
+							. '<a href="' . $art['url']  . '">' . tr::get('read_more') . '</a>'
 						. '</div>'
 						. '</article>';
 			}
@@ -257,10 +257,10 @@ class htmlOut
 			foreach ( $art_list['list'] as $art )
 			{
 				$html .= '<article class="list">'
-						. ($art['title'] ? ' <h3><a href="' . $art['link']  . '">' . $art['title'] . '</a></h3>' : '')
+						. ($art['title'] ? ' <h3><a href="' . $art['url']  . '">' . $art['title'] . '</a></h3>' : '')
 						. '<div class="content">' . $art['summary'] . '</div>'
 						. '<div class="read_more">'
-							. '<a href="' . $art['link']  . '">' . tr::get('read_more') . '</a>'
+							. '<a href="' . $art['url']  . '">' . tr::get('read_more') . '</a>'
 						. '</div>'
 					. '</article>';
 			}
@@ -293,10 +293,10 @@ class htmlOut
 		foreach ( $art_list as $art )
 		{
 			$html .= '<article>'
-					. ($art['title'] ? ' <h3><a href="' . $art['link']  . '">' . $art['title'] . '</a></h3>' : '')
+					. ($art['title'] ? ' <h3><a href="' . $art['url']  . '">' . $art['title'] . '</a></h3>' : '')
 					. '<div class="content">' . $art['summary'] . '</div>'
 					. '<div class="read_more">'
-						. '<a href="' . $art['link']  . '">' . tr::get('read_more') . '</a>'
+						. '<a href="' . $art['url']  . '">' . tr::get('read_more') . '</a>'
 					. '</div>'
 				. '</article>';
 		}

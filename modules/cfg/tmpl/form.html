@@ -87,7 +87,7 @@
 			<div class="control-group">
 				<div class="controls">
 					<input type="text" class="span2" value="{{ art_img }}" name="art_img[]" />
-					<a class="btn delete-row"><i class="icon icon-trash"></i></a>
+					<a class="btn delete-custom_field"><i class="icon icon-trash"></i></a>
 				</div>
 			</div>
 		{% endfor %}
@@ -119,6 +119,14 @@
 	<hr />
 	<p class="lead">{{ tr.get('cfg-languages') }}</p>
 	
+	<div class="control-group">
+		<div class="controls">
+			<div class="span2">{{ tr.get('cfg-lang_id') }}</div>
+			<div class="span2">{{ tr.get('cfg-lang_name') }}</div>
+			<div class="span2">{{ tr.get('cfg-lang_published') }}</div>
+		</div>
+	</div>
+	
 	{% for lang in data.languages %}
 	<div class="control-group">
 		<div class="controls">
@@ -128,7 +136,7 @@
 				<option></option>
 				<option{% if lang.published %} selected="selected "{% endif %}>1</option>
 			</select>
-			<a class="btn delete-lang"><i class="icon icon-trash"></i></a>
+			<a class="btn delete-custom_field"><i class="icon icon-trash"></i></a>
 		</div>
 	</div>
 	{% endfor %}
@@ -141,17 +149,30 @@
 				<option></option>
 				<option>1</option>
 			</select>
-			<a class="btn add-lang"><i class="icon icon-hdd"></i></a>
+			<a class="btn add-custom_field"><i class="icon icon-hdd"></i></a>
 		</div>
 	</div>
 	
 	<hr />
 	<p class="lead">{{ tr.get('custom_fields') }}</p>
 	
+	
+	<div class="control-group">
+		<div class="controls">
+			<div class="span2">{{ tr.get('cfg-fld_name') }}</div>
+			<div class="span2">{{ tr.get('cfg-type') }}</div>
+			<div class="span2">{{ tr.get('cfg-label') }}</div>
+			<div class="span4">{{ tr.get('cfg-values') }}</div>
+		</div>
+	</div>
+	
 	{% for fld in data.custom_fields %}
 	<div class="control-group">
 		<div class="controls">
-			<input type="text" class="span6" value="{{ fld }}" name="custom_fields[{{ loop.index0 }}]" />
+			<input type="text" class="span2" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]" />
+			<input type="text" class="span2" value="{{ fld.type }}" name="custom_fields[{{ loop.index0 }}][type]" />
+			<input type="text" class="span2" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]" />
+			<input type="text" class="span4" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]" />
 			<a class="btn delete-custom_field"><i class="icon icon-trash"></i></a>
 		</div>
 	</div>
@@ -159,7 +180,10 @@
 	
 	<div class="control-group">
 		<div class="controls">
-			<input type="text" class="span6" name="custom_fields[{{ data.custom_fields|length }}]" />
+			<input type="text" class="span2" name="custom_fields[{{ data.custom_fields|length }}][name]" />
+			<input type="text" class="span2" name="custom_fields[{{ data.custom_fields|length }}][type]" />
+			<input type="text" class="span2" name="custom_fields[{{ data.custom_fields|length }}][label]" />
+			<input type="text" class="span4" name="custom_fields[{{ data.custom_fields|length }}][values]" />
 			<a class="btn add-custom_field"><i class="icon icon-hdd"></i></a>
 		</div>
 	</div>
@@ -219,19 +243,8 @@ $('#cache-{{ uid }}').on('click', function(){
 	}, 'json');
 });
 
-$('button.add-custom_field').on('click', function(){});
-$('button.delete-custom_field').on('click', function(){});
-$('button.add-lang').on('click', function(){});
-$('button.delete-lang').on('click', function(){});
-$('a.delete-row').on('click', function(){
-	$(this).parents('div.control-group').hide().find(':input').val('');
+$('.add-custom_field').on('click', function(){});
+$('.delete-custom_field').on('click', function(){
+	$(this).parents('div.controls').hide().find(':input').val('');
 });
-/*
-<div class="control-group">
-				<div class="controls">
-					<input type="text" class="span2" value="{{ art_img }}" name="art_img[]" />
-					<a class="btn delete-row"><i class="icon icon-trash"></i></a>
-				</div>
-			</div>
- */
 </script>

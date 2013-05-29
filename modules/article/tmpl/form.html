@@ -1,5 +1,10 @@
-
 <div class="container-fluid">
+	<div class="btn-group" style="padding:20px 0;">
+		<a class="btn" href="#article/addNew" title="{{ tr.get('add_new_article') }}"><i class="icon-plus"></i> {{ tr.get('add_new_article') }}</a>
+		<a class="btn" href="#translate/article" title="{{ tr.get('translations') }}"><i class="icon-globe"></i> {{ tr.get('translations') }}</a>
+		<a class="btn reload" title="{{ tr.get('reload') }}"><i class="icon-repeat"></i> {{ tr.get('reload') }}</a>
+	</div>
+
 	<div class="row-fluid">
 		<div class="span10">
 			<form action="javascript:void(0)" id="edit_form{{ uid }}">
@@ -68,8 +73,18 @@
 							{% for fld in custom_fields %}
 								<div class="span2">
 									<p>
-										<label>{{ fld|upper }}</label>
-										<input type="text" value="{{ art[fld] }}" name="{{ fld }}"  class="span12" />
+										<label>{{ fld.label|upper }}</label>
+										{% if fld.type == 'longtext' %}
+										<textarea name="{{ fld.name }}"  class="span12">{{ art[fld.name] }}</textarea>
+										{% elseif fld.type == 'select' and fld.values %}
+											<select class="span12">
+												{% for opt in fld.values|split(',') %}
+													<option>{{ opt }}</option>
+												{% endfor %}
+											</select>
+										{% else %}
+										<input name="{{ fld.name }}" type="text" value="{{ art[fld.name] }}" class="span12" />
+										{% endif %}
 								</div>
 								{% if loop.index is divisibleby(6) %}
 								</div>
@@ -115,7 +130,12 @@
 <script>
 	tinyMCE.execCommand("mceAddControl", false, "summary{{ uid }}");
 	tinyMCE.execCommand("mceAddControl", false, "text{{ uid }}");
-	
+
+	$('a.reload').click(function(){
+		admin.tabs.reloadActive();
+		return false;
+	});
+
 	$('#edit_form{{ uid }} input[name="text_id"]').on('change', function(){
 		$this = $(this);
 		

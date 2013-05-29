@@ -213,7 +213,14 @@ class article_ctrl
 		echo json_encode($msg);
 	}
 	
-	
+	/**
+	 * Creates image files using configuration dimensions 
+	 * and places this images in appropriate directories (./sites/images/articles/dim_widthxdim_height/art_id.jpg)
+	 * 
+	 * @param int $id article ID
+	 * @param string $file full path to uploaded file in temporary dire
+	 * @throws Exception on erros
+	 */
 	public static function attachImage($id, $file)
 	{
 		try{
@@ -228,24 +235,29 @@ class article_ctrl
 			// loop in dimensions
 			foreach($dimensions as $dim)
 			{
+				// de'fine image directory
 				$dir = IMG_DIR . 'articles/' . $dim;
+				
+				// if image dir does not exist, try to create it
 				if(!is_dir($dir))
 				{
 					@mkdir($dir, 0777, true);
 				}
 				
+				// if image dir does not exist, throw exception
 				if(!is_dir($dir))
 				{
 					throw new Exception(tr::sget('create_dir_error', $dir));
 				}
 				
+				// if image dir is not writeable, throw exception				
 				if(!is_writable($dir))
 				{
 					throw new Exception(tr::sget('dir_is_not_writable', $dir));
 				}
 				
 				
-				//make thumbnails in jpg format
+				// make thumbnails in jpg format, using original file
 				$output = $dir . '/' . $id . '.jpg';
 				
 				imgMng::thumb(TMP_DIR . $file, $output, $dim);

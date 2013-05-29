@@ -11,13 +11,13 @@ class OAI_ctrl extends Controller
 	public function run()
 	{
 		
-		if (!file_exists('./sites/default/oai/config.json'))
+		if (!file_exists('./sites/default/modules/oai/config.json'))
 		{
 			echo tr::get('no_oai_config_for_site');
 			return;
 		}
 		
-		$config = json_decode(file_get_contents('./sites/default/oai/config.json'), true);
+		$config = json_decode(file_get_contents('./sites/default/modules/oai/config.json'), true);
 		
 		
 		require_once LIB_DIR . 'OAIprovider/endpoint.php';

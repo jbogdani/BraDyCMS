@@ -163,12 +163,16 @@ class myRepository implements Repository
 				$dcrec = new DublinCoreRecord();
 				//http://dublincore.org/documents/dcmi-terms/#terms-title
 				$dcrec->addNS(NS::DC, 'title', $row[$this->info['table']['title']]);
+				if ($row[$this->info['table']['translated_title']])
+				{
+					$dcrec->addNS(NS::DC, 'title', $row[$this->info['table']['translated_title']]);
+				}
 				
 				$dcrec->addNS(NS::DC, 'creator', $row[$this->info['table']['creator']]);
 				//http://dublincore.org/documents/dcmi-terms/#terms-description
 				$dcrec->addNS(NS::DC, 'description', $row[$this->info['table']['description']]);
 				// http://dublincore.org/documents/dcmi-terms/#terms-publisher
-				$dcrec->addNS(NS::DC, 'publisher', 'BraDypUS books');
+				$dcrec->addNS(NS::DC, 'publisher', $this->info['publisher']);
 				//http://dublincore.org/documents/dcmi-terms/#terms-date
 				$dcrec->addNS(NS::DC, 'date', $row[$this->info['table']['lastchanged']]);
 				//http://dublincore.org/documents/dcmi-terms/#terms-type
@@ -185,11 +189,15 @@ class myRepository implements Repository
 			case 'ese':
 				$eserec = new EuropeanaRecord();
 				$eserec->addNS(NS::DC, 'title', $row[$this->info['table']['title']]);
+				if ($row[$this->info['table']['translated_title']])
+				{
+					$eserec->addNS(NS::DC, 'title', $row[$this->info['table']['translated_title']]);
+				}
 				$eserec->addNS(NS::DC, 'description', $row[$this->info['table']['description']]);
 				
 				$eserec->addNS(NS::DC, 'title', $row[$this->info['table']['title']]);
 				$eserec->addNS(NS::DC, 'description', $row[$this->info['table']['description']]);
-				$eserec->addNS(NS::DC, 'publisher', 'BraDypUS books');
+				$eserec->addNS(NS::DC, 'publisher', $this->info['publisher']);
 				$eserec->addNS(NS::DC, 'date', $row[$this->info['table']['lastchanged']]);
 				$eserec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				

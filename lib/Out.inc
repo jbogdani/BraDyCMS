@@ -94,9 +94,16 @@ class Out
 		}
 	}
 	
-	public function link2($art)
+	public function link2($art, $isSection = false, $tags = false)
 	{
-		return link::to_article($art == 'home' ? './' : $art, $this->lang);
+		if ($isSection)
+		{
+			return link::to_section($art, $tags, $this->lang);	
+		}
+		else
+		{
+			return link::to_article($art == 'home' ? './' : $art, $this->lang);
+		}
 	}
 	
 	public function sectionHasTags()
@@ -141,6 +148,7 @@ class Out
 		}
 		
 		$this->data['article'][$article]['text'] = $this->parseContent($this->data['article'][$article]['text']);
+		
 		return $this->data['article'][$article];
 	}
 	
@@ -403,10 +411,15 @@ class Out
 	
 	public function parseContent($html)
 	{
+		//return customTagParser::do_shortcode($html);
 		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
 		
 		foreach ($customTags as $customTag)
 		{
+			$attributes = array();
+			$rawAttributes = array();
+			$formatedAttributes = array();
+			
 			$originalTag = $customTag[0];
 		
 			$tag = $customTag[1];

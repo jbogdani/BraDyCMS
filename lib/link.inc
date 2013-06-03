@@ -24,7 +24,7 @@ class link
 	
 	public static function to_section($section, $tags = false, $lang = false)
 	{
-		return self::getPath() . '/' . ( $lang ? $lang . '/' : '') . $text_id . '.all' . (!empty($tags) ? '/' . implode('-', $tags) : '');
+		return self::getPath() . '/' . ( $lang ? $lang . '/' : '') . $section . '.all' . (!empty($tags) ? '/' . implode('-', $tags) : '');
 	}
 	
 	

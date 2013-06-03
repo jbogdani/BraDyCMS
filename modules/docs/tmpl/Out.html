@@ -346,12 +346,24 @@ please check <a href="#docs/tmpl/htmlOut">htmlOut documentation</a></p>
 		
 		
 		<tr>
-			<th>link2(article)</th>
-			<td>(string) Returns relative link string article (<code>article</code> is articles textual ID) or to site homepage (if <code>article</code> is home), depending on current url</td>
+			<th>link2(article, isSection, tags)</th>
+			<td><strong>article</strong>: (string) Returns relative link string article (<code>article</code> is articles textual ID) or to site homepage (if <code>article</code> is home), depending on current url<br />
+				<strong>isSection</strong>: (boolean) If true It's a link to a section blog. Default: false<br />
+				<strong>tags</strong>: (array): tags used to filter section blog. Default: false
+			</td>
 			<td>
 				<code>{% raw %}{{ out.link2('home') }}{% endraw %}</code>
-			
 				<pre class="prettyprint">./</pre>
+				
+				<code>{% raw %}{{ out.link2('my-first-page') }}{% endraw %}</code>
+				<pre class="prettyprint">./my-first-page</pre>
+				
+				<code>{% raw %}{{ out.link2('news', 'true') }}{% endraw %}</code>
+				<pre class="prettyprint">./news.all</pre>
+				
+				<code>{% raw %}{{ out.link2('news', ['latest', 'hot']) }}{% endraw %}</code>
+				<pre class="prettyprint">./news.all/latest-hot</pre>
+				
 			</td>
 		</tr>
 		

@@ -263,4 +263,56 @@ class customTags
 				'show_artwork=' . ( ($data['artwork'] && $data['artwork'] != 'false' ) ?  'true' : 'false') . '">' .
 		'</iframe>';
 	}
+	
+	/**
+	 * 
+	 * @param array $data
+	 * 		content*: image file relative url
+	 * 		width:	main div (container) width
+	 * 		caption: image caption
+	 * 		align: image alignent (left|right)
+	 * 		href: href of image link
+	 * 		href_class: css class of href link
+	 * 
+	 * @return string
+	 */
+	public static function figure($data)
+	{
+		$alt = $data['caption'] ? $data['caption'] : $data['content'];
+		
+		if ($data['width'])
+		{
+			$width = $data['width'];
+		}
+		else
+		{
+			$file_dim = getimagesize('./sites/default/images/' . $data['content']);
+			$width = $file_dim[0];
+		}
+		
+		if ($data['align'])
+		{
+			$figure_width = $width;
+		}
+		else if ($data['width'])
+		{
+			$figure_width = $data['width'];
+		}
+		
+		$alt = str_replace('"', '', strip_tags($alt));
+		
+		return '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" ' . ($figure_width ? ' style="width: ' . $figure_width . '"' : '') . '>' .
+			'<div class="image">' .
+				( $data['href'] ? '<a href="' . $data['href'] . '"' . ( $data['href_class'] ? ' class="' . $data['href_class'] . '" ' : '') . '>' : '') .
+					'<img src="./sites/default/images/' . $data['content'] . '" alt="' . $alt . '" />' .
+					( $data['href'] ? '</a>' : '') .
+			'</div>' . 
+			($data['caption'] ?
+					'<div class="caption">' .
+						$data['caption'] .
+					'</div>' 
+					: 
+					'') .
+		'</div>';
+	}
 }

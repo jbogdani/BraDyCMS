@@ -290,6 +290,20 @@
 				</p>
 			</dd>
 			
+			<dt>How to add and image and caption in article content?</dt>
+			<dd>
+				<p>Images can be added using TinyMCE image tag, or a special custom tag that permits to add figures and captions using a small piece of code</p>
+				<pre>[[figure width="300px" caption="image_caption" align="left" href="http://bradypus.net" href_class="bordered"]]image_url[[/figure]]</pre>
+				<p>Where<br />
+					<code>image_url</code> is the relative path to the image location (no need to add "./sites/default/images/" part of path)<br />
+					<code>width</code> id the width of the image container<br />
+					<code>caption</code> is image caption<br />
+					<code>align</code> Image container's alignment. Can be "left" or "right"<br />
+					<code>href</code> if present a link will be added to the image pointing to this destination.<br />
+					<code>href_class</code> a css class to be added to the link. Tis may be usefull for special javascript actions, like fancybox<br />
+				</p>
+			</dd>
+			
 			<dt>For DEVELOPERS: how to create custom modules?</dt>
 			<dd>
 				<p>BraDyCMS allows users to create custom modules that can be called and loaded directly form articles content.</p>

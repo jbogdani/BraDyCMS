@@ -1,0 +1,60 @@
+<h2>Authoring modules</h2>
+
+<div class="row-fluid">
+	
+	<div class="span6">
+		<h3>What are user modules and how to use?</h3>
+		<p>Modules help creating custom tags that can be used with custom paramaters in articles content or in template files to provide additional functionality to the web site. Any PHP or JAVASCRIPT code can be run inside a custom tags.</p>
+		
+		<p>...</p>
+		
+		<p>Users can create custom modules build in php and javascript in order to add new functionality to the website.</p>
+		<p>All modules are saved in the <code>./sites/default/modules</code> directory.</p>
+		
+		<h3>Naming system</h3>
+		<p>User modules names should not contain special characters or spaces. Underscores and camel case can be used. The main php file containing the module's code should be placed in the modules directory, with the <code>inc</code> extension, eg. <code>./sides/default/modules/myFirstModule.inc</code> is a valid module file name.</p>
+		
+		<h3>Module code structure</h3>
+		
+		<h4>Parameters</h4>
+		
+		<h4>Javascript, images, HTML, etc.</h4>
+		
+	</div>
+	
+	<div class="span6">
+		<h3>Hello world example</h3>
+		
+		<h5>Module content</h5>
+		<p>File: <code>./sites/default/modules/myFirstModule.inc</code></p>
+		<pre class="prettyprint lang-php">
+&#60;?php
+
+class myFirstModule{
+
+  public static function init($data){
+    
+    return 'Say it now: &#60;strong&#62;"' . $data['content'] . '"&#60;/strong>&#62;';
+  }
+}
+
+?&#62;
+</pre>
+		<h5>Inclusion in articles content</h5>
+		<pre class="prettyprint lang-html">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum semper malesuada nulla non lobortis. Vivamus ut sem metus, at tincidunt felis.
+
+<strong>[[myFirstModule]]hello world![[/myFirstModule]]</strong>
+
+Donec aliquet blandit est sit amet blandit. In hac habitasse platea dictumst. Quisque tristique accumsan neque, sit amet accumsan massa convallis in. Suspendisse viverra placerat posuere. Morbi lorem diam, adipiscing eget tempus eget, consectetur pharetra nunc.</pre>
+
+		<h5>Output</h5>
+		<pre class="prettyprint lang-html">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum semper malesuada nulla non lobortis. Vivamus ut sem metus, at tincidunt felis.
+
+Say it now: <strong>"hello world!"</strong>
+
+Donec aliquet blandit est sit amet blandit. In hac habitasse platea dictumst. Quisque tristique accumsan neque, sit amet accumsan massa convallis in. Suspendisse viverra placerat posuere. Morbi lorem diam, adipiscing eget tempus eget, consectetur pharetra nunc.</pre>
+	</div>
+</div>
+<script>window.prettyPrint && prettyPrint()</script>

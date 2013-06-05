@@ -167,6 +167,14 @@ catch (Exception $e)
 									
 									<li class="divider"></li>
 									<li class="dropdown-submenu">
+										<a href="#">HOWTOs</a>
+										<ul class="dropdown-menu">
+											<li><a href="#docs/tmpl/howto-oai"><i class="icon-book"></i> Setup a OAI-PMH interface</a></li>
+											<li><a href="#docs/tmpl/howto-module"><i class="icon-book"></i> Create create custom modules</a></li>
+										</ul>
+									
+									<li class="divider"></li>
+									<li class="dropdown-submenu">
 										<a href="#">Template documentation</a>
 										<ul class="dropdown-menu">
 											<li><a href="#docs/tmpl/intro"><i class="icon-book"></i> Intro</a></li>

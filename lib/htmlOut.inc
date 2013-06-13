@@ -18,11 +18,15 @@ class htmlOut
 	
 	public function metadata($no_og = false)
 	{
-		$html = "\n\t" . '<title>' . $this->out->getPageData('title') . '</title>' .
+		$html = "\n\t <!-- HTML metadata -->" .
+				"\n\t" . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />' .
+				"\n\t" . '<meta name="robots" content="index, follow" />' .
+				"\n\t" . '<title>' . $this->out->getPageData('title') . '</title>' .
 				"\n\t" . '<meta name="description" content="' . $this->out->getPageData('description') . '" />' .
 				"\n\t" . '<meta name="keywords" content="' . $this->out->getPageData('keywords') . '" />' .
 				"\n\t" . '<meta lang="' . $this->out->getPageData('lang') . '" />' .
-				"\n\t" . '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+				"\n\t" . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+			;
 
 		if (!$no_og)
 		{
@@ -30,7 +34,8 @@ class htmlOut
 					"\n\t" . '<meta property="og:title" content="' . $this->out->getPageData('title') . '" />' .
 					"\n\t" . '<meta property="og:description" content="' . $this->out->getPageData('description') . '" />' .
 					"\n\t" . '<meta property="og:url" content="' . $this->out->getPageData('url') . '" />' .
-					( $this->out->getPageData('image') ? "\n\t" . '<meta property="og:image" content="' . $this->out->getPageData('image') . '" />' : '' );
+					( $this->out->getPageData('image') ? "\n\t" . '<meta property="og:image" content="' . $this->out->getPageData('image') . '" />' : '' )
+			;
 		}
 				
 		$html .= "\n\n\t<!-- Feed links -->" .
@@ -42,18 +47,129 @@ class htmlOut
 	
 	public function metadata_dc()
 	{
-		$html =  "\n\t<!-- Dublin Core metadata -->" .
-				"\n\t" . '<meta name="DC.type" content="Text" />' .
-				"\n\t" . '<meta name="DC.format" content="text/html" />' .
-				"\n\t" . '<meta name="DC.identifier" scheme="URI" content="' . $this->out->getPageData('url') . '" />' .
-				"\n\t" . '<meta name="DC.title" content="' . $this->out->getPageData('title') . '" />' .
-				"\n\t" . '<meta name="DC.description" content="' . $this->out->getPageData('description') . '" />' .
-				"\n\t" . '<meta name="DC.language" scheme="RFC3066" content="' . $this->out->getPageData('lang') . '" />' .
-				( $this->out->getPageData('author') ? "\n\n" . '<meta name="DC.creator" content="' . $this->out->getPageData('author') . '" />' : '') .
-				( $this->out->getPageData('publisher') ? "\n\n" . '<meta name="DC.publisher" content="' . $this->out->getPageData('publisher') . '" />' : '') .
-				"\n\t" . '<meta name="DC.subject" scheme="RFC3066" content="' . $this->out->getPageData('keywords') . '" />' . 
-				( $this->out->getPageData('date') ? "\n\n" . '<meta name="DC.date" scheme="W3CDTF" content="' . $this->out->getPageData('date') . '" />' : '')
+		/*
+		<meta name="DC.Contributor.Sponsor" xml:lang="en" content=""/>
+		<meta name="DC.Contributor.Sponsor" xml:lang="it" content=""/>
+		<meta name="DC.Date.dateSubmitted" scheme="ISO8601" content="2012-12-20"/>
+		<meta name="DC.Date.issued" scheme="ISO8601" content="2012-12-21"/>
+		<meta name="DC.Description" xml:lang="en" content="English Description"/>
+		<meta name="DC.Identifier.pageNumber" content="1-46"/>
+		<meta name="DC.Rights" content="I copyright degli articoli pubblicati su questa rivista appartengono agli autori, e i diritti di prima pubblicazione sono concessi alla rivista. Nel momento in cui presentano il proprio lavoro, gli autori accettano che possa essere copiato da chiunque per fini non commerciali, ma solamente nel caso in cui venga appropriatamente citato. In virtù della loro apparizione su questa rivista gratuita, gli articoli sono dichiarati usufruibili gratuitamente, con una corretta attribuzione, in contesti non commerciali. Ogni autore è responsabile per il contenuto del proprio lavoro, incluse citazioni, attribuzione e permessi d&#039;uso."/>
+		<meta name="DC.Source.Issue" content="1"/>
+		<meta name="DC.Source.Volume" content="5"/>
+		<meta name="DC.Title.Alternative" xml:lang="en" content="The Bronze Age settlement of S. Giovanni in Triario (Bologna)"/>
+		<meta name="DC.Type" content="Text.Serial.Journal"/>
+		 */
+		
+		$art = $this->out->getArticle();
+	
+		if (!$art || !is_array($art) || empty($art))
+		{
+			return;
+		}
+	
+		$html =  "\n\t<!-- Dublin Core metadata tags -->" .
+
+				// Type
+				"\n\t" . '<meta name="DC.Type" content="Text" />' .
+				
+				// Format
+				"\n\t" . '<meta name="DC.Format" content="text/html" />' .
+				
+				// Identifier
+				"\n\t" . '<meta name="DC.Identifier" content="' . $art['id'] . '"/>' .
+				
+				// Identifier.URI
+				"\n\t" . '<meta name="DC.Identifier.URI" scheme="URI" content="' . $this->out->getPageData('url') . '" />' .
+				
+				// Identifier.DOI
+				"\n\t" . '<meta name="DC.Identifier.DOI" content="' . $this->out->MD()->getDoiPrefix() . '.' . $art[$this->out->MD()->getTable('id')] . '" />' .
+				
+				// Titile
+				"\n\t" . '<meta name="DC.Title" content="' . $this->out->getPageData('title') . '" />' .
+				
+				// Description
+				"\n\t" . '<meta name="DC.Description" content="' . $this->out->getPageData('description') . '" />' .
+				
+				// Language
+				"\n\t" . '<meta name="DC.Language" scheme="ISO639-1" content="' . $this->out->getPageData('lang') . '" />' .
+				
+				// Creator
+				( $this->out->getPageData('author') ? "\n\t" . '<meta name="DC.Creator" content="' . $this->out->getPageData('author') . '" />' : '') .
+				
+				// Creator.PersonalName
+				( $this->out->getPageData('author') ? "\n\t" . '<meta name="DC.Creator.PersonalName" content="' . $this->out->getPageData('author') . '" />' : '') .
+				
+				// Publisher
+				( $this->out->MD()->getPublisher() ? "\n\t" . '<meta name="DC.Publisher" content="' . $this->out->MD()->getPublisher() . '" />' : '') .
+				
+				// Subject
+				"\n\t" . '<meta name="DC.subject" scheme="RFC3066" content="' . $this->out->getPageData('keywords') . '" />' .
+
+				// Date
+				( $this->out->getPageData('date') ? "\n\t" . '<meta name="DC.Date" scheme="W3CDTF" content="' . $this->out->getPageData('date') . '" />' : '') .
+				
+				// Date.created
+				( $this->out->getPageData('date') ? "\n\t" . '<meta name="DC.Date.created" scheme="ISO8601" content="' . $this->out->getPageData('date') . '" />' : '') .
+				
+				// Date.modified
+				( $art['updated'] ? "\n\t" . '<meta name="DC.Date.modified" scheme="ISO8601" content="' . $art['updated'] . '" />' : '') .
+				
+				// Source
+				($this->out->MD()->getRepositoryName() ? "\n\t" . '<meta name="DC.Source" content="' . $this->out->MD()->getRepositoryName() . '"/>' : '') .
+				
+				// Source.ISSN
+				($this->out->MD()->getISSN() ? "\n\t" . '<meta name="DC.Source.ISSN" content="' . $this->out->MD()->getISSN() . '"/>' : '') .
+				
+				// Source.URI
+				($this->out->MD()->getURL() ? "\n\t" . '<meta name="DC.Source.URI" content="' . $this->out->MD()->getURL() . '"/>' : '')
 				;
+		return $html;
+	}
+	
+	public function metadata_hp()
+	{
+		/*
+		 http://www.google.com/intl/en/scholar/inclusion.html#indexing
+		 
+		 <meta name="citation_volume" content="5"/>
+		 <meta name="citation_issue" content="1"/>
+		 <meta name="citation_firstpage" content="1-46"/>
+		 */
+		$art = $this->out->getArticle();
+		
+		$html =  "\n\t<!-- Highwire Press metadata tags -->" .
+				
+				// journal title
+				($this->out->MD()->getRepositoryName() ? "\n\t" . '<meta name="citation_journal_title" content="' . $this->out->MD()->getRepositoryName() . '"/>' : '') .
+				
+				// journal issn
+				($this->out->MD()->getISSN() ? "\n\t" . '<meta name="citation_issn" content="' . $this->out->MD()->getISSN() . '"/>' : '') .
+				
+				// article author
+				( $this->out->getPageData('author') ? "\n\t" . '<meta name="citation_author" content="' . $this->out->getPageData('author') . '" />' : '') .
+				
+				// article title
+				"\n\t" . '<meta name="citation_title" content="' . $this->out->getPageData('title') . '" />' .
+				
+				// article date
+				( $this->out->getPageData('date') ? "\n\t" . '<meta name="citation_date" content="' . $this->out->getPageData('date') . '" />' : '') .
+				
+				// article doi
+				"\n\t" . '<meta name="citation_doi" content="' . $this->out->MD()->getDoiPrefix() . '.' . $art[$this->out->MD()->getTable('id')] . '"/>' .
+		
+				// article abstract url
+				"\n\t" . '<meta name="citation_abstract_html_url" content="' . $this->out->getPageData('url') . '"/>' .
+				
+				// article language
+				"\n\t" . '<meta name="citation_language" content="' . $this->out->getPageData('lang') . '" />' .
+		
+				// article pdf url
+				(file_exists('./sites/default/images/pdf/' . $art['text_id'] . '.pdf') ?  
+					"\n\t" .  '<meta name="citation_pdf_url" content="' . $this->out->MD()->getURL() . '/sites/default/images/pdf/' . $art['text_id'] . '.pdf"/>'
+					: '')
+	
+		;
 		return $html;
 	}
 	
@@ -352,17 +468,16 @@ class htmlOut
 		if (method_exists('customTags', $method))
 		{
 			$html = call_user_func(array('customTags', $method), $param);
-	
 		}
-		else if (file_exists('sites/default/modules/' . $param . '.inc'))
+		else if (file_exists('sites/default/modules/' . $method . '/' . $method. '.inc'))
 		{
-			require_once 'sites/default/modules/' . $param . '.inc';
+			require_once 'sites/default/modules/' . $method . '/' . $method . '.inc';
 	
 			$html = call_user_func(array($method, 'init'), $param);
 	
 		}
 	
-		return $html;
+		echo $html;
 			
 	}
 		

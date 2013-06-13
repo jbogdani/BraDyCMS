@@ -36,7 +36,8 @@ class Out
 	$cfg,		// cfg object
 	$get,		// GET data
 	$context,	// context: article, section, search
-	$data	//
+	$data,	//
+	$metadata
 	;
 	public 
 	$session_lang, // different from $lang that if is the same of sys_lang is not set!
@@ -93,7 +94,22 @@ class Out
 			$this->context = 'home';
 		}
 	}
+	/**
+	 * If called sets Article object's preview firlds to *. All fields will be returned!
+	 */
+	public function getAllFlds()
+	{
+		$this->article->flds = ' * '; 
+	}
 	
+	/**
+	 * Returns full link to provided content (article or section)
+	 * 
+	 * @param string $art	article or section name
+	 * @param boolean $isSection if true $art is a section name, if false (default) $art is an article text_id
+	 * @param array|false $tags	array of tags to use for filtering section articles
+	 * @return string
+	 */
 	public function link2($art, $isSection = false, $tags = false)
 	{
 		if ($isSection)
@@ -106,17 +122,27 @@ class Out
 		}
 	}
 	
+	/**
+	 * Returns true if current context is section and some tag filtering is active
+	 * @return boolean
+	 */
 	public function sectionHasTags()
 	{
 		return ($this->get['tags'] && $this->context == 'section');
 	}
 	
-	
+	/**
+	 * Returns curent context
+	 * @return string
+	 */
 	public function getContext()
 	{
 		return $this->context;
 	}
 	
+	/**
+	 * Returns current secion name. Works  if section is article or section
+	 */
 	public function getSectionName()
 	{
 		if ($this->context == 'section')
@@ -133,6 +159,11 @@ class Out
 		}
 	}
 	
+	/**
+	 * Returns array with atricle data. If $article is not provided current article's data will be returned
+	 * @param string $article article text_id
+	 * @return array
+	 */
 	public function getArticle($article = false)
 	{
 		$article = $article ? $article : $this->get['art_title'];
@@ -152,6 +183,10 @@ class Out
 		return $this->data['article'][$article];
 	}
 	
+	/**
+	 * Returns array of articles of current section or of provided section
+	 * @param string $section Section name to get articles for
+	 */
 	public function getArticlesBySection($section = false)
 	{
 		$section = $section ? $section : $this->get['section'];
@@ -221,7 +256,6 @@ class Out
 			$section = $this->get['section'];
 			$tags = $this->get['tags'];
 		}
-		
 		if (!is_array($tags))
 		{
 			return false;
@@ -266,9 +300,10 @@ class Out
 			$this->data['page']['url']  = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			
 			$art_img_paths = cfg::get('art_img');
-			if (file_exists('./sites/default/images/articles/' . $art_img_paths[0] . '.jpg'))
+			
+			if (file_exists('./sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg'))
 			{
-				$this->data['page']['image'] = './sites/default/images/articles/' . $art_img_paths[0] . '.jpg';
+				$this->data['page']['image'] = './sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg';
 			}
 			else if ($this->data['article'][$this->get['art_title']]['text'])
 			{
@@ -284,9 +319,8 @@ class Out
 			}
 			
 			if ($this->data['article'][$this->get['art_title']]['publish_on'] && $this->data['article'][$this->get['art_title']]['publish_on'] != '0000-00-00')
-			$oai_data = cfg::getOAI();
 			
-			$this->data['page']['date'] = $oai_data['publish_on'];
+			$this->data['page']['date'] = $this->data['article'][$this->get['art_title']]['publish_on'];
 			
 		}
 	
@@ -445,21 +479,21 @@ class Out
 		
 				$html = str_replace($originalTag, $replace, $html);
 			}
-			else if (file_exists('sites/default/modules/' . $tag . '.inc'))
+			else if (file_exists('sites/default/modules/' . $tag . '/' . $tag . '.inc'))
 			{
-				require_once 'sites/default/modules/' . $tag . '.inc';
+				require_once 'sites/default/modules/' . $tag . '/' . $tag . '.inc';
 				
 				$replace = call_user_func(array($tag, 'init'), $formatedAttributes);
 				
 				$html = str_replace($originalTag, $replace, $html);
 				
-				$pending[] = $tag;
+				$pending[$tag] = true;
 			}
 		}
 		
 		if (is_array($pending) && !empty($pending))
 		{
-			foreach ($pending as $obj)
+			foreach ($pending as $obj => $true)
 			{
 				if (method_exists($obj, 'end'))
 				{
@@ -474,5 +508,24 @@ class Out
 	public function gallery($data)
 	{
 		return customTags::gallery($data);
+	}
+	
+	public function MD()
+	{
+		if (!$this->metadata)
+		{
+			if(!file_exists('./sites/default/modules/metadata/MD_repository.inc'))
+			{
+				return false;
+			}
+			else
+			{
+				require_once './sites/default/modules/metadata/MD_repository.inc';
+				
+				$this->metadata = new MD_repository();
+			}
+		}
+		
+		return $this->metadata;
 	}
 }

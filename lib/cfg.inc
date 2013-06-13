@@ -10,27 +10,6 @@ class cfg
 {
 	private static $data;
 	
-	private static $oaiData;
-	
-	/**
-	 * Parses and returns OAI data
-	 * @param string $el	OAI element to return
-	 * @return mixed|boolean
-	 */
-	public static function getOAI($el = false)
-	{
-		if (!self::$oaiData && file_exists(MAIN_DIR . 'sites/default/OAI/config.json'))
-		{
-			self::$oaiData = json_decode(file_get_contents(MAIN_DIR . 'sites/default/OAI/config.json'), true);
-		}
-		
-		if (self::$oaiData)
-		{
-			return $el ? self::$oaiData[$el] : self::$oaiData; 
-		}
-		return false;
-	}
-	
 	public static function get($el = false)
 	{
 		if (!self::$data)

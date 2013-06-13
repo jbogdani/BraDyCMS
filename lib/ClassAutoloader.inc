@@ -23,9 +23,9 @@ class ClassAutoloader
 		if (preg_match('/_ctrl/', $className))
 		{
 			$mod = str_replace('_ctrl', null, $className);
-			if(file_exists(MAIN_DIR . 'modules/' . $mod . '/' . $mod . '.php'))
+			if(file_exists(MOD_DIR . $mod . '/' . $mod . '.php'))
 			{
-				require_once MAIN_DIR . 'modules/' . $mod . '/' . $mod . '.php';
+				require_once MOD_DIR . $mod . '/' . $mod . '.php';
 			}
 			else
 			{

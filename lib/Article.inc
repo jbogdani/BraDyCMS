@@ -9,7 +9,8 @@
 class Article
 {
 	
-	private $db; 
+	private $db;
+	public $flds;
 	
 	/**
 	 * Starts DB object
@@ -21,7 +22,13 @@ class Article
 	
 	private function previewFlds()
 	{
-		return '`id`, `title`, `sort`, `text_id`, `author`, `summary`, `section`, `tags`';
+		if (!$this->flds)
+		{
+			$this->flds = '`id`, `title`, `sort`, `text_id`, `author`, `summary`, `section`, `tags`';
+		}
+		return $this->flds;
+		
+		//return '`id`, `title`, `sort`, `text_id`, `author`, `summary`, `section`, `tags`';
 	}
 	
 	/**
@@ -287,17 +294,18 @@ class Article
 	{
 		
 		$res = $this->getArticlesByTag($tags, $lang, true);
-	
+		
 		foreach ($res as $r)
 		{
 			if ($text_id && $r['text_id'] != $text_id)
 			{
-				$new[count(array_intersect($tags, utils::csv_explode($r['tags'])))] = $r;
+				$new[count(array_intersect($tags, utils::csv_explode($r['tags'])))][] = $r;
 			}
 		}
 		asort($new);
-	
-		return $new;
+		
+		// http://stackoverflow.com/questions/1921421/get-first-element-of-an-array
+		return array_shift(array_values($new));
 	}
 	
 	

@@ -15,6 +15,7 @@ RewriteRule ^feed/atom$ controller.php?obj=feeds_ctrl&method=atom
 
 #OAI
 RewriteRule ^OAI$ controller.php?obj=OAI_ctrl&method=run [QSA]
+RewriteRule ^oai$ controller.php?obj=OAI_ctrl&method=run [QSA]
 
 
 #admin 

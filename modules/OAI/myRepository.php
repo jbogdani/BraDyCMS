@@ -21,21 +21,22 @@ use oaiprovider\Header;
 
 class myRepository implements Repository
 {
-	private $info, $db;
+	private $repo, $db;
 	
-	public function __construct($info, DB $db)
+	public function __construct(MD_repository $repo, DB $db)
 	{
-		$this->info = $info;
+		// info
+		$this->repo = $repo;
 		$this->db = $db;
 	}
 
 	public function getIdentifyData() {
 		return array(
-				'repositoryName' => $this->info['repositoryName'],
-				'baseURL' => $this->info['baseURL'],
-				'protocolVersion' => $this->info['protocolVersion'],
-				'adminEmail' => $this->info['adminEmail'],
-				'earliestDatestamp' => '2013-04-01',
+				'repositoryName' => $this->repo->getRepositoryName(),
+				'baseURL' => $this->repo->getOAPMH_URL(),
+				'protocolVersion' => $this->repo->getProtocolVersion(),
+				'adminEmail' => $this->repo->getAdminEmail(),
+				'earliestDatestamp' => $this->repo->getEarliestDate(),
 				'deletedRecord' => 'persistent',
 				'granularity' => 'YYYY-MM-DDThh:mm:ssZ');
 	}
@@ -56,12 +57,12 @@ class myRepository implements Repository
 	}
 
 	public function getSets() {
-		return $this->info['sets'];
+		return $this->repo->getSets();
 	}
 
 	public function getIdentifiers($from, $until, $set, $last_identifier, $max_results)
 	{
-		$sql = "SELECT `" . $this->info['table']['id'] . "` FROM `" . $this->info['table']['name'] . "`";
+		$sql = "SELECT `" . $this->repo->getTable('id') . "` FROM `" . $this->repo->getTable('name') . "`";
 
 		$where = array();
 		$values = array();
@@ -80,7 +81,7 @@ class myRepository implements Repository
 		
 		if ($set)
 		{
-			$where[] = $this->info['table']['category'] . " = :category";
+			$where[] = $this->repo->getTable('category') . " = :category";
 			$values[':category'] = $set;
 		}
 		
@@ -108,7 +109,7 @@ class myRepository implements Repository
 		
 		foreach($res as $row)
 		{
-			$ids[] = $row[$this->info['table']['id']];
+			$ids[] = $row[$this->repo->getTable('id')];
 		}
 		return $ids;
 	}
@@ -118,9 +119,9 @@ class myRepository implements Repository
 		$identifier = str_replace('oai:' . $_SERVER['HTTP_HOST'] . ':article/', null, $identifier);
 		
 		$sql = "SELECT " .
-					"`id`, `" . $this->info['table']['id'] . "`, `" . $this->info['table']['lastchanged'] . "`, `" . $this->info['table']['category'] . "`, `" . $this->info['table']['deleted'] . "` " .
-				"FROM `" . $this->info['table']['name'] . "` " .
-				"WHERE `" . $this->info['table']['id'] . "`= :id";
+					"`id`, `" . $this->repo->getTable('id') . "`, `" . $this->repo->getTable('lastchanged') . "`, `" . $this->repo->getTable('category') . "`, `" . $this->repo->getTable('deleted') . "` " .
+				"FROM `" . $this->repo->getTable('name') . "` " .
+				"WHERE `" . $this->repo->getTable('id') . "`= :id";
 		
 		
 		$result = $this->db->executeQuery($sql, array(':id' => $identifier), 'read');
@@ -130,14 +131,14 @@ class myRepository implements Repository
 		
 		$header->identifier = 'oai:' . $_SERVER['HTTP_HOST'] . ':article/' . $row['id'];
 		
-		$header->datestamp = strtotime($row[$this->info['table']['lastchanged']]);
+		$header->datestamp = strtotime($row[$this->repo->getTable('lastchanged')]);
 		
-		if ($row[$this->info['table']['category']])
+		if ($row[$this->repo->getTable('category')])
 		{
-			$header->setSpec = array($row[$this->info['table']['category']]);
+			$header->setSpec = array($row[$this->repo->getTable('category')]);
 		}
 		
-		$header->deleted = ($row[$this->info['table']['deleted']] == 0);
+		$header->deleted = ($row[$this->repo->getTable('deleted')] == 0);
 		
 		return $header;
 	}
@@ -145,13 +146,13 @@ class myRepository implements Repository
 	public function getMetadata($metadataPrefix, $identifier)
 	{
 		$identifier = str_replace('oai:' . $_SERVER['HTTP_HOST'] . ':article/', null, $identifier);
-		$sql = "SELECT * FROM " . $this->info['table']['name'] . " WHERE " . $this->info['table']['id'] . "= :id";
+		$sql = "SELECT * FROM " . $this->repo->getTable('name') . " WHERE " . $this->repo->getTable('id') . "= :id";
 		
 		$res = $this->db->executeQuery($sql, array(':id' => $identifier), 'read');
 		
 		$row = $this->clean($res[0]);
 		
-		if ($row[$this->info['table']['deleted']] === 0)
+		if ($row[$this->repo->getTable('deleted')] === 0)
 		{
 			return null;
 		}
@@ -162,49 +163,46 @@ class myRepository implements Repository
 				
 				$dcrec = new DublinCoreRecord();
 				//http://dublincore.org/documents/dcmi-terms/#terms-title
-				$dcrec->addNS(NS::DC, 'title', $row[$this->info['table']['title']]);
-				if ($row[$this->info['table']['translated_title']])
+				$dcrec->addNS(NS::DC, 'title', $row[$this->repo->getTable('title')]);
+				if ($row[$this->repo->getTable('translated_title')])
 				{
-					$dcrec->addNS(NS::DC, 'title', $row[$this->info['table']['translated_title']]);
+					$dcrec->addNS(NS::DC, 'title', $row[$this->repo->getTable('translated_title')]);
 				}
 				
-				$dcrec->addNS(NS::DC, 'creator', $row[$this->info['table']['creator']]);
+				$dcrec->addNS(NS::DC, 'creator', $row[$this->repo->getTable('creator')]);
 				//http://dublincore.org/documents/dcmi-terms/#terms-description
-				$dcrec->addNS(NS::DC, 'description', $row[$this->info['table']['description']]);
+				$dcrec->addNS(NS::DC, 'description', html_entity_decode($row[$this->repo->getTable('description')]));
 				// http://dublincore.org/documents/dcmi-terms/#terms-publisher
-				$dcrec->addNS(NS::DC, 'publisher', $this->info['publisher']);
+				$dcrec->addNS(NS::DC, 'publisher', $this->repo->getTable('publisher'));
 				//http://dublincore.org/documents/dcmi-terms/#terms-date
-				$dcrec->addNS(NS::DC, 'date', $row[$this->info['table']['lastchanged']]);
+				$dcrec->addNS(NS::DC, 'date', $row[$this->repo->getTable('lastchanged')]);
 				//http://dublincore.org/documents/dcmi-terms/#terms-type
 				// http://info-uri.info/registry/OAIHandler?verb=GetRecord&metadataPrefix=reg&identifier=info:eu-repo/
 				$dcrec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				
 				$dcrec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['text_id']);
-				
-				$dcrec->addNS(NS::DC, 'identifier', $this->info['doi_prefix'] . '/' . $this->info['journal_suffix'] . '.' . $row[$this->info['table']['id']]);
-				
-				$dcrec->addNS(NS::DC, 'identifier', $this->info['issn']);
+				$dcrec->addNS(NS::DC, 'identifier', $this->repo->getDoiPrefix() . '.' . $row[$this->repo->getTable('id')]);
+				$dcrec->addNS(NS::DC, 'identifier', $this->repo->getISSN());
 				
 				return $dcrec->toXml();
 			case 'ese':
 				$eserec = new EuropeanaRecord();
-				$eserec->addNS(NS::DC, 'title', $row[$this->info['table']['title']]);
-				if ($row[$this->info['table']['translated_title']])
+				$eserec->addNS(NS::DC, 'title', $row[$this->repo->getTable('title')]);
+				if ($row[$this->repo->getTable('translated_title')])
 				{
-					$eserec->addNS(NS::DC, 'title', $row[$this->info['table']['translated_title']]);
+					$eserec->addNS(NS::DC, 'title', $row[$this->repo->getTable('translated_title')]);
 				}
-				$eserec->addNS(NS::DC, 'description', $row[$this->info['table']['description']]);
+				$eserec->addNS(NS::DC, 'description', html_entity_decode($row[$this->repo->getTable('description')]));
 				
-				$eserec->addNS(NS::DC, 'title', $row[$this->info['table']['title']]);
-				$eserec->addNS(NS::DC, 'description', $row[$this->info['table']['description']]);
-				$eserec->addNS(NS::DC, 'publisher', $this->info['publisher']);
-				$eserec->addNS(NS::DC, 'date', $row[$this->info['table']['lastchanged']]);
+				$eserec->addNS(NS::DC, 'title', $row[$this->repo->getTable('title')]);
+				$eserec->addNS(NS::DC, 'description', html_entity_decode($row[$this->repo->getTable('description')]));
+				$eserec->addNS(NS::DC, 'publisher', $this->repo->getPublisher());
+				$eserec->addNS(NS::DC, 'date', $row[$this->repo->getTable('lastchanged')]);
 				$eserec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				
 				$eserec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['text_id']);
-				$eserec->addNS(NS::DC, 'identifier', $this->info['doi_prefix'] . '/' . $row[$this->info['table']['id']]);
-				$eserec->addNS(NS::DC, 'identifier', $this->info['doi_prefix'] . '/' . $this->info['journal_suffix'] . '.' . $row[$this->info['table']['id']]);
-				$eserec->addNS(NS::DC, 'identifier', $this->info['issn']);
+				$eserec->addNS(NS::DC, 'identifier', $this->repo->getDoiPrefix() . '.' . $row[$this->repo->getTable('id')]);
+				$eserec->addNS(NS::DC, 'identifier', $this->repo->getISSN());
 				
 				return $eserec->toXml();
 		}

@@ -72,8 +72,7 @@ class media_ctrl extends Controller
 			$path_arr = array('.');
 		}
 		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'media/tmpl'), unserialize(CACHE));
-		echo $twig->render('list.html', array(
+		$this->render('media', 'list', array(
 				'error_create' => $error_create,
 				'path_arr'=> $path_arr,
 				'path' => $path,
@@ -88,8 +87,7 @@ class media_ctrl extends Controller
 	{
 		$file = IMG_DIR . implode('/', $this->get['param']);
 		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'media/tmpl'), unserialize(CACHE));
-		echo $twig->render('edit_form.html', array(
+		$this->render('media', 'edit_form', array(
 				'file' => $file,
 				'uid' => uniqid(),
 				'finfo' => getimagesize($file),

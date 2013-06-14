@@ -3,12 +3,12 @@
 <div class="alert alert-error">{{ error_create|raw }}</div>
 {% endif%}
 
-
+{% set part_path = '' %}
 <div class="nav clearfix">
 	<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uniqid }}" class="search-query pull-right" />
 </div>
 
-
+<!-- Navigation bar -->
 <ul class="breadcrumb form-horizontal">
 	<li>
 		<button class="btn btn-success" title="{{ tr.get('reload') }}" onclick="admin.tabs.reloadActive();">
@@ -17,8 +17,15 @@
 		<span class="divider">|||</span>
 	</li>
 	{% for part in path_arr %}
+		{% if part != '.' %}
+			{% if part_path == '' %}
+				{% set part_path = '/' ~ part %}
+			{% else %}
+				{% set part_path = part_path ~ '/' ~ part %}
+			{% endif %}
+		{% endif %}
 	<li>
-		<a class="btn{% if loop.last %} btn-success{% endif %}" href="#media/all{% if part != '.'%}/{{ part }}{% endif %}">{{ part }}</a> 
+		<a class="btn{% if loop.last %} btn-success{% endif %}" href="#media/all{{ part_path }}">{{ part }}</a> 
 		<span class="divider">/</span>
 	</li>
 	{% endfor %}

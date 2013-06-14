@@ -20,6 +20,10 @@ class Controller
 	public function render($module, $template, $data = false)
 	{
 		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . $module . '/tmpl'), unserialize(CACHE));
+		if ($_SESSION['debug'])
+		{
+			$twig->addExtension(new Twig_Extension_Debug());
+		}
 		echo $twig->render($template . '.html', $data ? $data : array() );
 	}
 

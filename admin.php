@@ -130,6 +130,7 @@ catch (Exception $e)
 									<li><a href="#media/all"><i class="icon-picture"></i> <?php echo tr::get('media'); ?></a></li>
 									<li><a href="#galleries/all"><i class="icon-facetime-video"></i> <?php echo tr::get('galleries'); ?></a></li>
 								</ul>
+							</li>
 							
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-cog"></i> <?php echo tr::get('other'); ?> <b class="caret"></b></a>
@@ -185,6 +186,35 @@ catch (Exception $e)
 									</li>
 								</ul>
 							</li>
+							
+							<?php
+							$usr_mods = utils::dirContent('./sites/default/modules');
+							if (is_array($usr_mods) && !empty($usr_mods))
+							{
+								foreach ($usr_mods as $mod)
+								{
+									if (file_exists('./sites/default/modules/' . $mod . '/' . $mod . '.inc'))
+									{
+										require_once './sites/default/modules/' . $mod . '/' . $mod . '.inc';
+										
+										if (method_exists($mod, 'admin'))
+										{
+											$custom_mods[] = $mod;
+										}
+									}
+								}
+							}
+							
+							if ($custom_mods): ?>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-leaf"></i> <?php echo tr::get('plugins'); ?> <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<?php foreach($custom_mods as $mod): ?>
+									<li><a href="./admin#plugins/run/<?php echo $mod; ?>"><i class="icon-asterisk"></i> <?php echo $mod; ?></a></li>
+									<?php endforeach;?>
+								</ul>
+							</li>
+							<?php endif ?>
 							
 							
 							<li><a href="#log/out"><i class="icon-off"></i> <?php echo tr::get('logout'); ?></a></li>

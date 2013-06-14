@@ -29,6 +29,7 @@ $_lang = array(
 	'error_log' => 'Log degli errori',
 	'view_site' => 'Visualizza sito',
 	'reload' => 'Ricarica',
+	'plugins' => 'Plugin',		
 	'logout' => 'Esci',
 	
 	//modules

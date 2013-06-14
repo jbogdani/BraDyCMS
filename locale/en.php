@@ -14,6 +14,7 @@ $_lang['changelog'] = "Changelog";
 $_lang['error_log'] = "Error log";
 $_lang['view_site'] = "View site";
 $_lang['reload'] = "Reload";
+$_lang['plugins'] = "Plugins";
 $_lang['logout'] = "Logout";
 $_lang['delete_article_ok'] = "Article successfully deleted";
 $_lang['delete_article_error'] = "Error. Article id:%s was not deleted.";

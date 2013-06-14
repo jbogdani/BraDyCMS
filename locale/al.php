@@ -14,6 +14,7 @@ $_lang['changelog'] = "Ndryshimet";
 $_lang['error_log'] = "Log i keqfunksionimeve";
 $_lang['view_site'] = "Hap faqen e internetit";
 $_lang['reload'] = "Ngarko përsëri";
+$_lang['plugins'] = "Plugin";
 $_lang['logout'] = "Dil";
 $_lang['delete_article_ok'] = "Artikulli u fshi";
 $_lang['delete_article_error'] = "Gabim. Artikulli me id %s nuk u fshi";

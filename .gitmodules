@@ -4,3 +4,6 @@
 [submodule "lib/Twig"]
 	path = lib/Twig
 	url = https://github.com/fabpot/Twig.git
+[submodule "lib/OOCurl"]
+	path = lib/OOCurl
+	url = https://github.com/jsocol/oocurl.git

@@ -142,6 +142,7 @@ class Out
 	
 	/**
 	 * Returns current secion name. Works  if section is article or section
+	 * @return string
 	 */
 	public function getSectionName()
 	{
@@ -186,6 +187,7 @@ class Out
 	/**
 	 * Returns array of articles of current section or of provided section
 	 * @param string $section Section name to get articles for
+	 * @return array
 	 */
 	public function getArticlesBySection($section = false)
 	{
@@ -199,6 +201,10 @@ class Out
 		return $this->data['section'][$section];
 	}
 	
+	/**
+	 * If context is article returns list of current article siblings (same section)
+	 * @return array|false
+	 */
 	public function getArticleSiblings()
 	{
 		if (!$this->get['art_title'])
@@ -212,6 +218,10 @@ class Out
 		return $this->data['siblings'];
 	}
 	
+	/**
+	 * If context is  article returns list or article's tags siblings (only the most similar articles will be retuned)
+	 * @return array|false
+	 */
 	public function getArticlesTagSiblings()
 	{
 		if (!$this->get['art_title'])
@@ -238,7 +248,12 @@ class Out
 		return $this->data['tag_siblings'];
 	}
 	
-	
+	/**
+	 * Return list (array) of articles folterd by section and tags. Section and tags to use as filter can be set in the URL or as function parameters
+	 * @param $section if present the first parameter is assumed to be the section name
+	 * @param $tag, if present, the second and other parameters are assumed to be the tags.
+	 * @return array|false
+	 */
 	public function getArticlesBySectionAndTags()
 	{
 		$args = func_get_args();
@@ -264,11 +279,22 @@ class Out
 		return $this->article->getArticlesBySectionAndTag($section, $tags, $this->lang);
 	}
 	
+	
+	/**
+	 * Returns list of articles filtered by one or more tags
+	 * @param $tag, $tag, if present, the firts and other parameters are assumed to be the tags.
+	 * @return array|false
+	 */
 	public function getArticlesByTag()
 	{
 		return $this->article->getArticlesByTag(func_get_args(), $this->lang);
 	}
 	
+	/**
+	 * Returns metadata about the current page, filtered by $el
+	 * @param string $el page element to return
+	 * @return string|array
+	 */
 	public function getPageData($el = false)
 	{
 		if (!$this->data['page'])
@@ -327,7 +353,12 @@ class Out
 		return $el ? $this->data['page'][$el] : $this->data['page'];
 	}
 	
-	public function getMenu($menu_name, $hide_sub = false)
+	/**
+	 * Returns structured array of menu data for $menu_name.
+	 * @param string $menu_name menu name to retrieve from the database
+	 * @return array|false
+	 */
+	public function getMenu($menu_name)
 	{
 		if (!$this->data['menu'][$menu])
 		{
@@ -393,7 +424,11 @@ class Out
 		return $this->data['menu'][$menu_name];
 	}
 	
-	
+	/**
+	 * Private function, used by getMenu to structure sub menu items in main menu list
+	 * @param string $menu
+	 * @return array
+	 */
 	private function recursiveRichMenu($menu)
 	{
 		foreach ($menu as $item)
@@ -423,6 +458,10 @@ class Out
 		return $menu;
 	}
 	
+	/**
+	 * Returns structured array of available system languages
+	 * @return array
+	 */
 	public function getLanguages()
 	{
 		if (!$this->data['languages'])
@@ -432,17 +471,30 @@ class Out
 		return $this->data['languages'];
 	}
 	
+	/**
+	 * Returns list of articles containing the searched string 
+	 * @return array|false
+	 */
 	public function getSearchResults()
 	{
 		return $this->article->search($this->get['search'], $this->lang);
 	}
 	
+	/**
+	 * Returns, if available, the searched string
+	 * @return string|false
+	 */
 	public function getSearchString()
 	{
 		return $this->get['search'];
 	}
 	
 	
+	/**
+	 * 
+	 * @param string $html parses html string and checks for custom tags, both system and user's. Runs functions and replaces string content.
+	 * @return string
+	 */
 	public function parseContent($html)
 	{
 		//return customTagParser::do_shortcode($html);
@@ -504,12 +556,10 @@ class Out
 		return $html;
 	}
 	
-	
-	public function gallery($data)
-	{
-		return customTags::gallery($data);
-	}
-	
+	/**
+	 * Returns, if available, a new instance of object M(eta)D(ata)_repository
+	 * @return boolean|MD_repository
+	 */
 	public function MD()
 	{
 		if (!$this->metadata)

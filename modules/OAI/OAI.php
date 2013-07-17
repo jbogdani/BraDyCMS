@@ -11,13 +11,13 @@ class OAI_ctrl extends Controller
 	public function run()
 	{
 		
-		if (!file_exists('./sites/default/modules/oai/MD_repository.inc'))
+		if (!file_exists('./sites/default/modules/metadata/MD_repository.inc'))
 		{
 			echo tr::get('no_oai_config_for_site');
 			return;
 		}
 		
-		require_once './sites/default/modules/oai/MD_repository.inc';
+		require_once './sites/default/modules/metadata/MD_repository.inc';
 		require_once LIB_DIR . 'OAIprovider/endpoint.php';
 		require_once MOD_DIR . 'OAI/myRepository.php';
 		

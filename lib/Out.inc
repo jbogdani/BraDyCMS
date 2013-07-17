@@ -46,7 +46,6 @@ class Out
 	
 	public function __construct($get, $lang = false)
 	{
-		
 		// initialize database object
 		$this->db = new DB();
 		
@@ -78,7 +77,7 @@ class Out
 		if ( $get['art'] OR $get['art_title'] )
 		{
 			$this->context = 'article';
-			$this->getArticle($ge['art_title']);
+			$this->getArticle($get['art_title'], $get['draft']);
 		}
 		else if ( $get['section'] )
 		{
@@ -165,7 +164,7 @@ class Out
 	 * @param string $article article text_id
 	 * @return array
 	 */
-	public function getArticle($article = false)
+	public function getArticle($article = false, $draft = false)
 	{
 		$article = $article ? $article : $this->get['art_title'];
 		
@@ -176,7 +175,7 @@ class Out
 		
 		if (!$this->data['article'][$article])
 		{
-			$this->data['article'][$article] = $this->article->getArticle(false, $article, $this->lang);
+			$this->data['article'][$article] = $this->article->getArticle(false, $article, $this->lang, $draft);
 		}
 		
 		if ($this->data['article'][$article]['text'])

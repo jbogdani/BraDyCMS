@@ -3,7 +3,7 @@ RewriteBase /
 
 ErrorDocument 404 /index.php?art_title=not_found
 
-#  www 2 non www url syntax
+#  www to non-www url syntax
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L] 
 
@@ -40,11 +40,15 @@ RewriteRule ^([a-zA-Z0-9-_]+).all/([a-zA-Z0-9-_]+)$ index.php?section=$1&tags=$2
 RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2
 RewriteRule ^([a-zA-Z0-9-_]+)/?$ index.php?art_title=$1
 
-#art_title html
+#art_title with html extension
 RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).html$ index.php?lang=$1&art_title=$2
 RewriteRule ^([a-zA-Z0-9-_]+).html$ index.php?art_title=$1
 
-#art_id
+#art_title, draft
+RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1
+RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=1
+
+#art_id, deprecated
 #RewriteRule ^(it|en|es|fr|ar|de|al)/id:([0-9]+)$ index.php?lang=$1&art=$2
 #RewriteRule ^id:([a-zA-Z0-9-_]+)$ index.php?art=$1
 

@@ -20,6 +20,13 @@ try
 	{
 		$twig->addExtension(new Twig_Extension_Debug());
 	}
+	
+	$function = new Twig_SimpleFunction('file_exists', function ($file) {
+		return file_exists($file);
+	});
+	
+	$twig->addFunction($function);
+	
 	echo $twig->render('index.html', array(
 			'out'=>$out,
 			'html'=>$htmlOut

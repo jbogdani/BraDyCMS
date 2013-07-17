@@ -179,7 +179,10 @@ class Out
 			$this->data['article'][$article] = $this->article->getArticle(false, $article, $this->lang);
 		}
 		
-		$this->data['article'][$article]['text'] = $this->parseContent($this->data['article'][$article]['text']);
+		if ($this->data['article'][$article]['text'])
+		{
+			$this->data['article'][$article]['text'] = $this->parseContent($this->data['article'][$article]['text']);
+		}
 		
 		return $this->data['article'][$article];
 	}

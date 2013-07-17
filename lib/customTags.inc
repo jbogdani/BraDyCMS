@@ -317,4 +317,32 @@ class customTags
 					'') .
 		'</div>';
 	}
+	
+	/**
+	 * 
+	 * @param array $data
+	 * 			content*: prezi id
+	 * 			width
+	 * 			height
+	 * 			bgcolor
+	 * 			lock_to_path
+	 * 			autoplay
+	 * 			autohide_ctrls
+	 * @return string
+	 */
+	public static function prezi($data)
+	{
+		$html = '<iframe ' .
+			'src="http://prezi.com/embed/' . $data['content'] . '/?' .
+			'bgcolor=' . ($data['bgcolor'] ? $data['bgcolor'] : 'ffffff') . '&amp;' .
+			'lock_to_path=' . ( $data['lock_to_path'] ? $data['lock_to_path'] : '0') . '&amp;' .
+			'autoplay=' . ($data['autoplay'] ? $data['autoplay'] : '0') . '&amp;' .
+			'autohide_ctrls=' . ($data['autohide_ctrls'] ? $data['autohide_ctrls'] : '0') . '&amp;' .
+			'features=undefined&amp;disabled_features=undefined" ' .
+			'width="' . ( $data['width'] ? $data['width'] : '550') . '" ' .
+			'height="' . ( $data['height'] ? $data['height'] : '550') . '" ' .
+			'frameBorder="0"></iframe>';
+		
+		return $html;
+	}
 }

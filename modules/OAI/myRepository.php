@@ -181,7 +181,7 @@ class myRepository implements Repository
 				$dcrec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				
 				$dcrec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['text_id']);
-				$dcrec->addNS(NS::DC, 'identifier', $this->repo->getDoiPrefix() . '.' . $row[$this->repo->getTable('id')]);
+				$dcrec->addNS(NS::DC, 'identifier', $this->repo->getDoiPrefix() . '' . $row[$this->repo->getTable('id')]);
 				$dcrec->addNS(NS::DC, 'identifier', $this->repo->getISSN());
 				
 				return $dcrec->toXml();
@@ -201,7 +201,7 @@ class myRepository implements Repository
 				$eserec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				
 				$eserec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['text_id']);
-				$eserec->addNS(NS::DC, 'identifier', $this->repo->getDoiPrefix() . '.' . $row[$this->repo->getTable('id')]);
+				$eserec->addNS(NS::DC, 'identifier', $this->repo->getDoiPrefix() . '' . $row[$this->repo->getTable('id')]);
 				$eserec->addNS(NS::DC, 'identifier', $this->repo->getISSN());
 				
 				return $eserec->toXml();

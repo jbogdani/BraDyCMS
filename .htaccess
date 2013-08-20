@@ -32,8 +32,12 @@ RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).all$ index.php?lang=$1&sect
 RewriteRule ^([a-zA-Z0-9-_]+).all$ index.php?section=$1
 
 #section & tags
-RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).all/([a-zA-Z0-9-_]+)$ index.php?lang=$1&section=$2&tags=$3
-RewriteRule ^([a-zA-Z0-9-_]+).all/([a-zA-Z0-9-_]+)$ index.php?section=$1&tags=$2
+RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).all/([a-zA-Z0-9-_\s]+)$ index.php?lang=$1&section=$2&tags=$3
+RewriteRule ^([a-zA-Z0-9-_]+).all/([a-zA-Z0-9-_\s]+)$ index.php?section=$1&tags=$2
+
+#tags
+RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).tag$ index.php?lang=$1&tags=$2
+RewriteRule ^([a-zA-Z0-9-_]+).tag$ index.php?tags=$1
 
 
 #art_title no html

@@ -35,7 +35,7 @@ class Out
 	$article,	// article object
 	$cfg,		// cfg object
 	$get,		// GET data
-	$context,	// context: article, section, search
+	$context,	// context: article, section, tags, search
 	$data,	//
 	$metadata
 	;
@@ -84,9 +84,13 @@ class Out
 			$this->context = 'section';
 			$this->getArticlesBySection($get['section']);
 		}
-		else if ($get['search'])
+		else if ( $get['search'] )
 		{
 			$this->context = 'search';
+		}
+		else if ( !$get['section'] && $get['tags'] )
+		{
+			$this->context = 'tags';
 		}
 		else
 		{
@@ -128,6 +132,14 @@ class Out
 	public function sectionHasTags()
 	{
 		return ($this->get['tags'] && $this->context == 'section');
+	}
+	
+	/**
+	 * TODO: documentare!!!!!
+	 */
+	public function getFilterTags()
+	{
+		return $this->get['tags'];
 	}
 	
 	/**
@@ -325,7 +337,11 @@ class Out
 			// Lang
 			$this->data['page']['lang'] = $this->lang ? $this->lang: $this->cfg['sys_lang'];
 			
+			// Url
 			$this->data['page']['url']  = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			
+			// Mission
+			$this->data['page']['mission'] = cfg::get('logo');
 			
 			$art_img_paths = cfg::get('art_img');
 			
@@ -362,66 +378,13 @@ class Out
 	 */
 	public function getMenu($menu_name)
 	{
-		if (!$this->data['menu'][$menu])
+		if (!$this->data['menu'][$menu_name])
 		{
 			$menu = new Menu();
 			$tmp = $menu->get_structured_menu($menu_name, $this->lang);
 			
 			$this->data['menu'][$menu_name] = $this->recursiveRichMenu($tmp);
 			
-			return $this->data['menu'][$menu_name];
-			
-			$not_structured_menu = $menu->get_all_items_of_menu($menu_name, $this->lang);
-				
-			foreach($not_structured_menu as $item)
-			{
-				/**
-				 * Current is true if:
-				 * 	1. The menu points to the article I'm viewing
-				 * 	2. The menu point to the section blog I'm actually viewing
-				 * 	3. The menu point to a section blog and the current section name of the article I'm viewing is the same
-				 * 	4. The menu point to the home page and I'm actually on the home page
-				 */
-				
-				if ($this->get['art_title'] && preg_match('/art_title=' . $this->get['art_title'] . '/', $item['href']))
-				{
-					$item['current'] = true;
-				}
-				else if ($this->get['section'] && preg_match('/section=' . $this->get['section'] . '/', $item['href']))
-				{
-					$item['current'] = true;
-				}
-				else if ($this->context == 'article' && preg_match('/section=' . $this->getSectionName() . '/', $item['href']))
-				{
-					$item['current'] = true;
-				}
-				else if ($this->context == 'home' && $item['href'] == './')
-				{
-					$item['current'] = true;
-				}
-				/*
-				else if (!$this->get['search'] && !$this->get['art_title'] && !$this->get['section'] && $item['href'] == './')
-				{
-					$item['current'] = true;
-				}
-				*/
-	
-				if (empty($item['subof']))
-				{
-					if (is_array($this->data['menu'][$menu_name][$item['id']]))
-					{
-						$this->data['menu'][$menu_name][$item['id']] = array_merge($this->data['menu'][$menu_name][$item['id']], $item);
-					}
-					else
-					{
-						$this->data['menu'][$menu_name][$item['id']] = $item;
-					}
-				}
-				else
-				{
-					$this->data['menu'][$menu_name][$item['subof']]['sub'][] = $item;
-				}
-			}
 		}
 		return $this->data['menu'][$menu_name];
 	}

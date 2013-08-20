@@ -79,7 +79,7 @@
 										{% elseif fld.type == 'select' and fld.values %}
 											<select class="span12" name="{{ fld.name }}"  >
 												{% for opt in fld.values|split(',') %}
-													<option>{{ opt }}</option>
+													<option{% if opt == art[fld.name] %} selected="selected" {% endif %}>{{ opt }}</option>
 												{% endfor %}
 											</select>
 										{% else %}

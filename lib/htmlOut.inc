@@ -189,9 +189,9 @@ class htmlOut
 			return false;
 		}
 		
-		if (!is_array($menu_arr))
+		if (!is_array($menu_arr) || empty($menu_arr))
 		{
-			error_log('Menu ' . $menu . ' not found');
+			error_log('Menu <' . $menu . '> not found');
 			return false;
 		}
 		
@@ -253,7 +253,7 @@ class htmlOut
 	
 	public function searchForm()
 	{
-		$html = '<form action="javascript:void(0);" id="searchForm">'
+		$html = '<form action="javascript:void(0);" id="searchForm" data-path="' . $this->out->link2('home') . '">'
 				. '<input class="search-query" type="search" placeholder="' . tr::get('search_site') . '" name="search" id="search" />'
 			. '</form>';
 		return $html;
@@ -297,12 +297,12 @@ class htmlOut
 		
 		if ($art)
 		{
-			$html = '<section>'
-						. '<article>'
-							. '<h1>' . $art['title'] . '</h1>'
-							. '<div class="content">' . $art['text'] . '</div>'
-						. '</article>'
-					. '</section>';
+			$html = '<section>' .
+					'<article>' .
+						'<h1>' . $art['title'] . '</h1>' .
+						'<div class="content">' . $art['text'] . '</div>' .
+					'</article>' .
+				'</section>';
 		}
 		else
 		{
@@ -321,13 +321,13 @@ class htmlOut
 				
 			foreach ( $art_list as $art )
 			{
-				$html .= '<article>'
-						. ($art['title'] ? ' <h3><a href="' . $art['url']  . '">' . $art['title'] . '</a></h3>' : '')
-						. '<div class="content">' . $art['summary'] . '</div>'
-						. '<div class="read_more">'
-							. '<a href="' . $art['url']  . '">' . tr::get('read_more') . '</a>'
-						. '</div>'
-						. '</article>';
+				$html .= '<article>' .
+							($art['title'] ? ' <h3><a href="' . $art['url']  . '">' . $art['title'] . '</a></h3>' : '') .
+							'<div class="content">' . $art['summary'] . '</div>' .
+							'<div class="read_more">' .
+								'<a href="' . $art['url']  . '">' . tr::get('read_more') . '</a>' .
+							'</div>' .
+						'</article>';
 			}
 		
 			$html .= '</section>';

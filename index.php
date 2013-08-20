@@ -14,7 +14,10 @@ try
 	
 	$htmlOut = new htmlOut($out);
 	
-	$twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), unserialize(CACHE));
+	$settings = unserialize(CACHE);
+	$settings['autoescape'] = false; 
+	
+	$twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), $settings);
 	
 	if ($_SESSION['debug'])
 	{

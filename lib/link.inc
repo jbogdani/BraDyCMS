@@ -11,7 +11,7 @@ class link
 	private static function getPath()
 	{
 		$path = $_REQUEST['lang'] ? '..' : '.';
-		$path .= $_REQUEST['tags'] ? '/..' : '';
+		$path .= ($_REQUEST['section'] && $_REQUEST['tags']) ? '/..' : '';
 		
 		return $path;
 	}

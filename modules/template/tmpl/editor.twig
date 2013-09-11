@@ -1,0 +1,23 @@
+<div id="{{ uid }}">
+
+	<div class="well well-sm">File: <code>{{ filename }}</code></div>
+
+	<div><button class="btn btn-success pull-right save"><i class="glyphicon glyphicon-save"></i> Save</button></div>
+	
+	<pre class="prettyprint {% if lang %} lang-{{ lang }}{% endif %}" id="txt_{{ uid }}" contenteditable="true">{{ content }}</pre>
+	
+</div>
+
+
+
+
+<script>
+	
+	prettyPrint();
+	
+	$('#{{ uid }} .save').on('click', function(){
+		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', {text: $('#txt_{{ uid }}').text()}, function(data){
+			admin.message(data.text, data.type);
+		}, 'json');
+	});
+</script>

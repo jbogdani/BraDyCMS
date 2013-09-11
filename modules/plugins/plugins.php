@@ -30,16 +30,19 @@ class plugins_ctrl extends Controller
 				{
 					throw new Exception('Plugin file <code>' . $plg_file . '</code> not found!');
 				}
+				
 				require_once $plg_file;
 				
-				if(!method_exists($plugin, 'admin'))
-				{
-					throw new Exception('Method <code>' . $plugin . '::admin</code> not found in <code>' . $plg_file . '</code>');
-					return false;
-				}
-				
-				call_user_func_array(array($plugin, 'admin'), $param);
 			}
+			
+			if(!method_exists($plugin, 'admin'))
+			{
+				throw new Exception('Method <code>' . $plugin . '::admin</code> not found in <code>' . $plg_file . '</code>');
+				return false;
+			}
+
+			call_user_func_array(array($plugin, 'admin'), $param);
+			
 		}
 		catch (Exception $e)
 		{

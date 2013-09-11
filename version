@@ -1,5 +1,8 @@
+;text_id => textid
+;publish_on => publish
+
 ; TODO
-; delete all referencec for id:(int); articles are retrieved only by text_id, not by numeric id!
+; delete all referencec for id:(int); articles are retrieved only by textid, not by numeric id!
 ; 		deletefrom .htaccess
 ;		delete from rewrite links system
 ;		delete from ArticleRead

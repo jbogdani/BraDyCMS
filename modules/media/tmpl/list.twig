@@ -1,0 +1,145 @@
+<div id="{{ uid }}">
+	{% if error_create %}
+		<div class="alert alert-danger">{{ error_create|raw }}</div>
+	{% endif%}
+
+	{% set part_path = '' %}
+
+
+	<!-- Navigation bar -->
+	<div class="well well-sm clearfix">
+		<!-- Reload button -->
+		<button class="btn btn-success btn-sm" title="{{ tr.get('reload') }}" onclick="admin.tabs.reloadActive();">
+			<i class="glyphicon glyphicon-repeat"></i>
+		</button>
+		<span class="text-muted">|||</span>
+
+		<!-- URL -->
+		{% for part in path_arr %}
+			{% if part != '.' %}
+				{% if part_path == '' %}
+					{% set part_path = '/' ~ part %}
+				{% else %}
+					{% set part_path = part_path ~ '/' ~ part %}
+				{% endif %}
+			{% endif %}
+		<span>
+			<a class="navigation btn btn-{% if loop.last %}info disabled{% else %}default{% endif %}" data-href="#media/all{{ part_path }}">{{ part }}</a>
+		</span>
+		<span class="text-muted"> / </span>
+		{% endfor %}
+		<input type="text" placeholder="{{ tr.get('new_dir_name') }}" style="width:200px; display:inline-block;" />
+		<button class="btn btn-info newFolder" type="button">{{ tr.get('create_go') }}</button>
+
+		<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" class="pull-right col-xs-2" />
+
+	</div>
+
+
+	<!-- File uploader button -->
+	<div id="file-uploader_{{ uid }}"></div>
+
+	{% if path and files|length ==0 %}
+	<!-- Delete directory button -->
+	<p style="text-align: center">
+		<button class="btn btn-danger btn-lg deleteFolder">
+			<i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete_directory') }}
+		</button>
+	</p>
+
+	{% else %}
+	<!-- Media list UL -->
+	<ul class="mediaList" id="media-{{ uid }}">
+	{% for file in files %}
+
+		{# Folders #}
+		{% if file.type == 'folder' %}
+		<li class="img">
+			<a href="#media/all/{{ file.href }}">
+				<i class="glyphicon glyphicon-folder-open{% if file.name == 'thumbs' %} thumbs{% endif %}"></i>
+				<div class="caption searcheable">{{ file.name }}</div>
+			</a>
+		</li>
+		{% endif %}
+
+
+		{# Files #}
+		{% if file.type == 'file' %}
+		<li class="openpop img"
+			data-file="{{ file.href }}"
+			data-name="{{ file.name }}" 
+			{% if file.image %}
+			data-image="true"
+			{% endif %}
+			>
+			<div class="img-wrapper">
+				<img src="{{ file.src }}" />
+			</div>
+
+			<div class="caption searcheable">{{ file.name }}</div>
+		</li>
+		{% endif%}
+	{% endfor %}
+	</ul>
+	{% endif %}
+</div>
+
+
+<script>
+	
+	$('#{{ uid }} .navigation').on('click', function(){
+		admin.tabs.closeActive($(this).data('htef'));
+	});
+	
+	admin.upload(
+			$('#file-uploader_{{ uid }}')[0],
+			'controller.php?obj=utils&method=upload&param[]={{ path }}',
+			{
+				loaded: function(){
+					admin.tabs.closeActive('media/all{% if rel_path %}/{{ rel_path }}{% endif %}');
+				}
+			});
+
+	$('#{{ uid }} li.openpop').popover({
+		html:true,
+		title: function(){
+			var file = $(this).data('file')
+				name = $(this).data('name')
+				is_image = $(this).data('image');
+			
+			return $('<div />').append(
+					'<h4>' + $(this).data('name') + '</h4>',
+					'File URL:',
+					'<input type="text" value="' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
+					$('<div />').addClass('input-append'),
+					$('<div class="btn-group"></div>').append(
+						'<a class="btn btn-default" target="_blank" href="{{ path }}/' + name + '" title="{{ tr.get('open_download') }}"><i class="glyphicon glyphicon-download-alt"></i></a>',
+						( is_image ? $('<a href="#media/edit/{{ rel_path }}/' + name + '" class="btn btn-default" title="{{ tr.get('edit_file') }}"><i class="glyphicon glyphicon-wrench"></i>') : ''),
+						$('<a class="btn btn-danger" href="javascript:void(0);" title="{{ tr.get('delete') }}"><i class="glyphicon glyphicon-trash"></i>')
+							.click(function(){
+								admin.media.deleteFile('{{ rel_path }}/' + name);
+							})
+							)
+						);
+		}
+	});
+	
+	$('{{ uid }} .newFolder').click(function(){
+		var val = $(this).prev().val();
+		if (!val){
+			admin.message('{{ tr.get('missing_directory_name') }}', 'error');
+			$(this).prev().focus();
+		} else {
+			admin.media.go2dir({% if rel_path %}'{{ rel_path }}/' + {% endif %}val);
+		}
+	});
+	
+	
+	$('{{ uid }} .deleteFolder').click(function(){
+		admin.media.deleteDir('{{ rel_path }}');
+	});
+	
+	$('#input_{{ uid }}').on('keyup', function(){
+		admin.media.filterDir($(this).val(), '{{ uid }}');
+	});
+</script>

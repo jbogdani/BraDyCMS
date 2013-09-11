@@ -1,0 +1,79 @@
+<div id="{{ uid }}">
+	
+	<div class="row">
+		<div class="col-md-4 text-muted"><h1>{{ form|replace({'.json': ''}) }}</h1></div>
+		
+		<div class="col-md-4 text-center">Syntax validation: <span class="validate"></span></div>
+		
+		<div class="col-md-4 text-right">
+			<button class="btn btn-success save-button"><i class="glyphicon glyphicon-save"></i> {{ tr.get('save') }}</button>
+			<button class="btn btn-danger delete-button"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}</button>
+		</div>
+	</div>
+	
+	<pre ContentEditable="true" class="prettyprint code">{{ content }}</pre>
+	
+	
+
+</div>
+
+
+<script>
+	
+	function validateSyntax(){
+		try {
+			var c = $.parseJSON($('#{{ uid }} .code').text());
+			
+			if (c){
+				$('#{{ uid }} .validate').html('<i class="text-success glyphicon glyphicon-ok" style="font-size: 3em;"></i>');
+				$('#{{ uid }} .save-button').fadeIn();
+			}
+		}
+		catch (err) {
+			$('#{{ uid }} .validate').html('<i class="text-danger glyphicon glyphicon-fire" style="font-size: 3em;"></i>');
+			$('#{{ uid }} .save-button').fadeOut();
+		}
+	}
+	
+	
+	validateSyntax();
+	
+	
+	$('#{{ uid }} .code').on('keyup', function(){
+		validateSyntax();
+	});
+	
+	$('#{{ uid }} .save-button').on('click', function(){
+		$.post('controller.php?obj=userform_ctrl&method=save&param[]={{ form }}', {data: $.parseJSON($('#{{ uid }} .code').text())}, function(data){
+			admin.message(data.text, data.status);
+		}, 'json');
+	});
+	
+	$('#{{ uid }} .delete-button').on('click', function(){
+		admin.dialog({
+			html:'<h3>' + admin.tr('confirm_delete_form') + '<h3>',
+			buttons: [
+				{
+					text: admin.tr('delete'),
+					addclass: 'btn-danger',
+					click: function(){
+						$.get('controller.php?obj=userform_ctrl&method=erase&param[]={{ form }}', function(data){
+							admin.message(data.text, data.status);
+							if (data.status == 'success'){
+								$('#modal').modal('hide');
+								admin.tabs.reloadActive();
+							}
+						}, 'json');
+					}
+				},
+				{
+					text: admin.tr('reset'),
+					action: 'close'
+				}
+			]
+		});
+	});
+	
+	window.prettyPrint && prettyPrint();
+</script>
+	

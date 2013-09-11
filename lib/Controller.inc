@@ -8,15 +8,40 @@
  
 class Controller
 {
-	protected $get, $post, $request;
+	/**
+	 *
+	 * @var array arrau of $_GET data
+	 */
+	protected $get;
+	
+	/**
+	 *
+	 * @var array array of $_POST data
+	 */
+	protected $post;
+	
+	/**
+	 *
+	 * @var array array of $_REQUEST data 
+	 */
+	protected $request;
 
-	public function __construct($get, $post, $request)
+	/**
+	 * Starts object and sets $get, $post and $request
+	 */
+	public function __construct()
 	{
-		$this->get = $get;
-		$this->post = $post;
-		$this->request = $request;
+		$this->get = $_GET;
+		$this->post = $_POST;
+		$this->request = $_REQUEST;
 	}
 
+	/**
+	 * Renders a TWIG template in a module folder
+	 * @param string $module module name
+	 * @param string $template template (no extension) file name
+	 * @param array $data array of data to inject in template (uid and tr object are available by default)
+	 */
 	public function render($module, $template, $data = false)
 	{
 		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . $module . '/tmpl'), unserialize(CACHE));
@@ -24,9 +49,17 @@ class Controller
 		{
 			$twig->addExtension(new Twig_Extension_Debug());
 		}
-		echo $twig->render($template . '.html', $data ? $data : array() );
+		
+		$data['tr'] = new tr();
+		$data['uid'] = uniqid();
+		 
+		echo $twig->render($template . '.twig', $data );
 	}
 
+	/**
+	 * Main routing method
+	 * @throws Exception
+	 */
 	public function route()
 	{
 		if ($this->request['obj'])

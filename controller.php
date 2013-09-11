@@ -11,7 +11,7 @@ try
 	$root = './';
 	require_once $root . 'lib/globals.inc';
 	
-	$controller = new Controller($_GET, $_POST, $_REQUEST);
+	$controller = new Controller();
 	
 	$controller->route();
 }

@@ -5,14 +5,11 @@
  * @license			All rights reserved
  * @since			Dec 1, 2012
  */
- 
 try
 {
 	require_once 'lib/globals.inc';
 
-	$out = new Out($_GET, $_SESSION['lang']);
-	
-	$htmlOut = new htmlOut($out);
+	$outHtml = new OutHtml($_GET, $_SESSION['lang']);
 	
 	$settings = unserialize(CACHE);
 	$settings['autoescape'] = false; 
@@ -30,9 +27,8 @@ try
 	
 	$twig->addFunction($function);
 	
-	echo $twig->render('index.html', array(
-			'out'=>$out,
-			'html'=>$htmlOut
+	echo $twig->render('index.twig', array(
+			'html'=>$outHtml
 	));
 }
 catch (Exception $e)

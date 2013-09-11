@@ -1,0 +1,350 @@
+<style>
+	dl.docs dt{
+		margin-top: 20px;
+	}
+</style>
+
+<h1>FAQ</h1>
+<div class="row" id="{{ uid }}">
+	
+	<div class="col-md-5">	
+		<div class="test well">
+			<ul class="nav nav-list menu"></ul>
+		</div>
+	</div>
+	
+	<div class="col-md-7">
+		<dl class="docs">
+			<dt>How to add a new article?</dt>
+			<dd><pre>Main menu > Articles > Add new Article</pre></dd>
+		
+			<dt>How to edit existing article?</dt>
+			<dd>
+				<pre>Main menu > Articles > Show all articles</pre>
+				Find in the list the article you want to edit. Also the serach filter can be used. Click on edit button.
+			</dd>
+			
+			<dt>How to create a new menu?</dt>
+			<dd>
+				<pre>Main menu > Menu > Add new menu item</pre>
+				Fill the field "Menu" with the name of the new menu. 
+			</dd>
+			
+			<dt>What information are needed to create a new menu item?</dt>
+			<dd>
+				To add a new menu item the following information is necessary:
+					<ul>
+						<li>Text: is the text that users will see</li>
+						<li>Link: the link the menu item will point to. For external links also the <code>http://</code> part is needed (eg.: <code>http://bradypus.net</code>). For internal links the following syntaxt should be used:
+						<ul>
+							<li><code>./art_title=article_textid</code> for links to articles</li>
+							<li><code>./section=section_name</code> for links to section blogs</li>
+							<li><code>./</code> to link to the home page</li>
+							<li><code>#</code> do nothing link</li>
+						</ul>
+						Links to articles, section blogs and more can also be entred by using the widget on the left. Clicking on one article or section, etc, the input will be filled automatically.</li>
+						<li>Target: where the link will be opened:
+							<ul>
+								<li>if not set all links will be opened in the same window or tab</li>
+								<li><code>_blank</code> will open the link in a new window or tab</li>
+							</ul>
+						</li>
+						<li>Title: an explicative text that the user will see on hovering the menu text with the cursor</li>
+						<li>Menu: menu name. If choosen from the available list, the menu item will be added to that menu. If a new string is entered a new menu is created. <code>Attention:</code> No white spaces, upper case or special characters in this field, please!</li>
+						<li>Sub menu of: if an existing menu is select a list of the available menu items (siblings) will be shown. If one of them is selected this menu item will be nested to the selected item. <code>Attention:</code> Please see the "How to manage menus?" section for easily nestins menu items</li>
+						<li>Sorting: Only integers are allowed in this field. Use this field to controle the order of appearance of the menu items. <code>Attention:</code> Please see the "How to manage menus?" section for easily sorting menu items</li>
+					</ul>
+			</dd>
+			
+			<dt>How to manage menus?</dt>
+			<dd>
+				<pre>Main menu > Menu > Show all menus</pre>
+				If menus are available will be listed here. Fot each available menu will be provided a list containing all items. Clicking on an item will open it in a new tab for editing (for detail see <code>What information are needed to create a new menu item?</code>).
+				<p>Menu items can be ordered bu dragging & dropping them. In the same way these items can be nested into one another. Settings are automatically saved.</p>
+			</dd>
+			
+			<dt>How to insert menu divider item</dt>
+			<dd>
+				To add menu divider just add a new menu item having as <strong>Text</strong> and as <strong>Link</strong> just a dot (.). This will output <code>&#60;li class="divider"&#62;&#60;/li&#62;</code>
+			</dd>
+			
+			<dt>How to upload files?</dt>
+			<dd>
+				<pre>Main menu > Media > Media</pre>
+				Click on "Upload a file" button, or drag& drop files from your folders to the "Upload a file" button. Multiple files can be loaded simultanously. 
+			</dd>
+			
+			<dt>Can I organize my files in folders?</dt>
+			<dd>
+				Yes. In the media folder you can create all the directories you need to beter organize your files. Creating a folder is easy as typing its name:
+				<pre>Main menu > Media > Media</pre>
+				Simply click on one folder to enter in it and use the navigation bar to go back up to the root folder.
+			</dd>
+		
+			<dt>Can I navigate my files and folders?</dt>
+			<dd>
+				<pre>Main menu > Media > Media</pre>
+				In the navigation bar enter in the input the name of the directory you want to create and click "Create & Go!". The new folder will be created and you will be durected there, ready to upload files.
+			</dd>
+			
+			<dt>Can I delete or rename my files?</dt>
+			<dd>
+				Yes you can!
+				<pre>Main menu > Media > Media</pre>
+				Just click on the file and a popup will appear (click on the file to make it disappear again). In the popup you can fine the file URL to use in your articles, an input where you can enter the new name, to rename the file (<code>Attention:</code> make sure to use the same file extension), and the open / download and delete buttons.
+				<p><code>Tip:</code> in the new name input you can also use relative paths to move your file in other folder!</p>
+			</dd>
+			
+			<dt>How can I delete a a folder I don't need anymore?</dt>
+			<dd>You can not delete folders that contains files. Thus, to delete a folder you must delete or move (see: <code>Can I delete or rename my files?</code>) all files inside. Once the folder is empty a button will appear and you can delete it.</dd>
+			
+			<dt>How can I translate an article?</dt>
+			<dd>
+				<pre>Main menu > Articles > Translations</pre>
+				Click in the language you want to translate in, a table showinf the translation status for each article will appear. To translate an article click on the edit button. It will open the article translation form for the article. The automatic copy & paste buttons (<code>>></code>) can help in copying the original text in the translation box, in order to import images and other tags in the translation. 
+			</dd>
+			
+			<dt>How can I translate a menu item?</dt>
+			<dd>
+				<pre>Main menu > Menu > Translations</pre>
+				Click in the language you want to translate in, a table showinf the translation status for each menu item will appear. To translate a menu item click on the edit button. It will open the menu translation form for the menu item. The automatic copy & paste buttons (<code>>></code>) can help in copying the original text in the translation box, in order to import images and other tags in the translation. 
+			</dd>
+			
+			<dt>Can I have nested articles?</dt>
+			<dd>BraDypUS CMS supports something similar to "Nested articles". It's a feature that permits to use an article as an introduction text for a list of articles, usually articles of the same section. To achieve this just create a new article having as <code>text id</code> the same string as the section name you want to use this article as introduction for. This article will be used as intro text for the section blog list!</dd>
+			
+			
+			<dt>For DESIGNERS: How to create and edit a site template?</dt>
+			<dd>
+				<p>To edit the <strong>HTML</strong> of the main index file:</p>
+				<pre>Main menu > Other > Template manager > Edit HTML</pre>
+				or follow <a href="#template/index">this link</a>. Plaese check the <a href="#docs/tmpl/intro">template documentation</a>.
+				
+				<p>To edit the <strong>CSS</strong>:</p>
+				<pre>Main menu > Other > Template manager > Edit CSS</pre>
+				or follow <a href="#template/css">this link</a>.
+				
+			</dd>
+			
+			<dt>How can I create a new image gallery?</dt>
+			<dd>
+				<pre>Main menu > Media > Galleries</pre>
+				Will list all available image galleries. To add a new Gallery just click on the PLUS button, <code>Add new gallery</code>. You will be promped fot the gallery name. Be carefull: no spaces, special characters of commas (,), dashes (-), apices (') or double apices (") are allowed. If entered these characters will be automatically replaced with underscores (_). Gallery names must be lower case.
+			</dd>
+			
+			<dt>How can I edit an existing image gallery?</dt>
+			<dd>
+				<pre>Main menu > Media > Galleries</pre>
+				Will list all available image galleries. Just click on the gallery you want to edit.
+				<p>Images can be loaded by clicking, in the lower part of the page, the <code>Upload file</code> button. More images can be load simultaneously. An easier way to load more images is by simply dragging and dropping them from your computer to the button.</p>
+				<p>After the images are loaded you can entre the captions, bu writing in the <code>Description</code> column. Clicking on save will save all captions.</p>
+				<p>An easy way to create image thumbnails is by using the <code>(Re) create thumbnail</code> button in the Thumbnail column. This will create an image thumbnail measuring 200x200px.</p>
+				<p class="text-error"><strong>Pay attention</strong>: for the thumbnail creator to work is necessary to have a valid convert path in the system configuration!</p>
+			</dd>
+			
+			<dt>How can I translate an existing image gallery?</dt>
+			<dd>
+				<pre>Main menu > Media > Galleries</pre>
+				<p>Will list all available image galleries; click on the gallery you want to translate.</p>
+				<p>Click in the menu bar, under the page title, the language you want to add a translation for and write caption translations.</p>
+				<p>When you have finished click on any save button, to save the translations.</p>
+			</dd>
+			
+			<dt>How can I create delete an image or a whole gallery?</dt>
+			<dd>
+				<pre>Main menu > Media > Galleries</pre>
+				<p>Click on the gallery you want to edit / delete</p>
+				<p>Clicking the <code>Delete</code> button in the image column will delete the original image, its thumbnail and captio if exist. This action can not be undone.</p>
+				<p>To delete a whole gallery all images must be deleted first. When no images are present a button <code>Delete gallery</code> will be shown and the gallery can be deleted. This action can not be undone.</p> 
+			</dd>
+			
+			<dt>How can I add a galley in an article's body?</dt>
+			<dd>
+				<p>To add a gallery in the article body a special syntax is provided:</p>
+				<pre>[[gallery]]gallery_name[[/gallery]]</pre>
+				<p>Where <code>gallery_name</code> is the name (lower-case, no-spaces, no special characters) of the gallery. This will display a <code>div</code> having css class <code>gallery-container</code> and containing an unordered list (<code>ul</code>) with images and captions. For more details on output check <a href="#docs/tmpl/OutHtml">OutHtml.gallery()</a> documentation.</p>
+				<ul>Some formatting options are available:
+					<li><pre>[[gallery class="my_css_class"]]gallery_name[[/gallery]]</pre>
+					<code>my_class_name</code> is a css class that will be added to the unordered list containing the gallery. Manu class names can be added, separated by spaces.</li>
+					<li><pre>[[gallery rel="true"]]gallery_name[[/gallery]]</pre>
+					if <code>rel</code> option is present (and set to true or anything else) the gallery elements will be linked to each other, otherwise each image will be considered as an indipendent gallery.</li>
+				</ul>
+				A full example is as follows:
+				<pre>[[gallery class="class1 class2" rel="true"]]gallery_name[[/gallery]]</pre>
+			</dd>
+			
+			<dt>What is a <em>conditional loading gallery</em> and how can I add it in an article's body?</dt>
+			<dd>
+				<p>BraDyCMS permits the creation of conditional loading galleries. Using these kind of galleries instead of the normal ones permits web designres to create faster websites for mobile templates</p>
+				<p>If you are building responsive layouts and do not want to show your image gallery in smaller devices, you surel do not want to load gallery image at all, in order to save bandwidth.</p>
+				<p>Conditional loading galleries will load images only if the <code>unordered list (ul)</code> element which holds the galley itself is visible. Images will be loaded using javascript. A jQuery plugin (<code>jquery.cl_gallery.js</code>) is provided.</p>
+				<p>To add a conditional loading gallery in the article body a special syntax is provided:</p>
+				<pre>[[cl_gallery]]gallery_name[[/cl_gallery]]</pre>
+				<p>Conditional loading galleries uses the same options as galleries</p>
+				<p class="text-warning"><strong>Hold on!</strong> For conditional loading image galleries to work properly adeguate javascript jquery plugin <code>jquery.cl_gallery.js</code> should be loaded and executed!</p>
+			</dd>
+			
+			<dt>How to add a YouTube video in an article's body?</dt>
+			<dd>
+				<p>To add a gallery in the article body a special syntax is provided:</p>
+				<pre>[[youtube width="560" height="315"]]you_tube_id[[/youtube]]</pre>
+				<p>Where<br />
+					<code>you_tube_id</code> (*required) is the id of the video provided by YouTube;<br />
+					<code>width</code> is the width of the video (if not provided default value - 560 - will be used) and<br />
+					<code>height</code> is the height of the video (if not provided default value - 315 - will be used).</p>
+			</dd>
+			
+			<dt>How to add a Vimeo video in an article's body?</dt>
+			<dd>
+				<p>To add a gallery in the article body a special syntax is provided:</p>
+				<pre>[[vimeo width="560" height="315"]]vimeo_id[[/vimeo]]</pre>
+				<p>Where<br />
+					<code>vimeo</code> (*required) is the id of the video provided by Vimeo;<br />
+					<code>width</code> is the width of the video (if not provided default value - 560 - will be used) and<br />
+					<code>height</code> is the height of the video (if not provided default value - 315 - will be used).</p>
+			</dd>
+			
+			
+			<dt>How to add a Twitter widget in an article's body?</dt>
+			<dd>
+				<p>To add a Twitter widget you must create it before in Twitter website: <a href="https://twitter.com/settings/widgets" target="_blank">https://twitter.com/settings/widgets</a>. Afterwords you can add it in your content using this simple tag:</p>
+				<pre>[[twitter user="twitter_username" id="twitter_widget_id"]]Some intro text[[/twitter]]</pre>
+				<p>Where<br />
+					<code>twitter_username</code> (*required) is your Twitter username;<br />
+					<code>id</code> (*required) is your widget id, provided by Twitter and<br />
+					<code>some intro text</code> is the text that will be shown id something goes wrong nad Twitter widget is not initialized.</p>
+			</dd>
+			
+			<dt>How to add Facebook COMMENTS widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook comments widget use this simple tag:</p>
+				<pre>[[fb_comments width="470" posts="10" colorscheme="dark"]][[/fb_comments]]</pre>
+				<p>Where<br />
+					<code>width</code> is the widget's width (default value is 470);<br />
+					<code>num_posts</code> is the number of posts you want to show (default is 10)<br />
+					<code>colorscheme</code> dark or light</p>
+				<p>For a list of all available options: <a href="https://developers.facebook.com/docs/reference/plugins/comments/" target="_blank">https://developers.facebook.com/docs/reference/plugins/comments/</a></p>
+			</dd>
+			
+			<dt>How to add Facebook FOLLOW widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook follow widget use this simple tag:</p>
+				<pre>[[fb_follow]]http://facebook.com/rest_of_the_url_to_follow[[/fb_follow]]</pre>
+				<p>Where<br />
+					<code>http://facebook.com/rest_of_the_url_to_follow</code> is the Facebook page url to follow;</p>
+				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/follow/" target="_blank">https://developers.facebook.com/docs/reference/plugins/follow/</a></p>
+			</dd>
+			
+			<dt>How to add Facebook LIKE-box widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook like-box widget use this simple tag:</p>
+				<pre>[[fb_like_box]][[/fb_like_box]]</pre>
+				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/like-box/" target="_blank">https://developers.facebook.com/docs/reference/plugins/like-box/</a></p>
+			</dd>
+			
+			<dt>How to add Facebook LIKE widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook like widget use this simple tag:</p>
+				<pre>[[fb_like]][[/fb_like]]</pre>
+				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/like/" target="_blank">https://developers.facebook.com/docs/reference/plugins/like/</a></p>
+			</dd>
+			
+			<dt>How to add Facebook SEND widget in an article's body?</dt>
+			<dd>
+				<p>To add a Facebook send widget use this simple tag:</p>
+				<pre>[[fb_send]][[/fb_send]]</pre>
+				<p>For a list of all available options that can be used as arguments: <a href="https://developers.facebook.com/docs/reference/plugins/send/" target="_blank">https://developers.facebook.com/docs/reference/plugins/send/</a></p>
+			</dd>
+			
+			<dt>How to add AddThis sharing button?</dt>
+			<dd>
+				<p>To add a AddThis share widget use this simple tag:</p>
+				<pre>[[addThis only_js="true"]]some_html_or_text[[/addThis]]</pre>
+				<p>Where<br />
+					<code>some_html_or_text</code> is the html or text that will be shown in your page. If not provided the default AddThis image will be shown: <img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/><br />
+					<code>only_js</code> is a control flag. If present (and true) the html will not be showned, only javascript inclusion will be performed
+					
+				</p>
+			</dd>
+			
+			<dt>How to add Skype button?</dt>
+			<dd>
+				<p>To add a Skype call, chat or both widget use this simple tag:</p>
+				<pre>[[skype type="call" imageSize="32"]]skype_username[[/skype]]</pre>
+				<p>Where<br />
+					<code>skype_username</code> is the skype username of the person you want to be contacted. This value is required<br />
+					<code>type</code> is the action you want skype to perform. This can be "call", "chat" or "dropdown". Dropdown includes both chat and call actions. This value is optional; if missing the default value of "call" will be used.<br />
+					<code>imageSize</code> is the size in pixel of the skype image that will be shown. The following sizes are allowed: "10", "12", "14", "16", "24, "32"; if missing the default value "32" will be used<br /> 
+				</p>
+				<p><code>Attention!</code> You'll need to update your Skype setting to allow incoming calls or messages from people who are not on your contact list.</p>
+			</dd>
+			
+			<dt>How to add SoundCloud player?</dt>
+			<dd>
+				<p>To add a SoundCloud player use this simple tag:</p>
+				<pre>[[soundcloud width="100%" height="166" color="#ff6600" autoplay="true" artwork="true"]]track_url[[/soundcloud]]</pre>
+				<p>Where<br />
+					<code>track_url</code> is the skype username of the person you want to be contacted. This parameter is required<br />
+					<code>width</code> is the widget's width. This parameter is optional; if missing the default value of "100%" will be used.<br />
+					<code>height</code> is the widget's height. This parameter is optional; if missing the default value of "166" will be used.<br />
+					<code>color</code> is the widget's color. This parameter is optional; if missing the default value of "#ff6600" will be used.<br />
+					<code>autoplay</code> if true track autoplay will be enabled. This parameter is optional; if missing the default value of "false" will be used.<br />
+					<code>artwork</code> if true track artwork will be shown. This parameter is optional; if missing the default value of "false" will be used.<br />
+				</p>
+			</dd>
+			
+			<dt>How to embed a Prezi?</dt>
+			<dd>
+				<p>To embed a Prezi use this simple tag:</p>
+				<pre>[[prezi width="500" height="550" color="#ff6600" autoplay="true" artwork="true"]]prezi_id[[/prezi]]</pre>
+				<p>Where<br />
+					<code>prezi_id</code> The pezi unique ID<br />
+					<code>bgcolor</code> default value: ffffff<br />
+					<code>lock_to_path</code> default value: 0<br />
+					<code>autoplay</code> 0 or 1. default value: 0<br />
+					<code>autohide_ctrls</code> 0 or 1. default value: 0<br />
+					<code>width</code> default: 500<br />
+					<code>height</code> default: 550<br />
+				</p>
+			</dd>
+			
+			<dt>How to add and image and caption in article content?</dt>
+			<dd>
+				<p>Images can be added using TinyMCE image tag, or a special custom tag that permits to add figures and captions using a small piece of code</p>
+				<pre>[[figure width="300px" caption="image_caption" align="left" href="http://bradypus.net" href_class="bordered"]]image_url[[/figure]]</pre>
+				<p>Where<br />
+					<code>image_url</code> is the relative path to the image location (no need to add "./sites/default/images/" part of path)<br />
+					<code>width</code> id the width of the image container<br />
+					<code>caption</code> is image caption<br />
+					<code>align</code> Image container's alignment. Can be "left" or "right"<br />
+					<code>href</code> if present a link will be added to the image pointing to this destination.<br />
+					<code>href_class</code> a css class to be added to the link. Tis may be usefull for special javascript actions, like fancybox<br />
+				</p>
+			</dd>
+			
+			<dt>How to add Disqus comments on articles?</dt>
+			<dd>
+				<p>To add Disqus comments on articles use this simple tag:</p>
+				<pre>[[disqus]]disqus_website_id[[/disqus]]</pre>
+				<p>Where<br />
+					<code>disqus_website_id</code>is the unique shortname of your Disqus forum
+				</p>
+			</dd>
+			
+			
+		</dl>
+	</div>
+</div>
+
+<script>
+$('#{{ uid }} dl.docs dt').each(function(i, el){
+	$(el).attr('id', 'nt-' + i).prepend((i+1) + '. ');
+	$('#{{ uid }} ul.menu').append('<li><a href="#nt-' + (i) + '">' + $(el).text() + '</a></li');
+	$('#{{ uid }} div.test').affix({
+		offset: {
+			top: 80
+		}
+	});
+	
+});
+</script>

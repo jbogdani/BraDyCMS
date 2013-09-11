@@ -27,17 +27,9 @@ RewriteRule ^admin:lng-(it|en|es|fr|ar|de|al)?$ admin.php?lang=$1
 #safe home page 
 RewriteRule ^(it|en|es|fr|ar|de|al)/?$ index.php?lang=$1 
 
-#section
-RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).all$ index.php?lang=$1&section=$2
-RewriteRule ^([a-zA-Z0-9-_]+).all$ index.php?section=$1
-
-#section & tags
-RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).all/([a-zA-Z0-9-_\s]+)$ index.php?lang=$1&section=$2&tags=$3
-RewriteRule ^([a-zA-Z0-9-_]+).all/([a-zA-Z0-9-_\s]+)$ index.php?section=$1&tags=$2
-
 #tags
-RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).tag$ index.php?lang=$1&tags=$2
-RewriteRule ^([a-zA-Z0-9-_]+).tag$ index.php?tags=$1
+RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_+~]+).all$ index.php?lang=$1&tags=$2
+RewriteRule ^([a-zA-Z0-9-_+~]+).all$ index.php?tags=$1
 
 
 #art_title no html
@@ -50,7 +42,7 @@ RewriteRule ^([a-zA-Z0-9-_]+).html$ index.php?art_title=$1
 
 #art_title, draft
 RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1
-RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=1
+RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true
 
 #art_id, deprecated
 #RewriteRule ^(it|en|es|fr|ar|de|al)/id:([0-9]+)$ index.php?lang=$1&art=$2

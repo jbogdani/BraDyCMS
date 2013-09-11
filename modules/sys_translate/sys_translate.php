@@ -6,27 +6,25 @@
  * @since			Aug 12, 2012
  */
 
-class sys_translate_ctrl
+
+class sys_translate_ctrl extends Controller
 {
-	public static function showList($opened_lang=false)
+	public function showList($opened_lang=false)
 	{
 		$langs = utils::dirContent(LOCALE_DIR);
 		
 		$uid = uniqid('transl');
 		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'sys_translate/tmpl'), unserialize(CACHE));
-		
-		echo $twig->render('list.html', array(
+		$this->render('sys_translate', 'list', array(
 				'opened_lang' => $opened_lang,
-				'langs' => $langs,
-				'uid' => $uid,
-				'tr' => new tr()
+				'langs' => $langs
 		));
 	}
 	
-	public static function showForm($lng)
+	
+	public function showForm()
 	{
-
+		$lng = $this->get['param'][0];
 		require LOCALE_DIR . 'it.php';
 		$it = $_lang;
 		unset($_lang);
@@ -35,19 +33,18 @@ class sys_translate_ctrl
 		$edit_lang = $_lang;
 		unset($_lang);
 		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'sys_translate/tmpl'), unserialize(CACHE));
-		
-		echo $twig->render('form.html', array(
-				'uid' => uniqid('translate'),
+		$this->render('sys_translate', 'form', array(
 				'lng' => $lng,
 				'it' => $it,
-				'edit_lang' => $edit_lang,
-				'tr' => new tr()
+				'edit_lang' => $edit_lang
 		));
 	}
 	
-	public static function add_locale($lang)
+	
+	public function add_locale()
 	{
+		$lang = $this->get['param'][0];
+		
 		if (!file_exists(LOCALE_DIR . $lang . '.php') && utils::write_in_file(LOCALE_DIR . $lang . '.php', ''))
 		{
 			$msg['text'] = tr::get('ok_lang_create');
@@ -62,8 +59,11 @@ class sys_translate_ctrl
 		echo json_encode($msg);
 	}
 	
-	public static function save($post)
+	
+	public function save()
 	{
+		$post = $this->post;
+		
 		$lang = $post['edit_lang'];
 		unset($post['edit_lang']);
 
@@ -80,7 +80,6 @@ class sys_translate_ctrl
 		{
 			echo json_encode(array('text'=>tr::get('error_language_update'), 'status'=>'error'));
 		}
-		
 	}
 		
 }

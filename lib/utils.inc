@@ -92,7 +92,7 @@ class utils
 			{
 				if (!in_array($file, $dont_consider_array))
 				{
-					$dir_content[]=$file;
+					$dir_content[] = $file;
 				}
 			}
 			closedir($handle);
@@ -351,6 +351,7 @@ class utils
 		}
 		return array_filter($arr);
 	}
+	
 	
 	
 }

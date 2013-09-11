@@ -16,20 +16,31 @@ class link
 		return $path;
 	}
 	
-	public static function to_article($text_id, $lang = false)
+	private static function formatHref($href)
 	{
-		return self::getPath() . '/' . ( $lang ? $lang . '/' : '') . $text_id;
+		return str_replace(' ', '+', $href);
+	}
+	
+	public static function to_article($textid, $lang = false)
+	{
+		return self::getPath() . '/' . ( $lang ? $lang . '/' : '') . self::formatHref($textid);
 	}
 	
 	
-	public static function to_section($section, $tags = false, $lang = false)
+	public static function to_tags($tags, $lang = false)
 	{
-		return self::getPath() . '/' . ( $lang ? $lang . '/' : '') . $section . '.all' . (!empty($tags) ? '/' . implode('-', $tags) : '');
+		if (!is_array($tags))
+		{
+			$tags = array($tags);
+		}
+		return self::getPath() . '/' . ( $lang ? $lang . '/' : '') . self::format(implode('-', $tags)) . '.all';
 	}
 	
 	
 	public static function format($href, $lang = false)
 	{
+		$href = self::formatHref($href);
+		
 		$path = self::getPath();
 	
 		// absolute url is not processed

@@ -50,6 +50,6 @@ class cfg
 	public static function save($data)
 	{
 		self::$data = $data;
-		utils::write_in_file(MAIN_DIR . 'sites/default/cfg/config.json', self::$data, 'json');
+		return utils::write_in_file(MAIN_DIR . 'sites/default/cfg/config.json', self::$data, 'json');
 	}
 }

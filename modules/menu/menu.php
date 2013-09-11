@@ -6,117 +6,121 @@
  * @since			Dec 4, 2012
  */
  
-class menu_ctrl
+class menu_ctrl extends Controller
 {
-	public static function nestSort($data)
-	{
-		$menu = new Menu();
-		if (!$menu->updateSortNest($data['menu']))
-		{
-			echo tr::get('error_update_sort');
-		}
-	}
 	
-	public static function all()
+	public function all()
 	{
-		$menu = new Menu();
-		
-		$all_menus = $menu->getList();
-		
+		$all_menus = Menu::getList();
 		if (is_array($all_menus))
 		{
 			$str_menus = array();
-			
+				
 			foreach ($all_menus as $m)
 			{
-				$str_menus[$m] = $menu->get_structured_menu($m);
+				$html_menus[$m] = $this->strMenu2ul(Menu::get_structured_menu($m));
 			}
-			
 		}
 		
 		if (is_array($str_menus))
 		{
-			$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'menu/tmpl'), unserialize(CACHE));
-			echo $twig->render('list.html', array(
-					'all_menus'=>$str_menus,
-					'uid' => uniqid(),
-					'tr' => new tr()
+			$this->render('menu', 'list', array(
+				 'html_menus'=>$html_menus
 			));
 		}
 	}
 	
-	public static function edit($id)
+	private function strMenu2ul($menu)
 	{
-		$menu = new Menu();
-		$art = new Article(new DB());
-		
-		$menu_data = $menu->getItem($id);
-		
-		$menu_list = $menu->getList();
-		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'menu/tmpl'), unserialize(CACHE));
-		echo $twig->render('form.html', array(
-				'menu'=>$menu_data[0],
-				'menu_list' => $menu_list,
-				'uid' => uniqid('id'),
-				'tr' => new tr(),
-				'arts' => $art->getAll(),
-				'secs' => $art->getSections()
-		));
+		$html = '<ol class="dd-list">';
+		foreach($menu as $item)
+		{
+			$html .= '<li class="dd-item" data-id="' . $item['id'] . '">' .
+					  '<i class="glyphicon glyphicon-move dd-handle"></i> ' .
+						'<a href="#menu/edit/'. $item['id'] . '">' . $item['item'] . '</a>' .
+					  '';
+			if ($item['sub'])
+			{
+				$html .= $this->strMenu2ul($item['sub']);
+			}
+			$html .= '</li>';
+		}
+		$html .= '</ol>';
+		return $html;
 	}
 	
-	public static function addNew()
-	{
-		$menu = new Menu();
-		$art = new Article(new DB());
-		
-		$menu_list = $menu->getList();
-		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'menu/tmpl'), unserialize(CACHE));
-		echo $twig->render('form.html', array(
-				'menu_list' => $menu_list,
-				'menu_list_array' => '["' . ( is_array($menu_list) ? implode('","', $menu_list) : '' ) . '"]',
-				'uid' => uniqid('id'),
-				'tr' => new tr(),
-				'arts' => $art->getAll(),
-				'secs' => $art->getSections()
-		));
-		
-	}
 	
-	public static function getMenuItems($menu)
-	{
-		$menuObj = new Menu();
-
-		$items = $menuObj->get_all_items_of_menu($menu);
-		
-		echo json_encode($items);
-		
-	}
-	
-	public static function save($post)
+	public function updateNestSort()
 	{
 		try
 		{
-			$menu = new Menu();
-			
-			if ($post['id'])
+			Menu::updateNestSort($this->request['data']);
+		}
+		catch (Exception $e)
+		{
+			error_log($e->getMessage());
+			echo tr::get('error_update_sort');
+		}
+	}
+	
+	
+	public function edit()
+	{
+		$id = $this->request['param'][0];
+		
+		$menu_item = Menu::getItem($id, true);
+		
+		$transls = $menu_item->ownMenutrans;
+		
+		if (is_array($transls))
+		{
+			foreach ($transls as $trans)
 			{
-				if (!$menu->update($post))
-				{
-					throw new Exception(tr::sget('update_menu_error', $post_id));
-				}
+				$translation[$trans->lang] = $trans->export();
 			}
-			else
+		}
+		
+		$this->render('menu', 'form', array(
+			'menu' => $id ? $menu_item->export() : false,
+			'tags' => Article::getTags(),
+			'articles' => Article::getAllTextid(),
+			'menu_list' => Menu::getList(),
+			'cfg_langs' => cfg::get('languages'),
+			'translated' => $translation
+			 
+		));
+	}
+	
+	
+	public function getMenuItems()
+	{
+		$menu = $this->get['param'][0];
+		echo json_encode(Menu::get_all_items_of_menu($menu));
+	
+	}
+	
+		/**
+	 * Alias for edit
+	 */
+	public function addNew()
+	{
+		$this->edit();
+	}
+	
+	
+	public function save()
+	{
+		$post = $this->post;
+		try
+		{
+			$id = Menu::save($post);
+			
+			if (!$id)
 			{
-				$id = $menu->add($post); 
-				if (!$id)
-				{
-					throw new Exception(tr::get('save_menu_error'));
-				}
-				$out['id'] = $id;
+				throw new Exception($post['id'] ? tr::sget('update_menu_error', $post['id']) : tr::get('save_menu_error'));
 			}
 			
+			$out['id'] = $id;
 			
 			$out['type'] = 'success';
 			$out['text'] = tr::get('save_menu_ok');
@@ -131,16 +135,13 @@ class menu_ctrl
 	
 	
 	
-	public static function delete($id)
+	public function delete()
 	{
-		$menu = new Menu();
-	
+		$id = $this->get['param'][0];
+		
 		try
 		{
-			if (!$menu->delete($id))
-			{
-				throw new Exception(tr::sget('delete_menu_error', $id));
-			}
+			Menu::delete($id);
 			$out['type'] = 'success';
 			$out['text'] = tr::get('delete_menu_ok');
 		}
@@ -148,8 +149,31 @@ class menu_ctrl
 		{
 			error_log($e->getMessage());
 			$out['type'] = 'error';
-			$out['text'] = $e->getMessage();
+			$out['text'] = tr::sget('delete_menu_error', $id);
 		}
+		echo json_encode($out);
+	}
+	
+	
+	public function saveTransl()
+	{
+		$data = $this->post;
+		$menu_id = $this->get['param'][0];
+		
+		try
+		{
+			Menu::translate($menu_id, $data);
+			
+			$out['text'] = tr::get('ok_translation_saved');
+			$out['status'] = 'success';
+		}
+		catch (Exception $e)
+		{
+			error_log($e->getMessage());
+			$out['text'] = tr::get('error_translation_not_saved');
+			$out['status'] = 'error';
+		}
+		
 		echo json_encode($out);
 	}
 	

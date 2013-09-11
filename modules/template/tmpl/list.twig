@@ -1,0 +1,72 @@
+<div id="{{ uid }}">
+		
+	<div class="row">
+	
+		<div class="col-md-2">
+			{% for lang in ['twig', 'css', 'less'] %}
+				
+				{% for f in files[lang] %}
+				<p>
+					<button class="btn btn-info btn-block file" data-file="{{ f }}" data-type="{{ lang }}">{{ f }}</button>
+				</p>
+				{% endfor %}
+				
+			{% endfor %}
+			<p>
+				<button class="btn btn-warning btn-block compile"><i class="glyphicon glyphicon-cog"></i> {{ tr.get('compile_less')}}</button>
+			</p>
+			<p>
+				<button class="btn btn-warning btn-block empty_cache"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('empty_cache')}}</button>
+			</p>
+			
+			<p>
+				<button class="btn btn-default btn-block refresh"><i class="glyphicon glyphicon-refresh"></i> {{ tr.get('reload')}}</button>
+			</p>
+			
+		</div>
+		
+		<div class="col-md-10">
+			<div>
+				<div class="well well-sm clearfix">
+					<i class="glyphicon glyphicon-bullhorn" style="font-size:1.5em;"></i> {{ tr.get('empty_cache_to_use_twig') }}
+					<div class="pull-right">
+						<a class="btn btn-default" href="#docs/tmpl/main"><i class="glyphicon glyphicon-question-sign"></i> {{ tr.get('what_is_twig') }}</a>
+					</div>
+				</div>
+				
+				<div class="well well-sm clearfix">
+					<i class="glyphicon glyphicon-bullhorn" style="font-size:1.5em;"></i> {{ tr.get('compile_less_to_apply_changes') }}
+					<div class="pull-right">
+						<a class="btn btn-default" href="http://lesscss.org" target="_blank"><i class="glyphicon glyphicon-question-sign"></i> {{ tr.get('what_is_less') }}</a>
+					</div>
+				</div>
+			</div>
+				
+			<div class="editor"></div>
+		</div>
+		
+	</div>
+</div>
+
+<script>
+	
+	$('#{{ uid }} .file').on('click', function(){
+		$('#{{ uid }} .editor').html('<img src="img/spinner.gif" alt="loading" /> Loading...').load('controller.php?obj=template_ctrl&method=edit&param[]=' + $(this).data('file') + '&param[]=' + $(this).data('type'));
+	});
+	
+	$('#{{ uid }} .compile').on('click', function(){
+		$.get('controller.php?obj=template_ctrl&method=compile', function(data){
+			admin.message(data.text, data.status);
+		}, 'json');
+	});
+	
+	$('#{{ uid }} .empty_cache').on('click', function(){
+		$.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
+			admin.message(data.text, data.status);
+		}, 'json');
+	});
+	
+	$('#{{ uid }} .refresh').on('click', function(){
+		admin.tabs.reloadActive();
+	});
+</script>

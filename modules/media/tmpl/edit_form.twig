@@ -1,0 +1,257 @@
+<div class="row">
+	<div class="col-md-5">
+
+		<div class="well well-sm">
+			<form id="copy-{{ uid }}" action="javascript:void(0);">
+				<h4>{{ tr.get('copy') }}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">.{{ pathinfo.dirname }}</span>
+					<input class="form-control" type="text" value="{{ pathinfo.filename }}" name="filename" />
+					<span class="input-group-addon">.{{ pathinfo.extension }}</span>
+					
+				</div>
+				<button class="btn btn-default" type="submit">{{ tr.get('save') }}</button>
+			</form>
+		</div>
+
+		<div class="well well-sm">
+			<form id="rename-{{ uid }}" action="javascript:void(0);">
+				<h4>{{ tr.get('rename') }}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">.{{ pathinfo.dirname }}</span>
+					<input class="form-control" type="text" value="{{ pathinfo.filename }}" name="filename" />
+					<span class="input-group-addon">.{{ pathinfo.extension }}</span>
+				</div>
+				<button class="btn btn-default" type="submit">{{ tr.get('save') }}</button>
+			</form>
+		</div>
+
+		<div class="well well-sm">
+			<form id="convert-{{ uid }}" action="javascript:void(0);">
+			<h4>{{ tr.get('convert') }}</h4>
+				<div class="input-group">
+					<input class="form-control" type="text" value="{{ pathinfo.extension }}" readonly="readonly" />
+					<span class="input-group-addon"> » </span>
+					<select class="form-control" name="format">
+						<option>jpg</option>
+						<option>png</option>
+						<option>tif</option>
+						<option>gif</option>
+					</select>
+				</div>
+			
+				<button class="btn btn-default" type="submit">{{ tr.get('save') }}</button>
+			</form>
+		</div>
+
+		<div class="well well-sm">
+			<form id="resize-{{ uid }}" action="javascript:void(0);">
+				<h4>{{ tr.get('resize') }}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">{{ tr.get('width') }}</span>
+					<input class="form-control" value="{{ finfo.0 }}" type="text" name="width" />
+					<span class="input-group-addon"> px</span>
+				</div>
+				<button class="btn btn-default" type="submit">{{ tr.get('save') }}</button>
+				<button class="btn btn-default" type="reset">{{ tr.get('reset') }}</button>
+			</form>
+
+		</div>
+
+		<div class="well well-sm">
+			<form id="crop-{{ uid }}" action="javascript:void(0);">
+				<h4>{{ tr.get('crop') }}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">{{ tr.get('width') }}</span>
+					<input class="form-control" value="{{ finfo.0 }}" type="text" name="width" />
+					<span class="input-group-addon">{{ tr.get('height') }}</span>
+					<input class="form-control" value="{{ finfo.1 }}" type="text" name="height" />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">{{ tr.get('offset_x') }}</span>
+					<input class="form-control" value="0" type="text" name="offset_x" />
+					<span class="input-group-addon">{{ tr.get('offset_y') }}</span>
+					<input class="form-control" value="0" type="text" name="offset_y" />
+				</div>
+				<button class="btn btn-default" type="submit">{{ tr.get('save') }}</button>
+				<button class="btn btn-default" type="reset">{{ tr.get('reset') }}</button>
+			</form>
+
+		</div>
+
+	</div>
+	<div class="col-md-7">
+		<div id="img-{{ uid }}" style="width:{{ finfo.0 }}px; height:{{ finfo.1 }}px; background: url('{{ file }}?{{ uid }}') no-repeat 0, 0; border: 1px solid #ebebeb;"></div>
+		<hr />
+		<div class="well well-sm">
+			<dl>
+				<dt>Filename</dt>
+				<dd>{{ file }}</dd>
+
+				<dt>Dirname</dt>
+				<dd>{{ pathinfo.dirname }}</dd>
+
+				<dt>Basename</dt>
+				<dd>{{ pathinfo.basename }}</dd>
+
+				<dt>Extension</dt>
+				<dd>{{ pathinfo.extension }}</dd>
+
+				<dt>Width</dt>
+				<dd>{{ finfo.0 }}</dd>
+
+				<dt>Height</dt>
+				<dd>{{ finfo.1 }}</dd>
+
+				<dt>Mime type</dt>
+				<dd>{{ finfo.mime }}</dd>
+
+				<dt>Channels</dt>
+				<dd>{{ finfo.channels }}</dd>
+
+				<dt>Bits</dt>
+				<dd>{{ finfo.bits }}</dd>
+			</dl>
+
+		</div>
+	</div>
+</div>
+
+
+<script>
+
+$('#resize-{{ uid}} :input').on('keyup', function(){
+	var val = $(this).val();
+	if (!val || val == '0' || val ==''){
+		return;
+	}
+	$('#img-{{ uid }}').css({
+		'width':val,
+		'height': (val * {{ finfo.1 }} / {{ finfo.0 }}),
+		'background-size': val + 'px'
+	});
+});
+
+$('#crop-{{ uid}} :input').on('keyup', function(){
+	var what = $(this).attr('name'),
+	val = $(this).val(),
+	x_pos = parseInt($('#crop-{{ uid}} :input[name="offset_x"]').val()),
+	y_pos =parseInt( $('#crop-{{ uid}} :input[name="offset_y"]').val());
+	
+	if ((what == 'width' || what == 'height') && (!val || val == '0' || val =='')){
+		return;
+	}
+	
+	if (what == 'width' || what == 'height'){
+		$('#img-{{ uid }}').css(what, val);
+	}
+	
+	if (x_pos < 0){
+		x_pos = Math.abs(x_pos);
+	} else if (x_pos > 0){
+		x_pos = x_pos * -1;
+	}
+	if (y_pos < 0){
+		y_pos = Math.abs(y_pos);
+	} else if (y_pos > 0){
+		y_pos = y_pos * -1;
+	}
+	x_pos += 'px';
+	y_pos += 'px';
+	$('#img-{{ uid }}').css('backgroundPosition', x_pos + ' ' + y_pos);
+
+});
+
+$('#resize-{{ uid}} button[type="reset"], #crop-{{ uid}} button[type="reset"]').on('click', function(){
+	$('#img-{{ uid }}').css({
+		'background-size':'',
+		'width': {{ finfo.0 }},
+		'height': {{ finfo.1 }},
+		'backgroundPosition': '0, 0'
+	});
+});
+
+$('#resize-{{ uid}}').submit(function(){
+	var width = parseInt($(this).find(':input[name="width"]').val());
+	if (!width || width <= 0 ){
+		alert('Larghezza non valida');
+	} else if (width == '{{ finfo.0 }}'){
+		alert('Nessin cambiamento da eseguire');
+	} else {
+		$.get('controller.php?obj=media_ctrl&method=resize&param[]={{ file }}&param[]=' + width, function(data){
+			admin.message(data.text, data.status);
+			if(data.status == 'success'){
+				admin.tabs.reloadActive();
+			}
+		}, 'json');
+	}
+});
+
+
+$('#crop-{{ uid}}').submit(function(){
+	var width = parseInt($(this).find(':input[name="width"]').val()),
+	height = parseInt($(this).find(':input[name="height"]').val()),
+	offset_x = parseInt($(this).find('input[name="offset_x"]').val()),
+	offset_y = parseInt($(this).find(':input[name="offset_y"]').val())
+	
+	arguments = width + 'x' + height + (offset_x >=0 ? '%2B' : '') + offset_x + (offset_y >= 0 ? '%2B' : '') + offset_y;
+	
+	if (!width || width <= 0 || !height || height <= 0){
+		alert('Valori di larghezza e lunghezza non validi');
+	} else{
+		$.get('controller.php?obj=media_ctrl&method=crop&param[]={{ file }}&param[]=' + arguments, function(data){
+			admin.message(data.text, data.status);
+			if(data.status == 'success'){
+				admin.tabs.reloadActive();
+			}
+		}, 'json');
+	}
+});
+
+$('#convert-{{ uid}}').submit(function(){
+	var format = $(this).find(':input[name="format"]').val(); 
+	if (format == '{{ pathinfo.extension }}'){
+		admin.message('{{ tr.get('no_change_to_save') }}', 'error');
+	} else {
+		$.get('controller.php?obj=media_ctrl&method=convert&param[]={{ file }}&param[]={{ pathinfo.dirname }}/{{ pathinfo.filename }}.' + format, function(data){
+			admin.message(data.text, data.status);
+			if (data.status == 'success'){
+				admin.tabs.closeActive();
+				admin.tabs.reloadActive();
+			}
+		}, 'json');
+	}
+});
+
+$('#rename-{{ uid}}').submit(function(){
+	var filename = $(this).find('input[name="filename"]').val(); 
+	if (filename == '{{ pathinfo.filename }}'){
+		admin.message('{{ tr.get('no_change_to_save') }}', 'error');
+	} else if (!filename){
+		admin.message('{{ tr.get('invalid_name') }}', 'error');
+	} else {
+		$.get('controller.php?obj=media_ctrl&method=rename&param[]={{ pathinfo.dirname }}&param[]={{ pathinfo.filename }}.{{ pathinfo.extension }}&param[]=' + filename + '.{{ pathinfo.extension }}', function(data){
+			admin.message(data.text, data.status);
+			if (data.status == 'success'){
+				admin.tabs.closeActive();
+				admin.tabs.reloadActive();
+			}
+		}, 'json');
+	}
+});
+
+$('#copy-{{ uid}}').submit(function(){
+	var filename = $(this).find('input[name="filename"]').val(); 
+	if (filename == '{{ pathinfo.filename }}'){
+		admin.message('{{ tr.get('no_change_to_save') }}', 'error');
+	} else if (!filename){
+		admin.message('{{ tr.get('invalid_name') }}', 'error');
+	} else {
+		$.get('controller.php?obj=media_ctrl&method=copy&param[]={{ pathinfo.dirname }}&param[]={{ pathinfo.filename }}.{{ pathinfo.extension }}&param[]=' + filename + '.{{ pathinfo.extension }}', function(data){
+			admin.message(data.text, data.status);
+		}, 'json');
+	}
+});
+
+
+</script>

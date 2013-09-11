@@ -3,7 +3,8 @@
  * @author			Julian Bogdani <jbogdani@gmail.com>
  * @copyright		BraDypUS 2007-2013
  * @license			All rights reserved
- * @since			Apr 12, 2013
+ * @since				Apr 12, 2013
+ * @uses				R readbean onject
  */
 
 
@@ -23,11 +24,10 @@ class myRepository implements Repository
 {
 	private $repo, $db;
 	
-	public function __construct(MD_repository $repo, DB $db)
+	public function __construct(MD_repository $repo)
 	{
 		// info
 		$this->repo = $repo;
-		$this->db = $db;
 	}
 
 	public function getIdentifyData() {
@@ -69,25 +69,25 @@ class myRepository implements Repository
 		
 		if ($from)
 		{
-			$where[] = "lastchanged >= :lastchanged_from";
+			$where[] = '`' . $this->repo->getTable('updated') . "` = :lastchanged_from";
 			$values[':lastchanged_from'] = date('Y-m-d', $from);
 		}
 		
 		if ($until)
 		{
-			$where[] = "lastchanged <= :lastchanged_until";
+			$where[] = '`' . $this->repo->getTable('updated') . "` = :lastchanged_until";
 			$values[':lastchanged_until'] = date('Y-m-d', $until);
 		}
 		
 		if ($set)
 		{
-			$where[] = $this->repo->getTable('category') . " = :category";
+			$where[] = '`' . $this->repo->getTable('category') . "` = :category";
 			$values[':category'] = $set;
 		}
 		
 		if ($last_identifier)
 		{
-			$where[] = "id > :last_identifier";
+			$where[] = '`' . $this->repo->getTable('id') . "` = :last_identifier";
 			$values[':last_identifier'] = $last_identifier;
 		}
 
@@ -96,7 +96,7 @@ class myRepository implements Repository
 			$sql .= " WHERE " . implode(" AND ", $where);
 		}
 
-		$sql .= " ORDER BY id ASC";
+		$sql .= " ORDER BY `id` ASC";
 
 		if ($max_results)
 		{
@@ -105,7 +105,7 @@ class myRepository implements Repository
 		
 		$ids = array();
 		
-		$res = $this->db->executeQuery($sql, $values, 'read');
+		$res = R::getAll($sql, $values);
 		
 		foreach($res as $row)
 		{
@@ -124,7 +124,7 @@ class myRepository implements Repository
 				"WHERE `" . $this->repo->getTable('id') . "`= :id";
 		
 		
-		$result = $this->db->executeQuery($sql, array(':id' => $identifier), 'read');
+		$result = R::getAll($sql, array(':id' => $identifier));
 		$row = $this->clean($result[0]);
 		
 		$header = new Header();
@@ -148,7 +148,7 @@ class myRepository implements Repository
 		$identifier = str_replace('oai:' . $_SERVER['HTTP_HOST'] . ':article/', null, $identifier);
 		$sql = "SELECT * FROM " . $this->repo->getTable('name') . " WHERE " . $this->repo->getTable('id') . "= :id";
 		
-		$res = $this->db->executeQuery($sql, array(':id' => $identifier), 'read');
+		$res = R::getAll($sql, array(':id' => $identifier));
 		
 		$row = $this->clean($res[0]);
 		
@@ -180,7 +180,7 @@ class myRepository implements Repository
 				// http://info-uri.info/registry/OAIHandler?verb=GetRecord&metadataPrefix=reg&identifier=info:eu-repo/
 				$dcrec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				
-				$dcrec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['text_id']);
+				$dcrec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['textid']);
 				$dcrec->addNS(NS::DC, 'identifier', $this->repo->getDoiPrefix() . '' . $row[$this->repo->getTable('id')]);
 				$dcrec->addNS(NS::DC, 'identifier', $this->repo->getISSN());
 				
@@ -200,7 +200,7 @@ class myRepository implements Repository
 				$eserec->addNS(NS::DC, 'date', $row[$this->repo->getTable('lastchanged')]);
 				$eserec->addNS(NS::DC, 'type', 'info:eu-repo/semantics/article');
 				
-				$eserec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['text_id']);
+				$eserec->addNS(NS::DC, 'identifier', 'http://' . $_SERVER['HTTP_HOST'] . '/' . $row['textid']);
 				$eserec->addNS(NS::DC, 'identifier', $this->repo->getDoiPrefix() . '' . $row[$this->repo->getTable('id')]);
 				$eserec->addNS(NS::DC, 'identifier', $this->repo->getISSN());
 				

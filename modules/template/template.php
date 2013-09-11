@@ -6,83 +6,105 @@
  * @since			Feb 1, 2013
  */
  
-class template_ctrl
+class template_ctrl extends Controller
 {
-	public static function edit($file)
+	
+	public function compile()
 	{
-		switch ($file)
+		try
 		{
-			case 'html':
-				$full_file = './sites/default/index.html';
-				break;
-				
-			case 'css':
-				if (file_exists('./sites/default/css/styles.css'))
-				{
-					$full_file = './sites/default/css/styles.css';
-				}
-				break;
-				
-			default:
-				return false;
-				break;
-		}
-		
-		if ($full_file)
-		{
-			$content = file_get_contents($full_file);
+			$less = new lessc();
+			$less->checkedCompile(SITE_DIR .  "css/styles.less", SITE_DIR . "css/styles.css");
 			
-			$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'template/tmpl'), unserialize(CACHE));
-			echo $twig->render('editor.html', array(
-					'filename' => $full_file,
-					'content'=>$content,
-					'no_tab_content' => str_replace("\t", '   ', $content),
-					'lang' => $file,
-					'uid' => uniqid('uid')
-			));
-		
+			$ret['status'] = 'success';
+			$ret['text'] = tr::get('ok_compiling_less');
+		}
+		catch (Exception $e)
+		{
+			$ret['status'] = 'error';
+			$ret['text'] = tr::get('error_compiling_less');
 		}
 		
+		echo json_encode($ret);
 	}
 	
-	public static function save($file, $post)
+	public function edit()
 	{
-		// TODO: translate
-		switch ($file)
+		$file = $this->get['param'][0];
+		$type = $this->get['param'][1];
+		
+		switch ($type)
 		{
-			case 'html':
-				$full_file = './sites/default/index.html';
+			case 'twig':
+				$file = SITE_DIR . $file;
 				break;
-		
+				
 			case 'css':
-				$full_file = './sites/default/css/styles.css';
+			case 'less':
+				$file = SITE_DIR . 'css/' . $file;
 				break;
-		
+				
 			default:
 				return false;
 				break;
 		}
 		
-		if ($full_file)
+		$content = file_get_contents($file);
+
+		$this->render('template', 'editor', array(
+				'filename' => $file,
+				'content'=>$content,
+				'lang' => $file
+		));
+	}
+	
+	public function dashboard()
+	{
+		foreach (utils::dirContent(SITE_DIR) as $f)
+		{
+			if (preg_match('/\.twig/', $f))
+			{
+				$twig[] = $f;
+			}
+		}
+		
+		
+		foreach (utils::dirContent(SITE_DIR . 'css') as $f)
+		{
+			if (preg_match('/\.css/', $f))
+			{
+				$css[] = $f;
+			}
+			
+			if (preg_match('/\.less/', $f))
+			{
+				$less[] = $f;
+			}
+		}
+		
+		$this->render('template', 'list', array(
+			files => array(
+			'twig'=> $twig,
+			'css' => $css,
+			'less' => $less
+				)
+		));
+	}
+	
+	public function save()
+	{
+		$file = $this->get['param'][0];
+		$post = $this->post;
+		
+		if ($file)
 		{
 			try
 			{
-				$f = @fopen($full_file, 'w');
-				
-				if (!$f)
-				{
-					throw new Exception('Can not open file ' . $full_file);
-				}
-				
-				if ( !@fwrite ( $f, $post['text'] ) )
+				if (!utils::write_in_file($file, $post['text']))
 				{
 					throw new Exception('Can not write in file ' . $full_file);
 				}
-				
-				@fclose($f);
-				
 				$ret = array('status' => 'success', 'text' => 'File updated');
-				
 			}
 			catch(Exception $e)
 			{
@@ -94,14 +116,5 @@ class template_ctrl
 		}
 	}
 	
-	public static function html()
-	{
-		self::edit('html');
-	}
-	
-	public static function css()
-	{
-		self::edit('css');
-	}
 	
 }

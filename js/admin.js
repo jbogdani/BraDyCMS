@@ -1,4 +1,53 @@
+var _ignorehash;
+
 var admin = {
+		/**
+		 * 
+		 * opts.sizeLimit
+		 * opts.minSizeLimit
+		 * opts.loaded(id, filename, responseJSON)
+		 */
+		upload: function(element, action, opts){
+			if (!opts){
+				var opts = {};
+			}
+			
+			new qq.FileUploader({
+				element: element,
+				action: action,
+				sizeLimit: opts.sizeLimit ? opts.sizeLimit : 0,
+				minSizeLimit: opts.minSizeLimit ? opts.minSizeLimit : 0,
+				onComplete: function(id, filename, responseJSON){
+					opts.loaded ? opts.loaded(id, filename, responseJSON) : false;
+				}
+			});
+		},
+		
+		
+		/**
+		 * Filters elements with class search-container by text contained in search-text
+		 * @param string filter	string to use as filter
+		 * @param obj container jQuery element to look in
+		 * @param boolean parent_class if false search-container and search-text are the same element, otherwize container contains element
+		 * @returns {undefined}
+		 */
+		filterList: function(filter, container, parent_class){
+			
+			if (filter && filter !== '') {
+				if (parent_class){
+					container.find('.search-text:not(:Contains(' + filter + '))').parents('.search-container').fadeOut();
+					container.find('.search-text:Contains(' + filter + ')').parents('.search-container').fadeOut();
+					
+				} else {
+					
+					container.find('.search-text:not(:Contains(' + filter + '))').fadeOut();
+					container.find('.search-text:Contains(' + filter + ')').fadeIn();
+				}
+					
+			} else {
+		     container.find( '.' + (parent_class ? 'search-container' : 'search-text') ).fadeIn();
+			}
+		},
 		
 		/**
 		 * 
@@ -14,53 +63,72 @@ var admin = {
 		 * 			addclass
 		 */
 		dialog: function(opts){
-			var dialog =  $('<div />').addClass('modal hide fade').attr('id', 'modal')
-				.attr({'role':'dialog'})
-				.append(
-						(opts.title ? '<div class="modal-header"><h2>' + opts.title + '</h2></div>' : ''),
-						'<div class="modal-body">' + ( opts.html ? opts.html : '') + '</div>'
-						);
+			if ($('#modal').length > 0){
+				$('#modal').modal('hide');
+			}
+			
+			var dialog =  $('<div />').attr('id', 'modal').addClass('modal fade').append(
+						'<div class="modal-dialog">' +
+							'<div class="modal-content">' +
+								(opts.title ? '<div class="modal-header"><h4>' + opts. title + '</h4></div>' : '') +
+							'</div>' +
+						'</div>'
+						
+						).appendTo('body');
+			
+			if (opts.width){
+					dialog.css({
+						width:opts.width,
+						'margin-left':'-' + (opts.width/2) + 'px'
+					});
+			}
+			
+			var body = $('<div />').addClass('modal-body').appendTo(dialog.find('div.modal-content')),
+				URLstring = 'controller.php?';
+			
 			if (opts.buttons && typeof opts.buttons == 'object'){
 				
-				var footer = $('<div />').addClass('modal-footer');
-				
-				dialog.append(footer);
-				
-				$.each(opts.buttons, function(index, but){
-					var a = $('<a />').addClass('btn').html(but.text);
+				var footer = $('<div />').addClass('modal-footer').appendTo(dialog.find('div.modal-content'));
 					
+				$.each(opts.buttons, function(index, but){
+					var a = $('<a />').addClass('btn'+ (but.addclass ? ' ' + but.addclass : ' btn-primary')).html(but.text);
+
 					if (but.href){
 						a.attr('href', but.href);
 					}
-					
+
 					if (but.click){
-						a.click(function(){ but.click(); });
+						if (but.click == 'close'){
+							a.attr('data-dismiss', 'modal');
+						} else{
+							a.click(function(){ but.click(dialog); });
+						}
 					}
-					
+
 					if (but.action == 'close'){
 						a.attr('data-dismiss', 'modal');
-						dialog.on('hidden', function(){
-							dialog.remove();
-						});
 					}
-					
-					if(but.addclass){
-						a.addClass(but.addclass);
-					}
-					
-					footer.append(a);
+
+					a.appendTo(footer);
 				});
-				
-			}
-			dialog.modal();
-			
-			if (opts.html && opts.loaded){
-				dialog.on('shown', function(){;
-					opts.loaded(dialog);
-				})
 			}
 			
-			if (opts.obj && opts.method){
+			dialog.modal({'keyboard':true});
+			
+			dialog.on('hidden.bs.modal', function(){
+				$('body').removeClass('modal-open');
+				dialog.remove();
+			});
+			
+			
+			if (opts.html){
+				body.html(opts.html);
+
+				if (opts.loaded){
+					opts.loaded(body);
+				}
+
+			} else if (opts.obj && opts.method){
 				dialog.find('.modal-body').html('<img src="./img/spinner.gif" />');
 				$.ajax({
 	        		'type': opts.post ? 'POST' : 'GET',
@@ -87,7 +155,9 @@ var admin = {
 		        title: title ?  title : false,
 		        text: text,
 		        type: type ? type : false,
-		        hide: sticky ? false : true
+		        hide: sticky ? false : true,
+				  history: false,
+				  styling: "bootstrap3"
 		    });
 		},
 		
@@ -135,11 +205,15 @@ var admin = {
 	        	this.tab.next('div.tab-content').append('<div class="tab-pane" id="added' + id + '">' + opts.html + '</div>');
 	        	this.start(tab);
         		this.tab.find('li a:last').tab('show');
+						this.tab.find('li:last').data('url', location.hash.substring(1));
+						this.tab.find('li:last').data('opts', opts);
 	        } else if (opts.obj && opts.method){
 	        	admin.tabs.tab.next('div.tab-content')
     				.append('<div class="tab-pane" id="added' + id + '"><img src="img/spinner.gif" alt="loading..." /></div>');
 	        	admin.tabs.start(tab);
-        		admin.tabs.tab.find('li a:last').data('opts', opts).tab('show');
+        		admin.tabs.tab.find('li a:last').tab('show');
+						this.tab.find('li:last').data('url', location.hash.substring(1));
+						this.tab.find('li:last').data('opts', opts);
 	        	$.ajax({
 	        		'type': opts.post ? 'POST' : 'GET',
 	        		'url': 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
@@ -155,7 +229,7 @@ var admin = {
 	    
 	    reloadActive: function(){
 	    	var d_active = $('div.tab-content div.active'), 
-	    	opts = tab.find('li.active a').data('opts');
+	    	opts = tab.find('li.active').data('opts');
 	    	
 	    	var url = 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' );
 	    	
@@ -168,25 +242,47 @@ var admin = {
 	    },
 	    
 	    closeTab: function(li, state){
-	    	$('#' + li.find('a').attr('href').replace('#', '')).remove();
-            if (li.hasClass('active')){
-            	if (state){
-            		var actualState = $.bbq.getState();
-                	if (actualState[state] == ''){
-                		$(window).trigger( "hashchange" );
-                	} else {
-                		$.bbq.pushState('#' + state);
-                		tab.find('li a:last').tab('show');
-                	}
-                	li.remove();
-                } else {
-                	li.remove();
-                	$.bbq.pushState('#');
-                	tab.find('li a:last').tab('show');
-                }
-            } else {
-            	li.remove();
-            }
+				
+				if(tab.find('li').length == 1){
+					if (state){
+						location.hash = '#' + state;
+					}
+					return;
+				}
+				// remove tab-pane
+				$('#' + li.find('a').attr('href').replace('#', '')).remove();
+				
+				if (!state){
+				//	var state = tab.find('li:last').data('url');
+				}
+				
+				if (li.hasClass('active')){
+					if (state){
+						var actualState = location.hash.substr(1);
+							if (actualState === ''){
+								$(window).trigger( "hashchange" );
+							} else {
+								location.hash = '#' + state;
+								
+								tab.find('li a:last').tab('show');
+							}
+							li.remove();
+						} else {
+							li.remove();
+							tab.find('li a:last').tab('show');
+							
+							var prevState = tab.find('li:last').data('url');
+							
+							if (prevState && prevState !== 'undefined'){
+								_ignorehash = true;
+								location.hash = '#' + prevState;
+							} else{
+								location.hash = '#';
+							}
+						}
+				} else {
+					li.remove();
+				}
 	    }
 	},
 	
@@ -252,18 +348,26 @@ var admin = {
 
 
 $(function () {
+	
+	
 	admin.tabs.set('#tabs');
 	admin.tabs.start();
 
 
     $(window).on( 'hashchange', function(e) {
-    	var url = $.param.fragment();
-    	
-    	if (!url){
-    		return;
-    	} else if (url.match(/nt-/)){
-			return;
+			
+			if (_ignorehash){
+				_ignorehash = false;
+				return;
+			}
+			
+    	var url = location.hash.substring(1);
+			
+    	if (!url || url.match(/nt-/)){
+				
+				return;
     	} else {
+				
     		var url_arr = url.split('/');
     		
     		admin.tabs.add({
@@ -275,6 +379,7 @@ $(function () {
     	}
     }).trigger('hashchange');
     
+		
     tinyMCE.init({
     	// General options
     	mode : "exact",
@@ -286,7 +391,7 @@ $(function () {
     	theme_advanced_toolbar_align : 'left',
     	extended_valid_elements : 'script[language|type]',
     	theme_advanced_resizing : true,
-    	content_css : './css/bootstrap.min.css,./sites/default/css/styles.css',
+    	content_css : './sites/default/css/styles.css',
     	
     	theme_advanced_statusbar_location : 'bottom',
     	

@@ -8,6 +8,21 @@
  
 class customTags
 {
+	
+	/**
+	 * Displays a user defined form
+	 * @param array $data
+	 *			$data[content]	is the name of the form to display (i.e. the name of the json file with configuration)
+	 *			$data[nojs],		if true, no JS code will be printed
+	 * @return type
+	 */
+	public static function userform($data)
+	{
+		$f = new userform_ctrl();
+		
+		return $f->showForm($data);
+	}
+	
 	public static function cl_gallery($data)
 	{
 		return self::format_gallery($data, true);
@@ -21,7 +36,6 @@ class customTags
 	private static function format_gallery($data, $responsive = false)
 	{
 		$gal = $data['content'];
-		$rel = $data['rel'];
 		$class = $data['class'];
 		$lang = $data['lang'];
 	
@@ -50,7 +64,7 @@ class customTags
 			 * 	...
 			 * </ul>
 			 */
-			$html .= '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . ( $rel ? 'data-rel="' . $rel . '"' : '') . '>';
+			$html .= '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . 'data-rel="' . $gal . '"' . '>';
 			
 			foreach ($captions as $img => $dida)
 			{
@@ -72,7 +86,7 @@ class customTags
 				$img = str_replace('__x__', '.', $img);
 			
 				$html .= '<li data-id="' . $img . '">' .
-						'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '" ' . ($rel ? ' rel="' . $gal . '" ' : '') . '>' .
+						'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '"  rel="' . $gal . '" >' .
 						'<img src="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />' .
 						'</a>' .
 						'<div class="caption">' . $dida . '</div>' .
@@ -303,7 +317,7 @@ class customTags
 		
 		$alt = str_replace('"', '', strip_tags($alt));
 		
-		return '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" ' . ($figure_width ? ' style="width: ' . $figure_width . '"' : '') . '>' .
+		return '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" ' . ($figure_width ? ' style="max-width: ' . $figure_width . '"' : '') . '>' .
 			'<div class="image">' .
 				( $data['href'] ? '<a href="' . $data['href'] . '"' . ( $data['href_class'] ? ' class="' . $data['href_class'] . '" ' : '') . '>' : '') .
 					'<img src="./sites/default/images/' . $data['content'] . '" alt="' . $alt . '" />' .
@@ -344,5 +358,25 @@ class customTags
 			'frameBorder="0"></iframe>';
 		
 		return $html;
+	}
+	
+	
+	/**
+	 * @param array $data
+	 *		shortname: site shortname in disqus
+	 * @example [[disqus]]cliffyoungltd[[/disqus]]
+	 */
+	public static function disqus($data)
+	{
+		$html = '<div id="disqus_thread"></div>' .
+						'<script type="text/javascript">' .
+							"var disqus_shortname = '{$data['content']}';" .
+							"(function() {" .
+								"var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;" .
+								"dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';" .
+								"(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);" .
+						"})();" .
+					"</script>";
+	return $html;
 	}
 }

@@ -50,11 +50,14 @@ if (get_magic_quotes_gpc())
 }
 
 
-require_once $root . 'lib/ClassAutoloader.inc';
-new ClassAutoloader();
+require_once $root . 'lib/Autoloader.inc';
+Autoloader::start();
 
-require $root . 'lib/Twig/Autoloader.php';
-Twig_Autoloader::register();
+
+require $root . 'vendor/autoload.php';
+
+
+class_alias('RedBean_Facade', 'R');
 
 
 //set default date-zone
@@ -74,7 +77,9 @@ define ( 'LIB_DIR', MAIN_DIR . 'lib/');
 define ( 'ERR_LOG',	MAIN_DIR . 'logs/error.log');
 define ( 'TMP_DIR', MAIN_DIR . 'tmp/');
 define ( 'LOCALE_DIR', MAIN_DIR . 'locale/');
-define ( 'IMG_DIR', MAIN_DIR . 'sites/default/images/');
+define ( 'SITE_DIR', MAIN_DIR . 'sites/default/');
+define ( 'IMG_DIR', SITE_DIR . 'images/');
+
 define ( 'GALLERY_DIR', IMG_DIR . 'galleries/' );
 define ( 'CACHE_DIR', MAIN_DIR . 'cache/');
 
@@ -89,3 +94,8 @@ else
 	define('CACHE', serialize(array('cache' => CACHE_DIR)));
 }
 tr::load_file($_GET['lang']);
+
+R::setup(cfg::get('db_connection') ? cfg::get('db_connection') : 'sqlite:./sites/default/cfg/database.sqlite');
+R::freeze( true );
+R::dependencies(array('arttrans'=>array('articles')));
+R::dependencies(array('menutrans'=>array('menu')));

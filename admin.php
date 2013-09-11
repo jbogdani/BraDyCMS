@@ -43,7 +43,7 @@ catch (Exception $e)
 			<div style="text-align:center; display:none;" class="text-danger" id="logerror"></div>
 			
 			<form class="form-signin" id="signin" action="javascript:void(0);">
-				<h2 class="text-muted">BDUS.CMS</h2>
+				<h2 class="text-muted">BDUS.CMS <small>[v.<?php echo version::current() ?>]</small></h2>
 				<h2 class="form-signin-heading"><?php echo tr::get('please_sign_in'); ?></h2>
 				
 				<div class="form-group">
@@ -55,6 +55,7 @@ catch (Exception $e)
 				</div>
 				<button class="btn btn-lg btn-primary btn-block" type="submit"><?php echo tr::get('sign_in'); ?></button>
 			</form>
+			
 		</div>
 		<?php
 		}
@@ -216,7 +217,7 @@ catch (Exception $e)
 								<img src="./img/octocat.png" alt="octocats GITHUB" class="pull-left" style="width:150px" />
 								
 								<div class="media-body">
-									<h3 class="media-heading">BraDyCMS </h3>
+									<h3 class="media-heading">BraDyCMS</h3>
 									<p class="lead">is an open source project available for fork and/or download on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">GitHub</a></p>
 									<p><a href="https://github.com/jbogdani/BraDyCMS/archive/master.zip" target="_blank">Download latest build</a></p>
 								</div>
@@ -229,6 +230,7 @@ catch (Exception $e)
 		
 		<footer class="footer">
 			<h4>by BraDypUS <small>COMMUNICATING CULTURAL HERITAGE</small></h4>
+			<p>BraDyCMS [v. <?php echo version::current() ?>] is an open source project available for download <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">on Github</a></p>
 		</footer>
 	<?php } ?>
 	

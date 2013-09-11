@@ -232,5 +232,48 @@
         "keywords": [
             "curl"
         ]
+    },
+    {
+        "name": "oaiprovider-php/oaiprovider-php",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jbogdani/oaiprovider-php.git",
+            "reference": "d0a8259501d685ef837e7e9a476343f94a78e8a2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jbogdani/oaiprovider-php/zipball/d0a8259501d685ef837e7e9a476343f94a78e8a2",
+            "reference": "d0a8259501d685ef837e7e9a476343f94a78e8a2",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "time": "2013-09-11 21:14:01",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "endpoint.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Martijn Vogten",
+                "homepage": "https://github.com/martijnvogten",
+                "role": "Developer"
+            }
+        ],
+        "description": "OAI provider written in PHP",
+        "homepage": "https://github.com/martijnvogten/oaiprovider-php",
+        "keywords": [
+            "OAI"
+        ]
     }
 ]

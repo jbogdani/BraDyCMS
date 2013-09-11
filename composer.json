@@ -12,6 +12,7 @@
 			"leafo/lessphp": "0.4.0", 
 			"twig/twig": "1.*",
 			"gabordemooij/redbean": "dev-master",
-			"jsocol/oocurl": "dev-master"
+			"jsocol/oocurl": "dev-master",
+			"oaiprovider-php/oaiprovider-php": "dev-master"
     }
 }

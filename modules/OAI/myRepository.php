@@ -11,8 +11,8 @@
 use oaiprovider\xml\NS;
 
 
-require_once LIB_DIR . 'OAIprovider/xml/europeana.php';
-require_once LIB_DIR . 'OAIprovider/xml/dublincore.php';
+require_once 'vendor/oaiprovider-php/oaiprovider-php/xml/europeana.php';
+require_once 'vendor/oaiprovider-php/oaiprovider-php/xml/dublincore.php';
 
 use oaiprovider\xml\EuropeanaRecord;
 use oaiprovider\xml\DublinCoreRecord;

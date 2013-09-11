@@ -13,4 +13,6 @@ return array(
     'lessc_formatter_compressed' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
     'lessc_formatter_lessjs' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
     'lessc_parser' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
+    'oaiprovider\\OAIException' => $vendorDir . '/oaiprovider-php/oaiprovider-php/endpoint.php',
+    'oaiprovider\\ResumptionToken' => $vendorDir . '/oaiprovider-php/oaiprovider-php/endpoint.php',
 );

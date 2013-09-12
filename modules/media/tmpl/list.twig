@@ -110,7 +110,7 @@
 			return $('<div />').append(
 					'<h4>' + $(this).data('name') + '</h4>',
 					'File URL:',
-					'<input type="text" value="' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
+					'<input type="text" value="./sites/' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
 					$('<div />').addClass('input-append'),
 					$('<div class="btn-group"></div>').append(
 						'<a class="btn btn-default" target="_blank" href="{{ path }}/' + name + '" title="{{ tr.get('open_download') }}"><i class="glyphicon glyphicon-download-alt"></i></a>',

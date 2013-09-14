@@ -28,7 +28,7 @@ var admin = {
 		 * Filters elements with class search-container by text contained in search-text
 		 * @param string filter	string to use as filter
 		 * @param obj container jQuery element to look in
-		 * @param boolean parent_class if false search-container and search-text are the same element, otherwize container contains element
+		 * @param boolean parent_class if false search-container and search-text are the same element, otherwise container contains element
 		 * @returns {undefined}
 		 */
 		filterList: function(filter, container, parent_class){

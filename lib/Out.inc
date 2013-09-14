@@ -79,8 +79,8 @@ class Out
 	/**
 	 * Returns full link to provided content (article or section)
 	 * 
-	 * @param string $art	article or section name
-	 * @param array|false $tags	array of tags to use for filtering section articles
+	 * @param array|string $art	article or section name
+	 * @param boolean $tags	arrbay of tags to use for filtering section articles
 	 * @return string
 	 */
 	public function link2($art, $tags = false)
@@ -251,7 +251,7 @@ class Out
 		$this->data['page']['url']  = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			
 		// Mission
-		$this->data['page']['mission'] = cfg::get('logo');
+		$this->data['page']['mission'] = cfg::get('mission');
 			
 		$art_img_paths = cfg::get('art_img');
 			

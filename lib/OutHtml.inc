@@ -410,22 +410,16 @@ class OutHtml extends Out
 	
 	/**
 	 * Returns html with Google Analytics javascript code
-	 * @param string $id GA ID, if false config values will be used
-	 * @param boolean $restrict_domain if provided code will be displayed only if domain matches
 	 * @return string
 	 */
-	public function GA($id = false, $restrict_domain = false)
+	public function GA()
 	{
-		$id = $id ? $id : cfg::get('ga_id');
+		$id = cfg::get('ga_id');
 		
-		$restrict_domain = $restrict_domain ? $restrict_domain : cfg::get('ga_domain');
+		$restrict_domain = cfg::get('ga_domain');
 		
 		
-		if (
-				id && (
-				!$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) )
-				)
-			)
+		if ( id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) )
 		{
 			$html = '<script type="text/javascript">'
 					. 'var _gaq = _gaq || [];'

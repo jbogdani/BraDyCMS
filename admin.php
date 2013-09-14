@@ -137,8 +137,8 @@ catch (Exception $e)
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-globe"></i> <?php echo tr::get('language'); ?> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="./admin:lng-it"><i class="glyphicon glyphicon-save"></i> Italiano</a></li>
-								<li><a href="./admin:lng-en"><i class="glyphicon glyphicon-save"></i> English</a></li>
+								<li><a href="#lang/change/it"><i class="glyphicon glyphicon-save"></i> Italiano</a></li>
+								<li><a href="#lang/change/en"><i class="glyphicon glyphicon-save"></i> English</a></li>
 							</ul>
 						</li>
 						

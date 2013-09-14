@@ -22,7 +22,6 @@ RewriteRule ^oai$ controller.php?obj=OAI_ctrl&method=run [QSA]
 RewriteRule ^admin/?$ admin.php
 RewriteRule ^admin:debug?$ admin.php?debug=1
 RewriteRule ^admin:mini?$ admin.php?mini=1
-RewriteRule ^admin:lng-(it|en|es|fr|ar|de|al)?$ admin.php?lang=$1
 
 #safe home page 
 RewriteRule ^(it|en|es|fr|ar|de|al)/?$ index.php?lang=$1 
@@ -43,10 +42,6 @@ RewriteRule ^([a-zA-Z0-9-_]+).html$ index.php?art_title=$1
 #art_title, draft
 RewriteRule ^(it|en|es|fr|ar|de|al)/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1
 RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true
-
-#art_id, deprecated
-#RewriteRule ^(it|en|es|fr|ar|de|al)/id:([0-9]+)$ index.php?lang=$1&art=$2
-#RewriteRule ^id:([a-zA-Z0-9-_]+)$ index.php?art=$1
 
 #search
 RewriteRule ^(it|en|es|fr|ar|de|al)/search:([a-zA-Z0-1-_\.]+)$ index.php?lang=$1&search=$2

@@ -37,14 +37,22 @@ class customTags
 	{
 		$gal = $data['content'];
 		$class = $data['class'];
-		$lang = $data['lang'];
-	
-		if (!file_exists(GALLERY_DIR . $gal  . '/data.json'))
-		{
-			return tr::sget('gallery_does_not_exist', $gal);
+		$lang = ($data['lang'] && $data['lang'] != cfg::get('sys_lang') ? $data['lang'] : '');
+    
+    if (file_exists(GALLERY_DIR . $gal  . '/data' . ($lang ? '_' . $lang : '') . '.json'))
+    {
+      $file = GALLERY_DIR . $gal  . '/data' . ($lang ? '_' . $lang : '') . '.json';
+    }
+    else if (file_exists(GALLERY_DIR . $gal  . '/data' . '.json'))
+    {
+      $file = GALLERY_DIR . $gal  . '/data' . '.json';
+    }
+    else
+    {
+    	return tr::sget('gallery_does_not_exist', $gal);
 		}
-	
-		$captions = @json_decode(file_get_contents(GALLERY_DIR . $gal  . '/data' . ($lang ? '_' . $lang : '') . '.json'), 1);
+    
+		$captions = @json_decode(file_get_contents($file), 1);
 	
 		if (!is_array($captions))
 		{

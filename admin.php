@@ -102,42 +102,6 @@ catch (Exception $e)
 						</li>
 						
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <?php echo tr::get('other'); ?> <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#changelog/show"><i class="glyphicon glyphicon-asterisk"></i> <?php echo tr::get('changelog'); ?></a></li>
-								<li><a href="#error_log/show"><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo tr::get('error_log'); ?></a></li>
-								<li><a href="./" target="_blank"><i class="glyphicon glyphicon-share-alt"></i> <?php echo tr::get('view_site'); ?></a></li>
-								
-								<li><a href="./admin"><i class="glyphicon glyphicon-repeat"></i> <?php echo tr::get('reload'); ?></a></li>
-								
-								<li class="divider"></li>
-								
-								<li><a href="#cfg/edit"><i class="glyphicon glyphicon-wrench"></i> <?php echo tr::get('cfg_editor'); ?></a></li>
-								
-								<li><a href="#template/dashboard"><i class="glyphicon glyphicon-file"></i> <?php echo tr::get('template_mng'); ?></a></li>
-
-								<li><a href="#sys_translate/showList"><i class="glyphicon glyphicon-random"></i> <?php echo tr::get('sys_translate'); ?></a></li>
-								
-								
-								
-								<li class="divider"></li>
-								<li class="text-center"><strong><?php echo tr::get('docs'); ?></strong></li>
-								
-								<li><a href="#docs/tmpl/faq"><i class="glyphicon glyphicon-question-sign"></i> FAQ</a></li>
-								
-								<li><a href="#docs/tmpl/main"><i class="glyphicon glyphicon-book"></i> Template Docs</a></li>
-								<li><a href="#docs/tmpl/example"><i class="glyphicon glyphicon-file"></i> Template Example</a></li>
-								
-								<li><a href="#docs/tmpl/userform"><i class="glyphicon glyphicon-info-sign"></i> How to build and embed a form</a></li>
-								<li><a href="#docs/tmpl/howto-oai"><i class="glyphicon glyphicon-info-sign"></i> How to setup a OAI-PMH interface</a></li>
-								<li><a href="#docs/tmpl/howto-module"><i class="glyphicon glyphicon-info-sign"></i> How to create create custom modules</a></li>
-								
-							</ul>
-							
-						</li>
-						
-						
-						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-leaf"></i> <?php echo tr::get('plugins'); ?> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 									<li><a href="#userform/view"><i class="glyphicon glyphicon-list-alt"></i> <?php echo tr::get('user_forms'); ?></a></li>
@@ -176,6 +140,42 @@ catch (Exception $e)
 								<li><a href="./admin:lng-it"><i class="glyphicon glyphicon-save"></i> Italiano</a></li>
 								<li><a href="./admin:lng-en"><i class="glyphicon glyphicon-save"></i> English</a></li>
 							</ul>
+						</li>
+						
+						
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <?php echo tr::get('other'); ?> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#changelog/show"><i class="glyphicon glyphicon-asterisk"></i> <?php echo tr::get('changelog'); ?></a></li>
+								<li><a href="#error_log/show"><i class="glyphicon glyphicon-exclamation-sign"></i> <?php echo tr::get('error_log'); ?></a></li>
+								<li><a href="./" target="_blank"><i class="glyphicon glyphicon-share-alt"></i> <?php echo tr::get('view_site'); ?></a></li>
+								
+								<li><a href="./admin"><i class="glyphicon glyphicon-repeat"></i> <?php echo tr::get('reload'); ?></a></li>
+								
+								<li class="divider"></li>
+								
+								<li><a href="#cfg/edit"><i class="glyphicon glyphicon-wrench"></i> <?php echo tr::get('cfg_editor'); ?></a></li>
+								
+								<li><a href="#template/dashboard"><i class="glyphicon glyphicon-file"></i> <?php echo tr::get('template_mng'); ?></a></li>
+
+								<li><a href="#sys_translate/showList"><i class="glyphicon glyphicon-random"></i> <?php echo tr::get('sys_translate'); ?></a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li class="text-center"><strong><?php echo tr::get('docs'); ?></strong></li>
+								
+								<li><a href="#docs/tmpl/faq"><i class="glyphicon glyphicon-question-sign"></i> FAQ</a></li>
+								
+								<li><a href="#docs/tmpl/main"><i class="glyphicon glyphicon-book"></i> Template Docs</a></li>
+								<li><a href="#docs/tmpl/example"><i class="glyphicon glyphicon-file"></i> Template Example</a></li>
+								
+								<li><a href="#docs/tmpl/userform"><i class="glyphicon glyphicon-info-sign"></i> How to build and embed a form</a></li>
+								<li><a href="#docs/tmpl/howto-oai"><i class="glyphicon glyphicon-info-sign"></i> How to setup a OAI-PMH interface</a></li>
+								<li><a href="#docs/tmpl/howto-module"><i class="glyphicon glyphicon-info-sign"></i> How to create create custom modules</a></li>
+								
+							</ul>
+							
 						</li>
 						
 						<li><a href="#log/out"><i class="glyphicon glyphicon-off"></i> <?php echo tr::get('logout'); ?></a></li>

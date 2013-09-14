@@ -223,12 +223,20 @@ class userform_ctrl extends Controller
 	{
 		$this->loadForm($param['content']);
 		
+		if ($param['inline'])
+		{
+			$form_class = 'form-inline';
+			$label_class = 'col-md-3';
+			$input_class = 'col-md-9';
+			$buttons_class = 'col-md-offset-3';
+		}
+		
 		if (!$this->data)
 		{
 			return '<p class="text-danger">Error loading data for user form <strong>' . $param['content'] . '</strong></p>';
 		}
 		
-		$html = '<form action="javascript:void(0)" class="form-horizontal" id="' . $param['content'] . '">';
+		$html = '<form action="javascript:void(0)" class="' . $form_class . '" id="' . $param['content'] . '">';
 		
 		
 		foreach ($this->data['elements'] as $el)
@@ -236,8 +244,8 @@ class userform_ctrl extends Controller
 			$checkClass = ($el['is_required'] ? ' required' : '') . ($el['is_email'] ? ' email' : '');
 			
 			$html .= '<div class="form-group" >' .
-							'<div class="col-md-3 control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' .
-							'<div class="col-md-9">';
+							'<div class="' . $label_class . ' control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' .
+							'<div class="' . $input_class . '">';
 			
 			switch ($el['type'])
 			{
@@ -287,7 +295,7 @@ class userform_ctrl extends Controller
 						'</div>';
 		}
 		$html .= '<div class="row">' .
-							'<div class="col-md-9 col-md-offset-3">' .
+							'<div class="' . $input_class . ' ' . $buttons_class . '">' .
 								'<div class="message"></div>' .
 								'<input class="btn btn-success" type="submit" /> ' .
 								'<input class="btn btn-default" type="reset" />' .

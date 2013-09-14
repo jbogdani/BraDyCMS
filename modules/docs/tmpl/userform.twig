@@ -71,6 +71,13 @@
 		<td>required</td>
 		<td>Message to display when email is NOT successfully sent</td>
 	</tr>
+	
+	<tr>
+		<th>inline</th>
+		<td>boolean</td>
+		<td>optional</td>
+		<td>If this value is present and is true input lables will be displayed inline, right to the field, otherwise (default value) the label will be displayed above the field</td>
+	</tr>
 </table>
 
 <hr />
@@ -164,6 +171,7 @@
   "subject":"Contact form",
   "success_text":"Your message was successfully sent",
   "error_text": "Sorry, something went wrong and it was not possible to send your message"
+  "inline": true,
   "elements": [
     {
       "name": "name",

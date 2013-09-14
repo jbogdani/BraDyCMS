@@ -1,6 +1,6 @@
 <form class="form-horizontal" action="javascript:void(0);" id="form-{{ uid }}">
 
-
+	<!-- NAME -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-name') }}</label>
 		<div class="col-md-8">
@@ -8,13 +8,17 @@
 		</div>
 	</div>
 	
+	
+	<!-- MISSION -->
 	<div class="form-group">
-		<label class="control-label col-md-2">{{ tr.get('cfg-logo') }}</label>
+		<label class="control-label col-md-2">{{ tr.get('cfg-mission') }}</label>
 		<div class="col-md-8">
-			<input type="text" value="{{ data.logo }}" name="logo" />
+			<input type="text" value="{{ data.mission }}" name="mission" />
 		</div>
 	</div>
 	
+	
+	<!-- TITLE -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-title') }}</label>
 		<div class="col-md-8">
@@ -22,6 +26,7 @@
 		</div>
 	</div>
 	
+	<!-- DESCRIPTION -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-description') }}</label>
 		<div class="col-md-8">
@@ -29,6 +34,8 @@
 		</div>
 	</div>
 	
+	
+	<!-- KEYWORDS -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-keywords') }}</label>
 		<div class="col-md-8">
@@ -36,34 +43,40 @@
 		</div>
 	</div>
 	
-	<div class="form-group">
+		<!-- SYS_LANG -->
+	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-sys_lang') }}</label>
 		<div class="col-md-8">
 			<input type="text" value="{{ data.sys_lang }}" name="sys_lang" />
 		</div>
 	</div>
 	
-	<div class="form-group">
-		<label class="control-label col-md-2">{{ tr.get('cfg-db_connection') }}</label>
-		<div class="col-md-8">
-			<input type="text" value="{{ data.db_connection }}" name="db_connection" readonly="readonly" />
-		</div>
-	</div>
-	
-	<div class="form-group">
+	<!-- SYS_LANG_STRING -->
+	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-sys_lang_string') }}</label>
 		<div class="col-md-8">
 			<input type="text" value="{{ data.sys_lang_string }}" name="sys_lang_string" />
 		</div>
 	</div>
 	
-	<div class="form-group">
-		<label class="control-label col-md-2">{{ tr.get('cfg-prefix') }}</label>
+	
+	<!-- DB_CONNECTION -->
+	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+		<label class="control-label col-md-2">{{ tr.get('cfg-db_connection') }}</label>
 		<div class="col-md-8">
-			<input type="text" value="{{ data.prefix }}" name="prefix" readonly="readonly" />
+			<input type="text" value="{{ data.db_connection }}" name="db_connection" />
 		</div>
 	</div>
 	
+	<!-- PREFIX -->
+	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+		<label class="control-label col-md-2">{{ tr.get('cfg-prefix') }}</label>
+		<div class="col-md-8">
+			<input type="text" value="{{ data.prefix }}" name="prefix" />
+		</div>
+	</div>
+	
+	<!-- TIMEZONE -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-timezone') }}</label>
 		<div class="col-md-8">
@@ -71,7 +84,8 @@
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<!-- DEBUG -->
+	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-debug') }}</label>
 		<div class="col-md-2">
 			<select name="debug">
@@ -81,6 +95,7 @@
 		</div>
 	</div>
 	
+	<!-- THUMBS_DIMENSIONS -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-thumbs_dimensions') }}</label>
 		<div class="col-md-2">
@@ -88,6 +103,7 @@
 		</div>
 	</div>
 	
+	<!-- ART_IMG_DIMENSIONS -->
 	<hr />
 	<p class="lead">{{ tr.get('cfg-art_img_dimensions') }}</p>
 	{% if data.art_img|length > 0 %}
@@ -108,6 +124,7 @@
 		</div>
 	</div>
 	
+	<!-- GA_ID -->
 	<hr />
 	<p class="lead">{{ tr.get('cfg-ga') }}</p>
 	
@@ -118,6 +135,7 @@
 		</div>
 	</div>
 	
+	<!-- GA_DOMAIN -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-ga_domain') }}</label>
 		<div class="col-md-2">
@@ -125,70 +143,128 @@
 		</div>
 	</div>
 	
-	
+	<!-- GA_DOMAIN -->
 	<hr />
 	<p class="lead">{{ tr.get('cfg-languages') }}</p>
 	
 	<div class="row">
 		<div class="col-md-2 col-md-offset-2"><label>{{ tr.get('cfg-lang_id') }}</label></div>
 		<div class="col-md-3"><label>{{ tr.get('cfg-lang_name') }}</label></div>
-		<div class="col-md-1"><label>{{ tr.get('cfg-lang_published') }}</label></div>
+		<div class="col-md-2"><label>{{ tr.get('cfg-lang_published') }}</label></div>
 	</div>
 	
+	<!-- LANGUAGES -->
 	{% for lang in data.languages %}
 	<div class="form-group">
-			<input type="text" class="col-md-2 col-md-offset-2" value="{{ lang.id }}" name="languages[{{ loop.index0 }}][id]" />
-			<input type="text" class="col-md-3" value="{{ lang.string }}" name="languages[{{ loop.index0 }}][string]" />
-			<select class="col-md-1" name="languages[{{ loop.index0 }}][published]">
-				<option></option>
-				<option{% if lang.published %} selected="selected "{% endif %}>1</option>
-			</select>
-			<a class="btn btn-danger delete-custom_field col-md-1"><i class="glyphicon glyphicon-trash"></i></a>
+			<div class="col-md-2 col-md-offset-2">
+				<input type="text" value="{{ lang.id }}" maxlength="2" name="languages[{{ loop.index0 }}][id]" />
+			</div>
+			
+			<div class="col-md-3">
+				<input type="text" value="{{ lang.string }}" name="languages[{{ loop.index0 }}][string]" />
+			</div>
+			
+			<div class="col-md-2">
+				<select name="languages[{{ loop.index0 }}][published]">
+					<option></option>
+					<option{% if lang.published %} selected="selected "{% endif %}>1</option>
+				</select>
+			</div>
 	</div>
 	{% endfor %}
 	
 	<div class="form-group">
-		<input type="text" class="col-md-2 col-md-offset-2" name="languages[{{ data.languages|length }}][id]" />
-		<input type="text" class="col-md-3" name="languages[{{ data.languages|length }}][string]" />
-		<select class="col-md-1" name="languages[{{ data.languages|length }}][published]">
-			<option></option>
-			<option>1</option>
-		</select>
-		<a class="btn btn-danger add-custom_field col-md-1"><i class="glyphicon glyphicon-hdd"></i></a>
-	</div>
-	
-	<hr />
-	<p class="lead">{{ tr.get('custom_fields') }}</p>
-	
-	
-	<div class="form-group">
-		<div class="col-md-2 col-md-offset-2">{{ tr.get('cfg-fld_name') }}</div>
-		<div class="col-md-2">{{ tr.get('cfg-type') }}</div>
-		<div class="col-md-2">{{ tr.get('cfg-label') }}</div>
-		<div class="col-md-4">{{ tr.get('cfg-values') }}</div>
-	</div>
-	
-	{% for fld in data.custom_fields %}
-	<div class="form-group">
-		<input type="text" class="col-md-2 col-md-offset-2" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]" />
-		<input type="text" class="col-md-2" value="{{ fld.type }}" name="custom_fields[{{ loop.index0 }}][type]" />
-		<input type="text" class="col-md-2" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]" />
-		<input type="text" class="col-md-3" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]" />
-		<a class="btn btn-success delete-custom_field col-md-1"><i class="glyphicon glyphicon-trash"></i></a>
-	</div>
-	{% endfor %}
-	
-	<div class="form-group">
-		<div class="controls">
-			<input type="text" class="col-md-2 col-md-offset-2" name="custom_fields[{{ data.custom_fields|length }}][name]" />
-			<input type="text" class="col-md-2" name="custom_fields[{{ data.custom_fields|length }}][type]" />
-			<input type="text" class="col-md-2" name="custom_fields[{{ data.custom_fields|length }}][label]" />
-			<input type="text" class="col-md-3" name="custom_fields[{{ data.custom_fields|length }}][values]" />
-			<a class="btn btn-success add-custom_field col-md-1"><i class="glyphicon glyphicon-hdd"></i></a>
+		<div class="col-md-2 col-md-offset-2">
+			<input type="text" maxlength="2" name="languages[{{ data.languages|length }}][id]" />
 		</div>
+			
+		<div class="col-md-3">
+			<input type="text" name="languages[{{ data.languages|length }}][string]" />
+		</div>
+		
+		<div class="col-md-2">
+			<select name="languages[{{ data.languages|length }}][published]">
+				<option></option>
+				<option>1</option>
+			</select>
+			</div>
 	</div>
 	
 	
+	
+	<!-- CUSTOM_FIELDS -->
+	<div {% if is_admin == false %}style="display:none"{% endif %}>
+		<hr />
+		<p class="lead">{{ tr.get('custom_fields') }}</p>
+
+
+		<div class="form-group">
+			<div class="col-md-2 col-md-offset-2"><label>{{ tr.get('cfg-fld_name') }}</label></div>
+			<div class="col-md-2"><label>{{ tr.get('cfg-type') }}</label></div>
+			<div class="col-md-2"><label>{{ tr.get('cfg-label') }}</label></div>
+			<div class="col-md-4"><label>{{ tr.get('cfg-values') }}</label></div>
+		</div>
+
+		{% for fld in data.custom_fields %}
+		<div class="form-group">
+			<div class="col-md-2 col-md-offset-2">
+				<input type="text" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]" />
+			</div>
+
+			<div class="col-md-2">
+				<select name="custom_fields[{{ loop.index0 }}][type]">
+					<option></option>
+					<option{% if fld.type == 'input' or fdl.type == false %} selected="selected"{% endif %}>input</option>
+					<option{% if fld.type == 'longtext'%} selected="selected"{% endif %}>longtext</option>
+					<option{% if fld.type == 'select'%} selected="selected"{% endif %}>select</option>
+				</select>
+			</div>
+
+			<div class="col-md-2">
+				<input type="text" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]" />
+			</div>
+
+			<div class="col-md-3">
+				<input type="text" class="col-md-3" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]" />
+			</div>
+
+			<div class="col-md-1">
+				<a class="btn btn-success delete-custom_field"><i class="glyphicon glyphicon-trash"></i></a>
+			</div>
+		</div>
+		{% endfor %}
+
+		<div class="form-group">
+			<div class="controls">
+				<div class="col-md-2 col-md-offset-2">
+					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][name]" />
+				</div>
+
+				<div class="col-md-2">
+					<select name="custom_fields[{{ loop.index0 }}][type]">
+						<option></option>
+						<option>input</option>
+						<option>longtext</option>
+						<option>select</option>
+					</select>
+				</div>
+
+				<div class="col-md-2">
+					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][label]" />
+				</div>
+
+				<div class="col-md-3">
+					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]" />
+				</div>
+
+				<div class="col-md-1">
+					<a class="btn btn-success add-custom_field"><i class="glyphicon glyphicon-hdd"></i></a>
+				</div>
+			</div>
+		</div>
+	<div>
+	
+	<!-- PATHS -->
 	<hr />
 	<p class="lead">{{ tr.get('cfg-paths') }}</p>
 	
@@ -199,27 +275,35 @@
 		</div>
 	</div>
 	
+	<!-- USERS -->
 	<hr />
 	<p class="lead">{{ tr.get('cfg-users') }}</p>
 	
 	<div class="row">
 		<div class="col-md-3 col-md-offset-2">
-			<label>Username / Email</label>
+			<label>{{ tr.get('email_address') }}</label>
 		</div>
 		
 		<div class="col-md-3">
-			<label>Encrypted password</label>
+			<label>{{ tr.get('encrypted_passw') }}</label>
 		</div>
 	</div>
+	
 	{% for user in data.users %}
 	<div class="form-group">
 		<div class="col-md-3 col-md-offset-2">
-			<input type="text" value="{{ user.name }}" name="users[{{ loop.index0 }}][name]" {% if user.name == 'jbogdani@gmail.com' %} readonly="readonly" {% endif %} />
+			<input type="text" value="{{ user.name }}" name="users[{{ loop.index0 }}][name]" {% if user.admin and is_admin == false %} readonly="true" {% endif %} />
 		</div>
 		<div class="col-md-3">
-			<input type="text" name="users[{{ loop.index0 }}][pwd]" value="{{ user.pwd }}" {% if name == 'jbogdani@gmail.com' %} readonly="readonly" {% endif %} />
+			<input type="text" name="users[{{ loop.index0 }}][pwd]" value="{{ user.pwd }}" {% if user.admin and is_admin == false %} readonly="true" {% endif %} />
 		</div>
 		
+		<div class="col-md-2" {% if is_admin == false %}style="display:none"{% endif %}>
+			<select name="users[{{ loop.index0 }}][admin]">
+				<option></option>
+				<option{% if user.admin %} selected="selected"{% endif %}>admin</option>
+			</select>
+		</div>
 	</div>
 	{% endfor %}
 	
@@ -228,7 +312,10 @@
 			<input type="text" name="users[{{ data.users|length }}][name]" />
 		</div>
 		<div class="col-md-3">
-			<input type="text" name="users[{{ data.users|length }}][pwd]" />
+			<input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]" />
+		</div>
+		<div class="col-md-3">
+			<button class="btn btn-info encrypt" type="button"><i class="glyphicon glyphicon-lock"></i> {{ tr.get('one_way_encrypt_passw') }}</button>
 		</div>
 	</div>
 	
@@ -249,6 +336,19 @@ $('#form-{{ uid }}').on('submit', function(){
 			admin.tabs.reloadActive();
 		}
 	}, 'json');
+});
+
+$('#form-{{ uid }} button.encrypt').on('click', function(){
+	var pwd = $(this).parents('.form-group').find('input.pwd');
+	
+	if (!pwd.val()){
+		admin.message('Please enter a password to encrypt!', 'error');
+		pwd.focus();
+	} else {
+		$.post('controller.php?obj=log_ctrl&method=encodePwd&echo=true', {'password': pwd.val()}, function(data){
+			pwd.val(data);
+		});
+	}
 });
 
 $('#cache-{{ uid }}').on('click', function(){

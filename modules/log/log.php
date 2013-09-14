@@ -13,9 +13,10 @@ class log_ctrl extends Controller
 	{
 		$users_log = './sites/default/users.log';
 		
-		$_SESSION['user_confirmed'] = false;
+		error_log('user:' . $_SESSION['user_confirmed'] . ' logged OUT on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . "\n", 3, $users_log);
 		
-		error_log('user:' . $_POST['username'] . ' logged OUT on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . "\n", 3, $users_log);
+		$_SESSION['user_confirmed'] = false;
+		$_SESSION['user_admin'] = false;
 		
 		utils::emptyTmp();
 		
@@ -67,10 +68,14 @@ class log_ctrl extends Controller
 			if($username == $user['name'] && $this->encodePwd($password) == $user['pwd'])
 			{
 				$_SESSION['user_confirmed'] = $username;
-		
+				if ($user['admin'] == 'admin')
+				{
+					$_SESSION['user_admin'] = true;
+				}
+				
 				//$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
 					
-				//error_log('user:' . $username . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
+				error_log('user:' . $username . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
 				
 				echo json_encode(array('status' => 'success'));
 				return;

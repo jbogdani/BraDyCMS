@@ -12,7 +12,7 @@ class cfg_ctrl extends Controller
 	{
 		$data = cfg::get();
 		
-		$this->render('cfg', 'form', array( 'data' => $data ));
+		$this->render('cfg', 'form', array( 'data' => $data, 'current_user' => $_SESSION['user_confirmed'], 'is_admin' => $_SESSION['user_admin'] ));
 	}
 	
 	public function save()

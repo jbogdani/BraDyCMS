@@ -77,38 +77,28 @@ class utils
 	
 	public static function dirContent($dir, $dont_ignore_sys = false)
 	{
-		$handle = @opendir($dir);
-	
-		$dont_consider_array = array('.', '..');
-		
-		if (!$dont_ignore_sys)
+    $dont_consider_array = array('.', '..');
+    
+    if (!$dont_ignore_sys)
 		{
 			array_push($dont_consider_array,'.DS_Store', 'thumbs.db', '.svn');
 		}
-	
-		if($handle)
-		{
-			while (false !== ($file = readdir($handle)))
-			{
-				if (!in_array($file, $dont_consider_array))
-				{
-					$dir_content[] = $file;
-				}
-			}
-			closedir($handle);
-			if (count($dir_content)> 0)
-			{
-				return $dir_content;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		else
-		{
-			return false;
-		}
+    
+    $files = scandir($dir);
+    
+    if (is_array($files))
+    {
+      foreach ($files as $id => &$f)
+      {
+        if(in_array($f, $dont_consider_array))
+        {
+          unset($files[$id]);
+        }
+      }
+    }
+		$handle = @opendir($dir);
+    
+    return $files;
 	}
 	
 	public static function checkMimeExt ( $file )

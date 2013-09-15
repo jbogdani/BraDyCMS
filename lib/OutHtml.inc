@@ -346,13 +346,15 @@ class OutHtml extends Out
 		if (func_get_args())
 		{
 			$art_list = $this->getArticlesByTagArray(func_get_args());
+      $tags = implode(' ', func_get_args());
 		}
 		else
 		{
 			$art_list = $this->getArticlesByTag(); 
+      $tags = implode(' ', $this->getFilterTags());
 		}
     
-		return $this->array2html($art_list, 'tags');
+		return $this->array2html($art_list, 'tags ' . $tags);
 		
 	}
 	

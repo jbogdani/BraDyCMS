@@ -187,7 +187,7 @@
 				<option></option>
 				<option>1</option>
 			</select>
-			</div>
+    </div>
 	</div>
 	
 	
@@ -262,7 +262,7 @@
 				</div>
 			</div>
 		</div>
-	<div>
+  </div>
 	
 	<!-- PATHS -->
 	<hr />
@@ -325,7 +325,7 @@
 
 <hr />
 <p class="lead">{{ tr.get('empty_cache') }}</p>
-<button class="btn btn-warning btn-large" id="cache-{{ uid }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('empty_cache')}}</button>
+<button class="btn btn-warning btn-large" type="button" id="cache-{{ uid }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('empty_cache')}}</button>
 <span class="help-block">{{ tr.get('cache_help_text') }}</span>
 
 <script>
@@ -357,7 +357,6 @@ $('#cache-{{ uid }}').on('click', function(){
 	}, 'json');
 });
 
-$('.add-custom_field').on('click', function(){});
 $('.delete-custom_field').on('click', function(){
 	$(this).parents('div.controls').hide().find(':input').val('');
 });

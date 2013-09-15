@@ -479,7 +479,22 @@ class OutHtml extends Out
 		}
 	
 		return $html;
-			
 	}
+  
+  /**
+   * Returns string for jQuery library inclusion, trying first to load from Google CDN then from local host
+   * @param string $version jQuery version
+   * @return boolean|string
+   */
+  public function jQuery($version)
+  {
+    if (!$version)
+    {
+      return false;
+    }
+    
+    return $html = '<script src="//ajax.googleapis.com/ajax/libs/jquery/' . $version . '/jquery.min.js"></script>' . 
+      '<script>window.jQuery || document.write(\'<script src="./js/jquery-' . $version . '.min.js"><\/script>\')</script>';
+  }
 		
 }

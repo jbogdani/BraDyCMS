@@ -307,13 +307,13 @@ class Out
 			return false;
 		}
 		
-		foreach ($menu as $item)
+		foreach ($menu as &$item)
 		{
-			if ($this->get['art_title'] && preg_match('/art_title=' . $this->get['art_title'] . '/', $item['href']))
+			if ($this->get['art_title'] && $this->get['art_title'] == $item['href'])
 			{
 				$item['current'] = true;
 			}
-			else if ($this->context == 'home' && $item['href'] == './')
+			else if ($this->context == 'home' && ( $item['href'] == './' || $item['href'] == ''))
 			{
 				$item['current'] = true;
 			}

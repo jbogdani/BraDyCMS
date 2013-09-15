@@ -257,16 +257,16 @@ class utils
 	public static function getLanguages($lang = false)
 	{
 		$lang_arr = array(
-				array(
-						'code'=> cfg::get('sys_lang'),
-						'string' => cfg::get('sys_lang_string'),
-						'is_current' => (($lang == cfg::get('sys_lang')) || !$lang ? true : false)
-					)
-				);
+      array(
+        'code'=> cfg::get('sys_lang'),
+        'string' => cfg::get('sys_lang_string'),
+        'is_current' => (($lang == cfg::get('sys_lang')) || !$lang ? true : false)
+        )
+      );
 		// other languages
 		$languages = cfg::get('languages');
 		
-		if (is_array($languages))
+    if (is_array($languages))
 		{
 			foreach($languages as $ll)
 			{
@@ -303,7 +303,7 @@ class utils
 				$langThis['href'] = $langThis['code'] . $_SERVER['REQUEST_URI'];
 			}
 		}
-				
+		
 		return $lang_arr;
 	}
 	

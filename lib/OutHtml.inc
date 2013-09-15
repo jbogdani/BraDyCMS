@@ -251,7 +251,7 @@ class OutHtml extends Out
 	public function langMenu($flags = false, $no_text = false)
 	{
 		$lang_arr = $this->getLanguages();
-		
+    
 		$html = '<ul class="menu lang">';
 		
 		foreach ($lang_arr as $lang)

@@ -351,7 +351,7 @@ class OutHtml extends Out
 		{
 			$art_list = $this->getArticlesByTag(); 
 		}
-		
+    
 		return $this->array2html($art_list, 'tags');
 		
 	}
@@ -381,7 +381,7 @@ class OutHtml extends Out
 							'</div>' .
 					  '</div>';
 		}
-		$html = '</div>';
+		$html .= '</div>';
 		
 		return $html;
 	}

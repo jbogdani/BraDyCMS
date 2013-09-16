@@ -1,0 +1,76 @@
+<div id="{{ uid }}">
+	
+	<h2>{{ tr.get('galleries') }}</h2>
+	
+	<div class="well well-sm clearfix">
+		<div class="btn-group">
+			<a class="btn btn-info add_new" href="#" title="{{ tr.get('new_gallery') }}"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('new_gallery') }}</a>
+			<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
+		</div>
+			<div class="pull-right col-sm-2">
+				<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
+			</div>
+	</div>
+	
+	
+	
+	
+	<ul class="galleryList" id="media-{{ uid }}">
+		
+	{% for gal in galleries %}
+		<li class="img">
+			<a class="" href="#galleries/edit/{{ gal }}">
+				<i class="glyphicon glyphicon-expand"></i><br />
+				<div style="text-align:center;" class="searcheable caption">{{ gal }}</div>
+			</a>
+		</li>
+	{% endfor %}
+	
+	</ul>
+
+</div>
+
+<script>
+	$('#input_{{ uid }}').on('keyup', function(){
+		
+		admin.media.filterDir($(this).val(), '{{ uid }}');
+	});
+	
+	$('#{{ uid }} a.add_new').on('click', function(event){
+		admin.dialog({
+			html: '<input type="text" class="gal" placeholder="' + admin.tr('gallery_name') + '" />'
+				+ '<p class="text-error">' + admin.tr('gal_name_formatting') + '</p>',
+			title: admin.tr('new_gallery'),
+			loaded: function(modal){
+				modal.find('input.gal').focus();
+			},
+			buttons:[
+			         {
+			        	 text: admin.tr('save'),
+			        	 addclass: 'btn-success',
+			        	 click: function(){
+			        		 var gal = $('.modal input.gal').val();
+			        		 if (!gal){
+			        			 admin.message(admin.tr('gallery_name_cannot_be_empty'), 'error');
+			        		 } else {
+			        			 $.get('controller.php?obj=galleries_ctrl&method=addGallery&param[]=' + gal, function(data){
+			        				 admin.message(data.text, data.status);
+			        				 
+			        				 if (data.status == 'success'){
+			        					 window.location = '#galleries/edit/' + gal;
+			        					 
+			        					 $('#modal').modal('hide');
+			        				 }
+			        			 }, 'json');
+			        		 }
+			        	 }
+			         },
+			         {
+				         text: admin.tr('close'),
+				         action: 'close'
+			         }
+			         ]
+		});
+		event.preventDefault();
+	});
+</script>

@@ -14,26 +14,21 @@ class cfg
 	{
 		if (!self::$data)
 		{
-			if (file_exists(MAIN_DIR . 'sites/default/cfg/config.json'))
+      if (!is_dir(MAIN_DIR . 'sites/default'))
+      {
+        throw new Exception('missing_site_dir');
+      }
+      
+			if (!file_exists(MAIN_DIR . 'sites/default/cfg/config.json'))
 			{
-				self::$data = json_decode(file_get_contents(MAIN_DIR . 'sites/default/cfg/config.json'), true);
+        throw new Exception('Missing configuration file for site');
 			}
-			else if (file_exists(MAIN_DIR . 'sites/default/cfg/config.ini'))
-			{
-				$data = parse_ini_file(MAIN_DIR . 'sites/default/cfg/config.ini', 1);
-				self::save($data);
-				unlink(MAIN_DIR . 'sites/default/cfg/config.ini');
-			}
-			else
-			{
-				error_log("Missing configuration file for site");
-				return false;
-			}
+      
+			self::$data = json_decode(file_get_contents(MAIN_DIR . 'sites/default/cfg/config.json'), true);
 			
 			if (!self::$data)
 			{
-				error_log("Error in reading config file! Maybe your JSON is invalid");
-				return false;
+        throw new Exception('Error in reading config file! Maybe your JSON is is using invalid syntax');
 			}
 		}
 		
@@ -50,6 +45,6 @@ class cfg
 	public static function save($data)
 	{
 		self::$data = $data;
-		utils::write_in_file(MAIN_DIR . 'sites/default/cfg/config.json', self::$data, 'json');
+		return utils::write_in_file(MAIN_DIR . 'sites/default/cfg/config.json', self::$data, 'json');
 	}
 }

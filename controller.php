@@ -11,12 +11,12 @@ try
 	$root = './';
 	require_once $root . 'lib/globals.inc';
 	
-	$controller = new Controller($_GET, $_POST, $_REQUEST);
+	$controller = new Controller();
 	
 	$controller->route();
 }
 catch (Exception $e)
 {
-	error_log($e->getMessage());
+	error_log($e->getTraceAsString());
 	echo 'Something went wrong. Please check error log for details';
 }

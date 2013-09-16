@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+      <div id="register">
+        <div class="alert alert-info text-center">
+          <p class="lead"><i class="glyphicon glyphicon-warning-sign"></i> Hands up!</p>
+          <p>It seems you there is no site configured, yet!</p>
+        </div>
+
+        <p class="lead">Please, register with a username (valid email address) and password.</p>
+
+        <p>Your site will be created and you will be the first admin. After this you can login and finish the site layout and configuration!</p>
+
+        <form class="form" id="newsite" action="javascript:void(0)">
+
+          <div class="form-group">
+            <label>E-mail address</label>
+            <input type="email" name="users[0][name]" class="form-control" placeholder="eg. development@bradypus.net" />
+            <span class="help-block">This will be your username.</span>
+          </div>
+
+          <div class="form-group">
+            <input type="password" name="users[0][pwd]" class="form-control" placeholder="Surely you do not need any example for this" />
+            <span class="help-block">Your password will be encrypted</span>
+          </div>
+
+          <input type="hidden" name="users[0][admin]" value="admin" />
+          <input type="hidden" name="debug" value="true" />
+
+
+          <button class="btn btn-success" type="submit">Create my site</button>
+          <bytton class="btn btn-default" type="reset">Reset</bytton>
+
+
+        </form>
+      </div>
+      <div id="message" style="display:none;">
+        <div class="alert alert-success">
+          <p class="lead"><i class="glyphicon glyphicon-thumbs-up"></i> Wonderful! Everything went fine!</p>
+        </div>
+
+        <p>Now you can login to your new web site control panel, but <strong>remember</strong> there is still some work to do:</p>
+
+        <ul class="list-group">
+          <li class="list-group-item">1. Finish configuring your site (Main menu > Other > site configuration)</li>
+          <li class="list-group-item">2. Edit your public templates and CSS (Main menu > Other > Template manager)</li>
+          <li class="list-group-item">3. Add some articles (Main menu > Articles > Add new article)</li>
+          <li class="list-group-item">4. Add some menus (Main menu > Menu > Add new menu item)</li>
+          <li class="list-group-item">5. Read all documentation (Main menu > Other > Docs)</li>
+          <li class="list-group-item">6. Report any bug you might find on <a href="http://github.com/jbogdani/BraDyCMS/issues" target="_blank">Github</a></li>
+        </ul>
+
+        <a targe="_blank" class="btn btn-success btn-block" href="./admin"><i class="glyphicon glyphicon-log-in"></i> Go to login page</a>
+      </div>
+    </div>
+
+  </div>
+</div>

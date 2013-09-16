@@ -78,7 +78,6 @@ class media_ctrl extends Controller
 				'path' => $path,
 				'rel_path' => $rel_path,
 				'files' => $file_obj,
-				'uniqid' => uniqid(),
 				'tr' => new tr()
 		));
 	}

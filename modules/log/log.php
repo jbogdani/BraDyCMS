@@ -11,13 +11,40 @@ class log_ctrl extends Controller
 	
 	public function out()
 	{
-		$_SESSION['user_confirmed'] = false;
+		$users_log = './sites/default/users.log';
+    
+    if (!file_exists($users_log))
+		{
+			$fh = @fopen($users_log, 'w');
+			@fclose($fh);
+		}
 		
-		error_log('user:' . $_POST['username'] . ' logged OUT on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . "\n", 3, $users_log);
+		error_log('user:' . $_SESSION['user_confirmed'] . ' logged OUT on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . "\n", 3, $users_log);
+		
+		$_SESSION['user_confirmed'] = false;
+		$_SESSION['user_admin'] = false;
 		
 		utils::emptyTmp();
 		
 		echo '<script>window.location = "./admin"</script>';
+	}
+	
+	public function encodePwd($password = false, $echo = false)
+	{
+		$password = $password ? $password : $this->request['password'];
+		
+		$echo = $echo ? $echo : $this->request['echo'];
+		
+		$password = sha1($password);
+		
+		if($echo)
+		{
+			echo $password;
+		}
+		else
+		{
+			return $password;
+		}
 	}
 	
 	public function in()
@@ -44,11 +71,15 @@ class log_ctrl extends Controller
 		
 		foreach ($cfg_users as $user)
 		{
-			if($username == $user['name'] && sha1($password) == $user['pwd'])
+			if($username == $user['name'] && $this->encodePwd($password) == $user['pwd'])
 			{
 				$_SESSION['user_confirmed'] = $username;
-		
-				$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
+				if ($user['admin'] == 'admin')
+				{
+					$_SESSION['user_admin'] = true;
+				}
+				
+				//$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
 					
 				error_log('user:' . $username . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
 				

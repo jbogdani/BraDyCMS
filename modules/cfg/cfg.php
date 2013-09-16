@@ -6,27 +6,31 @@
  * @since			Feb 23, 2013
  */
  
-class cfg_ctrl
+class cfg_ctrl extends Controller
 {
-	public static function edit()
+	public function edit()
 	{
 		$data = cfg::get();
 		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'cfg/tmpl'), unserialize(CACHE));
-		echo $twig->render('form.html', array(
-				'data' => $data,
-				'tr' => new tr(),
-				'uid' => uniqid('uid')
-		));
+		$this->render('cfg', 'form', array( 'data' => $data, 'current_user' => $_SESSION['user_confirmed'], 'is_admin' => $_SESSION['user_admin'] ));
 	}
 	
-	public static function save($post)
+	public function save()
 	{
-		$post = utils::recursiveFilter($post);
-		cfg::save($post);
+		$post = utils::recursiveFilter($this->post);
+		if (cfg::save($post))
+		{
+			$resp = array('status' => 'success', 'text' => tr::get('ok_cfg_update'));
+		}
+		else
+		{
+			$resp = array('status' => 'success', 'text' => tr::get('error_cfg_update'));
+		}
+		
+		echo json_encode($resp);
 	}
 	
-	public static function empty_cache()
+	public function empty_cache()
 	{
 		$error = utils::recursive_delete(CACHE_DIR, true);
 		

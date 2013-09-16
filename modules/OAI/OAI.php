@@ -17,10 +17,13 @@ class OAI_ctrl extends Controller
 			return;
 		}
 		
+		unset($this->get['obj']);
+		unset($this->get['method']);
+		
 		require_once './sites/default/modules/metadata/MD_repository.inc';
-		require_once LIB_DIR . 'OAIprovider/endpoint.php';
+		require_once './vendor/oaiprovider-php/oaiprovider-php/endpoint.php';
 		require_once MOD_DIR . 'OAI/myRepository.php';
 		
-		\oaiprovider\handleRequest($this->get, new myRepository(new MD_repository(), new DB()), null, 'xsl/oai2.xsl');
+		\oaiprovider\handleRequest($this->get, new myRepository(new MD_repository()), null, 'xsl/oai2.xsl');
 	}
 }

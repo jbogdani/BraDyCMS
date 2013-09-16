@@ -8,6 +8,11 @@
 
 session_start();
 
+if (!is_dir('./sites/default'))
+{
+  define('CREATE_SITE', true);
+}
+
 if ($_GET['lang'])
 {
 	$_SESSION['lang'] = $_GET['lang'];
@@ -19,6 +24,26 @@ if (@!$root)
 	$root = './';
 }
 define('MAIN_DIR', $root);
+
+if (!is_dir(MAIN_DIR . 'cache'))
+{
+  @mkdir(MAIN_DIR . 'cache', 0777, true);
+}
+if (!is_dir(MAIN_DIR . 'logs'))
+{
+  @mkdir(MAIN_DIR . 'logs', 0777, true);
+}
+
+if (!file_exists(MAIN_DIR . 'logs/error.log'))
+{
+  touch(MAIN_DIR . 'logs/error.log');
+}
+
+
+if (!is_dir(MAIN_DIR . 'tmp'))
+{
+  @mkdir(MAIN_DIR . 'tmp', 0777, true);
+}
 
 ini_set('error_log', './logs/error.log');
 
@@ -50,37 +75,43 @@ if (get_magic_quotes_gpc())
 }
 
 
-require_once $root . 'lib/ClassAutoloader.inc';
-new ClassAutoloader();
+require_once $root . 'lib/Autoloader.inc';
+Autoloader::start();
 
-require $root . 'lib/Twig/Autoloader.php';
-Twig_Autoloader::register();
 
+require $root . 'vendor/autoload.php';
+
+
+class_alias('RedBean_Facade', 'R');
 
 //set default date-zone
-if (cfg::get('timezone'))
+if (defined('CREATE_SITE') || !cfg::get('timezone'))
 {
-	date_default_timezone_set(cfg::get('timezone'));
+  
+  date_default_timezone_set('Europe/Rome');
 }
 else
 {
-	date_default_timezone_set('Europe/Rome');
+	date_default_timezone_set(cfg::get('timezone'));
 }
 
-define ( 'PREFIX',	cfg::get('prefix') );
-define ( 'SYS_LANG',cfg::get('default_lang') );
+
+!defined('CREATE_SITE') ? define ( 'PREFIX',	cfg::get('prefix') ) : '';
+!defined('CREATE_SITE') ? define ( 'SYS_LANG',cfg::get('default_lang') ) : '';
 define ( 'MOD_DIR', MAIN_DIR . 'modules/');
 define ( 'LIB_DIR', MAIN_DIR . 'lib/');
 define ( 'ERR_LOG',	MAIN_DIR . 'logs/error.log');
 define ( 'TMP_DIR', MAIN_DIR . 'tmp/');
 define ( 'LOCALE_DIR', MAIN_DIR . 'locale/');
-define ( 'IMG_DIR', MAIN_DIR . 'sites/default/images/');
+define ( 'SITE_DIR', MAIN_DIR . 'sites/default/');
+define ( 'IMG_DIR', SITE_DIR . 'images/');
+
 define ( 'GALLERY_DIR', IMG_DIR . 'galleries/' );
 define ( 'CACHE_DIR', MAIN_DIR . 'cache/');
 
-$_SESSION['debug'] = cfg::get('debug');
+!defined('CREATE_SITE') ? $_SESSION['debug'] = cfg::get('debug') : '';
 
-if ($_SESSION['debug'])
+if (defined('CREATE_SITE') || $_SESSION['debug'])
 {
 	define('CACHE', serialize(array('debug' => true)));
 }
@@ -89,3 +120,17 @@ else
 	define('CACHE', serialize(array('cache' => CACHE_DIR)));
 }
 tr::load_file($_GET['lang']);
+
+if (defined('CREATE_SITE') || !cfg::get('db_connection'))
+{
+  R::setup('sqlite:./sites/default/cfg/database.sqlite');
+}
+else if (cfg::get('db_connection') && cfg::get('db_user') && cfg::get('db_pass'))
+{
+  R::setup(cfg::get('db_connection'), cfg::get('db_user'), cfg::get('db_pass'));
+}
+
+R::setup( ( defined('CREATE_SITE')|| !cfg::get('db_connection')) ? 'sqlite:./sites/default/cfg/database.sqlite' : cfg::get('db_connection') );
+R::freeze( true );
+R::dependencies(array('arttrans'=>array('articles')));
+R::dependencies(array('menutrans'=>array('menu')));

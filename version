@@ -1,3 +1,13 @@
+3.0.1[] = "New install documentation in README.md file"
+3.0.1[] = "Added documentation in cfg::edit"
+3.0.1[] = "Bug fixed with log::out. Check if user.log exists before log"
+3.0.1[] = "Dropped support for config.ini files in configuration file"
+3.0.1[] = "Bug fixed in utils::dirContent. If directory does not exist false is returned"
+3.0.1[] = "Bug fixed in media/list: delete button was visible in root directory"
+3.0.1[] = "New site config elements: database username and database password, for database engines other then SQLite"
+3.0.1[] = "Automatic check for missing directories (tmp, cache, log), and their creation on first run"
+3.0.1[] = "New module for new sites creation"
+3.0.1[] = "admin page is now a new core module"
 3.0[] = "New version, upgrade to Twitter Bootstrap v3 & adoption of RedBeanPHP"
 ; DB CHANGES in v3:
 ;		change articles.text_id to articles.textid

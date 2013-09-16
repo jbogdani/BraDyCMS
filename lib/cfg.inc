@@ -14,20 +14,17 @@ class cfg
 	{
 		if (!self::$data)
 		{
-			if (file_exists(MAIN_DIR . 'sites/default/cfg/config.json'))
-			{
-				self::$data = json_decode(file_get_contents(MAIN_DIR . 'sites/default/cfg/config.json'), true);
-			}
-			else if (file_exists(MAIN_DIR . 'sites/default/cfg/config.ini'))
-			{
-				$data = parse_ini_file(MAIN_DIR . 'sites/default/cfg/config.ini', 1);
-				self::save($data);
-				unlink(MAIN_DIR . 'sites/default/cfg/config.ini');
-			}
-			else
+      if (!is_dir(MAIN_DIR . 'sites/default'))
+      {
+        throw new Exception('missing_site_dir');
+      }
+      
+			if (!file_exists(MAIN_DIR . 'sites/default/cfg/config.json'))
 			{
         throw new Exception('Missing configuration file for site');
 			}
+      
+			self::$data = json_decode(file_get_contents(MAIN_DIR . 'sites/default/cfg/config.json'), true);
 			
 			if (!self::$data)
 			{

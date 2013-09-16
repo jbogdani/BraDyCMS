@@ -1,0 +1,115 @@
+<!DOCTYPE html >
+<html>
+<head>
+  
+  <!-- Print metadata -->
+  {{ html.metadata }}
+  
+  <!-- Load site favicon -->
+  <link rel="shortcut icon" href="./sites/default/css/favicon.png">
+  
+  <!-- Load site styles -->
+  <link rel="stylesheet" href="./sites/default/css/styles.css" type="text/css" />
+</head>
+
+<body>
+  
+  <!-- Site Header -->
+  <div class="header container">
+    <h1>My new Web Site</h1>
+    <p class="bigFont">This is my new webs site build with BraDyCMS!</p>
+  </div> <!-- end of header-->
+    
+  <!-- Main Menu -->
+  <div class="container">
+    <div class="navigation">
+      <!-- This will load menu with name "main" and will apply to main ul css classes: "nav" and "navbar-nav" -->
+      {{ html.menu('main', 'navigation-menu') }}
+    </div>
+  </div><!-- end of main menu -->
+    
+    
+  <!-- Main body -->
+  <div class="body container">
+    
+    <!-- Start of conditional displaying of content, depending on context (html.getContext) -->
+    <!-- 1. Context is "home";  this is the site's home page -->
+    {% if html.getContext == 'home' %}
+      <div class="row">
+      
+        <!-- Show in a big column the body of the welcome article -->
+        <div class="big-left-column">
+        
+        <!-- Retrieve from database article with textid: "welcome" and display the title: -->
+          <h1>{{ html.getArticle('welcome').title }}</h1>
+          
+          <!-- Retrieve from database article with textid: "welcome" and display the main text: -->
+          {{ html.getArticle('welcome').text }}
+        </div><!-- end of .big-left-column -->
+
+        <!-- Show in a side column -->
+        <div class="small-right-column">
+        
+        	<!-- Retrieve from database all articles tagged with both tags "news" AND "web" and display list as html -->
+          {{ html.tagBlog('news', 'web') }}
+          
+        </div> <!-- end of .small-right-column -->
+
+      </div><!--  end of context=home part -->
+
+        
+    <!-- 2. Context is "article".  -->
+    {% elseif html.getContext == 'article' %}
+      <div class="row">
+        <div class="big-left-column">
+          <!-- Show formatted article in main column -->
+          {{ html.articleBody }}
+        </div><!-- end of .big-left-column -->
+        
+        <div class="small-right-column">
+          <div class="well">
+            <!-- Show list of similar articles, ie. articles having as much tags in common with the present one as possible, in left column -->
+            {{ html.similarBlog }}
+          </div><!-- end of .small-right-column -->
+          
+      </div><!-- end of article section -->
+        
+    <!-- 3. Context is "tags" one or more tags are present in the url separated by dashes or tildes -->
+    {% elseif html.getContext == 'tags' %}
+      <div class="row">
+        <div class="big-left-column">
+      <!-- Display html will formatted list of articles matching tags used in URL. If URL tags are separated by dashes, articles must have all tags to be retrieved from database; if tags in URL are separated by tildes (~) it's enough for an article to have one of the tags to be retrived -->
+          {{ html.tagBlog }}
+        </div><!-- end of big-left-column -->
+      </div><!-- end of context=tags part -->
+      
+    <!-- 4. Context is "search" -->
+    {% elseif html.getContext == 'search' %}
+     <div class="row">
+        <div class="big-left-column">
+          {{ html.searchResults }}
+        </div><!-- end of context=search part -->
+      </div>
+
+    {% endif %} <!-- end of conditional contents displaying -->
+
+  </div> <!-- end of main body container (.body .container) -->
+  
+  
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="container">
+      <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+      <!-- Show "foot" menu styled by  "inline" css class -->
+      {{ html.menu('foot', 'inline') }}
+      <p>Powered by <a href="http://bradypus.net" target="_blank">BraDypUS <small>COMMUNICATING CULTURAL HERITAGE</small></a></p>
+    </div>
+  </div><!-- Footer end -->
+
+  <!-- Load jQuery -->
+  {{ html.jQuery('1.10.2') }}
+  
+  <!-- Load frontend.js -->
+  <script src="./sites/default/js/frontend.js"></script>
+</body>
+</html>

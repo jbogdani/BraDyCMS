@@ -26,14 +26,12 @@ class cfg
 			}
 			else
 			{
-				error_log("Missing configuration file for site");
-				return false;
+        throw new Exception('Missing configuration file for site');
 			}
 			
 			if (!self::$data)
 			{
-				error_log("Error in reading config file! Maybe your JSON is invalid");
-				return false;
+        throw new Exception('Error in reading config file! Maybe your JSON is is using invalid syntax');
 			}
 		}
 		

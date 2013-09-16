@@ -77,6 +77,11 @@ class utils
 	
 	public static function dirContent($dir, $dont_ignore_sys = false)
 	{
+    if (!is_dir($dir))
+    {
+      return false;
+    }
+    
     $dont_consider_array = array('.', '..');
     
     if (!$dont_ignore_sys)

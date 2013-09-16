@@ -1,5 +1,4 @@
 # BraDyCMS
--------------------
 
 ### A highly customizable, easy to setup & use php (>=5.3) Content Managing System, created for designers
 
@@ -31,10 +30,11 @@ A five-step guide to install and get running BraDyCMS
 2. Unzip everything in a web accesible directory (eg. `/var/www/bduscms` accessible at `http://localhost/bduscms`)
 3. (Eventually edit the second line of `.htaccess` file to match your installation path, if not installing in root directory, eg: `RewriteBase /bduscms`)
 4. Point your browser to the web path (eg. `http://localhost/bduscms`) and follow the instructions:
->4.1 Enter a valid email address and  password  
->4.2 Click on "Create my site"  
->4.3 Read all the instructions  and  "Go to login page"   
->4.4 Login
+
+> 4.1 Enter a valid email address and  password  
+> 4.2 Click on "Create my site"  
+> 4.3 Read all the instructions  and  "Go to login page"   
+> 4.4 Login
 5. Update your site's information and metadata, add some articles, write a template, [report all issues](https://github.com/jbogdani/BraDyCMS/issues) you might have
 
 **That's all! Enjoy!**

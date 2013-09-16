@@ -17,6 +17,6 @@ try
 }
 catch (Exception $e)
 {
-	error_log($e->getMessage());
+	error_log($e->getTraceAsString());
 	echo 'Something went wrong. Please check error log for details';
 }

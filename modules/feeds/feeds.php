@@ -30,9 +30,7 @@ class feeds_ctrl
 		
 		$feedWriter->setChannelElement('pubDate', date(DATE_RSS, time()));
 		
-		$article = new Article(new DB());
-		
-		$art_array = $article->getAllValid($lang);
+		$art_array = Article::getAllValid($lang);
 		
 		if (is_array($art_array))
 		{
@@ -40,13 +38,13 @@ class feeds_ctrl
 			{
 				$newItem = $feedWriter->createNewItem();
 				
-				$newItem->setTitle($art['title']);
+				$newItem->setTitle($art->title);
 				
-				$newItem->setLink($art['full_url']);
+				$newItem->setLink($art->full_url);
 				
-				$newItem->setDate($art['created']);
+				$newItem->setDate($art->created);
 				
-				$newItem->setDescription($art['summary'] ? $art['summary'] : substr($art['text'], 0, 500) . '...');
+				$newItem->setDescription($art->summary ? $art->summary : substr($art->text, 0, 500) . '...');
 				
 				$feedWriter->addItem($newItem);
 			}

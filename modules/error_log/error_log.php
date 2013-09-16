@@ -12,27 +12,30 @@ class error_log_ctrl
 
 	public static function show()
 	{
-
-		$html = '<div class="btn-group">' 
-				. '<a class="btn log-reload"><i class="icon icon-repeat"></i> Reload</a>'
-				. '<a class="btn log-delete"><i class="icon icon-remove-circle"></i> Delete</a>'
-			. '</div>'
-			. '<hr />';
+		$html = '<h2>Error log</h2>';
 		
 		if (file_exists(self::$file) AND filesize(self::$file) > 0)
 		{
+			$html .= '<div class="btn-group">' .
+					  '<a class="btn btn-default log-reload"><i class="glyphicon glyphicon-refresh"></i> Reload</a>' .
+					  '<a class="btn btn-default log-delete"><i class="glyphicon glyphicon-trash"></i> Delete</a>' .
+					  '</div>' .
+					  '<hr />';
+		
 			$handle = fopen(self::$file, 'r');
 			$contents = fread($handle, filesize(self::$file));
 			fclose($handle);
 		
 			$html .= '<pre>' . nl2br($contents) . '</pre>';
 			
-			echo $html;
 		}
 		else
 		{
-			echo 'Error log is empty';
+			$html .= '<div class="text-success"><i class="glyphicon glyphicon-ok"></i> Error log is empty</div>';
+			
 		}
+		
+		echo $html;
 		?>
 			<script>
 				$('.log-reload').click(function(){

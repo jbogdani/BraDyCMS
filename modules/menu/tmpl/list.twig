@@ -1,0 +1,53 @@
+<h1>{{ tr.get('manage_menus') }}</h1>
+
+<div class="btn-group clearfix" style="padding:20px 0;">
+	<a class="btn btn-info" href="#menu/addNew" title="Aggiungi nuovo"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('add_new_menu_item') }}</a>
+	<a class="btn btn-default reload" title="Ricarica"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
+</div>
+
+
+<div class="clearfix">
+	{% for menu_name, menu_data in html_menus %}
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading show-menu-body" style="cursor: pointer">
+				<strong>{{ menu_name }}</strong>
+				<i class="glyphicon glyphicon-circle-arrow-down pull-right"></i>
+			</div>
+			
+			<div class="panel-body dd" style="display:none;">
+				{{ menu_data|raw }}
+			</div>
+		</div>
+	</div>
+
+
+{% endfor %}
+</div>			
+			
+<script>
+	$('.show-menu-body').on('click', function(event){
+		$(this).parents('.panel').find('.panel-body').fadeToggle();
+		event.preventDefault();
+	});
+	
+	 
+	$.each($('div.dd'), function(i, el){
+		
+		$(el).nestable().on('change', function(){
+			var obj = $(this).nestable('serialize');
+			$.post('controller.php?obj=menu_ctrl&method=updateNestSort', {'data':obj}, function(data){
+				if(data){
+					admin.message(data, 'error');
+				}
+			});
+		});
+		
+	});
+	
+	$('a.reload').click(function(){
+		admin.tabs.reloadActive();
+		return false;
+	});
+
+</script>

@@ -77,38 +77,33 @@ class utils
 	
 	public static function dirContent($dir, $dont_ignore_sys = false)
 	{
-		$handle = @opendir($dir);
-	
-		$dont_consider_array = array('.', '..');
-		
-		if (!$dont_ignore_sys)
+    if (!is_dir($dir))
+    {
+      return false;
+    }
+    
+    $dont_consider_array = array('.', '..');
+    
+    if (!$dont_ignore_sys)
 		{
 			array_push($dont_consider_array,'.DS_Store', 'thumbs.db', '.svn');
 		}
-	
-		if($handle)
-		{
-			while (false !== ($file = readdir($handle)))
-			{
-				if (!in_array($file, $dont_consider_array))
-				{
-					$dir_content[]=$file;
-				}
-			}
-			closedir($handle);
-			if (count($dir_content)> 0)
-			{
-				return $dir_content;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		else
-		{
-			return false;
-		}
+    
+    $files = scandir($dir);
+    
+    if (is_array($files))
+    {
+      foreach ($files as $id => &$f)
+      {
+        if(in_array($f, $dont_consider_array))
+        {
+          unset($files[$id]);
+        }
+      }
+    }
+		$handle = @opendir($dir);
+    
+    return $files;
 	}
 	
 	public static function checkMimeExt ( $file )
@@ -257,16 +252,16 @@ class utils
 	public static function getLanguages($lang = false)
 	{
 		$lang_arr = array(
-				array(
-						'code'=> cfg::get('sys_lang'),
-						'string' => cfg::get('sys_lang_string'),
-						'is_current' => (($lang == cfg::get('sys_lang')) || !$lang ? true : false)
-					)
-				);
+      array(
+        'code'=> cfg::get('sys_lang'),
+        'string' => cfg::get('sys_lang_string'),
+        'is_current' => (($lang == cfg::get('sys_lang')) || !$lang ? true : false)
+        )
+      );
 		// other languages
 		$languages = cfg::get('languages');
 		
-		if (is_array($languages))
+    if (is_array($languages))
 		{
 			foreach($languages as $ll)
 			{
@@ -303,10 +298,17 @@ class utils
 				$langThis['href'] = $langThis['code'] . $_SERVER['REQUEST_URI'];
 			}
 		}
-				
+		
 		return $lang_arr;
 	}
 	
+  /**
+   * Writes $text in $file. If $file does not exist, will be created
+   * @param string $file path to file
+   * @param string|array $text  text to write, can be a string or an array (if type is JSON)
+   * @param string $type gz|json|false. If gz the $file will be gzipped, if json $text will be json_encoded
+   * @return boolean
+   */
 	public static function write_in_file ( $file, $text = false, $type = false )
 	{
 		if ( $type != 'gz' )
@@ -351,6 +353,7 @@ class utils
 		}
 		return array_filter($arr);
 	}
+	
 	
 	
 }

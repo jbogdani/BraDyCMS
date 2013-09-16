@@ -1,0 +1,119 @@
+<h1>Template example</h1>
+<p>File: 
+<code>./sites/default/index.twig</code></p>
+<pre class="prettyprint lang-html">
+{% raw %}
+&#60;!DOCTYPE html &#62;
+&#60;html&#62;
+&#60;head&#62;
+  
+  &#60;!-- Print metadata --&#62;
+  {{ html.metadata }}
+  
+  &#60;!-- Load site favicon --&#62;
+  &#60;link rel="shortcut icon" href="./sites/default/css/favicon.ico"&#62;
+  
+  &#60;!-- Load site styles --&#62;
+  &#60;link rel="stylesheet" href="./sites/default/css/styles.css" type="text/css" /&#62;
+&#60;/head&#62;
+
+&#60;body&#62;
+  
+  &#60;!-- HEADER --&#62;
+  &#60;div class="header"&#62;
+    &#60;div class="container"&#62;
+      &#60;h1&#62;My new Web Site&#60;/h1&#62;
+      &#60;p class="lead"&#62;This is my new webs site build with BraDyCMS!&#60;/p&#62;
+    &#60;/div&#62;
+  &#60;/div&#62; &#60;!-- end of header--&#62;
+    
+  &#60;!-- MAIN MENU --&#62;
+  &#60;div class="container"&#62;
+    &#60;div class="navbar navbar-default"&#62;
+      &#60;div class="container"&#62;
+        {{ html.menu('main', 'nav navbar-nav') }}
+      &#60;/div&#62;
+    &#60;/div&#62;
+  &#60;/div&#62;&#60;!-- end of main menu --&#62;
+    
+    
+  &#60;!-- MAIN BODY --&#62;
+  &#60;div class="body container"&#62;
+    
+    &#60;!-- Start ofonditional displaying of content, depending on context (out.getContext) --&#62;
+    &#60;!-- 1. Context is HOME --&#62;
+    {% if out.getContext == 'home' %}
+      &#60;div class="row"&#62;
+        &#60;!-- Show in a big column the body of the welcome article --&#62;
+        &#60;div class="col-md-9"&#62;
+          &#60;h1&#62;{{ out.getArticle('welcome').title }}&#60;/h1&#62;
+
+          &#60;div class="body"&#62;
+            {{ out.getArticle('welcome').text }}
+          &#60;/div&#62;
+        &#60;/div&#62;&#60;!-- /.end of left, big column --&#62;
+
+        &#60;!-- Show in a side column a list of articles tagged as news --&#62;
+        &#60;div class="col-md-3"&#62;
+          {{ html.tagBlog('news') }}
+        &#60;/div&#62; &#60;!-- /.end of small, right column --&#62;
+
+      &#60;/div&#62;&#60;!-- /. end of home section --&#62;
+
+        
+    &#60;!-- 2. Context is ARTICLE --&#62;
+    {% elseif out.getContext == 'article' %}
+      &#60;div class="row"&#62;
+        &#60;div class="col-md-9"&#62;
+          &#60;!-- Show formatted article in main column --&#62;
+          {{ html.articleBody }}
+        &#60;/div&#62;
+        
+        &#60;div class="col-md-3"&#62;
+          &#60;div class="well"&#62;
+            &#60;!-- Show list of similar articles in left column --&#62;
+            {{ html.similarBlog }}
+          &#60;/div&#62;
+      &#60;/div&#62;&#60;!--/. end of article section --&#62;
+        
+    &#60;!-- 3. Context is TAGS --&#62;
+    {% elseif out.getContext == 'tags' %}
+      {{ html.tagBlog }}
+      
+    &#60;!-- 4. Context is SEARCH --&#62;
+    {% elseif out.getContext == 'search' %}
+      {{ html.searchResults }}
+
+    {% endif %} &#60;!--/. end of conditional contents displaying --&#62;
+
+  &#60;/div&#62; &#60;!--/. end of main body container (.body .container) --&#62;
+  
+  
+  &#60;!-- FOOTER --&#62;
+  &#60;div class="footer"&#62;
+    &#60;div class="container"&#62;
+      &#60;p class="lead"&#62;Lorem ipsum dolor sit amet, consectetur adipiscing elit&#60;/p&#62;
+      {{ html.menu('foot', 'inline') }}
+      &#60;p&#62;Powered by &#60;a href="http://bradypus.net" target="_blank"&#62;BraDypUS &#60;small&#62;COMMUNICATING CULTURAL HERITAGE&#60;/small&#62;&#60;/a&#62;&#60;/p&#62;
+    &#60;/div&#62;
+  &#60;/div&#62;&#60;!-- Footer end --&#62;
+
+  &#60;!-- Load jQuery --&#62;
+  &#60;script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&#62;&#60;/script&#62;
+  
+  &#60;!-- Search form submission script --&#62;
+  &#60;script&#62;
+    (function(){
+      $('#searchForm').submit(function(){
+        if($('#search').val() != '' ){
+          window.location.href = $(this).data('path') + './search:' + $('#search').val();
+        }
+      });
+  })();
+  &#60;/script&#62;
+&#60;/body&#62;
+&#60;/html&#62;
+{% endraw %}
+</pre>
+
+<script>window.prettyPrint && prettyPrint()</script>

@@ -7,44 +7,79 @@
  */
  
 
-class article_ctrl
+class article_ctrl extends Controller
 {
 	
-	public static function check_duplicates($val)
+	public function all()
 	{
-		$db = new DB();
-		
-		$res = $db->executeQuery('SELECT count(*) as `tot` FROM  `' . PREFIX . '__articles` WHERE `text_id` = :text_id', array(':text_id' => $val), 'read');
-		
-		if ($res[0]['tot'] > 0)
+		if (!empty($this->request['param'][0]))
 		{
-			echo tr::sget('duplicate_text_id', $val);
+			$art_arr = Article::getByTag($this->request['param']);
+		}
+		else
+		{
+			$art_arr = Article::getAll();
+		}
+		$tags = Article::getTags();
+		
+		$this->render('article', 'list', array(
+			 'art_arr'=>$art_arr,
+			 'tags' => is_array(Article::getTags()) ? $tags : array(),
+			 'active_tags' => $this->request['param'],
+			 'cfg_langs' => cfg::get('languages'),
+			 'delete_tag' => (!$art_arr && count($this->request['param']) == 1 ? $this->request['param'][0] : false)
+				  ));
+	}
+	
+	public function deleteTag()
+	{
+		try
+		{
+			Article::deleteTag($this->get['tag']);
+		}
+		catch (Exception $e)
+		{
+			error_log($e->getMessage());
+			
+			echo tr::get('error_delete_tag');
+		}
+	}
+
+	public function deleteAllTags()
+	{
+		try
+		{
+			Article::deleteUnusedTags();
+		}
+		catch (Exception $e)
+		{
+			error_log($e->getMessage());
+			
+			echo tr::get('error_delete_tag');
+		}
+	}
+
+	public function check_duplicates()
+	{
+		$val = $this->get['param'][0];
+		
+		$res = Article::getByTextid($val, false, true);
+		
+		if ($res)
+		{
+			echo tr::sget('duplicate_textid', $val);
 		}
 	}
 	
-	public static function all()
-	{
-		$article = new Article(new DB());
-		$art_array = $article->getAll();
-		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'article/tmpl'), unserialize(CACHE));
-		echo $twig->render('list.html', array(
-				'art_arr'=>$art_array,
-				'tr' => new tr()
-		));
-	}
 	
-	public static function edit($id = false)
+	public function edit()
 	{
-		$article = new Article(new DB());
 		
-		if ($id)
-		{
-			$art = $article->getArticle($id, false, false, true);
-		}
+		$id = $this->get['param'][0];
 		
 		// check if art_img files exist
 		$art_img = cfg::get('art_img');
+		
 		if (is_array($art_img))
 		{
 			foreach($art_img as $dimension)
@@ -56,51 +91,120 @@ class article_ctrl
 			}
 		}
 		
-		$twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . 'article/tmpl'), unserialize(CACHE));
-		echo $twig->render('form.html', array(
-				'art'=>$art,
-				'custom_fields' => cfg::get('custom_fields'),
-				'date' => date('Y-m-d'),
-				'uid' => uniqid('id'),
-				'imploded_tags' => '"' . implode('","', $article->getTags()) . '"',
-				'sections' => $article->getSections(),
-				'tr' => new tr,
-				'art_imgs' => $article_images,
-				'tmp_path' => TMP_DIR
+		$art = Article::getById($id);
+		
+		$available_tags = Article::getTags();
+		
+		if (!is_array($available_tags))
+		{
+			$available_tags = array();
+		}
+		
+		$this->render('article', 'form', array(
+			 'art'=>$art,
+			 'custom_fields' => cfg::get('custom_fields'),
+			 'date' => date('Y-m-d'),
+			 'imploded_tags' => '"' . implode('","', $available_tags) . '"',
+			 'art_imgs' => $article_images,
+			 'tmp_path' => TMP_DIR,
+			 'cfg_langs' => cfg::get('languages'),
 		));
 	}
 	
-	public static function addNew()
+	public function saveTransl()
 	{
-		self::edit();
-		return;
-	}
-	
-	
-	public static function delete($id)
-	{
-		$article = new Article(new DB());
+		$data = $this->post;
+		$art_id = $this->get['param'][0];
 		
 		try
 		{
-			if (!$article->delete( $id ))
+			Article::translate($art_id, $data);
+			
+			$out['text'] = tr::get('ok_translation_saved');
+			$out['status'] = 'success';
+		}
+		catch (Exception $e)
+		{
+			error_log($e->getMessage());
+			$out['text'] = tr::get('error_translation_not_saved');
+			$out['status'] = 'error';
+		}
+		
+		echo json_encode($out);
+	}
+	
+	/**
+	 * Displays articles's translation form
+	 * param[0] is translation language
+	 * param[1] is article's id
+	 */
+	public function translate()
+	{
+		$id = $this->get['param'][1];
+		$lang = $this->get['param'][0];
+		
+		$article = Article::getById($id, false, true);
+		$translations = $article->ownArttrans;
+		
+		if (is_array($translations))
+		{
+			foreach ($translations as $trans)
 			{
-				throw new Exception(tr::sget('delete_article_error', $id));
-			}
-			try
-			{
-				self::delete_art_img($id, true);
-			}
-			catch(Exception $e)
-			{
+				if ($trans->lang == $lang)
+				{
+					$art_translation = $trans->export();
+				}
 				
 			}
+		}
+		
+		if (!$art_translation)
+		{
+			$art_translation = array('lang' => 'en', 'status' => 0, 'art_id' => $id);
+		}
+		
+		$article_array = $article->export();
+		
+		foreach (cfg::get('languages') as $langs)
+		{
+			if ($lang == $langs['id'])
+			{
+				$lang_arr = $langs;
+			}
+		}
+		
+		$this->render('article', 'trasl_form', array(
+			 'art'=>$article_array, 
+			 'transl' => $art_translation,
+			 'lang' => $lang_arr
+		));
+		
+	}
+	
+	
+	/**
+	 * Alias for article_ctrl::edit
+	 */
+	public function addNew()
+	{
+		$this->edit();
+	}
+	
+	
+	public function delete()
+	{
+		$id = $this->get['param'][0];
+		try
+		{
+			Article::delete($id);
+			$this->delete_art_img($id, true);
+
 			$out['type'] = 'success';
 			$out['text'] = tr::get('delete_article_ok');
 		}
 		catch (Exception $e)
 		{
-			error_log($e->getMessage());
+			error_log(tr::sget('delete_article_error'));
 			$out['type'] = 'error';
 			$out['text'] = $e->getMessage();
 		}
@@ -108,44 +212,36 @@ class article_ctrl
 		echo json_encode($out);
 	}
 	
-	public static function save($id = false, $post)
+	public function save()
 	{
+		$id = $this->get['param'][0];
+		$data = $this->post;
+		
 		try
 		{
-			$article = new Article(new DB());
+			$new_id = Article::save($id, $data);
 			
-			if ($id)
+			if (!$new_id)
 			{
-				if (!$article->update($id, $post))
-				{
-					throw new Exception(tr::sget('update_article_error', $id));
-				}
-				$out['type'] = 'success';
-				$out['text'] = tr::get('update_article_ok');
-				$out['id'] = $id;
+				throw new Exception(tr::get('save_article_error'));
 			}
-			else
-			{
-				$id = $article->add($post);
-				if (!$id)
-				{
-					throw new Exception(tr::get('save_article_error'));
-				}
-				$out['type'] = 'success';
-				$out['text'] = tr::get('save_article_ok');
-				$out['id'] = $id;
-			}
+			$out['type'] = 'success';
+			$out['text'] = tr::get('save_article_ok');
+			$out['id'] = $new_id;
 		}
 		catch (Exception $e)
 		{
+			error_log($e->getMessage());
 			$out['type'] = 'error';
-			$out['text'] = $e->getMessage();
+			$out['text'] = tr::get('save_article_error');
 		}
 		echo json_encode($out);
 	}
 	
-	public static function delete_art_img($id, $return = false)
+	public function delete_art_img()
 	{
+		$id = $this->get['param'][0];
+		$return = $this->get['param'][0];
 		try
 		{
 			$dimensions = cfg::get('art_img');
@@ -221,8 +317,11 @@ class article_ctrl
 	 * @param string $file full path to uploaded file in temporary dire
 	 * @throws Exception on erros
 	 */
-	public static function attachImage($id, $file)
+	public function attachImage()
 	{
+		$id = $this->get['param'][0];
+		$file = $this->get['param'][1];
+		
 		try{
 			$dimensions = cfg::get('art_img');
 			

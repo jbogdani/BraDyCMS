@@ -13,7 +13,7 @@ $_lang = array(
 	'articles' => 'Articoli',
 	'add_new_article' => 'Aggiungi nuovo articolo',
 	'show_all_articles' => 'Mostra tutti gli articoli',
-	'translations' => 'Traduzioni',
+	
 	//menu
 	'menu' => 'Menu',
 	'add_new_menu_item' => 'Aggiungi una nuova voce di menu',
@@ -21,9 +21,9 @@ $_lang = array(
 	'other' => 'Altro',
 	'link2home' => "Link alla home page",
 	'link2none' => "Link a niente",
+	
 	//media
 	'media' => 'Media',
-	
 	'other' => 'Altro',
 	'changelog' => 'Cambiamenti',
 	'error_log' => 'Log degli errori',
@@ -43,10 +43,8 @@ $_lang = array(
 	'manage_articles' => 'Gestione articoli',
 	'id' => 'ID',
 	'title' => 'Titolo',
-	'text_id' => 'ID Testuale (url)',
+	'textid' => 'ID Testuale (url)',
 	'status' => 'È pubblicato',
-	'section' => 'Sezione',
-	'sections' => "Sezioni",
 	'sorting' => 'Ordinamento',
 	'edit' => 'Modifica',
 	'delete' => 'Cancella',
@@ -65,7 +63,7 @@ $_lang = array(
 	'save' => 'Salva',
 	'reset' => 'Annulla',
 	'custom_fields' => "Campi personalizzati",
-	'duplicate_text_id' => "Il valore %s è già stato usato come ID testuale. Si prega di cambiarlo prima di procedere",
+	'duplicate_textid' => "Il valore %s è già stato usato come ID testuale. Si prega di cambiarlo prima di procedere",
 	'article_image' => "Immagine dell'articolo",
 	'available_dimensions' => "Disponibile nelle seguenti dimensioni (px)",
 	'no_art_img_available' => "Questo articolo non dispone di una immagine associata",
@@ -76,6 +74,10 @@ $_lang = array(
 	'art_img_partially_deleted' => "Non è stato possibile cancellare le seguenti immagini dell'articolo: %s",
 	'art_img_not_deleted' => "Non è stato possibile cancellare nessuna delle immagini dell'articolo",
 	'delete_art_img' => "Cancella l'immagine dell'articolo",
+	'confirm_delete_tag_not_used' => "Il tag `%s` non è collegato a nessun articolo. Cancellare?",
+	'error_delete_tag' => "Errore nel cancellare il tag. Per maggiori informazioni si prega di consultare il log degli errori.",
+	'delete_unused_tags' => "Cancellare tutti i tag non utilizzati?",
+	'preview_draft' => "Visualizza anteprima",
 			//menus
 	'manage_menus' => 'Gestione menu',
 	'item' => 'Testo',
@@ -167,18 +169,30 @@ $_lang = array(
 	'language' => 'Lingua',
 	
 		// translate
-	'transl_articles' => "Traduci articoli",
-	'original_title' => 'Titolo originale',
-	'translated_title' => 'Titolo tradotto',
-	'translation_status' => 'Stato traduzione',
-	'transl_yes' => 'Tradotto',
-	'transl_no' => 'Non tradotto',
-	'transl_menus' => "Traduci menu",
+	'translations' => 'Traduzioni',
+	'transl_article' => "Traduci articolo",
+	'translated' => "Tradotto",
+	'not_translated' => "Non tradotto",
+	'translate_article_in' => "Traduci articolo in %s",
+	'translate_menu_item_in' => "Traduci voce del menu in %s",
+	'ok_translation_saved' => "La traduzione è stata salvata",
+	'error_translation_not_saved' => "Errore. Non è stato possibile salavare la traduzione",
+	 
+	 
+	 // DOCS
+	 'docs' => "Documentazione",
 	
 		//template manager
 	'template_mng' => "Gestore template",
-	'edit_html' => "Modifica HTML",
+	'edit_html' => "Modifica HTML/TWIG",
 	'edit_css' => "Modifica CSS",
+	'ok_compiling_less' => "Il file styles.less è stato compilato nel file styles.css",
+	'error_compiling_less' => "Errore. Non è stato possibile compilare il file styles.less in styles.css",
+	'compile_less' => "Compila styles.less",
+	'what_is_less' => "Cos'è LESS?",
+	'what_is_twig' => "Cos'è TWIG?",
+	'empty_cache_to_use_twig' => "Per rendere effettivi i cambiamenti eseguiti nei file TWIG è necessario svuotare la cache",
+	'compile_less_to_apply_changes' => "Per rendere effettivi i cambiamenti eseguiti nei file LESS è necessario compilare il file styles.less",
 	
 	
 	// GUI
@@ -203,12 +217,15 @@ $_lang = array(
 	
 	'cfg_editor' => 'Configurazione del sito',
 	'cfg-name' => 'Nome del sito',
-	'cfg-logo' => 'Sotto titolo del sito',
+	'cfg-mission' => 'Mission del sito',
 	'cfg-title' => 'Titolo di default delle pagine del sito',
 	'cfg-description' => 'Descrizione del sito',
 	'cfg-keywords' => 'Parole chiavi',
-	'cfg-sys_lang' => 'Lingua del sistema',
-	'cfg-sys_lang_string' => 'Lingua del sistema',
+	'cfg-sys_lang' => 'ID della lingua del sistema',
+	'cfg-sys_lang_string' => 'Nome dell lingua del sistema',
+	'cfg-db_connection' => 'Stringa di connessione al database',
+  'cfg-db_user' => 'Utente database',
+  'cfg-db_pass' => 'Password database',
 	'cfg-prefix' => 'Prefisso del database',
 	'cfg-timezone' => 'Fuso orario del sito',
 	'cfg-languages' => 'Lingue del sistema',
@@ -217,7 +234,7 @@ $_lang = array(
 	'cfg-lang_published' => 'È pubblicata?',
 	'cfg-ga' => 'Google Analytics',
 	'cfg-ga_id' => 'Google analytics ID',
-	'cfg-ga_domain' => 'Limita GA al dominio',
+	'cfg-ga_domain' => 'Limita Google Analytics al dominio',
 	'cfg-paths' => 'Percorsi del sistema',
 	'cfg-users' => 'Utenti',
 	'cfg-debug' => 'Modalità debug',
@@ -227,12 +244,16 @@ $_lang = array(
 	'cfg-type' => "Tipo del campo",
 	'cfg-label' => "Etichetta del campo",
 	'cfg-values' => "Valori predefiniti del campo",
+	'encrypted_passw' => 'Password criptata',
+	'one_way_encrypt_passw' => 'Cripta la password',
 	'on' => 'attivata',
 	'off' => 'disattivata',
 	'empty_cache' => 'Svuota cache',
 	'cache_help_text' => "La cache rende più veloce il caricamento delle pagine, ma se vengono effettuati cambaimenti nel layout del sito la cache deve essere svuotata per rendere effettive le modifiche. La cache verrà creata automaticamente alla prima visita della pagina.",
 	'cache_emptied' => "La cache è stata svuotata",
 	'cache_not_emptied' => "Errore. La cache non è stata svuotata",
+	'ok_cfg_update' => "La configurazione del sito è stata aggiornata",
+	'error_cfg_update' => "Errore. Non è stato possibile aggiornare la configurazione del sito",
 	
 	'sys_translate' => 'Traduzione sistema',
 	'select_lang_to_edit' => 'Seleziona lingue da modificare',
@@ -247,6 +268,19 @@ $_lang = array(
 	'new_locale_cant_be_empty' => "La sigla della nuova lingua non può essere vuota",
 			
 	// OAI
-	'no_oai_config_for_site' => "L'interfaccia OAI non è configurato per questo sito"
+	'no_oai_config_for_site' => "L'interfaccia OAI non è configurato per questo sito",
+	
+	// USER Forms
+	'user_forms' => "Moduli utente",
+	'no_user_form_available' => "Nessun modulo utente salvato",
+	'add_new_form' => "Aggiungi un nuovo modulo",
+	'available_forms' => "Moduli disponibili",
+	'add_form_name' => "Inserisci il nome del nuovo modulo",
+	'no_special_chars' => "Non sono permessi spazi, linee medie e basse o altri caratteri speciali!",
+	'ok_form_config_saved' => "La configurazione del modulo è stato salvata",
+	'error_form_config_not_saved' => "Errore. La configurazione del modulo non è stato salvata",
+	'confirm_delete_form' => "Sei sicuro di voler cancellare questo modulo? Questa azione non può essere annullata",
+	'ok_form_deleted' => "Il modulo è stato cancellato",
+	'error_form_not_deleted' => "Errore. Il modulo non è stato cancellato"
 
 );

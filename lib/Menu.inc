@@ -8,122 +8,60 @@
  
 class Menu
 {
-	private $db;
 	
-	public function __construct()
+	/**
+	 * Returns name of menu table
+	 * @return string
+	 */
+	private static function menu_tb()
 	{
-		$this->db = new DB();
+		return PREFIX . 'menu';
 	}
 	
-	public function updateSortNest($arr)
+	
+	/**
+	 * Returns list of available menus
+	 * @return array|false
+	 */
+	public static function getList()
 	{
-		$this->db->beginTransaction();
-		try
+		return R::getCol("SELECT menu FROM " . self::menu_tb() . " WHERE 1 GROUP BY `menu` ORDER BY `menu`");
+	}
+	
+	/**
+	 * Gets bean or array of beans and return array data, with translation
+	 * @param object|array $menu menu daat
+	 * @param string $lang output language
+	 * @param boolean $return_bean if true beans will be returned
+	 * @return object|array
+	 */
+	public static function parseMenu($menu, $lang = false, $return_bean = false)
+	{
+		if (is_array($menu))
 		{
-			$sort = 0;
-			foreach ($arr as $id => $sub)
+			foreach ($menu as &$m)
 			{
-				$q = 'UPDATE `' . PREFIX . '__menu` SET `sort` = :sort, `subof` = :subof  WHERE `id` = :id';
+				$m = self::parseMenu($m, $lang);
+			}
+			return $menu;
+		}
+		else if (is_object($menu))
+		{
+			if ($lang)
+			{
+				$raw_translation = $menu->withCondition(' lang = ?', array($lang))->ownMenutrans;
 				
-				$values = array(':sort'=>$sort, ':id' => $id, ':subof' => ($sub == 'null' ? null : $sub));
-				
-				if (!$this->db->executeQuery($q, $values))
+				$trans_values = array_values($raw_translation);
+				$translation = array_shift($trans_values);
+			
+				if ($translation)
 				{
-					throw new Exception();
-				}
-				$sort++;
-			}
-			$this->db->commit();
-			return true;
-		}
-		catch (Exception $e)
-		{
-			$this->db->rollBack();
-			return false;
-		}
-	}
-	
-	public function updateSort($arr)
-	{
-		$this->db->beginTransaction();
-		
-		try
-		{
-			foreach ($arr as $sort=>$id)
-			{
-				$q = 'UPDATE `' . PREFIX . '__menu` SET `sort` = :sort WHERE `id` = :id';
-	
-				if (!$this->db->executeQuery($q, array(':sort'=>$sort, ':id' => $id)))
-				{
-					throw new Exception();
+					$translation->title	? $menu->title	= $translation->title	: '';
+					$translation->item	? $menu->item	= $translation->item		: '';
 				}
 			}
-			$this->db->commit();
-			return true;
-		}
-		catch (Exception $e)
-		{
-			$this->db->rollBack();
-			return false;
-		}
-	}
-	
-	public function getAll()
-	{
-		$query = "SELECT * FROM `" . PREFIX . "__menu` WHERE 1 ORDER BY `menu`, `sort`";
 			
-		$menus = $this->db->executeQuery($query, false, 'read');
-		
-		if(is_array($menus))
-		{
-			$x = 0;
-			
-			foreach ($menus as $menu)
-			{
-				$tmp[$menu['menu']][] = $menu;
-			}
-		}
-		else
-		{
-			return false;
-		}
-		
-		return $tmp;
-	}
-	
-	public function getItem($id)
-	{
-		$query = "SELECT * FROM `" . PREFIX . "__menu` WHERE `id`	= " . $id . " LIMIT 0, 1";
-		
-		$res = $this->db->executeQuery($query, false, 'read');
-		
-		if ( count ( $res ) == 0 )
-		{
-			return false;
-		}
-		else
-		{
-			return $res;
-		}
-	}
-	
-	public function getList()
-	{
-		$query = "SELECT menu FROM `" . PREFIX . "__menu` WHERE 1 GROUP BY (`menu`) ORDER BY `menu`";
-	
-		$res = $this->db->executeQuery($query, false, 'read');
-	
-		if (is_array($res))
-		{
-			foreach ($res as &$r)
-			{
-				$t[] = $r['menu'];
-			}
-			return $t;
-		}
-		else
-		{
-			return false;
+			return $return_bean ? $menu : $menu->export();
 		}
 	}
 	
@@ -133,19 +71,24 @@ class Menu
 	 * @param string $lang			language
 	 * @return array
 	 */
-	public function get_all_items_of_menu($menu_name, $lang = false)
+	public static function get_all_items_of_menu($menu_name, $lang = false)
 	{
-		$query = "SELECT * FROM `" . PREFIX . "__menu` WHERE `menu` = '{$menu_name}' ORDER BY `sort`";
-			
-		$res = $this->db->executeQuery($query, false, 'read');
 		
-		return $lang ? $this->translate($res, $lang) : $res;
+		$menus = R::find(self::menu_tb(), ' menu = ? ORDER BY sort ', array($menu_name));
+		
+		return self::parseMenu($menus, $lang);
 	}
 	
 	
-	public function get_structured_menu($menu_name, $lang = false)
+	/**
+	 * Returns structured array with menu data
+	 * @param string $menu_name
+	 * @param string $lang
+	 * @return array
+	 */
+	public static function get_structured_menu($menu_name, $lang = false)
 	{
-		$not_structured_menu = $this->get_all_items_of_menu($menu_name, $lang);
+		$not_structured_menu = self::get_all_items_of_menu($menu_name, $lang);
 		
 		$structured = $not_structured_menu;
 		
@@ -155,14 +98,21 @@ class Menu
 			{
 				unset($structured[$key]);
 				
-				$structured = $this->recursiveStr($structured, $item);
+				$structured = self::recursiveNest($structured, $item);
 			}
 		}
-		
+	
 		return $structured;
 	}
 	
-	private function recursiveStr($array, $item)
+	
+	/**
+	 * Returns a nested array of menu data
+	 * @param array $array	array of plain menu items
+	 * @param menu item $item
+	 * @return array
+	 */
+	private static function recursiveNest($array, $item)
 	{
 		foreach($array as $k=>&$v)
 		{
@@ -173,135 +123,140 @@ class Menu
 			}
 			if (is_array($v['sub']))
 			{
-				$v['sub'] = $this->recursiveStr($v['sub'], $item);
+				$v['sub'] = self::recursiveNest($v['sub'], $item);
 			}
 		}
 		return $array;
 	}
 	
-	private function translate($menu_arr, $lang)
+	
+	/**
+	 * Returns a flat/plain array of nested data
+	 * @param array $data array of nested menu items
+	 * @param number $sort
+	 * @param string $subof
+	 * @return array
+	 */
+	private static function recursiveFlat($data, $sort = 0, $subof = false)
 	{
-		if(!is_array($menu_arr))
+		foreach ($data as $row)
 		{
-			return $menu_arr;
-		}
-		if (!is_array($menu_arr[0]) && $menu_arr['id'])
-		{
-			$menu_arr = array($menu_arr);
-		}
-		
-		foreach($menu_arr as $menu)
-		{
-			$id_array[] = $menu['id'];
-		}
-		
-		$query = 'SELECT * from `' . PREFIX . '__menu_' . $lang . '` WHERE `id_menu` IN (' . implode(',', $id_array). ')';
-		
-		$translated = $this->db->executeQuery($query, false, 'read');
-		
-		if (is_array($translated))
-		{
-			foreach($menu_arr as &$menu)
+			$new_arr[] =  array(
+					'id' => $row['id'],
+					'sort' => $sort,
+					'subof' => $subof
+			);
+			$sort++;
+			if ($row['children'])
 			{
-				foreach ($translated as $tr_menu)
-				{
-					if ($menu['id'] == $tr_menu['id_menu'])
-					{
-						if($tr_menu['item'] != '')
-						{
-							$menu['item'] = $tr_menu['item'];
-						}
-		
-						if($tr_menu['title'] != '')
-						{
-							$menu['title'] = $tr_menu['title'];
-						}
-					}
-				}
+				$new_arr = array_merge($new_arr, self::recursiveFlat($row['children'], $sort, $row['id']));
 			}
 		}
-		
-		return (count($menu_arr) == 1) ? $menu_arr[0] : $menu_arr;
+		return $new_arr;
 	}
 	
-	public function update($post)
+	
+	/**
+	 * Saves in DB menu item updated sorting and nesting level 
+	 * @param unknown $data
+	 */
+	public static function updateNestSort($data)
 	{
-		if ( !$post['item'] || !$post['href'] || !$post['menu'] )
+		$new_data = self::recursiveFlat($data);
+		
+		foreach ($new_data as $d)
 		{
-			echo '1';
-			return false;
+			$menu = R::load(self::menu_tb(), $d['id']);
+			$menu->sort = $d['sort'];
+			$menu->subof = $d['subof'];
+			R::store($menu);
 		}
-		$statement = "UPDATE `" . PREFIX . "__menu` SET "
-				. " `item` 	= :item, "
-				. " `href`	= :href, "
-				. " `target`= :target, "
-				. " `title`	= :title, "
-				. " `menu`	= :menu, "
-				. " `sort`	= :sort, "
-				. " `subof` = :subof "
-				. " WHERE `id`	= :id";
-
-		$values = array(
-				':item'		=> $post['item'],
-				':href'		=> $post['href'],
-				':target'	=> $post['target'],
-				':title'	=> $post['title'],
-				':menu'		=> $post['menu'],
-				':sort'		=> $post['sort'],
-				':subof'	=> $post['subof'],
-				':id'		=> $post['id']
-		);
-		
-		return $this->db->executeQuery( $statement, $values);
-	
 	}
 	
-	public function add($post)
+	
+	/**
+	 * Returns array of menu item's data
+	 * @param int $id
+	 * @param boolean $dontexport if true bean will be returned, otherwise array
+	 * @return array|false
+	 */
+	public static function getItem($id, $dontexport = false)
 	{
-		if ( !$post['item'] OR !$post['href'] OR !$post['menu'] )
-		{
-			return false;
+		$menu = R::load(self::menu_tb(), $id);
+		
+		if ($menu->id){
+			return $dontexport ? $menu : $menu->export();
 		}
 		else
 		{
-	
-			$statement = "INSERT INTO `" . PREFIX . "__menu` "
-					. " (`item`,	`href`,	`target`,	`title`,	`menu`,	`sort`,	`subof`) "
-					. " VALUES "
-					. " (:item,		:href,	:target,	:title,		:menu,	:sort,	:subof)";
-	
-			$values = array(
-					':item'		=> $post['item'],
-					':href'		=> $post['href'],
-					':target'	=> $post['target'],
-					':title'	=> $post['title'],
-					':menu'		=> $post['menu'],
-					':sort'		=> $post['sort'],
-					':subof'	=> $post['subof']
-						
-			);
-	
-			return $this->db->executeQuery($statement, $values, 'id');
+			return false;
 		}
+		
 	}
 	
-	public function delete($id)
+	
+	/**
+	 * Deletes menu item and dependencies (ie. translations)
+	 * @param int $id
+	 */
+	public static function delete($id)
 	{
-		$sys_langs = cfg::get('languages');
+		$menu = R::load(self::menu_tb(), $id);
 		
-		$sql = "DELETE FROM `" . PREFIX . "__menu` WHERE `id` = " . $id;
-		
-		$ret = $this->db->executeQuery($sql);
-		
-		if (is_array($sys_langs))
+		if ($menu->id)
 		{
-			foreach ($sys_langs as $lang)
-			{
-				$this->db->executeQuery("DELETE FROM `" . PREFIX . "__menu_" . $lang['id'] . "` WHERE `id_menu` = " . $id);
-			}
+			// TODO check if necessary
+			unset($menu->ownMenutrans);
+			R::store($menu);
+			R::trash($menu);
+			
+			
+		}
+	}
+	
+	
+	/**
+	 * Saves menu data in DB
+	 * @param array $data
+	 * @return integer|false
+	 */
+	public static function save($data)
+	{
+		if ( !$data['item'] || !$data['href'] || !$data['menu'] )
+		{
+			return false;
 		}
 		
-		return $ret;
+		$menu = $data['id'] ? R::load(self::menu_tb(), $data['id']) : R::dispense(self::menu_tb());
+		
+		$menu->import($data);
+		
+		return R::store($menu);
 	}
+	
+	/**
+	 * Adds translation for certain menu item
+	 * @param int $menu_id id of menu item to translate
+	 * @param array $data array of tranlated data
+	 */
+	public static function translate($menu_id, $data)
+	{
+		if ($data['id'])
+		{
+			$id = $data['id'];
+			unset($data['id']);
+		}
+		$menuItem = R::load(self::menu_tb(), $menu_id);
+
+		$transl = R::dispense(PREFIX . 'menutrans');
+
+		$transl->import($data);
+		
+		$menuItem->ownMenutrans[$id] = $transl;
+		
+		R::store($menuItem);
+
+	}
+
 	
 }

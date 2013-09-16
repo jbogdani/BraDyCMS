@@ -3,96 +3,149 @@
 	<!-- NAME -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-name') }}</label>
-		<div class="col-md-8">
+		<div class="col-md-5">
 			<input type="text" value="{{ data.name }}" name="name" />
 		</div>
+    <div class="col-md-5">
+       <span class="text-muted">Site's short name.</span>
+    </div>
 	</div>
 	
 	
 	<!-- MISSION -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-mission') }}</label>
-		<div class="col-md-8">
-			<input type="text" value="{{ data.mission }}" name="mission" />
+		<div class="col-md-5">
+      <textarea name="mission">{{ data.mission }}</textarea>
 		</div>
+    <div class="col-md-5">
+      <span class="text-muted">Site's mission.</span>
+    </div>
 	</div>
 	
 	
 	<!-- TITLE -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-title') }}</label>
-		<div class="col-md-8">
-			<input type="text" value="{{ data.title }}" name="title" />
+		<div class="col-md-5">
+      <textarea name="title">{{ data.title }}</textarea>
 		</div>
+    <div class="col-md-5">
+      <span class="text-muted">Site's pages default title</span>
+    </div>
 	</div>
 	
 	<!-- DESCRIPTION -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-description') }}</label>
-		<div class="col-md-8">
-			<input type="text" value="{{ data.description }}" name="description" />
+		<div class="col-md-5">
+      <textarea name="description">{{ data.description }}</textarea>
 		</div>
+    <div class="col-md-5">
+      <span class="text-muted">Site's pages default description</span>
+    </div>
 	</div>
 	
 	
 	<!-- KEYWORDS -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-keywords') }}</label>
-		<div class="col-md-8">
-			<input type="text" value="{{ data.keywords }}" name="keywords" />
-		</div>
+		<div class="col-md-5">
+      <textarea name="keywords">{{ data.keywords }}</textarea>
+    </div>
+    <div class="col-md-5">
+      <span class="text-muted">Site's pages default comma separated keywords</span>
+    </div>
 	</div>
 	
 		<!-- SYS_LANG -->
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-sys_lang') }}</label>
-		<div class="col-md-8">
+		<div class="col-md-2">
 			<input type="text" value="{{ data.sys_lang }}" name="sys_lang" />
 		</div>
+    <div class="col-md-8">
+      <span class="text-muted">Two digits main language id, eg. en. Actually the following languages are supported: it, en, es, fr, ar, de, al. If you plan to support any language different from these please you should edit also the main .htaccess file!</span>
+    </div>
 	</div>
 	
 	<!-- SYS_LANG_STRING -->
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-sys_lang_string') }}</label>
-		<div class="col-md-8">
+		<div class="col-md-5">
 			<input type="text" value="{{ data.sys_lang_string }}" name="sys_lang_string" />
 		</div>
+    <div class="col-md-5">
+      <span class="text-muted">Main language name. Please enter only lower case digits.</span>
+    </div>
 	</div>
 	
 	
 	<!-- DB_CONNECTION -->
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-db_connection') }}</label>
-		<div class="col-md-8">
+		<div class="col-md-5">
 			<input type="text" value="{{ data.db_connection }}" name="db_connection" />
 		</div>
+    <div class="col-md-5">
+      <span class="text-muted">Database full DNS (eg.: mysql:host=localhost;dbname=bduscms). Leave blank if you are using the default SQLITE database. </span>
+    </div>
+	</div>
+  
+  <!-- DB_USER -->
+	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+		<label class="control-label col-md-2">{{ tr.get('cfg-db_user') }}</label>
+		<div class="col-md-5">
+			<input type="text" value="{{ data.db_user }}" name="db_user" />
+		</div>
+    <div class="col-md-5">
+      <span class="text-muted">Database username. Leave blank if you are using the default SQLITE database. </span>
+    </div>
+	</div>
+  
+  <!-- DB_PASS -->
+	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+		<label class="control-label col-md-2">{{ tr.get('cfg-db_pass') }}</label>
+		<div class="col-md-5">
+			<input type="text" value="{{ data.db_pass }}" name="db_pass" />
+		</div>
+    <div class="col-md-5">
+      <span class="text-muted">Database password. Leave blank if you are using the default SQLITE database. </span>
+    </div>
 	</div>
 	
-	<!-- PREFIX -->
+	<!-- PREFIX 
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-prefix') }}</label>
 		<div class="col-md-8">
 			<input type="text" value="{{ data.prefix }}" name="prefix" />
 		</div>
 	</div>
-	
+	-->
+  
 	<!-- TIMEZONE -->
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-timezone') }}</label>
-		<div class="col-md-8">
+		<div class="col-md-5">
 			<input type="text" value="{{ data.timezone }}" name="timezone" />
 		</div>
+    <div class="col-md-5">
+      <span class="text-muted">Please enter a  valid timezone. Supported timezones: <a href="http://php.net/manual/en/timezones.php" target="_blank">http://php.net/manual/en/timezones.php</a> </span>
+    </div>
 	</div>
 	
 	<!-- DEBUG -->
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-debug') }}</label>
-		<div class="col-md-2">
+		<div class="col-md-1">
 			<select name="debug">
 				<option value="1" {% if data.debug %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
 				<option value="0" {% if data.debug == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
 			</select>
 		</div>
+    <div class="col-md-9">
+      <span class="text-muted">If you turn off debug mode remember to clear the application cache (see below).</span>
+    </div>
 	</div>
 	
 	<!-- THUMBS_DIMENSIONS -->
@@ -101,6 +154,9 @@
 		<div class="col-md-2">
 			<input type="text" value="{{ data.thumbs_dimensions }}" name="thumbs_dimensions" />
 		</div>
+    <div class="col-md-8">
+      <span class="text-muted">BraDyCMS has a built in system for image management. If you want to create images thumbnails in a click, for examples for usage in galleries, please enter here the default dimensions of the thumbnails in {width}x{height} format, in pixels, eg.: 200x200</span>
+    </div>
 	</div>
 	
 	<!-- ART_IMG_DIMENSIONS -->
@@ -122,6 +178,9 @@
 		<div class="col-md-2 col-md-offset-2">
 			<input type="text" value="{{ art_img }}" name="art_img[]" />
 		</div>
+    <div class="col-md-8">
+      <span class="text-muted">Check <a href="#docs/tmpl/faq">FAQ section</a> to learn more about article images. Please ander here a valid format, {width}x{height}, expressed in pixels, eg. 800x400. You can have many dimension steps. Just save the form to have a new blank field added.</span>
+    </div>
 	</div>
 	
 	<!-- GA_ID -->
@@ -130,9 +189,12 @@
 	
 	<div class="form-group">
 		<label class="control-label col-md-2">{{ tr.get('cfg-ga_id') }}</label>
-		<div class="col-md-8">
+		<div class="col-md-2">
 			<input type="text" value="{{ data.ga_id }}" name="ga_id" />
 		</div>
+    <div class="col-md-8">
+      <span class="text-muted">Your Google Analytics CODE ID</span>
+    </div>
 	</div>
 	
 	<!-- GA_DOMAIN -->
@@ -141,6 +203,9 @@
 		<div class="col-md-2">
 			<input type="text" value="{{ data.ga_domain }}" name="ga_domain" />
 		</div>
+    <div class="col-md-8">
+      <span class="text-muted">If you enter here a domain (yourdomain.ext) the Google analytics code will be shown only if domain matches. This is very usefull if you have a localhost copy of your website and you do not want to update your analytics from localhost domain.</span>
+    </div>
 	</div>
 	
 	<!-- GA_DOMAIN -->
@@ -189,6 +254,11 @@
 			</select>
     </div>
 	</div>
+  <div class="row">
+    <div class="col-md-12">
+        <span class="text-muted">Use the fields above to add new languages to your site. For each language please provide a two-digits code and a lower-case language name.<br />Actually the following languages are supported: it, en, es, fr, ar, de, al. If you plan to support any language different from these please you should edit also the main .htaccess file!. If the "is published" flag is turned to "on" the language will be available in main site language menu.<br /> You can have many languages. Just save the form to have a new blank row added.</span>
+    </div>
+  </div>
 	
 	
 	
@@ -263,6 +333,11 @@
 			</div>
 		</div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <span class="text-muted">Use the fields above to add new custom fields to your articles. For each field please please provide a lower-case name, using no spaces, dashes, underscores or other special characters; a field type, a label, and eventually a default value. If you chose "select" as field type you should enter a comma separated list of values as default fields to use as select options.<br /><strong>Please remember</strong> that you should update the database manually to include the new fields.<br /> You can add many custom fields. Just save the form to have a new blank row added.</span>
+    </div>
+  </div>
 	
 	<!-- PATHS -->
 	<hr />
@@ -270,9 +345,12 @@
 	
 	<div class="form-group">
 		<label class="control-label col-md-2">convert</label>
-		<div class="col-md-8">
+		<div class="col-md-3">
 			<input type="text" value="{{ data.paths.convert }}" name="paths[convert]" />
 		</div>
+    <div class="col-md-7">
+      <span class="text-muted">This is the <strong>absolute</strong> path to the Imagemagick convert command in the hosting system. This setting is fundamental for the image manipulating system to work. if you do not know the path, ask your hosting provider.</span>
+    </div>
 	</div>
 	
 	<!-- USERS -->
@@ -319,14 +397,25 @@
 		</div>
 	</div>
 	
+  <div class="row">
+    <div class="col-md-12">
+      <span class="text-muted">Be sure to use the "encrypt password tool" before submitting a new user. Only system admins can grant admin privileges to other users.<br /> You can add many users. Just save the form to have a new blank row added.</span>
+    </div>
+  </div>
+  
 
-	<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-floppy-saved"></i> {{ tr.get('save') }}</button>
+	<button class="btn btn-success btn-lg" type="submit"><i class="glyphicon glyphicon-floppy-saved"></i> {{ tr.get('save') }}</button>
 </form>
 
 <hr />
-<p class="lead">{{ tr.get('empty_cache') }}</p>
-<button class="btn btn-warning btn-large" type="button" id="cache-{{ uid }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('empty_cache')}}</button>
-<span class="help-block">{{ tr.get('cache_help_text') }}</span>
+<div class="row">
+  <div class="col-md-3">
+    <button class="btn btn-warning btn-lg btn-block" type="button" id="cache-{{ uid }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('empty_cache')}}</button>
+  </div>
+  <div class="col-md-7">
+    <span class="text-muted">{{ tr.get('cache_help_text') }}</span>
+  </div>
+</div>
 
 <script>
 $('#form-{{ uid }}').on('submit', function(){

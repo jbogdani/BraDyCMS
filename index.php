@@ -8,6 +8,11 @@
 try
 {
 	require_once 'lib/globals.inc';
+  
+  if (defined('CREATE_SITE'))
+  {
+    header('location: ./admin');
+  }
 
 	$outHtml = new OutHtml($_GET, $_SESSION['lang']);
 	

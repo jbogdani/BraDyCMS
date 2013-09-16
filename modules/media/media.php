@@ -57,7 +57,7 @@ class media_ctrl extends Controller
 				{
 					$file_obj[$file]['type'] = 'folder';
 						
-					$file_obj[$file]['src'] = './img/folder.png';
+					//$file_obj[$file]['src'] = './img/folder.png';
 				}
 			}
 		}

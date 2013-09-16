@@ -297,6 +297,13 @@ class utils
 		return $lang_arr;
 	}
 	
+  /**
+   * Writes $text in $file. If $file does not exist, will be created
+   * @param string $file path to file
+   * @param string|array $text  text to write, can be a string or an array (if type is JSON)
+   * @param string $type gz|json|false. If gz the $file will be gzipped, if json $text will be json_encoded
+   * @return boolean
+   */
 	public static function write_in_file ( $file, $text = false, $type = false )
 	{
 		if ( $type != 'gz' )

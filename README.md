@@ -1,5 +1,7 @@
 # BraDyCMS
-### A highly customizable, easy to setup & use php5 mysql or sqlite driven Content Managing System
+-------------------
+
+### A highly customizable, easy to setup & use php (>=5.3) Content Managing System, created for designers
 
 ## Features:
 
@@ -10,24 +12,40 @@
 * Multilanguage content
 * Customizable layout, both Desktop and Mobile
 * Image slideshows, galleries and videos
+* Lots of prebuild custom tags for easy integration of web services
 * Easy integration social network
 * Fully customizable OAI-PMH interface for metadata exposing
+* User plugin system for easy expansion
+* Multiple database support: MySQL, SQLite (default), PostgreSQL, CUBRID, etc.
+* **Rich documentation**
 
 ## Websites already using BraDyCMS
 
-* [bradypus.net](http://bradypus.net)
+### Version 3.x
 * [belightproject.com](http://belightproject.com)
-* [belightproject.com](http://belightproject.com) 
-* [e-review.it](http://e-review.it)
-* [fabriziolapalombara.com](http://fabriziolapalombara.com)
+* [bradypus.net](http://bradypus.net)
 * [costruzioniartigiane.it](http://costruzioniartigiane.it)
+* [fabriziolapalombara.com](http://fabriziolapalombara.com)
 * [iraq.routes-assn.org](http://iraq.routes-assn.org)
-* [iraq.routes-assn.org](http://iraq.routes-assn.org)
-* [pastandpresent.al](http://pastandpresent.al)
-* [santamariainportuno.it](http://www.santamariainportuno.it)
 * [medantico.org](http://medantico.org/)
+* [santamariainportuno.it](http://www.santamariainportuno.it)
+* [tozziindustries.com] (http://tozziindustries.com)
 
-### Comming soon
+
+### Version 2.x
+* [e-review.it](http://e-review.it)
+* [pastandpresent.al](http://pastandpresent.al)
+
+### Comming soon (Version 3.x)
 * [artemusa.it]
 * ghazni-project
 * [http://cliffyoungltd.com](http://cliffyoungltd.com)
+* Teatro Masini
+
+## Tecnical features
+
+* Works with php >= 5.3, best with 5.4
+* [RedBeanPHP](http://www.redbeanphp.com/) is used as main ORM, both for frontend and backend interfaces
+* [TWIG](http://twig.sensiolabs.org/) is used as template engine, both for frontend and backend templates
+* [Twitter Bootstrap](http://getbootstrap.com/) framework is used for backend controle panel
+* [Composer](http://getcomposer.org/) is used as dependency manager for external libraries

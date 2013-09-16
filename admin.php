@@ -12,7 +12,7 @@ try
 }
 catch (Exception $e)
 {
-	error_log($e->getMessage());
+	error_log($e->getTraceAsString());
 	echo 'Something went wrong: ' . $e->getMessage();
 }
 
@@ -244,7 +244,7 @@ catch (Exception $e)
 	<script src="./js/admin.js"></script>
 	<script src="./js/jquery.pnotify.js"></script>
 	<script src="./js/bootstrap-datepicker.js"></script>
-	<script src="./js/select2.js"></script>
+	<script src="./js/select2.min.js"></script>
 	<script src="./tiny_mce/tiny_mce.js"></script>
 	<script src="./js/fileuploader.js"></script>
 	<script src="./js/prettify.js"></script>
@@ -269,6 +269,6 @@ catch (Exception $e)
 	</script>
 	<?php
 	}
-	?>
+  ?>
   </body>
 </html>

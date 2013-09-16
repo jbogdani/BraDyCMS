@@ -12,6 +12,12 @@ class log_ctrl extends Controller
 	public function out()
 	{
 		$users_log = './sites/default/users.log';
+    
+    if (!file_exists($users_log))
+		{
+			$fh = @fopen($users_log, 'w');
+			@fclose($fh);
+		}
 		
 		error_log('user:' . $_SESSION['user_confirmed'] . ' logged OUT on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . "\n", 3, $users_log);
 		

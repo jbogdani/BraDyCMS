@@ -46,7 +46,7 @@ class admin_ctrl extends Controller
     $this->render('admin', 'body', array(
       'version' => version::current(),
       'custom_mods' => $custom_mods,
-      'welcome' => file_exists('./sites/default/welcome.html')
+      'welcome' => file_exists('./sites/default/welcome.html') ? file_get_contents('./sites/default/welcome.html') : ''
       )
       );
   }

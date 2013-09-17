@@ -111,7 +111,8 @@
 							<div class="col-md-8">
 								{% if welcome %}
                   
-                  {% include './sites/default/welcome.html'%}
+                  {{ welcome|raw }}
+                  
 								{% else %}
 								
 								<div class="jumbotron">

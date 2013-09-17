@@ -8,27 +8,30 @@
 
 session_start();
 
-if (!is_dir('./sites/default'))
-{
-  define('CREATE_SITE', true);
-}
-
-if ($_GET['lang'])
-{
-	$_SESSION['lang'] = $_GET['lang'];
-}
-
-
 if (@!$root)
 {
 	$root = './';
 }
+
 define('MAIN_DIR', $root);
+
+
+if (!is_dir(MAIN_DIR . 'sites/default'))
+{
+  define('CREATE_SITE', true);
+}
+
+
+if (!is_dir(MAIN_DIR . 'tmp'))
+{
+  @mkdir(MAIN_DIR . 'tmp', 0777, true);
+}
 
 if (!is_dir(MAIN_DIR . 'cache'))
 {
   @mkdir(MAIN_DIR . 'cache', 0777, true);
 }
+
 if (!is_dir(MAIN_DIR . 'logs'))
 {
   @mkdir(MAIN_DIR . 'logs', 0777, true);
@@ -39,15 +42,15 @@ if (!file_exists(MAIN_DIR . 'logs/error.log'))
   touch(MAIN_DIR . 'logs/error.log');
 }
 
-
-if (!is_dir(MAIN_DIR . 'tmp'))
-{
-  @mkdir(MAIN_DIR . 'tmp', 0777, true);
-}
-
 ini_set('error_log', './logs/error.log');
 
 ini_set('display_errors', 'off');
+
+
+if (@$_GET['lang'])
+{
+	$_SESSION['lang'] = $_GET['lang'];
+}
 
 if (get_magic_quotes_gpc())
 {
@@ -74,12 +77,11 @@ if (get_magic_quotes_gpc())
 	unset($process);
 }
 
-
 require_once $root . 'lib/Autoloader.inc';
 Autoloader::start();
 
-
 require $root . 'vendor/autoload.php';
+
 
 
 class_alias('RedBean_Facade', 'R');
@@ -94,7 +96,6 @@ else
 {
 	date_default_timezone_set(cfg::get('timezone'));
 }
-
 
 !defined('CREATE_SITE') ? define ( 'PREFIX',	cfg::get('prefix') ) : '';
 !defined('CREATE_SITE') ? define ( 'SYS_LANG',cfg::get('default_lang') ) : '';
@@ -119,7 +120,7 @@ else
 {
 	define('CACHE', serialize(array('cache' => CACHE_DIR)));
 }
-tr::load_file($_GET['lang']);
+tr::load_file(@$_GET['lang'], defined('CREATE_SITE'));
 
 if (defined('CREATE_SITE') || !cfg::get('db_connection'))
 {
@@ -134,3 +135,4 @@ R::setup( ( defined('CREATE_SITE')|| !cfg::get('db_connection')) ? 'sqlite:./sit
 R::freeze( true );
 R::dependencies(array('arttrans'=>array('articles')));
 R::dependencies(array('menutrans'=>array('menu')));
+

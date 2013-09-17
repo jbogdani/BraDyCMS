@@ -16,13 +16,18 @@ class tr
 	 * 3) browser default language
 	 * 4) en
 	 */
-	public static function load_file($get_lang = false)
+	public static function load_file($get_lang = false, $silencemode = false)
 	{
-		require_once 'locale/en.php';
+		require_once './locale/en.php';
+    
 		$en = $_lang;
 		
-		//if ($get_lang AND cfg::get('languages') AND ( (array_key_exists($get_lang, cfg::get('languages'))) OR $get_lang == cfg::get('sys_lang')) )
-		if ($get_lang && $get_lang == cfg::get('sys_lang'))
+    // If silence mode is on (no site is defined yet) english is the only available language!
+    if ($silencemode)
+    {
+      // do nothing
+    }
+		else if ($get_lang && $get_lang == cfg::get('sys_lang'))
 		{
 			$_SESSION['adm_lang'] = $get_lang;
 		}
@@ -37,9 +42,13 @@ class tr
 			}
 		}
 		
+    /**
+     * Load Admin language
+     */
 		if (!$_SESSION['adm_lang'])
 		{
-			$_SESSION['adm_lang'] = cfg::get('sys_lang');
+      // If silence mode is on (no site is defined yet) english is the only available language!
+			$_SESSION['adm_lang'] = $silencemode ? 'en' : cfg::get('sys_lang');
 		}
 		
 		if (file_exists('locale/' . $_SESSION['adm_lang'] . '.php'))

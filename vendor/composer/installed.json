@@ -145,51 +145,6 @@
         ]
     },
     {
-        "name": "gabordemooij/redbean",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/gabordemooij/redbean.git",
-            "reference": "ab9590b399df99e8ebe157f565091f9a6c6b027a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/ab9590b399df99e8ebe157f565091f9a6c6b027a",
-            "reference": "ab9590b399df99e8ebe157f565091f9a6c6b027a",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "time": "2013-09-10 19:34:05",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "RedBean_": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD"
-        ],
-        "authors": [
-            {
-                "name": "Gabor de Mooij",
-                "email": "gabordemooij@gmail.com",
-                "homepage": "http://www.redbeanphp.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "Easy ORM for PHP",
-        "homepage": "http://github.com/gabordemooij/redbean",
-        "keywords": [
-            "Object Relational Mapping",
-            "orm"
-        ]
-    },
-    {
         "name": "jsocol/oocurl",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -274,6 +229,51 @@
         "homepage": "https://github.com/martijnvogten/oaiprovider-php",
         "keywords": [
             "OAI"
+        ]
+    },
+    {
+        "name": "gabordemooij/redbean",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/gabordemooij/redbean.git",
+            "reference": "bb41d5857389184dc8253a1444f889bc8077bd8c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/bb41d5857389184dc8253a1444f889bc8077bd8c",
+            "reference": "bb41d5857389184dc8253a1444f889bc8077bd8c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "time": "2013-09-14 14:37:27",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "RedBean_": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD"
+        ],
+        "authors": [
+            {
+                "name": "Gabor de Mooij",
+                "email": "gabordemooij@gmail.com",
+                "homepage": "http://www.redbeanphp.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Easy ORM for PHP",
+        "homepage": "http://github.com/gabordemooij/redbean",
+        "keywords": [
+            "Object Relational Mapping",
+            "orm"
         ]
     }
 ]

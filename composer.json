@@ -14,5 +14,10 @@
 			"gabordemooij/redbean": "dev-master",
 			"jsocol/oocurl": "dev-master",
 			"oaiprovider-php/oaiprovider-php": "dev-master"
+    },
+      
+    "scripts": {
+      "post-update-cmd": ["echo [WARNING] Delete all .git dirs", "rm -rf vendor/**/**/.git"],
+      "post-install-cmd": ["echo [WARNING] Delete all .git dirs", "rm -rf vendor/**/**/.git"]
     }
 }

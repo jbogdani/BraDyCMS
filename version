@@ -20,13 +20,6 @@
 ;		new arttrans table
 
 
-; TODO
-; delete all referencec for id:(int); articles are retrieved only by textid, not by numeric id!
-; 		deletefrom .htaccess
-;		delete from rewrite links system
-;		delete from ArticleRead
-;		delete from other source
-
 2.0[] = "New GUI, based on Twitter Bootstrap"
 1.5[] = "Added user access registry log (I/O)"
 1.5[] = "Added language: Albanian (al)"

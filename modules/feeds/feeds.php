@@ -5,7 +5,7 @@
  * @license			All rights reserved
  * @since			Mar 18, 2013
  */
- 
+
 class feeds_ctrl
 {
 	public static function rss2($lang = false)
@@ -18,9 +18,10 @@ class feeds_ctrl
 		self::feed('atom');
 	}
 	
-	private function feed($type = false, $lang = false)
+	private static function feed($type = false, $lang = false)
 	{
-		$feedWriter = new FeedWriter($type == 'atom' ? ATOM : RSS2);
+    
+    $feedWriter = ($type == 'atom' ? new \FeedWriter\Atom() : new \FeedWriter\RSS2);
 		
 		$feedWriter->setTitle(cfg::get('title'));
 		
@@ -32,26 +33,24 @@ class feeds_ctrl
 		
 		$art_array = Article::getAllValid($lang);
 		
-		if (is_array($art_array))
+    if (is_array($art_array))
 		{
 			foreach ($art_array as $art)
 			{
 				$newItem = $feedWriter->createNewItem();
 				
-				$newItem->setTitle($art->title);
+				$newItem->setTitle(htmlentities($art['title']));
 				
-				$newItem->setLink($art->full_url);
+				$newItem->setLink(htmlentities($art['full_url']));
 				
-				$newItem->setDate($art->created);
+				$newItem->setDate(htmlentities($art['created']));
 				
-				$newItem->setDescription($art->summary ? $art->summary : substr($art->text, 0, 500) . '...');
+				$newItem->setDescription($art['summary'] ? $art['summary'] : substr($art['text'], 0, 500) . '...');
 				
 				$feedWriter->addItem($newItem);
 			}
 		}
-		
-		
-		$feedWriter->genarateFeed();
+		$feedWriter->printFeed();
 		
 	}
 }

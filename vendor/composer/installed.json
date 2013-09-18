@@ -275,5 +275,66 @@
         "keywords": [
             "templating"
         ]
+    },
+    {
+        "name": "mibe/feedwriter",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mibe/FeedWriter.git",
+            "reference": "8b801e96326606d0360c0549f913f099df10ed67"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/8b801e96326606d0360c0549f913f099df10ed67",
+            "reference": "8b801e96326606d0360c0549f913f099df10ed67",
+            "shasum": ""
+        },
+        "time": "2013-09-13 21:22:37",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "ATOM.php",
+                "Feed.php",
+                "Item.php",
+                "RSS1.php",
+                "RSS2.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Michael Robinson",
+                "email": "mike@pagesofinterest.net",
+                "homepage": "http://pagesofinterest.net/",
+                "role": "Developer"
+            },
+            {
+                "name": "Anis uddin Ahmad"
+            },
+            {
+                "name": "Michael Bemmerl",
+                "email": "mail@mx-server.de"
+            },
+            {
+                "name": "Phil Freo"
+            },
+            {
+                "name": "Paul Ferrett"
+            },
+            {
+                "name": "Brennen Bearnes"
+            }
+        ],
+        "description": "Generate feeds in either RSS 1.0, RSS 2.0 or ATOM formats",
+        "homepage": "https://github.com/mibe/FeedWriter",
+        "keywords": [
+            "rss"
+        ]
     }
 ]

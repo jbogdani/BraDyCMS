@@ -225,6 +225,10 @@ var admin = {
 	        } else {
 	        	return false;
 	        }
+          this.tab.find('li:last').on('click', function(){
+            _ignorehash = true;
+            location.hash = '#' + $(this).data('url');
+          });
 	    },
 	    
 	    reloadActive: function(){

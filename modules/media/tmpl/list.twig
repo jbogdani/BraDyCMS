@@ -24,7 +24,7 @@
 				{% endif %}
 			{% endif %}
 		<span>
-			<a class="navigation btn btn-{% if loop.last %}info disabled{% else %}default{% endif %}" data-href="#media/all{{ part_path }}">{{ part }}</a>
+			<a class="navigation btn btn-{% if loop.last %}info disabled{% else %}default{% endif %}" data-href="media/all{{ part_path }}">{{ part }}</a>
 		</span>
 		<span class="text-muted"> / </span>
 		{% endfor %}
@@ -55,7 +55,7 @@
 		{# Folders #}
 		{% if file.type == 'folder' %}
 		<li class="img">
-			<a href="#media/all/{{ file.href }}">
+			<a data-href="media/all/{{ file.href }}" href="javascript:void(0)" class="navigation">
 				<i class="glyphicon glyphicon-folder-open{% if file.name == 'thumbs' %} thumbs{% endif %}"></i>
 				<div class="caption searcheable">{{ file.name }}</div>
 			</a>
@@ -88,7 +88,7 @@
 <script>
 	
 	$('#{{ uid }} .navigation').on('click', function(){
-		admin.tabs.closeActive($(this).data('htef'));
+		admin.tabs.closeActive($(this).data('href'));
 	});
 	
 	admin.upload(
@@ -124,7 +124,7 @@
 		}
 	});
 	
-	$('{{ uid }} .newFolder').click(function(){
+	$('#{{ uid }} .newFolder').click(function(){
 		var val = $(this).prev().val();
 		if (!val){
 			admin.message('{{ tr.get('missing_directory_name') }}', 'error');
@@ -135,7 +135,7 @@
 	});
 	
 	
-	$('{{ uid }} .deleteFolder').click(function(){
+	$('#{{ uid }} .deleteFolder').click(function(){
 		admin.media.deleteDir('{{ rel_path }}');
 	});
 	

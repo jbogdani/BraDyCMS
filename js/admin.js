@@ -247,43 +247,60 @@ var admin = {
 	    
 	    closeTab: function(li, state){
 				
+        // only one tab is left, the Welcome tab. This should never be closed!
 				if(tab.find('li').length == 1){
 					if (state){
-						location.hash = '#' + state;
+            location.hash = '#' + state;
 					}
 					return;
 				}
-				// remove tab-pane
-				$('#' + li.find('a').attr('href').replace('#', '')).remove();
-				
-				if (!state){
-				//	var state = tab.find('li:last').data('url');
-				}
-				
+        
+				// I'm closing the active tab
 				if (li.hasClass('active')){
+          
+          // if state is defined load new tab and then remove old one
 					if (state){
 						var actualState = location.hash.substr(1);
-							if (actualState === ''){
-								$(window).trigger( "hashchange" );
-							} else {
-								location.hash = '#' + state;
-								
-								tab.find('li a:last').tab('show');
-							}
-							li.remove();
-						} else {
-							li.remove();
-							tab.find('li a:last').tab('show');
-							
-							var prevState = tab.find('li:last').data('url');
-							
-							if (prevState && prevState !== 'undefined'){
-								_ignorehash = true;
-								location.hash = '#' + prevState;
-							} else{
-								location.hash = '#';
-							}
-						}
+            
+            
+            if (actualState == state){
+              console.log(actualState);
+              admin.tabs.reloadActive();
+              return;
+              //  $(window).trigger( "hashchange" );
+              
+            } else {
+              location.hash = '#' + state;
+              //$(window).trigger( "hashchange" );
+              
+              tab.find('li a:last').tab('show');
+            }
+            
+            // remove tab-pane
+            $('#' + li.find('a').attr('href').replace('#', '')).remove();
+            
+            // remove li element
+            li.remove();
+              
+          } else {
+            // remove tab-pane
+            $('#' + li.find('a').attr('href').replace('#', '')).remove();
+            
+            // remove li element
+            li.remove();
+            
+            tab.find('li a:last').tab('show');
+
+            var prevState = tab.find('li:last').data('url');
+
+            if (prevState && prevState !== 'undefined'){
+              _ignorehash = true;
+              location.hash = '#' + prevState;
+            } else{
+              location.hash = '#';
+            }
+          }
+        // I'm closing an not active tab: just remove the tab and do nothing!
 				} else {
 					li.remove();
 				}

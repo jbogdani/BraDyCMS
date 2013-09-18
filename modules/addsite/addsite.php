@@ -9,6 +9,34 @@
 
 class addsite_ctrl extends Controller
 {
+  
+  public function preInstallErrors()
+  {
+    if (!in_array('mod_rewrite', apache_get_modules()))
+    {
+      $error[] = 'Apache mo_rewrite is not enabled!';
+    }
+    if (!extension_loaded('PDO'))
+    {
+      $error[] = 'PDO extension not loaded!';
+    }
+    if (!extension_loaded('pdo_sqlite'))
+    {
+      $error[] = 'PDO SQLITE extension not loaded!';
+    }
+    if (!is_writable('./'))
+    {
+      $error[] = 'Main installation directory is not writeable';
+    }
+    if (phpversion()< 5.3)
+    {
+      $error[] = 'At least php 5.3 is required';
+    }
+
+    return $error;
+  }
+  
+  
   public function build()
   {
     try

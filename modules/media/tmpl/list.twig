@@ -96,7 +96,7 @@
 			'controller.php?obj=utils&method=upload&param[]={{ path }}',
 			{
 				loaded: function(){
-					admin.tabs.closeActive('media/all{% if rel_path %}/{{ rel_path }}{% endif %}');
+					admin.tabs.reloadActive();
 				}
 			});
 

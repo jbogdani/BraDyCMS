@@ -8,7 +8,7 @@
 <div class="row" id="{{ uid }}">
 	
 	<div class="col-md-5">	
-		<div class="test well">
+		<div class="ullist well">
 			<ul class="nav nav-list menu"></ul>
 		</div>
 	</div>
@@ -37,12 +37,14 @@
 						<li>Text: is the text that users will see</li>
 						<li>Link: the link the menu item will point to. For external links also the <code>http://</code> part is needed (eg.: <code>http://bradypus.net</code>). For internal links the following syntaxt should be used:
 						<ul>
-							<li><code>./art_title=article_textid</code> for links to articles</li>
-							<li><code>./section=section_name</code> for links to section blogs</li>
+							<li><code>article_textid</code> for links to articles</li>
+							<li><code>tag1.all</code> for links to lists of articles tagged by a single tag</li>
+              <li><code>tag1-tag2-tag3.all</code> for links to lists of articles tagged by all provided tags (tag1, tag2, tag3, etc)</li>
+              <li><code>tag1~tag2~tag3.all</code> for links to lists of articles tagged by any of the provided tags (tag1, tag2, tag3, etc)</li>
 							<li><code>./</code> to link to the home page</li>
 							<li><code>#</code> do nothing link</li>
 						</ul>
-						Links to articles, section blogs and more can also be entred by using the widget on the left. Clicking on one article or section, etc, the input will be filled automatically.</li>
+						Links to articles, tags lists and more can also be entred by using the widget on the left. Clicking on one article or tags, etc, the input will be filled automatically.</li>
 						<li>Target: where the link will be opened:
 							<ul>
 								<li>if not set all links will be opened in the same window or tab</li>
@@ -118,7 +120,7 @@
 			<dd>
 				<p>To edit the <strong>HTML</strong> of the main index file:</p>
 				<pre>Main menu > Other > Template manager > Edit HTML</pre>
-				or follow <a href="#template/index">this link</a>. Plaese check the <a href="#docs/tmpl/intro">template documentation</a>.
+				or follow <a href="#template/index">this link</a>. Plaese check the <a href="#docs/read/intro">template documentation</a>.
 				
 				<p>To edit the <strong>CSS</strong>:</p>
 				<pre>Main menu > Other > Template manager > Edit CSS</pre>
@@ -162,7 +164,7 @@
 			<dd>
 				<p>To add a gallery in the article body a special syntax is provided:</p>
 				<pre>[[gallery]]gallery_name[[/gallery]]</pre>
-				<p>Where <code>gallery_name</code> is the name (lower-case, no-spaces, no special characters) of the gallery. This will display a <code>div</code> having css class <code>gallery-container</code> and containing an unordered list (<code>ul</code>) with images and captions. For more details on output check <a href="#docs/tmpl/OutHtml">OutHtml.gallery()</a> documentation.</p>
+				<p>Where <code>gallery_name</code> is the name (lower-case, no-spaces, no special characters) of the gallery. This will display a <code>div</code> having css class <code>gallery-container</code> and containing an unordered list (<code>ul</code>) with images and captions. For more details on output check <a href="#docs/read/OutHtml">OutHtml.gallery()</a> documentation.</p>
 				<ul>Some formatting options are available:
 					<li><pre>[[gallery class="my_css_class"]]gallery_name[[/gallery]]</pre>
 					<code>my_class_name</code> is a css class that will be added to the unordered list containing the gallery. Manu class names can be added, separated by spaces.</li>
@@ -338,13 +340,15 @@
 
 <script>
 $('#{{ uid }} dl.docs dt').each(function(i, el){
-	$(el).attr('id', 'nt-' + i).prepend((i+1) + '. ');
-	$('#{{ uid }} ul.menu').append('<li><a href="#nt-' + (i) + '">' + $(el).text() + '</a></li');
-	$('#{{ uid }} div.test').affix({
+  var li = $('<li><a href="javascript:void(0)">' + $(el).text() + '</a></li>').on('click', function(){
+    $(document).scrollTop( $(el).offset().top - 50 );
+  });
+	$('#{{ uid }} ul.menu').append(li);
+});
+
+$('#{{ uid }} div.ullist').affix({
 		offset: {
 			top: 80
 		}
 	});
-	
-});
 </script>

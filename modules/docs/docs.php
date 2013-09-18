@@ -8,7 +8,7 @@
  
 class docs_ctrl extends Controller
 {
-	public function tmpl()
+	public function read()
 	{
 		$file = $this->get['param'][0];
 		
@@ -16,7 +16,7 @@ class docs_ctrl extends Controller
 		{
 			$this->render('docs', $file, array(
 				'art_arr'=>$art_array,
-				'docs' => $file == 'main' ? $this->stuctured_docs() : ''
+				'docs' => $file == 'template' ? $this->stuctured_docs() : ''
 				
 			));
 		}

@@ -15,7 +15,9 @@ class admin_ctrl extends Controller
   
   public function showCreateInstallForm()
   {
-    $this->render('admin', 'createInstallForm');
+    $addsite = new addsite_ctrl();
+    
+    $this->render('admin', 'createInstallForm', array('preInstallErrors' => $addsite->preInstallErrors()));
   }
   
   public function showError($error)

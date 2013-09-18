@@ -232,12 +232,12 @@
 	
 	// Articles button click	
 	$('#{{ uid }} button.art').click(function(){
-		$('#menu_edit{{ uid }} input[name="href"]').val('' + $(this).text());
+		$('#menu_edit{{ uid }} input[name="href"]').val('' + $.trim($(this).text()));
 	});
 	
 	// Tags button click
 	$('#{{ uid }} button.home').click(function(){
-		$('#menu_edit{{ uid }} input[name="href"]').val('');
+		$('#menu_edit{{ uid }} input[name="href"]').val('./');
 	});
 	
 	// None button click
@@ -302,8 +302,8 @@
 					 {% endfor %}
 					 ],
 			createSearchChoice: function(term){
-				return {id:term, text:term};
-			},
+        return {id: term, text: term};
+      },
 			initSelection:function(el, callback){
 				var value = $(el).val();
 				callback({id: value, text:value});

@@ -8,6 +8,7 @@
 * Multi-user administrator backend
 * Multi-language administrator backend
 * System translation integrated tool
+* Search engines fiendly URLs
 * Fully responsive backend, for optimal usage in mobile devices (smartphones and tablets)
 * Organize content in articles & sections
 * Create custom menus with submenus
@@ -22,6 +23,14 @@
 * User plugin system for easy expansion
 * Multiple database support: MySQL, SQLite (default), PostgreSQL, CUBRID, etc.
 * **Rich built in documentation**
+
+# System requirements
+
+* PHP >= 5.3
+* PHP PDO
+* PHP pdo_sqlite (for default SQLite database)
+* Apache mod_rewrite enabled
+
 
 # Installation guide
 A five-step guide to install and get running BraDyCMS

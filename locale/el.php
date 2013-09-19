@@ -1,4 +1,5 @@
 <?php
+
 $_lang['articles'] = "Άρθρα";
 $_lang['add_new_article'] = "Προσθήκη νέου άρθρου";
 $_lang['show_all_articles'] = "Εμφάνιση όλων των άρθρων";

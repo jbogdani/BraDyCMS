@@ -23,9 +23,11 @@ class log_ctrl extends Controller
 		
 		$_SESSION['user_confirmed'] = false;
 		$_SESSION['user_admin'] = false;
-		
+    
 		utils::emptyTmp();
-		
+    
+    session_destroy();
+    
 		echo '<script>window.location = "./admin"</script>';
 	}
 	

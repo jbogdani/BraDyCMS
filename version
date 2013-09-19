@@ -1,3 +1,6 @@
+3.0.3[] = "Added new Greek translation (thanks to Petros Gavrielides)"
+3.0.3[] = "Logout completely destroys now current session"
+3.0.3[] = "Bug fixed with files paths in media/list"
 3.0.3[] = "Feed writer classes are managed via Composer"
 3.0.2[] = "New, updated documentation system"
 3.0.2[] = "Image load uses as callback tabs.reloadActive, not closeActive('same_url')"

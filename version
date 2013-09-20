@@ -1,3 +1,5 @@
+3.0.4[] = "Bug fixed with article translation: missing language.id input"
+3.0.4[] = "Bug fixed with create thumbnail function in galleries: newly created thumbnail was not injected in html"
 3.0.4[] = "Bug fixed with Article::getByTag, returning hidden or expired articles"
 3.0.3[] = "Added new Greek translation (thanks to Petros)"
 3.0.3[] = "Logout completely destroys now current session"

@@ -2,6 +2,7 @@
 <form action="javascript:void(0)" id ="form{{ uid }}">
 	
 	<input type="hidden" name="id" value="{{ transl.id }}" />
+  <input type="hidden" name="lang" value="{{ lang.id }}" />
 	<!-- STATUS -->
 	<div class="row form-group">
 		<div class="col-sm-1"><label>Status</label></div>
@@ -44,8 +45,8 @@
 		<div class="col-sm-4">
 			<div class="well orig" style="overflow: auto; height: 200px;">{{ art.summary|raw }}</div>
 		</div>
-		<div class="col-sm-1 transl"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
-		<div class="col-sm-6">
+    <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
+		<div class="col-sm-6 transl">
 			<textarea name="summary" class="tiny" id="summary{{ uid }}" style="width: 100%; height: 200px;">{{ transl.summary }}</textarea>
 		</div>
 	</div>
@@ -96,6 +97,7 @@
 		input = $(this).parents('.form-group').find('.transl > :input');
 		
 		if (input.hasClass('tiny')){
+      console.log('tino');
 			tinyMCE.get(input.attr('id')).setContent(text);
 		} else {
 			input.val(text);

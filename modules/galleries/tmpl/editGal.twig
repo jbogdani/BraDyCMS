@@ -68,10 +68,10 @@
 	
 	$('#{{ uid }} button.create_thumb').on('click', function(){
 		var $this = $(this);
-		$.post('controller.php?obj=galleries_ctrl&method=makeThumbs&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
+    $.post('controller.php?obj=galleries_ctrl&method=makeThumbs&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
 			admin.message(data.text, data.status);
 			if (data.status == 'success'){
-				$this.parents('div.td').find('div.img-thumb').html('<img src="' + data.thumb + '" />');
+        $this.prev('.img-thumb').html('<img src="' + data.thumb + '" />');
 				//admin.tabs.reloadActive();
 			}
 		}, 'json');

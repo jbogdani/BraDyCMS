@@ -1,3 +1,4 @@
+3.0.4[] = "Bug fixed with Article::getByTag, returning hidden or expired articles"
 3.0.3[] = "Added new Greek translation (thanks to Petros)"
 3.0.3[] = "Logout completely destroys now current session"
 3.0.3[] = "Bug fixed with files paths in media/list"

@@ -269,9 +269,10 @@ class Article
 	 * @param array $tags
 	 * @param string $lang
 	 * @param boolean $lax if true all returned articles must have all tags in tags array
+   * @param boolean $admin  if true all articles will be returned else onvly valid (published) articles
 	 * @return array of beams objects or false
 	 */
-	public static function getByTag($tags, $lang = false, $lax = false)
+	public static function getByTag($tags, $lang = false, $lax = false, $admin = false)
 	{
 		$articles = $lax ? R::tagged( self::art_tb(), $tags ) : R::taggedAll(self::art_tb(), $tags);
 		
@@ -289,8 +290,22 @@ class Article
 			}
 			return ($a['sort'] > $b['sort']) ? -1 : 1;
 		});
-		
-		return $art_list;
+    
+    if ($admin)
+    {
+      return $art_list;
+    }
+    foreach ($art_list as $id => $art)
+    {
+      if (
+        $art['status'] == 1 && 
+        (
+          $articles['expires`'] == '0000-00-00 00:00:00' || $art['expires'] == '0000-00-00' || $art['expires'] == $art['publish'] || $art['expires'] > date("Y-m-d H:i:s") ) )
+        {
+        $new_art_list[$id] = $art;
+        }
+    }
+		return $new_art_list;
 	}
 	
 	

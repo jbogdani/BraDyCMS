@@ -14,7 +14,7 @@ class article_ctrl extends Controller
 	{
 		if (!empty($this->request['param'][0]))
 		{
-			$art_arr = Article::getByTag($this->request['param']);
+			$art_arr = Article::getByTag($this->request['param'], false, false, true);
 		}
 		else
 		{

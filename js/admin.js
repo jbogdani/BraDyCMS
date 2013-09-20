@@ -264,7 +264,6 @@ var admin = {
             
             
             if (actualState == state){
-              console.log(actualState);
               admin.tabs.reloadActive();
               return;
               //  $(window).trigger( "hashchange" );

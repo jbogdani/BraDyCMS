@@ -365,23 +365,23 @@ class Out
 	 */
 	private function parseContent($html)
 	{
-		//return customTagParser::do_shortcode($html);
+    //return customTagParser::do_shortcode($html);
 		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
 		
-		foreach ($customTags as $customTag)
+    foreach ($customTags as $customTag)
 		{
-			$attributes = array();
+      $attributes = array();
 			$rawAttributes = array();
 			$formatedAttributes = array();
 			
-			$originalTag = $customTag[0];
+			$originalTag = '/' . preg_quote($customTag[0], '/') . '/';
 		
 			$tag = $customTag[1];
 		
 			$rawAttributes = $customTag[2];
 		
 			$content = $customTag[3];
-		
+      
 			preg_match_all('/([^=\s]+)="([^"]+)"/', $rawAttributes, $attributes, PREG_SET_ORDER);
 		
 			$formatedAttributes['content'] = $content;
@@ -397,17 +397,18 @@ class Out
 			{
 				$replace = call_user_func(array('customTags', $tag), $formatedAttributes);
 		
-				$html = str_replace($originalTag, $replace, $html);
+				$html = preg_replace($originalTag, $replace, $html, 1);
 			}
-			else if (file_exists('sites/default/modules/' . $tag . '/' . $tag . '.inc'))
+			else
 			{
-				require_once 'sites/default/modules/' . $tag . '/' . $tag . '.inc';
-				
-				$replace = call_user_func(array($tag, 'init'), $formatedAttributes);
-				
-				$html = str_replace($originalTag, $replace, $html);
-				
-				$pending[$tag] = true;
+        if (method_exists($tag, 'init'))
+        {
+          $replace = call_user_func(array($tag, 'init'), $formatedAttributes);
+          
+          $html = preg_replace($originalTag, $replace, $html, 1);
+          
+          $pending[$tag] = true;
+        }
 			}
 		}
 		

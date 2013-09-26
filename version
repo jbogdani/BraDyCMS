@@ -1,3 +1,6 @@
+3.0.5[] = "Users plugins (custom tags) are now loaded using main Autotoloader class"
+3.0.5[] = "Bug fixed with custom tags: replacement is now done only once per tag in entire document"
+3.0.5[] = "Google Analytics code is not printed in draft mode"
 3.0.4[] = "Bug fixed with article translation: missing language.id input"
 3.0.4[] = "Bug fixed with create thumbnail function in galleries: newly created thumbnail was not injected in html"
 3.0.4[] = "Bug fixed with Article::getByTag, returning hidden or expired articles"

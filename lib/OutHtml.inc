@@ -421,7 +421,7 @@ class OutHtml extends Out
 		$restrict_domain = cfg::get('ga_domain');
 		
 		
-		if ( id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) )
+		if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$_GET['draft'])
 		{
 			$html = '<script type="text/javascript">'
 					. 'var _gaq = _gaq || [];'

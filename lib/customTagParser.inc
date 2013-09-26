@@ -69,7 +69,7 @@ class customTagParser
 	
 	private static function do_shortcode_tag( $m )
 	{
-		$html = '';
+    $html = '';
 		// allow [[foo]] syntax for escaping a tag
 		if ( $m[1] == '[' && $m[6] == ']' )
 		{
@@ -96,18 +96,19 @@ class customTagParser
 	
 	private static function checkAndRunMethod($tag, $formatedAttributes = false)
 	{
-		if (method_exists('customTags', $tag))
+    if (method_exists('customTags', $tag))
 		{
 			return call_user_func(array('customTags', $tag), $formatedAttributes);
 		
 		}
-		else if (file_exists('sites/default/modules/' . $tag . '.inc'))
+    else
 		{
-			require_once 'sites/default/modules/' . $tag . '.inc';
+      if (method_exists($tag, 'init'))
+      {
+        self::$pending[] = $tag;
 			
-			self::$pending[] = $tag;
-			
-			return call_user_func(array($tag, 'init'), $formatedAttributes);
+        return call_user_func(array($tag, 'init'), $formatedAttributes);
+      }
 		}
 	}
 	

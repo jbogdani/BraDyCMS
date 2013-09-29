@@ -16,22 +16,31 @@ class addsite_ctrl extends Controller
     {
       $error[] = 'Apache mo_rewrite is not enabled!';
     }
+    
     if (!extension_loaded('PDO'))
     {
       $error[] = 'PDO extension not loaded!';
     }
+    
     if (!extension_loaded('pdo_sqlite'))
     {
       $error[] = 'PDO SQLITE extension not loaded!';
     }
+    
     if (!is_writable('./'))
     {
       $error[] = 'Main installation directory is not writeable';
     }
-    if (phpversion()< 5.3)
+    
+    if (version_compare(PHP_VERSION, '5.3') < 0)
     {
       $error[] = 'At least php 5.3 is required';
     }
+    
+    if(!ini_get('allow_url_fopen') )
+    {
+      $error[] = 'PHP allow_url_fopen setting should be on for auto-update function to work';
+    } 
 
     return $error;
   }

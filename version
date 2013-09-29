@@ -1,3 +1,4 @@
+3.1.0[] = "New auto-update functionality added"
 3.0.5[] = "Users plugins (custom tags) are now loaded using main Autotoloader class"
 3.0.5[] = "Bug fixed with custom tags: replacement is now done only once per tag in entire document"
 3.0.5[] = "Google Analytics code is not printed in draft mode"

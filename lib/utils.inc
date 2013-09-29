@@ -19,6 +19,8 @@ class utils
 				if (is_dir($dir . '/' . $file))
 				{
 					self::recursive_delete($dir . '/' . $file);
+          
+          @rmdir($dir . '/' . $file);
 				}
 				else
 				{
@@ -39,7 +41,7 @@ class utils
 		}
 		else
 		{
-			rmdir($dir);
+			@rmdir($dir);
 			$check = array($dir);
 		}
 		

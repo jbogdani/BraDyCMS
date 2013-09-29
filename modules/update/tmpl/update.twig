@@ -1,0 +1,25 @@
+<div id="{{ uid }}">
+<h2>{{ tr.get('update_sys') }}</h2>
+
+<hr />
+<div class="row">
+  
+  <div class="col-sm-5">
+    <p class="lead">{{ tr.sget('you_are_running_v', curr_v) }}</p>
+    <p>
+      <button class="btn btn-info btn-lg check_update"><i class="glyphicon glyphicon-hand-right"></i> {{ tr.get('check_for_updates') }}</button>
+    </p>
+  </div>
+  
+  <div class="col-sm-7 check_result">
+  </div>
+  
+</div>
+
+</div>
+
+<script>
+  $('#{{ uid }} .check_update').on('click', function(){
+    $('#{{ uid }} .check_result').html('<img src="./img/loading.gif" alt="loading..." />').load('controller.php?obj=update_ctrl&method=check');
+  })
+</script>

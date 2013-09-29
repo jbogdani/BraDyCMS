@@ -281,6 +281,23 @@ $_lang = array(
 	'error_form_config_not_saved' => "Errore. La configurazione del modulo non è stato salvata",
 	'confirm_delete_form' => "Sei sicuro di voler cancellare questo modulo? Questa azione non può essere annullata",
 	'ok_form_deleted' => "Il modulo è stato cancellato",
-	'error_form_not_deleted' => "Errore. Il modulo non è stato cancellato"
+	'error_form_not_deleted' => "Errore. Il modulo non è stato cancellato",
+  
+  //UPDATE
+  'auto_updates' => "Aggiornamenti automatici",
+  'update_sys' => "Sistema di aggiornamenti",
+  'check_for_updates' => "Controlla aggiornamenti disponibili",
+  'you_are_running_v' => "Attualmente è installata la versione %s",
+  'already_updated' => "Il vostro sistema è già aggiornato all'ultima versione disponibile",
+  'not_updateable' => "Attenzione. Non è possibile aggiornare automaticamente il vostro sistema, perché la major release della versione più recente (%s) non coincide con quella installata(%s). È possibile fare aggiornamenti automatici solo per major releases uguali.",
+  'local_dev' => "Sembra che sia installata una versione di sviluppo (%s) più avanzata di quella disponibile (%s)",
+  'new_version_available' => "Una nuova versione è disponibile (%s) e il vostro sistema è compatibile con questo aggiornamento",
+  'download_install' => "Scarica e installa",
+  'updateable_warning' => "Attenzione, è possibile eseguire l'aggioramento, ma si consiglia comunque di leggere le note di versione per l'elenco delle nuove funzioni",
+  'error_version_check' => "Qualcosa è andato storto nel controllo degli aggiornamenti. per maggiori dettagli si prega di consultare il log degli errori",
+  'error_install' => "Qualcosa è andato storto nel controllo durante l'installazione. Per maggiori dettagli si prega di consultare il log degli errori",
+  'update_downloaded' => "L'aggiornamento è stato scaricato senza problemi",
+  'update_unpacked' => "L'aggiornamento è stato scompattato senza problemi",
+  'update_installed' => "L'aggiornamento è stato installato senza problemi"
 
 );

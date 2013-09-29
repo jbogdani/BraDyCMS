@@ -1,0 +1,39 @@
+<div id="{{ uid }}">
+  
+  {% if status == 'updateable_warning' or status == 'updateable' %}
+    <div class="alert alert-info">
+      <p class="lead">{{ tr.sget('new_version_available', remote_vers) }}</p>
+    </div>
+  
+    {% if status == 'updateable_warning' %}
+     <div class="alert alert-info"><i class="glyphicon glyphicon-info-sign"></i> {{ tr.get('updateable_warning') }}</div>
+    {% endif %}
+    <p><button class="btn btn-success install"><i class="glyphicon glyphicon-cloud-download"></i> {{ tr.get('download_install') }}</button></p>
+    
+  {% elseif status == 'already_updated' %}
+    <div class="alert alert-success">
+      <i class="glyphicon glyphicon-ok"></i> {{ tr.get('already_updated') }}
+    </div>
+    
+  {% elseif status == 'not_updateable' %}
+    <div class="alert alert-danger">
+      <i class="glyphicon glyphicon-warning-sign"></i> {{ tr.sget('not_updateable', [remote_vers, local_vers]) }}
+    </div>
+    
+  {% elseif status == 'local_dev' %}
+    <div class="alert alert-danger">
+      <i class="glyphicon glyphicon-warning-sign"></i> {{ tr.sget('local_dev', [local_vers, remote_vers]) }}
+    </div>
+  {% endif %}
+    
+    
+    <div class="update_result"></div>
+</div>
+
+<script>
+  $('#{{ uid }} .install').on('click', function(){
+    
+  
+    $('#{{ uid }} .update_result').html('<img src="./img/loading.gif" alt="loading..." />').load('controller.php?obj=update_ctrl&method=install')
+  });
+</script>

@@ -1,3 +1,4 @@
+3.1.2[] = "Typo fixed in english translation"
 3.1.2[] = "Bug fixed with utils::recursive_delete not deleting folders"
 3.1.1[] = "Pre-install uses version_compare to check the correct PHP version and also allow_url_fopen is checked"
 3.1.0[] = "New auto-update functionality added"

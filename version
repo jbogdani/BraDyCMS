@@ -1,3 +1,5 @@
+3.1.2[] = "Article images now saves also original file"
+3.1.2[] = "Bug fixes with upload process of article images with spaces in file name"
 3.1.2[] = "Language id field in system config form accepts only two digits"
 3.1.2[] = "Typo fixed in english translation"
 3.1.2[] = "Bug fixed with utils::recursive_delete not deleting folders"

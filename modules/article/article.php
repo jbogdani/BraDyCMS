@@ -79,6 +79,7 @@ class article_ctrl extends Controller
 		
 		// check if art_img files exist
 		$art_img = cfg::get('art_img');
+    $art_img[] = 'orig';
 		
 		if (is_array($art_img))
 		{
@@ -238,13 +239,13 @@ class article_ctrl extends Controller
 		echo json_encode($out);
 	}
 	
-	public function delete_art_img()
+	public function delete_art_img($return = false)
 	{
 		$id = $this->get['param'][0];
-		$return = $this->get['param'][0];
 		try
 		{
 			$dimensions = cfg::get('art_img');
+      $dimensions[] = 'orig';
 			
 			// check if cfg::art_img is available
 			if (!is_array($dimensions))
@@ -321,10 +322,12 @@ class article_ctrl extends Controller
 	{
 		$id = $this->get['param'][0];
 		$file = $this->get['param'][1];
-		
-		try{
+    
+    try{
+      
 			$dimensions = cfg::get('art_img');
-			
+      $dimensions[] = 'orig';
+      
 			// check if cfg::art_img is available
 			if (!is_array($dimensions))
 			{
@@ -334,7 +337,7 @@ class article_ctrl extends Controller
 			// loop in dimensions
 			foreach($dimensions as $dim)
 			{
-				// de'fine image directory
+        // define image directory
 				$dir = IMG_DIR . 'articles/' . $dim;
 				
 				// if image dir does not exist, try to create it
@@ -359,7 +362,18 @@ class article_ctrl extends Controller
 				// make thumbnails in jpg format, using original file
 				$output = $dir . '/' . $id . '.jpg';
 				
-				imgMng::thumb(TMP_DIR . $file, $output, $dim);
+        if ($dim === 'orig')
+        {
+          @copy(TMP_DIR . $file, $output);
+          if (!file_exists($output))
+          {
+            throw new Exception('error_copying_file');
+          }
+        }
+        else
+        {
+          imgMng::thumb(TMP_DIR . $file, $output, $dim);
+        }
 			}
 			
 			$msg['status'] = 'success';

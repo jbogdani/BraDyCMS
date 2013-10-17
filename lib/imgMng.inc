@@ -38,9 +38,10 @@ class imgMng
 	
 	public static function process_convert($ofile, $nfile = false, $type = false, $details = false)
 	{
-		$type = $type ? $type : 'convert';
-	
-		if (!$nfile)
+    
+    $type = $type ? $type : 'convert';
+    
+    if (!$nfile)
 		{
 			$nfile = TMP_DIR . uniqid('file');
 			$overwriteOriginal = true;
@@ -51,25 +52,25 @@ class imgMng
 		switch($type)
 		{
 			case 'convert':
-				$convert = $exec_path['convert'] . ' ' . $ofile . ' ' . $nfile;
+				$convert = $exec_path['convert'] . ' "' . $ofile . '" "' . $nfile . '"';
 				$ok = 'ok_converting_file';
 				$error = 'error_converting_file';
 				break;
 					
 			case 'crop':
-				$convert = $exec_path['convert'] . " -crop '" . $details . "' " . ' ' . $ofile . ' ' . $nfile;
+				$convert = $exec_path['convert'] . " -crop '" . $details . "' " . ' "' . $ofile . '" "' . $nfile . '"';
 				$ok = 'ok_cropping_file';
 				$error = 'error_cropping_file';
 				break;
 	
 			case 'resize':
-				$convert = $exec_path['convert'] . " -resize '" . $details . "'  " . $ofile . ' ' . $nfile;
+				$convert = $exec_path['convert'] . " -resize '" . $details . '\'  "' . $ofile . '" "' . $nfile . '"';
 				$ok = 'ok_resizing_file';
 				$error = 'error_resizing_file';
 				break;
 	
 			case 'thumb':
-				$convert = $exec_path['convert'] . ' -resize ' . $details . '^ ' . $ofile . ' -background none -gravity center -extent ' . $details . ' ' . $nfile;
+				$convert = $exec_path['convert'] . ' -resize ' . $details . '^ "' . $ofile . '" -background none -gravity center -extent ' . $details . ' "' . $nfile . '"';
 				$ok = 'thumbnail_created';
 				$error = 'thumbnail_not_created';
 				break;

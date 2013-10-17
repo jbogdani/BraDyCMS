@@ -62,7 +62,7 @@
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-sys_lang') }}</label>
 		<div class="col-md-2">
-			<input type="text" value="{{ data.sys_lang }}" name="sys_lang" />
+			<input type="text" value="{{ data.sys_lang }}" name="sys_lang" maxlength="2" />
 		</div>
     <div class="col-md-8">
       <span class="text-muted">Two digits main language id, eg. en. Actually the following languages are supported: it, en, es, fr, ar, de, al. If you plan to support any language different from these please you should edit also the main .htaccess file!</span>

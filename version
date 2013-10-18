@@ -1,3 +1,6 @@
+3.1.4[] = "RewiteBase option added in main configuration form"
+3.1.4[] = "After successful update a link to the system configuration tool is shown, for easy trash & cache deletion and .htaccess updating"
+3.1.4[] = "Different method for calculating current version"
 3.1.3[] = "Article images now saves also original file"
 3.1.3[] = "Bug fixes with upload process of article images with spaces in file name"
 3.1.3[] = "Language id field in system config form accepts only two digits"

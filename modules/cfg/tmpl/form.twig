@@ -65,7 +65,10 @@
 			<input type="text" value="{{ data.sys_lang }}" name="sys_lang" maxlength="2" />
 		</div>
     <div class="col-md-8">
-      <span class="text-muted">Two digits main language id, eg. en. Actually the following languages are supported: it, en, es, fr, ar, de, al. If you plan to support any language different from these please you should edit also the main .htaccess file!</span>
+      <span class="text-muted">Two digits main language id, eg. en. Actually the 
+        following languages are supported: it, en, es, fr, ar, de, al. If you 
+        plan to support any language different from these please you should edit 
+        also the main .htaccess file!</span>
     </div>
 	</div>
 	
@@ -88,7 +91,9 @@
 			<input type="text" value="{{ data.db_connection }}" name="db_connection" />
 		</div>
     <div class="col-md-5">
-      <span class="text-muted">Database full DNS (eg.: mysql:host=localhost;dbname=bduscms). Leave blank if you are using the default SQLITE database. </span>
+      <span class="text-muted">Database full DNS (eg.: 
+        mysql:host=localhost;dbname=bduscms). Leave blank if you are using the 
+        default SQLITE database. </span>
     </div>
 	</div>
   
@@ -99,7 +104,8 @@
 			<input type="text" value="{{ data.db_user }}" name="db_user" />
 		</div>
     <div class="col-md-5">
-      <span class="text-muted">Database username. Leave blank if you are using the default SQLITE database. </span>
+      <span class="text-muted">Database username. Leave blank if you are using 
+        the default SQLITE database. </span>
     </div>
 	</div>
   
@@ -110,7 +116,8 @@
 			<input type="text" value="{{ data.db_pass }}" name="db_pass" />
 		</div>
     <div class="col-md-5">
-      <span class="text-muted">Database password. Leave blank if you are using the default SQLITE database. </span>
+      <span class="text-muted">Database password. Leave blank if you are using 
+        the default SQLITE database. </span>
     </div>
 	</div>
 	
@@ -130,7 +137,21 @@
 			<input type="text" value="{{ data.timezone }}" name="timezone" />
 		</div>
     <div class="col-md-5">
-      <span class="text-muted">Please enter a  valid timezone. Supported timezones: <a href="http://php.net/manual/en/timezones.php" target="_blank">http://php.net/manual/en/timezones.php</a> </span>
+      <span class="text-muted">Please enter a  valid timezone. Supported timezones: 
+        <a href="http://php.net/manual/en/timezones.php" target="_blank">http://php.net/manual/en/timezones.php</a> </span>
+    </div>
+	</div>
+  
+  <!-- REWRITEBASE -->
+	<div class="form-group">
+		<label class="control-label col-md-2">{{ tr.get('cfg-rewriteBase') }}</label>
+		<div class="col-md-5">
+			<input type="text" value="{% if data.rewriteBase %}{{ data.rewriteBase }}{% else %}/{% endif %}" name="rewriteBase" />
+		</div>
+    <div class="col-md-5">
+      <span class="text-muted">If your site is not located in the root directory
+      of the domain, please enter here the relative path to the installation 
+      folder, preceded by single slash (/), eg. /new_site</span>
     </div>
 	</div>
 	
@@ -155,7 +176,10 @@
 			<input type="text" value="{{ data.thumbs_dimensions }}" name="thumbs_dimensions" />
 		</div>
     <div class="col-md-8">
-      <span class="text-muted">BraDyCMS has a built in system for image management. If you want to create images thumbnails in a click, for examples for usage in galleries, please enter here the default dimensions of the thumbnails in {width}x{height} format, in pixels, eg.: 200x200</span>
+      <span class="text-muted">BraDyCMS has a built in system for image management. 
+        If you want to create images thumbnails in a click, for examples for 
+        usage in galleries, please enter here the default dimensions of the 
+        thumbnails in {width}x{height} format, in pixels, eg.: 200x200</span>
     </div>
 	</div>
 	
@@ -404,18 +428,39 @@
   </div>
   
 
-	<button class="btn btn-success btn-lg" type="submit"><i class="glyphicon glyphicon-floppy-saved"></i> {{ tr.get('save') }}</button>
+	<hr />
+  <div class="row">
+    <div class="col-sm-3">
+      <button class="btn btn-success btn-lg btn-block" type="submit">
+        <i class="glyphicon glyphicon-floppy-saved"></i> {{ tr.get('save') }}
+      </button>
+    </div>
+      
+    <div class="col-sm-3">
+      <button class="btn btn-warning btn-lg btn-block" type="button" id="trash-{{ uid }}">
+        <i class="glyphicon glyphicon-trash"></i> {{ tr.get('empty_trash')}}
+      </button>
+    </div>
+
+    <div class="col-sm-3">
+      <button class="btn btn-warning btn-lg btn-block" type="button" id="cache-{{ uid }}">
+        <i class="glyphicon glyphicon-trash"></i> {{ tr.get('empty_cache')}}
+      </button>
+      <p class="text-muted">{{ tr.get('cache_help_text') }}</p>
+    </div>
+      
+    <div class="col-sm-3">
+      <button class="btn btn-warning btn-lg btn-block" type="button" id="htaccess-{{ uid }}">
+        <i class="glyphicon glyphicon-trash"></i> {{ tr.get('update_htaccess')}}
+      </button>
+      <p class="text-muted">If you have changed the relative path of the website 
+        you should update the .htaaccess file in order, otherwise you will experience
+      problems in the URL and linking system</p>
+    </div>
+      
+  </div>
 </form>
 
-<hr />
-<div class="row">
-  <div class="col-md-3">
-    <button class="btn btn-warning btn-lg btn-block" type="button" id="cache-{{ uid }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('empty_cache')}}</button>
-  </div>
-  <div class="col-md-7">
-    <span class="text-muted">{{ tr.get('cache_help_text') }}</span>
-  </div>
-</div>
 
 <script>
 $('#form-{{ uid }}').on('submit', function(){
@@ -442,6 +487,18 @@ $('#form-{{ uid }} button.encrypt').on('click', function(){
 
 $('#cache-{{ uid }}').on('click', function(){
 	$.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
+		admin.message(data.text, data.status);
+	}, 'json');
+});
+
+$('#trash-{{ uid }}').on('click', function(){
+	$.get('controller.php?obj=cfg_ctrl&method=empty_trash', function(data){
+		admin.message(data.text, data.status);
+	}, 'json');
+});
+
+$('#htaccess-{{ uid }}').on('click', function(){
+	$.get('controller.php?obj=cfg_ctrl&method=update_htaccess', function(data){
 		admin.message(data.text, data.status);
 	}, 'json');
 });

@@ -3,9 +3,8 @@
 <div id="but_{{ uid }}">
 	{% for lang in langs %}
 	
-		{% if lang != 'it.php' %}
-			<button type="button" data-lang="{{ lang|replace({'.php': ''})}}" class="lang btn btn-info"><i class="glyphicon glyphicon-globe"></i> {{ lang|replace({'.php': ''})|capitalize}}</button>
-		{% endif %}
+		<button type="button" data-lang="{{ lang|replace({'.php': ''})}}" class="lang btn btn-info"><i class="glyphicon glyphicon-globe"></i> {{ lang|replace({'.php': ''})|capitalize}}</button>
+		
 	{% endfor %}
 	
 	<button type="button" class="add-locale btn btn-warning"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('add_locale') }}</button>

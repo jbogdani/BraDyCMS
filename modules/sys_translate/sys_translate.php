@@ -25,8 +25,8 @@ class sys_translate_ctrl extends Controller
 	public function showForm()
 	{
 		$lng = $this->get['param'][0];
-		require LOCALE_DIR . 'it.php';
-		$it = $_lang;
+		require LOCALE_DIR . 'en.php';
+		$en = $_lang;
 		unset($_lang);
 		
 		require LOCALE_DIR . $lng . '.php';
@@ -35,7 +35,7 @@ class sys_translate_ctrl extends Controller
 		
 		$this->render('sys_translate', 'form', array(
 				'lng' => $lng,
-				'it' => $it,
+				'en' => $en,
 				'edit_lang' => $edit_lang
 		));
 	}

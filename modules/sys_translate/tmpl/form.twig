@@ -11,14 +11,14 @@
 		<thead>
 			<tr>
 				<th style="width:100px;">ID</th>
-				<th style="width:250px;">Italian</th>
+				<th style="width:250px;">English</th>
 				<th>Translation</th>
 				<th style="width:20px;">Status</th>
 			</tr>
 		</thead>
 		<tbody>
 		
-	{% for k, v in it %}
+	{% for k, v in en %}
 	{% if k %}
 		<tr{% if edit_lang[k] == false %} class="error"{% endif %}>
 			<td>{{ k }}</td>

@@ -1,3 +1,4 @@
+3.1.5[] = "English is now the main system language"
 3.1.4[] = "RewiteBase option added in main configuration form"
 3.1.4[] = "After successful update a link to the system configuration tool is shown, for easy trash & cache deletion and .htaccess updating"
 3.1.4[] = "Different method for calculating current version"

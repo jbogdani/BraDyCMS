@@ -60,6 +60,11 @@ class update_ctrl extends Controller
       $update->install(TMP_DIR . 'BraDyCMS-master', '.');
       echo '<p class="lead text-success"><i class="glyphicon glyphicon-ok"></i> ' . tr::get('update_installed') . '</p>';
       
+      echo '<p class="lead">The update was successfully installed. You ' .
+        'should consider emptying the cache, the trash and eventually updating ' .
+        'the .htaccess file. Follow <a href="#cfg/edit">this link</a> to ' .
+        'perform all these post-installation actions.</p>';
+      
     }
     catch (Exception $e)
     {

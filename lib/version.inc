@@ -28,8 +28,8 @@ class version
 
 	public static function current()
 	{
-		$va = self::parse();
-		return max(array_keys($va));
+    $keys = array_keys(self::parse());
+		return $keys[0];
 	}
 
 }

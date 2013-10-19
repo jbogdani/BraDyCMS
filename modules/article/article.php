@@ -367,12 +367,19 @@ class article_ctrl extends Controller
           @copy(TMP_DIR . $file, $output);
           if (!file_exists($output))
           {
-            throw new Exception('error_copying_file');
+            throw new Exception(tr::get('error_copying_file'));
           }
         }
         else
         {
-          imgMng::thumb(TMP_DIR . $file, $output, $dim);
+          try
+          {
+            imgMng::thumb(TMP_DIR . $file, $output, $dim);
+          }
+          catch (Exception $e)
+          {
+            throw new Exception(tr::get($e->getMessage()));
+          }
         }
 			}
 			

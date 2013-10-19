@@ -231,7 +231,7 @@ class media_ctrl extends Controller
 		catch (Exception $e)
 		{
 			$out['status'] = 'error';
-			$out['text'] = $e->getMessage();
+			$out['text'] = tr::get($e->getMessage());
 		}
 		
 		echo json_encode($out);

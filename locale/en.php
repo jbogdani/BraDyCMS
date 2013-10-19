@@ -105,6 +105,10 @@ $_lang['ok_cropping_file'] = "The file was cropped";
 $_lang['resize'] = "Resize";
 $_lang['error_reisizing_file'] = "Error. The file was not resized";
 $_lang['ok_resizing_file'] = "The file was resized";
+$_lang['imagick_not_available'] = "The web site is congurated to use imagick as main image manipulation library, but it seems that this library is not available.";
+$_lang['no_image_manipulation_setting_found'] = "No setting for image manipulation library found in main system configuration.";
+
+
 $_lang['galleries'] = "Galleries";
 $_lang['new_gallery'] = "New gallery";
 $_lang['edit_gallery'] = "Edit gallery";

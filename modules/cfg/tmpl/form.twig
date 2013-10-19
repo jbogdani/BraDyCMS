@@ -373,7 +373,18 @@
 			<input type="text" value="{{ data.paths.convert }}" name="paths[convert]" />
 		</div>
     <div class="col-md-7">
-      <span class="text-muted">This is the <strong>absolute</strong> path to the Imagemagick convert command in the hosting system. This setting is fundamental for the image manipulating system to work. if you do not know the path, ask your hosting provider.</span>
+      <span class="text-muted">If you are planing to use <a 
+          href="http://php.net/manual/en/book.imagick.php" target="_blank">php 
+          Imagick extension</a> for image manipulation enter here the string 
+          <code>imagick</code>.<br />
+        If you plan to use <a href="http://www.imagemagick.org/script/index.php"
+        target="_blank">Imagemagick binary</a> (<strong>recommended choise, 
+          if available</strong>) please enter here the 
+        <strong>absolute</strong> path to the Imagemagick convert command 
+        (usually <code>/usr/bin/convert</code> or <code>/usr/local/bin/convert</code>
+        on most *nix systems). <br />
+        This setting is  fundamental for the image manipulating system to work.
+        Settings depend on your hosting plans.</span>
     </div>
 	</div>
 	

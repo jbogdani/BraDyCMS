@@ -127,6 +127,8 @@ $_lang = array(
 	'resize' => "Ridimensiona",
 	'error_reisizing_file' => "Errore. Il file non è stato ridimensionato",
 	'ok_resizing_file' => "Il file è stato ridimensionato",
+  'imagick_not_available' => "Il sito è configurato per usare imagick come libreria principale per la manipulazione delle immagini, ma sembra che questa libreria non sia disponibile.",
+  'no_image_manipulation_setting_found' => "Non è stato trovata alcuna informazione di configurazione per la manipolazione delle immagini",
 	
 	// galleries
 	'galleries' => 'Gallerie',

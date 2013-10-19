@@ -1,3 +1,5 @@
+3.2.0[] = "Suppressed notice level errors in error log"
+3.2.0[] = "Image manipulation can be set to use also php's Imagick extension"
 3.1.6[] = "Bug fixed with file path in media list view"
 3.1.5[] = "English is now the main system language"
 3.1.4[] = "RewiteBase option added in main configuration form"

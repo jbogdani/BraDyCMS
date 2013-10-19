@@ -331,24 +331,24 @@ var admin = {
 				title: admin.tr('pay_attention_please'),
 				html: admin.tr('confirm_delete_file'),
 				buttons:[
-				         {
-				        	 text: admin.tr('close'),
-				        	 action: 'close'
-				         },
-				         {
-				        	 text: admin.tr('delete'),
-				        	 addclass: 'btn-danger',
-				        	 action: 'close',
-				        	 click: function(){
-				        		 $.get('controller.php?obj=media_ctrl&method=delete&param[]=' + full_path, function(data){
-				        			 admin.message(data.text, data.status);
-				        			 if (data.status == 'success'){
-				        				 admin.tabs.closeActive('media/all/' + data.new_path);
-				        			 }
-				        		 }, 'json')
-				        	 }
-				         }
-				         ]
+          {
+            text: '<i class="glyphicon glyphicon-trash"></i>  ' + admin.tr('delete'),
+            addclass: 'btn-danger',
+            action: 'close',
+            click: function(){
+              $.get('controller.php?obj=media_ctrl&method=delete&param[]=' + full_path, function(data){
+                admin.message(data.text, data.status);
+                if (data.status == 'success'){
+                  admin.tabs.closeActive('media/all/' + data.new_path);
+                }
+              }, 'json')
+            }
+          },
+          {
+            text: admin.tr('close'),
+            action: 'close'
+          },
+        ]
 			});
 			
 		},

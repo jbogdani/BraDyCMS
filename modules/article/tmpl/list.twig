@@ -71,31 +71,30 @@ $('#{{ uid }} a.reload').click(function(){
 });
 
 $('#{{ uid }} a.delete_article').click(function(){
-	var $this = $(this);
-	admin.dialog({
-		title: '{{ tr.get('pay_attention_please') }}',
-		html: '{{ tr.get('confirm_delete_article') }}',
-		buttons:[
-		         {
-		        	 text: '{{ tr.get('close') }}',
-		        	 action: 'close'
-		         },
-		         {
-		        	 text: '{{ tr.get('delete') }}',
-		        	 addclass: 'btn-danger',
-		        	 action: 'close',
-		        	 click: function(){
-		        		 $.get('controller.php?obj=article_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
-		        			 admin.message(data.text, data.type);
-		        			 if (data.type == 'success'){
-		        				 
-		        				 admin.tabs.reloadActive();
-		        			 }
-		        		 }, 'json')
-		        	 }
-		         }
+  var $this = $(this);
+  admin.dialog({
+    title: '{{ tr.get('pay_attention_please') }}',
+    html: '{{ tr.get('confirm_delete_article') }}',
+    buttons: [
+              {
+                text: '<i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}',
+                addclass: 'btn-danger',
+                action: 'close',
+                click: function(){
+                  $.get('controller.php?obj=article_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
+                    admin.message(data.text, data.type);
+                    if (data.type == 'success'){
+                      admin.tabs.reloadActive();
+                    }
+                  }, 'json')
+                }
+              },
+              {
+                text: '{{ tr.get('close') }}',
+                action: 'close'
+              }
 		         ]
-	});
+  });
 });
 
 $('#{{ uid }} table.data_table').dataTable({

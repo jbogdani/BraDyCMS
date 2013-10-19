@@ -42,6 +42,9 @@ if (!file_exists(MAIN_DIR . 'logs/error.log'))
   touch(MAIN_DIR . 'logs/error.log');
 }
 
+// SETS ERROR REPORTING
+( ini_get('error_reporting') <> 6135 )	?	ini_set('error_reporting', 6135) : '';
+
 ini_set('error_log', './logs/error.log');
 
 ini_set('display_errors', 'off');

@@ -24,27 +24,27 @@ RewriteRule ^admin:debug?$ admin.php?debug=1
 RewriteRule ^admin:mini?$ admin.php?mini=1
 
 #safe home page 
-RewriteRule ^(it|en|es|fr|ar|de|al|el)/?$ index.php?lang=$1 
+RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/?$ index.php?lang=$1 
 
 #tags
-RewriteRule ^(it|en|es|fr|ar|de|al|el)/([a-zA-Z0-9-_+~]+).all$ index.php?lang=$1&tags=$2
+RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_+~]+).all$ index.php?lang=$1&tags=$2
 RewriteRule ^([a-zA-Z0-9-_+~]+).all$ index.php?tags=$1
 
 
 #art_title no html
-RewriteRule ^(it|en|es|fr|ar|de|al|el)/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2
+RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2
 RewriteRule ^([a-zA-Z0-9-_]+)/?$ index.php?art_title=$1
 
 #art_title with html extension
-RewriteRule ^(it|en|es|fr|ar|de|al|el)/([a-zA-Z0-9-_]+).html$ index.php?lang=$1&art_title=$2
+RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_]+).html$ index.php?lang=$1&art_title=$2
 RewriteRule ^([a-zA-Z0-9-_]+).html$ index.php?art_title=$1
 
 #art_title, draft
-RewriteRule ^(it|en|es|fr|ar|de|al|el)/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1
+RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1
 RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true
 
 #search
-RewriteRule ^(it|en|es|fr|ar|de|al|el)/search:([a-zA-Z0-1-_\.]+)$ index.php?lang=$1&search=$2
+RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/search:([a-zA-Z0-1-_\.]+)$ index.php?lang=$1&search=$2
 RewriteRule ^search:([a-zA-Z0-9-_\.]+)$ index.php?search=$1
 
 <FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite)$">

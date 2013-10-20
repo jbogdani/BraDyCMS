@@ -30,6 +30,7 @@
 * PHP PDO
 * PHP pdo_sqlite (for default SQLite database)
 * Apache mod_rewrite enabled
+* Imagemagick or Imagick for image manipulation (optional)
 
 
 # Installation guide
@@ -53,22 +54,20 @@ A five-step guide to install and get running BraDyCMS
 ### Version 3.x
 * [belightproject.com](http://belightproject.com)
 * [bradypus.net](http://bradypus.net)
+* [http://cliffyoungltd.com](http://cliffyoungltd.com)
 * [costruzioniartigiane.it](http://costruzioniartigiane.it)
+* [e-review.it](http://e-review.it)
 * [fabriziolapalombara.com](http://fabriziolapalombara.com)
 * [iraq.routes-assn.org](http://iraq.routes-assn.org)
 * [medantico.org](http://medantico.org/)
+* [pastandpresent.al](http://pastandpresent.al)
 * [santamariainportuno.it](http://www.santamariainportuno.it)
 * [tozziindustries.com] (http://tozziindustries.com)
 
 
-### Version 2.x
-* [e-review.it](http://e-review.it)
-* [pastandpresent.al](http://pastandpresent.al)
-
 ### Comming soon (Version 3.x)
 * [artemusa.it]
 * ghazni-project
-* [http://cliffyoungltd.com](http://cliffyoungltd.com)
 * Teatro Masini
 
 ## Tecnical features

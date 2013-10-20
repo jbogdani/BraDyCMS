@@ -1,3 +1,5 @@
+3.2.1[] = "Minor documentation typo fixes"
+3.2.1[] = "Added japanese language in .htaccess file"
 3.2.1[] = "Icon added in file delete confirm dialog"
 3.2.1[] = "Icon added in article delete confirm dialog"
 3.2.0[] = "Suppressed notice level errors in error log"

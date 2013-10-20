@@ -12,7 +12,7 @@ class Out
 {
 	private 
 		$get,		// GET data
-		$context,	// context: article, section, tags, search
+		$context,	// context: article, tags, search, home
 		$data,	//
 		$metadata
 		;

@@ -378,7 +378,7 @@ class docs_ctrl extends Controller
 		
 		$docs[] = array(
 			'method' => 'getContext',
-			'description' => 'Returns context of usage: article, section, search or home',
+			'description' => 'Returns context of usage: article, tags, search or home',
 			'example_usage' => "{{ out.getContext }}",
 			'example_output' => 'home'
 			);

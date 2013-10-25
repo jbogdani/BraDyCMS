@@ -20,19 +20,19 @@ class OutHtml extends Out
 				"\n\t" . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />' .
 				"\n\t" . '<meta name="robots" content="index, follow" />' .
 				"\n\t" . '<title>' . $this->getPageData('title') . '</title>' .
-				"\n\t" . '<meta name="description" content="' . $this->getPageData('description') . '" />' .
-				"\n\t" . '<meta name="keywords" content="' . $this->getPageData('keywords') . '" />' .
-				"\n\t" . '<meta lang="' . $this->getPageData('lang') . '" />' .
+				"\n\t" . '<meta name="description" content="' . $this->getPageData('description', true) . '" />' .
+				"\n\t" . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />' .
+				"\n\t" . '<meta lang="' . $this->getPageData('lang', true) . '" />' .
 				"\n\t" . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
 			;
 
 		if (!$no_og)
 		{
 			$html .= "\n\n\t<!-- Open Graph metadata -->" .
-					"\n\t" . '<meta property="og:title" content="' . $this->getPageData('title') . '" />' .
-					"\n\t" . '<meta property="og:description" content="' . $this->getPageData('description') . '" />' .
-					"\n\t" . '<meta property="og:url" content="' . $this->getPageData('url') . '" />' .
-					( $this->getPageData('image') ? "\n\t" . '<meta property="og:image" content="' . $this->getPageData('image') . '" />' : '' )
+					"\n\t" . '<meta property="og:title" content="' . $this->getPageData('title', true) . '" />' .
+					"\n\t" . '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />' .
+					"\n\t" . '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />' .
+					( $this->getPageData('image') ? "\n\t" . '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />' : '' )
 			;
 		}
 				
@@ -82,31 +82,31 @@ class OutHtml extends Out
 				"\n\t" . '<meta name="DC.Identifier" content="' . $art['id'] . '"/>' .
 				
 				// Identifier.URI
-				"\n\t" . '<meta name="DC.Identifier.URI" scheme="URI" content="' . $this->getPageData('url') . '" />' .
+				"\n\t" . '<meta name="DC.Identifier.URI" scheme="URI" content="' . $this->getPageData('url', true) . '" />' .
 				
 				// Identifier.DOI
 				"\n\t" . '<meta name="DC.Identifier.DOI" content="' . $this->getMD()->getDoiPrefix() . '.' . $art[$this->getMD()->getTable('id')] . '" />' .
 				
 				// Titile
-				"\n\t" . '<meta name="DC.Title" content="' . $this->getPageData('title') . '" />' .
+				"\n\t" . '<meta name="DC.Title" content="' . $this->getPageData('title', true) . '" />' .
 				
 				// Description
-				"\n\t" . '<meta name="DC.Description" content="' . $this->getPageData('description') . '" />' .
+				"\n\t" . '<meta name="DC.Description" content="' . $this->getPageData('description', true) . '" />' .
 				
 				// Language
-				"\n\t" . '<meta name="DC.Language" scheme="ISO639-1" content="' . $this->getPageData('lang') . '" />' .
+				"\n\t" . '<meta name="DC.Language" scheme="ISO639-1" content="' . $this->getPageData('lang', true) . '" />' .
 				
 				// Creator
-				( $this->getPageData('author') ? "\n\t" . '<meta name="DC.Creator" content="' . $this->getPageData('author') . '" />' : '') .
+				( $this->getPageData('author') ? "\n\t" . '<meta name="DC.Creator" content="' . $this->getPageData('author', true) . '" />' : '') .
 				
 				// Creator.PersonalName
-				( $this->getPageData('author') ? "\n\t" . '<meta name="DC.Creator.PersonalName" content="' . $this->getPageData('author') . '" />' : '') .
+				( $this->getPageData('author') ? "\n\t" . '<meta name="DC.Creator.PersonalName" content="' . $this->getPageData('author', true) . '" />' : '') .
 				
 				// Publisher
 				( $this->getMD()->getPublisher() ? "\n\t" . '<meta name="DC.Publisher" content="' . $this->getMD()->getPublisher() . '" />' : '') .
 				
 				// Subject
-				"\n\t" . '<meta name="DC.subject" scheme="RFC3066" content="' . $this->getPageData('keywords') . '" />' .
+				"\n\t" . '<meta name="DC.subject" scheme="RFC3066" content="' . $this->getPageData('keywords', true) . '" />' .
 
 				// Date
 				( $this->getPageData('date') ? "\n\t" . '<meta name="DC.Date" scheme="W3CDTF" content="' . $this->getPageData('date') . '" />' : '') .
@@ -153,22 +153,22 @@ class OutHtml extends Out
 				($this->getMD()->getISSN() ? "\n\t" . '<meta name="citation_issn" content="' . $this->getMD()->getISSN() . '"/>' : '') .
 				
 				// article author
-				( $this->getPageData('author') ? "\n\t" . '<meta name="citation_author" content="' . $this->getPageData('author') . '" />' : '') .
+				( $this->getPageData('author') ? "\n\t" . '<meta name="citation_author" content="' . $this->getPageData('author', true) . '" />' : '') .
 				
 				// article title
-				"\n\t" . '<meta name="citation_title" content="' . $this->getPageData('title') . '" />' .
+				"\n\t" . '<meta name="citation_title" content="' . $this->getPageData('title', true) . '" />' .
 				
 				// article date
-				( $this->getPageData('date') ? "\n\t" . '<meta name="citation_date" content="' . $this->getPageData('date') . '" />' : '') .
+				( $this->getPageData('date') ? "\n\t" . '<meta name="citation_date" content="' . $this->getPageData('date', true) . '" />' : '') .
 				
 				// article doi
 				"\n\t" . '<meta name="citation_doi" content="' . $this->getMD()->getDoiPrefix() . '.' . $art[$this->getMD()->getTable('id')] . '"/>' .
 		
 				// article abstract url
-				"\n\t" . '<meta name="citation_abstract_html_url" content="' . $this->getPageData('url') . '"/>' .
+				"\n\t" . '<meta name="citation_abstract_html_url" content="' . $this->getPageData('url', true) . '"/>' .
 				
 				// article language
-				"\n\t" . '<meta name="citation_language" content="' . $this->getPageData('lang') . '" />' .
+				"\n\t" . '<meta name="citation_language" content="' . $this->getPageData('lang', true) . '" />' .
 		
 				// article pdf url
 				(file_exists('./sites/default/images/pdf/' . $art['textid'] . '.pdf') ?  

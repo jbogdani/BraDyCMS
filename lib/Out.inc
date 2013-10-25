@@ -205,16 +205,17 @@ class Out
 	/**
 	 * Returns metadata about the current page, filtered by $el
 	 * @param string $el page element to return
+   * @param boolean $escape if true double apices will be escaped
 	 * @return string|array
 	 */
-	public function getPageData($el = false)
+	public function getPageData($el = false, $escape = false)
 	{
 		if (!$this->data['page'])
 		{
 			$this->setPageData();
 		}
 	
-		return $el ? $this->data['page'][$el] : $this->data['page'];
+		return $el ? ( $escape ? str_replace('"', '\"', $this->data['page'][$el]) : $this->data['page'][$el] ) : $this->data['page'];
 	}
 	
 	

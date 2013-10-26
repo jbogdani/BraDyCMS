@@ -1,8 +1,8 @@
 <?php
 /**
  * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDypUS 2007-2011
- * @license			All rights reserved
+ * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license			MIT, See LICENSE file
  * @since			Apr 12, 2013
  */
  

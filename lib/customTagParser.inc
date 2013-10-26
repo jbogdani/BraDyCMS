@@ -1,8 +1,8 @@
 <?php
 /**
  * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDypUS 2007-2011
- * @license			All rights reserved
+ * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license			MIT, See LICENSE file
  * @since			May 30, 2013
  * 
  * Freely adapted from: http://core.trac.wordpress.org/browser/tags/3.5.1/wp-includes/shortcodes.php#L0

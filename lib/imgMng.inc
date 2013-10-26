@@ -4,7 +4,7 @@
  * Uses Imagemagick binary covert of Imagick php extension, depending on system cfg.
  * @author			Julian Bogdani <jbogdani@gmail.com>
  * @copyright		BraDypUS 2007-2013
- * @license			All rights reserved
+ * @license			MIT, See LICENSE file
  * @since			May 16, 2013
  * @uses cfg main configuration class
  */

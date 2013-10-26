@@ -2,7 +2,7 @@
 /**
  * @author			Julian Bogdani <jbogdani@gmail.com>
  * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013 
- * @license			All rights reserved
+ * @license			MIT, See LICENSE file
  * @since				Sep 16, 2013
  */
 
@@ -48,9 +48,11 @@ class admin_ctrl extends Controller
     $this->render('admin', 'body', array(
       'version' => version::current(),
       'custom_mods' => $custom_mods,
-      'welcome' => file_exists('./sites/default/welcome.html') ? file_get_contents('./sites/default/welcome.html') : ''
+      'welcome' => file_exists('./sites/default/welcome.html') ? file_get_contents('./sites/default/welcome.html') : '',
+      'user' => $_SESSION['user_confirmed'],
+      'gravatar' => md5( strtolower( trim( $_SESSION['user_confirmed'] ) ) )
       )
-      );
+    );
   }
 }
 ?>

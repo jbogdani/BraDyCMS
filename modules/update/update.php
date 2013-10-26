@@ -3,7 +3,7 @@
 /**
  * @author			Julian Bogdani <jbogdani@gmail.com>
  * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013 
- * @license			All rights reserved
+ * @license			MIT, See LICENSE file
  * @since				Sep 27, 2013
  */
 

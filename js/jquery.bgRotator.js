@@ -1,7 +1,7 @@
 /**
  * @author			Julian Bogdani <jbogdani@gmail.com>
  * @copyright		BraDypUS 2007-2013
- * @license			All rights reserved
+ * @license			MIT, See LICENSE file
  * @since			Apr 20, 2013
  * @example			$('ul.bgRotator').bgRotator();
  * 

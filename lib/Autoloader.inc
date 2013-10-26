@@ -2,7 +2,7 @@
 /**
  * @author			Julian Bogdani <jbogdani@gmail.com>
  * @copyright		BraDypUS 2007-2012
- * @license			All rights reserved
+ * @license			MIT, See LICENSE file
  * @since			Jan 10, 2012
  */
  

@@ -77,3 +77,4 @@ A five-step guide to install and get running BraDyCMS
 * [TWIG](http://twig.sensiolabs.org/) is used as template engine, both for frontend and backend templates
 * [Twitter Bootstrap](http://getbootstrap.com/) framework is used for backend controle panel
 * [Composer](http://getcomposer.org/) is used as dependency manager for external libraries
+* [Swift](http://swiftmailer.org) is used as for system emails

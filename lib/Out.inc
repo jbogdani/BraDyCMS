@@ -224,8 +224,26 @@ class Out
 	 */
 	private function setPageData()
 	{
-		// Title
-		$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ? $this->data['article'][$this->get['art_title']]['title'] : cfg::get('title');
+		// TITLE
+    // customtitle field is set in cfg and is not empty
+    if ($this->data['article'][$this->get['art_title']]['customtitle'])
+    {
+      $this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['customtitle'];
+    }
+    // article title
+    else if ($this->data['article'][$this->get['art_title']]['title'])
+    {
+      $this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'];
+    }
+    else if ($this->context === 'tags')
+    {
+      $this->data['page']['title'] = cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags());
+    }
+    else
+    {
+      $this->data['page']['title'] = cfg::get('title');
+    }
+		//$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ? $this->data['article'][$this->get['art_title']]['title'] : cfg::get('title');
 		
 		// Description
 		if ( $this->data['article'][$this->get['art_title']]['summary'] && trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])) != '' )
@@ -428,25 +446,16 @@ class Out
 	
 	/**
 	 * Returns, if available, a new instance of object M(eta)D(ata)_repository
-	 * @return boolean|MD_repository
+	 * @return boolean|Metadata
 	 */
 	public function getMD()
 	{
 		if (!$this->metadata)
 		{
-			if(!file_exists('./sites/default/modules/metadata/MD_repository.inc'))
-			{
-				return false;
-			}
-			else
-			{
-				require_once './sites/default/modules/metadata/MD_repository.inc';
-				
-				$this->metadata = new MD_repository();
-			}
+      $this->metadata = new Metadata('./sites/default/modules/metadataRepo/metadata.json');
 		}
-		
-		return $this->metadata;
+    
+    return $this->metadata;
 	}
 	
 }

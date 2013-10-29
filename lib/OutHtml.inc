@@ -79,52 +79,78 @@ class OutHtml extends Out
 				"\n\t" . '<meta name="DC.Format" content="text/html" />' .
 				
 				// Identifier
-				"\n\t" . '<meta name="DC.Identifier" content="' . $art['id'] . '"/>' .
+				"\n\t" . '<meta name="DC.Identifier" ' .
+          'content="' . $art['id'] . '"/>' .
 				
 				// Identifier.URI
-				"\n\t" . '<meta name="DC.Identifier.URI" scheme="URI" content="' . $this->getPageData('url', true) . '" />' .
+				"\n\t" . '<meta name="DC.Identifier.URI" scheme="URI" ' .
+          'content="' . $this->getPageData('url', true) . '" />' .
 				
 				// Identifier.DOI
-				"\n\t" . '<meta name="DC.Identifier.DOI" content="' . $this->getMD()->getDoiPrefix() . '.' . $art[$this->getMD()->getTable('id')] . '" />' .
+				"\n\t" . '<meta name="DC.Identifier.DOI" ' . 
+          'content="' . $this->getMD()->getDoiPrefix() . 
+          '.' . $art[$this->getMD()->getTable('id')] . '" />' .
 				
 				// Titile
-				"\n\t" . '<meta name="DC.Title" content="' . $this->getPageData('title', true) . '" />' .
+				"\n\t" . '<meta name="DC.Title" ' .
+          'content="' . $this->getPageData('title', true) . '" />' .
 				
 				// Description
-				"\n\t" . '<meta name="DC.Description" content="' . $this->getPageData('description', true) . '" />' .
+				"\n\t" . '<meta name="DC.Description" ' .
+          'content="' . $this->getPageData('description', true) . '" />' .
 				
 				// Language
-				"\n\t" . '<meta name="DC.Language" scheme="ISO639-1" content="' . $this->getPageData('lang', true) . '" />' .
+				"\n\t" . '<meta name="DC.Language" scheme="ISO639-1" ' .
+          'content="' . $this->getPageData('lang', true) . '" />' .
 				
 				// Creator
-				( $this->getPageData('author') ? "\n\t" . '<meta name="DC.Creator" content="' . $this->getPageData('author', true) . '" />' : '') .
+				( $this->getPageData('author') ? 
+            "\n\t" . '<meta name="DC.Creator" ' .
+              'content="' .  $this->getPageData('author', true) . '" />' : '') .
 				
 				// Creator.PersonalName
-				( $this->getPageData('author') ? "\n\t" . '<meta name="DC.Creator.PersonalName" content="' . $this->getPageData('author', true) . '" />' : '') .
+				( $this->getPageData('author') ? 
+            "\n\t" . '<meta name="DC.Creator.PersonalName" ' .
+              'content="' .  $this->getPageData('author', true) . '" />' : '') .
 				
 				// Publisher
-				( $this->getMD()->getPublisher() ? "\n\t" . '<meta name="DC.Publisher" content="' . $this->getMD()->getPublisher() . '" />' : '') .
+				( $this->getMD()->getPublisher() ? 
+            "\n\t" . '<meta name="DC.Publisher" ' .
+              'content="' . $this->getMD()->getPublisher() . '" />' : '') .
 				
 				// Subject
-				"\n\t" . '<meta name="DC.subject" scheme="RFC3066" content="' . $this->getPageData('keywords', true) . '" />' .
+				"\n\t" . '<meta name="DC.subject" scheme="RFC3066" ' .
+          'content="' . $this->getPageData('keywords', true) . '" />' .
 
 				// Date
-				( $this->getPageData('date') ? "\n\t" . '<meta name="DC.Date" scheme="W3CDTF" content="' . $this->getPageData('date') . '" />' : '') .
+				( $this->getPageData('date') ? 
+            "\n\t" . '<meta name="DC.Date" scheme="W3CDTF" ' .
+              'content="' . $this->getPageData('date') . '" />' : '') .
 				
 				// Date.created
-				( $this->getPageData('date') ? "\n\t" . '<meta name="DC.Date.created" scheme="ISO8601" content="' . $this->getPageData('date') . '" />' : '') .
+				( $this->getPageData('date') ? 
+            "\n\t" . '<meta name="DC.Date.created" scheme="ISO8601" ' .
+              'content="' . $this->getPageData('date') . '" />' : '') .
 				
 				// Date.modified
-				( $art['updated'] ? "\n\t" . '<meta name="DC.Date.modified" scheme="ISO8601" content="' . $art['updated'] . '" />' : '') .
+				( $art['updated'] ? 
+            "\n\t" . '<meta name="DC.Date.modified" scheme="ISO8601" ' .
+              'content="' . $art['updated'] . '" />' : '') .
 				
 				// Source
-				($this->getMD()->getRepositoryName() ? "\n\t" . '<meta name="DC.Source" content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
+				($this->getMD()->getRepositoryName() ? 
+            "\n\t" . '<meta name="DC.Source" ' .
+              'content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
 				
 				// Source.ISSN
-				($this->getMD()->getISSN() ? "\n\t" . '<meta name="DC.Source.ISSN" content="' . $this->getMD()->getISSN() . '"/>' : '') .
+				($this->getMD()->getISSN() ? 
+            "\n\t" . '<meta name="DC.Source.ISSN" ' .
+              'content="' . $this->getMD()->getISSN() . '"/>' : '') .
 				
 				// Source.URI
-				($this->getMD()->getURL() ? "\n\t" . '<meta name="DC.Source.URI" content="' . $this->getMD()->getURL() . '"/>' : '')
+				($this->getMD()->getURL() ? 
+            "\n\t" . '<meta name="DC.Source.URI" ' .
+              'content="' . $this->getMD()->getURL() . '"/>' : '')
 				;
 		return $html;
 	}
@@ -147,32 +173,47 @@ class OutHtml extends Out
 		$html =  "\n\t<!-- Highwire Press metadata tags -->" .
 				
 				// journal title
-				($this->getMD()->getRepositoryName() ? "\n\t" . '<meta name="citation_journal_title" content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
+				($this->getMD()->getRepositoryName() ? 
+          "\n\t" . '<meta name="citation_journal_title" ' .
+            'content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
 				
 				// journal issn
-				($this->getMD()->getISSN() ? "\n\t" . '<meta name="citation_issn" content="' . $this->getMD()->getISSN() . '"/>' : '') .
+				($this->getMD()->getISSN() ? 
+          "\n\t" . '<meta name="citation_issn" ' .
+            'content="' . $this->getMD()->getISSN() . '"/>' : '') .
 				
 				// article author
-				( $this->getPageData('author') ? "\n\t" . '<meta name="citation_author" content="' . $this->getPageData('author', true) . '" />' : '') .
+				( $this->getPageData('author') ? 
+          "\n\t" . '<meta name="citation_author" ' .
+            'content="' . $this->getPageData('author', true) . '" />' : '') .
 				
 				// article title
-				"\n\t" . '<meta name="citation_title" content="' . $this->getPageData('title', true) . '" />' .
+				"\n\t" . '<meta name="citation_title" ' .
+          'content="' . $this->getPageData('title', true) . '" />' .
 				
 				// article date
-				( $this->getPageData('date') ? "\n\t" . '<meta name="citation_date" content="' . $this->getPageData('date', true) . '" />' : '') .
+				( $this->getPageData('date') ? 
+            "\n\t" . '<meta name="citation_date" ' .
+              'content="' . $this->getPageData('date', true) . '" />' : '') .
 				
 				// article doi
-				"\n\t" . '<meta name="citation_doi" content="' . $this->getMD()->getDoiPrefix() . '.' . $art[$this->getMD()->getTable('id')] . '"/>' .
+				"\n\t" . '<meta name="citation_doi" ' .
+          'content="' . $this->getMD()->getDoiPrefix() . 
+            ( $art[$this->getMD()->getTable('id')] ? 
+              '.' . $art[$this->getMD()->getTable('id')] : '' ). '"/>' .
 		
 				// article abstract url
-				"\n\t" . '<meta name="citation_abstract_html_url" content="' . $this->getPageData('url', true) . '"/>' .
+				"\n\t" . '<meta name="citation_abstract_html_url" ' .
+          'content="' . $this->getPageData('url', true) . '"/>' .
 				
 				// article language
-				"\n\t" . '<meta name="citation_language" content="' . $this->getPageData('lang', true) . '" />' .
+				"\n\t" . '<meta name="citation_language" ' .
+          'content="' . $this->getPageData('lang', true) . '" />' .
 		
 				// article pdf url
 				(file_exists('./sites/default/images/pdf/' . $art['textid'] . '.pdf') ?  
-					"\n\t" .  '<meta name="citation_pdf_url" content="' . $this->getMD()->getURL() . '/sites/default/images/pdf/' . $art['textid'] . '.pdf"/>'
+					"\n\t" .  '<meta name="citation_pdf_url" ' .
+            'content="' . $this->getMD()->getURL() . '/sites/default/images/pdf/' . $art['textid'] . '.pdf"/>'
 					: '')
 	
 		;
@@ -493,8 +534,10 @@ class OutHtml extends Out
       return false;
     }
     
-    return $html = '<script src="//ajax.googleapis.com/ajax/libs/jquery/' . $version . '/jquery.min.js"></script>' . 
-      '<script>window.jQuery || document.write(\'<script src="./js/jquery-' . $version . '.min.js"><\/script>\')</script>';
+    return $html = '<script src="//ajax.googleapis.com/ajax/libs/jquery/' . 
+      $version . '/jquery.min.js"></script>' . 
+      '<script>window.jQuery || document.write(\'<script src="./js/jquery-' . 
+      $version . '.min.js"><\/script>\')</script>';
   }
 		
 }

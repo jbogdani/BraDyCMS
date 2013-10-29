@@ -1,3 +1,7 @@
+3.2.1[] = "Metadata repository is now configured with a json file"
+3.2.1[] = "Page title checks first for customtitle field in article table"
+3.2.1[] = "Minor code style fixes"
+3.2.1[] = "Bug fixed: blockquote button was not showing in text editor"
 3.2.1[] = "Added license information in all files"
 3.2.1[] = "Bug fix with metadata output. Double quotation marks are now escaped"
 3.2.1[] = "Added MIT license"

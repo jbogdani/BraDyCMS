@@ -280,7 +280,15 @@
 	</div>
   <div class="row">
     <div class="col-md-12">
-        <span class="text-muted">Use the fields above to add new languages to your site. For each language please provide a two-digits code and a lower-case language name.<br />Actually the following languages are supported: it, en, es, fr, ar, de, al. If you plan to support any language different from these please you should edit also the main .htaccess file!. If the "is published" flag is turned to "on" the language will be available in main site language menu.<br /> You can have many languages. Just save the form to have a new blank row added.</span>
+        <span class="text-muted">Use the fields above to add new languages 
+          to your site. For each language please provide a two-digits code 
+          and a lower-case language name.<br />Actually the following languages 
+          are supported: it, en, es, fr, ar, de, al. If you plan to support 
+          any language different from these please you should edit also the 
+          main .htaccess file!. If the "is published" flag is turned to "on" 
+          the language will be available in main site language menu.<br /> 
+          You can have many languages. Just save the form to have a new 
+          blank row added.</span>
     </div>
   </div>
 	
@@ -319,7 +327,7 @@
 			</div>
 
 			<div class="col-md-3">
-				<input type="text" class="col-md-3" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]" />
+				<input type="text" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]" />
 			</div>
 
 			<div class="col-md-1">
@@ -359,7 +367,19 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <span class="text-muted">Use the fields above to add new custom fields to your articles. For each field please please provide a lower-case name, using no spaces, dashes, underscores or other special characters; a field type, a label, and eventually a default value. If you chose "select" as field type you should enter a comma separated list of values as default fields to use as select options.<br /><strong>Please remember</strong> that you should update the database manually to include the new fields.<br /> You can add many custom fields. Just save the form to have a new blank row added.</span>
+      <p class="text-muted">Use the fields above to add new custom fields to 
+        your articles. For each field please please provide a lower-case name, 
+        using no spaces, dashes, underscores or other special characters; a 
+        field type, a label, and eventually a default value. 
+        If you chose "select" as field type you should enter a comma separated 
+        list of values as default fields to use as select options.<br />
+        <strong>Please remember</strong> that you should update the database 
+        manually to include the new fields.<br />
+        <strong>Special fields</strong> The fieldname <code>customtitle</code>
+        is a special field. If provided it's value will be used to throughout the
+        website for the HTML <code>title</code> metatag output.<br />
+        You can add many custom fields. Just save the form to have a new 
+        blank row added.</p>
     </div>
   </div>
 	

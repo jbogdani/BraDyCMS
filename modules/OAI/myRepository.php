@@ -24,10 +24,10 @@ class myRepository implements Repository
 {
 	private $repo, $db;
 	
-	public function __construct(MD_repository $repo)
+	public function __construct(Metadata $metadata)
 	{
 		// info
-		$this->repo = $repo;
+		$this->repo = $metadata;
 	}
 
 	public function getIdentifyData() {

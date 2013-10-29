@@ -10,20 +10,20 @@ class OAI_ctrl extends Controller
 {
 	public function run()
 	{
-		
-		if (!file_exists('./sites/default/modules/metadata/MD_repository.inc'))
-		{
-			echo tr::get('no_oai_config_for_site');
-			return;
-		}
-		
-		unset($this->get['obj']);
-		unset($this->get['method']);
-		
-		require_once './sites/default/modules/metadata/MD_repository.inc';
-		require_once './vendor/oaiprovider-php/oaiprovider-php/endpoint.php';
-		require_once MOD_DIR . 'OAI/myRepository.php';
-		
-		\oaiprovider\handleRequest($this->get, new myRepository(new MD_repository()), null, 'xsl/oai2.xsl');
+    if(!file_exists('./sites/default/modules/metadata_repo/metadata.json'))
+    {
+      echo tr::get('no_oai_config_for_site');
+      return;
+    }
+    
+    $metadata = new Metadata('./sites/default/modules/metadata_repo/metadata.json');
+
+    require_once './vendor/oaiprovider-php/oaiprovider-php/endpoint.php';
+    require_once MOD_DIR . 'OAI/myRepository.php';
+
+    unset($this->get['obj']);
+    unset($this->get['method']);
+
+    \oaiprovider\handleRequest($this->get, new myRepository($metadata), null, 'xsl/oai2.xsl');
 	}
 }

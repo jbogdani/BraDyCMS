@@ -6,11 +6,11 @@
  * @since			Jun 6, 2013
  * 
  * Abstract class for metadata structured information
- * This class should be implemented and populated with data from signle by ./sites/default/modules/metadata/MD_repositories.inc classes
+ * This class should be implemented and populated with data from single by ./sites/default/modules/metadata/MD_repositories.inc classes
  */
  
 
-abstract class metadata
+class Metadata
 {
 	/**
 	 * 
@@ -18,6 +18,16 @@ abstract class metadata
 	 */
 	protected $metadata;
 	
+  
+  public function __construct($path2metadata)
+  {
+    $this->metadata = array();
+    
+    if (file_exists($path2metadata))
+    {
+      $this->metadata = json_decode(file_get_contents($path2metadata), true);
+    }
+  }
 	
 	/**
 	 * Returns the repository (Review) name

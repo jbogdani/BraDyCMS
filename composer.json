@@ -1,6 +1,7 @@
 {
-    "name": "bradypus/bdusCMS",
+    "name": "bradypus/bduscms",
     "description": "bdusCMS is a light, database agnostic, design oriented PHP CMS",
+    "license": "MIT",
     "authors": [
         {
             "name": "jbogdani",
@@ -11,15 +12,15 @@
 			"swiftmailer/swiftmailer": "v5.0.2",
 			"leafo/lessphp": "0.4.0", 
 			"twig/twig": "1.*",
-			"gabordemooij/redbean": "dev-master",
+			"gabordemooij/redbean": "dev-RedBeanPHP3_5_X",
 			"jsocol/oocurl": "dev-master",
 			"oaiprovider-php/oaiprovider-php": "dev-master",
       "mibe/feedwriter": "dev-master",
-      "mobiledetect/mobiledetectlib": "dev-master"
+      "mobiledetect/mobiledetectlib": "2.7.2"
     },
       
     "scripts": {
-      "post-update-cmd": ["echo [WARNING] Delete all .git dirs", "rm -rf vendor/**/**/.git"],
-      "post-install-cmd": ["echo [WARNING] Delete all .git dirs", "rm -rf vendor/**/**/.git"]
+      "post-update-cmd": ["echo [WARNING] Delete all .git dirs", "rm -rf vendor/**/.git"],
+      "post-install-cmd": ["echo [WARNING] Delete all .git dirs", "rm -rf vendor/**/.git"]
     }
 }

@@ -708,10 +708,13 @@ class RedBean_OODB extends RedBean_Observable
 			if (
 				is_array( $value )
 				|| ( is_object( $value ) )
-				|| strlen( $prop ) < 1
+			) {
+				throw new RedBean_Exception_Security( "Invalid Bean value: property $prop" );
+			} else if (
+				strlen( $prop ) < 1
 				|| preg_match( $pattern, $prop )
 			) {
-				throw new RedBean_Exception_Security( "Invalid Bean: property $prop  " );
+				throw new RedBean_Exception_Security( "Invalid Bean property: property $prop" );
 			}
 		}
 	}
@@ -778,7 +781,7 @@ class RedBean_OODB extends RedBean_Observable
 	}
 
 	/**
-	 * Stores a bean in the database. This function takes a
+	 * Stores a bean in the database. This method takes a
 	 * RedBean_OODBBean Bean Object $bean and stores it
 	 * in the database. If the database schema is not compatible
 	 * with this bean and RedBean runs in fluid mode the schema
@@ -787,10 +790,15 @@ class RedBean_OODB extends RedBean_Observable
 	 * RedBean runs in frozen mode it will throw an exception.
 	 * This function returns the primary key ID of the inserted
 	 * bean.
+	 * 
+	 * The return value is an integer if possible. If it is not possible to
+	 * represent the value as an integer a string will be returned. We use
+	 * explicit casts instead of functions to preserve performance 
+	 * (0.13 vs 0.28 for 10000 iterations on Core i3).
 	 *
 	 * @param RedBean_OODBBean|RedBean_SimpleModel $bean bean to store
 	 *
-	 * @return integer
+	 * @return integer|string
 	 *
 	 * @throws RedBean_Exception_Security
 	 */
@@ -810,7 +818,7 @@ class RedBean_OODB extends RedBean_Observable
 		}
 		$this->signal( 'after_update', $bean );
 
-		return (int) $bean->id;
+		return ( (string) $bean->id === (string) (int) $bean->id ) ? (int) $bean->id : (string) $bean->id;
 	}
 
 	/**
@@ -983,7 +991,9 @@ class RedBean_OODB extends RedBean_Observable
 	}
 
 	/**
-	 * Returns the number of beans we have in DB of a given type.
+	 * Counts the number of beans of type $type.
+	 * This method accepts a second argument to modify the count-query.
+	 * A third argument can be used to provide bindings for the SQL snippet.
 	 *
 	 * @param string $type     type of bean we are looking for
 	 * @param string $addSQL   additional SQL snippet

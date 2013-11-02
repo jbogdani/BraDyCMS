@@ -13,6 +13,7 @@ return array(
     'FeedWriter\\Item' => $vendorDir . '/mibe/feedwriter/Item.php',
     'FeedWriter\\RSS1' => $vendorDir . '/mibe/feedwriter/RSS1.php',
     'FeedWriter\\RSS2' => $vendorDir . '/mibe/feedwriter/RSS2.php',
+    'Mobile_Detect' => $vendorDir . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
     'lessc' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
     'lessc_formatter_classic' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
     'lessc_formatter_compressed' => $vendorDir . '/leafo/lessphp/lessc.inc.php',

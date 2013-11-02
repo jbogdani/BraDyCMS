@@ -23,6 +23,22 @@ class RedUNIT_Blackhole_Misc extends RedUNIT_Blackhole
 	}
 
 	/**
+	 * Tests whether getID never produces a notice.
+	 * 
+	 * @return void
+	 */
+	public function testGetIDShouldNeverPrintNotice() 
+	{
+		set_error_handler(function($err, $errStr){
+			die('>>>>FAIL :'.$err.' '.$errStr);
+		});
+		$bean = new RedBean_OODBBean;
+		$bean->getID();
+		restore_error_handler();
+		pass();
+	}
+
+	/**
 	 * Tests beansToArray().
 	 * 
 	 * @return void 
@@ -198,6 +214,33 @@ class RedUNIT_Blackhole_Misc extends RedUNIT_Blackhole
 
 		$bean->name = 'a';
 
+		$id = R::transaction( function() use( &$bean ) {
+			return R::transaction( function() use( &$bean ) {
+				return R::store( $bean );
+			} );
+		} );
+		
+		asrt( (int) $id, (int) $bean->id );
+		
+		R::trash( $bean );
+		
+		$bean = R::dispense( 'bean' );
+
+		$bean->name = 'a';
+
+		$id = R::transaction( function() use( &$bean ) {
+			return R::store( $bean );
+		} );
+		
+		asrt( (int) $id, (int) $bean->id );
+
+		R::trash( $bean );
+		
+		$bean = R::dispense( 'bean' );
+
+		$bean->name = 'a';
+
+		
 		try {
 			R::transaction( function () use ( $bean ) {
 				R::store( $bean );

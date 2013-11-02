@@ -102,6 +102,7 @@ $allPacks = array(
 	'Blackhole/Import',
 	'Blackhole/Export',
 	'Blackhole/Glue',
+	'Blackhole/Plugins',
 	'Base/Dispense',
 	'Base/Preloading',
 	'Base/Boxing',
@@ -128,6 +129,7 @@ $allPacks = array(
 	'Base/Null',
 	'Base/Issue90',
 	'Base/Issue259',
+	'Base/Issue303',
 	'Base/Nuke',
 	'Base/Keywords',
 	'Base/Count',
@@ -202,13 +204,30 @@ foreach ( $packList as $testPack ) {
 
 	$drivers       = $test->getTargetDrivers();
 
+	$colorMap      = array( 
+		 'mysql'  => '0;31',
+		 'pgsql'  => '0;32',
+		 'sqlite' => '0;34',
+		 'oracle' => '0;33',
+		 'CUBRID' => '0;35' 
+	);
+
 	maintestpack( str_replace( '_', ' ', get_class( $test ) ) );
 
 	if ( $drivers && is_array( $drivers ) ) {
 		foreach ( $drivers as $driver ) {
 			if ( !isset( $ini[$driver] ) ) continue;
 
-			echo '(' . $driver . '):';
+			echo PHP_EOL;
+			
+			echo '===== DRIVER : (' . $driver . ') =====';
+
+			echo PHP_EOL;
+			echo PHP_EOL;
+
+			if ( isset( $colorMap[$driver] ) ) {
+				echo "\033[{$colorMap[$driver]}m";
+			}
 
 			activate_driver( $driver );
 
@@ -219,6 +238,13 @@ foreach ( $packList as $testPack ) {
 			$test->prepare();
 			$test->run();
 			$test->cleanUp();
+		
+			if ( isset ( $colorMap[$driver] ) ) {
+				echo "\033[0m";
+			}
+
+			echo PHP_EOL;
+
 		}
 	} else {
 		$test->prepare();

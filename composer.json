@@ -14,7 +14,8 @@
 			"gabordemooij/redbean": "dev-master",
 			"jsocol/oocurl": "dev-master",
 			"oaiprovider-php/oaiprovider-php": "dev-master",
-      "mibe/feedwriter": "dev-master"
+      "mibe/feedwriter": "dev-master",
+      "mobiledetect/mobiledetectlib": "dev-master"
     },
       
     "scripts": {

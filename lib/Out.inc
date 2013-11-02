@@ -336,6 +336,15 @@ class Out
 			{
 				$item['current'] = true;
 			}
+      else if ($this->context === 'tags' && (
+        $item['href'] === implode('-', $this->getFilterTags()) . '.all' || 
+        $item['href'] === implode('~', $this->getFilterTags()) . '.all' ||
+        $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' || 
+        $item['href'] === './' . implode('~', $this->getFilterTags()) . '.all'
+        ))
+      {
+        $item['current'] = true;
+      }
 			
 			if (is_array($item['sub']))
 			{

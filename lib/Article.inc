@@ -387,7 +387,6 @@ class Article
 	 */
 	public static function getSimilar($tags = false, $textid = false, $lang = false)
 	{
-		
 		if (!$tags && $textid)
 		{
 			$art = self::getByTextid($textid);
@@ -412,7 +411,7 @@ class Article
 
 		foreach ($list as $article)
 		{
-			if ($textid && $article->textid !== $textid)
+			if ($textid && $article['textid'] != $textid)
 			{
 				$new[count(array_intersect($tags, $article['tags'] ))][] = $article;
 			}

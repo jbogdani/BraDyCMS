@@ -384,6 +384,13 @@ class docs_ctrl extends Controller
 			);
 		
 		$docs[] = array(
+			'method' => 'getDevice',
+			'description' => 'Returns device type: computer, tablet, phone',
+			'example_usage' => "{{ out.getDevice }}",
+			'example_output' => 'computer'
+			);
+		
+		$docs[] = array(
 			'method' => 'getFilterTags',
 			'description' => 'Returns array of URL tags used as filters',
 			'example_usage' => "{{ html.getFilterTag }}",

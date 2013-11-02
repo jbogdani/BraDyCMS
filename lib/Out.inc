@@ -14,7 +14,8 @@ class Out
 		$get,		// GET data
 		$context,	// context: article, tags, search, home
 		$data,	//
-		$metadata
+		$metadata,
+    $mobiledetect
 		;
 	public 
 		$session_lang, // different from $lang whitch if is the same of sys_lang is not set!
@@ -218,6 +219,20 @@ class Out
 		return $el ? ( $escape ? str_replace('"', '\"', $this->data['page'][$el]) : $this->data['page'][$el] ) : $this->data['page'];
 	}
 	
+  
+  /**
+   * Return device type; one of: computer | tablet | phone
+   * @return string one of: computer|tablet|phone
+   */
+  public function getDevice()
+  {
+    if (!$this->mobiledetect)
+    {
+      $this->mobiledetect = new Detection\MobileDetect;
+    }
+    
+    return ($this->mobiledetect->isMobile() ? ($this->mobiledetect->isTablet() ? 'tablet' : 'phone') : 'computer');
+  }
 	
 	/**
 	 * Sets $data['page'] info

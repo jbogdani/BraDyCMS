@@ -336,14 +336,13 @@ class OutHtml extends Out
 		
 		$tot_found = count($art_list);
 		
-		if ( $tot_found == 0 )
+		if ( $tot_found === 0 )
 		{
 			$html = '<h4>' . sprintf(tr::get('no_result_for_query'), $this->getSearchString()). '</h4>';
 		}
 		else
 		{
 			$html = '<h4>' . sprintf(tr::get('x_results_for_query'), $this->getSearchString(), $tot_found) . '</h4>';
-			
 			
 			$html .= $this->array2html($art_list, 'search');
 			

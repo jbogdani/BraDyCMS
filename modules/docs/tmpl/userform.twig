@@ -104,11 +104,18 @@
 	<tr>
 		<th>label</th>
 		<td>string</td>
-		<td>required</td>
+		<td>optional</td>
 		<td>This label will be visible to users.</td>
 	</tr>
 	
 	<tr>
+		<th>placeholder</th>
+		<td>string</td>
+		<td>optional</td>
+		<td>Placehoder visible to users.</td>
+	</tr>
+
+  <tr>
 		<th>type</th>
 		<td>string</td>
 		<td>required</td>
@@ -176,12 +183,14 @@
     {
       "name": "name",
       "label": "Name",
+      "placehoder": "Name",
       "type": "text",
       "is_required": "true"
     },
     {
       "name": "email",
       "label": "Email address",
+      "placeholder": "Email address",
       "type": "text",
       "is_required": "true",
       "is_email": "true"
@@ -189,6 +198,7 @@
     {
       "name": "phone_no",
       "label": "Phone number",
+      "placeholder": "Phone number",
       "type": "text"
     },
     {
@@ -199,6 +209,7 @@
     {
       "name": "how_did_you_hear_about_us",
       "label": "How did you hear about us?",
+      "placehoder": "How did you hear about us?",
       "type": "select",
       "options": [
         "google",
@@ -209,6 +220,7 @@
     {
       "name": "comments",
       "label": "Comments",
+      "placeholer": "Comments",
       "type": "longtext"
     },
     {

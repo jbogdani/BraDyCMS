@@ -26,6 +26,8 @@ class userform_ctrl extends Controller
 			'elements'=>array(
 				array(
 					'name' => '',
+          'label' => '',
+          'placeholder' => '',
 					'type' => 'text|longtext|select',
 					'options' => 'if type is select options array is required',
 					'is_required' => 'true|false',
@@ -35,6 +37,11 @@ class userform_ctrl extends Controller
 			);
 		
 		
+    if (!is_dir('./sites/default/modules/userforms'))
+    {
+      @mkdir('./sites/default/modules/userforms', 0777, true);
+    }
+    
 		if (utils::write_in_file('./sites/default/modules/userforms/' . $name, $text, 'json'))
 		{
 			echo json_encode(array('status' => 'success', 'text' => tr::get('ok_form_config_saved') ));
@@ -241,21 +248,26 @@ class userform_ctrl extends Controller
 		
 		foreach ($this->data['elements'] as $el)
 		{
+      
 			$checkClass = ($el['is_required'] ? ' required' : '') . ($el['is_email'] ? ' email' : '');
 			
-			$html .= '<div class="form-group" >' .
-							'<div class="' . $label_class . ' control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' .
+			$html .= '<div class="form-group">' .
+							( $el['label'] ? '<div class="' . $label_class . ' control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' : '' ) .
 							'<div class="' . $input_class . '">';
-			
+      
 			switch ($el['type'])
 			{
 				case 'text':
 				default:
-					$html .= '<input type="text" name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '" />';
+					$html .= '<input type="text" ' . 
+            ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+            ' name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '" />';
 					break;
 				
 				case 'longtext';
-					$html .= '<textarea name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
+					$html .= '<textarea ' .
+            ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+            'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
 					break;
 				
 				case 'select':

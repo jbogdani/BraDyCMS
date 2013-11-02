@@ -402,7 +402,9 @@ class Article
 		
 		
 		$list = R::tagged(self::art_tb(), $tags);
-		
+    
+    $list = self::parseArt($list);
+    
 		if (!$list)
 		{
 			return false;
@@ -412,7 +414,7 @@ class Article
 		{
 			if ($textid && $article->textid !== $textid)
 			{
-				$new[count(array_intersect($tags, R::tag($article)))][] = $article->export();
+				$new[count(array_intersect($tags, $article['tags'] ))][] = $article;
 			}
 			
 		}

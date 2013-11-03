@@ -20,7 +20,7 @@
 		{% if files|length > 0 %}
 			<form action="javascript:void(0)">
 				{% for file in files %}
-					<div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %}">
+					<div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
 						<div class="col-xs-2">
 							<h4>{{ file.name }}</h4>
 							<p><button class="btn btn-danger delete" data-file="{{ file.name }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}</button></p>
@@ -89,11 +89,11 @@
 		$.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
 			admin.message(data.text, data.status);
 			
-			if (data.status != 'error'){
-				if ($this.parents('div.table').find('div.tr').length == 1){
-					admin.tabs.reloadActive();
+			if (data.status !== 'error'){
+        if ($this.parents('div.listitem').siblings().length > 0){
+          $this.parents('div.listitem').remove();
 				} else {
-					$this.parents('div.tr').remove();
+					admin.tabs.reloadActive();
 				}
 			}
 		}, 'json');

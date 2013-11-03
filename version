@@ -1,3 +1,7 @@
+3.2.2[] = "Bug fixed with Article::getSimilar. No error is logged if no similar articles are found"
+3.2.2[] = "Bug fixed with Article::getSimilar: not published articles are not included in the list anymore"
+3.2.2[] = "Bug fixed with gallery module: when last gallery item was deleted page was not reloaded"
+3.2.2[] = "Bug fixed with similar articles list"
 3.2.1[] = "New function: added html.getDevice method to get the current device (computer|tablet|phone)"
 3.2.1[] = "Bug fixed with menu's current item class in tags view"
 3.2.1[] = "Twig update"

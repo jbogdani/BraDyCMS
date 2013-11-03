@@ -411,7 +411,7 @@ class Article
 
 		foreach ($list as $article)
 		{
-			if ($textid && $article['textid'] != $textid)
+			if ($textid && $article['textid'] !== $textid && $article['status'] == 1 )
 			{
 				$new[count(array_intersect($tags, $article['tags'] ))][] = $article;
 			}

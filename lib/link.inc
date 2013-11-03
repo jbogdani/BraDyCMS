@@ -44,7 +44,7 @@ class link
 		$path = self::getPath();
 	
 		// absolute url is not processed
-		if (preg_match('/^http:\/\/(.+)/', $href))
+		if (preg_match('/^https?:\/\/(.+)/', $href))
 		{
 			return $href;
 		}
@@ -59,6 +59,12 @@ class link
 		if ($href == '#')
 		{
 			return ($path != '.' ? $path : '') . $href;
+		}
+    
+    // skype  & callto links
+    if (preg_match('/^skype(.+)/', $href) || preg_match('/^callto(.+)/', $href) )
+		{
+			return $href;
 		}
 	
 		// links to home page is not processed

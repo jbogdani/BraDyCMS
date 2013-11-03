@@ -418,12 +418,19 @@ class Article
 			
 		}
 		
-		asort($new);
+    if (is_array($new))
+    {
+      asort($new);
 		
-		$new_values = array_values($new);
-		
-		// http://stackoverflow.com/questions/1921421/get-first-element-of-an-array
-		return array_shift($new_values);
+      $new_values = array_values($new);
+
+      // http://stackoverflow.com/questions/1921421/get-first-element-of-an-array
+      return array_shift($new_values);
+    }
+		else
+    {
+      return false;
+    }
 	}
 	
 	

@@ -260,7 +260,7 @@ class Out
     }
 		//$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ? $this->data['article'][$this->get['art_title']]['title'] : cfg::get('title');
 		
-		// Description
+		// DESCRIPTION
 		if ( $this->data['article'][$this->get['art_title']]['summary'] && trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])) != '' )
 		{
 			$this->data['page']['description'] = trim(strip_tags($this->data['article'][$this->get['art_title']]['summary']));
@@ -275,16 +275,16 @@ class Out
 			$this->data['page']['description'] = substr($this->data['page']['description'], 0, 497) . '...';
 		}
 		
-		// Keywords
+		// KEYWORDS
 		$this->data['page']['keywords'] = $this->data['article'][$this->get['art_title']]['keywords'] ? $this->data['article'][$this->get['art_title']]['keywords'] : cfg::get('keywords');
 		
-		// Lang
+		// LANG
 		$this->data['page']['lang'] = $this->lang ? $this->lang: cfg::get('sys_lang');
 			
-		// Url
+		// URL
 		$this->data['page']['url']  = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			
-		// Mission
+		// MISSION
 		$this->data['page']['mission'] = cfg::get('mission');
 			
 		$art_img_paths = cfg::get('art_img');

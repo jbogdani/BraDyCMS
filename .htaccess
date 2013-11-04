@@ -47,7 +47,7 @@ RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true
 RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/search:([a-zA-Z0-1-_\.]+)$ index.php?lang=$1&search=$2
 RewriteRule ^search:([a-zA-Z0-9-_\.]+)$ index.php?search=$1
 
-<FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite)$">
+<FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite|json)$">
 	order allow,deny
 	deny from all
 </FilesMatch>

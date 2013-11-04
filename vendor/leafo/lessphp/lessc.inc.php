@@ -313,9 +313,12 @@ class lessc {
 		}
 
 		if ($split) {
-			return array(array_merge($vars, $imports), $other);
+      // applied patch from @ldbglobe as in https://github.com/leafo/lessphp/issues/302
+      return array(array_merge($imports,$vars), $other);
+			//return array(array_merge($vars, $imports), $other);
 		} else {
-			return array_merge($vars, $imports, $other);
+      return array_merge($imports, $vars, $other);
+			//return array_merge($vars, $imports, $other);
 		}
 	}
 

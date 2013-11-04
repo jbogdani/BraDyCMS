@@ -431,14 +431,17 @@ class docs_ctrl extends Controller
 		
 		$docs[] = array(
 			'method' => 'getMD',
-			'description' => 'Tryies to include Metadata object file, initializes object and returnes it.',
+			'description' => 'Tries to include Metadata object file, initializes object and returnes it.',
 			'example_usage' => " {{ html.getMD }}"
 		);
 		
 		$docs[] = array(
 			'method' => 'getPageData',
 			'params' => array(
-				'' => '',
+				'el' => 'string, optional. If present only this element will be returned,'
+          . 'otherwize the entire array will be returned',
+        'escape' => 'boolean, optional, default: false. If true the sigle quotes'
+          . 'of the string will be escaped'
 			),
 			'description' => 'Returns document metadata array (all metadata). Available documenta metadata are: title, description, keywords, lang, url, image (may be false. It\'s the src of the first image of article\'s content), author (may be false. It\'s article\'s author), date (may be false. It\'s article\'s publish date), publisher (may be false. It\'s OAI config publisher parameter)',	
 			'example_usage' => "{{ out.getPageData.title }}",

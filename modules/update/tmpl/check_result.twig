@@ -28,12 +28,61 @@
     
     
     <div class="update_result"></div>
+    <div class="loading"></div>
 </div>
 
 <script>
-  $('#{{ uid }} .install').on('click', function(){
-    
   
-    $('#{{ uid }} .update_result').html('<img src="./img/loading.gif" alt="loading..." />').load('controller.php?obj=update_ctrl&method=install')
+  function stepByStepInstall(step, localZipPath){
+    if (!step)
+    {
+      var step = 'start';
+    }
+    var waitingMsg;
+    
+    switch(step){
+      case 'start':
+        waitingMsg = 'Downloading update from Github...';
+        break;
+      case 'unzip':
+        waitingMsg = 'Unpacking update...';
+        break;
+      case 'install':
+        waitingMsg = 'Installing update...';
+        break;
+    }
+    $('#{{ uid }} .loading').html('<img src="./img/loading.gif" alt="loading..." /> ' + waitingMsg)
+    
+    $.get('controller.php?obj=update_ctrl&method=stepByStepInstall&step=' + step + 
+      (localZipPath ? '&localZipPath=' + localZipPath : ''),
+      
+    function(data){
+        
+      if (data.status === 'success'){
+        $('#{{ uid }} .update_result').append('<p class="lead text-success">' +
+          '<i class="glyphicon glyphicon-ok"></i> ' + data.text +
+          '</p>');
+        if (data.step === 'finished'){
+          $('#{{ uid }} .loading').remove();
+          $('#{{ uid }} .update_result').append('<p class="lead">' +
+            'The update was successfully installed. You  should consider ' +
+            'emptying the cache, the trash and eventually updating  the ' +
+            '.htaccess file. Follow <a href="#cfg/edit">this link</a> to perform ' +
+            'all these post-installation actions.</p>');
+          
+        } else {
+          stepByStepInstall(data.step, data.localZipPath);
+        }
+        
+      } else {
+        $('#{{ uid }} .update_result').append('<div class="alert alert-danger">' +
+          '<p class="lead">' + data.text + '</p>' +
+          '</div>');
+      }
+    }, 'json');
+  }
+  
+  $('#{{ uid }} .install').on('click', function(){
+    stepByStepInstall();
   });
 </script>

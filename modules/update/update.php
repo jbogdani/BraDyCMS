@@ -60,7 +60,7 @@ class update_ctrl extends Controller
       $update->install(TMP_DIR . 'BraDyCMS-master', '.');
       echo '<p class="lead text-success"><i class="glyphicon glyphicon-ok"></i> ' . tr::get('update_installed') . '</p>';
       
-      echo '<p class="lead">The update was successfully installed. You ' .
+      echo '<p class="lead text-warning">The update was successfully installed. You ' .
         'should consider emptying the cache, the trash and eventually updating ' .
         'the .htaccess file. Follow <a href="#cfg/edit">this link</a> to ' .
         'perform all these post-installation actions.</p>';
@@ -73,6 +73,45 @@ class update_ctrl extends Controller
         '</div>';
       error_log(var_export($e, true));
     }
+  }
+  
+  public function stepByStepInstall()
+  {
+    try
+    {
+      $update = new Update();
+      
+      switch($this->get['step'])
+      {
+        case 'start':
+          $localZipPath = TMP_DIR . uniqid() . '.zip';
+          $update->downloadZip($this->path2ZIP, $localZipPath);
+          $resp = array('status' => 'success', 'text' => tr::get('update_downloaded'), 'step' => 'unzip', 'localZipPath' => $localZipPath);
+          break;
+        
+        case 'unzip':
+          $update->unzip($this->get['localZipPath'], false, false, true);
+          $resp = array('status' => 'success', 'text' => tr::get('update_unpacked'), 'step' => 'install');
+        break;
+      
+        case 'install':
+          $update->install(TMP_DIR . 'BraDyCMS-master', '.');
+          $resp = array('status' => 'success', 'text' => tr::get('update_installed'), 'step' => 'finished');
+          break;
+        
+        case false:
+        default:
+          return;
+          break;
+      }
+    }
+    catch(Exception $e)
+    {
+      $resp = array('status' => 'error', 'text' => tr::get('error_install'), 'step' => $this->get['step']);
+      error_log(var_export($e, true));
+    }
+    
+    echo json_encode($resp);
   }
   
 }

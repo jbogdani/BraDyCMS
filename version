@@ -1,3 +1,5 @@
+3.2.3[] = "Applied patch to lessc.inc.php from @ldbglobe as in https://github.com/leafo/lessphp/issues/302"
+3.2.3[] = "Added support in linking system, to skype calls, callto and https protocol"
 3.2.2[] = "Bug fixed with Article::getSimilar. No error is logged if no similar articles are found"
 3.2.2[] = "Bug fixed with Article::getSimilar: not published articles are not included in the list anymore"
 3.2.2[] = "Bug fixed with gallery module: when last gallery item was deleted page was not reloaded"

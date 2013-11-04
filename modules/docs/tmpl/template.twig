@@ -37,8 +37,12 @@
 				</td>
 				<td>{{ el.description }}</td>
 				<td>
-					<code>{{ el.example_usage }}</code>
-					<pre class="prettyprint">{{ el.example_output }}</pre>
+          {% if el.example_usage %}
+            <code>{{ el.example_usage }}</code>
+          {% endif %}
+          {% if el.example_output %}
+            <pre class="prettyprint">{{ el.example_output }}</pre>
+          {% endif %}
 				</td>
 			</tr>
 		{% endfor %}

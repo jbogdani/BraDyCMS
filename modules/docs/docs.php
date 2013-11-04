@@ -207,6 +207,20 @@ class docs_ctrl extends Controller
 <meta name="citation_pdf_url" content="http://lorem.ipsum.pdf"/>'
 			);
 		
+    $docs[] = array(
+      'method' => 'TBSjs',
+      'params' => array(
+        'version' => 'string, required. Twiter Bootstrap version (x.x.x)'
+      ), 
+      'description' => 'Returns string for Twitter Bootstrap javascript library ' .
+        'inclusion, trying first to load from CDN then from local host',
+      'example_usage' => "{{ html.TBSjs('3.0.1') }}",
+			'example_output' => "<script src=\"//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js\">" .
+      "</script><script>if(typeof($.fn.modal) === \'undefined\') { " .
+        'document.write(\'<script src="./js/bootstrap-3.0.1.min.js"><\/script>\')' .
+      "}</script>';"
+    );
+        
 		$docs[] = array(
 			'method' => 'searchForm',
 			'description' => 'Returns well-formatted html of search form input. Form submission should be done with javascript. The data attribute contains the path to the site root!',

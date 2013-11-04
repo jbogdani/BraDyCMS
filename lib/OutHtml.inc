@@ -538,5 +538,21 @@ class OutHtml extends Out
       '<script>window.jQuery || document.write(\'<script src="./js/jquery-' . 
       $version . '.min.js"><\/script>\')</script>';
   }
+  
+  public function TBSjs($version)
+  {
+    if (!$version)
+    {
+      return false;
+    }
+    
+    $html = '<script src="//netdna.bootstrapcdn.com/bootstrap/' . 
+      $version . '/js/bootstrap.min.js"></script>' . 
+      '<script>if(typeof($.fn.modal) === \'undefined\') { ' .
+        'document.write(\'<script src="./js/bootstrap-' . $version . '.min.js"><\/script>\')' .
+      '}</script>';
+    
+    return $html;
+  }
 		
 }

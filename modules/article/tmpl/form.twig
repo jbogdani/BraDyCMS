@@ -79,7 +79,7 @@
 						<h4>{{ tr.get('custom_fields') }}</h4>
 						<div class="row">
 							{% for fld in custom_fields %}
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<p>
 										<label>{{ fld.label|upper }}</label>
 										{% if fld.type == 'longtext' %}
@@ -95,7 +95,7 @@
 										<input name="{{ fld.name }}" type="text" value="{{ art[fld.name] }}" class="col-md-12" />
 										{% endif %}
 								</div>
-								{% if loop.index is divisibleby(6) %}
+								{% if loop.index is divisibleby(3) %}
 								</div>
 								<div class="row">
 								{% endif %}

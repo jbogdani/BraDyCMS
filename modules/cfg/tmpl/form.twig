@@ -193,7 +193,7 @@
 					<input type="text"  value="{{ art_img }}" name="art_img[]" />
 				</div>
 				<div class="col-md-1">
-					<a class="btn btn-danger delete-custom_field"><i class="glyphicon glyphicon-trash"></i></a>
+					
 				</div>
 			</div>
 		{% endfor %}
@@ -203,7 +203,7 @@
 			<input type="text" value="{{ art_img }}" name="art_img[]" />
 		</div>
     <div class="col-md-8">
-      <span class="text-muted">Check <a href="#docs/read/general">General concepts</a> to learn more about article images. Please ander here a valid format, {width}x{height}, expressed in pixels, eg. 800x400. You can have many dimension steps. Just save the form to have a new blank field added.</span>
+      <span class="text-muted">Check <a href="#docs/read/general">General concepts</a> to learn more about article images. Please enter here a valid format, {width}x{height}, expressed in pixels, eg. 800x400. You can have many dimension steps. Just save the form to have a new blank field added.</span>
     </div>
 	</div>
 	
@@ -326,13 +326,11 @@
 				<input type="text" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]" />
 			</div>
 
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<input type="text" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]" />
 			</div>
 
-			<div class="col-md-1">
-				<a class="btn btn-success delete-custom_field"><i class="glyphicon glyphicon-trash"></i></a>
-			</div>
+			
 		</div>
 		{% endfor %}
 
@@ -355,13 +353,10 @@
 					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][label]" />
 				</div>
 
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]" />
 				</div>
 
-				<div class="col-md-1">
-					<a class="btn btn-success add-custom_field"><i class="glyphicon glyphicon-hdd"></i></a>
-				</div>
 			</div>
 		</div>
   </div>

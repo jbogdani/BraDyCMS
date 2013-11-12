@@ -1,3 +1,5 @@
+3.2.5[] = "Added temporary patch to lessc.in.php"
+3.2.5[] = "Added debug information logging in less compiling process"
 3.2.4[] = "Added json extension to denied file types in .htaccess file"
 3.2.4[] = "Removed unused Browser lib"
 3.2.4[] = "Admin interface upgraded to Twitter Bootstrap 3.0.1"

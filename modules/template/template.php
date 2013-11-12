@@ -44,7 +44,11 @@ class template_ctrl extends Controller
 			case 'less':
 				$file = SITE_DIR . 'css/' . $file;
 				break;
-				
+      
+      case 'js':
+			$file = SITE_DIR . 'js/' . $file;
+          break;
+      
 			default:
 				return false;
 				break;
@@ -82,12 +86,15 @@ class template_ctrl extends Controller
 				$less[] = $f;
 			}
 		}
-		
+    
+    $js = array('frontend.js');
+    
 		$this->render('template', 'list', array(
-			files => array(
-			'twig'=> $twig,
-			'css' => $css,
-			'less' => $less
+      files => array(
+        'twig'=> $twig,
+        'css' => $css,
+        'less' => $less,
+        'js' => $js
 				)
 		));
 	}

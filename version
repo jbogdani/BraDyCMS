@@ -1,3 +1,4 @@
+3.2.6[] = "Added the possibility to edit sites/default/js/frontend.js in admin frontend"
 3.2.5[] = "Added temporary patch to lessc.in.php"
 3.2.5[] = "Added debug information logging in less compiling process"
 3.2.4[] = "Added json extension to denied file types in .htaccess file"

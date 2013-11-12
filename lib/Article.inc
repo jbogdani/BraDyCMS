@@ -346,8 +346,17 @@ class Article
 	 */
 	public static function save($id = false, $data)
 	{
-		$tags = utils::csv_explode($data['tags']);
-		unset($data['tags']);
+    if(is_string($data['tags']))
+    {
+      $tags = utils::csv_explode($data['tags']);
+      unset($data['tags']);
+    }
+    elseif (is_array($data['tags']))
+    {
+      $tags = $data['tags'];
+      unset($data['tags']);
+    }
+		
 		
 		$article = $id ? R::load(self::art_tb(), $id) :  R::dispense(self::art_tb());
 
@@ -355,7 +364,10 @@ class Article
 		
 		$article->setAttr('updated', date("Y-m-d H:i:s"));
 		
-		R::tag($article, $tags);
+    if ($tags)
+    {
+      R::tag($article, $tags);
+    }
 		
 		return R::store($article);
 	}

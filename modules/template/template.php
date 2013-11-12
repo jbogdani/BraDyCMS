@@ -21,6 +21,7 @@ class template_ctrl extends Controller
 		}
 		catch (Exception $e)
 		{
+      error_log($e->getTraceAsString());
 			$ret['status'] = 'error';
 			$ret['text'] = tr::get('error_compiling_less');
 		}

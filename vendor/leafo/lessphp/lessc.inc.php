@@ -617,7 +617,8 @@ class lessc {
 					// has default value
 					$value = $a[2];
 				} else {
-					$this->throwError("Failed to assign arg " . $a[1]);
+          // applied patch from @pdias as in https://github.com/leafo/lessphp/issues/491
+					//$this->throwError("Failed to assign arg " . $a[1]);
 					$value = null; // :(
 				}
 

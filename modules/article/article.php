@@ -21,14 +21,20 @@ class article_ctrl extends Controller
 			$art_arr = Article::getAll();
 		}
 		$tags = Article::getTags();
+    
+    if (!is_array($tags))
+    {
+      $tags = array();
+    }
 		
 		$this->render('article', 'list', array(
-			 'art_arr'=>$art_arr,
-			 'tags' => is_array(Article::getTags()) ? $tags : array(),
-			 'active_tags' => $this->request['param'],
-			 'cfg_langs' => cfg::get('languages'),
-			 'delete_tag' => (!$art_arr && count($this->request['param']) == 1 ? $this->request['param'][0] : false)
-				  ));
+      'art_arr'=>$art_arr,
+      'tags' => $tags,
+      'imploded_tags' => '"' . implode('","', $tags) . '"',
+      'active_tags' => $this->request['param'],
+      'cfg_langs' => cfg::get('languages'),
+      'delete_tag' => (!$art_arr && count($this->request['param']) == 1 ? $this->request['param'][0] : false)
+      ));
 	}
 	
 	public function deleteTag()

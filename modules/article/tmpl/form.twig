@@ -202,6 +202,7 @@
 			$('#file_uploader_{{ uid }}')[0],
 			'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}',
 			{
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
 				loaded: function(id, filename, responseJSON){
 					$.get('controller.php?obj=article_ctrl&method=attachImage&param[]={{ art.id }}&param[]=' + responseJSON.filename + '.' + responseJSON.ext, function(data){
 						admin.message(data.text, data.status);

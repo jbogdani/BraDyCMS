@@ -11,6 +11,7 @@ var admin = {
 		 * 
 		 * opts.sizeLimit
 		 * opts.minSizeLimit
+     * opts.allowedExtensions
 		 * opts.loaded(id, filename, responseJSON)
 		 */
 		upload: function(element, action, opts){
@@ -21,6 +22,7 @@ var admin = {
 			new qq.FileUploader({
 				element: element,
 				action: action,
+        allowedExtensions: opts.allowedExtensions ? opts.allowedExtensions : [],
 				sizeLimit: opts.sizeLimit ? opts.sizeLimit : 0,
 				minSizeLimit: opts.minSizeLimit ? opts.minSizeLimit : 0,
 				onComplete: function(id, filename, responseJSON){

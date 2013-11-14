@@ -541,6 +541,18 @@ class docs_ctrl extends Controller
 			'example_usage' => "{{ html.link2('news', true) }}",
 			'example_output' => './news.all'
 		);
+    
+    $docs[] = array(
+			'method' => 'tr(string, args, escape)',
+			'params' => array(
+				'string' => 'string, required. String to translate (translation ID)',
+        'args' => 'string|array, optional, default false. String, or array of strings to use for replacment of placeholders (%s)',
+        'escape' => 'boolean, optional, default false. If true the single quotes will be replaced in the resulting string'
+			),
+			'description' => 'Returns the translated value for the given string in the current language',
+			'example_usage' => "tr('hello_world')",
+			'example_output' => 'Ciao mondo!'
+		);
 		
 		
 

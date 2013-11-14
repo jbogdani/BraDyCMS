@@ -76,7 +76,18 @@ class Out
 		}
 	}
 	
-	
+	/**
+   * Returns translated string
+   * @param string $string  string to translate
+   * @param mixed: string|array|false $args if true tr::sget will be used
+   * @param boolean $escape  if true the single quotes will be escaped (usefull for usage in javascript scripts)
+   * @return string
+   */
+  public function tr($string, $args = false, $escape = false)
+  {
+    return $args ? tr::get($string, $escape) : tr::sget($string, $args, $escape);
+  }
+  
 	/**
 	 * Returns full link to provided content (article or section)
 	 * 

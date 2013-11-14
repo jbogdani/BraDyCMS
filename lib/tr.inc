@@ -20,6 +20,11 @@ class tr
 	{
 		require_once './locale/en.php';
     
+    if (file_exists(SITE_DIR . 'locale/en.php'))
+    {
+      require_once SITE_DIR . 'locale/en.php';
+    }
+    
 		$en = $_lang;
 		
     // If silence mode is on (no site is defined yet) english is the only available language!
@@ -56,6 +61,11 @@ class tr
 			require_once 'locale/' . $_SESSION['adm_lang'] . '.php';
 		}
 		
+    if (file_exists(SITE_DIR . 'locale/' . $_SESSION['adm_lang'] . '.php'))
+    {
+      require_once SITE_DIR . 'locale/' . $_SESSION['adm_lang'] . '.php';
+    }
+    
 		
 		
 		$_SESSION['language_strings'] = array_merge($en, $_lang);

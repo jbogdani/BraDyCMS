@@ -54,7 +54,6 @@ $_lang['art_images_created'] = "All article's images were successfully created";
 $_lang['art_img_deleted'] = "All article's images were deleted";
 $_lang['art_img_partially_deleted'] = "It was not possible to delete the following article's images: %s";
 $_lang['art_img_not_deleted'] = "None of the linked article's images was deleted";
-$_lang['delete_art_img'] = "Delete article's image";
 $_lang['confirm_delete_tag_not_used'] = "Tag `%s` is not connected to any articled. Delete it?";
 $_lang['error_delete_tag'] = "Error. The tag was not deleted. For more info please check error log";
 $_lang['delete_unused_tags'] = "Delete all unused tags?";
@@ -108,8 +107,6 @@ $_lang['error_reisizing_file'] = "Error. The file was not resized";
 $_lang['ok_resizing_file'] = "The file was resized";
 $_lang['imagick_not_available'] = "The web site is congurated to use imagick as main image manipulation library, but it seems that this library is not available.";
 $_lang['no_image_manipulation_setting_found'] = "No setting for image manipulation library found in main system configuration.";
-
-
 $_lang['galleries'] = "Galleries";
 $_lang['new_gallery'] = "New gallery";
 $_lang['edit_gallery'] = "Edit gallery";
@@ -271,3 +268,7 @@ $_lang['update_downloaded'] = "The update was downloaded without problems";
 $_lang['update_unpacked'] = "The update was unpacked without problems";
 $_lang['update_installed'] = "The update was installed without problems";
 $_lang['add_new_tr_string'] = "Add new string translation";
+$_lang['tr_key'] = "Translation Id";
+$_lang['tr_value'] = "Translation value";
+$_lang['tr_key_required'] = "Please enter a valid translation id";
+$_lang['key_exists'] = "Pay attention! Translation id %s already exists.";

@@ -11,32 +11,91 @@ class sys_translate_ctrl extends Controller
 {
 	public function showList($opened_lang=false)
 	{
-		$langs = utils::dirContent(LOCALE_DIR);
-		
+    $context = $this->get['param'][0];
+    switch($context)
+    {
+      case 'admin':
+        $langs = utils::dirContent(LOCALE_DIR);
+        $add_lang = true;
+        break;
+      
+      case 'front':
+      default :
+        foreach(cfg::get('languages') as $l_arr)
+        {
+          $langs[] = $l_arr['id'];
+        }
+        $langs[] = cfg::get('sys_lang');
+        break;
+    }
+    
 		$uid = uniqid('transl');
 		
 		$this->render('sys_translate', 'list', array(
-				'opened_lang' => $opened_lang,
-				'langs' => $langs
+      'opened_lang' => $opened_lang,
+      'langs' => $langs,
+      'add_lang' => $add_lang,
+      'context' => $context
 		));
 	}
 	
 	
 	public function showForm()
 	{
-		$lng = $this->get['param'][0];
-		require LOCALE_DIR . 'en.php';
-		$en = $_lang;
-		unset($_lang);
+    $context = $this->get['param'][0];
+		$lng = $this->get['param'][1];
+    
+    if($context === 'admin')
+    {
+      require LOCALE_DIR . 'en.php';
+      $en = $_lang;
+      unset($_lang);
 		
-		require LOCALE_DIR . $lng . '.php';
-		$edit_lang = $_lang;
-		unset($_lang);
-		
+      require LOCALE_DIR . $lng . '.php';
+      $edit_lang = $_lang;
+      unset($_lang);
+      
+      if ($lng === 'en')
+      {
+        $can_add = true;
+      }
+    }
+    else
+    {
+      if (file_exists(SITE_DIR . 'locale/' . cfg::get('sys_lang') . '.php'))
+      {
+        require SITE_DIR . 'locale/' . cfg::get('sys_lang') . '.php';
+        $en = $_lang;
+        unset($_lang);
+      }
+      else
+      {
+        $en = array();
+      }
+      
+      if (file_exists(SITE_DIR . 'locale/' . $lng . '.php'))
+      {
+        require SITE_DIR . 'locale/' . $lng . '.php';
+        $edit_lang = $_lang;
+        unset($_lang);
+      }
+      else
+      {
+        $edit_lang = array();
+      }
+      
+      if ($lng === cfg::get('sys_lang'))
+      {
+        $can_add = true;
+      }
+    }
+    
 		$this->render('sys_translate', 'form', array(
-				'lng' => $lng,
-				'en' => $en,
-				'edit_lang' => $edit_lang
+      'lng' => $lng,
+      'en' => $en,
+      'edit_lang' => $edit_lang,
+      'context' => $context,
+      'can_add' => $can_add
 		));
 	}
 	
@@ -62,24 +121,73 @@ class sys_translate_ctrl extends Controller
 	
 	public function save()
 	{
+    $context = $this->get['param'][0];
 		$post = $this->post;
 		
-		$lang = $post['edit_lang'];
+    if ($context === 'admin')
+    {
+      $file = LOCALE_DIR . $post['edit_lang'] .'.php';
+    }
+    else
+    {
+      $file = SITE_DIR . 'locale/' . $post['edit_lang'] .'.php';
+    }
+    
 		unset($post['edit_lang']);
-
-		foreach ($post as $k => $v)
+    
+    echo $this->array2file($post, $file);
+	}
+  
+  public function addLine()
+  {
+    $context = $this->get['param'][0];
+    $lng = $this->get['param'][1];
+		$key = $this->get['param'][2];
+    $val = $this->get['param'][3];
+		
+    if ($context === 'admin')
+    {
+      $file = LOCALE_DIR . $lng .'.php';
+    }
+    else
+    {
+      $file = SITE_DIR . 'locale/' . $lng .'.php';
+    }
+    if(file_exists($file))
+    {
+      require $file;
+    }
+    if (is_array($_lang) && array_key_exists($key, $_lang))
+    {
+      echo json_encode(array(
+        'status' => 'error',
+        'message' => tr::sget('key_exists', $key)
+        ));
+      return;
+    }
+    
+    $_lang[$key] = $val;
+    
+    echo $this->array2file($_lang, $file);
+  }
+  
+  
+  
+  private function array2file($array, $file)
+  {
+    foreach ($array as $k => $v)
 		{
 			$text[]='$_lang[\'' . $k . '\'] = "' . str_replace(array('"', "\r\n"), array('\'', '\\n'), $v) . '";'; 
 		}
 		
-		if(utils::write_in_file(LOCALE_DIR . $lang .'.php', '<?php' . "\n" . implode("\n", $text)))
+		if(utils::write_in_file($file, '<?php' . "\n" . implode("\n", $text)))
 		{
-			echo json_encode(array('text'=>tr::get('ok_language_update'), 'status'=>'success'));
+			return json_encode(array('text'=>tr::get('ok_language_update'), 'status'=>'success'));
 		}
 		else
 		{
-			echo json_encode(array('text'=>tr::get('error_language_update'), 'status'=>'error'));
+			return json_encode(array('text'=>tr::get('error_language_update'), 'status'=>'error'));
 		}
-	}
+  }
 		
 }

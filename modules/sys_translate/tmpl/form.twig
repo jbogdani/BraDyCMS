@@ -1,60 +1,124 @@
-<h3>{{ lng|capitalize }}</h3>
+<div id="{{ uid }}">
+  <h3>{{ lng|capitalize }}</h3>
 
-<div class="navbar">
-	<button class="btn btn-info" id="chck-{{ uid }}"> {{ tr.get('show_incomplete_translations') }}</button>
+  <div class="navbar">
+    <button class="btn btn-info toggleVisible">
+      <i class="glyphicon glyphicon-eye-close"></i> 
+      {{ tr.get('show_incomplete_translations') }}
+    </button>
+    {% if can_add %}
+    <button class="btn btn-info addstring"><i class="glyphgicon glyphicon-plus"></i> {{ tr.get('add_new_tr_string') }}</button>
+    {% endif %}
+  </div>
+
+  <form action="javascript:void(0)" id ="form-{{ uid }}">
+    <input type="hidden" value="{{ lng }}" name="edit_lang" />
+
+    <table style="width:80%;" class="table table-striped table-hover" id="tbl-{{ uid }}">
+      <thead>
+        <tr>
+          <th style="width:100px;">ID</th>
+          <th style="width:250px;">English</th>
+          <th>Translation</th>
+          <th style="width:20px;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+    {% for k, v in en %}
+    {% if k %}
+      <tr{% if edit_lang[k] == false %} class="error"{% endif %}>
+        <td>{{ k }}</td>
+        <td>{{ v|nl2br }}</td>
+        <td><br />
+          <textarea 
+            style="width:90%; 
+            {% if edit_lang[k] == false %} border:1px solid #ff0000; {% endif %}" 
+            name="{{ k }}" >{{ edit_lang[k] }}</textarea>
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            <i class="glyphicon {% if edit_lang[k] == false %}glyphicon-hand-left{% else %}glyphicon-ok{% endif %}"></i>
+          </button>
+        </td>
+      </tr>
+    {% endif %}
+    {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">{{ tr.get('save') }}</button>
+  </form>
 </div>
 
-<form action="javascript:void(0)" id ="{{ uid }}">
-	<input type="hidden" value="{{ lng }}" name="edit_lang" />
-	
-	<table style="width:80%;" class="table table-striped table-hover" id="tbl-{{ uid }}">
-		<thead>
-			<tr>
-				<th style="width:100px;">ID</th>
-				<th style="width:250px;">English</th>
-				<th>Translation</th>
-				<th style="width:20px;">Status</th>
-			</tr>
-		</thead>
-		<tbody>
-		
-	{% for k, v in en %}
-	{% if k %}
-		<tr{% if edit_lang[k] == false %} class="error"{% endif %}>
-			<td>{{ k }}</td>
-			<td>{{ v|nl2br }}</td>
-			<td><br />
-				<textarea style="width:90%; {% if edit_lang[k] == false %} border:1px solid #ff0000; {% endif %}" name="{{ k }}" >{{ edit_lang[k] }}</textarea>
-			</td>
-			<td><button type="submit" class="btn btn-success"><i class="glyphicon {% if edit_lang[k] == false %}glyphicon-hand-left{% else %}glyphicon-ok{% endif %}"></i></button></td>
-		</tr>
-	{% endif %}
-	{% endfor %}
-		</tbody>
-	</table>
-	<button type="submit" class="btn btn-success">{{ tr.get('save') }}</button>
-</form>
-
 <script>
-	$('#{{ uid }}').submit(function(){
-		$.post('controller.php?obj=sys_translate_ctrl&method=save', $(this).serialize(), function(data){
+	$('#form-{{ uid }}').submit(function(){
+		$.post('controller.php?obj=sys_translate_ctrl&method=save&param[]={{ context }}', 
+      $(this).serialize(), 
+      function(data){
 			admin.message(data.text, data.status);
-			if (data.status == 'success'){
-				$('#{{ uid }}').parents('div.transl-content').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ lng }}');
+			if (data.status === 'success'){
+				$('#{{ uid }}')
+          .parents('div.transl-content')
+          .load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lng }}');
 			}
 		}, 'json');
 	});
 	
-	$('#chck-{{ uid }}').on('click', function(){
+	$('#{{ uid }} button.toggleVisible').on('click', function(){
 		$(this).toggleClass('btn-danger');
 		if ($(this).hasClass('btn-danger')){
 			$('#tbl-{{ uid }} tbody tr.error').fadeIn();
 			$('#tbl-{{ uid }} tbody tr:not(.error)').fadeOut();
-			$(this).text("{{ tr.get('show_all_translations') }}")
+			$(this).html("<i class='glyphicon glyphicon-eye-open'></i> {{ tr.get('show_all_translations') }}")
 		} else {
 			$('#tbl-{{ uid }} tbody tr').fadeIn();
-			$(this).text("{{ tr.get('show_incomplete_translations') }}")
+			$(this).html("<i class='glyphicon glyphicon-eye-close'></i> {{ tr.get('show_incomplete_translations') }}")
 		}
-		
 	});
+  
+  {% if can_add %}
+  $('#{{ uid }} button.addstring').on('click', function(){
+    admin.dialog({
+      title: '{{ tr.get('add_new_tr_string', true) }}',
+      html: '<div class="row">' +
+        '<div class="col-sm-4">' +
+          '<input type="text" class="key" placeholder="{{ tr.get('tr_key') }}" />' +
+        '</div>' + 
+        '<div class="col-sm-8">' +
+          '<textarea class="value" style="height: 100px;" placeholder="{{ tr.get('tr_value') }}"></textarea>' +
+        '</div>',
+        
+      buttons:[
+        {
+          text: '{{ tr.get('close', true) }}',
+          action: 'close'
+        },{
+          text: '{{ tr.get('save', true) }}',
+          click: function(){
+            
+            var key = $('#modal .key').val();
+            var val = $('#modal .value').val();
+            
+            if (!key)
+            {
+              admin.message('{{ tr.get('tr_key_required', true) }}', 'error');
+              return;
+            }
+            
+            $.get('controller.php?obj=sys_translate_ctrl&method=addLine' +
+              '&param[]={{ context }}&param[]={{ lng }}&param[]=' + key + '&param[]=' + val, 
+            function(data){
+              if (data.status == 'success'){
+                $('#{{ uid }}')
+                  .parents('div.transl-content')
+                  .load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lng }}');
+                $('#modal').modal('hide');
+              }
+            }, 'json')
+          }
+        }
+      ]
+    });
+  });
+  {% endif %}
 </script>

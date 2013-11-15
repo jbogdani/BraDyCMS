@@ -80,13 +80,13 @@ class article_ctrl extends Controller
 	
 	public function edit()
 	{
-		
 		$id = $this->get['param'][0];
 		
 		// check if art_img files exist
 		$art_img = cfg::get('art_img');
     $art_img[] = 'orig';
 		
+    // get list of (different dimensions of) article's images, if present
 		if (is_array($art_img))
 		{
 			foreach($art_img as $dimension)
@@ -97,6 +97,12 @@ class article_ctrl extends Controller
 				}
 			}
 		}
+    
+    // get list of all available image files
+    if (is_dir(IMG_DIR . 'articles/media/' . $id))
+    {
+      $art_media = utils::dirContent(IMG_DIR . 'articles/media/' . $id);
+    }
 		
 		$art = Article::getById($id);
 		
@@ -108,13 +114,14 @@ class article_ctrl extends Controller
 		}
 		
 		$this->render('article', 'form', array(
-			 'art'=>$art,
-			 'custom_fields' => cfg::get('custom_fields'),
-			 'date' => date('Y-m-d'),
-			 'imploded_tags' => '"' . implode('","', $available_tags) . '"',
-			 'art_imgs' => $article_images,
-			 'tmp_path' => TMP_DIR,
-			 'cfg_langs' => cfg::get('languages'),
+      'art'=>$art,
+      'custom_fields' => cfg::get('custom_fields'),
+      'date' => date('Y-m-d'),
+      'imploded_tags' => '"' . implode('","', $available_tags) . '"',
+      'art_imgs' => $article_images,
+      'tmp_path' => TMP_DIR,
+      'cfg_langs' => cfg::get('languages'),
+      'art_media' => $art_media
 		));
 	}
 	
@@ -399,4 +406,59 @@ class article_ctrl extends Controller
 		}
 		echo json_encode($msg);
 	}
+  
+  
+  public function attachMedia()
+	{
+		$id = $this->get['param'][0];
+		$file = $this->get['param'][1];
+    
+    
+    // define image directory
+    $dir = IMG_DIR . 'articles/media/' . $id;
+    
+    try
+    {
+      // if image dir does not exist, try to create it
+      if(!is_dir($dir))
+      {
+        @mkdir($dir, 0777, true);
+      }
+
+      // if image dir does not exist, throw exception
+      if(!is_dir($dir))
+      {
+        throw new Exception(tr::sget('create_dir_error', $dir));
+      }
+
+      // if image dir is not writeable, throw exception				
+      if(!is_writable($dir))
+      {
+        throw new Exception(tr::sget('dir_is_not_writable', $dir));
+      }
+      
+      // set output file full path
+      $output = $dir . '/' . $file;
+      
+      // copy file to destination
+      @copy(TMP_DIR . $file, $output);
+      if (!file_exists($output))
+      {
+        throw new Exception(tr::get('error_copying_file'));
+      }
+      
+      $msg['status'] = 'success';
+			$msg['text'] = tr::get('ok_file_uploaded');
+      $msg['all_media'] = utils::dirContent($dir);
+    }
+    catch (Exception $e)
+    {
+      $msg['status'] = 'error';
+			$msg['text'] = tr::get('error_file_not_uploaded');
+    }
+    
+    echo json_encode($msg);
+	}
+  
+  
 }

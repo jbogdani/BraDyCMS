@@ -196,7 +196,13 @@ class Article
 	 */
 	public static function deleteUnusedTags()
 	{
-		return R::exec('DELETE FROM `' . PREFIX . 'tag` WHERE id NOT IN( SELECT `tag_id` FROM `' . PREFIX . 'articles_tag`)');
+    $one = R::exec('DELETE FROM `' . PREFIX . 'articles_tag` WHERE ' .
+      '`articles_id` NOT IN( SELECT `id` FROM `' . PREFIX . 'articles`)');
+    
+		$two = R::exec('DELETE FROM `' . PREFIX . 'tag` WHERE ' .
+      '`id` NOT IN( SELECT `tag_id` FROM `' . PREFIX . 'articles_tag`)');
+    
+    return ($one || $two);
 	}
 	
 	

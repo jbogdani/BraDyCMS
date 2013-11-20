@@ -319,9 +319,15 @@ class OutHtml extends Out
 	 */
 	public function searchForm()
 	{
-		$html = '<form action="javascript:void(0);" id="searchForm" data-path="' . $this->link2('home') . '">'
-				. '<input class="search-query" type="search" placeholder="' . tr::get('search_site') . '" name="search" id="search" />'
-			. '</form>';
+		$html = '<form action="javascript:void(0);" ' .
+          'id="searchForm" ' .
+          'data-path="' . $this->link2('home') . '">' .
+      '<input class="search-query" ' .
+          'type="search" ' .
+          'placeholder="' . tr::get('search_site') . '" ' .
+          'name="search" ' .
+          'id="search" />' .
+      '</form>';
 		return $html;
 	}
 	
@@ -533,10 +539,15 @@ class OutHtml extends Out
       return false;
     }
     
-    return $html = '<script src="//ajax.googleapis.com/ajax/libs/jquery/' . 
+    $html = $_SESSION['debug'] ? 
+      '<script src="./js/jquery-' .  $version . '.min.js"></script>' 
+      :
+      '<script src="//ajax.googleapis.com/ajax/libs/jquery/' . 
       $version . '/jquery.min.js"></script>' . 
       '<script>window.jQuery || document.write(\'<script src="./js/jquery-' . 
       $version . '.min.js"><\/script>\')</script>';
+    
+    return $html;
   }
   
   public function TBSjs($version)
@@ -546,7 +557,10 @@ class OutHtml extends Out
       return false;
     }
     
-    $html = '<script src="//netdna.bootstrapcdn.com/bootstrap/' . 
+    $html = $_SESSION['debug'] ?
+      '<script src="./js/bootstrap-' . $version . '.min.js"></script>'
+      :
+      '<script src="//netdna.bootstrapcdn.com/bootstrap/' . 
       $version . '/js/bootstrap.min.js"></script>' . 
       '<script>if(typeof($.fn.modal) === \'undefined\') { ' .
         'document.write(\'<script src="./js/bootstrap-' . $version . '.min.js"><\/script>\')' .

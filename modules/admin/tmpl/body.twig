@@ -128,19 +128,29 @@
 								{% else %}
 								
 								<div class="jumbotron">
-                  <img src="http://www.gravatar.com/avatar/{{ gravatar}}" alt="{{ user }}" class="pull-right img-responsive" />
-									<p>Welcome {{ user }} to</p>
-									<h1>BraDy.CMS</h1>
-									<p>A highly customizable, easy to setup & use php (>=5.3) Content Managing System, created for designers</p>
+                  <h1>BraDyCMS</h1>
+                  <p>is an</p>
+                  <ul>
+                    <li>open source</li>
+                    <li>highly customizable</li>
+                    <li>easy to setup</li>
+                    <li>easy to use</li>
+                    <li>design oriented</li>
+                  </ul>
+                  <p>Content Managing System, written in Object Oriented PHP and 
+                    Javascript, for creating beautiful and fully responsive websites.</p>
+                  <p>Want to contribute? Fork it on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">GitHub</a></p>
 								</div>
 								{% endif %}
 							</div>
 							
 							<div class="col-md-4">
-								<img src="./img/octocat.png" alt="octocats GITHUB" class="pull-left" style="width:150px" />
+                <img src="http://www.gravatar.com/avatar/{{ gravatar}}" alt="{{ user }}" class="pull-right img-responsive" />
+                <p>Welcome <big>{{ user }}</big> to</p>
+									<h3 class="media-heading">BraDyCMS</h3>
+								
 								
 								<div class="media-body">
-									<h3 class="media-heading">BraDyCMS</h3>
 									<p class="lead">is an open source project available for fork and/or download on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">GitHub</a></p>
 									<p><a href="https://github.com/jbogdani/BraDyCMS/archive/master.zip" target="_blank">Download latest build</a></p>
 								</div>
@@ -153,5 +163,8 @@
 		
 		<footer class="footer">
 			<h4>by BraDypUS <small>COMMUNICATING CULTURAL HERITAGE</small></h4>
-			<p>BraDyCMS [v. {{ version }}] is an open source project available for download <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">on Github</a></p>
+			<p>BraDyCMS [v. {{ version }}] is an open source 
+        (<a href="http://opensource.org/licenses/MIT" target="_blank" >MIT license</a>) 
+        project available for download on
+        <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">Github</a></p>
 		</footer>

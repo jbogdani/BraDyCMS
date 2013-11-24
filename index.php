@@ -31,6 +31,14 @@ try
 	});
 	
 	$twig->addFunction($function);
+  
+  
+  $filter = new Twig_SimpleFilter('parseTags', function ($string)
+    {
+      return customTags::parseContent($string);
+    });
+  
+  $twig->addFilter($filter);
 	
 	echo $twig->render('index.twig', array(
 			'html'=>$outHtml

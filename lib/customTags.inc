@@ -8,6 +8,75 @@
  
 class customTags
 {
+  
+  public static function parseContent($html)
+	{
+    if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html))
+    {
+      return $html;
+    }
+    
+    //return customTagParser::do_shortcode($html);
+		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
+		
+    foreach ($customTags as $customTag)
+		{
+      $attributes = array();
+			$rawAttributes = array();
+			$formatedAttributes = array();
+			
+			$originalTag = '/' . preg_quote($customTag[0], '/') . '/';
+		
+			$tag = $customTag[1];
+		
+			$rawAttributes = $customTag[2];
+		
+			$content = $customTag[3];
+      
+			preg_match_all('/([^=\s]+)="([^"]+)"/', $rawAttributes, $attributes, PREG_SET_ORDER);
+		
+			$formatedAttributes['content'] = $content;
+		
+			foreach ($attributes as $attribute)
+			{
+				$formatedAttributes[$attribute[1]] = $attribute[2];
+			}
+			
+			$formatedAttributes['lang'] =
+        ( ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ) ?
+          $_SESSION['lang'] : false);
+			
+			if (method_exists('customTags', $tag))
+			{
+				$replace = call_user_func(array('customTags', $tag), $formatedAttributes);
+		
+				$html = preg_replace($originalTag, $replace, $html, 1);
+			}
+			else
+			{
+        if (method_exists($tag, 'init'))
+        {
+          $replace = call_user_func(array($tag, 'init'), $formatedAttributes);
+          
+          $html = preg_replace($originalTag, $replace, $html, 1);
+          
+          $pending[$tag] = true;
+        }
+			}
+		}
+		
+		if (is_array($pending) && !empty($pending))
+		{
+			foreach ($pending as $obj => $true)
+			{
+				if (method_exists($obj, 'end'))
+				{
+					$html .= call_user_func(array($obj, 'end'));
+				}
+			}
+		}
+		return $html;
+	}
 	
 	/**
 	 * Displays a user defined form
@@ -87,7 +156,8 @@ class customTags
 		}
 		else
 		{
-			$html .= '<ul class="gallery ' . $gal . ($class ? ' ' . $class : '') . '">';
+			$html .= '<ul class="gallery ' . $gal 
+        . ($class ? ' ' . $class : '') . '" data-rel="' . $gal . '">';
 			
 			foreach ($captions as $img => $dida)
 			{
@@ -302,6 +372,10 @@ class customTags
 	 */
 	public static function figure($data)
 	{
+    if (!file_exists('./sites/default/images/' . $data['content']))
+    {
+      return false;
+    }
 		$alt = $data['caption'] ? $data['caption'] : $data['content'];
 		
 		if ($data['width'])
@@ -370,12 +444,18 @@ class customTags
 	
 	
 	/**
+   * Enables Disqus comments in page. Disqus shortname should be provided as tag content
 	 * @param array $data
-	 *		shortname: site shortname in disqus
+	 *		content: (required) site shortname in disqus
 	 * @example [[disqus]]cliffyoungltd[[/disqus]]
 	 */
 	public static function disqus($data)
 	{
+    if (!$data['content'])
+    {
+      return false;
+    }
+    
 		$html = '<div id="disqus_thread"></div>' .
 						'<script type="text/javascript">' .
 							"var disqus_shortname = '{$data['content']}';" .
@@ -387,4 +467,40 @@ class customTags
 					"</script>";
 	return $html;
 	}
+  
+  /**
+   * @param type $data
+   *    content: (required) path to swf file.
+   *    width: object's width
+   *    height: object's height
+   *    other artguments will be used as paramaeters
+   * @example [[flash width="200" height="100" quality="height"]]./sites/default/images/flash/my.swf[[/flash]]
+   */
+  public static function flash($data)
+  {
+    if (!$data['content'])
+    {
+      return false;
+    }
+    
+    //http://stackoverflow.com/questions/1333202/embed-flash-in-html
+    $html = '<object ' .
+        'type="application/x-shockwave-flash" ' .
+        'data="' . $data['content'] .
+        ($data['width'] ? ' width="' . $data['width'] . '"' : '') .
+        ($data['height'] ? ' height="' . $data['height'] . '"' : '') .
+        '"> ' .
+      '<param name="movie" value="' . $data['content'] . '" />';
+    foreach ($data as $k => $v)
+    {
+      if ($k !== 'content' && $k !== 'width' && $k !== 'height')
+      {
+        $html .= '<param name="' . $k . '" value="' . $v . '" />';
+      }
+    }
+    
+    $html .= '<embed src="' . $data['content'] . '" quality="high" />' . 
+      '</object>';
+    return $html;
+  }
 }

@@ -185,7 +185,7 @@ class Out
 		
 		if ($this->data['article'][$article]['text'])
 		{
-			$this->data['article'][$article]['text'] = $this->parseContent($this->data['article'][$article]['text']);
+			$this->data['article'][$article]['text'] = customTags::parseContent($this->data['article'][$article]['text']);
 		}
 		
 		return $this->data['article'][$article];
@@ -411,73 +411,6 @@ class Out
 		return $this->get['search'];
 	}
 	
-	
-	/**
-	 * 
-	 * @param string $html parses html string and checks for custom tags, both system and user's. Runs functions and replaces string content.
-	 * @return string
-	 */
-	private function parseContent($html)
-	{
-    //return customTagParser::do_shortcode($html);
-		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
-		
-    foreach ($customTags as $customTag)
-		{
-      $attributes = array();
-			$rawAttributes = array();
-			$formatedAttributes = array();
-			
-			$originalTag = '/' . preg_quote($customTag[0], '/') . '/';
-		
-			$tag = $customTag[1];
-		
-			$rawAttributes = $customTag[2];
-		
-			$content = $customTag[3];
-      
-			preg_match_all('/([^=\s]+)="([^"]+)"/', $rawAttributes, $attributes, PREG_SET_ORDER);
-		
-			$formatedAttributes['content'] = $content;
-		
-			foreach ($attributes as $attribute)
-			{
-				$formatedAttributes[$attribute[1]] = $attribute[2];
-			}
-			
-			$formatedAttributes['lang'] = $this->lang;
-			
-			if (method_exists('customTags', $tag))
-			{
-				$replace = call_user_func(array('customTags', $tag), $formatedAttributes);
-		
-				$html = preg_replace($originalTag, $replace, $html, 1);
-			}
-			else
-			{
-        if (method_exists($tag, 'init'))
-        {
-          $replace = call_user_func(array($tag, 'init'), $formatedAttributes);
-          
-          $html = preg_replace($originalTag, $replace, $html, 1);
-          
-          $pending[$tag] = true;
-        }
-			}
-		}
-		
-		if (is_array($pending) && !empty($pending))
-		{
-			foreach ($pending as $obj => $true)
-			{
-				if (method_exists($obj, 'end'))
-				{
-					$html .= call_user_func(array($obj, 'end'));
-				}
-			}
-		}
-		return $html;
-	}
 	
 	/**
 	 * Returns, if available, a new instance of object M(eta)D(ata)_repository

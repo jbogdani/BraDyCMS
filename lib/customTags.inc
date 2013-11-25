@@ -372,11 +372,20 @@ class customTags
 	 */
 	public static function figure($data)
 	{
-    if (!file_exists('./sites/default/images/' . $data['content']))
+    if (file_exists('./sites/default/images/articles/' . $data['content']))
+    {
+      $filename = './sites/default/images/articles/' . $data['content'];
+    }
+    else if (file_exists('./sites/default/images/' . $data['content']))
+    {
+      $filename = './sites/default/images/' . $data['content'];
+    }
+    else
     {
       return false;
     }
-		$alt = $data['caption'] ? $data['caption'] : $data['content'];
+    
+    $alt = $data['caption'] ? $data['caption'] : $data['content'];
 		
 		if ($data['width'])
 		{
@@ -384,7 +393,7 @@ class customTags
 		}
 		else
 		{
-			$file_dim = getimagesize('./sites/default/images/' . $data['content']);
+			$file_dim = getimagesize($filename);
 			$width = $file_dim[0];
 		}
 		
@@ -399,10 +408,11 @@ class customTags
 		
 		$alt = str_replace('"', '', strip_tags($alt));
 		
-		return '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" ' . ($figure_width ? ' style="max-width: ' . $figure_width . '"' : '') . '>' .
+		return '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" ' 
+      . ($figure_width ? ' style="max-width: ' . $figure_width . '"' : '') . '>' .
 			'<div class="image">' .
 				( $data['href'] ? '<a href="' . $data['href'] . '"' . ( $data['href_class'] ? ' class="' . $data['href_class'] . '" ' : '') . '>' : '') .
-					'<img src="./sites/default/images/' . $data['content'] . '" alt="' . $alt . '" />' .
+					'<img src="' . $filename . '" alt="' . $alt . '" />' .
 					( $data['href'] ? '</a>' : '') .
 			'</div>' . 
 			($data['caption'] ?
@@ -501,6 +511,27 @@ class customTags
     
     $html .= '<embed src="' . $data['content'] . '" quality="high" />' . 
       '</object>';
+    return $html;
+  }
+  
+  /**
+   * Returns well formatted html with link to internal article
+   * @param array $data
+   *    content: link's text
+   *    art:   destination article's textid, or 'home' for link to home page
+   *  
+   * @return string
+   */
+  public static function link($data)
+  {
+    $lang =
+        ( ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ) ?
+          $_SESSION['lang'] : false);
+    
+    $html = '<a href="' . (
+      link::to_article($data['art'] === 'home' ? './' : $data['art'], $lang)) .
+      '">' . $data['content'] . '</a>';
+    
     return $html;
   }
 }

@@ -341,7 +341,7 @@
 				</div>
 
 				<div class="col-md-2">
-					<select name="custom_fields[{{ loop.index0 }}][type]">
+					<select name="custom_fields[{{ data.custom_fields|length }}][type]">
 						<option></option>
 						<option>input</option>
 						<option>longtext</option>

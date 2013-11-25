@@ -1,3 +1,6 @@
+3.3.0[] = "New custom tag added (link) and bug fixed with figure tag"
+3.3.0[] = "Bug fixed with custom tags documentation layout"
+3.3.0[] = "Bug fixed with config edit module (custom tags offset error)"
 3.3.0[] = "New Twig filter available in main template engine: parseTags"
 3.3.0[] = "New custom tag: flash"
 3.3.0[] = "Custom tag figure returns false if image file does not exist"

@@ -205,12 +205,9 @@ class Menu
 		
 		if ($menu->id)
 		{
-			// TODO check if necessary
 			unset($menu->ownMenutrans);
 			R::store($menu);
 			R::trash($menu);
-			
-			
 		}
 	}
 	

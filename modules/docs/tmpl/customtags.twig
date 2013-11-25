@@ -33,14 +33,14 @@
 					{% endfor %}
 				</td>
 				<td>{{ el.description }}</td>
-				<td>
+				<td style="min-width:400px;">
           {% if el.min_example %}
             <p>Minimal example</p>
-            <code>{{ el.min_example }}</code>
+            <pre>{{ el.min_example }}</pre>
           {% endif %}
-          {% if el.min_example %}
+          {% if el.max_example %}
             <p>Complete example</p>
-            <code>{{ el.min_example }}</code>
+            <pre>{{ el.max_example }}</pre>
           {% endif %}
 				</td>
 			</tr>

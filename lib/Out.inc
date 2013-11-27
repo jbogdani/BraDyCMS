@@ -150,13 +150,14 @@ class Out
 	/**
 	 * Returns array of similar articles
 	 * @param string $article articles textid
+   * @param int $max maximum number of array elements to return
 	 * @return array of beans|false
 	 */
-	public function getSimilar($textid = false)
+	public function getSimilar($textid = false, $max = false)
 	{
 		$article = $this->getArticle($textid);
 		
-		return Article::getSimilar($article['tags'], $article['textid'], $this->lang);
+		return Article::getSimilar($article['tags'], $article['textid'], $this->lang, $max);
 	}
 
 		/**

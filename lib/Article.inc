@@ -401,9 +401,10 @@ class Article
 	 * @param array $tags array of tags to check for similar
 	 * @param string $textid articles text id not to be returned. if $tags is false, then the tags of $textid will be used
 	 * @param string $lang language
+   * @param int $max maximum number of array elements to return
 	 * @return array|false
 	 */
-	public static function getSimilar($tags = false, $textid = false, $lang = false)
+	public static function getSimilar($tags = false, $textid = false, $lang = false, $max = false)
 	{
 		if (!$tags && $textid)
 		{
@@ -443,7 +444,8 @@ class Article
       $new_values = array_values($new);
 
       // http://stackoverflow.com/questions/1921421/get-first-element-of-an-array
-      return array_shift($new_values);
+      $new_values2 = array_shift($new_values); 
+      return $max ? array_slice($new_values2, 0, $max) : $new_values2;
     }
 		else
     {

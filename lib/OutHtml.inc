@@ -437,11 +437,12 @@ class OutHtml extends Out
 	
 	/**
 	 * Returns html with list of articles similar to present article
+   * @param int $max maximum number of array elements to return
 	 * @return boolean|string
 	 */
-	public function similarBlog()
+	public function similarBlog($max = false)
 	{
-		$art_list = $this->getSimilar();
+		$art_list = $this->getSimilar(false, $max);
 	
 		if (!is_array($art_list))
 		{

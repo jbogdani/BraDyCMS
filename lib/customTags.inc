@@ -496,10 +496,10 @@ class customTags
     //http://stackoverflow.com/questions/1333202/embed-flash-in-html
     $html = '<object ' .
         'type="application/x-shockwave-flash" ' .
-        'data="' . $data['content'] .
+        'data="' . $data['content'] . '" ' .
         ($data['width'] ? ' width="' . $data['width'] . '"' : '') .
         ($data['height'] ? ' height="' . $data['height'] . '"' : '') .
-        '"> ' .
+        '> ' .
       '<param name="movie" value="' . $data['content'] . '" />';
     foreach ($data as $k => $v)
     {

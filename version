@@ -1,3 +1,4 @@
+3.0.0[] = "Bug fixed with fonts fonts path"
 3.3.0[] = "New function: added the possibility to translate custom fields"
 3.3.0[] = "New function: automatic (recursive) thumbnail creation in media folders and subfolders"
 3.3.0[] = "Custom tag figure has now the new fancybox parameter"

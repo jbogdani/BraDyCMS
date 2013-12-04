@@ -364,6 +364,7 @@ class customTags
 	 * 		content*: image file relative url
 	 * 		width:	main div (container) width
 	 * 		caption: image caption
+   *    fancybox: boolean, if true the thumbnail will be displayed and the original file will be shown on click
 	 * 		align: image alignent (left|right)
 	 * 		href: href of image link
 	 * 		href_class: css class of href link
@@ -372,6 +373,7 @@ class customTags
 	 */
 	public static function figure($data)
 	{
+    // Look for file inside images/articles OR images/ folder
     if (file_exists('./sites/default/images/articles/' . $data['content']))
     {
       $filename = './sites/default/images/articles/' . $data['content'];
@@ -385,43 +387,66 @@ class customTags
       return false;
     }
     
+    // Format ALT text
     $alt = $data['caption'] ? $data['caption'] : $data['content'];
-		
-		if ($data['width'])
+    $alt = str_replace('"', '', strip_tags($alt));
+    
+    // filename will the the thumbanail filename if fancybox parameter is true and thumb exists
+    if( $data['fancybox'])
+    {
+      // Get the file name (clean path data)
+      $name = basename($filename);
+
+      // Format the thumbnail path: same as file path + thumbs/
+      $thumb = str_replace($name, 'thumbs/' . $name, $filename);
+
+      if (file_exists($thumb))
+      {
+        $dest_file = $filename;
+
+        $filename = $thumb;
+      }
+    }
+
+    // Set figure_width if width or align attributes are privided
+    if ($data['align'] || $data['width'])
 		{
-			$width = $data['width'];
+      if ($data['width'])
+      {
+        $figure_width = $data['width'];
+      }
+      else
+      {
+        $file_dim = getimagesize($filename);
+        $figure_width = $file_dim[0] . 'px';
+      }
 		}
-		else
-		{
-			$file_dim = getimagesize($filename);
-			$width = $file_dim[0];
-		}
+    
 		
-		if ($data['align'])
-		{
-			$figure_width = $width;
-		}
-		else if ($data['width'])
-		{
-			$figure_width = $data['width'];
-		}
-		
-		$alt = str_replace('"', '', strip_tags($alt));
-		
-		return '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" ' 
+		$html = '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" ' 
       . ($figure_width ? ' style="max-width: ' . $figure_width . '"' : '') . '>' .
-			'<div class="image">' .
-				( $data['href'] ? '<a href="' . $data['href'] . '"' . ( $data['href_class'] ? ' class="' . $data['href_class'] . '" ' : '') . '>' : '') .
-					'<img src="' . $filename . '" alt="' . $alt . '" />' .
-					( $data['href'] ? '</a>' : '') .
-			'</div>' . 
+			'<div class="image">';
+    
+    if ($dest_file || $data['href'])
+    {
+      $html .= '<a href="' . ($dest_file ? $dest_file : $data['href']) . '" ' .
+        'class="fancybox' . ($data['href_class'] ? ' ' . $data['href_class'] .' ' : '') . '">';
+    }
+    
+    $html .= '<img src="' . $filename . '" alt="' . $alt . '" />';
+    
+    if ($dest_file || $data['href'])
+    {
+      $html .= '</a>';
+    }
+    $html .= '</div>' .
 			($data['caption'] ?
-					'<div class="caption">' .
-						$data['caption'] .
-					'</div>' 
+					'<div class="caption">' . $data['caption'] . '</div>' 
 					: 
 					'') .
 		'</div>';
+    
+    return $html;
 	}
 	
 	/**

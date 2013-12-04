@@ -211,6 +211,7 @@ class docs_ctrl extends Controller
         'caption' => 'string, optional. The image\'s caption',
         'align' => 'string, optional, available values: left, right, center. ' .
           'Widget\'s alignment in the page',
+        'fancybox' => 'boolean, optional, default false. If present the system will try to create a valid html fancybox popup, using thumbnail, if present',
         'href' => 'string, optional. If present the image will hold a link to this URL',
         'href_class' => 'string, optional. If present the imag\'s link will have this CSS class'
         ),

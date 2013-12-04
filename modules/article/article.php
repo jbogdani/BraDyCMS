@@ -192,7 +192,7 @@ class article_ctrl extends Controller
 			}
 		}
 		
-		$this->render('article', 'trasl_form', array(
+		$this->render('article', 'transl_form', array(
 			 'art'=>$article_array, 
 			 'transl' => $art_translation,
 			 'lang' => $lang_arr

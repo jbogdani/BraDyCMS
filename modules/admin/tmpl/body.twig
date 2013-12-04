@@ -42,7 +42,7 @@
               <li><a href="#userform/view"><i class="glyphicon glyphicon-list-alt"></i> {{ tr.get('user_forms') }}</a></li>
 
             {% for mod in custom_mods %}
-              <li><a href="./admin#plugins/run/{{ mod }}"><i class="glyphicon glyphicon-asterisk"></i> {{ mod }}</a></li>
+              <li><a href="./admin#plugins/run/{{ mod }}"><i class="glyphicon glyphicon-asterisk"></i> {{ tr.get(mod) }}</a></li>
             {% endfor %}
         </ul>
         </li>

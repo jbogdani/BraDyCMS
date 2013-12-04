@@ -301,15 +301,16 @@
 
 
 		<div class="form-group">
-			<div class="col-md-2 col-md-offset-2"><label>{{ tr.get('cfg-fld_name') }}</label></div>
+			<div class="col-md-2 col-md-offset-1"><label>{{ tr.get('cfg-fld_name') }}</label></div>
 			<div class="col-md-2"><label>{{ tr.get('cfg-type') }}</label></div>
 			<div class="col-md-2"><label>{{ tr.get('cfg-label') }}</label></div>
 			<div class="col-md-4"><label>{{ tr.get('cfg-values') }}</label></div>
+      <div class="col-md-1"><label>{{ tr.get('cfg-translate') }}</label></div>
 		</div>
 
 		{% for fld in data.custom_fields %}
 		<div class="form-group">
-			<div class="col-md-2 col-md-offset-2">
+			<div class="col-md-2 col-md-offset-1">
 				<input type="text" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]" />
 			</div>
 
@@ -330,13 +331,19 @@
 				<input type="text" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]" />
 			</div>
 
-			
+			<div class="col-md-1">
+				<select value="{{ fld.translate }}" name="custom_fields[{{ loop.index0 }}][translate]">
+          <option value=""></option>
+          <option value="1"{% if fld.translate %} selected="selected" {% endif %}>1</option>
+        </select>
+			</div>
+      
 		</div>
 		{% endfor %}
 
 		<div class="form-group">
 			<div class="controls">
-				<div class="col-md-2 col-md-offset-2">
+				<div class="col-md-2 col-md-offset-1">
 					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][name]" />
 				</div>
 
@@ -356,6 +363,13 @@
 				<div class="col-md-4">
 					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]" />
 				</div>
+        
+        <div class="col-md-1">
+				<select value="{{ fld.translate }}" name="custom_fields[{{ data.custom_fields|length }}][translate]">
+          <option value=""></option>
+          <option value="1">1</option>
+        </select>
+			</div>
 
 			</div>
 		</div>

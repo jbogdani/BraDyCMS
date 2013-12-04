@@ -100,6 +100,21 @@ class Article
 					$translation->summary	? $article->summary	= $translation->summary	: '';
 					$translation->text		? $article->text		= $translation->text		: '';
 					$translation->keywords	? $article->keywords	= $translation->keywords	: '';
+          
+          $custom_flds = cfg::get('custom_fields');
+          if (is_array($custom_flds))
+          {
+            foreach ($custom_flds as $fld)
+            {
+              if ($fld['translate'])
+              {
+                if ($translation->$fld['translate'])
+                {
+                  $article->$fld['translate']	= $translation->$fld['translate'];
+                }
+              }
+            }
+          }
 				}
 			}
 			

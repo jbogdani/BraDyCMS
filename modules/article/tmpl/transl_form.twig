@@ -63,6 +63,23 @@
 		</div>
 	</div>
 	
+  <!-- CUSTOM FIELDS -->
+  {% if custom_fields %}
+    {% for field in custom_fields %}
+      {% if field.translate %}
+        <div class="row form-group">
+          <div class="col-sm-1"><label>{{ field.label }}</label></div>
+          <div class="col-sm-4">
+            <div class="well orig" style="overflow: auto; height: 200px;">{{ art[field.name]|raw }}</div>
+          </div>
+          <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
+          <div class="col-sm-6 transl">
+            <textarea name="{{ field.name }}" style="width: 100%; height: 200px;">{{ transl[field.name] }}</textarea>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 	<p>
 		<button type="submit" class="btn btn-success">{{ tr.get('save') }}</button>
 		<button type="reset" class="btn btn-default">{{ tr.get('reset') }}</button>

@@ -196,10 +196,14 @@
       '</div>',
       loaded: function(){
         $('#modal .maxDim').on('keyup', function(){
-          $('#modal .fixedDim').val('');
+          if ($(this).val()){
+            $('#modal .fixedDim').val('');
+          }
         });
         $('#modal .fixedDim').on('keyup', function(){
-          $('#modal .maxDim').val('');
+          if ($(this).val()){
+            $('#modal .maxDim').val('');
+          }
         });
       },
           

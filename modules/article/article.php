@@ -193,10 +193,11 @@ class article_ctrl extends Controller
 		}
 		
 		$this->render('article', 'transl_form', array(
-			 'art'=>$article_array, 
-			 'transl' => $art_translation,
-			 'lang' => $lang_arr
-		));
+      'art'=>$article_array, 
+      'custom_fields' => cfg::get('custom_fields'),
+      'transl' => $art_translation,
+      'lang' => $lang_arr
+      ));
 		
 	}
 	

@@ -6075,7 +6075,7 @@ body.login .form-signin {
   -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-input,
+input:not([type="checkbox"]),
 textarea,
 select {
   display: block;
@@ -6095,27 +6095,27 @@ select {
   -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
-input:-moz-placeholder,
+input:not([type="checkbox"]):-moz-placeholder,
 textarea:-moz-placeholder,
 select:-moz-placeholder {
   color: #999999;
 }
-input::-moz-placeholder,
+input:not([type="checkbox"])::-moz-placeholder,
 textarea::-moz-placeholder,
 select::-moz-placeholder {
   color: #999999;
 }
-input:-ms-input-placeholder,
+input:not([type="checkbox"]):-ms-input-placeholder,
 textarea:-ms-input-placeholder,
 select:-ms-input-placeholder {
   color: #999999;
 }
-input::-webkit-input-placeholder,
+input:not([type="checkbox"])::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder,
 select::-webkit-input-placeholder {
   color: #999999;
 }
-input:focus,
+input:not([type="checkbox"]):focus,
 textarea:focus,
 select:focus {
   border-color: #66afe9;
@@ -6123,19 +6123,19 @@ select:focus {
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
-input[disabled],
+input:not([type="checkbox"])[disabled],
 textarea[disabled],
 select[disabled],
-input[readonly],
+input:not([type="checkbox"])[readonly],
 textarea[readonly],
 select[readonly],
-fieldset[disabled] input,
+fieldset[disabled] input:not([type="checkbox"]),
 fieldset[disabled] textarea,
 fieldset[disabled] select {
   cursor: not-allowed;
   background-color: #eeeeee;
 }
-textareainput,
+textareainput:not([type="checkbox"]),
 textareatextarea,
 textareaselect {
   height: auto;

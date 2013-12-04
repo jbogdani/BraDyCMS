@@ -6,38 +6,70 @@
 	{% set part_path = '' %}
 
 
-	<!-- Navigation bar -->
-	<div class="well well-sm clearfix">
-		<!-- Reload button -->
-		<button class="btn btn-success btn-sm" title="{{ tr.get('reload') }}" onclick="admin.tabs.reloadActive();">
-			<i class="glyphicon glyphicon-repeat"></i>
-		</button>
-		<span class="text-muted">|||</span>
+	<div class="clearfix well well-sm">
+    
+    <button class="btn btn-success btn-sm" title="{{ tr.get('reload') }}" 
+            onclick="admin.tabs.reloadActive();">
+      <i class="glyphicon glyphicon-repeat"></i>
+    </button>
 
-		<!-- URL -->
-		{% for part in path_arr %}
-			{% if part != '.' %}
-				{% if part_path == '' %}
-					{% set part_path = '/' ~ part %}
-				{% else %}
-					{% set part_path = part_path ~ '/' ~ part %}
-				{% endif %}
-			{% endif %}
-		<span>
-			<a class="navigation btn btn-{% if loop.last %}info disabled{% else %}default{% endif %}" data-href="media/all{{ part_path }}">{{ part }}</a>
-		</span>
-		<span class="text-muted"> / </span>
-		{% endfor %}
-		<input type="text" placeholder="{{ tr.get('new_dir_name') }}" style="width:200px; display:inline-block;" />
-		<button class="btn btn-info newFolder" type="button">{{ tr.get('create_go') }}</button>
+    <span class="text-muted">|||</span>
 
-		<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" class="pull-right col-xs-2" />
+    {% for part in path_arr %}
+      {% if part != '.' %}
+        {% if part_path == '' %}
+          {% set part_path = '/' ~ part %}
+        {% else %}
+          {% set part_path = part_path ~ '/' ~ part %}
+        {% endif %}
+      {% endif %}
+    <span>
+      <a data-href="media/all{{ part_path }}"
+        class="navigation btn btn-{% if loop.last %}info disabled{% else %}default{% endif %}" 
+         >{{ part }}</a>
+    </span>
+    <span class="text-muted"> / </span>
+    {% endfor %}
 
+    <div style="width:300px; display:inline-block; top: 13px; position: relative;">
+      <div class="input-group">
+        <input type="text" class="form-control folderName" placeholder="{{ tr.get('new_dir_name') }}" />
+        <span class="input-group-btn">
+          <button class="btn btn-info newFolder" type="button">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i> {{ tr.get('create_go') }}</button>
+        </span>
+      </div>
+    </div>
 	</div>
+    
+  <div class="row">
+    <div class="col-sm-4">
+      <!-- File uploader button -->
+      <div id="file-uploader_{{ uid }}"></div>
+    </div>
+
+    <div class="col-sm-4">
+      {% if rel_path != 'thumbs' %}
+        <button class="btn btn-info makeThumbs">
+          <i class="glyphicon glyphicon-picture"></i>
+          {{ tr.get('make_thumbs') }}
+        </button>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-4">
+      {% if files|length > 0 %}
+        <input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
+      {% endif %}
+    </div>
+  </div>
+    
+  <hr />
+  
+    
 
 
-	<!-- File uploader button -->
-	<div id="file-uploader_{{ uid }}"></div>
+	
 
 	{% if rel_path and files|length ==0 %}
 	<!-- Delete directory button -->
@@ -125,7 +157,7 @@
 	});
 	
 	$('#{{ uid }} .newFolder').click(function(){
-		var val = $(this).prev().val();
+		var val = $('#{{ uid }} .folderName').val();
 		if (!val){
 			admin.message('{{ tr.get('missing_directory_name') }}', 'error');
 			$(this).prev().focus();
@@ -142,4 +174,92 @@
 	$('#input_{{ uid }}').on('keyup', function(){
 		admin.media.filterDir($(this).val(), '{{ uid }}');
 	});
+  
+  $('#{{ uid }} .makeThumbs').on('click', function(){
+    admin.dialog({
+      title: '{{ tr.get('make_thumbs', true) }}',
+      html: 
+      '<div class="row">' + 
+        '<div class="col-md-6">' +
+          '<label>{{ tr.get('max_dimension', true) }}</label>' + 
+          '<input type="text" class="form-control maxDim" placeholder="eg. 400" />' + 
+        '</div>' +
+        '<div class="col-md-6">' +
+          '<label>{{ tr.get('fixed_dimension', true) }}</label>' + 
+            '<input type="text" class="form-control fixedDim" placeholder="eg. 400x400" />' + 
+          '</div>' +
+        '</div>' +
+        '<hr />' +
+        '<label><input type="checkbox" class="overwrite" /> {{ tr.get('overwrite') }}</label>' +
+        '<br />' +
+        '<label><input type="checkbox" class="recursive" /> {{ tr.get('recursive_subfolders') }}</label>' +
+      '</div>',
+      loaded: function(){
+        $('#modal .maxDim').on('keyup', function(){
+          $('#modal .fixedDim').val('');
+        });
+        $('#modal .fixedDim').on('keyup', function(){
+          $('#modal .maxDim').val('');
+        });
+      },
+          
+      buttons: [{
+          text: '{{ tr.get('create', true) }}',
+          glyphicon: 'ok',
+          click: function(){
+            var max = $('#modal .maxDim').val();
+            var fixed = $('#modal .fixedDim').val();
+            var overwrite = $('#modal .overwrite').is(':checked');
+            var recursive = $('#modal .recursive').is(':checked');
+            
+            if (!max && !fixed){
+              admin.message('{{ tr.get('max_or_fixed_dim_required', true)}}', 'error');
+              return;
+            }
+            
+            if (max && isNaN(max)){
+              console.log(typeof max);
+              admin.message('{{ tr.get('max_only_integer_allowed', true) }}', 'error');
+              $('#modal .maxDim').focus();
+              return;
+            }
+            
+            if (fixed && !fixed.match(/([0-9]{1,4}x([0-9]{1,4}))/)){
+              admin.message('{{ tr.get('fixed_not_well_formatted', true) }}', 'error');
+              $('#modal .fixedDim').focus();
+              return;
+            }
+            
+            $('#modal .modal-body').html('<img src="./img/spinner.gif" /> {{ tr.get('please_wait', true) }}');
+            
+            var url = 'controller.php?' +
+              'obj=media_ctrl&' +
+              'method=makeThumbs&' +
+              'dir={{ path }}' +
+              (max ? '&max=' + max : '') +
+              (fixed ? '&fixed=' + fixed : '') +
+              (overwrite ? '&overwrite=true' : '') + 
+              (recursive ? '&recursive=true' : '');
+            
+            $.get(url, function(data){
+              if (data){
+                admin.message('{{ tr.get('error_in_creating_some_thumbails', true) }}', 'error');
+              } else {
+                admin.message('{{ tr.get('ok_all_thumbails_created', true) }}', 'success');
+              }
+              $('#modal').modal('hide');
+              admin.tabs.reloadActive();
+            });
+
+          }
+      },
+      {
+        text: '{{ tr.get('close', true) }}',
+        glyphicon: 'remove',
+        addclass: 'btn-danger',
+        click: 'close'
+      }
+      ]
+    });
+  });
 </script>

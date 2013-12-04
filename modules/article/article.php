@@ -102,6 +102,11 @@ class article_ctrl extends Controller
     if (is_dir(IMG_DIR . 'articles/media/' . $id))
     {
       $art_media = utils::dirContent(IMG_DIR . 'articles/media/' . $id);
+      
+      if(($key = array_search('thumbs', $art_media)) !== false)
+      {
+        unset($art_media[$key]);
+      }
     }
 		
 		$art = Article::getById($id);

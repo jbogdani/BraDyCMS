@@ -236,5 +236,96 @@ class media_ctrl extends Controller
 		
 		echo json_encode($out);
 	}
+  
+  public function makeThumbs($dir = false, $max = false, $fixed = false, $overwrite = false, $recursive = false)
+  {
+    set_time_limit(0);
+    !$dir ? $dir = $this->request['dir'] : '';
+    !$max ? $max = $this->request['max'] : '';
+    !$fixed ? $fixed = $this->request['fixed'] : '';
+    !$overwrite ? $overwrite = $this->request['overwrite'] : '';
+    !$recursive ? $recursive = $this->request['recursive'] : '';
+    
+    if (!$fixed && !$max)
+    {
+      echo tr::get('max_or_fixed_dim_required');
+      return;
+    }
+    
+    if ($fixed)
+    {
+      $details = $fixed;
+    }
+    
+    $validExts = array('bmp', 'gif', 'jpg', 'png', 'tif');
+    
+    $files = utils::dirContent($dir);
+    
+    if (!is_array($files))
+    {
+      return;
+    }
+    
+    foreach ($files as $file)
+    {
+      if (is_dir($dir . '/' . $file) && $file !== 'thumbs' && $recursive)
+      {
+        $this->makeThumbs($dir . '/' . $file, $max, $fixed, $overwrite, $recursive);
+      }
+      else if (is_file($dir . '/' . $file))
+      {
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        
+        $nfile = $dir . '/thumbs/' . str_replace($ext, 'jpg', $file);
+        
+        if (file_exists($nfile) && !$overwrite)
+        {
+          continue;
+        }
+        
+        if (!$details)
+        {
+          $dim = getimagesize($dir . '/' . $file);
+          $w = $dim[0];
+          $h = $dim[1];
+
+          if ($w > $h)
+          {
+            $details = $max. 'x' . ( $h / ( $w/$max ) );
+          }
+          else
+          {
+            $details = ( $w / ( $h/$max ) ) . 'x' . $max;
+          }
+        }
+      
+        if (!in_array($ext, $validExts))
+        {
+          continue;
+        }
+        
+        if (!is_dir($dir . '/thumbs'))
+        {
+          @mkdir($dir . '/thumbs', 0777, true);
+        }
+        
+        imgMng::thumb(
+          $dir . '/' . $file,
+          $nfile,
+          $details);
+        
+        if (!file_exists($nfile))
+        {
+          error_log('Error can not create thumbnail: ' . $nfile);
+          $error[] = $nfile;
+        }
+      }
+    }
+    
+    if ($error)
+    {
+      echo 'error_in_creating_some_thumbails';
+    }
+  }
 	
 }

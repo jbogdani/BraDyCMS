@@ -69,6 +69,7 @@ var admin = {
 		 * 			click
 		 * 			action: 'close'
 		 * 			addclass
+     *      glyphicon
 		 */
 		dialog: function(opts){
 			if ($('#modal').length > 0){
@@ -99,21 +100,23 @@ var admin = {
 				var footer = $('<div />').addClass('modal-footer').appendTo(dialog.find('div.modal-content'));
 					
 				$.each(opts.buttons, function(index, but){
-					var a = $('<a />').addClass('btn'+ (but.addclass ? ' ' + but.addclass : ' btn-primary')).html(but.text);
+					var a = $('<a />')
+            .addClass('btn'+ (but.addclass ? ' ' + but.addclass : ' btn-primary'))
+            .html((but.glyphicon ? '<i class="glyphicon glyphicon-' + but.glyphicon + '"></i> ' : '') + but.text);
 
 					if (but.href){
 						a.attr('href', but.href);
 					}
 
 					if (but.click){
-						if (but.click == 'close'){
+						if (but.click === 'close'){
 							a.attr('data-dismiss', 'modal');
 						} else{
 							a.click(function(){ but.click(dialog); });
 						}
 					}
 
-					if (but.action == 'close'){
+					if (but.action === 'close'){
 						a.attr('data-dismiss', 'modal');
 					}
 

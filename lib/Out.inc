@@ -85,7 +85,7 @@ class Out
    */
   public function tr($string, $args = false, $escape = false)
   {
-    return $args ? tr::get($string, $escape) : tr::sget($string, $args, $escape);
+    return $args ? tr::sget($string, $args, $escape) : tr::get($string, $escape);
   }
   
 	/**

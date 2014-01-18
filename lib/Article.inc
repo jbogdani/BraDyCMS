@@ -321,7 +321,7 @@ class Article
       if (
         $art['status'] == 1 && 
         (
-          $articles['expires`'] == '0000-00-00 00:00:00' || $art['expires'] == '0000-00-00' || $art['expires'] == $art['publish'] || $art['expires'] > date("Y-m-d H:i:s") ) )
+          $articles['expires'] == '0000-00-00 00:00:00' || $art['expires'] == '0000-00-00' || $art['expires'] == $art['publish'] || $art['expires'] > date("Y-m-d H:i:s") ) )
         {
         $new_art_list[$id] = $art;
         }

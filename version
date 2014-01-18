@@ -1,3 +1,6 @@
+3.3.3[] = "Inline documentation enhancement"
+3.3.1[] = "Bug fixed with whitespaces that could not be used in site search search"
+3.3.1[] = "Bug fixed valid article statement"
 3.3.0[] = "Bug fixed with template method html.tr"
 3.3.0[] = "Bug fixed with fonts fonts path"
 3.3.0[] = "New function: added the possibility to translate custom fields"

@@ -138,7 +138,7 @@ class Out
 	}
 	
 	/**
-	 * Returns curent context
+	 * Returns curent context. Can be one of the following: article, tags, search, home
 	 * @return string
 	 */
 	public function getContext()

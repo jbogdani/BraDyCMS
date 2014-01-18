@@ -62,7 +62,7 @@ class Out
 			// load curent article's data in $data['article'] array
 			$this->data['article'][$get['art_title']] = Article::getByTextid($get['art_title'], $this->lang, $this->get['draft']);
 		}
-		else if ( $get['search'] )
+		else if ( $get['search'] || $get['is_search'])
 		{
 			$this->context = 'search';
 		}
@@ -400,7 +400,14 @@ class Out
 	 */
 	public function getSearchResults()
 	{
-		return Article::search($this->get['search'], $this->lang);
+    if ($this->get['search'])
+    {
+      return Article::search($this->get['search'], $this->lang);
+    }
+    else
+    {
+      return $this->getArticlesByTag();
+    }
 	}
 	
 	/**

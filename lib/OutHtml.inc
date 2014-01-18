@@ -339,16 +339,30 @@ class OutHtml extends Out
 	public function searchResults()
 	{
 		$art_list = $this->getSearchResults();
-		
-		$tot_found = count($art_list);
+    
+		$tot_found = $art_list ? count($art_list) : 0;
 		
 		if ( $tot_found === 0 )
 		{
-			$html = '<h4>' . sprintf(tr::get('no_result_for_query'), $this->getSearchString()). '</h4>';
+      if ($this->getSearchString())
+      {
+        $html = '<h4>' . sprintf(tr::get('no_result_for_query'), $this->getSearchString()). '</h4>';
+      }
+      else
+      {
+        $html = '<h4>' . sprintf(tr::get('no_result_for_tags'), implode(', ', $this->getFilterTags())). '</h4>';
+      }
 		}
 		else
 		{
-			$html = '<h4>' . sprintf(tr::get('x_results_for_query'), $this->getSearchString(), $tot_found) . '</h4>';
+			if ($this->getSearchString())
+      {
+        $html = '<h4>' . sprintf(tr::get('x_results_for_query'), $this->getSearchString(), $tot_found) . '</h4>';
+      }
+      else
+      {
+        $html = '<h4>' . sprintf(tr::get('x_results_for_tags'), implode(', ', $this->getFilterTags()), $tot_found) . '</h4>';
+      }
 			
 			$html .= $this->array2html($art_list, 'search');
 			

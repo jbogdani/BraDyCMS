@@ -1,3 +1,8 @@
+3.3.2[] = "Updated Redbean and Composer"
+3.3.2[] = "Updated Twig to v. 1.15"
+3.3.2[] = "Fixed bug with default search form path: now the form's data-path attribute is used"
+3.3.2[] = "Twitter Bootstrap upgraded to version 3.1.0"
+3.3.2[] = "Article in lists are sorted by sorting field then by created field and then by id field"
 3.3.1[] = "New function: search context handles also search by tags (tag1-tag2-etc.search)"
 3.3.1[] = "Inline documentation enhancement"
 3.3.1[] = "Bug fixed with whitespaces that could not be used in site search search"

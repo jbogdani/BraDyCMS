@@ -192,7 +192,7 @@ class Article
 	 */
 	public static function getTags()
 	{
-		return R::getCol('select `title` from `' . PREFIX. 'tag` order by `title` ASC');
+		return R::getCol('SELECT `title` FROM `' . PREFIX. 'tag` ORDER BY `title` ASC');
 	}
 	
 	/**
@@ -305,11 +305,31 @@ class Article
 		$art_list = self::parseArt($articles, $lang);
 		
 		usort($art_list, function($a, $b){
-			if ($a['sort'] == $b['sort'])
-			{
-				return 0;
-			}
-			return ($a['sort'] > $b['sort']) ? -1 : 1;
+      if ($a['sort'] && $b['sort'])
+      {
+        if ($a['sort'] == $b['sort'])
+        {
+          return 0;
+        }
+        return ($a['sort'] > $b['sort']) ? -1 : 1;
+      }
+      else if ($a['created'] && $b['created'])
+      {
+        if ($a['created'] == $b['created'])
+        {
+          return 0;
+        }
+        return ($a['created'] > $b['created']) ? -1 : 1;
+      }
+      else
+      {
+        if ($a['id'] == $b['id'])
+        {
+          return 0;
+        }
+        return ($a['id'] > $b['id']) ? -1 : 1;
+      }
+        
 		});
     
     if ($admin)

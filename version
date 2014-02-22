@@ -1,3 +1,4 @@
+3.3.4[] = "Bug fixed with default list of custom fields not supporting escape character"
 3.3.3[] = "New function: robots meta tag can no be edited globally (new configuration option) or for each article (adding a custom field named robots)"
 3.3.2[] = "Updated Redbean and Composer"
 3.3.2[] = "Updated Twig to v. 1.15"

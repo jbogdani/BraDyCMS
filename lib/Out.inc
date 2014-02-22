@@ -75,8 +75,8 @@ class Out
 			$this->context = 'home';
 		}
 	}
-	
-	/**
+  
+  /**
    * Returns translated string
    * @param string $string  string to translate
    * @param mixed: string|array|false $args if true tr::sget will be used
@@ -201,7 +201,7 @@ class Out
 	public function getArticlesByTag()
 	{
 		$tags = func_get_args() ? func_get_args() : $this->getFilterTags();
-		
+    
 		return Article::getByTag($tags, $this->lang, $this->get['tag_all']);
 	}
 	
@@ -210,7 +210,7 @@ class Out
 	 * @param array $tags array of tags
 	 * @return type
 	 */
-	protected function getArticlesByTagArray($tags)
+	public function getArticlesByTagArray($tags)
 	{
 		return Article::getByTag($tags, $this->lang);
 	}
@@ -294,7 +294,7 @@ class Out
 		$this->data['page']['lang'] = $this->lang ? $this->lang: cfg::get('sys_lang');
 			
 		// URL
-		$this->data['page']['url']  = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$this->data['page']['url']  = utils::getBaseUrl() . $_SERVER['REQUEST_URI'];
 			
 		// MISSION
 		$this->data['page']['mission'] = cfg::get('mission');
@@ -310,7 +310,7 @@ class Out
 			$xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->get['art_title']]['text']));
 			$src = $xpath->evaluate("string(//img/@src)");
 		
-			$this->data['page']['image'] = ( !preg_match('/http/', $src) ? 'http://' . $_SERVER['HTTP_HOST'] . '/' : '') . $src;
+			$this->data['page']['image'] = ( !preg_match('/http/', $src) ? utils::getBaseUrl() . '/' : '') . $src;
 		}
 			
 		if ($this->data['article'][$this->get['art_title']]['author'] && $this->data['article'][$this->get['art_title']]['author'] != '')

@@ -213,6 +213,7 @@ $_lang['cfg-fld_name'] = "Nome del campo";
 $_lang['cfg-type'] = "Tipo del campo";
 $_lang['cfg-label'] = "Etichetta del campo";
 $_lang['cfg-values'] = "Valori predefiniti del campo";
+$_lang['cfg-robots'] = "Valore predefinito per il meta tag robots";
 $_lang['encrypted_passw'] = "Password criptata";
 $_lang['one_way_encrypt_passw'] = "Cripta la password";
 $_lang['on'] = "attivata";

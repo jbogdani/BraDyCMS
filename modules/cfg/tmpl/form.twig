@@ -168,6 +168,23 @@
       <span class="text-muted">If you turn off debug mode remember to clear the application cache (see below).</span>
     </div>
 	</div>
+  
+  <!-- ROBOTS -->
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+		<label class="control-label col-md-2">{{ tr.get('cfg-robots') }}</label>
+		<div class="col-md-2">
+			<select name="robots">
+        <option></option>
+        {% for val in ['noindex, follow', 'index, nofollow', 'noindex, nofollow'] %}
+          <option value="{{ val }}" {% if val == data.robots %}selected="selected"{% endif %}>{{ val }}</option>
+        {% endfor %}
+				
+			</select>
+		</div>
+    <div class="col-md-7">
+      <span class="text-muted">This is the global default value for <em>robots</em> meta tag (<a href="https://support.google.com/webmasters/answer/79812" target="_blank">more info</a>).</span>
+    </div>
+	</div>
 	
 	<!-- THUMBS_DIMENSIONS -->
 	<div class="form-group">

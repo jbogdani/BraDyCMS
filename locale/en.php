@@ -213,6 +213,7 @@ $_lang['cfg-fld_name'] = "Field name";
 $_lang['cfg-type'] = "Field type";
 $_lang['cfg-label'] = "Field label";
 $_lang['cfg-values'] = "Default field values";
+$_lang['cfg-robots'] = "Default robots meta tag";
 $_lang['encrypted_passw'] = "Encrypted password";
 $_lang['one_way_encrypt_passw'] = "Encrypt password";
 $_lang['on'] = "on";

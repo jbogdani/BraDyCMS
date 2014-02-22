@@ -8,6 +8,14 @@
  
 class utils
 {
+  
+  public static function getBaseUrl()
+  {
+    // http://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    return $protocol . $_SERVER['HTTP_HOST'] . cfg::get('rewriteBase') . '/';
+  }
+  
 	public static function recursive_delete($dir, $dont_delete_self = false)
 	{
 		$files = self::dirContent($dir, true);

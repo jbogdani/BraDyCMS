@@ -107,9 +107,9 @@
 										{% if fld.type == 'longtext' %}
 										<textarea name="{{ fld.name }}"  class="col-md-12" style="height:100px">{{ art[fld.name] }}</textarea>
 										{% elseif fld.type == 'select' and fld.values %}
-											<select class="col-md-12" name="{{ fld.name }}">
+                    	<select class="col-md-12" name="{{ fld.name }}">
 												<option></option>
-												{% for opt in fld.values|split(',') %}
+												{% for opt in fld.values %}
 													<option{% if opt == art[fld.name] %} selected="selected" {% endif %}>{{ opt }}</option>
 												{% endfor %}
 											</select>

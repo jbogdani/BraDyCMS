@@ -313,12 +313,9 @@ class lessc {
 		}
 
 		if ($split) {
-      // applied patch from @ldbglobe as in https://github.com/leafo/lessphp/issues/302
-      return array(array_merge($imports,$vars), $other);
-			//return array(array_merge($vars, $imports), $other);
+			return array(array_merge($vars, $imports), $other);
 		} else {
-      return array_merge($imports, $vars, $other);
-			//return array_merge($vars, $imports, $other);
+			return array_merge($vars, $imports, $other);
 		}
 	}
 
@@ -617,8 +614,7 @@ class lessc {
 					// has default value
 					$value = $a[2];
 				} else {
-          // applied patch from @pdias as in https://github.com/leafo/lessphp/issues/491
-					//$this->throwError("Failed to assign arg " . $a[1]);
+					$this->throwError("Failed to assign arg " . $a[1]);
 					$value = null; // :(
 				}
 

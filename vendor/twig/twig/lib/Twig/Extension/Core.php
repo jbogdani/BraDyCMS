@@ -393,7 +393,7 @@ function twig_random(Twig_Environment $env, $values = null)
         return $values < 0 ? mt_rand($values, 0) : mt_rand(0, $values);
     }
 
-    if ($values instanceof Traversable) {
+    if (is_object($values) && $values instanceof Traversable) {
         $values = iterator_to_array($values);
     } elseif (is_string($values)) {
         if ('' === $values) {
@@ -504,18 +504,15 @@ function twig_date_converter(Twig_Environment $env, $date = null, $timezone = nu
         $defaultTimezone = $timezone;
     }
 
-    // immutable dates
-    if ($date instanceof DateTimeImmutable) {
-        return false !== $timezone ? $date->setTimezone($defaultTimezone) : $date;
-    }
-
     if ($date instanceof DateTime || $date instanceof DateTimeInterface) {
-        $date = clone $date;
+        $returningDate = new DateTime($date->format('c'));
         if (false !== $timezone) {
-            $date->setTimezone($defaultTimezone);
+            $returningDate->setTimezone($defaultTimezone);
+        } else {
+            $returningDate->setTimezone($date->getTimezone());
         }
 
-        return $date;
+        return $returningDate;
     }
 
     $asString = (string) $date;
@@ -692,7 +689,7 @@ function twig_array_merge($arr1, $arr2)
  */
 function twig_slice(Twig_Environment $env, $item, $start, $length = null, $preserveKeys = false)
 {
-    if ($item instanceof Traversable) {
+    if (is_object($item) && $item instanceof Traversable) {
         $item = iterator_to_array($item, false);
     }
 
@@ -759,7 +756,7 @@ function twig_last(Twig_Environment $env, $item)
  */
 function twig_join_filter($value, $glue = '')
 {
-    if ($value instanceof Traversable) {
+    if (is_object($value) && $value instanceof Traversable) {
         $value = iterator_to_array($value, false);
     }
 
@@ -901,7 +898,7 @@ function twig_in_filter($value, $compare)
         }
 
         return false !== strpos($compare, (string) $value);
-    } elseif ($compare instanceof Traversable) {
+    } elseif (is_object($compare) && $compare instanceof Traversable) {
         return in_array($value, iterator_to_array($compare, false), is_object($value));
     }
 
@@ -1375,8 +1372,6 @@ function twig_test_iterable($value)
  */
 function twig_include(Twig_Environment $env, $context, $template, $variables = array(), $withContext = true, $ignoreMissing = false, $sandboxed = false)
 {
-    $alreadySandboxed = false;
-    $sandbox = null;
     if ($withContext) {
         $variables = array_merge($context, $variables);
     }
@@ -1441,7 +1436,7 @@ function twig_constant($constant, $object = null)
  */
 function twig_array_batch($items, $size, $fill = null)
 {
-    if ($items instanceof Traversable) {
+    if (is_object($items) && $items instanceof Traversable) {
         $items = iterator_to_array($items, false);
     }
 

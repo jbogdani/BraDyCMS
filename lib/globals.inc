@@ -85,9 +85,7 @@ Autoloader::start();
 
 require $root . 'vendor/autoload.php';
 
-
-
-class_alias('RedBean_Facade', 'R');
+use RedBean_Facade as R;
 
 //set default date-zone
 if (defined('CREATE_SITE') || !cfg::get('timezone'))

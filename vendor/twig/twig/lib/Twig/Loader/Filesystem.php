@@ -143,8 +143,7 @@ class Twig_Loader_Filesystem implements Twig_LoaderInterface, Twig_ExistsLoaderI
      */
     public function exists($name)
     {
-        $name = $this->normalizeName($name);
-
+        $name = (string) $name;
         if (isset($this->cache[$name])) {
             return true;
         }
@@ -168,7 +167,10 @@ class Twig_Loader_Filesystem implements Twig_LoaderInterface, Twig_ExistsLoaderI
 
     protected function findTemplate($name)
     {
-        $name = $this->normalizeName($name);
+        $name = (string) $name;
+
+        // normalize name
+        $name = preg_replace('#/{2,}#', '/', strtr($name, '\\', '/'));
 
         if (isset($this->cache[$name])) {
             return $this->cache[$name];
@@ -198,11 +200,6 @@ class Twig_Loader_Filesystem implements Twig_LoaderInterface, Twig_ExistsLoaderI
         }
 
         throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $name, implode(', ', $this->paths[$namespace])));
-    }
-
-    protected function normalizeName($name)
-    {
-        return preg_replace('#/{2,}#', '/', strtr((string) $name, '\\', '/'));
     }
 
     protected function validateName($name)

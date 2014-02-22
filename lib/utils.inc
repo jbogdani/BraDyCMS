@@ -244,13 +244,29 @@ class utils
 	}
 	
 	
-	public static function csv_explode($string, $delimiter = ',') {
+	public static function csv_explode($string, $delimiter = ',', $escape ="\\") {
 	
 		$string = str_replace($delimiter .' ', $delimiter, $string);
 	
 		if ( preg_match('/' . $delimiter . '/i', $string) )
 		{
-			return array_filter(explode($delimiter, $string));
+      if ( preg_match('/' . $escape . $delimiter . '/i', $string) )
+      {
+        $string = str_replace($escape . $delimiter, '@@delimiter@@', $string);
+        $changed = true;
+      }
+      $array = array_filter(explode($delimiter, $string));
+      
+      
+      if ($changed)
+      {
+        foreach ($array as &$a)
+        {
+          $a = str_replace('@@delimiter@@', $delimiter, $a);
+        }
+      }
+      
+      return $array;
 				
 		}
 		else

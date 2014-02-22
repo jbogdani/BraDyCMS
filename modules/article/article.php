@@ -117,10 +117,24 @@ class article_ctrl extends Controller
 		{
 			$available_tags = array();
 		}
-		
+		$customflds = cfg::get('custom_fields');
+    
+    if (is_array($customflds))
+    {
+      foreach ($customflds as &$a)
+      {
+        if($a['values'])
+        {
+          $a['values'] = utils::csv_explode($a['values']);
+        }
+      }
+    }
+    
+    var_dump($customflds);
+    
 		$this->render('article', 'form', array(
       'art'=>$art,
-      'custom_fields' => cfg::get('custom_fields'),
+      'custom_fields' => $customflds,
       'date' => date('Y-m-d'),
       'imploded_tags' => '"' . implode('","', $available_tags) . '"',
       'art_imgs' => $article_images,

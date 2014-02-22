@@ -251,6 +251,20 @@ class Out
 	 */
 	private function setPageData()
 	{
+    
+    // ROBOTS
+    if ($this->data['article'][$this->get['art_title']]['robots'])
+    {
+      $this->data['page']['robots'] = $this->data['article'][$this->get['art_title']]['robots'];
+    }
+    else if(cfg::get('robots'))
+    {
+      $this->data['page']['robots'] = cfg::get('robots');
+    }
+    else
+    {
+      $this->data['page']['robots'] = 'index, follow';
+    }
 		// TITLE
     // customtitle field is set in cfg and is not empty
     if ($this->data['article'][$this->get['art_title']]['customtitle'])

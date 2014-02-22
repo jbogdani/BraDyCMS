@@ -18,7 +18,7 @@ class OutHtml extends Out
 	{
 		$html = "\n\t <!-- HTML metadata -->" .
 				"\n\t" . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />' .
-				"\n\t" . '<meta name="robots" content="index, follow" />' .
+				"\n\t" . '<meta name="robots" content="' . $this->getPageData('robots') . '" />' .
 				"\n\t" . '<title>' . $this->getPageData('title') . '</title>' .
 				"\n\t" . '<meta name="description" content="' . $this->getPageData('description', true) . '" />' .
 				"\n\t" . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />' .

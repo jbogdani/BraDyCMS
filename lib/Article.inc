@@ -73,11 +73,11 @@ class Article
 	 */
 	private static function parseArt($article, $lang = false, $return_bean = false)
 	{
-		if (is_array($article))
+    if (is_array($article))
 		{
 			foreach ($article as &$art)
 			{
-				$art = self::parseArt($art, $lang);
+				$art = self::parseArt($art, $lang, $return_bean);
 			}
 			return $article;
 		}
@@ -122,34 +122,59 @@ class Article
 			$article->url = link::to_article($article->textid, $lang);
 			
 			// add FULL URL
-			$article->full_url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . str_replace('./', null, $article->url);
+			$article->full_url = utils::getBaseUrl() . str_replace('./', null, $article->url);
 			
 			// add article image link
 			$image_steps = cfg::get('art_img');
 			if (is_array($image_steps))
 			{
-				$x = 0;
-				foreach ($image_steps as $step)
+				foreach ($image_steps as $x => $step)
 				{
-					if (file_exists('./sites/default/images/articles/' . $step . '/' . $article->id))
+          if (file_exists('./sites/default/images/articles/orig/' . $article->id . '.jpg'))
 					{
-						$article->art_img[$step] = './sites/default/images/articles/' . $step . '/' . $article->id;
-						$article->art_img[$x] = './sites/default/images/articles/' . $step . '/' . $article->id;
-						
+						$art_img['orig'] = utils::getBaseUrl() . 'sites/default/images/articles/orig/' . $article->id . '.jpg';
+						$art_img[0] = utils::getBaseUrl() . 'sites/default/images/articles/orig/' . $article->id . '.jpg';
 					}
-					$x++;
+          
+					if (file_exists('./sites/default/images/articles/' . $step . '/' . $article->id . '.jpg'))
+					{
+						$art_img[$step] = utils::getBaseUrl() . 'sites/default/images/articles/' . $step . '/' . $article->id . '.jpg';
+						$art_img[$x+1] = utils::getBaseUrl() . 'sites/default/images/articles/' . $step . '/' . $article->id . '.jpg';
+					}
 				}
-				$x = false;
 			}
-			//
-			
-			// export to array
+      
+      //add article media link
+      $media_dir = 'sites/default/images/articles/media/' . $article->id;
+      if (file_exists($media_dir))
+      {
+        $files = utils::dirContent($media_dir);
+        
+        if (is_array($files))
+        {
+          $article->media = array();
+          foreach($files as $file)
+          {
+            //$article->media = 'ciao';
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            $media[$ext][] = utils::getBaseUrl() . $media_dir . '/' . $file;
+          }
+        }
+      }
+      
+      // export to array
 			if (!$return_bean)
 			{
 				$art_array = $article->export();
 			
 				//add tags
 				$art_array['tags'] = $tags;
+        
+        //add art_img
+				$art_img ? $art_array['art_img'] = $art_img : '';
+        
+        //add media
+        $media ? $art_array['media'] = $media : '';
 			}
 			else
 			{
@@ -281,7 +306,7 @@ class Article
 			return false;
 		}
 		
-		return self::parseArt($article, $lang, true);
+		return self::parseArt($article, $lang);
 	}
 	
 	
@@ -296,7 +321,7 @@ class Article
 	public static function getByTag($tags, $lang = false, $lax = false, $admin = false)
 	{
 		$articles = $lax ? R::tagged( self::art_tb(), $tags ) : R::taggedAll(self::art_tb(), $tags);
-		
+    
 		if (!is_array($articles) || empty($articles))
 		{
 			return false;

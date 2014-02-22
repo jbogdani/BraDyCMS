@@ -5,16 +5,9 @@
 <i>Mobile_Detect is a lightweight PHP class for detecting mobile devices (including tablets).
 It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.</i>
 
-You may consider this script as being part of the <b>RESS</b> (Responsive Web Design with Server-Side Component) movement. You can find out more on the topic by reading these articles: <a href="http://mobile.smashingmagazine.com/2013/04/09/improve-mobile-support-with-server-side-enhanced-responsive-design/">Improve Mobile Support With Server-Side-Enhanced Responsive Design</a> and <a href="http://www.lukew.com/ff/entry.asp?1392">RESS: Responsive Design + Server Side Components</a>. Related presentations: <a href="http://www.slideshare.net/pgodel/creating-mobile-apps-with-php-symfony2">Creating mobile apps with PHP &amp; Symfony2 (2013)</a>, <a href="http://www.w3.org/2013/Talks/responsive-design.pdf">Responsive Design (2013)</a>
+Nowadays web site/app <b>content strategy</b> matters, this is why you need all the tools to deliver the best and the fastest experience for the small screens. Mobile_Detect class is a [server-side detection](http://www.w3.org/TR/mwabp/#bp-devcap-detection) tool, it is not a replacement for Responsive Web Design (media queries) or other forms of client-side feature detection.
 
-##### How reliable is this script?
-
-The script is as reliable as Server-Side detection can be. This is not a replacement for Responsive Web Design (media queries)
-or other forms of Client-Side detection. Read W3C's Mobile Web Application Best Practices [Prefer Server-Side Detection Where Possible](http://www.w3.org/TR/mwabp/#bp-devcap-detection) section.
-We're running [automated tests](./tests) to make sure the we don't break the detection every time we update it with new devices and also to avoid regex collisions.
-
-The script is updated on <b>daily</b> and <b>weekly</b> basis, so make sure you keep following the updates!
-Sometimes is hard to distinguish between a phone and a tablet, this is why we're constantly researching a lot of mobile vendors sites, checking product codes and new releases.
+We're commited to make Mobile_Detect the best open-source mobile detection resource and this is why before each release we're running [unit tests](./tests), we also research and update the detection rules on <b>daily</b> and <b>weekly</b> basis.
 
 ##### Download and demo
 
@@ -22,6 +15,8 @@ Sometimes is hard to distinguish between a phone and a tablet, this is why we're
 
 See also: <a href="https://github.com/serbanghita/Mobile-Detect/wiki/Become-a-contributor">:bulb: Become a contributor</a> / <a href="https://github.com/serbanghita/Mobile-Detect/wiki/History">:coffee: History</a> / <a href="https://github.com/serbanghita/Mobile-Detect/wiki/Code-examples">:point_right: Code examples</a> /
 <a href="http://is.gd/mobiletest">:iphone: Live demo!</a> (point your device browser to this URL)
+
+<img src="https://www.dropbox.com/s/8kw8e30v3mxig02/qrcode.png" width="96">
 
 ##### Help
 
@@ -35,9 +30,15 @@ Special thanks to the community :+1: for donations, [BrowserStack](http://browse
 
 ##### 3rd party modules / [Submit new](https://github.com/serbanghita/Mobile-Detect/issues/new?title=New%203rd%20party%20module&body=Name, Link and Description of the module.)
 
-:point_right: The recommendation is that you keep Mobile_Detect.php class in a separate module and not include it in your script core because of the high frequency of updates.
+:point_right: Keep `Mobile_Detect.php` class in a separate `module` and do NOT include it in your script core because of the high frequency of updates.
+:point_right: When including the class into you `web application` or `module` always use `include_once '../path/to/Mobile_Detect.php` to prevent conflicts.
 
 <table>
+
+<tr>
+<td>Varnish Cache</td>
+<td><p><a href="https://github.com/willemk/varnish-mobiletranslate">Varnish Mobile Detect</a> - Drop-in varnish solution to mobile user detection based on the Mobile-Detect library. Made by <a href="https://github.com/willemk">willemk</a></p></td>
+</tr>
 
 <tr>
   <td>Wordpress</td>
@@ -83,7 +84,11 @@ Special thanks to the community :+1: for donations, [BrowserStack](http://browse
 
  <tr>
   <td>Zend Framework</td>
-  <td><p><a href="https://github.com/neilime/zf2-mobile-detect.git">ZF2 Mobile-Detect</a> - Zend Framework 2 module that provides Mobile-Detect features (Mobile_Detect class as a service, helper for views and plugin controllers). Made by <a href="https://github.com/neilime">neilime</a></p></td>
+  <td>
+    <p><a href="https://github.com/neilime/zf2-mobile-detect.git">ZF2 Mobile-Detect</a> - Zend Framework 2 module that provides Mobile-Detect features (Mobile_Detect class as a service, helper for views and plugin controllers). Made by <a href="https://github.com/neilime">neilime</a></p>
+
+    <p><a href="https://github.com/nikolaposa/MobileDetectModule">ZF2 MobileDetectModule</a> - Facilitates integration of a PHP MobileDetect class with some ZF2-based application. Has similar idea like the existing ZF2 Mobile-Detect module, but differs in initialization and provision routine of the actual Mobile_Detect class. Appropriate view helper and controller plugin also have different conceptions. Made by <a href="https://github.com/nikolaposa">Nikola Posa</a></p>
+  </td>
  </tr>
 
   <tr>
@@ -92,6 +97,14 @@ Special thanks to the community :+1: for donations, [BrowserStack](http://browse
         Made by <a href="https://github.com/suncat2000">Nikolay Ivlev</a>.</p>
         <p><a href="https://github.com/jbinfo/MobileDetectServiceProvider">Silex Mobile Detect Service Provider</a> - <code>Silex</code> service provider to interact with Mobile detect class methods. Made by <a href="https://github.com/jbinfo">Lhassan Baazzi</a>.</p>
      </td>
+  </tr>
+
+  <tr>
+    <td>Laravel</td>
+    <td>
+    <p><a href="https://github.com/jenssegers/Laravel-Agent">Laravel-Agent</a> a user agent class for Laravel, based on Mobile Detect with some additional functionality. Made by <a href="https://github.com/jenssegers">Jens Segers</a>.</p>
+    <p><a href="https://github.com/hisorange/browser-detect">BrowserDetect</a>is a browser &amp; mobile detection package, collects and wrap together the best user-agent identifiers for Laravel. Created by <a href="https://github.com/hisorange">Varga Zsolt</a>.</p>
+    </td>
   </tr>
 
   <tr>
@@ -116,8 +129,13 @@ It overrides the Fuelphp Agent class its methods. Made by <a href="https://githu
 </tr>
 
 <tr>
+  <td>Typo3</td>
+  <td><a href="http://docs.typo3.org/typo3cms/extensions/px_mobiledetect/1.0.2/">px_mobiledetect</a> is an extension that helps to detect visitor's mobile device class (if that’s tablet or mobile device like smartphone). Made by Alexander Tretyak.</td>
+</tr>
+
+<tr>
   <td>Statamic</td>
-  <td><p><a href="https://github.com/sergeifilippov/statamic-mobile-detect">Statamic CMS Mobile Detect</a> - <code>plugin</code>. Made by <a href="https://github.com/sergeifilippov">Sergei Filippov</a>.</p></td>
+  <td><p><a href="https://github.com/sergeifilippov/statamic-mobile-detect">Statamic CMS Mobile Detect</a> - <code>plugin</code>. Made by <a href="https://github.com/haikulab/statamic-mobile-detect">Sergei Filippov of Haiku Lab</a>.</p></td>
 </tr>
 
 <tr>

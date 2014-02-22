@@ -86,6 +86,7 @@ Autoloader::start();
 require $root . 'vendor/autoload.php';
 
 use RedBean_Facade as R;
+class_alias('RedBean_Facade', 'R');
 
 //set default date-zone
 if (defined('CREATE_SITE') || !cfg::get('timezone'))
@@ -123,7 +124,7 @@ else
 }
 tr::load_file(@$_GET['lang'], defined('CREATE_SITE'));
 
-if (defined('CREATE_SITE') || !cfg::get('db_connection'))
+if (defined('CREATE_SITE') && !cfg::get('db_connection'))
 {
   R::setup('sqlite:./sites/default/cfg/database.sqlite');
 }

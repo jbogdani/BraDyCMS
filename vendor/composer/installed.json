@@ -1,23 +1,23 @@
 [
     {
         "name": "swiftmailer/swiftmailer",
-        "version": "v5.0.2",
-        "version_normalized": "5.0.2.0",
+        "version": "v5.0.3",
+        "version_normalized": "5.0.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/swiftmailer/swiftmailer.git",
-            "reference": "f3917ecef35a4e4d98b303eb9fee463bc983f379"
+            "reference": "32edc3b0de0fdc1b10f5c4912e8677b3f411a230"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/f3917ecef35a4e4d98b303eb9fee463bc983f379",
-            "reference": "f3917ecef35a4e4d98b303eb9fee463bc983f379",
+            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/32edc3b0de0fdc1b10f5c4912e8677b3f411a230",
+            "reference": "32edc3b0de0fdc1b10f5c4912e8677b3f411a230",
             "shasum": ""
         },
         "require": {
             "php": ">=5.2.4"
         },
-        "time": "2013-08-30 12:35:21",
+        "time": "2013-12-03 13:33:24",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -37,7 +37,9 @@
         "authors": [
             {
                 "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
+                "email": "fabien@symfony.com",
+                "homepage": "http://fabien.potencier.org",
+                "role": "Lead Developer"
             },
             {
                 "name": "Chris Corbyn"
@@ -94,6 +96,95 @@
         "homepage": "http://leafo.net/lessphp/"
     },
     {
+        "name": "gabordemooij/redbean",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/gabordemooij/redbean.git",
+            "reference": "51bf2a5a5deb7b49830c428ceb1a0c3ada91e2d3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/51bf2a5a5deb7b49830c428ceb1a0c3ada91e2d3",
+            "reference": "51bf2a5a5deb7b49830c428ceb1a0c3ada91e2d3",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "time": "2014-02-08 16:57:26",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "RedBean_": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD"
+        ],
+        "authors": [
+            {
+                "name": "Gabor de Mooij",
+                "email": "gabordemooij@gmail.com",
+                "homepage": "http://www.redbeanphp.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Easy ORM for PHP",
+        "homepage": "http://github.com/gabordemooij/redbean",
+        "keywords": [
+            "Object Relational Mapping",
+            "orm"
+        ]
+    },
+    {
+        "name": "jsocol/oocurl",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jsocol/oocurl.git",
+            "reference": "72ff5e0a75917793de8dc30fa136cef794b90529"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jsocol/oocurl/zipball/72ff5e0a75917793de8dc30fa136cef794b90529",
+            "reference": "72ff5e0a75917793de8dc30fa136cef794b90529",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "time": "2013-10-28 22:02:20",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "OOCurl.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "JordiJames Socol",
+                "email": "me@jamessocol.com",
+                "homepage": "http://coffeeonthekeyboard.com/",
+                "role": "Developer"
+            }
+        ],
+        "description": "LoggingOOCurl is an object-oriented wrapper around PHP's cURL bindings. The goal was to provide an interface that felt more natural in modern, OO PHP.",
+        "homepage": "https://github.com/jsocol/oocurl",
+        "keywords": [
+            "curl"
+        ]
+    },
+    {
         "name": "oaiprovider-php/oaiprovider-php",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -143,15 +234,15 @@
         "source": {
             "type": "git",
             "url": "https://github.com/mibe/FeedWriter.git",
-            "reference": "8b801e96326606d0360c0549f913f099df10ed67"
+            "reference": "02eac4b31c66a6c0c7643035d2963660c6397301"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/8b801e96326606d0360c0549f913f099df10ed67",
-            "reference": "8b801e96326606d0360c0549f913f099df10ed67",
+            "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/02eac4b31c66a6c0c7643035d2963660c6397301",
+            "reference": "02eac4b31c66a6c0c7643035d2963660c6397301",
             "shasum": ""
         },
-        "time": "2013-09-13 21:22:37",
+        "time": "2014-02-09 22:28:32",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -198,18 +289,77 @@
         ]
     },
     {
-        "name": "mobiledetect/mobiledetectlib",
-        "version": "2.7.2",
-        "version_normalized": "2.7.2.0",
+        "name": "twig/twig",
+        "version": "v1.15.1",
+        "version_normalized": "1.15.1.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/serbanghita/Mobile-Detect.git",
-            "reference": "1d709b8f24c1ab8d991e7bb8730cafb0de020641"
+            "url": "https://github.com/fabpot/Twig.git",
+            "reference": "1fb5784662f438d7d96a541e305e28b812e2eeed"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/1d709b8f24c1ab8d991e7bb8730cafb0de020641",
-            "reference": "1d709b8f24c1ab8d991e7bb8730cafb0de020641",
+            "url": "https://api.github.com/repos/fabpot/Twig/zipball/1fb5784662f438d7d96a541e305e28b812e2eeed",
+            "reference": "1fb5784662f438d7d96a541e305e28b812e2eeed",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.4"
+        },
+        "time": "2014-02-13 10:19:29",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.15-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Twig_": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com",
+                "homepage": "http://fabien.potencier.org",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Armin Ronacher",
+                "email": "armin.ronacher@active-4.com",
+                "role": "Project Founder"
+            },
+            {
+                "name": "Twig Team",
+                "homepage": "https://github.com/fabpot/Twig/graphs/contributors",
+                "role": "Contributors"
+            }
+        ],
+        "description": "Twig, the flexible, fast, and secure template language for PHP",
+        "homepage": "http://twig.sensiolabs.org",
+        "keywords": [
+            "templating"
+        ]
+    },
+    {
+        "name": "mobiledetect/mobiledetectlib",
+        "version": "2.7.8",
+        "version_normalized": "2.7.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/serbanghita/Mobile-Detect.git",
+            "reference": "aad192c0e0152ccd6a4ce4b4c2c901d4994063f0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/aad192c0e0152ccd6a4ce4b4c2c901d4994063f0",
+            "reference": "aad192c0e0152ccd6a4ce4b4c2c901d4994063f0",
             "shasum": ""
         },
         "require": {
@@ -218,9 +368,9 @@
         "require-dev": {
             "phpunit/phpunit": "*"
         },
-        "time": "2013-11-01 19:39:17",
+        "time": "2014-02-05 18:07:26",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "classmap": [
                 "Mobile_Detect.php"
@@ -249,146 +399,6 @@
             "mobile detect",
             "mobile detector",
             "php mobile detect"
-        ]
-    },
-    {
-        "name": "jsocol/oocurl",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/jsocol/oocurl.git",
-            "reference": "72ff5e0a75917793de8dc30fa136cef794b90529"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/jsocol/oocurl/zipball/72ff5e0a75917793de8dc30fa136cef794b90529",
-            "reference": "72ff5e0a75917793de8dc30fa136cef794b90529",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "time": "2013-10-28 22:02:20",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "OOCurl.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "JordiJames Socol",
-                "email": "me@jamessocol.com",
-                "homepage": "http://coffeeonthekeyboard.com/",
-                "role": "Developer"
-            }
-        ],
-        "description": "LoggingOOCurl is an object-oriented wrapper around PHP's cURL bindings. The goal was to provide an interface that felt more natural in modern, OO PHP.",
-        "homepage": "https://github.com/jsocol/oocurl",
-        "keywords": [
-            "curl"
-        ]
-    },
-    {
-        "name": "gabordemooij/redbean",
-        "version": "dev-RedBeanPHP3_5_X",
-        "version_normalized": "dev-RedBeanPHP3_5_X",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/gabordemooij/redbean.git",
-            "reference": "1bf4f25fc05e69623cf282fb29061f2af5d8c298"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/1bf4f25fc05e69623cf282fb29061f2af5d8c298",
-            "reference": "1bf4f25fc05e69623cf282fb29061f2af5d8c298",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "time": "2013-12-10 09:39:38",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "RedBean_": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD"
-        ],
-        "authors": [
-            {
-                "name": "Gabor de Mooij",
-                "email": "gabordemooij@gmail.com",
-                "homepage": "http://www.redbeanphp.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "Easy ORM for PHP",
-        "homepage": "http://github.com/gabordemooij/redbean",
-        "keywords": [
-            "Object Relational Mapping",
-            "orm"
-        ]
-    },
-    {
-        "name": "twig/twig",
-        "version": "v1.15.0",
-        "version_normalized": "1.15.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/fabpot/Twig.git",
-            "reference": "85e4ff98000157ff753d934b9f13659a953f5666"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/fabpot/Twig/zipball/85e4ff98000157ff753d934b9f13659a953f5666",
-            "reference": "85e4ff98000157ff753d934b9f13659a953f5666",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.4"
-        },
-        "time": "2013-12-06 07:47:10",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.15-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Twig_": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Armin Ronacher",
-                "email": "armin.ronacher@active-4.com"
-            }
-        ],
-        "description": "Twig, the flexible, fast, and secure template language for PHP",
-        "homepage": "http://twig.sensiolabs.org",
-        "keywords": [
-            "templating"
         ]
     }
 ]

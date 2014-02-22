@@ -17,6 +17,8 @@ RewriteRule ^feed/atom$ controller.php?obj=feeds_ctrl&method=atom
 RewriteRule ^OAI$ controller.php?obj=OAI_ctrl&method=run [QSA]
 RewriteRule ^oai$ controller.php?obj=OAI_ctrl&method=run [QSA]
 
+#api
+RewriteRule ^api/?(.+)$ controller.php?obj=api_ctrl&method=run&$1 [QSA]
 
 #admin 
 RewriteRule ^admin/?$ admin.php

@@ -8,24 +8,13 @@
     "authors": [
         {
             "name": "Fabien Potencier",
-            "email": "fabien@symfony.com",
-            "homepage": "http://fabien.potencier.org",
-            "role": "Lead Developer"
-        },
-        {
-            "name": "Twig Team",
-            "homepage": "https://github.com/fabpot/Twig/graphs/contributors",
-            "role": "Contributors"
+            "email": "fabien@symfony.com"
         },
         {
             "name": "Armin Ronacher",
-            "email": "armin.ronacher@active-4.com",
-            "role": "Project Founder"
+            "email": "armin.ronacher@active-4.com"
         }
     ],
-    "support": {
-        "forum": "https://groups.google.com/forum/#!forum/twig-users"
-    },
     "require": {
         "php": ">=5.2.4"
     },

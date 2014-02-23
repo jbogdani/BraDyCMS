@@ -130,8 +130,6 @@ class article_ctrl extends Controller
       }
     }
     
-    var_dump($customflds);
-    
 		$this->render('article', 'form', array(
       'art'=>$art,
       'custom_fields' => $customflds,

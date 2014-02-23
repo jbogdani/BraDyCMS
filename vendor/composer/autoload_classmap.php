@@ -8,7 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Curl' => $vendorDir . '/jsocol/oocurl/OOCurl.php',
     'CurlParallel' => $vendorDir . '/jsocol/oocurl/OOCurl.php',
-    'FeedWriter\\ATOM' => $vendorDir . '/mibe/feedwriter/ATOM.php',
+    'FeedWriter\\Atom' => $vendorDir . '/mibe/feedwriter/ATOM.php',
     'FeedWriter\\Feed' => $vendorDir . '/mibe/feedwriter/Feed.php',
     'FeedWriter\\Item' => $vendorDir . '/mibe/feedwriter/Item.php',
     'FeedWriter\\RSS1' => $vendorDir . '/mibe/feedwriter/RSS1.php',

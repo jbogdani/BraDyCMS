@@ -10,13 +10,13 @@ class OAI_ctrl extends Controller
 {
 	public function run()
 	{
-    if(!file_exists('./sites/default/modules/metadata_repo/metadata.json'))
+    if(!file_exists('./sites/default/modules/metadataRepo/metadata.json'))
     {
       echo tr::get('no_oai_config_for_site');
       return;
     }
     
-    $metadata = new Metadata('./sites/default/modules/metadata_repo/metadata.json');
+    $metadata = new Metadata('./sites/default/modules/metadataRepo/metadata.json');
 
     require_once './vendor/oaiprovider-php/oaiprovider-php/endpoint.php';
     require_once MOD_DIR . 'OAI/myRepository.php';

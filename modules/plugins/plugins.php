@@ -16,7 +16,7 @@ class plugins_ctrl extends Controller
 			
 			$param = $this->get['param'];
 			array_shift($param);
-			
+      
 			if (!$plugin)
 			{
 				throw new Exception('No plugin name defined');
@@ -24,7 +24,7 @@ class plugins_ctrl extends Controller
 			
 			if (!class_exists($plugin))
 			{
-				$plg_file = './sites/default/modules/' . $plugin . '/' .$plugin . '.inc';
+				$plg_file = './sites/default/modules/' . $plugin . '/' . $plugin . '.inc';
 				
 				if (!file_exists($plg_file))
 				{

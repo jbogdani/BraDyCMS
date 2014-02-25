@@ -28,6 +28,11 @@ class Metadata
       $this->metadata = json_decode(file_get_contents($path2metadata), true);
     }
   }
+  
+  public function __get($name)
+  {
+    return $this->metadata[$name];
+  }
 	
 	/**
 	 * Returns the repository (Review) name

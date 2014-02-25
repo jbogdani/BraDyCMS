@@ -523,11 +523,9 @@ class OutHtml extends Out
 	 */
 	public function ct($method, $param = false)
 	{
-		if ($param)
-		{
-			$param = json_decode($param, true);
-		}
-		if (method_exists('customTags', $method))
+    $param = $param ? json_decode($param, true) : array();
+    
+    if (method_exists('customTags', $method))
 		{
 			$html = call_user_func(array('customTags', $method), $param);
 		}
@@ -535,7 +533,7 @@ class OutHtml extends Out
 		{
 			require_once 'sites/default/modules/' . $method . '/' . $method . '.inc';
 	
-			$html = call_user_func(array($method, 'init'), $param);
+			$html = call_user_func(array($method, 'init'), $param, $this);
 	
 		}
 	

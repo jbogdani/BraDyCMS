@@ -391,7 +391,7 @@ class customTags
     $alt = $data['caption'] ? $data['caption'] : $data['content'];
     $alt = str_replace('"', '', strip_tags($alt));
     
-    // filename will the the thumbanail filename if fancybox parameter is true and thumb exists
+    // filename will the thumbanail filename if fancybox parameter is true and thumb exists
     if( $data['fancybox'])
     {
       // Get the file name (clean path data)

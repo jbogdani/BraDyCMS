@@ -13,8 +13,13 @@ class template_ctrl extends Controller
 	{
 		try
 		{
-			$less = new lessc();
-			$less->checkedCompile(SITE_DIR .  "css/styles.less", SITE_DIR . "css/styles.css");
+      $opts = array(
+        'compress'=>true
+      );
+      $parser = new Less_Parser($opts);
+      $parser->parseFile( SITE_DIR .  "css/styles.less");
+      $css = $parser->getCss();
+      file_put_contents(SITE_DIR . "css/styles.css", $css);
 			
 			$ret['status'] = 'success';
 			$ret['text'] = tr::get('ok_compiling_less');

@@ -387,11 +387,13 @@ class Article
 
 		$articles = R::find(
 				self::art_tb(),
-				"    `title`    LIKE ? " .
-				" OR `summary`  LIKE ? " .
-				" OR `text`     LIKE ? " .
-				" OR `keywords` LIKE ? ",
-				array($string, $string, $string, $string)
+        "    `title`    LIKE ? "
+        . " OR `textid`  LIKE ? "
+        . " OR `author`  LIKE ? "
+				. " OR `summary`  LIKE ? "
+				. " OR `text`     LIKE ? "
+				. " OR `keywords` LIKE ? ",
+				array($string, $string, $string, $string, $string, $string)
 		);
 		
 		if (!is_array($articles))

@@ -3,7 +3,10 @@ RewriteBase /
 
 ErrorDocument 404 /index.php?art_title=not_found
 
-#  www to non-www url syntax
+# robots
+RewriteRule ^robots.txt$ controller.php?obj=seo_ctrl&method=robots
+
+# www to non-www url syntax
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L] 
 

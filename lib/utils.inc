@@ -13,7 +13,8 @@ class utils
   {
     // http://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-    return $protocol . $_SERVER['HTTP_HOST'] . cfg::get('rewriteBase') . '/';
+    $url = $protocol . $_SERVER['HTTP_HOST'] . cfg::get('rewriteBase');
+    return (substr($url, -1) ===  '/' ? $url : $url . '/');
   }
   
 	public static function recursive_delete($dir, $dont_delete_self = false)

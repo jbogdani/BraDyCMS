@@ -175,7 +175,7 @@
 		<div class="col-md-2">
 			<select name="robots">
         <option></option>
-        {% for val in ['noindex, follow', 'index, nofollow', 'noindex, nofollow'] %}
+        {% for val in ['index, follow', 'noindex, follow', 'index, nofollow', 'noindex, nofollow'] %}
           <option value="{{ val }}" {% if val == data.robots %}selected="selected"{% endif %}>{{ val }}</option>
         {% endfor %}
 				

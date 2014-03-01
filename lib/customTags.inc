@@ -78,6 +78,21 @@ class customTags
 		return $html;
 	}
 	
+  /**
+	 * Displays a user defined form
+	 * @param array $data
+	 *			$data[content]  is the name of the map to display (i.e. the name of the json file with configuration)
+	 *			$data[width],   the width of the map container element (default value: 100%)
+   *      $data[height],  the height of the map container element (default value: 400px)
+	 * @return type
+	 */
+	public static function map($data)
+	{
+		$f = new usermap_ctrl();
+		
+		return $f->showMap($data);
+	}
+  
 	/**
 	 * Displays a user defined form
 	 * @param array $data

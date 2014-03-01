@@ -26,18 +26,9 @@ class docs_ctrl extends Controller
   
   private function structuredCustomTags()
   {
-   $ct[] = array(
-      'tag' => 'gallery',
-      'description' => 'Displays an existing image gallery',
-      'content' => 'string, required. Name of gallery',
-      'params' => array(
-        'class' => 'string, optional. One or more (space separated) CSS class to apply to main ul tag'
-        ),
-      'min_example' => '[[gallery]]gallery_name[[/gallery]]',
-      'max_example' => '[[gallery class="horizontal small"]]gallery_name[[/gallery]]'
-    );
+   
     
-   $ct[] = array(
+    $ct[] = array(
       'tag' => 'cl_gallery',
       'description' => 'Displays imageless galleries, for conditional image loading. ' .
         'This custom tags should be used together with the provided jquery.cl_gallery.js javascript plugin',
@@ -49,7 +40,31 @@ class docs_ctrl extends Controller
       'max_example' => '[[cl_gallery class="horizontal small"]]gallery_name[[/cl_gallery]]'
     );
     
-   $ct[] = array(
+    $ct[] = array(
+      'tag' => 'gallery',
+      'description' => 'Displays an existing image gallery',
+      'content' => 'string, required. Name of gallery',
+      'params' => array(
+        'class' => 'string, optional. One or more (space separated) CSS class to apply to main ul tag'
+        ),
+      'min_example' => '[[gallery]]gallery_name[[/gallery]]',
+      'max_example' => '[[gallery class="horizontal small"]]gallery_name[[/gallery]]'
+    );
+    
+    $ct[] = array(
+      'tag' => 'twitter',
+      'description' => 'Adds the necessary HTML and javascript code to show ' . 
+        'a Twitter widget',
+      'content' => 'string, optional. The text that will be shown if something goes ' .
+        'wrong and Twitter widget fails to be initialized.',
+      'params' => array(
+        'twitter_username' => 'string, required. Twitter username',
+        'id' => 'string, required. The ) The widget\'s id, provided by Twitter'
+        ),
+      'min_example' => '[[twitter user="twitter_username" id="twitter_widget_id"]]Some intro text[[/twitter]]'
+    );
+    
+    $ct[] = array(
       'tag' => 'youtube',
       'description' => 'Adds necessary HTML code to embed a Youtube video',
       'content' => 'string, required. Youtube video\'s id',
@@ -73,18 +88,7 @@ class docs_ctrl extends Controller
       'max_example' => '[[vimeo width="560" height="315"]]vimeo_id[[/vimeo]]'
     );
     
-   $ct[] = array(
-      'tag' => 'twitter',
-      'description' => 'Adds the necessary HTML and javascript code to show ' . 
-        'a Twitter widget',
-      'content' => 'string, optional. The text that will be shown if something goes ' .
-        'wrong and Twitter widget fails to be initialized.',
-      'params' => array(
-        'twitter_username' => 'string, required. Twitter username',
-        'id' => 'string, required. The ) The widget\'s id, provided by Twitter'
-        ),
-      'min_example' => '[[twitter user="twitter_username" id="twitter_widget_id"]]Some intro text[[/twitter]]'
-    );
+   
     
    $ct[] = array(
       'tag' => 'fb_comments',
@@ -250,6 +254,18 @@ class docs_ctrl extends Controller
         ),
       'min_example' => '[[userform]]contact[[/userform]]',
       'max_example' => '[[userform inline="true"]]contact[[/userform]]'
+    );
+   
+   $ct[] = array(
+      'tag' => 'map',
+      'description' => 'Shows a user map in article content',
+      'content' => 'string, required. User formap name (uique ID)',
+      'params' => array(
+        'width' => 'string, default: 100%. Width of the map container',
+        'height' => 'string, default: 400%. height of the map container'
+        ),
+      'min_example' => '[[map]]where_we_are[[/map]]',
+      'max_example' => '[[map width="300px" height="200px"]]where_we_are[[/map]]'
     );
     
     return $ct;

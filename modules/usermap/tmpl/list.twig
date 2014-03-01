@@ -1,0 +1,93 @@
+<div id="{{ uid }}">
+	<h2>{{ tr.get('user_maps') }}</h2>
+
+	<div class="btn-group" style="padding:20px 0;">
+			<a class="btn btn-info add_new" title="{{ tr.get('add_new_map') }}"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('add_new_map') }}</a>
+			<a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
+		</div>
+	{% if (maps == false) %}
+		<div class="alert alert-warning"><i class="glyphicon glyphicon-warning-sign"></i> {{ tr.get('no_user_map_available') }}</div>
+	{% else %}
+
+		<div class="row">
+			<div class="col-md-3">
+				<h3>{{ tr.get('available_maps') }}</h3>
+				{% for map in maps %}
+					<div>
+						<p><button class="btn btn-default btn-block openedit">{{ map|replace({'.map': ''}) }}</button></p>
+					</div>
+				{% endfor %}
+				
+				<div>
+					<a href="#docs/read/usermap" class="btn btn-info btn-block"><i class="glyphicon glyphicon-info-sign"></i> More about maps</a>
+				</div>
+			</div>
+
+				<div class="col-md-9 edit_area">
+			</div>
+		</div>
+
+	{% endif %}
+</div>	
+	
+<script>
+	
+	// Reload
+	$('#{{ uid }} .reload').on('click', function(){
+		admin.tabs.reloadActive();
+	});
+	
+	// Open edit map
+	$('#{{ uid }} .openedit').on('click', function(){
+		$('#{{ uid }} .edit_area').load('controller.php?obj=usermap_ctrl&method=edit_map&param[]=' + $(this).text() + '.map');
+	});
+	
+	// Add new
+	$('#{{ uid }} .add_new').on('click', function(){
+		admin.dialog({
+			title: admin.tr('add_map_name'),
+			html: '<div class="input-group">' +
+				'<input type="text" id="new_map_name" class="form-control" />' +
+				'<span class="input-group-addon">.map</span>' +
+			'</div>' +
+			'<span class="text-warning">' + admin.tr('no_special_chars')+ '</span>',
+			buttons:[
+				{
+					text: admin.tr('save'),
+					addclass: 'btn-success',
+					click: function(){
+						$.get('controller.php?obj=usermap_ctrl&method=createNew&param[]=' + $('#new_map_name').val(), function(data){
+							admin.message(data.text, data.status);
+							if (data.status == 'success'){
+								$('#modal').modal('hide');
+								admin.tabs.reloadActive();
+							}
+						}, 'json');
+						
+					}
+				},
+				{
+					text: admin.tr('reset'),
+					action: 'close'
+				}
+			],
+			loaded: function(){
+				$('.modal-footer .btn-success').fadeOut();
+				
+				$('#new_map_name').on('keyup', function(){
+					var val = $(this).val();
+					
+					if (!val || val === ''){
+						$('.modal-footer .btn-success').fadeOut();
+					} else{
+						
+						
+						$(this).val(val.replace(new RegExp("([-=_\.\\s])"), ''));
+						
+						$('.modal-footer .btn-success').fadeIn();
+					}
+				});
+			}
+		});
+	});
+</script>

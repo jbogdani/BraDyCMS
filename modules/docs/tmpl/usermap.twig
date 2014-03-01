@@ -9,13 +9,16 @@
 <p class="text-danger">Pay attention: map ids must be unique. If you enter the name of a previously existing form the former will be deleted and <strong>overwritten</strong>!</p>
 
 
-<h3>Embed a mao in article's body</h3>
+<h3>Embed a map in article's body</h3>
 <p>Embedding a map in an article's body is very simple. Just use the custom tag <code>[[map]]</code> with the name/id of your form.</p>
 <p>For example, to embed the map named <code>find_us</code> in an article's body just add this simple tag:</p>
 <pre>[[map]]find_us[[/map]]</pre>
 <p>You can also set the dimensions of the form by using the attributes <code>width</code> and <code>height</code>, eg.:</p>
 <pre>[[map width="300px" height="300px"]]find_us[[/map]]</pre>
-<p>If these attiributes are missing the default values of 100% for width and 400px for height will be used</p>
+<p>If these attiributes are missing the default values of 100% for width and 400px for height will be used.</p>
+
+<p class="lead text-warning">Usermaps module requires JQuery. Also, in order to get the module correctly working the ./modules/usermap/usermap.js file should be loaded in the header section of your HTML document or be,fore the closing of the <code>body</code> tag, eg:</p>
+<pre>&lt;script src="./modules/usermap/usermap.js"&gt;&lt;/script&gt;</pre>
 
 <h3>Custom map syntax</h3>
 <p>The configuration of a user map must follow a simple but rigid syntax. The configuration file must be a valid <a href="http://www.json.org/" target="_blank">json file</a>. BraDyCMS integrates a real-time validator to help finding any syntax error.</p>

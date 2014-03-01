@@ -16,29 +16,29 @@ class OutHtml extends Out
 	 */
 	public function metadata($no_og = false)
 	{
-		$html = "\n\t <!-- HTML metadata -->" .
-				"\n\t" . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />' .
-				"\n\t" . '<meta name="robots" content="' . $this->getPageData('robots') . '" />' .
-				"\n\t" . '<title>' . $this->getPageData('title') . '</title>' .
-				"\n\t" . '<meta name="description" content="' . $this->getPageData('description', true) . '" />' .
-				"\n\t" . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />' .
-				"\n\t" . '<meta lang="' . $this->getPageData('lang', true) . '" />' .
-				"\n\t" . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+		$html = "\n  <!-- HTML metadata -->" .
+				"\n  " . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />' .
+				"\n  " . '<meta name="robots" content="' . $this->getPageData('robots') . '" />' .
+				"\n  " . '<title>' . $this->getPageData('title') . '</title>' .
+				"\n  " . '<meta name="description" content="' . $this->getPageData('description', true) . '" />' .
+				"\n  " . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />' .
+				"\n  " . '<meta lang="' . $this->getPageData('lang', true) . '" />' .
+				"\n  " . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
 			;
 
 		if (!$no_og)
 		{
-			$html .= "\n\n\t<!-- Open Graph metadata -->" .
-					"\n\t" . '<meta property="og:title" content="' . $this->getPageData('title', true) . '" />' .
-					"\n\t" . '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />' .
-					"\n\t" . '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />' .
-					( $this->getPageData('image') ? "\n\t" . '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />' : '' )
+			$html .= "\n\n  <!-- Open Graph metadata -->" .
+					"\n  " . '<meta property="og:title" content="' . $this->getPageData('title', true) . '" />' .
+					"\n  " . '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />' .
+					"\n  " . '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />' .
+					( $this->getPageData('image') ? "\n  " . '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />' : '' )
 			;
 		}
 				
-		$html .= "\n\n\t<!-- Feed links -->" .
-				"\n\t" . '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />' .
-				"\n\t" . '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />';
+		$html .= "\n\n  <!-- Feed links -->" .
+				"\n  " . '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />' .
+				"\n  " . '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />';
 		
 		return $html;
 	}
@@ -70,86 +70,86 @@ class OutHtml extends Out
 			return;
 		}
 	
-		$html =  "\n\t<!-- Dublin Core metadata tags -->" .
+		$html =  "\n <!-- Dublin Core metadata tags -->" .
 
 				// Type
-				"\n\t" . '<meta name="DC.Type" content="Text" />' .
+				"\n  " . '<meta name="DC.Type" content="Text" />' .
 				
 				// Format
-				"\n\t" . '<meta name="DC.Format" content="text/html" />' .
+				"\n  " . '<meta name="DC.Format" content="text/html" />' .
 				
 				// Identifier
-				"\n\t" . '<meta name="DC.Identifier" ' .
+				"\n  " . '<meta name="DC.Identifier" ' .
           'content="' . $art['id'] . '"/>' .
 				
 				// Identifier.URI
-				"\n\t" . '<meta name="DC.Identifier.URI" scheme="URI" ' .
+				"\n  " . '<meta name="DC.Identifier.URI" scheme="URI" ' .
           'content="' . $this->getPageData('url', true) . '" />' .
 				
 				// Identifier.DOI
-				"\n\t" . '<meta name="DC.Identifier.DOI" ' . 
+				"\n  " . '<meta name="DC.Identifier.DOI" ' . 
           'content="' . $this->getMD()->getDoiPrefix() . 
           '.' . $art[$this->getMD()->getTable('id')] . '" />' .
 				
 				// Titile
-				"\n\t" . '<meta name="DC.Title" ' .
+				"\n  " . '<meta name="DC.Title" ' .
           'content="' . $this->getPageData('title', true) . '" />' .
 				
 				// Description
-				"\n\t" . '<meta name="DC.Description" ' .
+				"\n  " . '<meta name="DC.Description" ' .
           'content="' . $this->getPageData('description', true) . '" />' .
 				
 				// Language
-				"\n\t" . '<meta name="DC.Language" scheme="ISO639-1" ' .
+				"\n  " . '<meta name="DC.Language" scheme="ISO639-1" ' .
           'content="' . $this->getPageData('lang', true) . '" />' .
 				
 				// Creator
 				( $this->getPageData('author') ? 
-            "\n\t" . '<meta name="DC.Creator" ' .
+            "\n  " . '<meta name="DC.Creator" ' .
               'content="' .  $this->getPageData('author', true) . '" />' : '') .
 				
 				// Creator.PersonalName
 				( $this->getPageData('author') ? 
-            "\n\t" . '<meta name="DC.Creator.PersonalName" ' .
+            "\n  " . '<meta name="DC.Creator.PersonalName" ' .
               'content="' .  $this->getPageData('author', true) . '" />' : '') .
 				
 				// Publisher
 				( $this->getMD()->getPublisher() ? 
-            "\n\t" . '<meta name="DC.Publisher" ' .
+            "\n  " . '<meta name="DC.Publisher" ' .
               'content="' . $this->getMD()->getPublisher() . '" />' : '') .
 				
 				// Subject
-				"\n\t" . '<meta name="DC.subject" scheme="RFC3066" ' .
+				"\n  " . '<meta name="DC.subject" scheme="RFC3066" ' .
           'content="' . $this->getPageData('keywords', true) . '" />' .
 
 				// Date
 				( $this->getPageData('date') ? 
-            "\n\t" . '<meta name="DC.Date" scheme="W3CDTF" ' .
+            "\n  " . '<meta name="DC.Date" scheme="W3CDTF" ' .
               'content="' . $this->getPageData('date') . '" />' : '') .
 				
 				// Date.created
 				( $this->getPageData('date') ? 
-            "\n\t" . '<meta name="DC.Date.created" scheme="ISO8601" ' .
+            "\n  " . '<meta name="DC.Date.created" scheme="ISO8601" ' .
               'content="' . $this->getPageData('date') . '" />' : '') .
 				
 				// Date.modified
 				( $art['updated'] ? 
-            "\n\t" . '<meta name="DC.Date.modified" scheme="ISO8601" ' .
+            "\n  " . '<meta name="DC.Date.modified" scheme="ISO8601" ' .
               'content="' . $art['updated'] . '" />' : '') .
 				
 				// Source
 				($this->getMD()->getRepositoryName() ? 
-            "\n\t" . '<meta name="DC.Source" ' .
+            "\n  " . '<meta name="DC.Source" ' .
               'content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
 				
 				// Source.ISSN
 				($this->getMD()->getISSN() ? 
-            "\n\t" . '<meta name="DC.Source.ISSN" ' .
+            "\n  " . '<meta name="DC.Source.ISSN" ' .
               'content="' . $this->getMD()->getISSN() . '"/>' : '') .
 				
 				// Source.URI
 				($this->getMD()->getURL() ? 
-            "\n\t" . '<meta name="DC.Source.URI" ' .
+            "\n  " . '<meta name="DC.Source.URI" ' .
               'content="' . $this->getMD()->getURL() . '"/>' : '')
 				;
 		return $html;
@@ -170,49 +170,49 @@ class OutHtml extends Out
 		 */
 		$art = $this->getArticle();
 		
-		$html =  "\n\t<!-- Highwire Press metadata tags -->" .
+		$html =  "\n  <!-- Highwire Press metadata tags -->" .
 				
 				// journal title
 				($this->getMD()->getRepositoryName() ? 
-          "\n\t" . '<meta name="citation_journal_title" ' .
+          "\n  " . '<meta name="citation_journal_title" ' .
             'content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
 				
 				// journal issn
 				($this->getMD()->getISSN() ? 
-          "\n\t" . '<meta name="citation_issn" ' .
+          "\n  " . '<meta name="citation_issn" ' .
             'content="' . $this->getMD()->getISSN() . '"/>' : '') .
 				
 				// article author
 				( $this->getPageData('author') ? 
-          "\n\t" . '<meta name="citation_author" ' .
+          "\n  " . '<meta name="citation_author" ' .
             'content="' . $this->getPageData('author', true) . '" />' : '') .
 				
 				// article title
-				"\n\t" . '<meta name="citation_title" ' .
+				"\n  " . '<meta name="citation_title" ' .
           'content="' . $this->getPageData('title', true) . '" />' .
 				
 				// article date
 				( $this->getPageData('date') ? 
-            "\n\t" . '<meta name="citation_date" ' .
+            "\n  " . '<meta name="citation_date" ' .
               'content="' . $this->getPageData('date', true) . '" />' : '') .
 				
 				// article doi
-				"\n\t" . '<meta name="citation_doi" ' .
+				"\n  " . '<meta name="citation_doi" ' .
           'content="' . $this->getMD()->getDoiPrefix() . 
             ( $art[$this->getMD()->getTable('id')] ? 
               '.' . $art[$this->getMD()->getTable('id')] : '' ). '"/>' .
 		
 				// article abstract url
-				"\n\t" . '<meta name="citation_abstract_html_url" ' .
+				"\n  " . '<meta name="citation_abstract_html_url" ' .
           'content="' . $this->getPageData('url', true) . '"/>' .
 				
 				// article language
-				"\n\t" . '<meta name="citation_language" ' .
+				"\n  " . '<meta name="citation_language" ' .
           'content="' . $this->getPageData('lang', true) . '" />' .
 		
 				// article pdf url
 				(file_exists('./sites/default/images/pdf/' . $art['textid'] . '.pdf') ?  
-					"\n\t" .  '<meta name="citation_pdf_url" ' .
+					"\n  " .  '<meta name="citation_pdf_url" ' .
             'content="' . $this->getMD()->getURL() . '/sites/default/images/pdf/' . $art['textid'] . '.pdf"/>'
 					: '')
 	

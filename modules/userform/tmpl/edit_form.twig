@@ -44,7 +44,8 @@
 	});
 	
 	$('#{{ uid }} .save-button').on('click', function(){
-		$.post('controller.php?obj=userform_ctrl&method=save&param[]={{ form }}', {data: $.parseJSON($('#{{ uid }} .code').text())}, function(data){
+    var html = $('#{{ uid }} .code').html().replace(/<div>/, "\n").replace('/<\/div>', '').replace(/<br>/, "\n");
+		$.post('controller.php?obj=userform_ctrl&method=save&param[]={{ form }}', {data: $.parseJSON($(html).text())}, function(data){
 			admin.message(data.text, data.status);
 		}, 'json');
 	});

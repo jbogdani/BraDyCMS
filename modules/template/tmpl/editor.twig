@@ -16,7 +16,8 @@
 	prettyPrint();
 	
 	$('#{{ uid }} .save').on('click', function(){
-		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', {text: $('#txt_{{ uid }}').text()}, function(data){
+    var html = $('#txt_{{ uid }}').html().replace(/<div>/, "\n").replace('/<\/div>', '').replace(/<br>/, "\n");
+		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: $(html).text() }, function(data){
 			admin.message(data.text, data.type);
 		}, 'json');
 	});

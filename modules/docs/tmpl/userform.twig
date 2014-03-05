@@ -6,14 +6,17 @@
 
 <h3>Create a new custom form</h3>
 <p>To create a new custom form just click the <code>{{ tr.get('add_new_form') }}</code> button and enter a form id.</p>
-<p class="text-danger">Pay attention: form ids must be unique. If you enter the name of a previously existing form the former will be deleted and <strong>overwritten</strong>!</p>
+<p class="bg-danger">Pay attention: form ids must be unique. If you enter the name of a previously existing form the former will be deleted and <strong>overwritten</strong>!</p>
 
 
 <h3>Embed a form in article's body</h3>
 <p>Embedding a form in an article's body is very simple. Just use the custom tag <code>[[userform]]</code> with the name/id of your form.</p>
-<p>For example, to ambed the form named <code>contactus</code> in an article's body just add this simple tag:</p>
-<pre>[[userform]]contactus[[/userform]]</pre>.
+<p>For example, to embed the form named <code>contactus</code> in an article's body just add this simple tag:</p>
+<pre>[[userform]]contactus[[/userform]]</pre>
+<p>You can aso provide a subject directly in the form definition, overwrting the custom one defined in the configuration file (see below):</p>
+<pre>[[userform subject="Contact us"]]contactus[[/userform]]</pre>
 <p>BraDyCMS will do the rest: form formatting, validation and email & attach delivery.</p>
+
 
 
 <h3>Custom form syntax</h3>
@@ -55,7 +58,7 @@
 		<th>subject</th>
 		<td>string</td>
 		<td>required</td>
-		<td>Email message subject</td>
+		<td>Email message subject. This setting can be overwritten in the article content of template file where the form is rendered.</td>
 	</tr>
 
 	<tr>

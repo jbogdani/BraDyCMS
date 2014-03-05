@@ -20,11 +20,10 @@ RewriteRule ^feed/rss$ controller.php?obj=feeds_ctrl&method=rss2
 RewriteRule ^feed/atom$ controller.php?obj=feeds_ctrl&method=atom
 
 #OAI
-RewriteRule ^OAI$ controller.php?obj=OAI_ctrl&method=run [QSA]
-RewriteRule ^oai$ controller.php?obj=OAI_ctrl&method=run [QSA]
+RewriteRule ^(OAI|oai)$ controller.php?obj=OAI_ctrl&method=run [QSA]
 
 #api
-RewriteRule ^api/?(.+)$ controller.php?obj=api_ctrl&method=run&$1 [QSA]
+RewriteRule ^(api|API)/?(.+)$ controller.php?obj=api_ctrl&method=run&$1 [QSA]
 
 #admin 
 RewriteRule ^admin/?$ admin.php
@@ -58,6 +57,11 @@ RewriteRule ^search:([a-zA-Z0-9-_\.\s]+)$ index.php?search=$1
 #search tags
 RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_+~]+).search$ index.php?lang=$1&tags=$2&is_search=1
 RewriteRule ^([a-zA-Z0-9-_+~]+).search$ index.php?tags=$1&is_search=1
+
+#all non existing content to index.php http://jrgns.net/redirect_request_to_index/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . index.php [L]
 
 
 <FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite|json)$">

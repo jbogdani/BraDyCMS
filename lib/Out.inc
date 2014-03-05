@@ -114,8 +114,13 @@ class Out
 	 * Returns array of tags used by current article
 	 * @return array|false
 	 */
-	public function getArticleTags()
+	public function getArticleTags($article = false)
 	{
+    if (!$article)
+		{
+			$article = $this->get['art_title'];
+		}
+    
 		if ($this->context !== 'article')
 		{
 			return false;

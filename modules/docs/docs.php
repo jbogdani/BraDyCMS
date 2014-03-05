@@ -257,6 +257,19 @@ class docs_ctrl extends Controller
     );
    
    $ct[] = array(
+      'tag' => 'link',
+      'description' => 'Adds an internal link to an article',
+      'content' => 'string, required. Text of the link content that will be visible to users',
+      'params' => array(
+        'art' => 'string, required. Textid of the destination article. To link to home page use the string "home"',
+        'title' => 'string, optional. Link\'s title attribute',
+        'rel' => 'string, optional. Link\'s rel attribute'
+        ),
+      'min_example' => '[[link art="contacts"]]Contact us[[/link]]',
+      'max_example' => '[[link art="contacts" title="Contact us" rel="help"]]Contact us[[/link]]'
+    );
+   
+   $ct[] = array(
       'tag' => 'map',
       'description' => 'Shows a user map in article content',
       'content' => 'string, required. User formap name (uique ID)',

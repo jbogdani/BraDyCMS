@@ -559,6 +559,8 @@ class customTags
    * @param array $data
    *    content: link's text
    *    art:   destination article's textid, or 'home' for link to home page
+   *    title: title attribute, optional
+   *    rel: rel attribute, optional
    *  
    * @return string
    */
@@ -568,7 +570,10 @@ class customTags
         ( ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ) ?
           $_SESSION['lang'] : false);
     
-    $html = '<a href="' . (
+    $html = '<a '
+      . ($data['title'] ? ' title="' . $data['title']. '"' : '')
+      . ($data['rel'] ? ' rel="' . $data['rel']. '"' : '')
+      . 'href="' . (
       link::to_article($data['art'] === 'home' ? './' : $data['art'], $lang)) .
       '">' . $data['content'] . '</a>';
     

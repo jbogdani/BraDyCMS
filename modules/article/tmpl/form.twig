@@ -46,51 +46,74 @@
 				<div class="row">
 					<!-- first column -->
 					<div class="col-md-4">
-						<label>{{ tr.get('title') }}</label>
-						<input type="text" name="title" value="{{ art.title}}" class="col-md-12" />
+            <div class="form-group">
+              <label>{{ tr.get('title') }}</label>
+              <input type="text" name="title" value="{{ art.title}}" class="col-md-12" />
+            </div>
 						
-						<label>{{ tr.get('textid') }}</label>
-						<input type="text" name="textid" value="{{ art.textid }}" class="col-md-12" />
+            <div class="form-group">
+              <label>{{ tr.get('textid') }}</label>
+              <input type="text" name="textid" value="{{ art.textid }}" class="col-md-12" />
+            </div>
 						
-						<label>{{ tr.get('sorting') }}</label>
-						<input type="text" name="sort" value="{{ art.sort}}" class="col-md-12" />
+            <div class="form-group">
+              <label>{{ tr.get('sorting') }}</label>
+              <input type="text" name="sort" value="{{ art.sort}}" class="col-md-12" />
+            </div>
 						
-						<label>{{ tr.get('keywords') }}</label>
-						<input type="text" name="keywords" value="{{ art.keywords }}" class="col-md-12" />
+            <div class="form-group">
+              <label>{{ tr.get('keywords') }}</label>
+              <input type="text" name="keywords" value="{{ art.keywords }}" class="col-md-12" />
+            </div>
 						
-						<label>{{ tr.get('author') }}</label>
-						<input type="text" name="author" value="{{ art.author }}" class="col-md-12" />
-		
-						<label>{{ tr.get('status') }}</label>
-						<select name="status" class="col-md-12">
-							<option value="0" {% if art.status == false %} selected="true" {% endif %}>Nascosto</option>
-							<option value="1" {% if art.status %} selected="true" {% endif %}>Visibile</option>
-						</select>
-		
-						<label>{{ tr.get('creation_date') }}</label>
-						<input class="datepicker col-md-12" type="text" name="created"
-								value="{% if art.created %}{{ art.created }}{% else %}{{ date }}{% endif %}" />
+            <div class="form-group">
+              <label>{{ tr.get('author') }}</label>
+              <input type="text" name="author" value="{{ art.author }}" class="col-md-12" />
+            </div>
+            
+            <div class="form-group">
+              <label>{{ tr.get('status') }}</label>
+              <select name="status" class="col-md-12">
+                <option value="0" {% if art.status == false %} selected="true" {% endif %}>Nascosto</option>
+                <option value="1" {% if art.status %} selected="true" {% endif %}>Visibile</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>{{ tr.get('creation_date') }}</label>
+              <input class="datepicker col-md-12" type="text" name="created"
+                  value="{% if art.created %}{{ art.created }}{% else %}{{ date }}{% endif %}" />
+            </div>
 						
-						<label>{{ tr.get('pubblication_date') }}</label>
-						<input class="datepicker col-md-12" type="text" name="publish"
-								value="{% if art.publish %}{{ art.publish }}{% else %}{{ date }}{% endif %}" />
+            <div class="form-group">
+              <label>{{ tr.get('pubblication_date') }}</label>
+              <input class="datepicker col-md-12" type="text" name="publish"
+                  value="{% if art.publish %}{{ art.publish }}{% else %}{{ date }}{% endif %}" />
+            </div>
 						
-						<label>{{ tr.get('expiration_date') }}</label>
-						<input class="datepicker col-md-12" type="text" name="expires"
-								value="{% if art.expires %}{{ art.expires }}{% else %}{{ date }}{% endif %}" />
+            <div class="form-group">
+              <label>{{ tr.get('expiration_date') }}</label>
+              <input class="datepicker col-md-12" type="text" name="expires"
+                  value="{% if art.expires %}{{ art.expires }}{% else %}{{ date }}{% endif %}" />
+            </div>
 						
-						
-						<label> {{ tr.get('last_update') }}</label>
-						{{ art.updated }}
+						<div class="form-group">
+              <label> {{ tr.get('last_update') }}</label>
+              {{ art.updated }}
+            </div>
 					</div>
 					
 					<!-- second column -->
 					<div class="col-md-8">
-						<label>{{ tr.get('summary') }}</label>
-						<textarea name="summary" id="summary{{ uid }}" style="width:100%; height: 150px;">{{ art.summary }}</textarea>
+            <div class="form-group">
+              <label>{{ tr.get('summary') }}</label>
+              <textarea name="summary" id="summary{{ uid }}" style="width:100%; height: 150px;">{{ art.summary }}</textarea>
+            </div>
 						
-						<label>{{ tr.get('text') }}</label>
-						<textarea name="text" style="width:100%; height: 500px;" id="text{{ uid }}">{{ art.text }}</textarea>
+            <div class="form-group">
+              <label>{{ tr.get('text') }}</label>
+              <textarea name="text" style="width:100%; height: 500px;" id="text{{ uid }}">{{ art.text }}</textarea>
+            </div>
 					</div>
 				</div> {# end of first form row: main article data #}
         
@@ -102,7 +125,7 @@
 						<div class="row">
 							{% for fld in custom_fields %}
 								<div class="col-md-4">
-									<p>
+									<div class="form-group">
 										<label>{{ fld.label|upper }}</label>
 										{% if fld.type == 'longtext' %}
 										<textarea name="{{ fld.name }}"  class="col-md-12" style="height:100px">{{ art[fld.name] }}</textarea>
@@ -116,6 +139,7 @@
 										{% else %}
 										<input name="{{ fld.name }}" type="text" value="{{ art[fld.name] }}" class="col-md-12" />
 										{% endif %}
+                  </div>
 								</div>
 								{% if loop.index is divisibleby(3) %}
 								</div>

@@ -124,6 +124,12 @@ class userform_ctrl extends Controller
 			$this->loadForm($form);
 
 			$data = $_POST;
+      
+      if ($data['customsubject'])
+      {
+        $this->data['subject'] = $data['customsubject'];
+        unset($data['customsubject']);
+      }
 
 			/**
 			 * Check for error in POST data
@@ -224,13 +230,14 @@ class userform_ctrl extends Controller
 	 * Formats and return HTML with form data
 	 * @param array $param general parameters.
 	 *	Mandatory value: $param['content']: the form to show
+   *  Optional value: subject, overrites the config subject
 	 * @return string
 	 */
 	public function showForm($param)
 	{
 		$this->loadForm($param['content']);
-		
-		if ($param['inline'])
+		  
+    if ($param['inline'])
 		{
 			$form_class = 'form-inline';
 			$label_class = 'col-md-3';
@@ -245,6 +252,10 @@ class userform_ctrl extends Controller
 		
 		$html = '<form action="javascript:void(0)" class="' . $form_class . '" id="' . $param['content'] . '">';
 		
+    if ($param['subject'])
+    {
+      $html .= '<input type="hidden" name="customsubject" value="' . $param['subject'] . '" />';
+    }
 		
 		foreach ($this->data['elements'] as $el)
 		{
@@ -306,7 +317,7 @@ class userform_ctrl extends Controller
 			$html .= '</div>' .
 						'</div>';
 		}
-		$html .= '<div class="row">' .
+		$html .= '<div class="clearfix">' .
 							'<div class="' . $input_class . ' ' . $buttons_class . '">' .
 								'<div class="message"></div>' .
 								'<input class="btn btn-success" type="submit" /> ' .

@@ -263,10 +263,12 @@ class docs_ctrl extends Controller
       'params' => array(
         'art' => 'string, required. Textid of the destination article. To link to home page use the string "home"',
         'title' => 'string, optional. Link\'s title attribute',
-        'rel' => 'string, optional. Link\'s rel attribute'
+        'rel' => 'string, optional. Link\'s rel attribute',
+        'class' => 'string, optional. Link\'s class attribute',
+        'id' =>  'string, optional. link\'s id attribute'
         ),
       'min_example' => '[[link art="contacts"]]Contact us[[/link]]',
-      'max_example' => '[[link art="contacts" title="Contact us" rel="help"]]Contact us[[/link]]'
+      'max_example' => '[[link art="contacts" title="Contact us" rel="help" class="primary-link" id="contact"]]Contact us[[/link]]'
     );
    
    $ct[] = array(

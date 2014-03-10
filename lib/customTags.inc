@@ -561,6 +561,8 @@ class customTags
    *    art:   destination article's textid, or 'home' for link to home page
    *    title: title attribute, optional
    *    rel: rel attribute, optional
+   *    class: class attribute, optional
+   *    id: id attribute, optiona
    *  
    * @return string
    */
@@ -573,6 +575,8 @@ class customTags
     $html = '<a '
       . ($data['title'] ? ' title="' . $data['title']. '"' : '')
       . ($data['rel'] ? ' rel="' . $data['rel']. '"' : '')
+      . ($data['class'] ? ' class="' . $data['class']. '"' : '')
+      . ($data['id'] ? ' id="' . $data['id']. '"' : '')
       . 'href="' . (
       link::to_article($data['art'] === 'home' ? './' : $data['art'], $lang)) .
       '">' . $data['content'] . '</a>';

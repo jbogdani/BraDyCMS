@@ -274,36 +274,45 @@ class Out
     // customtitle field is set in cfg and is not empty
     if ($this->data['article'][$this->get['art_title']]['customtitle'])
     {
-      $this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['customtitle'];
+      $this->data['page']['title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customtitle']);
     }
     // article title
     else if ($this->data['article'][$this->get['art_title']]['title'])
     {
-      $this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'];
+      $this->data['page']['title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['title']);
     }
     else if ($this->context === 'tags')
     {
-      $this->data['page']['title'] = cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags());
+      $this->data['page']['title'] = str_replace('"', '&quot;', cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags()));
     }
     else
     {
-      $this->data['page']['title'] = cfg::get('title');
+      $this->data['page']['title'] = str_replace('"', '&quot;', cfg::get('title'));
     }
 		//$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ? $this->data['article'][$this->get['art_title']]['title'] : cfg::get('title');
 		
 		// DESCRIPTION
-		if ( $this->data['article'][$this->get['art_title']]['summary'] && trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])) != '' )
+    if ($this->data['article'][$this->get['art_title']]['customdescription'])
+    {
+      $this->data['page']['description'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customdescription']);
+    }
+		else if ( $this->data['article'][$this->get['art_title']]['summary'] && trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])) != '' )
 		{
-			$this->data['page']['description'] = trim(strip_tags($this->data['article'][$this->get['art_title']]['summary']));
+			$this->data['page']['description'] = str_replace('"', '&quot;', trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])));
 		}
+    else if ($this->context === 'tags')
+    {
+      $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description') . ' / ' .  implode(', ', $this->getFilterTags()));
+    }
+    
 		else
 		{
-			$this->data['page']['description'] = ($this->data['article'][$this->get['art_title']]['section'] ? $this->data['article'][$this->get['art_title']]['section'] . ' :: ' : '') . cfg::get('description');
+			$this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description'));
 		}
 			
 		if (strlen($this->data['page']['description']) > 500)
 		{
-			$this->data['page']['description'] = substr($this->data['page']['description'], 0, 497) . '...';
+			$this->data['page']['description'] = str_replace('"', '&quot;', substr($this->data['page']['description'], 0, 497) . '...');
 		}
 		
 		// KEYWORDS

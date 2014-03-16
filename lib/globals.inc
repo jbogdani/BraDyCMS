@@ -124,7 +124,7 @@ else
 }
 tr::load_file(@$_GET['lang'], defined('CREATE_SITE'));
 
-if (defined('CREATE_SITE') && !cfg::get('db_connection'))
+if (defined('CREATE_SITE') || !cfg::get('db_connection'))
 {
   R::setup('sqlite:./sites/default/cfg/database.sqlite');
 }
@@ -133,7 +133,6 @@ else if (cfg::get('db_connection') && cfg::get('db_user') && cfg::get('db_pass')
   R::setup(cfg::get('db_connection'), cfg::get('db_user'), cfg::get('db_pass'));
 }
 
-R::setup( ( defined('CREATE_SITE')|| !cfg::get('db_connection')) ? 'sqlite:./sites/default/cfg/database.sqlite' : cfg::get('db_connection') );
 R::freeze( true );
 R::dependencies(array('arttrans'=>array('articles')));
 R::dependencies(array('menutrans'=>array('menu')));

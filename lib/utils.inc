@@ -202,7 +202,7 @@ class utils
 		);
 		
 		$trova_punto = explode(".", $file);
-		$ext = $trova_punto[count($trova_punto) - 1];
+		$ext = strtolower($trova_punto[count($trova_punto) - 1]);
 		
 		if (!$ext AND !$mime)
 		{

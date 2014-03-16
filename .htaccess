@@ -34,8 +34,8 @@ RewriteRule ^admin:mini?$ admin.php?mini=1
 RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/?$ index.php?lang=$1  [L]
 
 #tags
-RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_+~]+).all$ index.php?lang=$1&tags=$2
-RewriteRule ^([a-zA-Z0-9-_+~]+).all$ index.php?tags=$1
+RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_+~]+).all$ index.php?lang=$1&tags=$2 [QSA,L]
+RewriteRule ^([a-zA-Z0-9-_+~]+).all$ index.php?tags=$1 [QSA,L]
 
 
 #art_title no html

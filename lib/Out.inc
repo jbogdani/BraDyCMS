@@ -77,6 +77,15 @@ class Out
 	}
   
   /**
+   * Returns textid specified in URL
+   * @return string
+   */
+  public function getTextId()
+  {
+    return $this->get['art_title'];
+  }
+  
+  /**
    * Returns translated string
    * @param string $string  string to translate
    * @param mixed: string|array|false $args if true tr::sget will be used

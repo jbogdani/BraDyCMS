@@ -805,6 +805,13 @@ class docs_ctrl extends Controller
 )"
 		);
 		
+    $docs[] = array(
+			'method' => 'getTextId()',
+			'description' => 'Returns article\'s text id required in URL',
+			'example_usage' => "{{ html.getTextId() }}",
+			'example_output' => 'contact_us'
+		);
+    
 		$docs[] = array(
 			'method' => 'link2(resource, tags)',
 			'params' => array(

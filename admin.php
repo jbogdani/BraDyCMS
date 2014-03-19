@@ -57,7 +57,7 @@ catch (Exception $e)
     ?>
 	
 	<script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
-	<script src="./js/jquery-2.0.3.min.js"></script>
+	<script src="./js/jquery-2.1.0.min.js"></script>
 	<script src="./js/jquery.nestable.js"></script>
 	<script src="./js/bootstrap-3.1.1.min.js"></script>
 	<script src="./js/jquery.dataTables.js"></script>

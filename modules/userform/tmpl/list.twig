@@ -74,19 +74,8 @@
 			loaded: function(){
 				$('.modal-footer .btn-success').fadeOut();
 				
-				$('#new_form_name').on('keyup', function(){
-					var val = $(this).val();
-					
-					if (!val || val === ''){
-						$('.modal-footer .btn-success').fadeOut();
-					} else{
-						
-						
-						$(this).val(val.replace(new RegExp("([-=_\.\\s])"), ''));
-						
-						$('.modal-footer .btn-success').fadeIn();
-					}
-				});
+        admin.removeNotValid($('#new_form_name'));
+				
 			}
 		});
 	});

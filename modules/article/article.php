@@ -10,6 +10,109 @@
 class article_ctrl extends Controller
 {
 	
+  public function sql2json()
+  {
+    $aColumns = array( 'id', 'title', 'textid', 'sort', 'author', 'status');
+    
+    $sIndexColumn = 'id';
+    
+    
+    // Paging
+    $sLimit = '';
+    if ( isset( $this->request['iDisplayStart'] ) && $this->request['iDisplayLength'] != '-1' )
+    {
+      $sLimit = "LIMIT " . $this->request['iDisplayStart'] .", "
+        . $this->request['iDisplayLength'];
+    }
+    
+    // Ordering
+    if ( isset( $this->request['iSortCol_0'] ) )
+    {
+      $sOrder = "ORDER BY  ";
+      
+      for ( $i=0 ; $i<intval( $this->request['iSortingCols'] ) ; $i++ )
+      {
+        if ( $this->request[ 'bSortable_' . intval($this->request['iSortCol_' . $i]) ] == "true" )
+        {
+          $sOrder .= $aColumns[ intval( $this->request['iSortCol_'.$i] ) ] . "
+            " . $this->request['sSortDir_'.$i] . ", ";
+        }
+      }
+      
+      $sOrder = substr_replace( $sOrder, "", -2 );
+      
+      if ( $sOrder == "ORDER BY" )
+      {
+        $sOrder = "";
+      }
+    }
+    
+    
+    if (is_array($this->request['param']) && !empty($this->request['param'][0]))
+    {
+      $sWhere = "WHERE  `id` IN ( "
+          . "SELECT `articles_id` FROM `articles_tag` WHERE `tag_id` IN ( "
+            . "SELECT `id` FROM `tag` WHERE `title` IN ('" . implode("', '", $this->request['param']). "' )"
+          . " ) "
+        . " ) ";
+    }
+    else
+    {
+      $sWhere = "";
+    }
+    
+    $totalRows = $this->request['iTotalRecords'] ? $this->request['iTotalRecords'] : R::getCell(" SELECT count(*) FROM `articles` " . $sWhere);
+    
+    // Filtering
+    if ( $this->request['sSearch'] != "" )
+    {
+      $sWhere .= ($sWhere == "" ? "WHERE (" : "AND (");
+      for ( $i=0 ; $i<count($aColumns) ; $i++ )
+      {
+        $sWhere .= $aColumns[$i]." LIKE '%". $this->request['sSearch'] ."%' OR ";
+      }
+      $sWhere = substr_replace( $sWhere, "", -3 );
+      $sWhere .= ')';
+    }
+
+    /* Individual column filtering */
+    for ( $i=0 ; $i<count($aColumns) ; $i++ )
+    {
+      if ( $this->request['bSearchable_'.$i] == "true" && $this->request['sSearch_'.$i] != '' )
+      {
+        if ( $sWhere == "" )
+        {
+          $sWhere = "WHERE ";
+        }
+        else
+        {
+          $sWhere .= " AND ";
+        }
+        $sWhere .= $aColumns[$i]." LIKE '%" . $this->request['sSearch_'.$i] ."%' ";
+      }
+    }
+    
+    $sQuery = "
+      SELECT `" . implode('`, `', $aColumns ). "` FROM `articles`
+        $sWhere
+        $sOrder
+        $sLimit
+      ";
+    
+    $result = R::getAll($sQuery);
+    
+    $output = array(
+      "sEcho" => intval($this->request['sEcho']),
+      "iTotalRecords" => count($result),
+      "iTotalDisplayRecords" => $totalRows,
+      "aaData" => $result
+      );
+    
+    header('Content-type: application/json');
+    echo json_encode($output);
+  }
+
+  
 	public function all()
 	{
 		if (!empty($this->request['param'][0]))
@@ -32,6 +135,7 @@ class article_ctrl extends Controller
       'tags' => $tags,
       'imploded_tags' => '"' . implode('","', $tags) . '"',
       'active_tags' => $this->request['param'],
+      'imploded_active_tags' => (!empty($this->request['param'][0]) ? '&param[]=' . implode('&param[]=', $this->request['param']) : ''),
       'cfg_langs' => cfg::get('languages'),
       'delete_tag' => (!$art_arr && count($this->request['param']) == 1 ? $this->request['param'][0] : false)
       ));

@@ -35,36 +35,18 @@
 				<th>{{ tr.get('id') }}</th>
 				<th>{{ tr.get('title') }}</th>
 				<th>{{ tr.get('textid') }}</th>
-				<th>{{ tr.get('status') }}</th>
-				<th>{{ tr.get('sorting') }}</th>
-				<th style="min-width:200px;"></th>
+        <th>{{ tr.get('sorting') }}</th>
+        <th>{{ tr.get('author') }}</th>
+        <th>{{ tr.get('status') }}</th>
+        <th style="min-width:150px;"></th>
 			</tr>
 		</thead>
 
 		<tbody>
-		{% for art in art_arr %}
-			<tr>
-				<td>{{ art.id }}</td>
-				<td><a href="#article/edit/{{ art.id }}">{{ art.title }}</a></td>
-				<td>{{ art.textid }}</td>
-				<td>{{ art.status }}</td>
-				<td>{{ art.sort }}</td>
-				<td>
-					<div class="btn-group">
-						<a href="#article/edit/{{ art.id }}" class="btn btn-default" title="{{ tr.get('edit') }}"><i class="glyphicon glyphicon-edit"></i></a>
-						{% for lang in cfg_langs %}
-							<a href="#article/translate/{{ lang.id }}/{{ art.id }}" class="btn btn-default" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="glyphicon glyphicon-random text-muted"></i> {{ lang.id|upper }}</a>
-						{% endfor %}
-						<a href="#" class="btn btn-default delete_article" data-id="{{ art.id }}" title="{{ tr.get('delete') }}"><i class="glyphicon glyphicon-trash"></i></a>
-					</div>
-				</td>
-			</tr>
-			{% endfor %}
 		</tbody>
 
 	</table>
 </div>
-
 <script>
 $('#{{ uid }} a.reload').click(function(){
 	admin.tabs.reloadActive();
@@ -100,7 +82,34 @@ $('#{{ uid }} a.delete_article').click(function(){
 
 $('#{{ uid }} table.data_table').dataTable({
 	"iDisplayLength": 10,
-	"bDestroy": true
+	"bDestroy": true,
+  "bProcessing": true,
+  "bServerSide": true,
+  "sAjaxSource": "./controller.php?obj=article_ctrl&method=sql2json{{ imploded_active_tags|raw }}",
+  "aoColumns": [
+    {"mData":"id"},
+    {
+      "mData": function(row){
+        return '<a href="#article/edit/' + row.id + '">' + row.title + '</a>'
+      }
+    },
+    {"mData":"textid"},
+    {"mData":"sort"},
+    {"mData":"author"},
+    {"mData":"status"},
+    {
+      "mData":  function(row){
+        return '<div class="btn-group">'
+          + '<a href="#article/edit/' + row .id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="glyphicon glyphicon-edit"></i></a>'
+          
+						{% for lang in cfg_langs %}
+							+ ' <a href="#article/translate/{{ lang.id }}/{{ art.id }}" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="glyphicon glyphicon-random text-muted"></i> {{ lang.id|upper }}</a>'
+						{% endfor %}
+          + '<a href="#" class="btn btn-default delete_article btn-sm" data-id="{{ art.id }}" title="{{ tr.get('delete') }}"><i class="glyphicon glyphicon-trash"></i></a>'
+          + '</div>'
+      }
+    }
+  ]
 });
 
 {% if delete_tag %}

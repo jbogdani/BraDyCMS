@@ -241,6 +241,8 @@
 		admin.tabs.reloadActive();
 		return false;
 	});
+  
+  admin.removeNotValid($('#edit_form{{ uid }} input[name="textid"]'), '-', true);
 
 	$('#edit_form{{ uid }} input[name="textid"]').on('change', function(){
 		$this = $(this);

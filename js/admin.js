@@ -12,7 +12,7 @@ var admin = {
     input.on('keyup', function(){
       var val = $(this).val();
       if (val && val !== ''){
-        var newVal = val.replace(new RegExp("([-=_\.\\s])", "g"), replace ? replace : ''); 
+        var newVal = val.replace(new RegExp("([,-=_\.\\s\\?'\"])", "g"), replace ? replace : ''); 
         toLower ? newVal = newVal.toLowerCase() : '';
         $(this).val(newVal);
       }

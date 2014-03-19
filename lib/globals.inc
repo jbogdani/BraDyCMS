@@ -128,7 +128,7 @@ if (defined('CREATE_SITE') || !cfg::get('db_connection'))
 {
   R::setup('sqlite:./sites/default/cfg/database.sqlite');
 }
-else if (cfg::get('db_connection') && cfg::get('db_user') && cfg::get('db_pass'))
+else if (cfg::get('db_connection'))
 {
   R::setup(cfg::get('db_connection'), cfg::get('db_user'), cfg::get('db_pass'));
 }

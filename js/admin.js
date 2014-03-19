@@ -7,29 +7,41 @@
 var _ignorehash;
 
 var admin = {
-		/**
-		 * 
-		 * opts.sizeLimit
-		 * opts.minSizeLimit
-     * opts.allowedExtensions
-		 * opts.loaded(id, filename, responseJSON)
-		 */
-		upload: function(element, action, opts){
-			if (!opts){
-				var opts = {};
-			}
-			
-			new qq.FileUploader({
-				element: element,
-				action: action,
-        allowedExtensions: opts.allowedExtensions ? opts.allowedExtensions : [],
-				sizeLimit: opts.sizeLimit ? opts.sizeLimit : 0,
-				minSizeLimit: opts.minSizeLimit ? opts.minSizeLimit : 0,
-				onComplete: function(id, filename, responseJSON){
-					opts.loaded ? opts.loaded(id, filename, responseJSON) : false;
-				}
-			});
-		},
+  
+  removeNotValid: function(input, replace, toLower){
+    input.on('keyup', function(){
+      var val = $(this).val();
+      if (val && val !== ''){
+        var newVal = val.replace(new RegExp("([-=_\.\\s])", "g"), replace ? replace : ''); 
+        toLower ? newVal = newVal.toLowerCase() : '';
+        $(this).val(newVal);
+      }
+    });
+  },
+  
+  /**
+   * 
+   * opts.sizeLimit
+   * opts.minSizeLimit
+   * opts.allowedExtensions
+   * opts.loaded(id, filename, responseJSON)
+   */
+  upload: function(element, action, opts){
+    if (!opts){
+      var opts = {};
+    }
+
+    new qq.FileUploader({
+      element: element,
+      action: action,
+      allowedExtensions: opts.allowedExtensions ? opts.allowedExtensions : [],
+      sizeLimit: opts.sizeLimit ? opts.sizeLimit : 0,
+      minSizeLimit: opts.minSizeLimit ? opts.minSizeLimit : 0,
+      onComplete: function(id, filename, responseJSON){
+        opts.loaded ? opts.loaded(id, filename, responseJSON) : false;
+      }
+    });
+  },
 		
 		
 		/**

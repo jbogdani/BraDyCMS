@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-			"swiftmailer/swiftmailer": "v5.0.3",
+      "swiftmailer/swiftmailer": "v5.0.3",
       "oyejorge/less.php": "~1.5",
 			"twig/twig": "1.*",
 			"gabordemooij/redbean": "dev-master",
@@ -17,6 +17,7 @@
 			"oaiprovider-php/oaiprovider-php": "dev-master",
       "mibe/feedwriter": "dev-master",
       "mobiledetect/mobiledetectlib": "2.*"
+
     },
       
     "scripts": {

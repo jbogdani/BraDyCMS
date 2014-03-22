@@ -8,5 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'RedBean_' => array($vendorDir . '/gabordemooij/redbean'),
+    'Less' => array($vendorDir . '/oyejorge/less.php/lib'),
     'Detection' => array($vendorDir . '/mobiledetect/mobiledetectlib/namespaced'),
 );

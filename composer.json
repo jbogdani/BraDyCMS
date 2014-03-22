@@ -1,26 +1,22 @@
 {
-    "name": "bradypus/bduscms",
-    "description": "bdusCMS is a light, database agnostic, design oriented PHP CMS",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "jbogdani",
-            "email": "jbogdani@gmail.com"
-        }
-    ],
-    "require": {
-      "swiftmailer/swiftmailer": "v5.1.0",
-      "oyejorge/less.php": "1.7.0.1",
-			"twig/twig": "1.15.1",
-			"gabordemooij/redbean": "dev-master",
-			"jsocol/oocurl": "dev-master",
-			"oaiprovider-php/oaiprovider-php": "dev-master",
-      "mibe/feedwriter": "dev-master",
-      "mobiledetect/mobiledetectlib": "2.*"
-    },
-      
-    "scripts": {
-      "post-update-cmd": ["echo [WARNING] Delete all .git dirs", "rm -rf vendor/**/.git"],
-      "post-install-cmd": ["echo [WARNING] Delete all .git dirs", "rm -rf vendor/**/.git"]
+  "name": "bradypus/bduscms",
+  "description": "bdusCMS is a light, database agnostic, design oriented PHP CMS",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "jbogdani",
+      "email": "jbogdani@gmail.com"
     }
+  ],
+  
+  "require": {
+    "swiftmailer/swiftmailer": "v5.1.0",
+    "oyejorge/less.php": "1.7.0.1",
+    "twig/twig": "1.15.1",
+    "gabordemooij/redbean": "dev-master",
+    "jsocol/oocurl": "dev-master",
+    "oaiprovider-php/oaiprovider-php": "dev-master",
+    "mibe/feedwriter": "dev-master",
+    "mobiledetect/mobiledetectlib": "2.*"
+  }
 }

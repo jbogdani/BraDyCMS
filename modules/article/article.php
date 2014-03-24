@@ -61,8 +61,7 @@ class article_ctrl extends Controller
       $sWhere = "";
     }
     
-    $totalRows = $this->request['iTotalRecords'] ? $this->request['iTotalRecords'] : R::getCell(" SELECT count(*) FROM `articles` " . $sWhere);
-    
+        
     // Filtering
     if ( $this->request['sSearch'] != "" )
     {
@@ -74,13 +73,15 @@ class article_ctrl extends Controller
       $sWhere = substr_replace( $sWhere, "", -3 );
       $sWhere .= ')';
     }
+    
+    $totalRows = $this->request['iTotalRecords'] ? $this->request['iTotalRecords'] : R::getCell(" SELECT count(*) FROM `articles` " . $sWhere);
 
     /* Individual column filtering */
     for ( $i=0 ; $i<count($aColumns) ; $i++ )
     {
       if ( $this->request['bSearchable_'.$i] == "true" && $this->request['sSearch_'.$i] != '' )
       {
-        if ( $sWhere == "" )
+        if ( $sWhere === "" )
         {
           $sWhere = "WHERE ";
         }

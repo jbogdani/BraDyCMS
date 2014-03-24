@@ -9,10 +9,19 @@ var _ignorehash;
 var admin = {
   
   removeNotValid: function(input, replace, toLower){
-    input.on('keyup', function(){
+    input.on('keyup', function(e){
+      if (
+           e.keyCode === 13 //enter
+        || e.keyCode === 37 //left-arrow
+        || e.keyCode === 38 //up-arrow
+        || e.keyCode === 39 //right-arrow
+        || e.keyCode === 40 //down-arrow
+        ){
+        return;
+      }
       var val = $(this).val();
       if (val && val !== ''){
-        var newVal = val.replace(new RegExp("([,-=_\.\\s\\?'\"])", "g"), replace ? replace : ''); 
+        var newVal = val.replace(new RegExp("([,=_\.\\s\\?'\"\\-])", "g"), replace ? replace : ''); 
         toLower ? newVal = newVal.toLowerCase() : '';
         $(this).val(newVal);
       }

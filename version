@@ -1,3 +1,4 @@
+3.4.2[] = "Bug fixed with articles not being deleted in article list view"
 3.4.2[] = "Bug fixed with regular expression of automatic formatter of article text id"
 3.4.2[] = "Bug fixed with admin view of list of articles pagination"
 3.4.1[] = "Update swiftmailer/swiftmailer from 5.0.3to 5.1.3"

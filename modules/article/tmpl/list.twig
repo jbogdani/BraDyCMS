@@ -53,33 +53,6 @@ $('#{{ uid }} a.reload').click(function(){
 	return false;
 });
 
-$('#{{ uid }} a.delete_article').click(function(){
-  var $this = $(this);
-  admin.dialog({
-    title: '{{ tr.get('pay_attention_please') }}',
-    html: '{{ tr.get('confirm_delete_article') }}',
-    buttons: [
-              {
-                text: '<i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}',
-                addclass: 'btn-danger',
-                action: 'close',
-                click: function(){
-                  $.get('controller.php?obj=article_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
-                    admin.message(data.text, data.type);
-                    if (data.type == 'success'){
-                      admin.tabs.reloadActive();
-                    }
-                  }, 'json')
-                }
-              },
-              {
-                text: '{{ tr.get('close') }}',
-                action: 'close'
-              }
-		         ]
-  });
-});
-
 $('#{{ uid }} table.data_table').dataTable({
 	"iDisplayLength": 10,
 	"bDestroy": true,
@@ -100,17 +73,49 @@ $('#{{ uid }} table.data_table').dataTable({
     {
       "mData":  function(row){
         return '<div class="btn-group">'
-          + '<a href="#article/edit/' + row .id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="glyphicon glyphicon-edit"></i></a>'
+          + '<a href="#article/edit/' + row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="glyphicon glyphicon-edit"></i></a>'
           
 						{% for lang in cfg_langs %}
 							+ ' <a href="#article/translate/{{ lang.id }}/{{ art.id }}" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="glyphicon glyphicon-random text-muted"></i> {{ lang.id|upper }}</a>'
 						{% endfor %}
-          + '<a href="#" class="btn btn-default delete_article btn-sm" data-id="{{ art.id }}" title="{{ tr.get('delete') }}"><i class="glyphicon glyphicon-trash"></i></a>'
+          + '<a href="#" class="btn btn-default delete_article btn-sm" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="glyphicon glyphicon-trash"></i></a>'
           + '</div>'
       }
     }
-  ]
+  ],
+  "fnDrawCallback": function(){
+    $('#{{ uid }} a.delete_article').click(function(event){
+      event.preventDefault();
+      var $this = $(this);
+      admin.dialog({
+        title: '{{ tr.get('pay_attention_please') }}',
+        html: '{{ tr.get('confirm_delete_article') }}',
+        buttons: [
+                  {
+                    text: '<i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}',
+                    addclass: 'btn-danger',
+                    action: 'close',
+                    click: function(){
+                      $.get('controller.php?obj=article_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
+                        admin.message(data.text, data.type);
+                        if (data.type == 'success'){
+                          admin.tabs.reloadActive();
+                        }
+                      }, 'json')
+                    }
+                  },
+                  {
+                    text: '{{ tr.get('close') }}',
+                    action: 'close'
+                  }
+                 ]
+      });
+    });
+  
+  }
 });
+
+
 
 {% if delete_tag %}
 	$('#{{ uid }} .deleteTag').on('click', function(){

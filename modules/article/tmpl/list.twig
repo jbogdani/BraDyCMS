@@ -38,6 +38,7 @@
         <th>{{ tr.get('sorting') }}</th>
         <th>{{ tr.get('author') }}</th>
         <th>{{ tr.get('status') }}</th>
+        <th>{{ tr.get('publish') }}</th>
         <th style="min-width:150px;"></th>
 			</tr>
 		</thead>
@@ -70,6 +71,7 @@ $('#{{ uid }} table.data_table').dataTable({
     {"mData":"sort"},
     {"mData":"author"},
     {"mData":"status"},
+    {"mData":"publish"},
     {
       "mData":  function(row){
         return '<div class="btn-group">'

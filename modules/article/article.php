@@ -12,7 +12,7 @@ class article_ctrl extends Controller
 	
   public function sql2json()
   {
-    $aColumns = array( 'id', 'title', 'textid', 'sort', 'author', 'status');
+    $aColumns = array( 'id', 'title', 'textid', 'sort', 'author', 'status', 'publish');
     
     $sIndexColumn = 'id';
     
@@ -50,10 +50,16 @@ class article_ctrl extends Controller
     
     if (is_array($this->request['param']) && !empty($this->request['param'][0]))
     {
+      $tag_ids = R::getCol("SELECT `id` FROM `tag` WHERE `title` IN ('" . implode("','", $this->request['param']) . "')");
+      
+      $tmp = array();
+      foreach($tag_ids as $tagid)
+      {
+        $tmp[] = "`tag_id` = " . $tagid;
+      }
+      
       $sWhere = "WHERE  `id` IN ( "
-          . "SELECT `articles_id` FROM `articles_tag` WHERE `tag_id` IN ( "
-            . "SELECT `id` FROM `tag` WHERE `title` IN ('" . implode("', '", $this->request['param']). "' )"
-          . " ) "
+          . "SELECT `articles_id` FROM `articles_tag` WHERE " . implode(' OR ', $tmp) . " GROUP BY `articles_id` HAVING count(*) = ". count($tmp)
         . " ) ";
     }
     else
@@ -61,7 +67,7 @@ class article_ctrl extends Controller
       $sWhere = "";
     }
     
-        
+    
     // Filtering
     if ( $this->request['sSearch'] != "" )
     {

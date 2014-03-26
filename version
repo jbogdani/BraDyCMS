@@ -1,3 +1,5 @@
+3.4.2[] = "Added publishing date in article list view in admin panel"
+3.4.2[] = "Bug fixed with article filtering by tags in article list view in admin panel"
 3.4.2[] = "Bug fixed with articles not being deleted in article list view"
 3.4.2[] = "Bug fixed with regular expression of automatic formatter of article text id"
 3.4.2[] = "Bug fixed with admin view of list of articles pagination"

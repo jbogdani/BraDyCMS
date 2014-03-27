@@ -23,6 +23,14 @@
 					<div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
 						<div class="col-xs-4">
 							<h4>{{ file.name }}</h4>
+              <p>
+                <a 
+                  href="{{ file.fullpath }}"
+                  class="btn btn-info" 
+                  target="_blank">
+                  <i class="glyphicon glyphicon-download-alt"></i> {{ tr.get('open_download') }}
+                </a>
+              </p>
 							<p>
                 <button 
                   class="btn btn-danger delete" 

@@ -17,10 +17,8 @@ class galleries_ctrl extends Controller
 		asort($all_galls);
 		
 		$this->render('galleries', 'listAllGalleries', array(
-				'tr' => new tr(),
-				'galleries' => $all_galls,
-				'uid' => uniqid('galllist')
-				));
+      'galleries' => $all_galls
+      ));
 	} 
 	
 	/**
@@ -151,24 +149,22 @@ class galleries_ctrl extends Controller
 	{
 		try{
 			
-			$gal = strtolower(str_replace(array(' ', "'", '"'), '_', $this->get['param'][0]));
-			
-			$gal_name = $this->path . $gal;
+			$gal_name = $this->path . strtolower(str_replace(array(' ', "'", '"'), '_', $this->get['param'][0]));
 			
 			
-			if (is_dir($this->path . $gal))
+			if (is_dir($gal_name))
 			{
 				throw new Exception(tr::get('gallery_exists'));
 			}
-			@mkdir($this->path . $gal, 0777, true);
-			@mkdir($this->path . $gal . '/thumbs', 0777, true);
+			@mkdir($gal_name, 0777, true);
+			@mkdir($gal_name . '/thumbs', 0777, true);
 			
-			if (!is_dir($this->path . $gal))
+			if (!is_dir($gal_name))
 			{
 				throw new Exception(tr::get('gallery_not_created'));
 			}
 			
-			if (!is_dir($this->path . $gal . '/thumbs'))
+			if (!is_dir($gal_name . '/thumbs'))
 			{
 				throw new Exception(tr::get('gallery_partially_created'));
 			}

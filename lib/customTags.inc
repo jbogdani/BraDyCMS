@@ -107,6 +107,74 @@ class customTags
 		return $f->showForm($data);
 	}
 	
+  /**
+   * 
+   * @param type $data
+   *  content: node name
+   *  getObject: if false a well formatted html table will be returned, otherwize an array
+   *  class: css class or space-separated classes to attache to main html table (getObject should be false)
+   * @return string|boolean
+   */
+  public static function download($data)
+  {
+    $path2node = './sites/default/images/downloads/' . $data['content'];
+    
+    if (
+      !file_exists($path2node) 
+      || 
+      !file_exists($path2node . '/data.json')
+    )
+    {
+      return false;
+    }
+    
+    $fileData = json_decode(file_get_contents($path2node . '/data.json'), true);
+    
+    if (!$fileData || !is_array($fileData))
+    {
+      return false;
+    }
+    
+    $node_content = utils::dirContent($path2node);
+    
+    $files = array();
+    
+    foreach ($node_content as $file)
+    {
+      $formattedName = str_replace('.', '__x__', $file);
+      
+      $files[] = array(
+        'path' => $path2node . '/' . $file,
+        'basename' => pathinfo($file, PATHINFO_FILENAME),
+        'ext' => pathinfo($file, PATHINFO_EXTENSION),
+        'title' => $fileData[$formattedName]['title'] ? $fileData[$formattedName]['title'] : $file,
+        'description' => $fileData[$formattedName]['description']
+        ); 
+    }
+    
+    if ($data['getObject'])
+    {
+      return $files;
+    }
+    
+    $html = '<table ' . ($data['class'] ? 'class="' . $data['class'] . '"' : '' ) . '>'
+      . '<tbody>';
+    
+    foreach($files as $d)
+    {
+      $html .= '<tr>'
+        . '<td><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . $d['title'] . '</a></td>'
+        . '<td><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . $d['description'] . '</a></td>'
+        . '<td><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('download') . '</a></td>'
+        . '</tr>';
+    }
+    
+    $html .= '</tbody>'
+      . '</table>';
+    
+    return $html;
+  }
+  
 	public static function cl_gallery($data)
 	{
 		return self::format_gallery($data, true);

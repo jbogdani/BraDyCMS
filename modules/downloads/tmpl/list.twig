@@ -1,0 +1,80 @@
+<div id="{{ uid }}">
+	
+	<h2>{{ tr.get('downloads') }}</h2>
+	
+	<div class="well well-sm clearfix">
+		<div class="btn-group">
+			<a class="btn btn-info add_new" href="#" title="{{ tr.get('new_download_node') }}">
+        <i class="glyphicon glyphicon-plus"></i> {{ tr.get('new_download_node') }}
+      </a>
+			<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}">
+        <i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}
+      </a>
+		</div>
+			<div class="pull-right col-sm-2">
+				<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
+			</div>
+	</div>
+	
+	
+	
+	
+	<ul class="galleryList" id="media-{{ uid }}">
+		
+	{% for node in nodes %}
+		<li class="img">
+			<a class="" href="#downloads/edit/{{ node }}">
+				<i class="glyphicon glyphicon-hdd"></i><br />
+				<div class="searcheable caption text-center">{{ node }}</div>
+			</a>
+		</li>
+	{% endfor %}
+	
+	</ul>
+
+</div>
+
+<script>
+	$('#input_{{ uid }}').on('keyup', function(){
+		
+		admin.media.filterDir($(this).val(), '{{ uid }}');
+	});
+	
+	$('#{{ uid }} a.add_new').on('click', function(event){
+		admin.dialog({
+			html: '<input type="text" class="download" placeholder="' + admin.tr('download_node_name') + '" />',
+			title: admin.tr('new_download_node'),
+			loaded: function(modal){
+				modal.find('input.download').focus();
+        admin.removeNotValid(modal.find('input.download'), '_', true);
+			},
+			buttons:[
+			         {
+			        	 text: admin.tr('save'),
+			        	 addclass: 'btn-success',
+			        	 click: function(){
+			        		 var download = $('.modal input.download').val();
+			        		 if (!download){
+			        			 admin.message(admin.tr('download_node_name_cannot_be_empty'), 'error');
+			        		 } else {
+			        			 $.get('controller.php?obj=downloads_ctrl&method=add&param[]=' + download, function(data){
+			        				 admin.message(data.text, data.status);
+			        				 
+			        				 if (data.status == 'success'){
+			        					 window.location = '#downloads/edit/' + download;
+			        					 
+			        					 $('#modal').modal('hide');
+			        				 }
+			        			 }, 'json');
+			        		 }
+			        	 }
+			         },
+			         {
+				         text: admin.tr('close'),
+				         action: 'close'
+			         }
+			         ]
+		});
+		event.preventDefault();
+	});
+</script>

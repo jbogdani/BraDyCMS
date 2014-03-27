@@ -470,5 +470,25 @@ class Out
     
     return $this->metadata;
 	}
+  
+  /**
+   * Returns array of data for download node. Foreach file the following information is returned:
+   *  path
+   *  ext
+   *  title
+   *  description
+   * @param string $node Download node name
+   * @return false|array
+   */
+  public function getDownloadNode($node)
+  {
+    return customTags::download(
+      array(
+        'content' => $node,
+        'getObject' => true
+        )
+      );
+    
+  }
 	
 }

@@ -29,6 +29,21 @@ class docs_ctrl extends Controller
    
     
     $ct[] = array(
+      'tag' => 'download',
+      'description' => 'Displays table with file download node data and links '
+        . 'or array with files download data',
+      'content' => 'string, required. Name of download node',
+      'params' => array(
+        'class' => 'string, optional. One or more (space separated) CSS class to apply to main ul tag',
+        'getObject' => 'boolean, optional, default false. If true only array of data will be returned, '
+          . 'otherwize, default option, full html will be returned'
+        ),
+      'min_example' => '[[download]]node_name[[/download]]',
+      'max_example' => '[[download class="table table-stripped"]]node_name[[/download]]'
+    );
+    
+    
+    $ct[] = array(
       'tag' => 'cl_gallery',
       'description' => 'Displays imageless galleries, for conditional image loading. ' .
         'This custom tags should be used together with the provided jquery.cl_gallery.js javascript plugin',
@@ -328,7 +343,22 @@ class docs_ctrl extends Controller
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d8b051f4951c18f"></script>'
 			);
 		
-		
+    
+		$docs[] = array(
+			'method' => 'downloadNode',
+			'params' => array(
+				'node' => 'string, required. Name of download node to display',
+				'class' => 'string, optional, css class or space separated css classes to attache to main table element',
+			),
+			'description' => 'Returns well formatted html showing table element with data for available files in download node',
+			'example_usage' => "{{ html.downloadNode('curricula', 'table-stripped') }}",
+			'example_output' => '<table class=\"table-stripped\">' . "\n  " . '<tbody>' . "\n    " . '<tr>'
+        . "\n      " . '<td><a href="{ full path to file }" class="downloadFile" target="_blank">{ file title }</a></td>'
+        . "\n      " . '<td><a href="{ full path to file }" class="downloadFile" target="_blank">{ file description }</a></td>'
+        . "\n      " . '<td><a href="{ full path to file }" class="downloadFile" target="_blank">Download</a></td>'
+        . "\n    " . '</tr>' . "\n    " . '<tr>...</tr>' . "\n  " . '<tbody>' . "\n" . '</table>'
+			);
+
 		$docs[] = array(
 			'method' => 'GA',
 			'description' => 'Returns javascript code for Google Analytics Tracking. Google Analytics id must be provided in site configuration file. A domain is provided in configuration file, the code will be shown only if current domain matches the provided domain. This is very usefull in test installations.',
@@ -580,6 +610,25 @@ class docs_ctrl extends Controller
 		
 		
 		
+    $docs[] = array(
+			'method' => 'getDownloadNode',
+			'params' => array(
+				'node' => 'string, required. Name of download node to display'
+			),
+			'description' => 'Returns array with data for available files in download node',
+			'example_usage' => "{{ html.getDownloadNode('curricula') }}",
+			'example_output' => 'array ('
+        . "\n  array ("
+        . "\n   path => sites/default/images/downloads/curricola/jbogdani.pdf"
+        . "\n   basename => jbogdani"
+        . "\n   ext => pdf"
+        . "\n   title => CV of Julian Bogdani"
+        . "\n   description => Detailed CV of Julian Bogdani, PDF version. Last updated 2014"
+        . "\n  ),"
+        . "\n ..."
+        . "\n);"
+    );
+
 		
 		$docs[] = array(
 			'method' => 'getArticle',

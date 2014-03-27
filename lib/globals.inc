@@ -110,6 +110,7 @@ define ( 'SITE_DIR', MAIN_DIR . 'sites/default/');
 define ( 'IMG_DIR', SITE_DIR . 'images/');
 
 define ( 'GALLERY_DIR', IMG_DIR . 'galleries/' );
+define ( 'DOWNLOADS_DIR', IMG_DIR . 'downloads/' );
 define ( 'CACHE_DIR', MAIN_DIR . 'cache/');
 
 !defined('CREATE_SITE') ? $_SESSION['debug'] = cfg::get('debug') : '';

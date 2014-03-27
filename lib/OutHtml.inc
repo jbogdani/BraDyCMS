@@ -563,6 +563,11 @@ class OutHtml extends Out
     return $html;
   }
   
+  /**
+   * Returns string for Twitter Bootstrap javascript inclusion, trying first to load from CDN then from local host
+   * @param string $version   Twitter Bootstrap version
+   * @return false|string
+   */
   public function TBSjs($version)
   {
     if (!$version)
@@ -580,6 +585,22 @@ class OutHtml extends Out
       '}</script>';
     
     return $html;
+  }
+  
+  /**
+   * Returns well formatted html containing table
+   * @param string $node Download node name
+   * @param string $class CSS class or space-separated classes to attche tomain table element
+   * @return string|boolean well formatted html
+   */
+  public function downloadNode($node, $class = false)
+  {
+    return customTags::download(
+      array(
+        'content' => $node,
+        'class' => $class
+        )
+      );
   }
 		
 }

@@ -74,7 +74,12 @@
           </div>
           <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
           <div class="col-sm-6 transl">
-            <textarea name="{{ field.name }}" style="width: 100%; height: 200px;">{{ transl[field.name] }}</textarea>
+            <textarea name="{{ field.name }}" style="width: 100%; height: 200px;"
+                      {% if field.richtext %}
+                        id="richtext{{ uid ~ field.name }}"
+                        class="tiny"
+                      {% endif %}
+                      >{{ transl[field.name] }}</textarea>
           </div>
         </div>
       {% endif %}
@@ -108,13 +113,17 @@
 
 	tinyMCE.execCommand("mceAddControl", true, "summary{{ uid }}");
 	tinyMCE.execCommand("mceAddControl", true, "text{{ uid }}");
+  {% if custom_fields %}
+    {% for field in custom_fields %}
+      tinyMCE.execCommand("mceAddControl", true, "richtext{{ uid ~ field.name }}");
+    {% endfor %}
+  {% endif %}
 
 	$('#form{{ uid }} .copy').on('click', function(){
 		var text = $(this).parents('.form-group').find('.orig').html();
 		input = $(this).parents('.form-group').find('.transl > :input');
 		
 		if (input.hasClass('tiny')){
-      console.log('tino');
 			tinyMCE.get(input.attr('id')).setContent(text);
 		} else {
 			input.val(text);

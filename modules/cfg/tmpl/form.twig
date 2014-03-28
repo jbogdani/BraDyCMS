@@ -168,7 +168,25 @@
       <span class="text-muted">If you turn off debug mode remember to clear the application cache (see below).</span>
     </div>
 	</div>
-  
+      
+  <!-- UPDATE CHANNEL -->
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+		<label class="control-label col-md-2">{{ tr.get('cfg-update-channel') }}</label>
+		<div class="col-md-5">
+			<select name="updatechannel">
+        <option value="master" {% if data.updatechannel == 'master' or data.updatechannel ==false %} selected="selected"{% endif %}>
+          MASTER (https://github.com/jbogdani/BraDyCMS/tree/dev)
+        </option>
+        <option value="dev" {% if data.updatechannel == 'dev' %} selected="selected"{% endif %}>
+          DEVELOPMENT (https://github.com/jbogdani/BraDyCMS/tree/dev)
+        </option>
+			</select>
+		</div>
+    <div class="col-md-5">
+      <span class="text-muted">For a stable use please use the MASTER branch. Use development branch on your own risk.</span>
+    </div>
+	</div>
+      
   <!-- ROBOTS -->
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-robots') }}</label>

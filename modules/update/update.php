@@ -10,10 +10,25 @@
 class update_ctrl extends Controller
 {
   
-  private $path2ZIP = 'https://github.com/jbogdani/BraDyCMS/archive/master.zip';
-  
-  private $path2ini = 'https://raw.github.com/jbogdani/BraDyCMS/master/version';
-  
+  private function getPath($what = false)
+  {
+    $channel = cfg::get('updatechannel');
+    
+    if (!$what || $what === 'zip')
+    {
+      return !$channel || $channel === 'master' ?
+        'https://github.com/jbogdani/BraDyCMS/archive/master.zip'
+        :
+        'https://github.com/jbogdani/BraDyCMS/archive/dev.zip';
+    }
+    else if ($what === 'ini')
+    {
+      return !$channel || $channel === 'master' ?
+        'https://raw.github.com/jbogdani/BraDyCMS/master/version'
+        :
+        'https://raw.github.com/jbogdani/BraDyCMS/dev/version';
+    }
+  }
   
   public function main()
   {
@@ -28,7 +43,7 @@ class update_ctrl extends Controller
     {
       $update = new Update();
       
-      $res = $update->checkUpdate(version::current(), $this->path2ini);
+      $res = $update->checkUpdate(version::current(), $this->getPath('ini'));
       
       $this->render('update', 'check_result', $res);
      
@@ -51,7 +66,7 @@ class update_ctrl extends Controller
       
       $localZipPath = TMP_DIR . uniqid() . '.zip';
       
-      $update->downloadZip($this->path2ZIP, $localZipPath);
+      $update->downloadZip($this->getPath('zip'), $localZipPath);
       echo '<p class="lead text-success"><i class="glyphicon glyphicon-ok"></i> ' . tr::get('update_downloaded') . '</p>';
       
       $update->unzip($localZipPath, false, false, true);
@@ -85,7 +100,7 @@ class update_ctrl extends Controller
       {
         case 'start':
           $localZipPath = TMP_DIR . uniqid() . '.zip';
-          $update->downloadZip($this->path2ZIP, $localZipPath);
+          $update->downloadZip($this->getPath('zip'), $localZipPath);
           $resp = array('status' => 'success', 'text' => tr::get('update_downloaded'), 'step' => 'unzip', 'localZipPath' => $localZipPath);
           break;
         

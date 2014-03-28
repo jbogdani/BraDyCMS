@@ -1,3 +1,4 @@
+3.5.0[] = "Added new functionality: automatic updates can point to master (default) or development version in Github repository"
 3.5.0[] = "Added new functionality: custom fields now can be configured to have rich text (TinyMCE editor)"
 3.5.0[] = "Added new functionality: Create and display download nodes."
 3.4.3[] = "Minor code cleaning"

@@ -119,16 +119,20 @@ class customTags
   {
     $path2node = './sites/default/images/downloads/' . $data['content'];
     
+    $json_file = $path2node . '/data' 
+      . ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ? '_' . $_SESSION['lang'] : '')
+      . '.json';
+    
     if (
       !file_exists($path2node) 
       || 
-      !file_exists($path2node . '/data.json')
+      !file_exists($json_file)
     )
     {
       return false;
     }
     
-    $fileData = json_decode(file_get_contents($path2node . '/data.json'), true);
+    $fileData = json_decode(file_get_contents($json_file), true);
     
     if (!$fileData || !is_array($fileData))
     {
@@ -141,6 +145,10 @@ class customTags
     
     foreach ($node_content as $file)
     {
+      if (preg_match('/data_?([a-z]{2})?\.json/', $file))
+      {
+        continue;
+      }
       $formattedName = str_replace('.', '__x__', $file);
       
       $files[] = array(
@@ -189,7 +197,7 @@ class customTags
 	{
 		$gal = $data['content'];
 		$class = $data['class'];
-		$lang = ($data['lang'] && $data['lang'] != cfg::get('sys_lang') ? $data['lang'] : '');
+		$lang =  ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ? $_SESSION['lang'] : '');
     
     if (file_exists(GALLERY_DIR . $gal  . '/data' . ($lang ? '_' . $lang : '') . '.json'))
     {

@@ -43,7 +43,7 @@ class media_ctrl extends Controller
 			
 					$ftype = utils::checkMimeExt($path . '' . $file);
 						
-					if ($ftype[0] == 'image')
+					if ($ftype[0] === 'image')
 					{
 						$file_obj[$file]['src'] = $path . '/' . $file;
 						$file_obj[$file]['image'] = true;
@@ -77,8 +77,7 @@ class media_ctrl extends Controller
 				'path_arr'=> $path_arr,
 				'path' => $path,
 				'rel_path' => $rel_path,
-				'files' => $file_obj,
-				'tr' => new tr()
+				'files' => $file_obj
 		));
 	}
 	

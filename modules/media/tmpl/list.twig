@@ -135,9 +135,9 @@
 	$('#{{ uid }} li.openpop').popover({
 		html:true,
 		title: function(){
-			var file = $(this).data('file')
-				name = $(this).data('name')
-				is_image = $(this).data('image');
+			var file = $(this).data('file');
+      var name = $(this).data('name');
+      var is_image = $(this).data('image');
 			
 			return $('<div />').append(
 					'<h4>' + $(this).data('name') + '</h4>',

@@ -268,7 +268,15 @@ class media_ctrl extends Controller
     
     foreach ($files as $file)
     {
-      if (is_dir($dir . '/' . $file) && $file !== 'thumbs' && $recursive)
+      if (
+        is_dir($dir . '/' . $file)
+        &&
+        $file !== 'thumbs'
+        &&
+        $file !== 'downloads'
+        &&
+        $recursive
+        )
       {
         $this->makeThumbs($dir . '/' . $file, $max, $fixed, $overwrite, $recursive);
       }

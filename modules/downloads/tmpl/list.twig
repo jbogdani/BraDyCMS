@@ -46,7 +46,7 @@
 			title: admin.tr('new_download_node'),
 			loaded: function(modal){
 				modal.find('input.download').focus();
-        admin.removeNotValid(modal.find('input.download'), '_', true);
+        admin.removeNotValid(modal.find('input.download'), {'replace':'_', 'toLower': true});
 			},
 			buttons:[
 			         {

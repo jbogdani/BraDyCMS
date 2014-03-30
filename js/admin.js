@@ -8,21 +8,48 @@ var _ignorehash;
 
 var admin = {
   
-  removeNotValid: function(input, replace, toLower){
+  removeNotValid: function(input, opts){
+    /**
+     * available opts:
+     *  replace: string
+     *  toLower: boolean
+     *  permit: array
+     */
+    if (!opts){
+      var opts = {};
+    }
+    
+    var pattern = "_,=\.\\s\\?'\"\\-";
+    
+    if (opts.permit){
+      $.each(opts.permit, function(i, item){
+        pattern = pattern.replace(item, '');
+      });
+    }
+
     input.on('keyup', function(e){
       if (
+        //http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
            e.keyCode === 13 //enter
         || e.keyCode === 37 //left-arrow
         || e.keyCode === 38 //up-arrow
         || e.keyCode === 39 //right-arrow
         || e.keyCode === 40 //down-arrow
+        || e.keyCode === 8 //backspace
+        || e.keyCode === 46 //delete
+        || e.keyCode === 16 //shift
+        || e.keyCode === 17 //CTRL
+        || e.keyCode === 18 //alt
+        || e.keyCode === 91 //left window
+        || e.keyCode === 93 //select key
         ){
         return;
       }
+      
       var val = $(this).val();
       if (val && val !== ''){
-        var newVal = val.replace(new RegExp("([,=_\.\\s\\?'\"\\-])", "g"), replace ? replace : ''); 
-        toLower ? newVal = newVal.toLowerCase() : '';
+        var newVal = val.replace(new RegExp("([" + pattern + "])", "gi"), opts.replace ? opts.replace : ''); 
+        opts.toLower ? newVal = newVal.toLowerCase() : '';
         $(this).val(newVal);
       }
     });

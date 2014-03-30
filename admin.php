@@ -70,7 +70,6 @@ catch (Exception $e)
 	<script src="./tiny_mce/tiny_mce.js"></script>
 	<script src="./js/fileuploader.js"></script>
 	<script src="./js/prettify.js"></script>
-  <script src="./js/jquery.removeNotValid.js"></script>
 	
 	<?php if (!$_SESSION['user_confirmed']): ?>
 	<script>

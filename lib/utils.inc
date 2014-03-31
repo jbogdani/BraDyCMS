@@ -199,6 +199,14 @@ class utils
 						"mime"=>array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/vnd.microsoft.icon", "image/tiff"),
 						"ext"=>array("png", "jpeg", "jpg", "bmp", "ico", "tif", "tiff", "gif"),
 						"icon"=>"image-x-generic.png"),
+        "EPUB"=>array(
+						"mime"=>array("application/epub+zip"),
+						"ext"=>array("epub"),
+						"icon"=>"epub.png"),
+        "MOBIPOCKET"=>array(
+						"mime"=>array("application/x-mobipocket-ebook"),
+						"ext"=>array("mobi"),
+						"icon"=>"mobi.png"),
 		);
 		
 		$trova_punto = explode(".", $file);

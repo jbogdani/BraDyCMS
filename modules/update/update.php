@@ -64,41 +64,16 @@ class update_ctrl extends Controller
     }
   }
   
-  
-  public function install()
-  {
-    try
-    {
-      $update = new Update();
-      
-      $localZipPath = TMP_DIR . uniqid() . '.zip';
-      
-      $update->downloadZip($this->getPath('zip'), $localZipPath);
-      echo '<p class="lead text-success"><i class="glyphicon glyphicon-ok"></i> ' . tr::get('update_downloaded') . '</p>';
-      
-      $update->unzip($localZipPath, false, false, true);
-      echo '<p class="lead text-success"><i class="glyphicon glyphicon-ok"></i> ' . tr::get('update_unpacked') . '</p>';
-      
-      $update->install(TMP_DIR . $this->getPath('package'), '.');
-      echo '<p class="lead text-success"><i class="glyphicon glyphicon-ok"></i> ' . tr::get('update_installed') . '</p>';
-      
-      echo '<p class="lead text-warning">The update was successfully installed. You ' .
-        'should consider emptying the cache, the trash and eventually updating ' .
-        'the .htaccess file. Follow <a href="#cfg/edit">this link</a> to ' .
-        'perform all these post-installation actions.</p>';
-      
-    }
-    catch (Exception $e)
-    {
-      echo '<div class="alert alert-danger">' . 
-        '<p class="lead">' . tr::get('error_install') . '</p>' .
-        '</div>';
-      error_log(var_export($e, true));
-    }
-  }
-  
   public function stepByStepInstall()
   {
+    $basePath = TMP_DIR . md5($this->get['remoteVersion']) . '/';
+    $localZipPath = $basePath . $this->get['remoteVersion'] . '.zip';
+    
+    if (!is_dir($basePath))
+    {
+      @mkdir($basePath, 0777, true);
+    }
+    
     try
     {
       $update = new Update();
@@ -106,19 +81,25 @@ class update_ctrl extends Controller
       switch($this->get['step'])
       {
         case 'start':
-          $localZipPath = TMP_DIR . uniqid() . '.zip';
-          $update->downloadZip($this->getPath('zip'), $localZipPath);
-          $resp = array('status' => 'success', 'text' => tr::get('update_downloaded'), 'step' => 'unzip', 'localZipPath' => $localZipPath);
+          
+          if (!file_exists($localZipPath))
+          {
+            $update->downloadZip($this->getPath('zip'), $localZipPath);
+          }
+          $resp = array('status' => 'success', 'text' => tr::get('update_downloaded'), 'step' => 'unzip', 'remoteVersion' => $this->get['remoteVersion']);
           break;
         
         case 'unzip':
-          $update->unzip($this->get['localZipPath'], false, false, true);
-          $resp = array('status' => 'success', 'text' => tr::get('update_unpacked'), 'step' => 'install');
+          if (!is_dir($basePath . $this->getPath('package')))
+          {
+            $update->unzip($localZipPath, $basePath, false, true);
+          }
+          $resp = array('status' => 'success', 'text' => tr::get('update_unpacked'), 'step' => 'install', 'remoteVersion' => $this->get['remoteVersion']);
         break;
       
         case 'install':
-          $update->install(TMP_DIR . $this->getPath('package'), '.');
-          $resp = array('status' => 'success', 'text' => tr::get('update_installed'), 'step' => 'finished');
+          $update->install($basePath . $this->getPath('package'), '.');
+          $resp = array('status' => 'success', 'text' => tr::get('update_installed'), 'step' => 'finished', 'remoteVersion' => $this->get['remoteVersion']);
           break;
         
         case false:

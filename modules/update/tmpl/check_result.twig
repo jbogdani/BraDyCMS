@@ -33,7 +33,7 @@
 
 <script>
   
-  function stepByStepInstall(step, localZipPath){
+  function stepByStepInstall(step, remoteVersion){
     if (!step)
     {
       var step = 'start';
@@ -51,10 +51,10 @@
         waitingMsg = 'Installing update...';
         break;
     }
-    $('#{{ uid }} .loading').html('<img src="./img/loading.gif" alt="loading..." /> ' + waitingMsg)
+    $('#{{ uid }} .loading').html('<img src="./img/loading.gif" alt="loading..." /> ' + waitingMsg);
     
     $.get('controller.php?obj=update_ctrl&method=stepByStepInstall&step=' + step + 
-      (localZipPath ? '&localZipPath=' + localZipPath : ''),
+      '&remoteVersion=' + remoteVersion,
       
     function(data){
         
@@ -71,7 +71,7 @@
             'all these post-installation actions.</p>');
           
         } else {
-          stepByStepInstall(data.step, data.localZipPath);
+          stepByStepInstall(data.step, data.remoteVersion);
         }
         
       } else {
@@ -83,6 +83,6 @@
   }
   
   $('#{{ uid }} .install').on('click', function(){
-    stepByStepInstall();
+    stepByStepInstall('start', '{{ remote_vers }}');
   });
 </script>

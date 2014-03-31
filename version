@@ -1,3 +1,4 @@
+3.5.3[] = "Bug fixed with auto update module"
 3.5.2[] = "Bug fixed with package name in automatic update function"
 3.5.1[] = "Added support for download elements sorting"
 3.5.0[] = "Added support and icons for epub and mobi file extensions in supported file list"

@@ -123,11 +123,9 @@ class Update
   {
     if( is_dir($path) )
     {
-      @mkdir( $dest );
-      
-      if (!is_dir($dest))
+      if (!mkdir( $dest ) || !is_dir($dest))
       {
-        throw new Exception('Can not create dire: ' . $dest);
+        throw new Exception('Can not create dir: ' . $dest);
       }
       
       $objects = scandir($path);
@@ -145,8 +143,7 @@ class Update
           }
           else
           {
-              @copy( $path . '/' . $file, $dest . '/' . $file );
-              if(!file_exists($dest . '/' . $file))
+              if(!copy( $path . '/' . $file, $dest . '/' . $file ) || !file_exists($dest . '/' . $file))
               {
                 throw new Exception('Can not copy file: ' . $dest . '/' . $file);
               }
@@ -157,9 +154,7 @@ class Update
     }
     else if ( is_file($path) )
     {
-        @copy($path, $dest);
-        
-        if (!file_exists($dest))
+        if (!copy($path, $dest) || !file_exists($dest))
         {
           throw new Exception('Can not copy file: ' . $dest);
         }
@@ -217,9 +212,7 @@ class Update
         if ($dest_dir === false) $dest_dir = substr($src_file, 0, strrpos($src_file, $splitter))."/";
         
         // Create the directories to the destination dir if they don't already exist
-        @mkdir($dest_dir, 0777, true);
-        
-        if (!is_dir($dest_dir))
+        if (!mkdir($dest_dir, 0777, true) || !is_dir($dest_dir))
         {
           throw new Exception('Can not create directory: ' . $dest_dir);
         }
@@ -234,8 +227,7 @@ class Update
           if ($pos_last_slash !== false)
           {
             // Create the directory where the zip-entry should be saved (with a "/" at the end)
-            @mkdir($dest_dir.substr(zip_entry_name($zip_entry), 0, $pos_last_slash+1), 0777, true);
-            if (!is_dir($dest_dir))
+            if (!mkdir($dest_dir.substr(zip_entry_name($zip_entry), 0, $pos_last_slash+1), 0777, true) || !is_dir($dest_dir))
             {
               throw new Exception('Can not create directory: ' . $dest_dir);
             }

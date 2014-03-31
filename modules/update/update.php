@@ -28,6 +28,13 @@ class update_ctrl extends Controller
         :
         'https://raw.github.com/jbogdani/BraDyCMS/dev/version';
     }
+    else if ($what === 'package')
+    {
+      return !$channel || $channel === 'master' ?
+        'BraDyCMS-master'
+        :
+        'BraDyCMS-dev';
+    }
   }
   
   public function main()
@@ -72,7 +79,7 @@ class update_ctrl extends Controller
       $update->unzip($localZipPath, false, false, true);
       echo '<p class="lead text-success"><i class="glyphicon glyphicon-ok"></i> ' . tr::get('update_unpacked') . '</p>';
       
-      $update->install(TMP_DIR . 'BraDyCMS-master', '.');
+      $update->install(TMP_DIR . $this->getPath('package'), '.');
       echo '<p class="lead text-success"><i class="glyphicon glyphicon-ok"></i> ' . tr::get('update_installed') . '</p>';
       
       echo '<p class="lead text-warning">The update was successfully installed. You ' .
@@ -110,7 +117,7 @@ class update_ctrl extends Controller
         break;
       
         case 'install':
-          $update->install(TMP_DIR . 'BraDyCMS-master', '.');
+          $update->install(TMP_DIR . $this->getPath('package'), '.');
           $resp = array('status' => 'success', 'text' => tr::get('update_installed'), 'step' => 'finished');
           break;
         

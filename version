@@ -1,3 +1,4 @@
+3.5.0[] = "Added support and icons for epub and mobi file extensions in supported file list"
 3.5.0[] = "New option in javascript: admin.removeNotValid. Added the possibility to implement permitted values"
 3.5.0[] = "Added new functionality: automatic updates can point to master (default) or development version in Github repository"
 3.5.0[] = "Added new functionality: custom fields now can be configured to have rich text (TinyMCE editor)"

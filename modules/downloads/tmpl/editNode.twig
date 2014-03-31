@@ -3,7 +3,7 @@
 	
 	<div class="btn-group" style="padding:20px 0;">
 		{% if files|length == 0 %}
-			<button class="btn btn-danger delete-node">{{ tr.get('delete_download_node') }}</button>
+			<button class="btn btn-danger delete-node" type="button">{{ tr.get('delete_download_node') }}</button>
 		{% endif %}
 		<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
 		{% for lng in langs %}
@@ -33,6 +33,7 @@
               </p>
 							<p>
                 <button 
+                  type="button"
                   class="btn btn-danger delete" 
                   data-file="{{ file.name }}">
                   <i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}
@@ -41,15 +42,30 @@
 						</div>
 
 						<div class="col-xs-8">
-              <div class="form-group">
-                <label>{{ tr.get('title') }}</label>
-                <input 
-                  type="text" 
-                  data-file="{{ file.name }}" 
-                  class="col-md-12" 
-                  name="{{ file.formattedName }}[title]"
-                  value="{{ file.title }}"
-                  />
+              <div class="row">
+                <div class="col-xs-9">
+                  <div class="form-group">
+                    <label>{{ tr.get('title') }}</label>
+                    <input 
+                      type="text" 
+                      data-file="{{ file.name }}" 
+                      name="{{ file.formattedName }}[title]"
+                      value="{{ file.title }}"
+                      />
+                  </div>
+                </div>
+                      
+                <div class="col-xs-3">
+                  <div class="form-group">
+                    <label>{{ tr.get('sorting') }}</label>
+                    <input 
+                      type="text" 
+                      data-file="{{ file.name }}" 
+                      name="{{ file.formattedName }}[sort]"
+                      value="{{ file.sort }}"
+                      />
+                  </div>
+                </div>
               </div>
               
               <div class="form-group">

@@ -8,6 +8,7 @@
  
 class customTags
 {
+
   
   public static function parseContent($html)
 	{
@@ -143,6 +144,7 @@ class customTags
     
     $files = array();
     
+    
     foreach ($node_content as $file)
     {
       if (preg_match('/data_?([a-z]{2})?\.json/', $file))
@@ -156,9 +158,19 @@ class customTags
         'basename' => pathinfo($file, PATHINFO_FILENAME),
         'ext' => pathinfo($file, PATHINFO_EXTENSION),
         'title' => $fileData[$formattedName]['title'] ? $fileData[$formattedName]['title'] : $file,
-        'description' => $fileData[$formattedName]['description']
+        'description' => $fileData[$formattedName]['description'],
+        'sort' => $fileData[$formattedName]['sort']
         ); 
     }
+    
+    usort($files, function($a, $b){
+      if ($a['sort'] === $b['sort'])
+      {
+        return 0;
+      }
+      
+      return ($a['sort'] > $b['sort']) ? -1 : 1;
+    });
     
     if ($data['getObject'])
     {

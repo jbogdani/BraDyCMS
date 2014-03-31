@@ -51,19 +51,31 @@ class downloads_ctrl extends Controller
 			}
 		}
 		
+    $files = array();
 		foreach ($node_content as $file)
 		{
-			if ($file != 'data.json' && !preg_match('/\.json/', $file))
+			if ($file !== 'data.json' && !preg_match('/\.json/', $file))
 			{
+        $formattedName = str_replace('.', '__x__', $file);
 				$files[] = array(
 						'name' => $file,
-						'formattedName' => str_replace('.', '__x__', $file),
+						'formattedName' => $formattedName,
 						'fullpath' => $this->path . $this->get['param'][0] . '/' . $file,
-            'title' => $data[str_replace('.', '__x__', $file)]['title'] ? $data[str_replace('.', '__x__', $file)]['title'] : $file,
-						'description' => $data[str_replace('.', '__x__', $file)]['description']
+            'title' => $data[$formattedName]['title'] ? $data[$formattedName]['title'] : $file,
+						'description' => $data[$formattedName]['description'],
+            'sort' => $data[$formattedName]['sort'] ? $data[$formattedName]['sort'] : count($files) + 1
 						); 
 			}
 		}
+    
+    usort($files, function($a, $b){
+      
+      if ($a['sort'] === $b['sort'])
+      {
+        return 0;
+      }
+      return ($a['sort'] > $b['sort']) ? -1 : 1;
+    });
 		
 		$this->render('downloads', 'editNode', array(
 				'node'=> $this->get['param'][0],

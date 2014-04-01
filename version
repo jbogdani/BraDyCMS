@@ -1,3 +1,4 @@
+3.5.4[] = "Bug fixed with download module: index file is updated automatically after each file upload"
 3.5.3[] = "Bug fixed with auto update module"
 3.5.2[] = "Bug fixed with package name in automatic update function"
 3.5.1[] = "Added support for download elements sorting"

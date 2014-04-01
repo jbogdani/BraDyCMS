@@ -39,7 +39,7 @@ class docs_ctrl extends Controller
           . 'otherwize, default option, full html will be returned'
         ),
       'min_example' => '[[download]]node_name[[/download]]',
-      'max_example' => '[[download class="table table-stripped"]]node_name[[/download]]'
+      'max_example' => '[[download class="table table-striped"]]node_name[[/download]]'
     );
     
     

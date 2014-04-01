@@ -57,16 +57,32 @@ class downloads_ctrl extends Controller
 			if ($file !== 'data.json' && !preg_match('/\.json/', $file))
 			{
         $formattedName = str_replace('.', '__x__', $file);
+        
+        // file is not - yet - present in index file. Add it
+        if (!$data[$formattedName])
+        {
+          $data[$formattedName] = array(
+            'title' => $file,
+            'sort' => is_array($data) ? count($data) + 1 : '1'
+          );
+          $changed = true;
+        }
+        
 				$files[] = array(
 						'name' => $file,
 						'formattedName' => $formattedName,
 						'fullpath' => $this->path . $this->get['param'][0] . '/' . $file,
-            'title' => $data[$formattedName]['title'] ? $data[$formattedName]['title'] : $file,
+            'title' => $data[$formattedName]['title'],
 						'description' => $data[$formattedName]['description'],
-            'sort' => $data[$formattedName]['sort'] ? $data[$formattedName]['sort'] : count($files) + 1
+            'sort' => $data[$formattedName]['sort']
 						); 
 			}
 		}
+    
+    if ($changed)
+    {
+      utils::write_in_file($this->path . $this->get['param'][0] . '/data' . ($lang ? '_' . $lang : '') . '.json', $data, 'json');
+    }
     
     usort($files, function($a, $b){
       

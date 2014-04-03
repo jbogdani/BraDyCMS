@@ -20,10 +20,11 @@ class OAI_ctrl extends Controller
 
     require_once './vendor/oaiprovider-php/oaiprovider-php/endpoint.php';
     require_once MOD_DIR . 'OAI/myRepository.php';
+    require_once MOD_DIR . 'OAI/myTokenStore.php';
 
     unset($this->get['obj']);
     unset($this->get['method']);
 
-    \oaiprovider\handleRequest($this->get, new myRepository($metadata), null, 'xsl/oai2.xsl');
+    \oaiprovider\handleRequest($this->get, new myRepository($metadata), new myTokenStore(), 'xsl/oai2.xsl');
 	}
 }

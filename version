@@ -1,3 +1,4 @@
+3.5.5[] = "Added custom myTokenStore class to OAI module"
 3.5.4[] = "Bug fixed with download module: index file is updated automatically after each file upload"
 3.5.3[] = "Bug fixed with auto update module"
 3.5.2[] = "Bug fixed with package name in automatic update function"

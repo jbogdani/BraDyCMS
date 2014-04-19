@@ -205,7 +205,12 @@ class customTags
 		return self::format_gallery($data);
 	}
 	
-	private static function format_gallery($data, $responsive = false)
+  public static function getGallery($data)
+  {
+    return self::format_gallery($data, false, true);
+  }
+  
+	private static function format_gallery($data, $responsive = false, $returnObject = false)
 	{
 		$gal = $data['content'];
 		$class = $data['class'];
@@ -236,7 +241,22 @@ class customTags
 		
 		$html = '<div class="gallery-container">';
 		
-		if ($responsive)
+    if ($returnObject)
+    {
+      foreach ($captions as $img => $cap)
+      {
+        $img = str_replace('__x__', '.', $img);
+        
+        $gal_data[] = array(
+          'img' => file_exists('./sites/default/images/galleries/' .$gal . '/' . $img) ? './sites/default/images/galleries/' .$gal . '/' . $img : false,
+          'thumb' => file_exists('./sites/default/images/galleries/' .$gal . '/thumbs/' . $img) ? './sites/default/images/galleries/' .$gal . '/thumbs/' . $img : false,
+          'caption' => $cap
+        );
+      }
+      
+      return $gal_data;
+    }
+    else if ($responsive)
 		{
 			/**
 			 * <ul data-rel="sth" class="a b c cl_gallery">

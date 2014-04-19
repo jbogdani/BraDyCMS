@@ -609,7 +609,23 @@ class docs_ctrl extends Controller
 			);
 		
 		
-		
+		$docs[] = array(
+      'method' => 'getGallery',
+			'params' => array(
+				'gallery' => 'string, required. Name of gallery to get data for'
+			),
+			'description' => 'Returns array with data for gallery name',
+			'example_usage' => "{{ html.getGallery('our_works') }}",
+			'example_output' => 'array ('
+        . "\n  array ("
+        . "\n   img => sites/default/images/galleries/our_works/picture01.jpg,"
+        . "\n   thumb => sites/default/images/galleries/our_works/thumbs/picture01.jpg,"
+        . "\n   caption => Caption of picture01"
+        . "\n  ),"
+        . "\n ..."
+        . "\n);"
+    );
+    
     $docs[] = array(
 			'method' => 'getDownloadNode',
 			'params' => array(
@@ -619,11 +635,11 @@ class docs_ctrl extends Controller
 			'example_usage' => "{{ html.getDownloadNode('curricula') }}",
 			'example_output' => 'array ('
         . "\n  array ("
-        . "\n   path => sites/default/images/downloads/curricola/jbogdani.pdf"
-        . "\n   basename => jbogdani"
-        . "\n   ext => pdf"
-        . "\n   title => CV of Julian Bogdani"
-        . "\n   description => Detailed CV of Julian Bogdani, PDF version. Last updated 2014"
+        . "\n   path => sites/default/images/downloads/curricola/jbogdani.pdf,"
+        . "\n   basename => jbogdani,"
+        . "\n   ext => pdf,"
+        . "\n   title => CV of Julian Bogdani,"
+        . "\n   description => Detailed CV of Julian Bogdani, PDF version. Last updated 2014,"
         . "\n  ),"
         . "\n ..."
         . "\n);"

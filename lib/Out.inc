@@ -76,6 +76,15 @@ class Out
 		}
 	}
   
+  public function getGallery($gal)
+	{
+		if (!file_exists(GALLERY_DIR . $gal . '/data.json'))
+		{
+			return;
+		}
+		return customTags::getGallery(array('content' => $gal));
+	}
+  
   /**
    * Returns textid specified in URL
    * @return string

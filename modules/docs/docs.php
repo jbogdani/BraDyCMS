@@ -374,6 +374,20 @@ class docs_ctrl extends Controller
   })();
 </script>"
 			);
+    
+    $docs[] = array(
+			'method' => 'GUA',
+			'description' => 'Returns javascript code for Google Universal Analytics Tracking. Google Analytics id must be provided in site configuration file. A domain is provided in configuration file, the code will be shown only if current domain matches the provided domain. This is very usefull in test installations.',
+			'example_usage' => "{{ html.GUA }}",
+			'example_output' => "<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'GA-ID', 'auto');
+  ga('send', 'pageview');
+</script>"
+			);
 		
 		$docs[] = array(
 			'method' => 'gallery',

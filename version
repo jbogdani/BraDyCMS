@@ -1,3 +1,4 @@
+3.5.7[] = "Updated README file with http://books.bradypus.net site"
 3.5.6[] = "Added new custom tag and template method getGallery"
 3.5.5[] = "Added custom myTokenStore class to OAI module"
 3.5.4[] = "Bug fixed with download module: index file is updated automatically after each file upload"

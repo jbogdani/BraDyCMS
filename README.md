@@ -53,6 +53,7 @@ A five-step guide to install and get running BraDyCMS
 
 ### Version 3.x
 * [belightproject.com](http://belightproject.com)
+* [books.bradypus.net](http://books.bradypus.net)
 * [bradypus.net](http://bradypus.net)
 * [http://cliffyoungltd.com](http://cliffyoungltd.com)
 * [costruzioniartigiane.it](http://costruzioniartigiane.it)

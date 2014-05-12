@@ -349,7 +349,7 @@ class Out
 			
 		if (file_exists('./sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg'))
 		{
-			$this->data['page']['image'] = './sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg';
+			$this->data['page']['image'] = utils::getBaseUrl() . 'sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg';
 		}
 		else if ($this->data['article'][$this->get['art_title']]['text'])
 		{

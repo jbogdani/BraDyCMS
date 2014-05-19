@@ -381,19 +381,43 @@ class Article
 	 * @param string $lang
 	 * @return array of beams objects or false
 	 */
-	public static function search($string, $lang = false)
+	public static function search($string, $lang = false, $dontseparate = false)
 	{
-		$string = "%$string%";
-
+    $searcheableFields = array('title', 'textid', 'author', 'summary', 'text', 'keywords');
+  
+    if ($dontseparate)
+    {
+      $string_arr[] = $string;
+    } else
+    {
+      $string_arr = utils::csv_explode($string, " ");
+    }
+    
+    if (!is_array($string_arr) || empty($string_arr))
+    {
+      return false;
+    }
+    
+    $sql_part = false;
+    
+    foreach ($searcheableFields as $fld)
+    {
+      $sql_micro_part = false;
+      
+      foreach ($string_arr as $str)
+      {
+        $sql_micro_part[] = "`" . $fld . "` LIKE ?";
+        $values[] = "%" . $str . "%";
+      }
+      $sql_part[] = ' (' . implode(' AND ', $sql_micro_part) . ') ';
+    }
+    
+    $sql = implode(' OR ', $sql_part);
+    
 		$articles = R::find(
 				self::art_tb(),
-        "    `title`    LIKE ? "
-        . " OR `textid`  LIKE ? "
-        . " OR `author`  LIKE ? "
-				. " OR `summary`  LIKE ? "
-				. " OR `text`     LIKE ? "
-				. " OR `keywords` LIKE ? ",
-				array($string, $string, $string, $string, $string, $string)
+      $sql,
+      $values
 		);
 		
 		if (!is_array($articles))

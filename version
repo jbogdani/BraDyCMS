@@ -1,3 +1,4 @@
+3.5.9[] = "New function: search now splits searched string using spaces and searches for all bits of string separately"
 3.5.9[] = "Bug fixed with utils::getLanguages"
 3.5.8[] = "Bug fixed with og:image tag. Relative path was being provided"
 3.5.7[] = "Typo fix in userform docs"

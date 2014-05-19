@@ -315,7 +315,7 @@ class utils
 		{
 			if($lang)
 			{
-				if (preg_match('/\/' . $lang . '/', $_SERVER['REQUEST_URI']) || preg_match('/lang=' . $lang, $_SERVER['REQUEST_URI'] . '/'))
+				if (preg_match('/\/' . $lang . '/', $_SERVER['REQUEST_URI']) || preg_match('/lang=' . $lang . '/', $_SERVER['REQUEST_URI']))
 				{
 					$langThis['href'] = str_replace(
 							array('/' . $lang, 'lang=' . $lang),

@@ -505,6 +505,10 @@ class customTags
     {
       $filename = './sites/default/images/' . $data['content'];
     }
+    else if (file_exists($data['content']))
+    {
+      $filename = $data['content'];
+    }
     else
     {
       return false;

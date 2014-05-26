@@ -7,7 +7,7 @@
  * @since				Apr 3, 2014
  */
 
-class myTokenStore implements oaiprovider\tokens\TokenStore
+class myTokenStore implements \oaiprovider\tokens\TokenStore
 {
   
   private function assertTable()

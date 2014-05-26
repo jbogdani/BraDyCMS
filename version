@@ -1,3 +1,4 @@
+3.5.10[] = "Bug fixed with OAI-PMH module"
 3.5.9[] = "Custom tag [[figure]] accepts now full path to image"
 3.5.9[] = "New function: search now splits searched string using spaces and searches for all bits of string separately"
 3.5.9[] = "Bug fixed with utils::getLanguages"

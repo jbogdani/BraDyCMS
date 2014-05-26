@@ -89,49 +89,6 @@
         ]
     },
     {
-        "name": "oaiprovider-php/oaiprovider-php",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/jbogdani/oaiprovider-php.git",
-            "reference": "d0a8259501d685ef837e7e9a476343f94a78e8a2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/jbogdani/oaiprovider-php/zipball/d0a8259501d685ef837e7e9a476343f94a78e8a2",
-            "reference": "d0a8259501d685ef837e7e9a476343f94a78e8a2",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "time": "2013-09-11 21:14:01",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "endpoint.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Martijn Vogten",
-                "homepage": "https://github.com/martijnvogten",
-                "role": "Developer"
-            }
-        ],
-        "description": "OAI provider written in PHP",
-        "homepage": "https://github.com/martijnvogten/oaiprovider-php",
-        "keywords": [
-            "OAI"
-        ]
-    },
-    {
         "name": "mibe/feedwriter",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -313,60 +270,6 @@
         ]
     },
     {
-        "name": "mobiledetect/mobiledetectlib",
-        "version": "2.7.9",
-        "version_normalized": "2.7.9.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/serbanghita/Mobile-Detect.git",
-            "reference": "610846237295e3e50a1923e7cc1639a956ead22a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/610846237295e3e50a1923e7cc1639a956ead22a",
-            "reference": "610846237295e3e50a1923e7cc1639a956ead22a",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.0.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "*"
-        },
-        "time": "2014-03-07 13:33:54",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "Mobile_Detect.php"
-            ],
-            "psr-0": {
-                "Detection": "namespaced/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Serban Ghita",
-                "email": "serbanghita@gmail.com",
-                "homepage": "http://mobiledetect.net",
-                "role": "Developer"
-            }
-        ],
-        "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
-        "homepage": "https://github.com/serbanghita/Mobile-Detect",
-        "keywords": [
-            "detect mobile devices",
-            "mobile",
-            "mobile detect",
-            "mobile detector",
-            "php mobile detect"
-        ]
-    },
-    {
         "name": "swiftmailer/swiftmailer",
         "version": "v5.1.0",
         "version_normalized": "5.1.0.0",
@@ -417,6 +320,108 @@
         "keywords": [
             "mail",
             "mailer"
+        ]
+    },
+    {
+        "name": "mobiledetect/mobiledetectlib",
+        "version": "2.8.0",
+        "version_normalized": "2.8.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/serbanghita/Mobile-Detect.git",
+            "reference": "cf8f99c1575e6fdb2df4bb65248d351395312479"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/cf8f99c1575e6fdb2df4bb65248d351395312479",
+            "reference": "cf8f99c1575e6fdb2df4bb65248d351395312479",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2014-04-21 18:09:41",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "Mobile_Detect.php"
+            ],
+            "psr-0": {
+                "Detection": "namespaced/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Serban Ghita",
+                "email": "serbanghita@gmail.com",
+                "homepage": "http://mobiledetect.net",
+                "role": "Developer"
+            }
+        ],
+        "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
+        "homepage": "https://github.com/serbanghita/Mobile-Detect",
+        "keywords": [
+            "detect mobile devices",
+            "mobile",
+            "mobile detect",
+            "mobile detector",
+            "php mobile detect"
+        ]
+    },
+    {
+        "name": "oaiprovider-php/oaiprovider-php",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jbogdani/oaiprovider-php.git",
+            "reference": "b310c740af20a117fa4cb00eeeaaeade097027af"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jbogdani/oaiprovider-php/zipball/b310c740af20a117fa4cb00eeeaaeade097027af",
+            "reference": "b310c740af20a117fa4cb00eeeaaeade097027af",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "time": "2014-05-26 18:41:29",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "endpoint.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Martijn Vogten",
+                "homepage": "https://github.com/martijnvogten",
+                "role": "Developer"
+            },
+            {
+                "name": "Julian Bogdani",
+                "homepage": "https://github.com/jbogdani",
+                "role": "Developer"
+            }
+        ],
+        "description": "OAI provider written in PHP",
+        "homepage": "https://github.com/jbogdani/oaiprovider-php",
+        "keywords": [
+            "OAI"
         ]
     }
 ]

@@ -168,35 +168,34 @@ class userform_ctrl extends Controller
 			
 			try
 			{
-				$message = Swift_Message::newInstance()
-				
-					->setSubject($this->data['subject'])
-
-					->setFrom($this->data['from_email'], $this->data['from_name'])
-
-					->setTo($this->data['to'])
-
-					->setBody($text, 'text/plain')
-
-					->setReplyTo($this->data['from'])
-
-					;
-				
+        $message = new PHPMailer();
+        $message->From = $this->data['from_email'];
+        $message->FromName = $this->data['from_name'];
+        $message->addAddress($this->data['to']);
+        $message->addReplyTo($this->data['from']);
+        $message->Subject = $this->data['subject'];
+        $message->Body = $text;
+        $message->isHTML(false);
+        
 				if (is_array($attach))
 				{
 					foreach ($attach as $file)
 					{
-						$message->attach(Swift_Attachment::fromPath($file));
+            $message->addAttachment($file);
 					}
 				}
 				
-				$mailer = Swift_Mailer::newInstance(Swift_MailTransport::newInstance());
+        $message->send();
 				
-				$mailer->send($message);
-				
-				echo json_encode(array('status' => 'success', 'text' =>$this->data['success_text']));
+				echo json_encode(array('status' => 'success', 'text' => $this->data['success_text']));
 			}
-			
+      
+      catch (phpmailerException $e)
+      {
+        error_log($e->getTraceAsString());
+				
+				throw new Exception($this->data['error_text']);
+      }
 			catch (Exception $e)
 			{
 				error_log($e->getTraceAsString());

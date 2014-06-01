@@ -10,7 +10,6 @@
   ],
   
   "require": {
-    "swiftmailer/swiftmailer": "v5.1.0",
     "oyejorge/less.php": "1.7.0.1",
     "twig/twig": "1.15.1",
     "jsocol/oocurl": "dev-master",

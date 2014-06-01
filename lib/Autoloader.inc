@@ -19,6 +19,17 @@ class Autoloader
 		{
 			return true;
 		}
+    
+    // Manually installed external libraries
+    switch($className)
+    {
+      case 'Less_Parser':
+        require_once LIB_DIR . 'vendor/lessphp/Less.php';
+        return true;
+      case 'R':
+        require LIB_DIR . 'vendor/redbean/rb.php';
+        return true;
+    }
 		
 		if (preg_match('/_ctrl/', $className))
 		{

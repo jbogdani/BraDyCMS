@@ -1,3 +1,4 @@
+3.6.0[] = "Less.php is included as single file library and is excluded from composer"
 3.6.0[] = "PHPMailer one file library replaces Swiftmailer managed from composer"
 3.6.0[] = "Redbean is included as single file library and is excluded from composer"
 3.5.12[] = "Auto-update will always install from remote source if development channel is selected"

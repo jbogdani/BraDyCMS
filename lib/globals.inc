@@ -84,7 +84,7 @@ require_once $root . 'lib/Autoloader.inc';
 Autoloader::start();
 
 require $root . 'vendor/autoload.php';
-require $root . 'lib/vendor/redbean/rb.php';
+//require $root . 'lib/vendor/redbean/rb.php';
 
 //set default date-zone
 if (defined('CREATE_SITE') || !cfg::get('timezone'))

@@ -14,7 +14,6 @@ return array(
     'FeedWriter\\RSS1' => $vendorDir . '/mibe/feedwriter/RSS1.php',
     'FeedWriter\\RSS2' => $vendorDir . '/mibe/feedwriter/RSS2.php',
     'Mobile_Detect' => $vendorDir . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
-    'lessc' => $vendorDir . '/oyejorge/less.php/lessc.inc.php',
     'oaiprovider\\OAIException' => $vendorDir . '/oaiprovider-php/oaiprovider-php/endpoint.php',
     'oaiprovider\\ResumptionToken' => $vendorDir . '/oaiprovider-php/oaiprovider-php/endpoint.php',
 );

@@ -26,11 +26,17 @@ class Autoloader
       case 'Less_Parser':
         require_once LIB_DIR . 'vendor/lessphp/Less.php';
         return true;
+        
       case 'R':
         require_once LIB_DIR . 'vendor/redbean/rb.php';
         return true;
+        
       case 'Curl':
         require_once LIB_DIR . 'vendor/oocurl/OOCurl.php';
+        return true;
+        
+      case 'Mobile_Detect':
+        require_once LIB_DIR . 'Mobile_Detect/Mobile_Detect.php';
         return true;
     }
 		

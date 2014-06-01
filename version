@@ -1,3 +1,4 @@
+3.5.11[] = "Bug fixed with auto-update module"
 3.5.11[] = "Bug fixed with fancybox function in figure custom tag"
 3.5.10[] = "Bug fixed with OAI-PMH module"
 3.5.9[] = "Custom tag [[figure]] accepts now full path to image"

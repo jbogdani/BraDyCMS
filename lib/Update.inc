@@ -55,7 +55,9 @@ class Update
     
     
     $va = parse_ini_string($iniContent);
-		$remote_version = max(array_keys($va));
+    
+		$remote_version = array_keys($va);
+    $remote_version = $remote_version[0];
     
     $remote_version_arr = explode('.', $remote_version);
     $local_version_arr = explode('.', $localVersion);

@@ -27,7 +27,10 @@ class Autoloader
         require_once LIB_DIR . 'vendor/lessphp/Less.php';
         return true;
       case 'R':
-        require LIB_DIR . 'vendor/redbean/rb.php';
+        require_once LIB_DIR . 'vendor/redbean/rb.php';
+        return true;
+      case 'Curl':
+        require_once LIB_DIR . 'vendor/oocurl/OOCurl.php';
         return true;
     }
 		

@@ -1,4 +1,5 @@
-3.6.0[] = "Twig is included as manually instelled library and is excluded from composer"
+3.6.0[] = "OOCurl is included as single file library and is excluded from composer"
+3.6.0[] = "Twig is included as manually installed library and is excluded from composer"
 3.6.0[] = "Less.php is included as single file library and is excluded from composer"
 3.6.0[] = "PHPMailer one file library replaces Swiftmailer managed from composer"
 3.6.0[] = "Redbean is included as single file library and is excluded from composer"

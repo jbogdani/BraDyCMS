@@ -10,7 +10,6 @@
   ],
   
   "require": {
-    "jsocol/oocurl": "dev-master",
     "oaiprovider-php/oaiprovider-php": "dev-master",
     "mibe/feedwriter": "dev-master",
     "mobiledetect/mobiledetectlib": "2.*"

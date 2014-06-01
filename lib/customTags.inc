@@ -521,6 +521,8 @@ class customTags
     // filename will the thumbanail filename if fancybox parameter is true and thumb exists
     if( $data['fancybox'])
     {
+      $dest_file = $filename;
+      
       // Get the file name (clean path data)
       $name = basename($filename);
 
@@ -529,8 +531,6 @@ class customTags
 
       if (file_exists($thumb))
       {
-        $dest_file = $filename;
-
         $filename = $thumb;
       }
     }

@@ -290,6 +290,7 @@ $_lang['already_updated'] = "Il vostro sistema è già aggiornato all'ultima ver
 $_lang['not_updateable'] = "Attenzione. Non è possibile aggiornare automaticamente il vostro sistema, perché la major release della versione più recente (%s) non coincide con quella installata(%s). È possibile fare aggiornamenti automatici solo per major releases uguali.";
 $_lang['local_dev'] = "Sembra che sia installata una versione di sviluppo (%s) più avanzata di quella disponibile (%s)";
 $_lang['new_version_available'] = "Una nuova versione è disponibile (%s) e il vostro sistema è compatibile con questo aggiornamento";
+$_lang['dev_update_available'] = "Il vostro sistema sta usando un canale di sviluppo e la più recente versione (%s) verrà scaricata e installata";
 $_lang['download_install'] = "Scarica e installa";
 $_lang['updateable_warning'] = "Attenzione, è possibile eseguire l'aggioramento, ma si consiglia comunque di leggere le note di versione per l'elenco delle nuove funzioni";
 $_lang['error_version_check'] = "Qualcosa è andato storto nel controllo degli aggiornamenti. per maggiori dettagli si prega di consultare il log degli errori";

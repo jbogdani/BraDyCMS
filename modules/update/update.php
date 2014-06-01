@@ -49,9 +49,8 @@ class update_ctrl extends Controller
     try
     {
       $update = new Update();
-      
       $res = $update->checkUpdate(version::current(), $this->getPath('ini'));
-      
+      $res['branch'] = $this->getPath('package');
       $this->render('update', 'check_result', $res);
      
     }
@@ -82,7 +81,7 @@ class update_ctrl extends Controller
       {
         case 'start':
           
-          if (!file_exists($localZipPath))
+          if (!file_exists($localZipPath) || $this->getPath('package') === 'BraDyCMS-dev')
           {
             $update->downloadZip($this->getPath('zip'), $localZipPath);
           }

@@ -83,8 +83,10 @@ if (get_magic_quotes_gpc())
 require_once $root . 'lib/Autoloader.inc';
 Autoloader::start();
 
+require_once $root . 'lib/vendor/Twig/Autoloader.php';
+Twig_Autoloader::register();
+
 require $root . 'vendor/autoload.php';
-//require $root . 'lib/vendor/redbean/rb.php';
 
 //set default date-zone
 if (defined('CREATE_SITE') || !cfg::get('timezone'))

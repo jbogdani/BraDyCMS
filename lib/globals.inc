@@ -84,9 +84,7 @@ require_once $root . 'lib/Autoloader.inc';
 Autoloader::start();
 
 require $root . 'vendor/autoload.php';
-
-use RedBean_Facade as R;
-class_alias('RedBean_Facade', 'R');
+require $root . 'lib/vendor/redbean/rb.php';
 
 //set default date-zone
 if (defined('CREATE_SITE') || !cfg::get('timezone'))
@@ -135,6 +133,4 @@ else if (cfg::get('db_connection'))
 }
 
 R::freeze( true );
-R::dependencies(array('arttrans'=>array('articles')));
-R::dependencies(array('menutrans'=>array('menu')));
 

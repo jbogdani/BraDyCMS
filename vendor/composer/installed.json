@@ -1,50 +1,5 @@
 [
     {
-        "name": "gabordemooij/redbean",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/gabordemooij/redbean.git",
-            "reference": "b146123c108425f7dc06dd2eb8fb218f87f9a075"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/b146123c108425f7dc06dd2eb8fb218f87f9a075",
-            "reference": "b146123c108425f7dc06dd2eb8fb218f87f9a075",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "time": "2014-03-02 12:03:05",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "RedBean_": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD"
-        ],
-        "authors": [
-            {
-                "name": "Gabor de Mooij",
-                "email": "gabordemooij@gmail.com",
-                "homepage": "http://www.redbeanphp.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "Easy ORM for PHP",
-        "homepage": "http://github.com/gabordemooij/redbean",
-        "keywords": [
-            "Object Relational Mapping",
-            "orm"
-        ]
-    },
-    {
         "name": "jsocol/oocurl",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -86,67 +41,6 @@
         "homepage": "https://github.com/jsocol/oocurl",
         "keywords": [
             "curl"
-        ]
-    },
-    {
-        "name": "mibe/feedwriter",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/mibe/FeedWriter.git",
-            "reference": "02eac4b31c66a6c0c7643035d2963660c6397301"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/02eac4b31c66a6c0c7643035d2963660c6397301",
-            "reference": "02eac4b31c66a6c0c7643035d2963660c6397301",
-            "shasum": ""
-        },
-        "time": "2014-02-09 22:28:32",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "ATOM.php",
-                "Feed.php",
-                "Item.php",
-                "RSS1.php",
-                "RSS2.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Michael Robinson",
-                "email": "mike@pagesofinterest.net",
-                "homepage": "http://pagesofinterest.net/",
-                "role": "Developer"
-            },
-            {
-                "name": "Anis uddin Ahmad"
-            },
-            {
-                "name": "Michael Bemmerl",
-                "email": "mail@mx-server.de"
-            },
-            {
-                "name": "Phil Freo"
-            },
-            {
-                "name": "Paul Ferrett"
-            },
-            {
-                "name": "Brennen Bearnes"
-            }
-        ],
-        "description": "Generate feeds in either RSS 1.0, RSS 2.0 or ATOM formats",
-        "homepage": "https://github.com/mibe/FeedWriter",
-        "keywords": [
-            "rss"
         ]
     },
     {
@@ -422,6 +316,67 @@
         "homepage": "https://github.com/jbogdani/oaiprovider-php",
         "keywords": [
             "OAI"
+        ]
+    },
+    {
+        "name": "mibe/feedwriter",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mibe/FeedWriter.git",
+            "reference": "de099ff8008accab4ae7bcc15f9a858f283d6e15"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/de099ff8008accab4ae7bcc15f9a858f283d6e15",
+            "reference": "de099ff8008accab4ae7bcc15f9a858f283d6e15",
+            "shasum": ""
+        },
+        "time": "2014-05-31 19:25:21",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "ATOM.php",
+                "Feed.php",
+                "Item.php",
+                "RSS1.php",
+                "RSS2.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Michael Robinson",
+                "email": "mike@pagesofinterest.net",
+                "homepage": "http://pagesofinterest.net/",
+                "role": "Developer"
+            },
+            {
+                "name": "Anis uddin Ahmad"
+            },
+            {
+                "name": "Michael Bemmerl",
+                "email": "mail@mx-server.de"
+            },
+            {
+                "name": "Phil Freo"
+            },
+            {
+                "name": "Paul Ferrett"
+            },
+            {
+                "name": "Brennen Bearnes"
+            }
+        ],
+        "description": "Generate feeds in either RSS 1.0, RSS 2.0 or ATOM formats",
+        "homepage": "https://github.com/mibe/FeedWriter",
+        "keywords": [
+            "rss"
         ]
     }
 ]

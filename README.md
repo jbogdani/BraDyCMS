@@ -74,8 +74,28 @@ A five-step guide to install and get running BraDyCMS
 ## Tecnical features
 
 * Works with php >= 5.3, best with 5.4
-* [RedBeanPHP](http://www.redbeanphp.com/) is used as main ORM, both for frontend and backend interfaces
-* [TWIG](http://twig.sensiolabs.org/) is used as template engine, both for frontend and backend templates
-* [Twitter Bootstrap](http://getbootstrap.com/) framework is used for backend controle panel
-* [Composer](http://getcomposer.org/) is used as dependency manager for external libraries
-* [Swift](http://swiftmailer.org) is used as for system emails
+
+### External libraries
+
+#### Javascript
+
+* [jQuery](http://jquery.com/)
+* [Twitter Bootstrap](http://getbootstrap.com/)
+* [Datepicker for Bootstrap](http://www.eyecon.ro/bootstrap-datepicker/)
+* [DataTables](https://datatables.net/)
+* [FineUploader](http://fineuploader.com/)
+* [Fancybox](http://fancyapps.com/fancybox/)
+* [Nestable](http://dbushell.github.io/Nestable/)
+* [Pnotify](https://github.com/sciactive/pnotify)
+* [google-code-prettify](https://code.google.com/p/google-code-prettify/)
+* [select2](http://ivaynberg.github.io/select2/)
+
+#### PHP
+
+* [RedBeanPHP](http://www.redbeanphp.com/)
+* [TWIG](http://twig.sensiolabs.org/)
+* [FeedWriter](https://github.com/mibe/FeedWriter)
+* [Mobile_Detect](https://github.com/serbanghita/Mobile-Detect)
+* [Lessphp](http://leafo.net/lessphp/)
+* [oaiprovider-php](https://github.com/jbogdani/oaiprovider-php)
+* [OOCurl](https://github.com/jbogdani/oocurl)

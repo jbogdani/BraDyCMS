@@ -92,10 +92,10 @@ A five-step guide to install and get running BraDyCMS
 
 #### PHP
 
-* [RedBeanPHP](http://www.redbeanphp.com/)
-* [TWIG](http://twig.sensiolabs.org/)
+* [RedBeanPHP v. 4.0.4](http://www.redbeanphp.com/)
+* [TWIG v. 1.15.1](http://twig.sensiolabs.org/)
 * [FeedWriter](https://github.com/mibe/FeedWriter)
-* [Mobile_Detect](https://github.com/serbanghita/Mobile-Detect)
-* [Lessphp](http://leafo.net/lessphp/)
+* [Mobile_Detect v. 2.8.0](https://github.com/serbanghita/Mobile-Detect)
+* [Lessphp v. 0.4.0](http://leafo.net/lessphp/)
 * [oaiprovider-php](https://github.com/jbogdani/oaiprovider-php)
-* [OOCurl](https://github.com/jbogdani/oocurl)
+* [OOCurl v. 0.3.0](https://github.com/jbogdani/oocurl)

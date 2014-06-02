@@ -1,3 +1,4 @@
+3.6.0[] = "FeedWriter is included as manually installed library and is excluded from composer"
 3.6.0[] = "Mobile_Detect is included as single file library and is excluded from composer"
 3.6.0[] = "OOCurl is included as single file library and is excluded from composer"
 3.6.0[] = "Twig is included as manually installed library and is excluded from composer"

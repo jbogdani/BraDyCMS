@@ -10,7 +10,6 @@
   ],
   
   "require": {
-    "oaiprovider-php/oaiprovider-php": "dev-master",
-    "mibe/feedwriter": "dev-master"
+    "oaiprovider-php/oaiprovider-php": "dev-master"
   }
 }

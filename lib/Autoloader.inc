@@ -47,6 +47,20 @@ class Autoloader
         require_once LIB_DIR . 'vendor/phpmailer/class.phpmailer.php';
         return true;
         break;
+      
+      case 'FeedWriter\Atom':
+        require_once LIB_DIR . 'vendor/FeedWriter/Feed.php';
+        require_once LIB_DIR . 'vendor/FeedWriter/Item.php';
+        require_once LIB_DIR . 'vendor/FeedWriter/ATOM.php';
+        return true;
+        break;
+      
+      case 'FeedWriter\RSS2':
+        require_once LIB_DIR . 'vendor/FeedWriter/Feed.php';
+        require_once LIB_DIR . 'vendor/FeedWriter/Item.php';
+        require_once LIB_DIR . 'vendor/FeedWriter/RSS2.php';
+        return true;
+        break;
     }
 		
 		if (preg_match('/_ctrl/', $className))

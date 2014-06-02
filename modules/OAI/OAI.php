@@ -18,7 +18,7 @@ class OAI_ctrl extends Controller
     
     $metadata = new Metadata('./sites/default/modules/metadataRepo/metadata.json');
 
-    require_once './vendor/oaiprovider-php/oaiprovider-php/endpoint.php';
+    require_once LIB_DIR . 'vendor/oaiprovider-php/endpoint.php';
     require_once MOD_DIR . 'OAI/myRepository.php';
     require_once MOD_DIR . 'OAI/myTokenStore.php';
 

@@ -10,6 +10,5 @@
   ],
   
   "require": {
-    "oaiprovider-php/oaiprovider-php": "dev-master"
   }
 }

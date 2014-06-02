@@ -64,7 +64,7 @@ catch (Exception $e)
 	<script src="./js/dataTable-bootstrap.js"></script>
 	
 	<script src="./js/admin.js"></script>
-	<script src="./js/jquery.pnotify.js"></script>
+	<script src="./js/pnotify.custom.min.js"></script>
 	<script src="./js/bootstrap-datepicker.js"></script>
 	<script src="./js/select2.min.js"></script>
 	<script src="./tiny_mce/tiny_mce.js"></script>

@@ -86,7 +86,7 @@ A five-step guide to install and get running BraDyCMS
 * [FineUploader 3.8.2](http://fineuploader.com/)
 * [Fancybox v. 2.1.4](http://fancyapps.com/fancybox/)
 * [Nestable](https://github.com/dbushell/Nestable)
-* [Pnotify v. 1.2.2](https://github.com/sciactive/pnotify)
+* [Pnotify v. 2.0.1](https://github.com/sciactive/pnotify)
 * [google-code-prettify](https://code.google.com/p/google-code-prettify/)
 * [select2 v. 3.2](http://ivaynberg.github.io/select2/)
 

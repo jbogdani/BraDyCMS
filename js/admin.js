@@ -210,14 +210,13 @@ var admin = {
 		 * @param sticky
 		 */
 		message: function(text, type, title, sticky){
-		    $.pnotify({
-		        title: title ?  title : false,
-		        text: text,
-		        type: type ? type : false,
-		        hide: sticky ? false : true,
-				  history: false,
-				  styling: "bootstrap3"
-		    });
+      new PNotify({
+        title: title ?  title : false,
+        text: text,
+        type: type ? type : false,
+        hide: sticky ? false : true,
+        styling: 'bootstrap3'
+      });
 		},
 		
 	tabs : {

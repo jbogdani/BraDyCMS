@@ -263,7 +263,7 @@ class Out
   {
     if (!$this->mobiledetect)
     {
-      $this->mobiledetect = new Detection\MobileDetect;
+      $this->mobiledetect = new Mobile_Detect();
     }
     
     return ($this->mobiledetect->isMobile() ? ($this->mobiledetect->isTablet() ? 'tablet' : 'phone') : 'computer');

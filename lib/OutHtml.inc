@@ -604,11 +604,11 @@ class OutHtml extends Out
     $html = $_SESSION['debug'] ?
       '<script src="./js/bootstrap-' . $version . '.min.js"></script>'
       :
-      '<script src="//netdna.bootstrapcdn.com/bootstrap/' . 
-      $version . '/js/bootstrap.min.js"></script>' . 
-      '<script>if(typeof($.fn.modal) === \'undefined\') { ' .
-        'document.write(\'<script src="./js/bootstrap-' . $version . '.min.js"><\/script>\')' .
-      '}</script>';
+      '<script src="//netdna.bootstrapcdn.com/bootstrap/'
+        . $version . '/js/bootstrap.min.js"></script>'
+        . '<script>if(typeof($.fn.modal) === \'undefined\') { '
+        . 'document.write(\'<script src="./js/bootstrap-' . $version . '.min.js"><\/script>\')'
+      . '}</script>';
     
     return $html;
   }

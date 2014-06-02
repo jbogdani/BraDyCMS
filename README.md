@@ -77,18 +77,18 @@ A five-step guide to install and get running BraDyCMS
 
 ### External libraries
 
-#### Javascript
+#### Javascript/CSS
 
-* [jQuery](http://jquery.com/)
-* [Twitter Bootstrap](http://getbootstrap.com/)
+* [jQuery v. 1.11.1 & v. 2.1.1](http://jquery.com/)
+* [Twitter Bootstrap v.3.1.1](http://getbootstrap.com/)
 * [Datepicker for Bootstrap](http://www.eyecon.ro/bootstrap-datepicker/)
-* [DataTables](https://datatables.net/)
-* [FineUploader](http://fineuploader.com/)
-* [Fancybox](http://fancyapps.com/fancybox/)
-* [Nestable](http://dbushell.github.io/Nestable/)
-* [Pnotify](https://github.com/sciactive/pnotify)
+* [DataTables v. 1.9.4](https://datatables.net/)
+* [FineUploader 3.8.2](http://fineuploader.com/)
+* [Fancybox v. 2.1.4](http://fancyapps.com/fancybox/)
+* [Nestable](https://github.com/dbushell/Nestable)
+* [Pnotify v. 1.2.2](https://github.com/sciactive/pnotify)
 * [google-code-prettify](https://code.google.com/p/google-code-prettify/)
-* [select2](http://ivaynberg.github.io/select2/)
+* [select2 v. 3.2](http://ivaynberg.github.io/select2/)
 
 #### PHP
 

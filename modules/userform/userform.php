@@ -162,20 +162,20 @@ class userform_ctrl extends Controller
 				}
 				else
 				{
-					$text .= "\n" . $el['label'] . ": " . $data[$el['name']];
+					$text .= "\n" 
+            . ($el['label'] ? $el['label'] . ': ' : ($el['placeholder'] ? $el['placeholder'] . ': ' : '')) 
+            . $data[$el['name']];
 				}
 			}
 			
 			try
 			{
         $message = new PHPMailer();
-        $message->From = $this->data['from_email'];
-        $message->FromName = $this->data['from_name'];
-        $message->addAddress($this->data['to']);
+        $message->setFrom($this->data['from_email'], $this->data['from_name']);
         $message->addReplyTo($this->data['from']);
+        $message->addAddress($this->data['to']);
         $message->Subject = $this->data['subject'];
         $message->Body = $text;
-        $message->isHTML(false);
         
 				if (is_array($attach))
 				{

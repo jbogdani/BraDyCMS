@@ -88,7 +88,7 @@ A five-step guide to install and get running BraDyCMS
 * [Nestable](https://github.com/dbushell/Nestable)
 * [Pnotify v. 2.0.1](https://github.com/sciactive/pnotify)
 * [google-code-prettify](https://code.google.com/p/google-code-prettify/)
-* [select2 v. 3.2](http://ivaynberg.github.io/select2/)
+* [select2 v. 3.4.8](http://ivaynberg.github.io/select2/)
 
 #### PHP
 

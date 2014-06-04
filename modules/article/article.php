@@ -52,6 +52,20 @@ class article_ctrl extends Controller
     {
       $tag_ids = R::getCol("SELECT `id` FROM `tag` WHERE `title` IN ('" . implode("','", $this->request['param']) . "')");
       
+      // If tag does not exist > return 0 records!!!
+      if(empty($tag_ids)){
+        $output = array(
+          "sEcho" => intval($this->request['sEcho']),
+          "iTotalRecords" => 0,
+          "iTotalDisplayRecords" => 0,
+          "aaData" => false
+          );
+
+        header('Content-type: application/json');
+        echo json_encode($output);
+        return;
+      }
+      
       $tmp = array();
       foreach($tag_ids as $tagid)
       {
@@ -122,14 +136,6 @@ class article_ctrl extends Controller
   
 	public function all()
 	{
-		if (!empty($this->request['param'][0]))
-		{
-			$art_arr = Article::getByTag($this->request['param'], false, false, true);
-		}
-		else
-		{
-			$art_arr = Article::getAll();
-		}
 		$tags = Article::getTags();
     
     if (!is_array($tags))
@@ -138,13 +144,11 @@ class article_ctrl extends Controller
     }
 		
 		$this->render('article', 'list', array(
-      'art_arr'=>$art_arr,
       'tags' => $tags,
       'imploded_tags' => '"' . implode('","', $tags) . '"',
       'active_tags' => $this->request['param'],
       'imploded_active_tags' => (!empty($this->request['param'][0]) ? '&param[]=' . implode('&param[]=', $this->request['param']) : ''),
-      'cfg_langs' => cfg::get('languages'),
-      'delete_tag' => (!$art_arr && count($this->request['param']) == 1 ? $this->request['param'][0] : false)
+      'cfg_langs' => cfg::get('languages')
       ));
 	}
 	

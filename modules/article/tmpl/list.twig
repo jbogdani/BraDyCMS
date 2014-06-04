@@ -1,6 +1,5 @@
 <div id="{{ uid }}">
-  
-	<h1>{{ tr.get('manage_articles') }}</h1>
+  <h1>{{ tr.get('manage_articles') }}</h1>
 
 	<div class="btn-group" style="padding:20px 0;">
 		<a class="btn btn-info" href="#article/addNew" title="{{ tr.get('add_new_article') }}"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('add_new_article') }}</a>
@@ -88,12 +87,10 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
   "fnDrawCallback": function(){
   
     // Show delete tags button
-    {% if active_tags|length == 1 %}
+    {% if active_tags|length == 1 and active_tags[0] != '' %}
     if (this.fnSettings().fnRecordsDisplay() === 0){
-      console.log('delete');
       
       $('#{{ uid }} .delete-tag-container').show();
-      //showDeleteTagButton();
     }
     {% endif %}
   

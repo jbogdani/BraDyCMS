@@ -199,7 +199,10 @@ var admin = {
 	        		if (opts.loaded){
 	        			opts.loaded(dialog);
 	        		}
-	        	});
+	        	})
+            .fail(function(){
+              dialog.find('.modal-body').html('<p class="text-danger">' + admin.tr('error_check_log') + '</p>');
+            });
 			}
 		},
 		/**
@@ -265,10 +268,13 @@ var admin = {
         		this.tab.find('li a:last').tab('show');
 						this.tab.find('li:last').data('url', location.hash.substring(1));
 						this.tab.find('li:last').data('opts', opts);
+            
 	        } else if (opts.obj && opts.method){
 	        	admin.tabs.tab.next('div.tab-content')
-    				.append('<div class="tab-pane" id="added' + id + '"><img src="img/spinner.gif" alt="loading..." /></div>');
+              .append('<div class="tab-pane" id="added' + id + '"><img src="img/spinner.gif" alt="loading..." /></div>');
+            
 	        	admin.tabs.start(tab);
+            
         		admin.tabs.tab.find('li a:last').tab('show');
 						this.tab.find('li:last').data('url', location.hash.substring(1));
 						this.tab.find('li:last').data('opts', opts);
@@ -279,7 +285,10 @@ var admin = {
 	        	})
 	        	.done(function(data){
 	        		$('#added' + id).html(data);
-	        	});
+	        	})
+            .fail(function(){
+              $('#added' + id).html('<p class="text-danger">' + admin.tr('error_check_log') + '</p>');
+            });
 	        } else {
 	        	return false;
 	        }
@@ -295,7 +304,18 @@ var admin = {
 	    	
 	    	var url = 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' );
 	    	
-	    	d_active.html('<img src="img/spinner.gif" alt="loading..." />').load(url, opts.data);
+	    	d_active.html('<img src="img/spinner.gif" alt="loading..." />');//.load(url, opts.data);
+        
+        $.ajax({
+	        		'url': url,
+	        		'data': opts.data
+	        	})
+	        	.done(function(data){
+	        		d_active.html(data);
+	        	})
+            .fail(function(){
+              d_active.html('<p class="text-danger">' + admin.tr('error_check_log') + '</p>');
+            });
 	    },
 	    
 	    closeActive: function(state){

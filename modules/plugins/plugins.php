@@ -46,7 +46,7 @@ class plugins_ctrl extends Controller
 		}
 		catch (Exception $e)
 		{
-			echo '<p class="text-error"><strong>Error: </strong>' . $e->getMessage() . '</p>';
+			echo '<p class="text-danger"><strong>Error: </strong>' . $e->getMessage() . '</p>';
 		}
 	}
 }

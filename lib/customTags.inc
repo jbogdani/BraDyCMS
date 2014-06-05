@@ -556,8 +556,10 @@ class customTags
     
     if ($dest_file || $data['href'])
     {
-      $html .= '<a href="' . ($dest_file ? $dest_file : $data['href']) . '" ' .
-        'class="fancybox' . ($data['href_class'] ? ' ' . $data['href_class'] .' ' : '') . '">';
+      $html .= '<a href="' . ($dest_file ? $dest_file : $data['href']) . '" '
+        . 'class="fancybox' . ($data['href_class'] ? ' ' . $data['href_class'] .' ' : '') . '"'
+        . ($data['caption'] ? ' title="' . $alt . '" ' : '')
+        . '>';
     }
     
     $html .= '<img src="' . $filename . '" alt="' . $alt . '" />';

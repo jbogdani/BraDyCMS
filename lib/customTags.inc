@@ -481,6 +481,40 @@ class customTags
 		'</iframe>';
 	}
 	
+  /**
+	 * 
+	 * @param array $data
+	 * 		path*: image file relative url
+	 * 		width:	main div (container) width
+	 * 		content: image caption
+   *    fancybox: boolean, if true the thumbnail will be displayed and the original file will be shown on click
+	 * 		align: image alignent (left|right)
+	 * 		href: href of image link
+	 * 		href_class: css class of href link
+	 * 
+	 * @return string
+	 */
+  public static function fig($data)
+  {
+    $new_data = array();
+    if (!$data['path'])
+    {
+      return false;
+    }
+    
+    $new_data['content'] = $data['path'];
+    $new_data['width'] = $data['width'];
+    $new_data['height'] = $data['height'];
+    $new_data['caption'] = $data['content'];
+    $new_data['fancybox'] = $data['fancybox'];
+    $new_data['align'] = $data['align'];
+    $new_data['href'] = $data['href'];
+    $new_data['href_class'] = $data['href_class'];
+    
+    return self::figure($new_data);
+  }
+  
+  
 	/**
 	 * 
 	 * @param array $data
@@ -631,6 +665,7 @@ class customTags
 					"</script>";
 	return $html;
 	}
+  
   
   /**
    * @param type $data

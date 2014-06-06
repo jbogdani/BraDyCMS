@@ -220,7 +220,24 @@ class docs_ctrl extends Controller
       'min_example' => '[[prezi]]prezi_id[[/prezi]]',
       'max_example' => '[[prezi width="500" height="550" color="#ff6600" autoplay="true" artwork="true"]]prezi_id[[/prezi]]'
     );
-    
+   
+   $ct[] = array(
+      'tag' => 'fig',
+      'description' => 'Adds complete HTML code to display figures and captions easily. This custom tag, differntly from the [[figure]] custom tag permits the use of rich html text in captions',
+      'content' => 'string, optional. The image\'s caption',
+      'params' => array(
+        'path' => 'string, required. Images\'u path, without the "/sites/default/images/" part.',
+        'width' => 'int, optional. Image\'s max-width. If absent the file width will be used',
+        'align' => 'string, optional, available values: left, right, center. ' .
+          'Widget\'s alignment in the page',
+        'fancybox' => 'boolean, optional, default false. If present the system will try to create a valid html fancybox popup, using thumbnail, if present',
+        'href' => 'string, optional. If present the image will hold a link to this URL',
+        'href_class' => 'string, optional. If present the imag\'s link will have this CSS class'
+        ),
+      'min_example' => '[[fig path="image_url"]][[/fig]]',
+      'max_example' => '[[fig path="image_url" width="300px" align="left" href="http://bradypus.net" href_class="bordered"]]image_caption[[/figure]]'
+    );
+   
    $ct[] = array(
       'tag' => 'figure',
       'description' => 'Adds complete HTML code to display figures and captions easily',

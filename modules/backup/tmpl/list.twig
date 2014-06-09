@@ -1,0 +1,130 @@
+{#
+  @author			${user}
+  @copyright	${company}, ${user}
+  @license		See file LICENSE distributed with this code
+  @since			${date}
+ #}
+
+<div id="{{ uid }}">
+  <h2>{{ tr.get('backup_restore_db') }}</h2>
+
+
+  <table class="table table-bordered table-striped">
+  {% for file in list %}
+    {% if loop.index == 1 %}
+      <tr>
+        <th></th>
+        <th>{{ tr.get('name') }}</th>
+        <th>{{ tr.get('date') }}</th>
+        <th>{{ tr.get('size') }}</th>
+        <th></th>
+      </tr>
+    {% endif %}
+    <tr>
+      <th>{{ loop.index }}</th>
+      <td>{{ file.name }}</td>
+      <td>{{ file.date }}</td>
+      <td>{{ file.size}} MB</td>
+      <td>
+        {% if is_admin %}
+          <button class="btn btn-danger delete" data-id="{{ file.name }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}</button>
+          <button class="btn btn-danger restore" data-id="{{ file.name }}"><i class="glyphicon glyphicon-share-alt"></i> {{ tr.get('restore') }}</button>
+        {% endif %}
+      </td>
+    </tr>
+    
+  {% else %}
+
+    <div class="bg-warning" style="padding: 20px;">
+      <p class="lead"><i class="glyphicon glyphicon-warning-sign"></i> {{ tr.get('no_available_backup') }}</p>
+    </div>
+  {% endfor %}
+  </table>
+
+  <div style="margin: 20px 0;">
+
+    <p>
+      <button class="btn btn-success create_backup"><i class="glyphicon glyphicon-floppy-save"></i> {{ tr.get('create_backup') }}</button>
+    </p>
+  </div>
+</div>
+    
+    
+<script>
+  $('#{{ uid }} .create_backup').on('click', function(){
+    $.getJSON('controller.php?obj=backup_ctrl&method=createNew', function(data){
+      if (data.status === 'success'){
+        admin.tabs.reloadActive();
+      }
+      
+      admin.message(data.text, data.status);
+    });
+    
+  });
+  
+{% if is_admin %}
+  $('#{{ uid }} .delete').on('click', function(){
+    
+    var file = $(this).data('id');
+    
+    admin.dialog({
+      'html': '<h3>' + admin.tr('confirm_delete_backup') + '</h3>',
+      'buttons': [
+        {
+          'text': admin.tr('delete'),
+          'addclass': 'btn-danger',
+          'glyphicon': 'trash',
+          'click': function(){
+            $.getJSON('controller.php?obj=backup_ctrl&method=deleteBackup&param[]=' + file, function(data){
+              if (data.status === 'success'){
+                admin.tabs.reloadActive();
+              }
+              
+              admin.message(data.text, data.status);
+              
+              $('#modal').modal('hide');
+            });
+          }
+        },
+        {
+          'text': admin.tr('close'),
+          'action': 'close'
+        }
+      ]
+    });
+    
+  });
+  
+  $('#{{ uid }} .restore').on('click', function(){
+    
+    var file = $(this).data('id');
+    
+    admin.dialog({
+      'html': '<h3>' + admin.tr('confirm_restore_backup') + '</h3>',
+      'buttons': [
+        {
+          'text': admin.tr('restore'),
+          'addclass': 'btn-danger',
+          'glyphicon': 'share-alt',
+          'click': function(){
+            
+            $.getJSON('controller.php?obj=backup_ctrl&method=restoreBackup&param[]=' + file, function(data){
+              if (data.status === 'success'){
+                admin.tabs.reloadActive();
+              }
+              
+              admin.message(data.text, data.status);
+              
+              $('#modal').modal('hide');
+            });
+          }
+        },
+        {
+          'text': admin.tr('close'),
+          'action': 'close'
+        }
+      ]
+    });
+  });
+{% endif %}
+</script>

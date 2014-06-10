@@ -44,7 +44,10 @@
   <div style="margin: 20px 0;">
 
     <p>
-      <button class="btn btn-success create_backup"><i class="glyphicon glyphicon-floppy-save"></i> {{ tr.get('create_backup') }}</button>
+      <button class="btn btn-success create_backup"
+              data-loading-text="<img src='img/loading.gif' /> Loading...."
+              onclick="$(this).button('loading');"
+              ><i class="glyphicon glyphicon-floppy-save"></i> {{ tr.get('create_backup') }}</button>
     </p>
   </div>
 </div>

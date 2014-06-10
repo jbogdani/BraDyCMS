@@ -1,3 +1,4 @@
+3.6.0[] = "Button loading status added to login and backup modules";
 3.6.0[] = "New function: backup and restore database from admin interface"
 3.6.0[] = "Added new custom tag, fig, for displaying figures with rich HTML content in captions"
 3.6.0[] = "Bug fixed with figure custom tag, not showing caption in fancybox mode"

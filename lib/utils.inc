@@ -286,7 +286,7 @@ class utils
 	
 	public static function getLanguages($lang = false)
 	{
-		$lang_arr = array(
+    $lang_arr = array(
       array(
         'code'=> cfg::get('sys_lang'),
         'string' => cfg::get('sys_lang_string'),
@@ -311,27 +311,35 @@ class utils
 			}
 		}
 		
+    $rewriteBase = ( !cfg::get('rewriteBase') || cfg::get('rewriteBase') === '/' ? '' : cfg::get('rewriteBase') . '/');
+    
+    
+    $cleaned_request_uri = str_replace($rewriteBase, null, $_SERVER['REQUEST_URI']);
+    
+    
 		foreach($lang_arr as &$langThis)
 		{
 			if($lang)
 			{
-				if (preg_match('/\/' . $lang . '/', $_SERVER['REQUEST_URI']) || preg_match('/lang=' . $lang . '/', $_SERVER['REQUEST_URI']))
+        if (preg_match('/\/' . $lang . '/', $_SERVER['REQUEST_URI']) || preg_match('/lang=' . $lang . '/', $_SERVER['REQUEST_URI']))
 				{
-					$langThis['href'] = str_replace(
+          $langThis['href'] = str_replace(
 							array('/' . $lang, 'lang=' . $lang),
 							array('/' . $langThis['code'], 'lang=' . $langThis['code']),
 							$_SERVER['REQUEST_URI']);
 				}
 				else
 				{
-					$langThis['href'] = '/' . $langThis['code'] . $_SERVER['REQUEST_URI'];
+          $langThis['href'] = $rewriteBase . $langThis['code'] . '/' . $cleaned_request_uri;
 				}
 				
 			}
 			else
 			{
-				$langThis['href'] = $langThis['code'] . $_SERVER['REQUEST_URI'];
+        $langThis['href'] = $langThis['code'] . '/' . $cleaned_request_uri ;
 			}
+      
+      $langThis['href'] = str_replace('//', '/', $langThis['href']);
 		}
 		
 		return $lang_arr;

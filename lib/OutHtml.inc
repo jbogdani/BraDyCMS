@@ -299,7 +299,8 @@ class OutHtml extends Out
 		{
 			$flag_html = '<img src="./img/flags/' . $lang['code'] . '.png"  alt="' . $lang['string'] . '"  /> ';
 		
-			$html .= '<li ' . ($lang['is_current'] ? 'class="current" ' : '') . '><a '
+			$html .= '<li ' . ($lang['is_current'] ? 'class="current" ' : '') . '>'
+        . '<a '
 					. ' data-ajax="false" '
 					. ' href="' . $lang['href'] . '" '
 					. ' title="' . $lang['string'] . '">'

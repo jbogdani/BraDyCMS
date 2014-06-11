@@ -58,7 +58,8 @@ RewriteRule ^search:([a-zA-Z0-9-_\.\s]+)$ index.php?search=$1 [L]
 RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_+~]+).search$ index.php?lang=$1&tags=$2&is_search=1 [L]
 RewriteRule ^([a-zA-Z0-9-_+~]+).search$ index.php?tags=$1&is_search=1 [L]
 
-#all non existing content to index.php http://jrgns.net/redirect_request_to_index/
+#all non existing, non image content to index.php http://jrgns.net/redirect_request_to_index/
+RewriteCond %{REQUEST_URI} !\.(gif|jpg|png)$
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L]

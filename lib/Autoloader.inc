@@ -61,6 +61,10 @@ class Autoloader
         require_once LIB_DIR . 'vendor/FeedWriter/RSS2.php';
         return true;
         break;
+      
+      case 'Parsedown':
+        require_once LIB_DIR . 'vendor/Parsedown/Parsedown.php';
+        break;
     }
 		
 		if (preg_match('/_ctrl/', $className))

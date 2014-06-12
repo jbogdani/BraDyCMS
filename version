@@ -1,3 +1,5 @@
+3.6.0[] = "Added Parsedown 1.0.1 library for Markdown parsing"
+
 3.6.0[] = "Bug fixed: non existing images (gif, jpg, png) does not redirect to index.php anymore"
 3.6.0[] = "Button loading status added to site configuration edit module";
 3.6.0[] = "Bug fixed with language href settings"

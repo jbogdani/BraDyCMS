@@ -124,6 +124,15 @@ class Metadata
 	{
 		return $this->metadata['doiPrefix'];
 	}
+  
+  /**
+	 * Returns journal DOI prefix
+	 * @return multitypestring
+	 */
+	public function getJournalDoi()
+	{
+		return $this->metadata['journalDoi'];
+	}
 	
 	/**
 	 * Returns ISSN number

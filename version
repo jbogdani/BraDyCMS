@@ -1,3 +1,4 @@
+3.6.0[] = "Bug fixed with sitemap.xml creation: articles are not parsed anymore"
 3.6.0[] = "Added journalDoi attribute in metadata repository"
 3.6.0[] = "Bug fixed: non existing images (gif, jpg, png) does not redirect to index.php anymore"
 3.6.0[] = "Button loading status added to site configuration edit module";

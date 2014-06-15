@@ -83,9 +83,6 @@ class Article
 		}
 		else if (is_object($article))
 		{
-			// get tags
-			$tags = R::tag($article);
-			
 			// get Translations
 			if ($lang)
 			{
@@ -166,6 +163,9 @@ class Article
 			if (!$return_bean)
 			{
 				$art_array = $article->export();
+        
+        // get tags
+        $tags = R::tag($article);
 			
 				//add tags
 				$art_array['tags'] = $tags;
@@ -202,13 +202,21 @@ class Article
 	/**
 	 * Returns list of all valid articles, with href value. Articles will be translated if lang is defined.
 	 * @param string $lang
+   * @param boolean $dontparse if true articles will not be parsed
 	 * @return array
 	 */
-	public static function getAllValid($lang = false)
+	public static function getAllValid($lang = false, $dontparse = false)
 	{
 		$articles = R::find(self::art_tb(), ' ' . self::$valid_art . ' ORDER BY `sort` DESC');
 		
-		return self::parseArt($articles, $lang);
+    if ($dontparse)
+    {
+      return $articles;
+    }
+    else
+    {
+      return self::parseArt($articles, $lang);
+    }
 	}
 	
 	/**

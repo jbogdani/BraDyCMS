@@ -56,9 +56,7 @@ EOD;
 </url>
 EOD;
     
-    $articles = new Article();
-    
-    $all_arts = $articles->getAllValid();
+    $all_arts = Article::getAllValid(false, true);
     
     if (is_array($all_arts))
     {
@@ -69,7 +67,9 @@ EOD;
           continue;
         }
         $xml .= "\n" . '<url>'
-          . "\n\t" . '<loc>' . $art['full_url'] . '</loc>'
+          . "\n\t" . '<loc>' 
+            . utils::getBaseUrl() . str_replace('./', null, link::to_article($art['textid']))
+          . '</loc>'
           . ($art['updated'] ? "\n\t" . '<lastmod>' . date('Y-m-d', strtotime($art['updated'])) . '</lastmod>' : '')
           . "\n\t" . '<changefreq>monthly</changefreq>'
         . "\n". '</url>';

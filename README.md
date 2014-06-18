@@ -58,18 +58,17 @@ A five-step guide to install and get running BraDyCMS
 * [http://cliffyoungltd.com](http://cliffyoungltd.com)
 * [costruzioniartigiane.it](http://costruzioniartigiane.it)
 * [e-review.it](http://e-review.it)
-* [fabriziolapalombara.com](http://fabriziolapalombara.com)
 * [iraq.routes-assn.org](http://iraq.routes-assn.org)
 * [medantico.org](http://medantico.org/)
 * [pastandpresent.al](http://pastandpresent.al)
 * [santamariainportuno.it](http://www.santamariainportuno.it)
+* [storicamente.org](http://storicamente.org)
 * [tozziindustries.com] (http://tozziindustries.com)
 
 
 ### Comming soon (Version 3.x)
-* [artemusa.it]
-* ghazni-project
-* Teatro Masini
+* Ghazni-project
+* liceo Laura Bassi, Bologna
 
 ## Tecnical features
 

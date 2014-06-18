@@ -62,7 +62,7 @@ RewriteRule ^([a-zA-Z0-9-_+~]+).search$ index.php?tags=$1&is_search=1 [L]
 RewriteCond %{REQUEST_URI} !\.(gif|jpg|png)$
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php [L]
+RewriteRule . index.php?art_title=not_found [L]
 
 
 <FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite|json)$">

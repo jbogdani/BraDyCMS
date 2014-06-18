@@ -1,5 +1,9 @@
 3.6.0[] = "Added Parsedown 1.0.1 library for Markdown parsing"
 
+3.6.0[] = ".htaccess file redirects all missing pages to not_found"
+3.6.0[] = "Updated list of sites using BraDyCMS"
+3.6.0[] = "Bug fixed with sitemap.xml creation: articles are not parsed anymore"
+3.6.0[] = "Added journalDoi attribute in metadata repository"
 3.6.0[] = "Bug fixed: non existing images (gif, jpg, png) does not redirect to index.php anymore"
 3.6.0[] = "Button loading status added to site configuration edit module";
 3.6.0[] = "Bug fixed with language href settings"

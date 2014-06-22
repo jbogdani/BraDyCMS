@@ -20,6 +20,10 @@ class feeds_ctrl
 	
 	private static function feed($type = false, $lang = false)
 	{
+    set_time_limit(0);
+    
+    ini_set('memory_limit', '512M');
+    
     $feedWriter = ($type == 'atom' ? new \FeedWriter\Atom() : new \FeedWriter\RSS2);
 		
 		$feedWriter->setTitle(cfg::get('title'));

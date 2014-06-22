@@ -20,12 +20,11 @@ class feeds_ctrl
 	
 	private static function feed($type = false, $lang = false)
 	{
-    
     $feedWriter = ($type == 'atom' ? new \FeedWriter\Atom() : new \FeedWriter\RSS2);
 		
 		$feedWriter->setTitle(cfg::get('title'));
 		
-		$feedWriter->setLink('http://' . $_SERVER['HTTP_HOST']);
+		$feedWriter->setLink(utils::getBaseUrl());
 		
 		$feedWriter->setChannelElement('language', $lang ? $lang : cfg::get('sys_lang'));
 		
@@ -38,19 +37,27 @@ class feeds_ctrl
 			foreach ($art_array as $art)
 			{
 				$newItem = $feedWriter->createNewItem();
+        
+				$newItem->setTitle($art['title'] ? self::cleanStr($art['title']) : '');
 				
-				$newItem->setTitle(htmlentities($art['title']));
+				$newItem->setLink(self::cleanStr($art['full_url']));
 				
-				$newItem->setLink(htmlentities($art['full_url']));
+        $date = $art['publish'] ? $art['publish'] : ( $art['created'] ? $art['created'] : false );
+        
+				$date ? $newItem->setDate(self::cleanStr($date)) : '';
 				
-				$newItem->setDate(htmlentities($art['created']));
-				
-				$newItem->setDescription($art['summary'] ? $art['summary'] : substr($art['text'], 0, 500) . '...');
+        $description = $art['summary'] ? $art['summary'] : substr($art['text'], 0, 500) . '...';
+				$newItem->setDescription(self::cleanStr($description));
 				
 				$feedWriter->addItem($newItem);
 			}
 		}
-		$feedWriter->printFeed();
+		$feedWriter->printFeed('application/rss+xml; charset=utf-8');
 		
 	}
+  
+  private static function cleanStr($str)
+  {
+    return trim ( htmlentities ( strip_tags ( $str) ) );
+  }
 }

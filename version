@@ -1,3 +1,4 @@
+3.6.0[] = "Gallery name and article textid have now same replacement policy"
 3.6.0[] = "Bug fixed with rss/atom feeds: increased script memory limit and execution time"
 3.6.0[] = "Bug fixed with rss/atom feeds: default encoding is now utf8 and item descriptions are now cleaned"
 3.6.0[] = ".htaccess file redirects all missing pages to not_found"

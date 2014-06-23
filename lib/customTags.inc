@@ -205,58 +205,14 @@ class customTags
 		return self::format_gallery($data);
 	}
 	
-  public static function getGallery($data)
-  {
-    return self::format_gallery($data, false, true);
-  }
-  
-	private static function format_gallery($data, $responsive = false, $returnObject = false)
+	private static function format_gallery($data, $responsive = false)
 	{
-		$gal = $data['content'];
+    $gal = $data['content'];
 		$class = $data['class'];
-		$lang =  ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ? $_SESSION['lang'] : '');
     
-    if (file_exists(GALLERY_DIR . $gal  . '/data' . ($lang ? '_' . $lang : '') . '.json'))
-    {
-      $file = GALLERY_DIR . $gal  . '/data' . ($lang ? '_' . $lang : '') . '.json';
-    }
-    else if (file_exists(GALLERY_DIR . $gal  . '/data' . '.json'))
-    {
-      $file = GALLERY_DIR . $gal  . '/data' . '.json';
-    }
-    else
-    {
-    	return tr::sget('gallery_does_not_exist', $gal);
-		}
+    $gal_data = Gallery::getGallery($gal);
     
-		$captions = @json_decode(file_get_contents($file), 1);
-	
-		if (!is_array($captions))
-		{
-			return tr::sget('gallery_not_well_formatted', $gal);
-		}
-		
-		
-		krsort($captions);
-		
-		$html = '<div class="gallery-container">';
-		
-    if ($returnObject)
-    {
-      foreach ($captions as $img => $cap)
-      {
-        $img = str_replace('__x__', '.', $img);
-        
-        $gal_data[] = array(
-          'img' => file_exists('./sites/default/images/galleries/' .$gal . '/' . $img) ? './sites/default/images/galleries/' .$gal . '/' . $img : false,
-          'thumb' => file_exists('./sites/default/images/galleries/' .$gal . '/thumbs/' . $img) ? './sites/default/images/galleries/' .$gal . '/thumbs/' . $img : false,
-          'caption' => $cap
-        );
-      }
-      
-      return $gal_data;
-    }
-    else if ($responsive)
+    if ($responsive)
 		{
 			/**
 			 * <ul data-rel="sth" class="a b c cl_gallery">
@@ -264,40 +220,39 @@ class customTags
 			 * 	...
 			 * </ul>
 			 */
-			$html .= '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . 'data-rel="' . $gal . '"' . '>';
+			$html .= '<div class="gallery-container">'
+        . '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . 'data-rel="' . $gal . '"' . '>';
 			
-			foreach ($captions as $img => $dida)
+			foreach ($gal_data as $item)
 			{
-				$img = str_replace('__x__', '.', $img);
-			
-				$html .= '<li data-id="' . $img . '" data-img="' . GALLERY_DIR .  $gal . '/' . $img . '" data-thumb="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '">' .
-							$dida . 
-						'</li>';
+				$html .= '<li data-id="' . basename($item['img']) . '" data-img="' . $item['img'] . '" data-thumb="' . $item['thumb'] . '">'
+          . $item['caption']
+          . '</li>';
 			}
 			
-			$html .='</ul>';
+			$html .='</ul>'
+        . '</div>';
 		}
 		else
 		{
-			$html .= '<ul class="gallery ' . $gal 
+      $html .= '<div class="gallery-container">'
+        . '<ul class="gallery ' . $gal 
         . ($class ? ' ' . $class : '') . '" data-rel="' . $gal . '">';
 			
-			foreach ($captions as $img => $dida)
+			foreach ($gal_data as $item)
 			{
-				$img = str_replace('__x__', '.', $img);
-			
-				$html .= '<li data-id="' . $img . '">' .
-						'<a href="' . GALLERY_DIR .  $gal . '/' . $img . '" class="fancybox" title="' . str_replace('"', '\"', $dida). '"  rel="' . $gal . '" >' .
-						'<img src="' . GALLERY_DIR . $gal . '/thumbs/' . $img . '" alt="' . str_replace('"', '\"', $dida). '" />' .
-						'</a>' .
-						'<div class="caption">' . $dida . '</div>' .
-						'</li>';
+				$html .= '<li data-id="' . basename($item['img']) . '">'
+          . '<a href="' . $item['img'] . '" class="fancybox" title="' . str_replace('"', '\"', $item['caption']). '"  rel="' . $gal . '" >'
+          . '<img src="' . $item['thumb'] . '" alt="' . str_replace('"', '\"', $item['caption']). '" />'
+          . '</a>'
+          . '<div class="caption">' . $item['caption'] . '</div>'
+          . '</li>';
 			}
 			
-			$html .='</ul>';
+			$html .='</ul>'
+        . '</div>';
 		}
 		
-		$html .= '</div>';
 		return $html;
 	}
 	

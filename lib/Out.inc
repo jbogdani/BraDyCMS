@@ -78,11 +78,14 @@ class Out
   
   public function getGallery($gal)
 	{
-		if (!file_exists(GALLERY_DIR . $gal . '/data.json'))
-		{
-			return;
-		}
-		return customTags::getGallery(array('content' => $gal));
+    try
+    {
+      return Gallery::getGallery($gal);
+    }
+    catch (Exception $e)
+    {
+      error_log($e->getMessage());
+    }
 	}
   
   /**

@@ -441,6 +441,14 @@ class utils
 		return array_filter($arr);
 	}
 	
+  /**
+   * Returns current language
+   * @return string
+   */
+  public static function getCurrLang()
+  {
+    return ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ? $_SESSION['lang'] : '');
+  }
 	
 	
 }

@@ -41,8 +41,8 @@ class Gallery{
       $img = str_replace('__x__', '.', $img);
 
       $gal_data[] = array(
-        'img' => file_exists('./sites/default/images/galleries/' .$gal . '/' . $img) ? './sites/default/images/galleries/' .$gal . '/' . $img : false,
-        'thumb' => file_exists('./sites/default/images/galleries/' .$gal . '/thumbs/' . $img) ? './sites/default/images/galleries/' .$gal . '/thumbs/' . $img : false,
+        'img' => file_exists('./sites/default/images/galleries/' .$gal . '/' . $img) ? utils::getBaseUrl() . 'sites/default/images/galleries/' .$gal . '/' . $img : false,
+        'thumb' => file_exists('./sites/default/images/galleries/' .$gal . '/thumbs/' . $img) ? utils::getBaseUrl() . 'sites/default/images/galleries/' .$gal . '/thumbs/' . $img : false,
         'caption' => $cap
       );
     }

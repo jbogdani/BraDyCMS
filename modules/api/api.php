@@ -27,6 +27,7 @@
  *  article: [
  *              textid: [],
  *            ]
+ *  galleries: true|false
  * 
  */
 
@@ -122,7 +123,27 @@ class api_ctrl extends Controller
       }
       if (is_array($tags))
       {
-        $response['tags'] = $out->getArticlesByTagArray($tags);
+        $arts = $out->getArticlesByTagArray($tags);
+        if (is_array($arts) && !empty($arts))
+        {
+          $response['tags'] = array_values($arts);
+        }
+        
+        if ($get['galleries'] && !empty($response['tags']))
+        {
+          foreach($response['tags'] as &$art)
+          {
+            try
+            {
+              $art['gallery'] = $out->getGallery($art['textid']);
+            }
+            catch (Exception $e)
+            {
+              error_log($e->getMessage());
+            }
+          }
+            
+        }
       }
     }
     
@@ -159,8 +180,21 @@ class api_ctrl extends Controller
           {
             $art = $art->export();
           }
+          
           $response['article'][$artid] = $art;
           
+          if ($get['galleries'])
+          {
+            try
+            {
+              $response['article'][$artid]['gallery'] = $out->getGallery($artid);
+            }
+            catch (Exception $e)
+            {
+              error_log($e->getMessage());
+            }
+            
+          }
         }
       }
     }

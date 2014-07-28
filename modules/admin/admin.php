@@ -45,10 +45,23 @@ class admin_ctrl extends Controller
         }
       }
     }
+    
+    if (file_exists('./sites/default/welcome.md'))
+    {
+      $welcome = Parsedown::instance()->text(file_get_contents('./sites/default/welcome.md'));
+    }
+    elseif (file_exists('./sites/default/welcome.html'))
+    {
+      $welcome =  file_get_contents('./sites/default/welcome.html');
+    }
+    else
+    {
+      $welcome = '';
+    }
     $this->render('admin', 'body', array(
       'version' => version::current(),
       'custom_mods' => $custom_mods,
-      'welcome' => file_exists('./sites/default/welcome.html') ? file_get_contents('./sites/default/welcome.html') : '',
+      'welcome' => $welcome,
       'user' => $_SESSION['user_confirmed'],
       'gravatar' => md5( strtolower( trim( $_SESSION['user_confirmed'] ) ) )
       )

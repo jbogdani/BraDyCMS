@@ -1,3 +1,4 @@
+3.7.0[] = "Welcome page can be written in markdown language"
 3.7.0[] = "Added Parsedown 1.0.1 library for Markdown parsing"
 3.6.0[] = "New function: RSS feeds are now paginated"
 3.6.0[] = "New function: added the possibility to add a LIMIT statement to Article::getAllValid()"

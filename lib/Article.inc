@@ -205,9 +205,12 @@ class Article
    * @param boolean $dontparse if true articles will not be parsed
 	 * @return array
 	 */
-	public static function getAllValid($lang = false, $dontparse = false)
+	public static function getAllValid($lang = false, $dontparse = false, $limit = false)
 	{
-		$articles = R::find(self::art_tb(), ' ' . self::$valid_art . ' ORDER BY `sort` DESC');
+		$articles = R::find(
+      self::art_tb(), 
+      ' ' . self::$valid_art . ' ORDER BY `sort` DESC ' . ($limit ? ' LIMIT ' . $limit : '')
+      );
 		
     if ($dontparse)
     {
@@ -219,6 +222,16 @@ class Article
     }
 	}
 	
+  /**
+   * Returns total number of valid articles
+   * @return int
+   */
+  public static function countAllValid()
+  {
+    $res = R::getCol( 'SELECT count(*) FROM ' . self::art_tb() . ' WHERE ' . self::$valid_art);
+    return $res[0];
+  }
+  
 	/**
 	 * Returns array of available tags
 	 * @return array

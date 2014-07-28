@@ -9,6 +9,10 @@
 class utils
 {
   
+  /**
+   * Returns base URL of current site wit correct protocol (http|https), host and rewrite base
+   * @return string
+   */
   public static function getBaseUrl()
   {
     // http://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https
@@ -17,6 +21,12 @@ class utils
     return (substr($url, -1) ===  '/' ? $url : $url . '/');
   }
   
+  /**
+   * Recursively empties/deletes directory
+   * @param string $dir directory to empty/delete
+   * @param boolean $dont_delete_self if true the directory will be emptied but not deleted
+   * @return string Error text
+   */
 	public static function recursive_delete($dir, $dont_delete_self = false)
 	{
 		$files = self::dirContent($dir, true);
@@ -66,6 +76,9 @@ class utils
 		return $error;
 	}
 	
+  /**
+   * Deletes from temporary directory files older then 3 days (259200 seconds)
+   */
 	public static function emptyTmp()
 	{
 		$tmp_content = self::dirContent(TMP_DIR);
@@ -86,6 +99,12 @@ class utils
 		}
 	}
 	
+  /**
+   * Returns array with list of files in directory
+   * @param string $dir path to directory
+   * @param boolean $dont_ignore_sys if true also system files will be returned
+   * @return boolean
+   */
 	public static function dirContent($dir, $dont_ignore_sys = false)
 	{
     if (!is_dir($dir))
@@ -117,6 +136,11 @@ class utils
     return $files;
 	}
 	
+  /**
+   * Returna array with file Type and icon name
+   * @param string $file path to file
+   * @return array|false
+   */
 	public static function checkMimeExt ( $file )
 	{
 		$mimeTypes = array(
@@ -238,7 +262,11 @@ class utils
 		return (array("Unknown filetype", "unknown.png"));
 	}
 	
-	
+	/**
+   * Upload file and returns information about uploaded file
+   * @param string $upload_dir  Directrory where the file will be uploaded
+   * @param boolean $removeSpaces
+   */
 	public static function upload($upload_dir, $removeSpaces = false)
 	{
 		$allowedExtensions = array();
@@ -252,7 +280,13 @@ class utils
 		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 	}
 	
-	
+	/**
+   * Returns array after string is exploded using custom delimiter
+   * @param string $string String to explode
+   * @param string $delimiter Delimiter
+   * @param string $escape
+   * @return array
+   */
 	public static function csv_explode($string, $delimiter = ',', $escape ="\\") {
 	
 		$string = str_replace($delimiter .' ', $delimiter, $string);
@@ -284,6 +318,11 @@ class utils
 		}
 	}
 	
+  /**
+   * Returns array of available languages with information about code, name and href
+   * @param string $lang
+   * @return array
+   */
 	public static function getLanguages($lang = false)
 	{
     $lang_arr = array(
@@ -385,6 +424,11 @@ class utils
 		}
 	}
 	
+  /**
+   * Filters multidimensional arrays
+   * @param array $arr  multidimensional array to filter
+   * @return array
+   */
 	public static function recursiveFilter($arr)
 	{
 		foreach ($arr as &$a)
@@ -397,6 +441,14 @@ class utils
 		return array_filter($arr);
 	}
 	
+  /**
+   * Returns current language
+   * @return string
+   */
+  public static function getCurrLang()
+  {
+    return ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ? $_SESSION['lang'] : '');
+  }
 	
 	
 }

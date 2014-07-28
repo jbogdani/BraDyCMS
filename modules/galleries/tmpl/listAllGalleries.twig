@@ -43,7 +43,11 @@
 			title: admin.tr('new_gallery'),
 			loaded: function(modal){
 				modal.find('input.gal').focus();
-        admin.removeNotValid(modal.find('input.gal'), {'replace': '_', 'toLower': true});
+        admin.removeNotValid(modal.find('input.gal'), {
+          'replace': '-',
+          'toLower': true,
+          'permit': ['\\-', '_']
+        });
 			},
 			buttons:[
 			         {

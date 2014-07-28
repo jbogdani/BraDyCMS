@@ -1,3 +1,4 @@
+3.6.0[] = "New function: RSS feeds are now paginated"
 3.6.0[] = "New function: added the possibility to add a LIMIT statement to Article::getAllValid()"
 3.6.0[] = "Bug fixed: galleries object returns now full path to images"
 3.6.0[] = "New function: added the possibility to get galleries data in public API (galleries must be named as articles' text id and will be loaded with other article data)"

@@ -1,16 +1,16 @@
-<h2>BraDyCMS API documentantion</h2>
+# BraDyCMS API documentantion
 
 <p class="bg-danger text-danger">This functionality is still under development and may change in the future. Please read carefully the following doc that will be carefully updated to reflect all changes.</p> 
-<p>BraDyCMS integrates, from v. 3.4 a <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">RESTful</a> API which permits users to easily retrive data from articles, menus, ecc. in <a href="http://json.org/" target="_blank">JSON format</a> to be reused in many different ways (eg. to build an mobile App).</p>
 
-<p>Up to now (v. 3.4) the API can be used only for reteiving data (read-only), but soon it will be possibile to use this interface for editing and erasing data.</p>
+BraDyCMS integrates, from v. 3.4 a [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) API which permits users to easily retrieve data from articles, menus, etc. in [JSON format](http://json.org) to be reused in many different ways (eg. to build an mobile app).
 
-<h3>Base URL</h3>
-<p>The API can be reached by adding <code>/api/</code> or <code>/API/</code> to your base URL, eg. the API for the domain <code>http://bradypus.net</code> can be accessed at <code>http://bradypus.net/api/</code> or at <code>http://bradypus.net/API/</code></p>
+Up to present (v. 3.6) the API can be used only for retrieving data (read-only), but soon it will be possible to use this interface for editing and erasing data.
 
-<p class="bg-info">Please note that the lowercase version of the URL is the recommended choise for readability reasons.</p>
+## Base URL
 
-<h3>Parameters</h3>
+The API can be reached by adding `/api/` to your base URL, eg. the API for the domain `http://bradypus.net` can be accessed at `http://bradypus.net/api/`.
+
+## Parameters
 
 <table class="table table-bordered table-striped">
 	<tr>
@@ -58,7 +58,7 @@
 </table>
 
 
-<h3>Examples</h3>
+## Examples
 <select class="url">
   <option value="http://bradypus.net/api/?action=read&menu=main">Menu: main</option>
   <option value="http://bradypus.net/api/?action=read&tag[]=gallerie&tag[]=mostre">Tags: gallerie & mostre</option>
@@ -89,9 +89,6 @@
     }, 'html');
     
   });
-  
-  
-  
 </script>
 
 

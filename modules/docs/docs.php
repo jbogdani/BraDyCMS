@@ -11,8 +11,12 @@ class docs_ctrl extends Controller
 	public function read()
 	{
 		$file = $this->get['param'][0];
-		
-		if (file_exists(MOD_DIR . 'docs/tmpl/' . $file . '.twig'))
+    
+    if (file_exists('docs/' . $file . '.md'))
+    {
+      echo Parsedown::instance()->text(file_get_contents('docs/' . $file . '.md'));
+    }
+    else if (file_exists(MOD_DIR . 'docs/tmpl/' . $file . '.twig'))
 		{
 			$this->render('docs', $file, array(
 				'art_arr'=>$art_array,

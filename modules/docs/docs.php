@@ -15,6 +15,13 @@ class docs_ctrl extends Controller
     if (file_exists('docs/' . $file . '.md'))
     {
       echo Parsedown::instance()->text(file_get_contents('docs/' . $file . '.md'));
+      
+      echo '<hr>'
+        . '<p class="text-muted"><big><i class="glyphicon glyphicon-pencil"></i></big> Enhance this documentation file: '
+        . '<a href="https://github.com/jbogdani/BraDyCMS/edit/dev/docs/' . $file . '.md" target="_blank">edit this page on Github (you must sign in to make or propose changes)</a>'
+        . ' or <a href="https://github.com/jbogdani/BraDyCMS/raw/dev/docs/' . $file . '.md" target="_blank">download the raw file</a>, edit it and send it by email to '
+        . '<a href="mailto:developer@bradypus.net">developer@bradypus.net</a>'
+      ;
     }
     else if (file_exists(MOD_DIR . 'docs/tmpl/' . $file . '.twig'))
 		{

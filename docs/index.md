@@ -21,6 +21,7 @@ If you are not familiar with Github just email your contribution to [developer@b
 
 #### Index
 - [General concepts](#docs/read/general)
+- [System requirements and nstallation](#docs/read/install)
 - [FAQ](#docs/read/faq)
 - [Custom tags](#docs/read/customtags)
 - [Template docs](#docs/read/template)

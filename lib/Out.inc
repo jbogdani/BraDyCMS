@@ -229,7 +229,7 @@ class Out
 	{
 		$tags = func_get_args() ? func_get_args() : $this->getFilterTags();
     
-		return Article::getByTag($tags, $this->lang, $this->get['tag_all']);
+    return $this->getArticlesByTag($tags);
 	}
 	
 	/**
@@ -239,7 +239,17 @@ class Out
 	 */
 	public function getArticlesByTagArray($tags)
 	{
-		return Article::getByTag($tags, $this->lang);
+    $arts = Article::getByTag($tags, $this->lang, $this->get['tag_all']);
+    
+    if (is_array($arts))
+    {
+      foreach($arts as &$art)
+      {
+        $art['text'] = customTags::parseContent($art['text']);
+      }
+    }
+    return $arts;
+
 	}
 	
 	/**

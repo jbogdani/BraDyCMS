@@ -255,14 +255,29 @@ class customTags
 		
 		return $html;
 	}
-	
+  
+  
+  /**
+   * 
+   * @param array $data
+   *  content: YouTube video ID
+   *  ratio: Video ratio: 4by3 or 16by9. If defined the Twitter Bootstrap responsive layout will be used (http://getbootstrap.com/components/#responsive-embed)
+   *  width: if ratio is not defined the width will be used, default value is 560
+   *  height: if ratio is not defined the height will be used, default value is 315
+   * @return string
+   */
 	public static function youTube($data)
 	{
 		$code = $data['content'];
 		$width = $data['width'] ? $data['width'] : 560;
 		$height = $data['height'] ? $data['height'] : 315;
+    $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '' ? : '';
 		
-		return '<iframe width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $code . '?rel=0" frameborder="0" allowfullscreen></iframe>';
+		return '<div' . ($ratio ? ' class="embed-responsive embed-responsive-' . $ratio . '"' : '') . '>'
+      . '<iframe '
+        . ( $ratio ? ' class="embed-responsive-item" ' : ' width="' . $width . '" height="' . $height . '" ')
+        .'src="http://www.youtube.com/embed/' . $code . '?rel=0" frameborder="0" allowfullscreen></iframe>'
+    . '</div>';
 	}
 	
 	public static function vimeo($data)

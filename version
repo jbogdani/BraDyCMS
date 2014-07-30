@@ -1,6 +1,8 @@
 3.7.0[] = "Documentation menu is now a sub-menu of Other item"
 3.7.0[] = "Welcome page can be written in markdown language"
 3.7.0[] = "Added Parsedown 1.0.1 library for Markdown parsing"
+3.6.1[] = "Bug fixed with auto-update module: Download and install button was not showing"
+3.6.1[] = "New feature: youtube custom tags accepts now the 'ratio' parameter in order to permit responsive embed of videos (Twitter Bootstrap >= 3.2 is required)"
 3.6.1[] = "Bug fixes: articles retrieved from database using tags were not properly parsed against custom tags"
 3.6.0[] = "New function: RSS feeds are now paginated"
 3.6.0[] = "New function: added the possibility to add a LIMIT statement to Article::getAllValid()"

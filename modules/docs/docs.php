@@ -96,7 +96,8 @@ class docs_ctrl extends Controller
       'content' => 'string, required. Youtube video\'s id',
       'params' => array(
         'width' => 'int, optional. Video\'s width in pixels',
-        'height' => "int, optional. Video's height in pixels"
+        'height' => "int, optional. Video's height in pixels",
+        'ratio' => "string, optional. Can be '16by9' or '4by3'. No other values are allowed. If defined the Twitter Bootstrap responsive layout will be used (http://getbootstrap.com/components/#responsive-embed) and width and height values will be ignored. Twitter Bootstrap >= 3.2 is required"
         ),
       'min_example' => '[[youtube]]youtube_id[[/youtube]]',
       'max_example' => '[[youtube width="560" height="315"]]you_tube_id[[/youtube]]'

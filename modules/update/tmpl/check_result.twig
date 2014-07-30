@@ -30,7 +30,7 @@
     </div>
   {% endif %}
   
-  {% if status == 'updateable_warning' or branch == 'BraDyCMS-dev' %}
+  {% if status == 'updateable_warning' or status == 'updateable' or branch == 'BraDyCMS-dev' %}
     <p><button class="btn btn-success install"><i class="glyphicon glyphicon-cloud-download"></i> {{ tr.get('download_install') }}</button></p>
   {% endif %}
     
@@ -38,6 +38,7 @@
     <div class="loading"></div>
 </div>
 
+{% if status == 'updateable_warning' or status == 'updateable' or branch == 'BraDyCMS-dev' %}
 <script>
   
   function stepByStepInstall(step, remoteVersion){
@@ -93,3 +94,4 @@
     stepByStepInstall('start', '{{ remote_vers }}');
   });
 </script>
+{% endif %}

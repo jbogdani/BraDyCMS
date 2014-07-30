@@ -229,7 +229,7 @@ class Out
 	{
 		$tags = func_get_args() ? func_get_args() : $this->getFilterTags();
     
-    return $this->getArticlesByTag($tags);
+    return $this->getArticlesByTagArray($tags);
 	}
 	
 	/**

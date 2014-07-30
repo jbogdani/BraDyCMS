@@ -1,3 +1,4 @@
+3.6.1[] = "Bug fixed with login button, not being reseted on wrong username/password"
 3.6.1[] = "Bug fixed with auto-update module: Download and install button was not showing"
 3.6.1[] = "New feature: youtube custom tags accepts now the 'ratio' parameter in order to permit responsive embed of videos (Twitter Bootstrap >= 3.2 is required)"
 3.6.1[] = "Bug fixes: articles retrieved from database using tags were not properly parsed against custom tags"

@@ -77,12 +77,13 @@ catch (Exception $e)
 		$('#logerror').hide();
 		$.post('controller.php?obj=log_ctrl&method=in', $(this).serialize(), function(data){
 
-			if (data.status == 'success'){
+			if (data.status === 'success'){
 				window.location.href = './admin';
 				return false;
 			} else {
 				$('#logerror .text').html(data.text);
         $('#logerror').show();
+        $('#login-button').button('reset');
 			}
 		}, 'json');
 	});

@@ -84,11 +84,13 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
       }
     }
   ],
-  "fnDrawCallback": function(){
+  "fnDrawCallback": function(d){
+  
+    $('#{{ uid }} .delete-tag-container').hide();
   
     // Show delete tags button
     {% if active_tags|length == 1 and active_tags[0] != '' %}
-    if (this.fnSettings().fnRecordsDisplay() === 0){
+    if (this.fnSettings().fnRecordsDisplay() === 0 && d.oPreviousSearch.sSearch.length < 1){
       
       $('#{{ uid }} .delete-tag-container').show();
     }
@@ -159,7 +161,6 @@ $('#{{ uid }} input.tags').select2({
 $('#{{ uid }} .filter').on('click', function(){
   var used = $('#{{ uid }} input.tags').val();
 
-  admin.tabs.closeActive('article/all' + (used.length ? '/' + used.replace(',', '/') : ''));
+  admin.tabs.closeActive('article/all' + (used.length ? '/' + used.replace(/,/g, '/') : ''));
 });
 </script>
-

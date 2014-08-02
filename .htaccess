@@ -69,3 +69,7 @@ RewriteRule . index.php?art_title=not_found [L]
 	order allow,deny
 	deny from all
 </FilesMatch>
+
+<FilesMatch "\.(png|jpg|jpeg|gif)$">
+	Header set Access-Control-Allow-Origin "*"
+</FilesMatch>

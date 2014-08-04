@@ -1,30 +1,42 @@
-<h2>Build and embed in articles forms</h2>
-
-<h3>Intro</h3>
-<p>BraDyCMS supports natively the creation of custom forms and their embedding in articles.</p>
-<p>There is a specific admin plugin to handle the creation and the management of custom forms. The plugin is located in the main menu: <code>{{ tr.get('plugins') }}</code> > <code>{{ tr.get('user_forms') }}</code>.</p>
-
-<h3>Create a new custom form</h3>
-<p>To create a new custom form just click the <code>{{ tr.get('add_new_form') }}</code> button and enter a form id.</p>
-<p class="bg-danger">Pay attention: form ids must be unique. If you enter the name of a previously existing form the former will be deleted and <strong>overwritten</strong>!</p>
+# Build and embed forms in articles
 
 
-<h3>Embed a form in article's body</h3>
-<p>Embedding a form in an article's body is very simple. Just use the custom tag <code>[[userform]]</code> with the name/id of your form.</p>
-<p>For example, to embed the form named <code>contactus</code> in an article's body just add this simple tag:</p>
-<pre>[[userform]]contactus[[/userform]]</pre>
-<p>You can aso provide a subject directly in the form definition, overwrting the custom one defined in the configuration file (see below):</p>
-<pre>[[userform subject="Contact us"]]contactus[[/userform]]</pre>
-<p>BraDyCMS will do the rest: form formatting, validation and email & attach delivery.</p>
+### Intro
+BraDyCMS supports natively the creation of custom forms and their embedding in articles.
+
+There is a specific admin plugin to handle the creation and the management of custom forms. The plugin is located in: 
+
+    Main menu > Plugins > User forms
+
+### Create a new custom form
+
+To create a new custom form just click the `Add new user form` button and enter a form id.
+`Hold on`: form ids must be unique. If you enter an already used id the former form will be deleted permanentely!
+
+
+### Embed a form in article's body
+
+Embedding a form in an article's body is very simple. Just use the custom tag `[[userform]]` with the name/id of your form.
+
+For example, to embed the form named `contactus` in an article's body just add this simple tag:
+
+    [[userform]]contactus[[/userform]]
+You can aso provide a subject directly in the form definition, overwrting the custom one defined in the configuration file (see below):
+
+    [[userform subject="Contact us"]]contactus[[/userform]]
+BraDyCMS will do the rest: form formatting, validation and email & attach delivery.
 
 
 
-<h3>Custom form syntax</h3>
-<p>The configuration of a user form must follow a simple but rigid syntax. The configuration file must be a valid <a href="http://www.json.org/" target="_blank">json file</a>. BraDyCMS integrates a real-time validator to help finding any syntax error.</p>
+### Custom form syntax
+
+
+The configuration of a user form must follow a simple but rigid syntax. The configuration file must be a valid [json file](http://www.json.org/). BraDyCMS integrates a real-time validator to help finding any syntax error.
 		
 
 
-<h4>General data</h4>
+### General data
+
 <table class="table table-bordered table-striped">
 	<tr>
 		<th>Parameter</th>
@@ -83,11 +95,13 @@
 	</tr>
 </table>
 
-<hr />
+---
 
-<h4>Form element's data</h4>
-<p>Form elements should be defined as an array. There is not a limit to the number of form elements that can be added to a form.</p>
-<p>Each element should have a unique name and one of the predefined types.</p>
+### Form element's data
+
+Form elements should be defined as an array. There is not a limit to the number of form elements that can be added to a form.
+
+Each element should have a unique name and one of the predefined types.
 
 <table class="table table-bordered table-striped">
 	<tr>
@@ -169,77 +183,74 @@
 
 </table>
 
-<hr />
+----
 
-<h5>Example of a simple contact form</h5>
+#### Example of a simple contact form
 
-<pre class="prettyprint">
-{
-  "to": "info@bradypus.com",
-  "from_email": "info@bradypus.com",
-  "from_name": "BraDypUS communicating cultural heritage",
-  "subject":"Contact form",
-  "success_text":"Your message was successfully sent",
-  "error_text": "Sorry, something went wrong and it was not possible to send your message"
-  "inline": true,
-  "elements": [
+
     {
-      "name": "name",
-      "label": "Name",
-      "placehoder": "Name",
-      "type": "text",
-      "is_required": "true"
-    },
-    {
-      "name": "email",
-      "label": "Email address",
-      "placeholder": "Email address",
-      "type": "text",
-      "is_required": "true",
-      "is_email": "true"
-    },
-    {
-      "name": "phone_no",
-      "label": "Phone number",
-      "placeholder": "Phone number",
-      "type": "text"
-    },
-    {
-      "name": "location",
-      "label": "Location",
-      "type": "text"
-    },
-    {
-      "name": "how_did_you_hear_about_us",
-      "label": "How did you hear about us?",
-      "placehoder": "How did you hear about us?",
-      "type": "select",
-      "options": [
-        "google",
-        "email message",
-        "friends"
-      ]
-    },
-    {
-      "name": "comments",
-      "label": "Comments",
-      "placeholder": "Comments",
-      "type": "longtext"
-    },
-    {
-      "name": "uploadcv",
-      "label": "Upload your CV",
-      "type": "upload",
-      "sizeLimit": "2097152",
-      "allowedExtensions": [
-        "pdf",
-        "doc",
-        "docx",
-        "odt"
+      "to": "info@bradypus.com",
+      "from_email": "info@bradypus.com",
+      "from_name": "BraDypUS communicating cultural heritage",
+      "subject":"Contact form",
+      "success_text":"Your message was successfully sent",
+      "error_text": "Sorry, something went wrong and it was not possible to send your message"
+      "inline": true,
+      "elements": [
+        {
+          "name": "name",
+          "label": "Name",
+          "placehoder": "Name",
+          "type": "text",
+          "is_required": "true"
+        },
+        {
+          "name": "email",
+          "label": "Email address",
+          "placeholder": "Email address",
+          "type": "text",
+          "is_required": "true",
+          "is_email": "true"
+        },
+        {
+          "name": "phone_no",
+          "label": "Phone number",
+          "placeholder": "Phone number",
+          "type": "text"
+        },
+        {
+          "name": "location",
+          "label": "Location",
+          "type": "text"
+        },
+        {
+          "name": "how_did_you_hear_about_us",
+          "label": "How did you hear about us?",
+          "placehoder": "How did you hear about us?",
+          "type": "select",
+          "options": [
+            "google",
+            "email message",
+            "friends"
+          ]
+        },
+        {
+          "name": "comments",
+          "label": "Comments",
+          "placeholder": "Comments",
+          "type": "longtext"
+        },
+        {
+          "name": "uploadcv",
+          "label": "Upload your CV",
+          "type": "upload",
+          "sizeLimit": "2097152",
+          "allowedExtensions": [
+            "pdf",
+            "doc",
+            "docx",
+            "odt"
+          ]
+        }
       ]
     }
-  ]
-}
-</pre>
-
-<script>window.prettyPrint && prettyPrint();</script>

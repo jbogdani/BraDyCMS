@@ -288,6 +288,8 @@ class Out
 	 */
 	private function setPageData()
 	{
+    // SITE NAME
+    $this->data['page']['site_name'] = cfg::get('name');
     
     // ROBOTS
     if ($this->data['article'][$this->get['art_title']]['robots'])

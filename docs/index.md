@@ -21,7 +21,7 @@ If you are not familiar with Github just email your contribution to [developer@b
 
 #### Index
 - [General concepts](#docs/read/general)
-- [System requirements and nstallation](#docs/read/install)
+- [System requirements and installation](#docs/read/install)
 - [FAQ](#docs/read/faq)
 - [Custom tags](#docs/read/customtags)
 - [Template docs](#docs/read/template)
@@ -31,5 +31,4 @@ If you are not familiar with Github just email your contribution to [developer@b
  - [How to build and embed a map](#docs/read/usermap)
  - [How to setup an OAI-PMH interface](#docs/read/oai)
  - [How to build a custom modules](#docs/read/usermodule)
- - [How to setup an OAI-PMH interface](#docs/read/oai)
  - [How to use the RESTful API](#docs/read/api)

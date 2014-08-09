@@ -1,3 +1,4 @@
+3.7.0[] = "Custom tags [fig] and [figure] accepts new gal attribute to collect several images in fancybox galleries"
 3.7.0[] = "Twitter Bootstrap updated to version 3.2.0"
 3.7.0[] = "html.getPageData supports also site_name"
 3.7.0[] = ".htaccess modified to permit access to image files from other domains"

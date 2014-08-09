@@ -461,6 +461,7 @@ class customTags
 	 * 		align: image alignent (left|right)
 	 * 		href: href of image link
 	 * 		href_class: css class of href link
+   *    gal: string or false. If true the string will be used as rel attribute to create fancybox galleries
 	 * 
 	 * @return string
 	 */
@@ -480,6 +481,7 @@ class customTags
     $new_data['align'] = $data['align'];
     $new_data['href'] = $data['href'];
     $new_data['href_class'] = $data['href_class'];
+    $new_data['gal'] = $data['gal'];
     
     return self::figure($new_data);
   }
@@ -560,7 +562,9 @@ class customTags
     
     if ($dest_file || $data['href'])
     {
-      $html .= '<a href="' . ($dest_file ? $dest_file : $data['href']) . '" '
+      $html .= '<a ' 
+        . ($data['gal'] && $data['gal'] !== '' ? 'rel="' . $data['gal'] . '"' : '') 
+        . ' href="' . ($dest_file ? $dest_file : $data['href']) . '" '
         . 'class="fancybox' . ($data['href_class'] ? ' ' . $data['href_class'] .' ' : '') . '"'
         . ($data['caption'] ? ' title="' . $alt . '" ' : '')
         . '>';

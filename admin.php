@@ -96,7 +96,7 @@ catch (Exception $e)
   <script>
     $('#newsite').on('submit', function(){
       $.post('./controller.php?obj=addsite_ctrl&method=build', $(this).serialize(), function(data){
-        if (data.status == 'success'){
+        if (data.status === 'success'){
           $('#register').fadeOut();
           $('#message').fadeIn();
         } else {

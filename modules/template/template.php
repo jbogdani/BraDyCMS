@@ -53,6 +53,10 @@ class template_ctrl extends Controller
       case 'js':
 			$file = SITE_DIR . 'js/' . $file;
           break;
+        
+      case 'md':
+        $file = SITE_DIR . $file;
+        break;
       
 			default:
 				return false;
@@ -92,6 +96,11 @@ class template_ctrl extends Controller
 			}
 		}
     
+    if (file_exists(SITE_DIR . 'welcome.md'))
+    {
+      $md[] = 'welcome.md';
+    }
+    
     $js = array('frontend.js');
     
 		$this->render('template', 'list', array(
@@ -99,7 +108,8 @@ class template_ctrl extends Controller
         'twig'=> $twig,
         'css' => $css,
         'less' => $less,
-        'js' => $js
+        'js' => $js,
+        'md' => $md
 				)
 		));
 	}

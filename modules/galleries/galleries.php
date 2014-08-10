@@ -288,6 +288,40 @@ class galleries_ctrl extends Controller
 		
 		echo json_encode($msg);
 	}
+  
+  public function renameGallery(){
+    
+    $old_name = $this->get['param'][0];
+    $new_name = $this->get['param'][1];
+    
+    $path = './sites/default/images/galleries/';
+    
+    try
+    {
+      if(!file_exists($path. $old_name))
+      {
+        throw new Exception('error_gallery_does_not_exist');
+      }
+    
+      if(file_exists($path . $new_name))
+      {
+        throw new Exception('error_new_gallery_name_exist');
+      }
+      
+      @rename($path . $old_name, $path . $new_name);
+      
+      if(file_exists($path. $old_name) || !file_exists($path . $new_name))
+      {
+        throw new Exception('error_new_gallery_not_renamed');
+      }
+      
+      echo json_encode(array('status' => 'success', 'text' => tr::get('ok_gallery_renamed')));
+    }
+    catch (Exception $e)
+    {
+      echo json_encode(array('status' => 'error', 'text' => tr::get($e->getMessage())));
+    }
+  }
 	
 	
 }

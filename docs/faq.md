@@ -151,7 +151,7 @@ or follow [this link](#template/css).
 #### How can I create a new image gallery?
 
     Main menu > Media > Galleries
-Will list all available image galleries. To add a new Gallery just click on the PLUS button, `Add new gallery`. You will be promped fot the gallery name. Be carefull: no spaces, special characters of commas (,), dashes (-), apices (') or double apices (") are allowed. If entered these characters will be automatically replaced with underscores (_). Gallery names must be lower case.
+Will list all available image galleries. To add a new Gallery just click on the PLUS button, `Add new gallery`. You will be prompted for the gallery name. Be careful: no spaces, special characters of commas (,), dashes (-), apices (') or double apices (") are allowed. If entered these characters will be automatically replaced with underscores (_). Gallery names must be lower case.
 
 ---
 
@@ -162,7 +162,7 @@ Will list all available image galleries. Just click on the gallery you want to e
 
 Images can be loaded by clicking, in the lower part of the page, the `Upload file` button. More images can be load simultaneously. An easier way to load more images is by simply dragging and dropping them from your computer to the button.
 
-After the images are loaded you can entre the captions, bu writing in the `Description` column. Clicking on save will save all captions.
+After the images are loaded you can enter the captions, by writing in the `Description` column. Clicking on save will save all captions.
 
 An easy way to create image thumbnails is by using the `(Re) create thumbnail` button in the Thumbnail column. This will create an image thumbnail measuring 200x200px.
 
@@ -191,6 +191,14 @@ To delete a whole gallery all images must be deleted first. When no images are p
 
 ---
 
+#### Can I rename an image gallery?
+
+    Main menu > Media > Galleries
+Click on the gallery you want to rename
+Clicking the `Rename gallery` You will be prompted for the gallery name. Be careful: no spaces, special characters of commas (,), dashes (-), apices (') or double apices (") are allowed. If entered these characters will be automatically replaced with underscores (_). Gallery names must be lower case. Galley names should be unique.
+
+---
+
 #### What is a *conditional loading gallery* and how can I add it in an article's body?
 
 BraDyCMS permits the creation of conditional loading galleries. Using these kind of galleries instead of the normal ones permits web designres to create faster websites for mobile templates
@@ -204,4 +212,4 @@ To add a conditional loading gallery in the article body a special syntax is pro
     [[cl_gallery]]gallery_name[[/cl_gallery]]
 Conditional loading galleries uses the same options as galleries
 
-`Hold on!` For conditional loading image galleries to work properly adeguate javascript jquery plugin `jquery.cl_gallery.js` should be loaded and executed!
+`Hold on!` For conditional loading image galleries to work properly the javascript jquery plugin `jquery.cl_gallery.js` should be loaded and executed!

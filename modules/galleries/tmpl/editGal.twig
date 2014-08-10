@@ -6,6 +6,7 @@
 			<button class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
 		{% endif %}
 		<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
+    <a class="btn btn-default rename" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-pencil"></i> {{ tr.get('rename_gallery') }}</a>
 		{% for lng in langs %}
 		<a class="btn btn-default" href="#galleries/edit/{{ gallery }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}"><i class="glyphicon glyphicon-globe"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}</a>
 		{% endfor %}
@@ -109,5 +110,57 @@
 			}	
 		}, 'json');
 	});
+  
+  
+  $('#{{ uid }} .rename').on('click', function(){
+    admin.dialog({
+			html: '<input type="text" class="gal" placeholder="' + admin.tr('gallery_name') + '" />'
+				+ '<p class="text-danger">' + admin.tr('gal_name_formatting') + '</p>',
+			title: admin.tr('rename_gallery') + ': {{ gallery }}',
+			loaded: function(modal){
+				modal.find('input.gal').focus();
+        admin.removeNotValid(modal.find('input.gal'), {
+          'replace': '-',
+          'toLower': true,
+          'permit': ['\\-', '_']
+        });
+			},
+			buttons:[
+			         {
+			        	 text: admin.tr('save'),
+			        	 addclass: 'btn-success',
+			        	 click: function(){
+			        		 var gal = $('.modal input.gal').val();
+                   $.get('controller.php?obj=galleries_ctrl&method=renameGallery&param[]={{ gallery }}&param[]=' + gal, function(data){
+                     admin.message(data.text, data.status);
+                     
+                     if (data.status === 'success'){
+                       $('#modal').modal('hide');
+                       admin.tabs.closeActive('galleries/edit/' + gal);
+                     }
+                   }, 'json');
+                 }
+			         },
+			         {
+				         text: admin.tr('close'),
+				         action: 'close'
+			         }
+			         ]
+		});
+    
+    return;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  });
 	
 </script>

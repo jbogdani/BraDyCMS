@@ -130,6 +130,12 @@ $_lang['gallery_does_not_exist'] = "Error. Gallery %s does not exist";
 $_lang['gallery_not_well_formatted'] = "Error. Gallery %s is not well formatted.";
 $_lang['gallery_updated'] = "Gallery updated";
 $_lang['gallery_not_updated'] = "Error. Gallery not updated";
+$_lang['error_gallery_does_not_exist'] = "Error. Original gallery does not exists";
+$_lang['error_new_gallery_name_exist'] = "Error. The name you entered has already been used for a gallery. Please enter a new name and retry.";
+$_lang['ok_gallery_renamed'] = "The gallery was successfully renamed";
+$_lang['rename_gallery'] = "Rename gallery";
+
+
 $_lang['downloads'] = "Download"; 
 $_lang['new_download_node'] = "Add new download node";
 $_lang['download_node_name'] = "Node name";

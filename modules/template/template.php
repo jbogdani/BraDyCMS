@@ -96,10 +96,7 @@ class template_ctrl extends Controller
 			}
 		}
     
-    if (file_exists(SITE_DIR . 'welcome.md'))
-    {
-      $md[] = 'welcome.md';
-    }
+    $md[] = 'welcome.md';
     
     $js = array('frontend.js');
     

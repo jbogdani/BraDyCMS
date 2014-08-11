@@ -109,6 +109,7 @@ class addsite_ctrl extends Controller
     $this->write_file('./sites/default/js/frontend.js', "$('#searchForm').submit(function(){\n\tif($('#search').val() !== '' ){\n\t\twindow.location = $(this).data('path') + './search:' + $('#search').val();\n\t}\n});");
     
     $this->write_file('./sites/default/index.twig', file_get_contents('./modules/addsite/indexModel.twig'));
+    $this->write_file('./sites/default/welcome.md', file_get_contents('./modules/addsite/welcome.md'));
   }
   
   private function buildDB()

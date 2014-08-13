@@ -1,3 +1,4 @@
+3.7.0[] = "Changed collapse breakpoint for main menu in admin frontend to @screen-sm-max"
 3.7.0[] = "The add new site module writes now a default welcome.md file"
 3.7.0[] = "New function: welcome.md file can now be edited in template editor module"
 3.7.0[] = "New function: galleries can now be easily renamed"

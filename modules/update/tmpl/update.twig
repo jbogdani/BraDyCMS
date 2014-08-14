@@ -20,6 +20,6 @@
 
 <script>
   $('#{{ uid }} .check_update').on('click', function(){
-    $('#{{ uid }} .check_result').html('<img src="./img/loading.gif" alt="loading..." />').load('controller.php?obj=update_ctrl&method=check');
+    $('#{{ uid }} .check_result').html('<i class="icon ion-load-c ion-loading-c"></i>').load('controller.php?obj=update_ctrl&method=check');
   })
 </script>

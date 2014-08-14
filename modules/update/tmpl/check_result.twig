@@ -59,7 +59,7 @@
         waitingMsg = 'Installing update...';
         break;
     }
-    $('#{{ uid }} .loading').html('<img src="./img/loading.gif" alt="loading..." /> ' + waitingMsg);
+    $('#{{ uid }} .loading').html('<i class="icon ion-load-c ion-loading-c"></i> ' + waitingMsg);
     
     $.get('controller.php?obj=update_ctrl&method=stepByStepInstall&step=' + step + 
       '&remoteVersion=' + remoteVersion,

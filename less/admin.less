@@ -5,6 +5,7 @@
  */
 
 @import 'bootstrap/bootstrap.less';
+@import 'ionicons/ionicons.less';
 /*@import '../css/dataTable-bootstrap.css';*/
 @import '../css/pnotify.custom.min.css';
 @import '../css/select2.css';
@@ -13,8 +14,160 @@
 @import '../css/fileuploader.css';
 @import '../css/prettify.css';
 
+.icon{
+  line-height: 1.5;
+  font-size: 1.5em;
+}
 
-@grid-float-breakpoint: @screen-sm-max;
+@grid-float-breakpoint: @screen-md-min;
+
+
+html{
+  overflow-x: hidden;
+}
+
+#wrapper{
+}
+
+.topbar{
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right:0;
+  background: @navbar-inverse-bg;
+  padding: 0;
+  margin: 0;
+  color: @navbar-inverse-color;
+  height: @navbar-height;
+  z-index:1000;
+  
+  a{
+    color: @navbar-inverse-link-color;
+  }
+  
+  .shorthands{
+    margin: 10px;
+    padding:0;
+    list-style: none;
+    li{
+      margin: 0 10px;
+      display: inline-block;
+      vertical-align: center;
+      
+      a{
+        display: inline-block;
+        padding: 0 5px;
+        color: #fff;
+      }
+    }
+  }
+}
+
+#navigation{
+  width: 150px;
+  height: @navbar-height;
+  display: block;
+  vertical-align: middle;
+  
+  
+  &:hover{
+    text-decoration: none;
+    background: lighten(@navbar-inverse-bg, 3%);
+  }
+  
+  i{
+    font-size: 2.5em;
+    vertical-align: middle;
+    margin: 0 10px;
+  }
+
+}
+
+#menu{
+  position: fixed !important;
+  top: @navbar-height;
+  left: -260px;
+  width: 250px;
+  height: 100%;
+  overflow: auto;
+  background: rgba(10,10,10,.8);
+  box-shadow: 0 0 10px rgba(10,10,10,.8);
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 0;
+  
+  &.shown{
+    .transition(.3s);
+    .translate3d(260px,0,0);
+    z-index: 999999;
+    
+  }
+  .translate3d(0,0,0);
+  
+  ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    li{
+      margin: 5px auto;
+    
+      a{
+        .transition(.5s);
+        color: darken(#fff, 20%);
+        display: block;
+        padding: 10px 10px 10px 20px;
+        &:hover{
+          text-decoration: none;
+          color: darken(#fff, 5%);
+          background: #2b2b2b;
+        }
+      }
+      i{
+        font-size: 1.5em;
+      }
+    }
+  }
+  
+  ul.sub{
+    margin-left: 15px;
+    border-left: 1px dashed lighten(#000, 50%);
+    margin-bottom: 10px;
+    li{
+      a{
+        color: darken(#fff, 5%);
+      }
+    }
+    display: none;
+    
+    &.show{
+      display: block;
+    }
+  }
+  
+  li.divider{
+    padding: 0;
+    margin: 6px 0;
+    border-bottom: 1px dashed lighten(#000, 50%);
+  }
+
+}
+
+#content{
+  background: #fff;
+  .clearfix();
+  overflow-x: hidden;
+  .transition(.3s);
+  
+  &.shown{
+    .translate3d(250px,0,0);
+    opacity: .1;
+  }
+  .translate3d(0,0,0);
+}
+
+
+
 
 /* DataTables Bootstrap */
 div.dataTables_length {
@@ -306,15 +459,5 @@ li.placeholder {
 			margin-top: 0;
 		}
 }
-
-
-
-
-
-
-
-
-
-
 
 

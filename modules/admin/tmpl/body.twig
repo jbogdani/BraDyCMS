@@ -1,149 +1,148 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-
-      <a class="navbar-brand" href="#">bdus.CMS</a>
-     </div>
-
-     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-edit"></i> {{ tr.get('articles') }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#article/addNew"><i class="glyphicon glyphicon-plus-sign"></i> {{ tr.get('add_new_article') }}</a></li>
-            <li><a href="#article/all"><i class="glyphicon glyphicon-list-alt"></i> {{ tr.get('show_all_articles') }}</a></li>
+<div id="wrapper">
+  <div class="topbar">
+    <div class="pull-left">
+      <a id="navigation" class="toggleMenu" href="#"><i class="icon ion-navicon"></i> bdus.CMS</a>
+    </div>
+    <div class="pull-right">
+      <ul class="shorthands">
+        <li><a href="#article/addNew" title="{{ tr.get('add_new_article') }}"><i class="icon ion-ios7-plus-outline"></i></a></li>
+        <li><a href="#media/all" title="{{ tr.get('media') }}"><i class="icon ion-ios7-photos-outline"></i></a></li>
+        <li><a href="./" target="_blank" title="{{ tr.get('view_site') }}"><i class="icon ion-ios7-eye-outline"></i></a></li>
+        <li><a href="#docs/read/index" title="{{ tr.get('docs') }}"><i class="icon ion-ios7-information-outline"></i></a>
+      </ul>
+    </div>
+  </div>
+  
+  
+  <div id="menu" >
+    <div class="menu-content">
+      <ul class="main-menu">
+        <li>
+          <a href="#" class="sub-toggle"><i class="ion-ios7-compose-outline"></i> {{ tr.get('articles') }} <b class="caret"></b></a>
+          <ul class="sub">
+            <li><a href="#article/addNew"><i class="icon ion-ios7-plus-outline"></i> {{ tr.get('add_new_article') }}</a></li>
+            <li><a href="#article/all"><i class="icon ion-ios7-eye-outline"></i> {{ tr.get('show_all_articles') }}</a></li>
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> {{ tr.get('menu') }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#menu/addNew"><i class="glyphicon glyphicon-plus-sign"></i> {{ tr.get('add_new_menu_item') }}</a></li>
-            <li><a href="#menu/all"><i class="glyphicon glyphicon-list"></i> {{ tr.get('show_all_menus') }}</a></li>
+        <li>
+          <a href="#" class="sub-toggle"><i class="icon ion-navicon"></i> {{ tr.get('menu') }} <b class="caret"></b></a>
+          <ul class="sub">
+            <li><a href="#menu/addNew"><i class="icon ion-ios7-plus-outline"></i> {{ tr.get('add_new_menu_item') }}</a></li>
+            <li><a href="#menu/all"><i class="icon ion-ios7-eye-outline"></i> {{ tr.get('show_all_menus') }}</a></li>
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-camera"></i> {{ tr.get('media') }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#media/all"><i class="glyphicon glyphicon-picture"></i> {{ tr.get('media') }}</a></li>
-            <li><a href="#galleries/all"><i class="glyphicon glyphicon-expand"></i> {{ tr.get('galleries') }}</a></li>
+        <li>
+          <a href="#" class="sub-toggle"><i class="icon ion-ios7-camera-outline"></i> {{ tr.get('media') }} <b class="caret"></b></a>
+          <ul class="sub">
+            <li><a href="#media/all"><i class="icon ion-image"></i> {{ tr.get('media') }}</a></li>
+            <li><a href="#galleries/all"><i class="icon ion-images"></i> {{ tr.get('galleries') }}</a></li>
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-leaf"></i> {{ tr.get('plugins') }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-              <li><a href="#userform/view"><i class="glyphicon glyphicon-list-alt"></i> {{ tr.get('user_forms') }}</a></li>
-              <li><a href="#usermap/view"><i class="glyphicon glyphicon-list-alt"></i> {{ tr.get('user_maps') }}</a></li>
-              <li><a href="#downloads/all"><i class="glyphicon glyphicon-list-alt"></i> {{ tr.get('downloads') }}</a></li>
+        <li>
+          <a href="#" class="sub-toggle"><i class="icon ion-pull-request"></i> {{ tr.get('plugins') }} <b class="caret"></b></a>
+          <ul class="sub">
+              <li><a href="#userform/view"><i class="icon ion-clipboard"></i> {{ tr.get('user_forms') }}</a></li>
+              <li><a href="#usermap/view"><i class="icon ion-map"></i> {{ tr.get('user_maps') }}</a></li>
+              <li><a href="#downloads/all"><i class="icon ion-ios7-cloud-download-outline"></i> {{ tr.get('downloads') }}</a></li>
 
             {% for mod in custom_mods %}
-              <li><a href="./admin#plugins/run/{{ mod }}"><i class="glyphicon glyphicon-asterisk"></i> {{ tr.get(mod) }}</a></li>
+              <li><a href="./admin#plugins/run/{{ mod }}"><i class="icon ion-wand"></i> {{ tr.get(mod) }}</a></li>
             {% endfor %}
-        </ul>
-        </li>
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-globe"></i> {{ tr.get('language') }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#lang/change/it"><i class="glyphicon glyphicon-save"></i> Italiano</a></li>
-            <li><a href="#lang/change/en"><i class="glyphicon glyphicon-save"></i> English</a></li>
-            <li><a href="#lang/change/el"><i class="glyphicon glyphicon-save"></i> Ελληνικά</a></li>
           </ul>
         </li>
 
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> {{ tr.get('other') }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#changelog/show"><i class="glyphicon glyphicon-asterisk"></i> {{ tr.get('changelog') }}</a></li>
-            <li><a href="#error_log/show"><i class="glyphicon glyphicon-exclamation-sign"></i> {{ tr.get('error_log') }}</a></li>
-            <li><a href="./" target="_blank"><i class="glyphicon glyphicon-share-alt"></i> {{ tr.get('view_site') }}</a></li>
-
-            <li><a href="./admin"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a></li>
-            
-            <li><a href="#sys_translate/showList/front"><i class="glyphicon glyphicon-random"></i> {{ tr.get('front_translate') }}</a></li>
-
-            <li class="divider"></li>
-
-            <li><a href="#cfg/edit"><i class="glyphicon glyphicon-wrench"></i> {{ tr.get('cfg_editor') }}</a></li>
-
-            <li><a href="#template/dashboard"><i class="glyphicon glyphicon-file"></i> {{ tr.get('template_mng') }}</a></li>
-
-            <li><a href="#sys_translate/showList/admin"><i class="glyphicon glyphicon-random"></i> {{ tr.get('sys_translate') }}</a></li>
-            
-            <li class="divider"></li>
-            
-            <li><a href="#update/main"><i class="glyphicon glyphicon-asterisk"></i> {{ tr.get('auto_updates') }}</a></li>
-            
-            <li><a href="#backup/listAll"><i class="glyphicon glyphicon-asterisk"></i> {{ tr.get('backup_restore_db') }}</a></li>
-            
+        <li>
+          <a href="#" class="sub-toggle"><i class="icon ion-earth"></i> {{ tr.get('language') }} <b class="caret"></b></a>
+          <ul class="sub">
+            <li><a href="#lang/change/it"><i class="icon ion-ios7-arrow-thin-right"></i> Italiano</a></li>
+            <li><a href="#lang/change/en"><i class="icon ion-ios7-arrow-thin-right"></i> English</a></li>
+            <li><a href="#lang/change/el"><i class="icon ion-ios7-arrow-thin-right"></i> Ελληνικά</a></li>
           </ul>
-
         </li>
         
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> {{ tr.get('docs') }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            
-            <li><a href="#docs/read/index"><i class="glyphicon glyphicon-book"></i> Intro</a></li>
-            
+        <li>
+          <a href="#" class="sub-toggle"><i class="icon ion-settings"></i> {{ tr.get('cfg_editor') }}</a>
+          <ul class="sub">
+            <li><a href="#sys_translate/showList/front"><i class="icon ion-shuffle"></i> {{ tr.get('front_translate') }}</a></li>
+            <li><a href="#cfg/edit"><i class="icon ion-wrench"></i> {{ tr.get('cfg_editor') }}</a></li>
+            <li><a href="#template/dashboard"><i class="icon ion-compose"></i> {{ tr.get('template_mng') }}</a></li>
+            <li><a href="#sys_translate/showList/admin"><i class="icon ion-shuffle"></i> {{ tr.get('sys_translate') }}</a></li>
+            <li><a href="#update/main"><i class="icon ion-ios7-cloud-download-outline"></i> {{ tr.get('auto_updates') }}</a></li>
+            <li><a href="#backup/listAll"><i class="icon ion-ios7-download-outline"></i> {{ tr.get('backup_restore_db') }}</a></li>
+          </ul>
+        </li>
+
+
+        <li>
+          <a href="#" class="sub-toggle"><i class="icon ion-ios7-gear-outline"></i> {{ tr.get('other') }} <b class="caret"></b></a>
+          <ul class="sub">
+            <li><a href="#changelog/show"><i class="icon ion-document-text"></i> {{ tr.get('changelog') }}</a></li>
+            <li><a href="#error_log/show"><i class="icon ion-bug"></i> {{ tr.get('error_log') }}</a></li>
+            <li><a href="./" target="_blank"><i class="icon ion-ios7-eye-outline"></i> {{ tr.get('view_site') }}</a></li>
+            <li><a href="./admin"><i class="icon ion-ios7-reload"></i> {{ tr.get('reload') }}</a></li>
+          </ul>
+
+        </li>
+
+        <li>
+          <a href="#" class="sub-toggle"><i class="icon ion-help-buoy"></i> {{ tr.get('docs') }} <b class="caret"></b></a>
+          <ul class="sub">
+
+            <li><a href="#docs/read/index"><i class="icon ion-ios7-bookmarks-outline"></i> Intro</a></li>
+
             <li class="divider"></li>
 
-            <li><a href="#docs/read/general"><i class="glyphicon glyphicon-book"></i> General concepts</a></li>
-            <li><a href="#docs/read/install"><i class="glyphicon glyphicon-book"></i> System requirements and installation</a></li>
-            <li><a href="#docs/read/faq"><i class="glyphicon glyphicon-question-sign"></i> FAQ</a></li>
-            <li><a href="#docs/read/customtags"><i class="glyphicon glyphicon-book"></i> Custom tags</a></li>
-            
-            <li class="divider"></li>
-
-            <li><a href="#docs/read/template"><i class="glyphicon glyphicon-book"></i> Template Docs</a></li>
-            <li><a href="#docs/read/tmpl_example"><i class="glyphicon glyphicon-file"></i> Template Example</a></li>
+            <li><a href="#docs/read/general"><i class="icon ion-ios7-information-outline"></i> General concepts</a></li>
+            <li><a href="#docs/read/install"><i class="icon ion-ios7-information-outline"></i> System requirements and installation</a></li>
+            <li><a href="#docs/read/faq"><i class="icon ion-ios7-help-outline"></i> FAQ</a></li>
+            <li><a href="#docs/read/customtags"><i class="ion-code-working"></i> Custom tags</a></li>
 
             <li class="divider"></li>
-            
-            <li><a href="#docs/read/userform"><i class="glyphicon glyphicon-info-sign"></i> How to build and embed a form</a></li>
-            <li><a href="#docs/read/usermap"><i class="glyphicon glyphicon-info-sign"></i> How to build and embed a map</a></li>
-            <li><a href="#docs/read/oai"><i class="glyphicon glyphicon-info-sign"></i> How to setup a OAI-PMH interface</a></li>
-            <li><a href="#docs/read/usermodule"><i class="glyphicon glyphicon-info-sign"></i> How to create create custom modules</a></li>
-            <li><a href="#docs/read/api"><i class="glyphicon glyphicon-info-sign"></i> How to use the RESTful API</a></li>
+
+            <li><a href="#docs/read/template"><i class="icon ion-ios7-browsers-outline"></i> Template Docs</a></li>
+            <li><a href="#docs/read/tmpl_example"><i class="icon ion-ios7-browsers-outline"></i> Template Example</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="#docs/read/userform"><i class="icon ion-ios7-information-outline"></i> How to build and embed a form</a></li>
+            <li><a href="#docs/read/usermap"><i class="iconion-ios7-information-outlinen"></i> How to build and embed a map</a></li>
+            <li><a href="#docs/read/oai"><i class="icon ion-ios7-information-outline"></i> How to setup a OAI-PMH interface</a></li>
+            <li><a href="#docs/read/usermodule"><i class="icon ion-ios7-information-outline"></i> How to create create custom modules</a></li>
+            <li><a href="#docs/read/api"><i class="icon ion-ios7-information-outline"></i> How to use the RESTful API</a></li>
 
           </ul>
 
         </li>
-        
 
-        <li><a href="#log/out"><i class="glyphicon glyphicon-off"></i> {{ tr.get('logout') }}</a></li>
+
+        <li><a href="#log/out"><i class="icon ion-log-out"></i> {{ tr.get('logout') }}</a></li>
       </ul>
-    </div><!--/.nav-collapse -->
+    </div>
   </div>
-</div>
-		
-		<div class="container">
-		
-			<div class="tabbable">
-			
-				<ul class="nav nav-tabs" id="tabs" data-tabs="tabs">
-					<li class="active"><a href="#home">Welcome</a></li>
-				</ul>
-				
-				<div class="tab-content">
-					<div class="tab-pane active" id="home">
-						<div class="row">
-							<div class="col-md-8">
-								{% if welcome %}
-                  
+        
+  <div id="content" class="content">
+    <div class="container">
+    
+    <div class="tabbable">
+
+        <ul class="nav nav-tabs" id="tabs" data-tabs="tabs">
+          <li class="active"><a href="#home">Welcome</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="home">
+            <div class="row">
+              <div class="col-md-8">
+                {% if welcome %}
+
                   {{ welcome|raw }}
-                  
-								{% else %}
-								
-								<div class="jumbotron">
+
+                {% else %}
+
+                <div class="jumbotron">
                   <h1>BraDyCMS</h1>
                   <p>is an</p>
                   <ul>
@@ -156,31 +155,35 @@
                   <p>Content Managing System, written in Object Oriented PHP and 
                     Javascript, for creating beautiful and fully responsive websites.</p>
                   <p>Want to contribute? Fork it on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">GitHub</a></p>
-								</div>
-								{% endif %}
-							</div>
-							
-							<div class="col-md-4">
+                </div>
+                {% endif %}
+              </div>
+
+              <div class="col-md-4">
                 <img src="http://www.gravatar.com/avatar/{{ gravatar}}" alt="{{ user }}" class="pull-right img-responsive" />
                 <p>Welcome <big>{{ user }}</big> to</p>
-									<h3 class="media-heading">BraDyCMS</h3>
-								
-								
-								<div class="media-body">
-									<p class="lead">is an open source project available for fork and/or download on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">GitHub</a></p>
-									<p><a href="https://github.com/jbogdani/BraDyCMS/archive/master.zip" target="_blank">Download latest build</a></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                  <h3 class="media-heading">BraDyCMS</h3>
+
+
+                <div class="media-body">
+                  <p class="lead">is an open source project available for fork and/or download on <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">GitHub</a></p>
+                  <p><a href="https://github.com/jbogdani/BraDyCMS/archive/master.zip" target="_blank">Download latest build</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--/ #content -->
+  
+  <footer class="footer">
+    <h4>by BraDypUS <small>COMMUNICATING CULTURAL HERITAGE</small></h4>
+    <p>BraDyCMS [v. {{ version }}] is an open source 
+      (<a href="http://opensource.org/licenses/MIT" target="_blank" >MIT license</a>) 
+      project available for download on
+      <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">Github</a></p>
+  </footer>
+</div>
 		
-		<footer class="footer">
-			<h4>by BraDypUS <small>COMMUNICATING CULTURAL HERITAGE</small></h4>
-			<p>BraDyCMS [v. {{ version }}] is an open source 
-        (<a href="http://opensource.org/licenses/MIT" target="_blank" >MIT license</a>) 
-        project available for download on
-        <a href="https://github.com/jbogdani/BraDyCMS" target="_blank">Github</a></p>
-		</footer>
+

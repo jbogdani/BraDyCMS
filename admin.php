@@ -1,9 +1,9 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			Dec 1, 2012
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      Dec 1, 2012
  */
 try
 {
@@ -15,28 +15,27 @@ try
 }
 catch (Exception $e)
 {
-	error_log($e->getTraceAsString());
+  error_log($e->getTraceAsString());
   
-	$stop_error = $e->getMessage() ;
+  $stop_error = $e->getMessage() ;
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
- 	<head>
- 	
-	 	<meta charset="utf-8" />
-	 	<title>bdus.CMS</title>
-	 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="./css/admin.css" rel="stylesheet" />
-	    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-	    <!--[if lt IE 9]>
-	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	    <![endif]-->
- 	</head>
-
-	<body<?php if (!$_SESSION['user_confirmed']) { echo ' class="login" '; }?>>
+  <head>
     
-		<?php
+    <meta charset="utf-8" />
+    <title>bdus.CMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./css/admin.css" rel="stylesheet" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body<?php if (!$_SESSION['user_confirmed']) { echo ' class="login" '; }?>>
+    
+    <?php
     
     if ($stop_error)
     {
@@ -46,50 +45,50 @@ catch (Exception $e)
     {
       $admin->showCreateInstallForm();
     }
-		else if (!$_SESSION['user_confirmed'])
-		{
+    else if (!$_SESSION['user_confirmed'])
+    {
       $admin->showLoginForm();
-		}
-		else
-		{
+    }
+    else
+    {
       $admin->showBody();
     }
     ?>
-	
-	<script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
-	<script src="./js/jquery-2.1.1.min.js"></script>
-	<script src="./js/jquery.nestable.js"></script>
-	<script src="./js/bootstrap-3.2.0.min.js"></script>
-	<script src="./js/jquery.dataTables.js"></script>
-	<script src="./js/dataTable-bootstrap.js"></script>
-	
-	<script src="./js/admin.js"></script>
-	<script src="./js/pnotify.custom.min.js"></script>
-	<script src="./js/bootstrap-datepicker.js"></script>
-	<script src="./js/select2.min.js"></script>
-	<script src="./tiny_mce/tiny_mce.js"></script>
-	<script src="./js/fileuploader.js"></script>
-	<script src="./js/prettify.js"></script>
-	
-	<?php if (!$_SESSION['user_confirmed']): ?>
-	<script>
-	$('#signin').on('submit', function(){
-		$('#logerror').hide();
-		$.post('controller.php?obj=log_ctrl&method=in', $(this).serialize(), function(data){
+  
+  <script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/jquery.nestable.js"></script>
+  <script src="./js/bootstrap-3.2.0.min.js"></script>
+  <script src="./js/jquery.dataTables.js"></script>
+  <script src="./js/dataTable-bootstrap.js"></script>
+  
+  <script src="./js/admin.js"></script>
+  <script src="./js/pnotify.custom.min.js"></script>
+  <script src="./js/bootstrap-datepicker.js"></script>
+  <script src="./js/select2.min.js"></script>
+  <script src="./tiny_mce/tiny_mce.js"></script>
+  <script src="./js/fileuploader.js"></script>
+  <script src="./js/prettify.js"></script>
+  
+  <?php if (!$_SESSION['user_confirmed']): ?>
 
-			if (data.status === 'success'){
-				window.location.href = './admin';
-				return false;
-			} else {
-				$('#logerror .text').html(data.text);
-        $('#logerror').show();
-        $('#login-button').button('reset');
-			}
-		}, 'json');
-	});
-	</script>
-	<?php
-	endif;
+  <script>
+    $('#signin').on('submit', function(){
+      $('#logerror').hide();
+      $.post('controller.php?obj=log_ctrl&method=in', $(this).serialize(), function(data){
+      if (data.status === 'success'){
+          window.location.href = './admin';
+          return false;
+        } else {
+          $('#logerror .text').html(data.text);
+          $('#logerror').show();
+          $('#login-button').button('reset');
+        }
+      }, 'json');
+    });
+  </script>
+  <?php
+  endif;
   
   if (defined('CREATE_SITE')):
   ?>

@@ -510,3 +510,32 @@ jQuery.expr[':'].Contains = function(a,i,m){
 };
 
 $('a.ftpopover').popover({html:true});
+
+$(document).ready(function () {
+  
+  $('.toggleMenu').on('click', function(e){
+    $('#menu, #content').toggleClass('shown');
+    if ($(this).attr('href') === '#'){
+      e.preventDefault();
+    }
+  });
+  $('#content').on('click', function(){
+    $('#menu, #content').removeClass('shown');
+    $('#menu ul.sub').removeClass('show');
+  });
+  
+  $('#menu a').on('click', function(){
+    if ($(this).attr('href') !== '#'){
+      $('#menu ul.sub').removeClass('show');
+      $('#menu, #content').removeClass('shown');
+    }
+  });
+  
+  $('#menu a.sub-toggle').on('click', function(e){
+    $(this).next('ul.sub').toggleClass('show');
+    $('#menu ul.sub').not($(this).next('ul.sub')).removeClass('show');
+    
+    e.preventDefault();
+    return false;
+  });
+});

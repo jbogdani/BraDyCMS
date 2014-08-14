@@ -1,4 +1,4 @@
-<div class="container" id="{{ uid }}">
+<div class="" id="{{ uid }}">
   
   {# Main button menu #}
   <div class="btn-group" style="padding:20px 0;">
@@ -24,53 +24,64 @@
     </a>
 	</div>{# End of main button menu #}
   
-  {# Start of page's main content #}
-	<div class="row">
+	<form action="javascript:void(0)" id="edit_form{{ uid }}">
     
-    {# Main column #}
-		<div class="col-md-10">
+    <div class="btn-group">
+      <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i> {{ tr.get('save') }}</button>
+      {% if art.id %}
+      <a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview" ><i class="glyphicon glyphicon-eye-open"></i> {{ tr.get('preview_draft') }}</a>
+      {% endif %}
+      <button class="btn btn-default" type="reset">{{ tr.get('reset') }}</button>
+    </div>
+    
+		{# Tag choise #}
+    <hr />
+    <div class="form-group">
+      <div class="input-group">
+       <div class="input-group-addon"><i class="glyphicon glyphicon-tag"></i> {{ tr.get('tags') }}</div>
+       <input class="form-control" type="text" name="tags" value="{{ art.tags|join(',') }}" />
+      </div>
+    </div>
+    <hr />{# End of tag choise #}
+    
+    
+    {#
+    |----------10----------|--2--|
+    |-----6----|-----6-----|-----|
+    |----------------------|--2--|
+    #}
+    
+    
+    <div class="row"><!-- main form container -->
       
-			<form action="javascript:void(0)" id="edit_form{{ uid }}">
-				
-        {# Tag choise #}
-        <hr />
-				<div class="clearfix">
-					<label class="col-md-1"><i class="glyphicon glyphicon-tag"></i> {{ tr.get('tags') }}</label>
-					<div >
-						<input type="text" name="tags" value="{{ art.tags|join(',') }}" class="col-md-10" />
-					</div>
-				</div>
-				<hr />{# End of tag choise #}
-        
-				{# First form row: main article data #}
-				<div class="row">
-					<!-- first column -->
-					<div class="col-md-4">
+      <div class="col-sm-10"><!-- form  fileds container -->
+        <div class="row">
+          <div class="col-sm-5">
             <div class="form-group">
               <label>{{ tr.get('title') }}</label>
               <input type="text" name="title" value="{{ art.title}}" class="col-md-12" />
             </div>
-						
+
             <div class="form-group">
               <label>{{ tr.get('textid') }}</label>
               <input type="text" name="textid" value="{{ art.textid }}" class="col-md-12" />
             </div>
-						
+
             <div class="form-group">
               <label>{{ tr.get('sorting') }}</label>
               <input type="text" name="sort" value="{{ art.sort}}" class="col-md-12" />
             </div>
-						
+
             <div class="form-group">
               <label>{{ tr.get('keywords') }}</label>
               <input type="text" name="keywords" value="{{ art.keywords }}" class="col-md-12" />
             </div>
-						
+
             <div class="form-group">
               <label>{{ tr.get('author') }}</label>
               <input type="text" name="author" value="{{ art.author }}" class="col-md-12" />
             </div>
-            
+
             <div class="form-group">
               <label>{{ tr.get('status') }}</label>
               <select name="status" class="col-md-12">
@@ -78,171 +89,164 @@
                 <option value="1" {% if art.status %} selected="true" {% endif %}>Visibile</option>
               </select>
             </div>
-            
+
             <div class="form-group">
               <label>{{ tr.get('creation_date') }}</label>
               <input class="datepicker col-md-12" type="text" name="created"
                   value="{% if art.created %}{{ art.created }}{% else %}{{ date }}{% endif %}" />
             </div>
-						
+
             <div class="form-group">
               <label>{{ tr.get('pubblication_date') }}</label>
               <input class="datepicker col-md-12" type="text" name="publish"
                   value="{% if art.publish %}{{ art.publish }}{% else %}{{ date }}{% endif %}" />
             </div>
-						
+
             <div class="form-group">
               <label>{{ tr.get('expiration_date') }}</label>
               <input class="datepicker col-md-12" type="text" name="expires"
                   value="{% if art.expires %}{{ art.expires }}{% else %}{{ date }}{% endif %}" />
             </div>
-						
-						<div class="form-group">
+
+            <div class="form-group">
               <label> {{ tr.get('last_update') }}</label>
               {{ art.updated }}
             </div>
-					</div>
-					
-					<!-- second column -->
-					<div class="col-md-8">
+          </div>
+        
+          <div class="col-sm-7">
             <div class="form-group">
               <label>{{ tr.get('summary') }}</label>
               <textarea name="summary" id="summary{{ uid }}" style="width:100%; height: 150px;">{{ art.summary }}</textarea>
             </div>
-						
+
             <div class="form-group">
               <label>{{ tr.get('text') }}</label>
               <textarea name="text" style="width:100%; height: 500px;" id="text{{ uid }}">{{ art.text }}</textarea>
             </div>
-            
-            {% if custom_fields %}
-              {% for fld in custom_fields if fld.richtext %}
-                <div class="form-group">
-                  <label>{{ fld.label|upper }}</label>
-                  <textarea name="{{ fld.name }}" 
-                            style="width:100%; height: 150px;" 
-                            id="richtext{{ uid ~ fld.name }}">{{ art[fld.name] }}</textarea>
-                </div>
-              {% endfor %}
-            {% endif %}
-					</div>
-				</div> {# end of first form row: main article data #}
-        
-        {# Second form row: custom fields #}
-        {% if custom_fields %}
-          <div class="row">
-						<hr />
-						<h4>{{ tr.get('custom_fields') }}</h4>
-						<div class="row">
-							{% for fld in custom_fields if fld.richtext == false %}
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>{{ fld.label|upper }}</label>
-										{% if fld.type == 'longtext' %}
-										<textarea name="{{ fld.name }}"  class="col-md-12" style="height:100px">{{ art[fld.name] }}</textarea>
-										{% elseif fld.type == 'select' and fld.values %}
-                    	<select class="col-md-12" name="{{ fld.name }}">
-												<option></option>
-												{% for opt in fld.values %}
-													<option{% if opt == art[fld.name] %} selected="selected" {% endif %}>{{ opt }}</option>
-												{% endfor %}
-											</select>
-										{% else %}
-										<input name="{{ fld.name }}" type="text" value="{{ art[fld.name] }}" class="col-md-12" />
-										{% endif %}
-                  </div>
-								</div>
-								{% if loop.index is divisibleby(3) %}
-								</div>
-								<div class="row">
-								{% endif %}
-							{% endfor %}
-							</fieldset>
-						</div>
-					</div>
-        {% endif %}{# End of second form row: custom fields #}
-				
-				<hr />
-				
-				<div class="btn-group">
-					<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i> {{ tr.get('save') }}</button>
-					{% if art.id %}
-					<a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview" ><i class="glyphicon glyphicon-eye-open"></i> {{ tr.get('preview_draft') }}</a>
-					{% endif %}
-					<button class="btn btn-default" type="reset">{{ tr.get('reset') }}</button>
-				</div>
-			</form> {# end of article data form #}
-      
-		</div> {# End of main column (width: 0) #}
-    
-    
-    
-    {# Right column: article images and article media #}
-    <div class="col-md-2">
-      {% if art.id %}
-      
-        {# Article images panel #}
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{ tr.get('article_image') }}</h3>
+
           </div>
-          
-          <div class="panel-body">
-            {% if art_imgs|length > 0 %}
-              {% for dim, file in art_imgs %}
-                {% if loop.first %}
-                  <img src ="{{ file }}?{{ uid }}" class="img-responsive"/>
-                  <br />
-                  <p><a class="delete_attach_img btn btn-danger btn-block">
-                      <i class="glyphicon glyphicon-trash"></i> 
-                      {{ tr.get('delete') }}</a>
-                  </p>
+        </div>
+            
+        <div class="row"><!-- custom fields row -->
+          {% if custom_fields %}
+            <hr />
+            <h4>{{ tr.get('custom_fields') }}</h4>  
+
+            {# Rich text custom fields #}
+            {% for fld in custom_fields if fld.richtext %}
+              <div class="form-group">
+                <label>{{ fld.label|upper }}</label>
+                <textarea name="{{ fld.name }}" 
+                          style="width:100%; height: 150px;" 
+                          id="richtext{{ uid ~ fld.name }}">{{ art[fld.name] }}</textarea>
+              </div>
+            {% endfor %}
+
+            {# Plain text custom fields #}
+            <div class="row">
+              {% for fld in custom_fields if fld.richtext == false %}
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>{{ fld.label|upper }}</label>
+                    {% if fld.type == 'longtext' %}
+                    <textarea name="{{ fld.name }}"  class="col-md-12" style="height:100px">{{ art[fld.name] }}</textarea>
+                    {% elseif fld.type == 'select' and fld.values %}
+                      <select class="col-md-12" name="{{ fld.name }}">
+                        <option></option>
+                        {% for opt in fld.values %}
+                          <option{% if opt == art[fld.name] %} selected="selected" {% endif %}>{{ opt }}</option>
+                        {% endfor %}
+                      </select>
+                    {% else %}
+                    <input name="{{ fld.name }}" type="text" value="{{ art[fld.name] }}" class="col-md-12" />
+                    {% endif %}
+                  </div>
+                </div>
+                {% if loop.index is divisibleby(3) %}
+                  </div><div class="row">
                 {% endif %}
               {% endfor %}
-                
-            {% elseif art.id %}
-              <p class="text-danger">{{ tr.get('no_art_img_available') }}</p>
-            {% endif %}
-          </div>
-          
-          <div class="panel-footer">
-            <div id="file_uploader_{{ uid }}"></div>
-          </div>
-        </div>{# End of article images panel #}
+
+            </div>
+          {% endif %}
+        </div><!--/ custom fields row -->
         
+      </div><!--/ form  fileds container -->
       
-      
-        {# Article media panel #}
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{ tr.get('article_media') }}</h3>
-          </div>
+      <div class="col-sm-2"><!-- images container -->
+        {% if art.id %}
+          {# Article images panel #}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ tr.get('article_image') }}</h3>
+            </div>
 
-          <div class="panel-body media_content">
-            {% if art_media == false %}
-              <p class="text-danger">{{ tr.get('no_art_media') }}</p>
-            {% else %}
-              {% for file in art_media %}
-                <p>{{file}}<br /><input type="text" value="sites/default/images/articles/media/{{ art.id }}/{{ file }}" /></p>
-              {% endfor %}
-              <hr />
-              <a class="btn btn-info btn-block" href="#media/all/articles/media/{{ art.id }}"><i class="glyphicon glyphicon-new-window"></i></a>
-            {% endif %}
-          </div>
+            <div class="panel-body">
+              {% if art_imgs|length > 0 %}
+                {% for dim, file in art_imgs %}
+                  {% if loop.first %}
+                    <img src ="{{ file }}?{{ uid }}" class="img-responsive"/>
+                    <br />
+                    <p><a class="delete_attach_img btn btn-danger btn-block">
+                        <i class="glyphicon glyphicon-trash"></i> 
+                        {{ tr.get('delete') }}</a>
+                    </p>
+                  {% endif %}
+                {% endfor %}
 
-          <div class="panel-footer">
-            <div class="media_uploader"></div>
-          </div>
+              {% elseif art.id %}
+                <p class="text-danger">{{ tr.get('no_art_img_available') }}</p>
+              {% endif %}
+            </div>
 
-        </div>{# End of article media panel #}
-      
-      {% endif %}{# end if art id is set (this is not a new article's form ) #}
-			
-		</div>{# End of right column: articles images and media (width: 2) #}
+            <div class="panel-footer">
+              <div id="file_uploader_{{ uid }}"></div>
+            </div>
+          </div>{# End of article images panel #}
+
+          {# Article media panel #}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ tr.get('article_media') }}</h3>
+            </div>
+
+            <div class="panel-body media_content">
+              {% if art_media == false %}
+                <p class="text-danger">{{ tr.get('no_art_media') }}</p>
+              {% else %}
+                {% for file in art_media %}
+                  <p>{{file}}<br /><input type="text" value="sites/default/images/articles/media/{{ art.id }}/{{ file }}" /></p>
+                {% endfor %}
+                <hr />
+                <a class="btn btn-info btn-block" href="#media/all/articles/media/{{ art.id }}"><i class="glyphicon glyphicon-new-window"></i></a>
+              {% endif %}
+            </div>
+
+            <div class="panel-footer">
+              <div class="media_uploader"></div>
+            </div>
+
+          </div>{# End of article media panel #}
+
+        {% endif %}
+      </div><!--/ images container -->
+    </div><!--/ main form container -->
+    
+    
+    <hr />
+				
+    <div class="btn-group">
+      <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i> {{ tr.get('save') }}</button>
+      {% if art.id %}
+      <a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview" ><i class="glyphicon glyphicon-eye-open"></i> {{ tr.get('preview_draft') }}</a>
+      {% endif %}
+      <button class="btn btn-default" type="reset">{{ tr.get('reset') }}</button>
+    </div>
+    
+  </form> {# end of article data form #}
 		
-	</div> {# End of page's main content #}
-  
-</div> {# Start of geeral container #}
+</div> {# Start of general container #}
 
 <script>
 	tinyMCE.execCommand("mceAddControl", false, "summary{{ uid }}");

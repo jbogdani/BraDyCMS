@@ -2,26 +2,27 @@
   <h1>{{ tr.get('manage_articles') }}</h1>
 
 	<div class="btn-group" style="padding:20px 0;">
-		<a class="btn btn-info" href="#article/addNew" title="{{ tr.get('add_new_article') }}"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('add_new_article') }}</a>
-		<a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
+		<a class="btn btn-info" href="#article/addNew" title="{{ tr.get('add_new_article') }}"><i class="icon ion-plus"></i> {{ tr.get('add_new_article') }}</a>
+		<a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
 	</div>
 	
 	<div class="row well">
-    <label class="col-md-1"><i class="glyphicon glyphicon-tag" style="font-size:3em;"></i></label>
-    <div class="col-md-9">
+    <div class="col-xs-1"><i class="icon ion-pricetag" style="font-size:2em;"></i></div>
+    <div class="col-xs-11 col-sm-9">
       <input type="text" name="tags" value="{{ active_tags|join(',') }}" class="tags" style="width:100%" />
     </div>
-    <div class="col-md-2">
-      <button class="btn btn-success btn-block filter">{{ tr.get('apply_filter') }} <i class="glyphicon glyphicon-filter"></i></button>
+    <div class="col-sm-2 col-xs-12">
+      <button class="btn btn-success btn-block filter"><i class="ion-funnel"></i> {{ tr.get('apply_filter') }}</button>
     </div>
   </div>
-
+  
+    
   <div class="well well-sm clearfix delete-tag-container" style="margin: 10px 0 20px 0; display: none;">
     <span class="text-danger">
-      <i style="font-size:1.5em;" class="glyphicon glyphicon-exclamation-sign"></i> 
+      <i style="font-size:1.5em;" class="icon ion-alert-circled"></i> 
       {{ tr.sget('confirm_delete_tag_not_used', active_tags[0]) }}</span> 
-      <button class="btn btn-danger deleteTag"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}</button>
-      <button class="btn btn-danger deleteAllTags"><i class="glyphicon glyphicon-fire"></i> {{ tr.get('delete_unused_tags') }}</button>
+      <button class="btn btn-danger deleteTag"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
+      <button class="btn btn-danger deleteAllTags"><i class="icon ion-flame"></i> {{ tr.get('delete_unused_tags') }}</button>
   </div>
 	
 
@@ -74,12 +75,12 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
     {
       "mData":  function(row){
         return '<div class="btn-group">'
-          + '<a href="#article/edit/' + row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="glyphicon glyphicon-edit"></i></a>'
+          + '<a href="#article/edit/' + row.id +'" class="btn btn-default" title="{{ tr.get('edit') }}"><i class="icon ion-edit"></i></a>'
           
 						{% for lang in cfg_langs %}
-							+ ' <a href="#article/translate/{{ lang.id }}/{{ art.id }}" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="glyphicon glyphicon-random text-muted"></i> {{ lang.id|upper }}</a>'
+							+ ' <a href="#article/translate/{{ lang.id }}/{{ art.id }}" class="btn btn-default" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="ion-shuffle text-muted"></i> {{ lang.id|upper }}</a>'
 						{% endfor %}
-          + '<a href="#" class="btn btn-default delete_article btn-sm" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="glyphicon glyphicon-trash"></i></a>'
+          + '<a href="#" class="btn btn-default delete_article" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
           + '</div>'
       }
     }
@@ -105,7 +106,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
         html: '{{ tr.get('confirm_delete_article') }}',
         buttons: [
                   {
-                    text: '<i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}',
+                    text: '<i class="icon ion-trash-a"></i> {{ tr.get('delete') }}',
                     addclass: 'btn-danger',
                     action: 'close',
                     click: function(){

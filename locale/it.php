@@ -339,3 +339,4 @@ $_lang['error_deleting_backup'] = "Maggiori dettagli nel log deli errori";
 $_lang['ok_deleting_backup'] = "Il backup è stato cancellato senza errori";
 $_lang['error_restore_backup'] = "Errore. Non è stato possibile ripristinare il database. Maggiori dettagli nel log deli errori";
 $_lang['ok_restore_backup'] = "Il database è stato ripristinato senza errori";
+$_lang['open'] = "Apri";

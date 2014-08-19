@@ -20,107 +20,107 @@
     <div class="menu-content">
       <ul class="main-menu">
         <li>
-          <a href="#" class="sub-toggle"><i class="ion-ios7-compose-outline"></i> {{ tr.get('articles') }} <b class="caret"></b></a>
+          <a href="#" class="sub-toggle"><i class="icon big ion-ios7-compose-outline"></i> {{ tr.get('articles') }} <b class="caret"></b></a>
           <ul class="sub">
-            <li><a href="#article/addNew"><i class="icon ion-ios7-plus-outline"></i> {{ tr.get('add_new_article') }}</a></li>
-            <li><a href="#article/all"><i class="icon ion-ios7-eye-outline"></i> {{ tr.get('show_all_articles') }}</a></li>
+            <li><a href="#article/addNew"><i class="icon big ion-ios7-plus-outline"></i> {{ tr.get('add_new_article') }}</a></li>
+            <li><a href="#article/all"><i class="icon big ion-ios7-eye-outline"></i> {{ tr.get('show_all_articles') }}</a></li>
           </ul>
         </li>
 
         <li>
-          <a href="#" class="sub-toggle"><i class="icon ion-navicon"></i> {{ tr.get('menu') }} <b class="caret"></b></a>
+          <a href="#" class="sub-toggle"><i class="icon big ion-navicon"></i> {{ tr.get('menu') }} <b class="caret"></b></a>
           <ul class="sub">
-            <li><a href="#menu/addNew"><i class="icon ion-ios7-plus-outline"></i> {{ tr.get('add_new_menu_item') }}</a></li>
-            <li><a href="#menu/all"><i class="icon ion-ios7-eye-outline"></i> {{ tr.get('show_all_menus') }}</a></li>
+            <li><a href="#menu/addNew"><i class="icon big ion-ios7-plus-outline"></i> {{ tr.get('add_new_menu_item') }}</a></li>
+            <li><a href="#menu/all"><i class="icon big ion-ios7-eye-outline"></i> {{ tr.get('show_all_menus') }}</a></li>
           </ul>
         </li>
 
         <li>
-          <a href="#" class="sub-toggle"><i class="icon ion-ios7-camera-outline"></i> {{ tr.get('media') }} <b class="caret"></b></a>
+          <a href="#" class="sub-toggle"><i class="icon big ion-ios7-camera-outline"></i> {{ tr.get('media') }} <b class="caret"></b></a>
           <ul class="sub">
-            <li><a href="#media/all"><i class="icon ion-image"></i> {{ tr.get('media') }}</a></li>
-            <li><a href="#galleries/all"><i class="icon ion-images"></i> {{ tr.get('galleries') }}</a></li>
+            <li><a href="#media/all"><i class="icon big ion-image"></i> {{ tr.get('media') }}</a></li>
+            <li><a href="#galleries/all"><i class="icon big ion-images"></i> {{ tr.get('galleries') }}</a></li>
           </ul>
         </li>
 
         <li>
-          <a href="#" class="sub-toggle"><i class="icon ion-pull-request"></i> {{ tr.get('plugins') }} <b class="caret"></b></a>
+          <a href="#" class="sub-toggle"><i class="icon big ion-pull-request"></i> {{ tr.get('plugins') }} <b class="caret"></b></a>
           <ul class="sub">
-              <li><a href="#userform/view"><i class="icon ion-clipboard"></i> {{ tr.get('user_forms') }}</a></li>
-              <li><a href="#usermap/view"><i class="icon ion-map"></i> {{ tr.get('user_maps') }}</a></li>
-              <li><a href="#downloads/all"><i class="icon ion-ios7-cloud-download-outline"></i> {{ tr.get('downloads') }}</a></li>
+              <li><a href="#userform/view"><i class="icon big ion-clipboard"></i> {{ tr.get('user_forms') }}</a></li>
+              <li><a href="#usermap/view"><i class="icon big ion-map"></i> {{ tr.get('user_maps') }}</a></li>
+              <li><a href="#downloads/all"><i class="icon big ion-ios7-cloud-download-outline"></i> {{ tr.get('downloads') }}</a></li>
 
             {% for mod in custom_mods %}
-              <li><a href="./admin#plugins/run/{{ mod }}"><i class="icon ion-wand"></i> {{ tr.get(mod) }}</a></li>
+              <li><a href="./admin#plugins/run/{{ mod }}"><i class="icon big ion-wand"></i> {{ tr.get(mod) }}</a></li>
             {% endfor %}
           </ul>
         </li>
 
         <li>
-          <a href="#" class="sub-toggle"><i class="icon ion-earth"></i> {{ tr.get('language') }} <b class="caret"></b></a>
+          <a href="#" class="sub-toggle"><i class="icon big ion-earth"></i> {{ tr.get('language') }} <b class="caret"></b></a>
           <ul class="sub">
-            <li><a href="#lang/change/it"><i class="icon ion-ios7-arrow-thin-right"></i> Italiano</a></li>
-            <li><a href="#lang/change/en"><i class="icon ion-ios7-arrow-thin-right"></i> English</a></li>
-            <li><a href="#lang/change/el"><i class="icon ion-ios7-arrow-thin-right"></i> Ελληνικά</a></li>
+            <li><a href="#lang/change/it"><i class="icon big ion-ios7-arrow-thin-right"></i> Italiano</a></li>
+            <li><a href="#lang/change/en"><i class="icon big ion-ios7-arrow-thin-right"></i> English</a></li>
+            <li><a href="#lang/change/el"><i class="icon big ion-ios7-arrow-thin-right"></i> Ελληνικά</a></li>
           </ul>
         </li>
         
         <li>
-          <a href="#" class="sub-toggle"><i class="icon ion-settings"></i> {{ tr.get('cfg_editor') }}</a>
+          <a href="#" class="sub-toggle"><i class="icon big ion-settings"></i> {{ tr.get('cfg_editor') }}</a>
           <ul class="sub">
-            <li><a href="#sys_translate/showList/front"><i class="icon ion-shuffle"></i> {{ tr.get('front_translate') }}</a></li>
-            <li><a href="#cfg/edit"><i class="icon ion-wrench"></i> {{ tr.get('cfg_editor') }}</a></li>
-            <li><a href="#template/dashboard"><i class="icon ion-compose"></i> {{ tr.get('template_mng') }}</a></li>
-            <li><a href="#sys_translate/showList/admin"><i class="icon ion-shuffle"></i> {{ tr.get('sys_translate') }}</a></li>
-            <li><a href="#update/main"><i class="icon ion-ios7-cloud-download-outline"></i> {{ tr.get('auto_updates') }}</a></li>
-            <li><a href="#backup/listAll"><i class="icon ion-ios7-download-outline"></i> {{ tr.get('backup_restore_db') }}</a></li>
+            <li><a href="#sys_translate/showList/front"><i class="icon big ion-shuffle"></i> {{ tr.get('front_translate') }}</a></li>
+            <li><a href="#cfg/edit"><i class="icon big ion-wrench"></i> {{ tr.get('cfg_editor') }}</a></li>
+            <li><a href="#template/dashboard"><i class="icon big ion-compose"></i> {{ tr.get('template_mng') }}</a></li>
+            <li><a href="#sys_translate/showList/admin"><i class="icon big ion-shuffle"></i> {{ tr.get('sys_translate') }}</a></li>
+            <li><a href="#update/main"><i class="icon big ion-ios7-cloud-download-outline"></i> {{ tr.get('auto_updates') }}</a></li>
+            <li><a href="#backup/listAll"><i class="icon big ion-ios7-download-outline"></i> {{ tr.get('backup_restore_db') }}</a></li>
           </ul>
         </li>
 
 
         <li>
-          <a href="#" class="sub-toggle"><i class="icon ion-ios7-gear-outline"></i> {{ tr.get('other') }} <b class="caret"></b></a>
+          <a href="#" class="sub-toggle"><i class="icon big ion-ios7-gear-outline"></i> {{ tr.get('other') }} <b class="caret"></b></a>
           <ul class="sub">
-            <li><a href="#changelog/show"><i class="icon ion-document-text"></i> {{ tr.get('changelog') }}</a></li>
-            <li><a href="#error_log/show"><i class="icon ion-bug"></i> {{ tr.get('error_log') }}</a></li>
-            <li><a href="./" target="_blank"><i class="icon ion-ios7-monitor-outline"></i> {{ tr.get('view_site') }}</a></li>
-            <li><a href="./admin"><i class="icon ion-ios7-reload"></i> {{ tr.get('reload') }}</a></li>
+            <li><a href="#changelog/show"><i class="icon big ion-document-text"></i> {{ tr.get('changelog') }}</a></li>
+            <li><a href="#error_log/show"><i class="icon big ion-bug"></i> {{ tr.get('error_log') }}</a></li>
+            <li><a href="./" target="_blank"><i class="icon big ion-ios7-monitor-outline"></i> {{ tr.get('view_site') }}</a></li>
+            <li><a href="./admin"><i class="icon big ion-ios7-reload"></i> {{ tr.get('reload') }}</a></li>
           </ul>
 
         </li>
 
         <li>
-          <a href="#" class="sub-toggle"><i class="icon ion-help-buoy"></i> {{ tr.get('docs') }} <b class="caret"></b></a>
+          <a href="#" class="sub-toggle"><i class="icon big ion-help-buoy"></i> {{ tr.get('docs') }} <b class="caret"></b></a>
           <ul class="sub">
 
-            <li><a href="#docs/read/index"><i class="icon ion-ios7-bookmarks-outline"></i> Intro</a></li>
+            <li><a href="#docs/read/index"><i class="icon big ion-ios7-bookmarks-outline"></i> Intro</a></li>
 
             <li class="divider"></li>
 
-            <li><a href="#docs/read/general"><i class="icon ion-ios7-information-outline"></i> General concepts</a></li>
-            <li><a href="#docs/read/install"><i class="icon ion-ios7-information-outline"></i> System requirements and installation</a></li>
-            <li><a href="#docs/read/faq"><i class="icon ion-ios7-help-outline"></i> FAQ</a></li>
+            <li><a href="#docs/read/general"><i class="icon big ion-ios7-information-outline"></i> General concepts</a></li>
+            <li><a href="#docs/read/install"><i class="icon big ion-ios7-information-outline"></i> System requirements and installation</a></li>
+            <li><a href="#docs/read/faq"><i class="icon big ion-ios7-help-outline"></i> FAQ</a></li>
             <li><a href="#docs/read/customtags"><i class="ion-code-working"></i> Custom tags</a></li>
 
             <li class="divider"></li>
 
-            <li><a href="#docs/read/template"><i class="icon ion-ios7-browsers-outline"></i> Template Docs</a></li>
-            <li><a href="#docs/read/tmpl_example"><i class="icon ion-ios7-browsers-outline"></i> Template Example</a></li>
+            <li><a href="#docs/read/template"><i class="icon big ion-ios7-browsers-outline"></i> Template Docs</a></li>
+            <li><a href="#docs/read/tmpl_example"><i class="icon big ion-ios7-browsers-outline"></i> Template Example</a></li>
 
             <li class="divider"></li>
 
-            <li><a href="#docs/read/userform"><i class="icon ion-ios7-information-outline"></i> How to build and embed a form</a></li>
+            <li><a href="#docs/read/userform"><i class="icon big ion-ios7-information-outline"></i> How to build and embed a form</a></li>
             <li><a href="#docs/read/usermap"><i class="iconion-ios7-information-outlinen"></i> How to build and embed a map</a></li>
-            <li><a href="#docs/read/oai"><i class="icon ion-ios7-information-outline"></i> How to setup a OAI-PMH interface</a></li>
-            <li><a href="#docs/read/usermodule"><i class="icon ion-ios7-information-outline"></i> How to create create custom modules</a></li>
-            <li><a href="#docs/read/api"><i class="icon ion-ios7-information-outline"></i> How to use the RESTful API</a></li>
+            <li><a href="#docs/read/oai"><i class="icon big ion-ios7-information-outline"></i> How to setup a OAI-PMH interface</a></li>
+            <li><a href="#docs/read/usermodule"><i class="icon big ion-ios7-information-outline"></i> How to create create custom modules</a></li>
+            <li><a href="#docs/read/api"><i class="icon big ion-ios7-information-outline"></i> How to use the RESTful API</a></li>
 
           </ul>
 
         </li>
 
 
-        <li><a href="#log/out"><i class="icon ion-log-out"></i> {{ tr.get('logout') }}</a></li>
+        <li><a href="#log/out"><i class="icon big ion-log-out"></i> {{ tr.get('logout') }}</a></li>
       </ul>
     </div>
   </div>

@@ -134,9 +134,7 @@ $_lang['error_gallery_does_not_exist'] = "Error. Original gallery does not exist
 $_lang['error_new_gallery_name_exist'] = "Error. The name you entered has already been used for a gallery. Please enter a new name and retry.";
 $_lang['ok_gallery_renamed'] = "The gallery was successfully renamed";
 $_lang['rename_gallery'] = "Rename gallery";
-
-
-$_lang['downloads'] = "Download"; 
+$_lang['downloads'] = "Download";
 $_lang['new_download_node'] = "Add new download node";
 $_lang['download_node_name'] = "Node name";
 $_lang['download_node_name_cannot_be_empty'] = "Node name can not be empty";
@@ -278,7 +276,6 @@ $_lang['error_form_config_not_saved'] = "Error. Can not save user form configura
 $_lang['confirm_delete_form'] = "Are you sure you want to delete this form. This action can not be undone";
 $_lang['ok_form_deleted'] = "User form deleted";
 $_lang['error_form_not_deleted'] = "Error. Can not delete user form";
-
 $_lang['ok_map_config_saved'] = "Map configuration saved";
 $_lang['error_map_config_not_saved'] = "Error. Can not save user map configuration";
 $_lang['ok_map_deleted'] = "User map deleted";
@@ -289,8 +286,6 @@ $_lang['no_user_map_available'] = "No user map available";
 $_lang['available_maps'] = "Available maps";
 $_lang['add_map_name'] = "Add map name";
 $_lang['confirm_delete_map'] = "Are you sure you want to delete this form. This action can not be undone";
-
-
 $_lang['auto_updates'] = "Automatic updates";
 $_lang['update_sys'] = "Updating system";
 $_lang['check_for_updates'] = "Check for available updates";
@@ -328,7 +323,6 @@ $_lang['recursive_subfolders'] = "Create thumbnails for all files in all subfold
 $_lang['error_in_creating_some_thumbails'] = "Error. Some thumbnails were not created. Check error log for more information";
 $_lang['ok_all_thumbails_created'] = "All thumbnails successfully created";
 $_lang['please_wait'] = "Still processing... Please wait....";
-
 $_lang['backup_restore_db'] = "Backup and restore database";
 $_lang['no_available_backup'] = "No available backup yet!";
 $_lang['create_backup'] = "Create new backup";
@@ -346,12 +340,4 @@ $_lang['ok_deleting_backup'] = "Backup file was successfully deleted";
 $_lang['error_restore_backup'] = "Error. Database could not be restored. More details in error log.";
 $_lang['ok_restore_backup'] = "";
 $_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
+$_lang['open'] = "Open";

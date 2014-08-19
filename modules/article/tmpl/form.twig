@@ -4,7 +4,7 @@
   <div class="btn-group" style="padding:20px 0;">
     <a class="btn btn-info" href="#article/addNew" 
        title="{{ tr.get('add_new_article') }}">
-      <i class="glyphicon glyphicon-plus"></i> 
+      <i class="icon ion-plus"></i> 
       {{ tr.get('add_new_article') }}
     </a>
     
@@ -13,32 +13,32 @@
         <a href="#article/translate/{{ lang.id }}/{{ art.id }}" 
            class="btn btn-default" 
            title="{{ tr.sget('translate_article_in', lang.string) }}">
-          <i class="glyphicon glyphicon-random text-muted"></i> 
+          <i class="icon ion-shuffle"></i> 
           {{ lang.id|upper }}
         </a>
       {% endfor %}
 		{% endif %}
 		<a class="btn btn-default reload" 
        title="{{ tr.get('reload') }}">
-      <i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}
+      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
     </a>
 	</div>{# End of main button menu #}
   
 	<form action="javascript:void(0)" id="edit_form{{ uid }}">
     
     <div class="btn-group">
-      <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i> {{ tr.get('save') }}</button>
+      <button class="btn btn-success" type="submit"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
       {% if art.id %}
-      <a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview" ><i class="glyphicon glyphicon-eye-open"></i> {{ tr.get('preview_draft') }}</a>
+      <a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview" ><i class="icon ion-monitor"></i> {{ tr.get('preview_draft') }}</a>
       {% endif %}
-      <button class="btn btn-default" type="reset">{{ tr.get('reset') }}</button>
+      <button class="btn btn-default" type="reset"><i class="icon ion-close"></i> {{ tr.get('reset') }}</button>
     </div>
     
 		{# Tag choise #}
     <hr />
     <div class="form-group">
       <div class="input-group">
-       <div class="input-group-addon"><i class="glyphicon glyphicon-tag"></i> {{ tr.get('tags') }}</div>
+       <div class="input-group-addon"><i class="icon ion-pricetag"></i> {{ tr.get('tags') }}</div>
        <input class="form-control" type="text" name="tags" value="{{ art.tags|join(',') }}" />
       </div>
     </div>
@@ -189,7 +189,7 @@
                     <img src ="{{ file }}?{{ uid }}" class="img-responsive"/>
                     <br />
                     <p><a class="delete_attach_img btn btn-danger btn-block">
-                        <i class="glyphicon glyphicon-trash"></i> 
+                        <i class="icon ion-trash-a"></i> 
                         {{ tr.get('delete') }}</a>
                     </p>
                   {% endif %}
@@ -219,7 +219,7 @@
                   <p>{{file}}<br /><input type="text" value="sites/default/images/articles/media/{{ art.id }}/{{ file }}" /></p>
                 {% endfor %}
                 <hr />
-                <a class="btn btn-info btn-block" href="#media/all/articles/media/{{ art.id }}"><i class="glyphicon glyphicon-new-window"></i></a>
+                <a class="btn btn-info btn-block" href="#media/all/articles/media/{{ art.id }}"><i class="icon ion-share"></i> {{ tr.get('open') }}</a>
               {% endif %}
             </div>
 
@@ -235,14 +235,15 @@
     
     
     <hr />
-				
+    
     <div class="btn-group">
-      <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i> {{ tr.get('save') }}</button>
+      <button class="btn btn-success" type="submit"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
       {% if art.id %}
-      <a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview" ><i class="glyphicon glyphicon-eye-open"></i> {{ tr.get('preview_draft') }}</a>
+      <a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview" ><i class="icon ion-monitor"></i> {{ tr.get('preview_draft') }}</a>
       {% endif %}
-      <button class="btn btn-default" type="reset">{{ tr.get('reset') }}</button>
+      <button class="btn btn-default" type="reset"><i class="icon ion-close"></i> {{ tr.get('reset') }}</button>
     </div>
+    
     
   </form> {# end of article data form #}
 		

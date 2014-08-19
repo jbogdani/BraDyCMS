@@ -12,7 +12,7 @@
       <input type="text" name="tags" value="{{ active_tags|join(',') }}" class="tags" style="width:100%" />
     </div>
     <div class="col-sm-2 col-xs-12">
-      <button class="btn btn-success btn-block filter"><i class="ion-funnel"></i> {{ tr.get('apply_filter') }}</button>
+      <button class="btn btn-success btn-block btn-sm filter"><i class="icon ion-funnel"></i> {{ tr.get('apply_filter') }}</button>
     </div>
   </div>
   
@@ -75,12 +75,12 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
     {
       "mData":  function(row){
         return '<div class="btn-group">'
-          + '<a href="#article/edit/' + row.id +'" class="btn btn-default" title="{{ tr.get('edit') }}"><i class="icon ion-edit"></i></a>'
+          + '<a href="#article/edit/' + row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="icon ion-edit"></i></a>'
           
 						{% for lang in cfg_langs %}
-							+ ' <a href="#article/translate/{{ lang.id }}/{{ art.id }}" class="btn btn-default" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="ion-shuffle text-muted"></i> {{ lang.id|upper }}</a>'
+							+ ' <a href="#article/translate/{{ lang.id }}/{{ art.id }}" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="icon ion-shuffle"></i> {{ lang.id|upper }}</a>'
 						{% endfor %}
-          + '<a href="#" class="btn btn-default delete_article" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
+          + '<a href="#" class="btn btn-default btn-sm delete_article" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
           + '</div>'
       }
     }

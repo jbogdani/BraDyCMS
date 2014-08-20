@@ -3,12 +3,12 @@
 <div id="but_{{ uid }}">
 	{% for lang in langs %}
 	
-		<button type="button" data-lang="{{ lang|replace({'.php': ''})}}" class="lang btn btn-info"><i class="glyphicon glyphicon-globe"></i> {{ lang|replace({'.php': ''})|capitalize}}</button>
+		<button type="button" data-lang="{{ lang|replace({'.php': ''})}}" class="lang btn btn-info"><i class="icon ion-ios7-world"></i> {{ lang|replace({'.php': ''})|capitalize}}</button>
 		
 	{% endfor %}
 	
   {% if add_lang %}
-	<button type="button" class="add-locale btn btn-warning"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('add_locale') }}</button>
+	<button type="button" class="add-locale btn btn-warning"><i class="icon ion-checkmark"></i> {{ tr.get('add_locale') }}</button>
   {% endif %}
 
 </div>

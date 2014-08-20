@@ -34,7 +34,7 @@ $('#userformID').on('submit', function(){
 		if (!stop){
 			$.post('controller.php?obj=userform_ctrl&method=process&param[]=userformID', $(this).serialize(), function(data){
 				if (data.status == 'success'){
-					messageContainer.removeClass('text-danger').addClass('text-success').html('<i class="glyphicon glyphicon-ok"></i>');
+					messageContainer.removeClass('text-danger').addClass('text-success').html('<i class="icon ion-checkmark"></i>');
 
 					$('#userformID :input:not(.btn)').val('');
 				} else{

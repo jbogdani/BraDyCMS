@@ -36,7 +36,7 @@ class menu_ctrl extends Controller
 		foreach($menu as $item)
 		{
 			$html .= '<li class="dd-item" data-id="' . $item['id'] . '">' .
-					  '<i class="glyphicon glyphicon-move dd-handle"></i> ' .
+					  '<i class="icon ion-arrow-move dd-handle"></i> ' .
 						'<a href="#menu/edit/'. $item['id'] . '">' . $item['item'] . '</a>' .
 					  '';
 			if ($item['sub'])

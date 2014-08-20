@@ -3,11 +3,11 @@
 
   <div class="navbar">
     <button class="btn btn-info toggleVisible">
-      <i class="glyphicon glyphicon-eye-close"></i> 
+      <i class="icon ion-eye-disabled"></i> 
       {{ tr.get('show_incomplete_translations') }}
     </button>
     {% if can_add %}
-    <button class="btn btn-info addstring"><i class="glyphgicon glyphicon-plus"></i> {{ tr.get('add_new_tr_string') }}</button>
+    <button class="btn btn-info addstring"><i class="icon ion-plus"></i> {{ tr.get('add_new_tr_string') }}</button>
     {% endif %}
   </div>
 
@@ -38,7 +38,7 @@
         </td>
         <td>
           <button type="submit" class="btn btn-success">
-            <i class="glyphicon {% if edit_lang[k] == false %}glyphicon-hand-left{% else %}glyphicon-ok{% endif %}"></i>
+            <i class="icon {% if edit_lang[k] == false %}ion-arrow-left-b{% else %}ion-checkmark{% endif %}"></i>
           </button>
         </td>
       </tr>
@@ -69,10 +69,10 @@
 		if ($(this).hasClass('btn-danger')){
 			$('#tbl-{{ uid }} tbody tr.error').fadeIn();
 			$('#tbl-{{ uid }} tbody tr:not(.error)').fadeOut();
-			$(this).html("<i class='glyphicon glyphicon-eye-open'></i> {{ tr.get('show_all_translations') }}")
+			$(this).html("<i class='icon ion-eye'></i> {{ tr.get('show_all_translations') }}")
 		} else {
 			$('#tbl-{{ uid }} tbody tr').fadeIn();
-			$(this).html("<i class='glyphicon glyphicon-eye-close'></i> {{ tr.get('show_incomplete_translations') }}")
+			$(this).html("<i class='icon ion-eye-disabled'></i> {{ tr.get('show_incomplete_translations') }}")
 		}
 	});
   
@@ -113,6 +113,8 @@
                   .parents('div.transl-content')
                   .load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lng }}');
                 $('#modal').modal('hide');
+              } else {
+                admin.message(data.text, data.status);
               }
             }, 'json');
           }

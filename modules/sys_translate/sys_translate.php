@@ -175,6 +175,11 @@ class sys_translate_ctrl extends Controller
   
   private function array2file($array, $file)
   {
+    if (!is_dir(SITE_DIR . 'locale'))
+    {
+      @mkdir(SITE_DIR . 'locale');
+    }
+      
     foreach ($array as $k => $v)
 		{
 			$text[]='$_lang[\'' . $k . '\'] = "' . str_replace(array('"', "\r\n"), array('\'', '\\n'), $v) . '";'; 

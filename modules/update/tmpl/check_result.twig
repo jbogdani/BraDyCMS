@@ -10,28 +10,28 @@
       
   
     {% if status == 'updateable_warning' %}
-     <div class="alert alert-info"><i class="glyphicon glyphicon-info-sign"></i> {{ tr.get('updateable_warning') }}</div>
+     <div class="alert alert-info"><i class="icon ion-information-circled"></i> {{ tr.get('updateable_warning') }}</div>
     {% endif %}
     
   {% elseif status == 'already_updated' %}
     <div class="alert alert-success">
-      <i class="glyphicon glyphicon-ok"></i> {{ tr.get('already_updated') }}
+      <i class="icon ion-checkmark"></i> {{ tr.get('already_updated') }}
     </div>
     
   {% elseif status == 'not_updateable' %}
     <div class="alert alert-danger">
-      <i class="glyphicon glyphicon-warning-sign"></i> {{ tr.sget('not_updateable', [remote_vers, local_vers]) }}
+      <i class="icon ion-alert-circled"></i> {{ tr.sget('not_updateable', [remote_vers, local_vers]) }}
     </div>
     
   {% elseif status == 'local_dev' %}
     <div class="alert alert-danger">
-      <i class="glyphicon glyphicon-warning-sign"></i> {{ tr.sget('local_dev', [local_vers, remote_vers]) }}
-      <p><button class="btn btn-success install"><i class="glyphicon glyphicon-cloud-download"></i> {{ tr.get('download_install') }}</button></p>
+      <i class="icon ion-alert-circled"></i> {{ tr.sget('local_dev', [local_vers, remote_vers]) }}
+      <p><button class="btn btn-success install"><i class="icon ion-archive"></i> {{ tr.get('download_install') }}</button></p>
     </div>
   {% endif %}
   
   {% if status == 'updateable_warning' or status == 'updateable' or branch == 'BraDyCMS-dev' %}
-    <p><button class="btn btn-success install"><i class="glyphicon glyphicon-cloud-download"></i> {{ tr.get('download_install') }}</button></p>
+    <p><button class="btn btn-success install"><i class="icon ion-archive"></i> {{ tr.get('download_install') }}</button></p>
   {% endif %}
     
     <div class="update_result"></div>
@@ -68,7 +68,7 @@
         
       if (data.status === 'success'){
         $('#{{ uid }} .update_result').append('<p class="lead text-success">' +
-          '<i class="glyphicon glyphicon-ok"></i> ' + data.text +
+          '<i class="icon ion-checkmark"></i> ' + data.text +
           '</p>');
         if (data.step === 'finished'){
           $('#{{ uid }} .loading').remove();

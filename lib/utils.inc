@@ -395,9 +395,12 @@ class utils
 	{
 		if ( $type != 'gz' )
 		{
-			$f = @fopen($file, 'w');
+			$f = fopen($file, 'w');
 				
-			if (!$f) return false;
+      if (!$f)
+      {
+        return false;
+      }
 				
 			if ($text)
 			{

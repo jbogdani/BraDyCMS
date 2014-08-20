@@ -17,8 +17,8 @@ class error_log_ctrl
 		if (file_exists(self::$file) AND filesize(self::$file) > 0)
 		{
 			$html .= '<div class="btn-group">' .
-					  '<a class="btn btn-default log-reload"><i class="glyphicon glyphicon-refresh"></i> Reload</a>' .
-					  '<a class="btn btn-default log-delete"><i class="glyphicon glyphicon-trash"></i> Delete</a>' .
+					  '<a class="btn btn-default log-reload"><i class="icon ion-refresh"></i> Reload</a>' .
+					  '<a class="btn btn-default log-delete"><i class="icon ion-trash-a"></i> Delete</a>' .
 					  '</div>' .
 					  '<hr />';
 		
@@ -31,7 +31,7 @@ class error_log_ctrl
 		}
 		else
 		{
-			$html .= '<div class="text-success"><i class="glyphicon glyphicon-ok"></i> Error log is empty</div>';
+			$html .= '<div class="text-success"><i class="icon ion-checkmark"></i> Error log is empty</div>';
 			
 		}
 		
@@ -44,7 +44,7 @@ class error_log_ctrl
 				$('.log-delete').click(function(){
 					$.get('controller.php?obj=error_log_ctrl&method=delete', function(data){
 						admin.message(data.text, data.status);
-						if (data.status == 'success'){
+						if (data.status === 'success'){
 							admin.tabs.closeActive('error_log/show');
 						}
 					}, 'json');

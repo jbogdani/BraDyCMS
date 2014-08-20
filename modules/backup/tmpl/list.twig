@@ -27,8 +27,8 @@
       <td>{{ file.size}} MB</td>
       <td>
         {% if is_admin %}
-          <button class="btn btn-danger delete" data-id="{{ file.name }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}</button>
-          <button class="btn btn-danger restore" data-id="{{ file.name }}"><i class="glyphicon glyphicon-share-alt"></i> {{ tr.get('restore') }}</button>
+          <button class="btn btn-danger delete" data-id="{{ file.name }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
+          <button class="btn btn-danger restore" data-id="{{ file.name }}"><i class="icon ion-reply"></i> {{ tr.get('restore') }}</button>
         {% endif %}
       </td>
     </tr>
@@ -36,7 +36,7 @@
   {% else %}
 
     <div class="bg-warning" style="padding: 20px;">
-      <p class="lead"><i class="glyphicon glyphicon-warning-sign"></i> {{ tr.get('no_available_backup') }}</p>
+      <p class="lead"><i class="icon ion-alert-circled"></i> {{ tr.get('no_available_backup') }}</p>
     </div>
   {% endfor %}
   </table>
@@ -47,7 +47,7 @@
       <button class="btn btn-success create_backup"
               data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading...."
               onclick="$(this).button('loading');"
-              ><i class="glyphicon glyphicon-floppy-save"></i> {{ tr.get('create_backup') }}</button>
+              ><i class="icon ion-hammer"></i> {{ tr.get('create_backup') }}</button>
     </p>
   </div>
 </div>

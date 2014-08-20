@@ -2,11 +2,11 @@
 	<h2>{{ tr.get('user_maps') }}</h2>
 
 	<div class="btn-group" style="padding:20px 0;">
-			<a class="btn btn-info add_new" title="{{ tr.get('add_new_map') }}"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('add_new_map') }}</a>
-			<a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
+			<a class="btn btn-info add_new" title="{{ tr.get('add_new_map') }}"><i class="icon ion-plus"></i> {{ tr.get('add_new_map') }}</a>
+			<a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
 		</div>
 	{% if (maps == false) %}
-		<div class="alert alert-warning"><i class="glyphicon glyphicon-warning-sign"></i> {{ tr.get('no_user_map_available') }}</div>
+		<div class="alert alert-warning"><i class="icon ion-alert-circled"></i> {{ tr.get('no_user_map_available') }}</div>
 	{% else %}
 
 		<div class="row">
@@ -19,7 +19,7 @@
 				{% endfor %}
 				
 				<div>
-					<a href="#docs/read/usermap" class="btn btn-info btn-block"><i class="glyphicon glyphicon-info-sign"></i> More about maps</a>
+					<a href="#docs/read/usermap" class="btn btn-info btn-block"><i class="icon ion-information-circled"></i> More about maps</a>
 				</div>
 			</div>
 

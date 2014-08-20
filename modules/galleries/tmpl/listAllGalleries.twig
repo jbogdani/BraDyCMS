@@ -4,8 +4,8 @@
 	
 	<div class="well well-sm clearfix">
 		<div class="btn-group">
-			<a class="btn btn-info add_new" href="#" title="{{ tr.get('new_gallery') }}"><i class="glyphicon glyphicon-plus"></i> {{ tr.get('new_gallery') }}</a>
-			<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
+			<a class="btn btn-info add_new" href="#" title="{{ tr.get('new_gallery') }}"><i class="icon ion-plus"></i> {{ tr.get('new_gallery') }}</a>
+			<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
 		</div>
 			<div class="pull-right col-sm-2">
 				<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
@@ -20,7 +20,7 @@
 	{% for gal in galleries %}
 		<li class="img">
 			<a class="" href="#galleries/edit/{{ gal }}">
-				<i class="glyphicon glyphicon-expand"></i><br />
+				<i class="icon ion-images"></i><br />
 				<div style="text-align:center;" class="searcheable caption">{{ gal }}</div>
 			</a>
 		</li>

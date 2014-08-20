@@ -5,10 +5,10 @@
 	<div class="well well-sm clearfix">
 		<div class="btn-group">
 			<a class="btn btn-info add_new" href="#" title="{{ tr.get('new_download_node') }}">
-        <i class="glyphicon glyphicon-plus"></i> {{ tr.get('new_download_node') }}
+        <i class="icon ion-plus"></i> {{ tr.get('new_download_node') }}
       </a>
 			<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}">
-        <i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}
+        <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
       </a>
 		</div>
 			<div class="pull-right col-sm-2">
@@ -24,7 +24,7 @@
 	{% for node in nodes %}
 		<li class="img">
 			<a class="" href="#downloads/edit/{{ node }}">
-				<i class="glyphicon glyphicon-hdd"></i><br />
+				<i class="icon ion-archive"></i><br />
 				<div class="searcheable caption text-center">{{ node }}</div>
 			</a>
 		</li>

@@ -66,11 +66,11 @@
 				</div>
 				
 				<div class="btn-group">
-					<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i> {{ tr.get('save') }}</button>
+					<button class="btn btn-success" type="submit"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
 
-					<button class="btn btn-default" type="button" onclick="admin.tabs.reloadActive()"><i class="glyphicon glyphicon-repeat"></i> Reload</button>
+					<button class="btn btn-default" type="button" onclick="admin.tabs.reloadActive()"><i class="icon ion-refresh"></i> Reload</button>
 					{% if menu.id %}
-					<button class="btn btn-danger delete" type="button" data-id="{{ menu.id }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}</button>
+					<button class="btn btn-danger delete" type="button" data-id="{{ menu.id }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
 					{% endif %}
 
 				</div>
@@ -90,7 +90,7 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse1{{ uid }}">
-								<i class="glyphicon glyphicon-align-left"></i> {{ tr.get('articles') }}
+								<i class="icon ion-document-text"></i> {{ tr.get('articles') }}
 							</a>
 						</h4>
 					</div>
@@ -102,7 +102,7 @@
 							</div>
 							<div class="tagscontainer">
 								{% for art in articles %}
-									<button type="button" class="btn btn-default art search-text"><i class="glyphicon glyphicon-align-left text-muted"></i> {{ art }}</button>
+									<button type="button" class="btn btn-default art search-text"><i class="icon ion-document-text text-muted"></i> {{ art }}</button>
 								{% endfor %}
 							</div>
 						</div>
@@ -115,7 +115,7 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse2{{ uid }}">
-							<i class="glyphicon glyphicon-tags"></i> {{ tr.get('tags') }}
+							<i class="icon ion-pricetag"></i> {{ tr.get('tags') }}
 							</a>
 						</h4>
 					</div>
@@ -128,7 +128,7 @@
 							</div>
 							<div class="tagscontainer">
 								{% for tag in tags %}
-									<button type="button" class="btn btn-default tags search-text"><i class="glyphicon glyphicon-tag text-muted"></i> {{ tag }}</button>
+									<button type="button" class="btn btn-default tags search-text"><i class="icon ion-pricetag text-muted"></i> {{ tag }}</button>
 								{% endfor %}
 							</div>
 						</div>
@@ -143,15 +143,15 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse3{{ uid }}">
-								<i class="glyphicon glyphicon-plus"></i> {{ tr.get('other') }}
+								<i class="icon ion-more"></i> {{ tr.get('other') }}
 							</a>
 						</h4>
 					</div>
 
 					<div id="collapse3{{ uid }}" class="panel-collapse collapse">
 						<div class="panel-body">
-							<button class="btn btn-default home"><i class="glyphicon glyphicon-home text-muted"></i> {{ tr.get('link2home') }}</button>
-							<button class="btn btn-default none"><i class="glyphicon glyphicon-remove text-muted"></i> {{ tr.get('link2none') }}</button>
+							<button class="btn btn-default home"><i class="icon ion-home text-muted"></i> {{ tr.get('link2home') }}</button>
+							<button class="btn btn-default none"><i class="icon ion-close text-muted"></i> {{ tr.get('link2none') }}</button>
 						</div>
 					</div>
 				</div>
@@ -208,7 +208,7 @@
 								</div>
 								
 								<div class="btn-group">
-									<button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> {{ tr.get('save') }}</button>
+									<button type="submit" class="btn btn-success"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
 								</div>
 							</form>
 						</div>

@@ -5,10 +5,12 @@
 		{% if files|length == 0 %}
 			<button class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
 		{% endif %}
-		<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-repeat"></i> {{ tr.get('reload') }}</a>
-    <a class="btn btn-default rename" title="{{ tr.get('reload') }}"><i class="glyphicon glyphicon-pencil"></i> {{ tr.get('rename_gallery') }}</a>
+		<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
+    <a class="btn btn-default rename" title="{{ tr.get('reload') }}"><i class="icon ion-edit"></i> {{ tr.get('rename_gallery') }}</a>
 		{% for lng in langs %}
-		<a class="btn btn-default" href="#galleries/edit/{{ gallery }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}"><i class="glyphicon glyphicon-globe"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}</a>
+		<a class="btn btn-default" href="#galleries/edit/{{ gallery }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}">
+      <i class="icon ion-shuffle"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}
+    </a>
 		{% endfor %}
 	</div>
 
@@ -24,7 +26,7 @@
 					<div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
 						<div class="col-xs-2">
 							<h4>{{ file.name }}</h4>
-							<p><button class="btn btn-danger delete" data-file="{{ file.name }}"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}</button></p>
+							<p><button class="btn btn-danger delete" data-file="{{ file.name }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button></p>
 						</div>
 
 						<div class="col-xs-4">
@@ -37,7 +39,7 @@
 								<pre>{{ file.orig_descr }}</pre>
 							{% endif %}
 							<textarea data-file="{{ file.name }}" class="col-md-12" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
-							<p><button class="btn btn-success save" data-file="{{ file.name }}"><i class="glyphicon glyphicon-ok"></i> {{ tr.get('save') }}</button></p>
+							<p><button class="btn btn-success save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></p>
 						</div>
 
 						<div class="col-xs-3">
@@ -46,7 +48,7 @@
 								<img src="{{ file.thumb }}" class="img-responsive" />
 							{% endif %}
 							</div>
-							<button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="glyphicon glyphicon-th-large"></i> {{ tr.get('re_create_thumb') }}</button>
+							<button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="icon ion-qr-scanner"></i> {{ tr.get('re_create_thumb') }}</button>
 						</div>
 
 					</div>

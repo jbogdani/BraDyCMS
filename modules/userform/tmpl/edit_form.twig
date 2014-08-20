@@ -6,8 +6,8 @@
 		<div class="col-md-4 text-center">Syntax validation: <span class="validate"></span></div>
 		
 		<div class="col-md-4 text-right">
-			<button class="btn btn-success save-button"><i class="glyphicon glyphicon-save"></i> {{ tr.get('save') }}</button>
-			<button class="btn btn-danger delete-button"><i class="glyphicon glyphicon-trash"></i> {{ tr.get('delete') }}</button>
+			<button class="btn btn-success save-button"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
+			<button class="btn btn-danger delete-button"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
 		</div>
 	</div>
 	
@@ -25,12 +25,12 @@
 			var c = $.parseJSON($('#{{ uid }} .code').text());
 			
 			if (c){
-				$('#{{ uid }} .validate').html('<i class="text-success glyphicon glyphicon-ok" style="font-size: 3em;"></i>');
+				$('#{{ uid }} .validate').html('<i class="text-success icon ion-checkmark" style="font-size: 3em;"></i>');
 				$('#{{ uid }} .save-button').fadeIn();
 			}
 		}
 		catch (err) {
-			$('#{{ uid }} .validate').html('<i class="text-danger glyphicon glyphicon-fire" style="font-size: 3em;"></i>');
+			$('#{{ uid }} .validate').html('<i class="text-danger icon ion-fireball" style="font-size: 3em;"></i>');
 			$('#{{ uid }} .save-button').fadeOut();
 		}
 	}

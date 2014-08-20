@@ -79,7 +79,7 @@ A five-step guide to install and get running BraDyCMS
 #### Javascript/CSS
 
 * [jQuery v. 1.11.1 & v. 2.1.1](http://jquery.com/)
-* [Twitter Bootstrap v.3.1.1](http://getbootstrap.com/)
+* [Twitter Bootstrap v.3.2.0](http://getbootstrap.com/)
 * [Datepicker for Bootstrap](http://www.eyecon.ro/bootstrap-datepicker/)
 * [DataTables v. 1.9.4](https://datatables.net/)
 * [FineUploader 3.8.2](http://fineuploader.com/)
@@ -95,6 +95,6 @@ A five-step guide to install and get running BraDyCMS
 * [TWIG v. 1.15.1](http://twig.sensiolabs.org/)
 * [FeedWriter](https://github.com/mibe/FeedWriter)
 * [Mobile_Detect v. 2.8.0](https://github.com/serbanghita/Mobile-Detect)
-* [Lessphp v. 0.4.0](http://leafo.net/lessphp/)
+* [Lessphp v. 1.7.0.2](https://github.com/oyejorge/less.php)
 * [oaiprovider-php](https://github.com/jbogdani/oaiprovider-php)
 * [OOCurl v. 0.3.0](https://github.com/jbogdani/oocurl)

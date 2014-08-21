@@ -1,3 +1,4 @@
+3.7.0[] = "New function: Change the database structure (add new fields) from admin backend"
 3.7.0[] = "Bug fixed: lang2json echos correct application/javascript header"
 3.7.0[] = "Added link to article gallery in article edit form"
 3.7.0[] = "Lessphp updated to v. 1.7.0.2"

@@ -132,5 +132,7 @@ else if (cfg::get('db_connection'))
   R::setup(cfg::get('db_connection'), cfg::get('db_user'), cfg::get('db_pass'));
 }
 
-R::freeze( true );
-
+if(!cfg::get('debug'))
+{
+  R::freeze( true );
+}

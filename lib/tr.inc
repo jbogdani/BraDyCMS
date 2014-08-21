@@ -113,10 +113,11 @@ class tr
 	public static function lang2json($is_string = false)
 	{
 		$lang = $_SESSION['language_strings'];
-		
+    
 		if ($is_string)
 		{
-			echo 'var lang = ' . json_encode($lang) . ';';
+      header('Content-Type: application/javascript');
+      echo 'var lang = ' . json_encode($lang) . ';';
 		}
 		else
 		{

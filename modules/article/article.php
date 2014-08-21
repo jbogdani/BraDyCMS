@@ -253,7 +253,8 @@ class article_ctrl extends Controller
       'art_imgs' => $article_images,
       'tmp_path' => TMP_DIR,
       'cfg_langs' => cfg::get('languages'),
-      'art_media' => $art_media
+      'art_media' => $art_media,
+      'art_gallery' => ( $art['textid'] && file_exists(GALLERY_DIR . $art['textid']) && is_dir(GALLERY_DIR . $art['textid']))
 		));
 	}
 	

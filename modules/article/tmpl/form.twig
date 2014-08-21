@@ -47,8 +47,8 @@
     
     {#
     |----------10----------|--2--|
-    |-----6----|-----6-----|-----|
-    |----------------------|--2--|
+    |-----6----|-----6-----|     |
+    |----------------------|     |
     #}
     
     
@@ -228,8 +228,29 @@
             </div>
 
           </div>{# End of article media panel #}
+          
+          {# Article gallery panel #}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ tr.get('article_gallery') }}</h3>
+            </div>
+            <div class="panel-body media_content">
+              {% if art_gallery %}
+                <a href="#galleries/edit/{{ art.textid }}" class="btn btn-info btn-block">
+                  <i class="icon ion-forward"></i> {{ tr.get('open')}}
+                </a>
+              {% else %}
+                <p class="text-danger">{{ tr.get('no_article_gallery') }}</p>
+              </div>
+              <div class="panel-footer">
+                <a class="btn btn-success btn-block create_gallery" data-name="{{ art.textid }}">
+                  <i class="icon ion-wand"></i> {{ tr.get('create') }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
 
-        {% endif %}
+        {% endif %}{# check article.id #}
       </div><!--/ images container -->
     </div><!--/ main form container -->
     
@@ -368,6 +389,20 @@
 			admin.tabs.reloadActive();
 		}, 'json');
 	});
+  
+  $('#{{ uid }} .create_gallery').on('click', function(){
+    var name = $(this).data('name');
+    console.log(name);
+    
+    $.getJSON('controller.php?obj=galleries_ctrl&method=addGallery&param[]=' + name, function(data){
+      admin.message(data.text, data.status);
+      if (data.status === 'success'){
+        $('#edit_form{{ uid }}').submit();
+        admin.tabs.reloadActive();
+        window.location = '#galleries/edit/' + name;
+      }
+    });
+  });
 	{% endif %}
 
 	

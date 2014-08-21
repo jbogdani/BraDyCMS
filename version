@@ -1,3 +1,4 @@
+3.7.0[] = "Added link to article gallery in article edit form"
 3.7.0[] = "Lessphp updated to v. 1.7.0.2"
 3.7.0[] = "Added ionicons icons"
 3.7.0[] = "New layout, tablet friendly"
@@ -13,6 +14,7 @@
 3.7.0[] = "Documentation menu is now a sub-menu of Other item"
 3.7.0[] = "Welcome page can be written in markdown language"
 3.7.0[] = "Added Parsedown 1.0.1 library for Markdown parsing"
+
 3.6.2[] = "Bug fixed with articles's list filtering by more then two tags in admin interface"
 3.6.2[] = "Bug fixed with article's list in admin interface: when filtering is activated and no record is found tag deletion option was shown"
 3.6.1[] = "Bug fixed with login button, not being reseted on wrong username/password"
@@ -53,6 +55,7 @@
 3.6.0[] = "Less.php is included as single file library and is excluded from composer"
 3.6.0[] = "PHPMailer one file library replaces Swiftmailer managed from composer"
 3.6.0[] = "Redbean is included as single file library and is excluded from composer"
+
 3.5.12[] = "Auto-update will always install from remote source if development channel is selected"
 3.5.11[] = "Bug fixed with auto-update module"
 3.5.11[] = "Bug fixed with fancybox function in figure custom tag"
@@ -77,6 +80,7 @@
 3.5.0[] = "Added new functionality: automatic updates can point to master (default) or development version in Github repository"
 3.5.0[] = "Added new functionality: custom fields now can be configured to have rich text (TinyMCE editor)"
 3.5.0[] = "Added new functionality: Create and display download nodes."
+
 3.4.3[] = "Minor code cleaning"
 3.4.2[] = "Added publishing date in article list view in admin panel"
 3.4.2[] = "Bug fixed with article filtering by tags in article list view in admin panel"
@@ -124,6 +128,7 @@
 3.4.0[] = "getArticlesByTagArray is now a public method (used in api module) utils::getBaseUrl is now used for correctly formatting URLs"
 3.4.0[] = "New function in usable in templates out::getBaseUrl, for returning well formated base URLs"
 3.4.0[] = "Bug fixed with parseArt which was incorrectly returning beans instead of arrays"
+
 3.3.5[] = "Bug fixed with article edit form in admin interface"
 3.3.4[] = "Bug fixed with default list of custom fields not supporting escape character"
 3.3.3[] = "New function: robots meta tag can no be edited globally (new configuration option) or for each article (adding a custom field named robots)"
@@ -156,7 +161,7 @@
 3.3.0[] = "Inline documentation improvement in custom tags"
 3.3.0[] = "Main documentation improvement: custom tags is now separated from FAQ"
 3.3.0[] = "Bug fix: custom field textareas are now rendered with a height of 100px"
-3.3.0[] = "Added jquery-1.10.2.mon.map file"
+3.3.0[] = "Added jquery-1.10.2.min.map file"
 3.3.0[] = "Bug fix: delete unused tags feature now deletes also records from articles_tag table"
 3.3.0[] = "In debug mode jQuery and TBTS ja files will always be loaded from local repository and minor code layout fix."
 3.3.0[] = "New presentation layout & Gravatar image always visible in main admin page"
@@ -168,6 +173,7 @@
 3.3.0[] = "Additional personal locale files can now be stored in ./sites/default/locale"
 3.3.0[] = "New function out::tr() to be used in the public layout."
 3.3.0[] = "Article images are now limited to the following extensions: 'jpg', 'jpeg', 'png', 'gif'"
+
 3.2.6[] = "Added the possibility to edit sites/default/js/frontend.js in admin frontend"
 3.2.5[] = "Added temporary patch to lessc.in.php"
 3.2.5[] = "Added debug information logging in less compiling process"
@@ -206,6 +212,7 @@
 3.2.1[] = "Icon added in article delete confirm dialog"
 3.2.0[] = "Suppressed notice level errors in error log"
 3.2.0[] = "Image manipulation can be set to use also php's Imagick extension"
+
 3.1.6[] = "Bug fixed with file path in media list view"
 3.1.5[] = "English is now the main system language"
 3.1.4[] = "RewiteBase option added in main configuration form"
@@ -218,6 +225,7 @@
 3.1.2[] = "Bug fixed with utils::recursive_delete not deleting folders"
 3.1.1[] = "Pre-install uses version_compare to check the correct PHP version and also allow_url_fopen is checked"
 3.1.0[] = "New auto-update functionality added"
+
 3.0.5[] = "Users plugins (custom tags) are now loaded using main Autotoloader class"
 3.0.5[] = "Bug fixed with custom tags: replacement is now done only once per tag in entire document"
 3.0.5[] = "Google Analytics code is not printed in draft mode"
@@ -246,18 +254,17 @@
 3.0.1[] = "New module for new sites creation"
 3.0.1[] = "admin page is now a new core module"
 3.0[] = "New version, upgrade to Twitter Bootstrap v3 & adoption of RedBeanPHP"
-; DB CHANGES in v3:
-;		change articles.text_id to articles.textid
-;		change articles.publish_on to articles.publish
-;		delete articles.tags
-;		delete articles.section
-;		new tag table
-;		new articles_tag table
-;		new menutrans table
-;		new arttrans table
-
+3.0[] = "DB structure changes: articles.text_id renamed to articles.textid"
+3.0[] = "DB structure changes: articles.publish_on renamed  to articles.publish"
+3.0[] = "DB structure changes: deleted field articles.tags"
+3.0[] = "DB structure changes: deleted field articles.section"
+3.0[] = "DB structure changes: added new tag table"
+3.0[] = "DB structure changes: added new articles_tag table"
+3.0[] = "DB structure changes: added new menutrans table"
+3.0[] = "DB structure changes: added new arttrans table"
 
 2.0[] = "New GUI, based on Twitter Bootstrap"
+
 1.5[] = "Added user access registry log (I/O)"
 1.5[] = "Added language: Albanian (al)"
 1.5[] = "New method: frontend::printLangMenu() to print language selector as a menu"
@@ -277,17 +284,15 @@
 1.1[] = "Added fancybox support"
 1.0[] = "SQLite support"
 1.0[] = "Sub menu support"
-; DB CHANGES:
-;		article.order > article.sort
-;		menu.order	  >	menu.sort
-;		article_{lang}.to_update	> article_{lang}.translated 
-;		menu_{lang}.to_update	> menu_{lang}.translated
-;		add: menu.subof int(11) DEFAULT(null)
-; API changes
-;		class selected in menu items is applied to <li> not to <a> element
-;		publicHtml::printLangSelelect() changed in publicHtml::printLangSelect()
-
-0.7[] = "Cambiata struttura del changelog"
+1.0[] = "class selected in menu items is applied to <li> not to <a> element"
+1.0[] = "publicHtml::printLangSelelect() changed in publicHtml::printLangSelect()"
+1.0[] = "DB structure changes: article.order renamed to article.sort"
+1.0[] = "DB structure changes: menu.order renamed to menu.sort"
+1.0[] = "DB structure changes: article_{lang}.to_update	renamed to article_{lang}.translated"
+1.0[] = "DB structure changes: article_{lang}.to_update	renamed to article_{lang}.translated "
+1.0[] = "DB structure changes: menu_{lang}.to_update	renamed to menu_{lang}.translated"
+1.0[] = "DB structure changes: added field menu.subof int(11) DEFAULT(null)"
+0.7[] = "Chached changelog file structure"
 0.7[] = "Aggiunto indicatore di caricamento generale"
 0.7[] = "Aggiunta la possibilità di inserire javascript nel corpo dei articoli"
 0.7[] = "Aggiunto sistema di filtro nella lista degli articoli"

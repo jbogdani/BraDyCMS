@@ -150,7 +150,7 @@
                   <div class="form-group">
                     <label>{{ fld.label|upper }}</label>
                     {% if fld.type == 'longtext' %}
-                    <textarea name="{{ fld.name }}"  class="col-md-12" style="height:100px">{{ art[fld.name] }}</textarea>
+                    <textarea name="{{ fld.name }}"  class="col-md-12" style="height:100px">{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}</textarea>
                     {% elseif fld.type == 'select' and fld.values %}
                       <select class="col-md-12" name="{{ fld.name }}">
                         <option></option>
@@ -159,7 +159,7 @@
                         {% endfor %}
                       </select>
                     {% else %}
-                    <input name="{{ fld.name }}" type="text" value="{{ art[fld.name] }}" class="col-md-12" />
+                    <input name="{{ fld.name }}" type="text" value="{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}" class="col-md-12" />
                     {% endif %}
                   </div>
                 </div>

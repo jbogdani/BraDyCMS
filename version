@@ -1,3 +1,4 @@
+3.7.0[] = "Bug fixed with untranslated Is published drop-down menu string"
 3.7.0[] = "Bug fixed with default values of custom fields"
 3.7.0[] = "New function: Change the database structure (add new fields) from admin backend"
 3.7.0[] = "Bug fixed: lang2json echos correct application/javascript header"

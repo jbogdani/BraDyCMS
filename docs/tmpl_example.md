@@ -39,16 +39,16 @@ File: `./sites/default/index.twig`
       <!-- MAIN BODY -->
       <div class="body container">
     
-        <!-- Start ofonditional displaying of content, depending on context (out.getContext) -->
+        <!-- Start ofonditional displaying of content, depending on context (html.getContext) -->
         <!-- 1. Context is HOME -->
-        {% if out.getContext == 'home' %}
+        {% if html.getContext == 'home' %}
           <div class="row">
             <!-- Show in a big column the body of the welcome article -->
             <div class="col-md-9">
-              <h1>{{ out.getArticle('welcome').title }}</h1>
+              <h1>{{ html.getArticle('welcome').title }}</h1>
 
               <div class="body">
-                {{ out.getArticle('welcome').text }}
+                {{ html.getArticle('welcome').text }}
               </div>
             </div><!-- /.end of left, big column -->
 
@@ -61,7 +61,7 @@ File: `./sites/default/index.twig`
 
         
         <!-- 2. Context is ARTICLE -->
-        {% elseif out.getContext == 'article' %}
+        {% elseif html.getContext == 'article' %}
           <div class="row">
             <div class="col-md-9">
               <!-- Show formatted article in main column -->
@@ -76,11 +76,11 @@ File: `./sites/default/index.twig`
           </div><!--/. end of article section -->
         
         <!-- 3. Context is TAGS -->
-        {% elseif out.getContext == 'tags' %}
+        {% elseif html.getContext == 'tags' %}
           {{ html.tagBlog }}
       
         <!-- 4. Context is SEARCH -->
-        {% elseif out.getContext == 'search' %}
+        {% elseif html.getContext == 'search' %}
           {{ html.searchResults }}
 
         {% endif %} <!--/. end of conditional contents displaying -->

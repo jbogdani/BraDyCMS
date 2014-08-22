@@ -30,23 +30,27 @@ All content is organized in `articles`. Articles are organized using tags. No se
 
 It's up to you to design the structure of your data, and you can build liquid or static categories and sections just using tags. Which category belongs to which section? Nested categories? No need for this, tags can make a single article can belong to many categories and/or section.
 
-Article `apple` can be tagged with tags `fruit`, `food`, `edible`, `tasty`; it means it belongs to all this categories and you don't need subcategories. If you need to display all articles of subcategory `edible` of category `fruit` just search for all articles having both tags `fruit` and `edible`!
+Article `apple` can be tagged with tags `fruit`, `food`, `edible`, `tasty`; it means it belongs to all this categories and you don't need sub-categories. If you need to display all articles of sub-category `edible` of category `fruit` just search for all articles having both tags `fruit` and `edible`!
 
-Each article has the following fields:
+Each article has the following **default** fields:
 
-- Title: this will be used for page HTML title tag
-- Text ID: this is the UNIQUE name of your article. Keep this simple and meaningful: it will be also the URL of the article
-- Sorting: custom sorting for list views
-- Keywords: this will be used for page HTML keywords tag
-- Author: This can be useful in many cases
-- Is published: you can save drafts and publish in a second moment using this flag
-- Creation date: This also be useful in many cases
-- Publishing date: If you want to automatically schedule the publishing of the article
-- Expiration date: If you want to automatically schedule the expiration date of your content
-- Summary: This will be used for the page HTML description tag. Can be usefull also in list view
-- Text: Finally, the article main content
-- Article images
+- `Title`: this will also be used for page HTML title tag
+- `Text ID`: this is the UNIQUE name of your article. Keep this simple and meaningful: it will be also the URL of the article
+- `Sorting`: custom sorting for list views
+- `Keywords`: this is mainly used for page HTML keywords tag
+- `Author`: The author of the article
+- `Is published`: you can save drafts and publish in a second moment using this flag
+- `Creation date`: Article creation date stamp
+- `Publishing date`: You can use this field if you want to schedule the publishing of the article
+- `Expiration date`: You can use this field if you want to schedule the expiration date of your content
+- `Summary`: This will be used also for the page HTML description tag. Can be useful also in list view, as it can be used as a preview of article contents
+- `Text`: Finally, the article main content
 
+### Custom fields and custom database schema
+
+If you need more fields for your articles, you can add them by your own. There is a simple and safe procedure adapt the database schema to match your needs.
+
+For a detailed guide check the [How to customize database schema](#docs/read/customfields) guide.
 
 ---
 

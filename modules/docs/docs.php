@@ -776,14 +776,14 @@ class docs_ctrl extends Controller
 		$docs[] = array(
 			'method' => 'getContext',
 			'description' => 'Returns context of usage: article, tags, search or home',
-			'example_usage' => "{{ out.getContext }}",
+			'example_usage' => "{{ html.getContext }}",
 			'example_output' => 'home'
 			);
 		
 		$docs[] = array(
 			'method' => 'getDevice',
 			'description' => 'Returns device type: computer, tablet, phone',
-			'example_usage' => "{{ out.getDevice }}",
+			'example_usage' => "{{ html.getDevice }}",
 			'example_output' => 'computer'
 			);
 		
@@ -800,7 +800,7 @@ class docs_ctrl extends Controller
 		$docs[] = array(
 			'method' => 'getLanguages',
 			'description' => 'Returns array of available languages',
-			'example_usage' => "out.getLanguages",
+			'example_usage' => "html.getLanguages",
 			'example_output' => "array(
    array(
      'code'=>'it',
@@ -827,7 +827,7 @@ class docs_ctrl extends Controller
           . 'of the string will be escaped'
 			),
 			'description' => 'Returns document metadata array (all metadata). Available documenta metadata are: title (custom titles for single articles - different from article\'s <code>title</code> field can be set using a custom field named <code>customtitle</code>), description, keywords, robots (custom robots meta tag values for single articles - different from the configuration global setting can be set using a custom field named <code>robots</code>), lang, url, image (may be false. It\'s the src of the first image of article\'s content), author (may be false. It\'s article\'s author), date (may be false. It\'s article\'s publish date), publisher (may be false. It\'s OAI config publisher parameter)',	
-			'example_usage' => "{{ out.getPageData.title }}",
+			'example_usage' => "{{ html.getPageData.title }}",
 			'example_output' => 'Home Page'
 		);
 		

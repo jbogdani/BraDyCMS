@@ -1,0 +1,57 @@
+<div id="{{ uid }}">
+  <h2>{{ tr.get('delete_file') }}</h2>
+  
+  
+  <div class="form-inline">
+    
+    <div class="form-group">
+      <select class="form-control filename">
+        {% for lang in ['twig', 'css', 'less', 'js', 'md'] %}
+          <optgroup label="{{ lang|upper }}">
+            {% for f in files[lang] %}
+              {% if f in ['index.twig', 'styles.less', 'frontend.js', 'welcome.md'] == false %}
+              <option>{{ f }}</option>
+              {% endif %}
+            {% endfor %}
+          </optgroup>
+			{% endfor %}
+        
+      </select>
+    </div>
+      
+     <div class="form-group">
+      <input type="text" placeholder="{{ tr.get('type_dete_to_confirm') }}" class="form-control confirm" />
+    </div>
+
+    <button type="button" class="btn btn-danger delete"
+            style="display: none;"
+            data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading...."
+            >
+      <i class="icon ion-trash-a"></i>
+      {{ tr.get('delete_file') }}
+    </button>
+    
+  </div>
+</div>
+    
+<script>
+  $('#{{ uid }} .confirm').on('keyup', function(){
+    if ($(this).val() === 'DELETE'){
+      $('#{{ uid }} .delete').show();
+    } else {
+      $('#{{ uid }} .delete').hide();
+    }
+  });
+  
+  $('#{{ uid }} .delete').on('click', function(){
+    var file = $('#{{ uid }} .filename').val();
+    
+    $.get('controller.php?obj=template_ctrl&method=confirm_delete_file&param[]=' + file, function(data){
+			admin.message(data.text, data.status);
+      
+      if (data.status === 'success'){
+        admin.tabs.reloadActive();
+      }
+		}, 'json');
+  });
+</script>

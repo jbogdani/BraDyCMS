@@ -3,6 +3,11 @@
 	<div class="row">
 	
 		<div class="col-md-2">
+      
+      <p>
+				<button class="btn btn-warning btn-block create"><i class="icon ion-wand"></i> {{ tr.get('create_file')}}</button>
+			</p>
+      
 			{% for lang in ['twig', 'css', 'less', 'js', 'md'] %}
 				
 				{% for f in files[lang] %}
@@ -22,11 +27,18 @@
           <i class="icon ion-trash-a"></i> {{ tr.get('empty_cache') }}
         </button>
 			</p>
+      
 			
 			<p>
-				<button class="btn btn-default btn-block refresh"><i class="ion-refresh"></i> {{ tr.get('reload')}}</button>
+				<button class="btn btn-default btn-block refresh"><i class="icon ion-refresh"></i> {{ tr.get('reload')}}</button>
 			</p>
 			
+      <hr />
+
+      <p>
+				<button class="btn btn-danger btn-block delete"><i class="icon ion-trash-a"></i> {{ tr.get('delete_file')}}</button>
+			</p>
+
 		</div>
 		
 		<div class="col-md-10">
@@ -53,9 +65,20 @@
 </div>
 
 <script>
+
+  $('#{{ uid }} .create').on('click', function(){
+    $('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
+      .load('controller.php?obj=template_ctrl&method=new_file');
+  });
+
+  $('#{{ uid }} .delete').on('click', function(){
+    $('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
+      .load('controller.php?obj=template_ctrl&method=delete_file');
+  });
 	
 	$('#{{ uid }} .file').on('click', function(){
-		$('#{{ uid }} .editor').html('<img src="img/spinner.gif" alt="loading" /> Loading...').load('controller.php?obj=template_ctrl&method=edit&param[]=' + $(this).data('file') + '&param[]=' + $(this).data('type'));
+		$('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
+      .load('controller.php?obj=template_ctrl&method=edit&param[]=' + $(this).data('file') + '&param[]=' + $(this).data('type'));
 	});
 	
 	$('#{{ uid }} .compile').on('click', function(){
@@ -75,7 +98,7 @@
       self.button('reset');
 		}, 'json');
 	});
-	
+  
 	$('#{{ uid }} .refresh').on('click', function(){
 		admin.tabs.reloadActive();
 	});

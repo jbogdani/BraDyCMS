@@ -8,6 +8,104 @@
  
 class template_ctrl extends Controller
 {
+  
+  
+  public function confirm_delete_file()
+  {
+    $file = $this->get['param'][0];
+    $ext = $ext = pathinfo($file, PATHINFO_EXTENSION);
+    
+    $path = 'sites/default/';
+    try
+    {
+      switch($ext)
+      {
+        case 'twig':
+          continue;
+        case 'css':
+        case 'less':
+          $path .= 'css/';
+          break;
+        case 'js':
+          $path .= 'js/';
+          break;
+        default:
+          throw new Exception(tr::get('error_unknown_extension'));
+          break;
+      }
+      
+      $path .= $file;
+      
+       if (!file_exists($path))
+      {
+        throw new Exception(tr::get('error_file_doesnt_exists'));
+      }
+      
+      @unlink($path);
+      
+      if (file_exists($path))
+      {
+        throw new Exception(tr::get('error_file_not_deleted'));
+      }
+
+      $resp['status'] = 'success';
+      $resp['text'] = tr::get('ok_file_deleted');
+    }
+    catch (Exception $e)
+    {
+      $resp['status'] = 'error';
+      $resp['text'] = $e->getMessage();
+    }
+    
+    echo json_encode($resp);
+  }
+  
+  
+  public function create_file()
+  {
+    $file = $this->get['param'][0];
+    
+    try
+    {
+      if (file_exists($file))
+      {
+        throw new Exception(tr::get('error_file_exists'));
+      }
+      
+      @touch($file);
+      
+      if (!file_exists($file))
+      {
+        throw new Exception(tr::get('error_file_not_created'));
+      }
+      
+      $resp['status'] = 'success';
+      $resp['text'] = tr::get('ok_file_created');
+      
+    }
+    catch (Exception $e)
+    {
+      $resp['status'] = 'error';
+      $resp['text'] = $e->getMessage();
+    }
+    
+    echo json_encode($resp);
+  }
+  
+  
+  public function new_file()
+  {
+    $this->render('template','new_file_type');
+  }
+  
+  public function delete_file()
+  {
+    $this->render('template', 'delete_file', array(
+      files => $this->getList()
+		));
+  }
+  
+  
 	
 	public function compile()
 	{
@@ -74,7 +172,15 @@ class template_ctrl extends Controller
 	
 	public function dashboard()
 	{
-		foreach (utils::dirContent(SITE_DIR) as $f)
+		$this->render('template', 'list', array(
+      files => $this->getList()
+		));
+	}
+  
+  
+  private function getList()
+  {
+    foreach (utils::dirContent(SITE_DIR) as $f)
 		{
 			if (preg_match('/\.twig/', $f))
 			{
@@ -100,16 +206,15 @@ class template_ctrl extends Controller
     
     $js = array('frontend.js');
     
-		$this->render('template', 'list', array(
-      files => array(
-        'twig'=> $twig,
-        'css' => $css,
-        'less' => $less,
-        'js' => $js,
-        'md' => $md
-				)
-		));
-	}
+    
+    return array(
+      'twig'=> $twig,
+      'css' => $css,
+      'less' => $less,
+      'js' => $js,
+      'md' => $md
+    );
+  }
 	
 	public function save()
 	{

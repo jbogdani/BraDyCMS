@@ -175,6 +175,24 @@ $_lang['ok_translation_saved'] = "Translation saved";
 $_lang['error_translation_not_saved'] = "Error. Can not save translation";
 $_lang['docs'] = "Docs";
 $_lang['template_mng'] = "Template manager";
+
+$_lang['create_file'] = "Create new file";
+$_lang['filename'] = "File name";
+$_lang['template_file'] = "Template file";
+$_lang['stylesheet_less_file'] = "LESS stylesheet file";
+$_lang['stylesheet_css_file'] = "CSS stylesheet file";
+$_lang['js_file'] = "Javascript file";
+$_lang['filename_type_missing'] = "File name or file type are missing";
+$_lang['ok_file_created'] = "The new file was successfully created";
+$_lang['error_file_exists'] = "Error. Can not create new file with this name. File already exists";
+$_lang['error_file_not_created'] = "Error. Can not create new file. Maybe the directory is not writteable";
+$_lang['delete_file'] = "Delete file";
+$_lang['type_dete_to_confirm'] = "Type DELETE (uppercase) to continue";
+$_lang['error_unknown_extension'] = "Error. The file could not be deleted. Unknown file extension";
+$_lang['ok_file_deleted'] = "The file was successfully deleted";
+$_lang['error_file_doesnt_exists'] = "Error. The file to be deleted was not found";
+$_lang['error_file_not_deleted'] = "Error. Can not delete file!";
+
 $_lang['edit_html'] = "Edit HTML/TWIG";
 $_lang['edit_css'] = "Edit CSS";
 $_lang['ok_compiling_less'] = "The file styles.less was successfully compiled in styles.css";

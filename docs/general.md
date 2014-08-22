@@ -2,7 +2,7 @@
 
 This document sums up some basic concept about how BraDyCMS works, about how you can organize articles, menus and how to format your URLs in order to get a beautiful and functional web site.
 
-More detailed documentation, on specific issues, howtos and other help can be found in the `Documentation` item of the main menu.
+More detailed documentation, on specific issues, tutorials and other help can be found in the `Documentation` item of the main menu.
 
 ---
 
@@ -20,7 +20,7 @@ The creation of a simple web site or of a big web portal passes through 3 steps:
 3. Design a template to present your content to other people
 
 
-<p class="lead">That's all BradyCMS does!</p>
+> That's all BradyCMS does!
 
 ---
 

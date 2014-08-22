@@ -1,3 +1,4 @@
+3.7.0[] = "New function: added the possibility to create new files and to delete existing ones in the template manager module"
 3.7.0[] = "New template docs"
 3.7.0[] = "Bug fixed with untranslated Is published drop-down menu string"
 3.7.0[] = "Bug fixed with default values of custom fields"

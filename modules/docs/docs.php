@@ -21,6 +21,7 @@ class docs_ctrl extends Controller
         . '<a href="https://github.com/jbogdani/BraDyCMS/edit/dev/docs/' . $file . '.md" target="_blank">edit this page on Github (you must sign in to make or propose changes)</a>'
         . ' or <a href="https://github.com/jbogdani/BraDyCMS/raw/dev/docs/' . $file . '.md" target="_blank">download the raw file</a>, edit it and send it by email to '
         . '<a href="mailto:developer@bradypus.net">developer@bradypus.net</a>'
+        . "<script>$('.active a').each(function(i, el){ if ($(el).attr('href').indexOf('http:') > -1 ){ $(el).attr('target', '_blank'); } });</script>" 
       ;
     }
     else if (file_exists(MOD_DIR . 'docs/tmpl/' . $file . '.twig'))

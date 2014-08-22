@@ -16,6 +16,8 @@ Using this module you can:
 - Customize the Welcome page
 - Compile LESS files
 - Empty the application cache
+- Create new files
+- Delete existing files
 
 ## Common troubleshooting
 
@@ -119,4 +121,37 @@ In order to render all edits you have applied to the twig files available to all
 users you should empty the application cache. Use the `Empty cache` button on the 
 left to empty the cache.
 
+---
 
+### Create new files
+It is possible to create new template, stylesheets and javascript files using a very
+simple user interface directly in the Template manager module.
+
+Just click on `Create new file` button in the left side of the screen. Then you 
+will be prompted for a filename and a file type. You should choose a non existing filename
+in order to successfully create the file.
+
+Please do not use spaces, special characters or diacritics in the filename. Remember:
+keep it simple, stupid (KISS!).
+
+After the file is created you will find it listed in the left side of the page.
+
+> **Note**: you will not be prompted to enter the directory where the file will be located.
+This will be handled automatically by the system using the [file tree conventions](#docs/read/tmpl_files).
+
+---
+
+### Delete existing files
+It is possible to deleted template, stylesheets and javascript files using a very
+simple user interface directly in the Template manager module.
+
+Just click on `delete file` button in the left side of the screen. Then you 
+can select the file to delete from a drop-down menu.
+
+Select the file and type `DELETE` in the text input on the right to confirm your action.
+You should use uppercase letters. The delete button will appear and you will be 
+able to permanently delete the file.
+
+
+> **Note**: the delete action can not be undone! Once deleted a file CAN NOT be 
+restored back!

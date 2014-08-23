@@ -15,41 +15,55 @@ class userform_ctrl extends Controller
 	public function createNew()
 	{
 		$name = $this->get['param'][0] . '.json';
-		
-		$text = array(
-			'to'=>'',
-			'from_email'=>'',
-			'from_name'=>'',
-			'subject'=>'',
-			'success_text'=>'',
-			'error_text'=>'',
-			'elements'=>array(
-				array(
-					'name' => '',
-          'label' => '',
-          'placeholder' => '',
-					'type' => 'text|longtext|select',
-					'options' => 'if type is select options array is required',
-					'is_required' => 'true|false',
-					'email' => 'true|false',
-				)
-				)
-			);
-		
-		
-    if (!is_dir('./sites/default/modules/userforms'))
+    
+    try
     {
-      @mkdir('./sites/default/modules/userforms', 0777, true);
+      if (file_exists('./sites/default/modules/userforms/' . $name))
+      {
+        throw new Exception(tr::get('error_formid_exixts') );
+      }
+
+      $text = array(
+        'to'=>'',
+        'from_email'=>'',
+        'from_name'=>'',
+        'subject'=>'',
+        'success_text'=>'',
+        'error_text'=>'',
+        'elements'=>array(
+          array(
+            'name' => '',
+            'label' => '',
+            'placeholder' => '',
+            'type' => 'text|longtext|select',
+            'options' => 'if type is select options array is required',
+            'is_required' => 'true|false',
+            'email' => 'true|false',
+          )
+          )
+        );
+
+
+      if (!is_dir('./sites/default/modules/userforms'))
+      {
+        @mkdir('./sites/default/modules/userforms', 0777, true);
+      }
+
+      if (utils::write_in_file('./sites/default/modules/userforms/' . $name, $text, 'json'))
+      {
+        $resp = array('status' => 'success', 'text' => tr::get('ok_form_config_saved') );
+      }
+      else
+      {
+        throw new Exception(tr::get('error_form_config_not_saved') );
+      }
+    }
+    catch (Exception $e)
+    {
+      $resp = array('status' => 'error', 'text' => $e->getMessage() );
     }
     
-		if (utils::write_in_file('./sites/default/modules/userforms/' . $name, $text, 'json'))
-		{
-			echo json_encode(array('status' => 'success', 'text' => tr::get('ok_form_config_saved') ));
-		}
-		else
-		{
-			echo json_encode(array('status' => 'error', 'text' => tr::get('error_form_config_not_saved') ));
-		}
+    echo json_encode($resp);
 	}
 	
 	public function save()

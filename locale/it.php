@@ -291,6 +291,7 @@ $_lang['add_form_name'] = "Inserisci il nome del nuovo modulo";
 $_lang['no_special_chars'] = "Non sono permessi spazi, linee medie e basse o altri caratteri speciali!";
 $_lang['ok_form_config_saved'] = "La configurazione del modulo è stato salvata";
 $_lang['error_form_config_not_saved'] = "Errore. La configurazione del modulo non è stato salvata";
+$_lang['error_formid_exixts'] = "Errore. L'ID che si sta cercando di usare è già stato usato precedentemente";
 $_lang['confirm_delete_form'] = "Sei sicuro di voler cancellare questo modulo? Questa azione non può essere annullata";
 $_lang['ok_form_deleted'] = "Il modulo è stato cancellato";
 $_lang['error_form_not_deleted'] = "Errore. Il modulo non è stato cancellato";

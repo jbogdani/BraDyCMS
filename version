@@ -1,3 +1,4 @@
+3.7.0[] = "Feature enhancement: new userform having an already used form id will not be created and will throw an error"
 3.7.0[] = "New function: Update process automatically update .htaccess and empties cache and trash"
 3.7.0[] = "New function: added the possibility to create new files and to delete existing ones in the template manager module"
 3.7.0[] = "New template docs"

@@ -461,7 +461,7 @@ class utils
   {
     $rewriteBase = cfg::get('rewriteBase');
     
-    if (!$rewriteBase || $rewriteBase === '' ) || $rewriteBase === '/' )
+    if (!$rewriteBase || $rewriteBase === '' || $rewriteBase === '/' )
     {
       return true;
     }

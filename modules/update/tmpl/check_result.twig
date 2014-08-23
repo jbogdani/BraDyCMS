@@ -38,7 +38,7 @@
     <div class="loading"></div>
 </div>
 
-{% if status == 'updateable_warning' or status == 'updateable' or branch == 'BraDyCMS-dev' %}
+{% if status in ['updateable_warning', 'updateable', 'BraDyCMS-dev', 'local_dev'] %}
 <script>
   
   function stepByStepInstall(step, remoteVersion){
@@ -58,6 +58,16 @@
       case 'install':
         waitingMsg = 'Installing update...';
         break;
+      case 'update_htaccess':
+        waitingMsg = 'Updating .htaccess file...';
+        break;
+      case 'empty_cache':
+        waitingMsg = 'Emptying cache...';
+        break;
+      case 'emty_trash':
+        waitingMsg = 'Emptying trash...';
+        break;
+      
     }
     $('#{{ uid }} .loading').html('<i class="icon ion-load-c ion-loading-c"></i> ' + waitingMsg);
     
@@ -73,10 +83,9 @@
         if (data.step === 'finished'){
           $('#{{ uid }} .loading').remove();
           $('#{{ uid }} .update_result').append('<p class="lead">' +
-            'The update was successfully installed. You  should consider ' +
-            'emptying the cache, the trash and eventually updating  the ' +
-            '.htaccess file. Follow <a href="#cfg/edit">this link</a> to perform ' +
-            'all these post-installation actions.</p>');
+            'Congrats! Version ' + remoteVersion + ' was successfully updated. '
+            + 'You  should consider reloading the application to start working with '
+            + ' this release <a href="./admin">Reload now</a>.</p>');
           
         } else {
           stepByStepInstall(data.step, data.remoteVersion);

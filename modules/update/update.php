@@ -83,7 +83,7 @@ class update_ctrl extends Controller
           
           if (!file_exists($localZipPath) || $this->getPath('package') === 'BraDyCMS-dev')
           {
-            $update->downloadZip($this->getPath('zip'), $localZipPath);
+            //$update->downloadZip($this->getPath('zip'), $localZipPath);
           }
           $resp = array('status' => 'success', 'text' => tr::get('update_downloaded'), 'step' => 'unzip', 'remoteVersion' => $this->get['remoteVersion']);
           break;
@@ -91,16 +91,46 @@ class update_ctrl extends Controller
         case 'unzip':
           if (!is_dir($basePath . $this->getPath('package')))
           {
-            $update->unzip($localZipPath, $basePath, false, true);
+            //$update->unzip($localZipPath, $basePath, false, true);
           }
           $resp = array('status' => 'success', 'text' => tr::get('update_unpacked'), 'step' => 'install', 'remoteVersion' => $this->get['remoteVersion']);
         break;
       
         case 'install':
-          $update->install($basePath . $this->getPath('package'), '.');
+          //$update->install($basePath . $this->getPath('package'), '.');
           $resp = array('status' => 'success', 'text' => tr::get('update_installed'), 'step' => 'finished', 'remoteVersion' => $this->get['remoteVersion']);
           break;
         
+        case 'update_htaccess':
+          if(utils::update_htaccess())
+          {
+            $resp = array('status' => 'success', 'text' => tr::get('htaccess_updated'), 'step' => 'empty_cache', 'remoteVersion' => $this->get['remoteVersion']);
+          }
+          else
+          {
+            throw new Exception(tr::get('htaccess_not_updated'));
+          }
+          break;
+        case 'empty_cache':
+          if(utils::recursive_delete(CACHE_DIR, true))
+          {
+            $resp = array('status' => 'success', 'text' => tr::get('cache_emptied'), 'step' => 'empty_trash', 'remoteVersion' => $this->get['remoteVersion']);
+          }
+          else
+          {
+            throw new Exception(tr::get('cache_not_emptied'));
+          }
+          break;
+        case 'emty_trash':
+          if(utils::recursive_delete(TMP_DIR, true))
+          {
+            $resp = array('status' => 'success', 'text' => tr::get('trash_emptied'), 'step' => 'finished', 'remoteVersion' => $this->get['remoteVersion']);
+          }
+          else
+          {
+            throw new Exception(tr::get('trash_not_emptied'));
+          }
+          break;
         case false:
         default:
           return;

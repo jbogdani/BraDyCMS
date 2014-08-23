@@ -452,6 +452,33 @@ class utils
   {
     return ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ? $_SESSION['lang'] : '');
   }
+  
+  /**
+   * 
+   * @return type
+   */
+  public static function update_htaccess()
+  {
+    $rewriteBase = cfg::get('rewriteBase');
+    
+    if (!$rewriteBase || $rewriteBase === '')
+    {
+      return true;
+    }
+    
+    $htaccess_arr = file('.htaccess');
+    
+    foreach($htaccess_arr as &$row)
+    {
+      if (strpos($row, 'RewriteBase') === 0)
+      {
+       $row = 'RewriteBase ' . $rewriteBase . "\n";
+      }
+    }
+    
+    return self::write_in_file('.htaccess', implode("", $htaccess_arr));
+    
+  }
 	
 	
 }

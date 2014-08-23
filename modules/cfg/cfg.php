@@ -66,33 +66,13 @@ class cfg_ctrl extends Controller
   
   public function update_htaccess()
   {
-    $rewriteBase = cfg::get('rewriteBase');
-    
-    if (!$rewriteBase || $rewriteBase === '')
+    if(utils::update_htaccess())
     {
-      echo json_encode(array('status' => 'success', 'text' => tr::get('htaccess_updated')));
-      return;
-    }
-    
-    $htaccess_arr = file('.htaccess');
-    
-    foreach($htaccess_arr as &$row)
-    {
-      if (strpos($row, 'RewriteBase') === 0)
-      {
-       $row = 'RewriteBase ' . $rewriteBase . "\n";
-      }
-    }
-    
-    if(utils::write_in_file('.htaccess', implode("", $htaccess_arr)))
-		{
       $ret = array('status' => 'success', 'text' => tr::get('htaccess_updated'));
-		}
-		else
-		{
+    }
+    else
+    {
       $ret = array('status' => 'error', 'text' => tr::get('htaccess_not_updated'));
-		}
-    echo json_encode($ret);
-    
+    }
   }
 }

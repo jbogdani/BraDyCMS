@@ -26,11 +26,10 @@
   {% elseif status == 'local_dev' %}
     <div class="alert alert-danger">
       <i class="icon ion-alert-circled"></i> {{ tr.sget('local_dev', [local_vers, remote_vers]) }}
-      <p><button class="btn btn-success install"><i class="icon ion-archive"></i> {{ tr.get('download_install') }}</button></p>
     </div>
   {% endif %}
   
-  {% if status == 'updateable_warning' or status == 'updateable' or branch == 'BraDyCMS-dev' %}
+  {% if status in ['updateable_warning', 'updateable', 'local_dev'] or branch == 'BraDyCMS-dev' %}
     <p><button class="btn btn-success install"><i class="icon ion-archive"></i> {{ tr.get('download_install') }}</button></p>
   {% endif %}
     
@@ -38,7 +37,7 @@
     <div class="loading"></div>
 </div>
 
-{% if status in ['updateable_warning', 'updateable', 'BraDyCMS-dev', 'local_dev'] %}
+{% if status in ['updateable_warning', 'updateable', 'local_dev'] or branch == 'BraDyCMS-dev' %}
 <script>
   
   function stepByStepInstall(step, remoteVersion){
@@ -83,9 +82,9 @@
         if (data.step === 'finished'){
           $('#{{ uid }} .loading').remove();
           $('#{{ uid }} .update_result').append('<p class="lead">' +
-            'Congrats! Version ' + remoteVersion + ' was successfully updated. '
-            + 'You  should consider reloading the application to start working with '
-            + ' this release <a href="./admin">Reload now</a>.</p>');
+            'Congrats! Version ' + remoteVersion + ' was successfully installed. ' +
+              'You  should consider reloading the application to start working with ' +
+              ' this release <a href="./admin">Reload now</a>.</p>');
           
         } else {
           stepByStepInstall(data.step, data.remoteVersion);

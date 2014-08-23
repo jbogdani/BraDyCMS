@@ -122,7 +122,8 @@ class update_ctrl extends Controller
           {
             $resp = array('status' => 'success', 'text' => tr::get('cache_emptied'), 'step' => 'empty_trash', 'remoteVersion' => $this->get['remoteVersion']);
           }
-        case 'emty_trash':
+          break;
+        case 'empty_trash':
           $error = utils::recursive_delete(TMP_DIR, true);
 		
           if(count($error) > 0)

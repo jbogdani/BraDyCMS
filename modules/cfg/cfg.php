@@ -74,5 +74,7 @@ class cfg_ctrl extends Controller
     {
       $ret = array('status' => 'error', 'text' => tr::get('htaccess_not_updated'));
     }
+    
+    echo json_encode($ret);
   }
 }

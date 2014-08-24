@@ -1,10 +1,10 @@
 # BraDyCMS API documentantion
 
-<p class="bg-danger text-danger">This functionality is still under development and may change in the future. Please read carefully the following doc that will be carefully updated to reflect all changes.</p> 
+<p class="bg-danger text-danger">This functionality is still under development and may change in the future. Please read carefully the following doc, that will be carefully updated to reflect in real time all changes.</p> 
 
-BraDyCMS integrates, from v. 3.4 a [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) API which permits users to easily retrieve data from articles, menus, etc. in [JSON format](http://json.org) to be reused in many different ways (eg. to build an mobile app).
+BraDyCMS integrates, from v. 3.4, an [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) API which allows users to easily retrieve data from articles, menus, etc. in [JSON format](http://json.org), to be reused in many different ways (eg., to build an mobile app).
 
-Up to present (v. 3.6) the API can be used only for retrieving data (read-only), but soon it will be possible to use this interface for editing and erasing data.
+Up to present (v. 3.6) the API can be used only for retrieving data (read-only), but soon it will be possible to use this interface also for editing and erasing data.
 
 ## Base URL
 

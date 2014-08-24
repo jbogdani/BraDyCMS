@@ -25,8 +25,12 @@ Using this module you can:
 
 ### Edit template files
 Template files have `.twig` extension and are written in the [Twig language](#docs/read/tmpl_twig).
-You can have all the template files you need, but at least, the `index.twig` file
-should exist for the application to work correctly.
+You build have all the template files you need (it is common to separate the different templates or templates parts in separate files to enhance readability), but at least one  template file named **index.twig** should exist, to make the application work correctly.
+
+You need at least one 
+template file named **index.twig** to make the template system work normally, but
+it is common to separate the different templates or templates parts in separate files to
+enhance readability, using the Twig [`include` statement](http://twig.sensiolabs.org/doc/tags/include.html).
 
 All available template files will be listed in the left side of the page. To 
 edit them just click on the button and their content will be shown in the right

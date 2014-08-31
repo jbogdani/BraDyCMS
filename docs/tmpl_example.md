@@ -22,7 +22,7 @@ File: `./sites/default/index.twig`
       <div class="header">
         <div class="container">
           <h1>My new Web Site</h1>
-          <p class="lead">This is my new web site build with BraDyCMS!</p>
+          <p class="lead">This is my new web site built with BraDyCMS!</p>
         </div>
       </div> <!-- end of header-->
     

@@ -8,13 +8,13 @@ The BraDypUS implementation of this interface uses the `oaiprovider-php` freely 
 
 This interface can be reached postponing `/oai` to the main url of the website. If your website is available the the URL `http://my-host.ext` the URL of the OAI-PMH interface will be `http://my-host.ext/oai`.
 
-All the configuration can be handled using a single [JSON](http://www.json.org) file named `config.json` and located in the `sites/default/modules/metadata` folder of the web directory where BraDyCMS is installed.
+All the configuration can be handled using a single [JSON](http://www.json.org) file named `config.json`, placed in the `sites/default/modules/metadata` folder of the web directory where BraDyCMS is installed.
 
 ## Configuration
 
 - `repositoryName`: (string) The name of the repository you are setting up
-- `baseURL`: (string) The full URl where the interface is available
-- `protocolVersion`: (string) The OAI-PMH version. The BraDyCMS supports the version 2.0
+- `baseURL`: (string) The full URL where the interface is available
+- `protocolVersion`: (string) The OAI-PMH version. BraDyCMS supports the version 2.0
 - `adminEmail`: (string) System adiministrator email address
 - `sets`: (array) Array with information about available sets. A repository can contain one or more sets
  - `sets.spec`: (string) Set's ID

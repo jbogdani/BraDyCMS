@@ -2,7 +2,7 @@
 
 The `html` object is the core of the BraDyCMS template system. The `html` object
 is organized in methods that can return everything relative to the CMS content: 
-strings, html pieces of code,  php arrays to use in iterations and also comples php objects.
+strings, html pieces of code, php arrays to use in iterations and also complex php objects.
 This object is used following the [Twig syntax](#docs/read/tmpl_twig).
 
 Calling a method of the `html` object is as simple as writing the method name after 
@@ -18,10 +18,10 @@ Some arguments may be *required*, i.e. if not provided an error occurs, or *opti
 
 Arguments can be strings (also pieces of html), arrays or other objects.
 
-Generically speaking there are two types of methods/attributes of the `html` objects: 
-the ones that return  well formatted and rich HTML 
+In general, there are two types of methods/attributes of the `html` objects: 
+the ones that return well-formatted and rich HTML 
 and the ones that return strings, arrays or PHP objects. These methods can be 
-recognized by the prefix `get`, ex: `{{ html.getContext }}`.
+identified by the prefix `get`, ex: `{{ html.getContext }}`.
 
 ---
 
@@ -30,7 +30,7 @@ recognized by the prefix `get`, ex: `{{ html.getContext }}`.
 ---
 
 #### articleBody('article_text_id')
-Returns well-formatted html with article content. If article_text_id is present the matching article will be shown otherwise the current article will be shown
+Returns well-formatted html with article content. If article_text_id is present the matching article will be shown, otherwise the current article will appear
 - **article_text_id** string, optional, required: false. Article's textual id
 
 E.g.: `{{ html.articleBody('lorem_ipsum') }}`
@@ -57,7 +57,7 @@ E.g.: `{{ html.ct('addThis', '{"content": "share"}') }}`
 ---
 
 #### downloadNode('node', 'class')
-Returns well formatted html showing table element with data for available files in download node
+Returns well-formatted html showing table element with data for available files in download node
 - **node** string, required. Name of download node to display
 - **class** string, optional, css class or space separated css classes to attache to main table element
 
@@ -76,7 +76,7 @@ E.g.: `{{ html.downloadNode('curricula', 'table-stripped') }}`
 ---
 
 #### GA()
-Returns javascript code for Google Analytics Tracking. Google Analytics id must be provided in site configuration file. A domain is provided in configuration file, the code will be shown only if current domain matches the provided domain. This is very usefull in test installations.
+Returns javascript code for Google Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
 
 E.g.: `{{ html.GA }}`
     <script>
@@ -93,7 +93,7 @@ E.g.: `{{ html.GA }}`
 ---
 
 #### GUA()
-Returns javascript code for Google Universal Analytics Tracking. Google Analytics id must be provided in site configuration file. A domain is provided in configuration file, the code will be shown only if current domain matches the provided domain. This is very usefull in test installations.
+Returns javascript code for Google Universal Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
 
 E.g.: `{{ html.GUA }}`
     <script>
@@ -203,7 +203,7 @@ E.g.: `{{ html.metadata() }}`
 ---
 
 #### medatada_dc()
-Returns well-formatted html code with Dublin Core html metadata. Title, description, languale, identifier (url), subject (keywords) are the same as html & og metadata. Date is the publish date of the article publisher is the publsher name as defined in OAI module configuration
+Returns well-formatted html code with Dublin Core html metadata. Title, description, language, identifier (url), subject (keywords) are the same as html & og metadata. Date is the date of publication of the article publisher is the publsher name as defined in OAI module configuration
 
 E.g.: `{{ html.metadata_dc }}`
     <!-- Dublin Core metadata -->
@@ -256,7 +256,7 @@ E.g.: `{{ html.searchForm }}`
 ---
 
 #### searchResults()
-Returns well-formatted html with list of articles found by search. This function will return false if context is not search!
+Returns well-formatted html with list of articles found by search. This function will return false if context is not found!
 
 E.g.: `{{ html.searchResults }}`
     <h1>10 articles found searching <code>web</code></h1>
@@ -281,7 +281,7 @@ E.g.: `{{ html.searchResults }}`
 ---
 
 #### similarBlog()
-Returns well-formatted html with list of articles similar (having the same tags) as current article.
+Returns well-formatted html with list of similar articles (having the same tags) as current article.
 
 E.g.: `{{ html.similarBlog}}`
     <div class="section blog tags">
@@ -366,7 +366,7 @@ E.g.: `{{ html.getDownloadNode('curricula') }}`
 ---
 
 #### getArticle('article')
-Returns array with article data. If article is not provided current article's data will be returned.
+Returns array with article data. If article is not provided, current article's data will be returned.
 - **article** string, optional, default false. Article's textid
 
 E.g.: `{{ html.getArticle('contacts') }}`
@@ -394,7 +394,7 @@ E.g.: `{{ html.getArticle('contacts') }}`
 ---
 
 #### getArticleTags()
-Return array of tags for current article
+Returns array of tags for current article
 
 E.g.: `{{ html.getArticleTags }}`
     array(
@@ -406,7 +406,7 @@ E.g.: `{{ html.getArticleTags }}`
 ---
 
 #### getArticlesByTag('tag1', 'tag2', 'ecc')
-Return array of articles arrays matching all the provided tags. If no tag is provided as argument URL tags will be used
+Returns array of articles arrays matching all the provided tags. If no tag is provided as argument, URL tags will be used
 - **tag1** string, optional, default false. First filtering tag
 - **tag2** string, optional, default false. Second filtering tag
 - **ecc** ...
@@ -498,9 +498,9 @@ E.g.: ` {{ html.getMD }}`
 ---
 
 #### getPageData('el', 'escape')
-Returns document metadata array (all metadata). Available documenta metadata are: title (custom titles for single articles - different from article's title field can be set using a custom field named customtitle), description, keywords, robots (custom robots meta tag values for single articles - different from the configuration global setting can be set using a custom field named robots), lang, url, image (may be false. It's the src of the first image of article's content), author (may be false. It's article's author), date (may be false. It's article's publish date), publisher (may be false. It's OAI config publisher parameter)
-- **el** string, optional. If present only this element will be returned,otherwize the entire array will be returned
-- **escape** boolean, optional, default: false. If true the sigle quotesof the string will be escaped
+Returns document metadata array (all metadata). Available document metadata are: title (custom titles for single articles, different from article's title field, can be set using a custom field named customtitle), description, keywords, robots (custom robots meta tag values for single articles, different from the configuration global setting, can be set using a custom field named robots), lang, url, image (may be false. It's the src of the first image of the article's content), author (may be false. It's the article's author), date (may be false. It's the article's date of publication), publisher (may be false. It's the OAI config publisher parameter)
+- **el** string, optional. If present, only this element will be returned; otherwise, the entire array will be returned
+- **escape** boolean, optional, default: false. If true the sigle quotes of the string will be escaped
 
 E.g.: `{{ html.getPageData.title }}`
     Home Page
@@ -508,7 +508,7 @@ E.g.: `{{ html.getPageData.title }}`
 ---
 
 #### getSearchResults()
-Return array of article arrays matching searched string
+Returns array of article arrays matching the searched string
 
 E.g.: `{{ html.getSearchResults }}`
     array(
@@ -546,7 +546,7 @@ E.g.: `{{ html.getSearchResults }}`
 ---
 
 #### getSearchString()
-Rerurns string used as filter in URL. Available only if context si search
+Returns string used as filter in URL. Available only if the context is found
 
 E.g.: ` {{html.getSearchString }}`
     web
@@ -554,7 +554,7 @@ E.g.: ` {{html.getSearchString }}`
 ---
 
 #### getSimilar('textid')
-Return array of article arrays matching the most similar (having the same tags) to article with given textid or to the current article
+Returns array of article arrays matching the most similar (having the same tags) results compared to the article with given textid or to the current article
 - **textid** string, optional, default false. Text id to use for comparison
 
 E.g.: `{{ html.getSimilar }}`
@@ -602,8 +602,8 @@ E.g.: `{{ html.getTextId() }}`
 
 #### link2('resource', 'is_tag')
 Returns relative link string to resource or to site homepage (if resource is home), depending on current url
-- **resource** string|array, required. If is a string it's textid of an article. If it's home then link to homepage will be created. If it's an array and tags is true a link to a list of tags will be created
--- **is_tag**, boolean, default false. If true resources will be treated as tag or tag list
+- **resource** string|array, required. If string, it's textid of an article. If home, then a link to the homepage will be created. If an array and tags is true, a link to a list of tags will be created
+-- **is_tag**, boolean, default false. If true, resources will be treated as tag or tag list
 
 E.g.: `{{ html.link2('news', true) }}`
     ./news.all
@@ -613,7 +613,7 @@ E.g.: `{{ html.link2('news', true) }}`
 #### tr('string', 'args', 'escape')
 Returns the translated value for the given string in the current language
 - **string** string, required. String to translate (translation ID)
-- **args** string|array, optional, default false. String, or array of strings to use for replacment of placeholders (%s)
+- **args** string|array, optional, default false. String, or array of strings, to use for replacment of placeholders (%s)
 - **escape** boolean, optional, default false. If true the single quotes will be replaced in the resulting string
 
 E.g.: `tr('hello_world')`

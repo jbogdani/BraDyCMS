@@ -1,7 +1,7 @@
 # Styling the templates, CSS and LESS
 
-As stated [in the template file tree docs](#docs/read/tmpl_files) you can use plain 
-CSS to style your templates but mind that BraDyCMS has built-in support for the LESS
+As stated [in the template file tree docs](#docs/read/tmpl_files), you can use plain 
+CSS to style your templates, but mind that BraDyCMS has a built-in support for the LESS
 language, which is an extension of the CSS syntax, that compiles into CSS.
 
 All the [LESS official docs](http://lesscss.org/) state: 
@@ -32,10 +32,10 @@ panorama over the LESS features including:
 
 If you love [Twitter Bootstrap HTML, CSS, JS framework](http://getbootstrap.com/)
 you will be happy to learn that BraDyCMS integrates the whole framework in the core.
-You an pick and load all the components of the Twitter Bootstrap and just start and use
+You can pick and load all the components of the Twitter Bootstrap and just start and use
 them.
 
-If you have never heard about this framework, well it's time to, because,
+If you have never heard about this framework, well it's time to do it, because,
 quoting the [official web page](http://getbootstrap.com/):
 > Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.
 
@@ -92,8 +92,8 @@ by simply overwriting them:
 #### The bootstrap.less index file
 The file `bootstrap.less` is the same as the default `bootstrap.less` file included
 in the default distribution of the Bootstrap framework 
-([Github example](https://github.com/twbs/bootstrap/blob/master/less/bootstrap.less))
-except that you have to put the correct path before any component. A complete example
+([Github example](https://github.com/twbs/bootstrap/blob/master/less/bootstrap.less)),
+except for the fact that you have to put the correct path before any component. A complete example
 should look like this:
 
 file `styles.less`:

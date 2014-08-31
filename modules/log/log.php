@@ -73,17 +73,22 @@ class log_ctrl extends Controller
 		
 		foreach ($cfg_users as $user)
 		{
-			if($username == $user['name'] && $this->encodePwd($password) == $user['pwd'])
+			if($username === $user['name'] && $this->encodePwd($password) === $user['pwd'])
 			{
 				$_SESSION['user_confirmed'] = $username;
-				if ($user['admin'] == 'admin')
+				if ($user['admin'] === 'admin')
 				{
 					$_SESSION['user_admin'] = true;
 				}
 				
 				//$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
+        $log_str = 'user:' . $username 
+          . ' logged IN on ' . date('r') 
+          . ' using IP :'  . $_SERVER['REMOTE_ADDR'] 
+          . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') 
+          . "\n";
 					
-				error_log('user:' . $username . ' logged IN on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') . "\n", 3, $users_log);
+				error_log($log_str, 3, $users_log);
 				
 				echo json_encode(array('status' => 'success'));
 				return;

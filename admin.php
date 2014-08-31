@@ -10,8 +10,7 @@ try
   $root = './';
   require_once $root . 'lib/globals.inc';
   
-  $admin = new admin_ctrl;
- // var_dump($admin);
+  $admin = new admin_ctrl();
 }
 catch (Exception $e)
 {

@@ -55,6 +55,21 @@ class Controller
 		 
 		echo $twig->render($template . '.twig', $data );
 	}
+  
+  private function nonNeed2Auth($object, $method)
+  {
+    $permitted = [
+      'tr'=> '*',
+      'log_ctrl' => ['in'],
+      'addsite_ctrl' => '*',
+      'admin_ctrl' => '*'
+    ];
+    
+    return (
+      $permitted[$object] === '*' ||
+      in_array($method, $permitted[$object])
+      );
+  }
 
 	/**
 	 * Main routing method
@@ -66,6 +81,11 @@ class Controller
 		{
 			$obj = $this->request['obj'];
 			$method = $this->request['method'];
+      
+      if (!$_SESSION['user_confirmed'] && !$this->nonNeed2Auth($obj, $method))
+      {
+        throw new Exception('Permission denied');
+      }
 			
 			unset($this->request['obj']);
 			unset($this->request['method']);

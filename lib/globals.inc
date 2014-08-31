@@ -132,7 +132,7 @@ else if (cfg::get('db_connection'))
   R::setup(cfg::get('db_connection'), cfg::get('db_user'), cfg::get('db_pass'));
 }
 
-if(!cfg::get('debug'))
+if(defined('CREATE_SITE') || (!defined('CREATE_SITE') && !cfg::get('debug')))
 {
   R::freeze( true );
 }

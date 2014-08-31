@@ -1,14 +1,14 @@
 # BraDyCMS docs
 
-
-This is the documentation section of **BraDyCMS** that we are trying to improve ceaselessly.
-Some sections need to be updated, other need to be written, other need some heavy revision.
+Welcome to BraDyCMS.
+This is the documentary section of **BraDyCMS**, that we are ceaselessly improving.
+Some sections need to be updated, other need to be written, other need heavy revisions.
 
 For this reason any **help** in improving and maintaining this documentation will be **much appreciated**.
 The documentation is written in [Markdown](http://daringfireball.net/projects/markdown/) format, which is 
-an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).
-Check the basics of the Markdown syntax here: http://daringfireball.net/projects/markdown/basics and
-the full syntax documentation here: http://daringfireball.net/projects/markdown/syntax
+an easy-to-read, easy-to-write plain text format; then, it can be converted to structurally valid XHTML (or HTML).
+Check the basic tools of the Markdown syntax here: http://daringfireball.net/projects/markdown/basics and
+the full syntax documentation here: http://daringfireball.net/projects/markdown/syntax.
 
 Contributing is easy. If you are familiar with Github just follow these three easy steps:
 1. Fork BraDyCMS on Github: https://github.com/jbogdani/BraDyCMS

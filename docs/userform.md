@@ -1,103 +1,87 @@
 # Build and embed forms in articles
 
+BraDyCMS has a built-in (core) plugin to help you deal with web-form and collect 
+data from your users easily.
+You can create all the web forms you need and embed them in article bodies. 
+You can easily customize all fields and add file uploading buttons, just editing
+the main configuration file.
 
-### Intro
-BraDyCMS supports natively the creation of custom forms and their embedding in articles.
-
-There is a specific admin plugin to handle the creation and the management of custom forms. The plugin is located in: 
+The plugin is located in: 
 
     Main menu > Plugins > User forms
+Or use [direct link](#userform/view).
+
+---
 
 ### Create a new custom form
 
-To create a new custom form just click the `Add new user form` button and enter a form id.
-`Hold on`: form ids must be unique. If you enter an already used id the former form will be deleted permanentely!
+To create a new custom form click the `Add new user form` button and enter a form id.
+**Please remember**, form ids must be unique. No spaces, dashes, hyphens or 
+other special characters are allowed in the form id.
 
+---
 
 ### Embed a form in article's body
 
-Embedding a form in an article's body is very simple. Just use the custom tag `[[userform]]` with the name/id of your form.
+Embedding a form in an article's body is very simple. Just use the custom tag 
+`[[userform]]` with the name/id of your form.
 
-For example, to embed the form named `contactus` in an article's body just add this simple tag:
+For example, to embed the form named `contactus` in an article's body just 
+add this simple tag:
 
     [[userform]]contactus[[/userform]]
-You can aso provide a subject directly in the form definition, overwrting the custom one defined in the configuration file (see below):
+You can aso provide a subject directly in the form definition, overwriting 
+the custom one defined in the configuration file, e.g:
 
     [[userform subject="Contact us"]]contactus[[/userform]]
-BraDyCMS will do the rest: form formatting, validation and email & attach delivery.
 
+> BraDyCMS will do the rest for you: form **formatting**, **validation** and 
+text and attachments delivery.
 
+---
 
 ### Custom form syntax
 
 
-The configuration of a user form must follow a simple but rigid syntax. The configuration file must be a valid [json file](http://www.json.org/). BraDyCMS integrates a real-time validator to help finding any syntax error.
+The configuration of a user form must follow a simple but rigid syntax. 
+The configuration file must be a valid [json file](http://www.json.org/). 
+BraDyCMS integrates a real-time validator to help finding any syntax error.
 		
 
 
-### General data
+#### General data
 
-<table class="table table-bordered table-striped">
-	<tr>
-		<th>Parameter</th>
-		<th>Type</th>
-		<th>Required/optional</th>
-		<th>Description</th>
-	</tr>
+- `to`, string, required. A valid email address to use to send the form data to.
+- `from_email`, string, required. A valid email address. This address will be 
+shown in the email header as the sender of the automatic email
+- `from_name`, string, optional, default none. A person name or other. This name 
+will be  shown in the email header as the sender of the automatic email, together
+with the `from_email` address
+- `subject`, string, required. Email message subject. This setting can be 
+overwritten in the article content of template file where the form is rendered.
+- `success_text`, string, required. Message to display to users filling the 
+form when the email message is successfully sent
+- `error_text`, string, required. Message to display when email to users filling 
+the form when the email message is NOT successfully sent
+- `inline`, boolean, optional, default: false. If this value is present and is true input 
+labels will be displayed inline, on the right of the text inputs, otherwise 
+(default value) the label will be displayed above the field.
 
-	<tr>
-		<th>to</th>
-		<td>string</td>
-		<td>required</td>
-		<td>A valid email address</td>
-	</tr>
 
-	<tr>
-		<th>from_email</th>
-		<td>string</td>
-		<td>required</td>
-		<td>Valid email address</td>
-	</tr>
-
-	<tr>
-		<th>from_name</th>
-		<td>string</td>
-		<td>optional</td>
-		<td>Name for the from_email address</td>
-	</tr>
-
-	<tr>
-		<th>subject</th>
-		<td>string</td>
-		<td>required</td>
-		<td>Email message subject. This setting can be overwritten in the article content of template file where the form is rendered.</td>
-	</tr>
-
-	<tr>
-		<th>success_text</th>
-		<td>string</td>
-		<td>required</td>
-		<td>Message to display when email is successfully sent</td>
-	</tr>
-
-	<tr>
-		<th>error_text</th>
-		<td>string</td>
-		<td>required</td>
-		<td>Message to display when email is NOT successfully sent</td>
-	</tr>
-	
-	<tr>
-		<th>inline</th>
-		<td>boolean</td>
-		<td>optional</td>
-		<td>If this value is present and is true input lables will be displayed inline, right to the field, otherwise (default value) the label will be displayed above the field</td>
-	</tr>
-</table>
+Partial example
+    {
+      "to": "info@bradypus.com",
+      "from_email": "info@bradypus.com",
+      "from_name": "BraDypUS communicating cultural heritage",
+      "subject":"Contact form",
+      "success_text":"Your message was successfully sent",
+      "error_text": "Sorry, something went wrong and it was not possible to send your message"
+      "inline": true,
+      ...
 
 ---
 
-### Form element's data
+#### Form element's data
 
 Form elements should be defined as an array. There is not a limit to the number of form elements that can be added to a form.
 
@@ -185,7 +169,7 @@ Each element should have a unique name and one of the predefined types.
 
 ----
 
-#### Example of a simple contact form
+## Full example of a simple contact form
 
 
     {

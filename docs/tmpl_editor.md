@@ -26,7 +26,7 @@ Using this module you can:
 ### Edit template files
 Template files have `.twig` extension and are written in the [Twig language](#docs/read/tmpl_twig).
 You can built all the template files you need, but at least, the `index.twig` file
-should exist for the application to work correctly. (questa non l'ho capita granché: vuoi dire che puoi fare tanti template files ma almeno 1 index.twig è necessario?)
+should exist for the application to work correctly.
 
 All available template files will be listed in the left side of the screen. To 
 edit them just click on the button and their content will be shown in the right

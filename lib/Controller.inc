@@ -62,7 +62,9 @@ class Controller
       'tr'=> '*',
       'log_ctrl' => ['in'],
       'addsite_ctrl' => '*',
-      'admin_ctrl' => '*'
+      'admin_ctrl' => '*',
+      'api_ctrl' => ['run'],
+      'userform_ctrl' => ['process']
     ];
     
     return (

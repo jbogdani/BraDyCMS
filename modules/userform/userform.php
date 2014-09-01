@@ -155,19 +155,14 @@ class userform_ctrl extends Controller
 				{
 					$error .= '<p>' . tr::sget('missing_required', $el['name']) . '</p>';
 				}
-				
-				// Check for email pattern
-				// TODO!
-			}
-
-			if ($error)
-			{
-				throw new Exception($error);
-			}
-			
-			foreach ($this->data['elements'] as $el)
-			{
-				if ($el['type'] == 'upload')
+        
+        if ($el['email'] && $el['email'] !== 'false' && !filter_var($data[$el['name']], FILTER_VALIDATE_EMAIL))
+				{
+					$error .= '<p>' . tr::sget('invalid_email', $el['name']) . '</p>';
+          continue;
+				}
+        
+				if ($el['type'] === 'upload')
 				{
 					if (file_exists($data[$el['name']]))
 					{
@@ -178,8 +173,13 @@ class userform_ctrl extends Controller
 				{
 					$text .= "\n" 
             . ($el['label'] ? $el['label'] . ': ' : ($el['placeholder'] ? $el['placeholder'] . ': ' : '')) 
-            . $data[$el['name']];
+            . htmlentities($data[$el['name']]);
 				}
+			}
+
+			if ($error)
+			{
+				throw new Exception($error);
 			}
 			
 			try

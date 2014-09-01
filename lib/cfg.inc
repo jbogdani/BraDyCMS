@@ -8,7 +8,7 @@
  
 class cfg
 {
-	private static $data;
+	private static $data = array();
 	
 	public static function get($el = false)
 	{

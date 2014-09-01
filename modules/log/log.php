@@ -9,7 +9,7 @@
 class log_ctrl extends Controller
 {
   
-  private function updateUsersLog($user, $action = 'in')
+  private function updateUsersLog($user, $action = ' in')
   {
     $users_log = './sites/default/users.log';
 		
@@ -27,7 +27,7 @@ class log_ctrl extends Controller
     
     $log_str = $user
       . ' logged ' . $action
-      . ' on: ' . date('r') . '( unix microtime: ' . microtime(true) . ')'
+      . ' on: ' . date('r') . ' (unix microtime: ' . microtime(true) . ')'
       . ' from IP: ' . $_SERVER['REMOTE_ADDR']
       . "\n";
 					

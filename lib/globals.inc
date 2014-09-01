@@ -43,7 +43,9 @@ if (!file_exists(MAIN_DIR . 'logs/error.log'))
 }
 
 // SETS ERROR REPORTING
-( ini_get('error_reporting') <> 6135 )	?	ini_set('error_reporting', 6135) : '';
+$err_code = 6135; // E_ALL & ~E_NOTICE, i.e.: 6143 (E_ALL) - 8 (E_NOTICE)
+
+( ini_get('error_reporting') <> $err_code )	?	ini_set('error_reporting', $err_code) : '';
 
 ini_set('error_log', './logs/error.log');
 

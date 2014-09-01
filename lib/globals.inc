@@ -89,7 +89,6 @@ Twig_Autoloader::register();
 //set default date-zone
 if (defined('CREATE_SITE') || !cfg::get('timezone'))
 {
-  
   date_default_timezone_set('Europe/Rome');
 }
 else

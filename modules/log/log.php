@@ -108,11 +108,19 @@ class log_ctrl extends Controller
 		$username = $this->post['username'];
     
 		$password = $this->post['password'];
+    
+    $token = $this->post['token'];
+    
 		
-		if (!$username || !$password)
+		if (!$token || !$username || !$password)
 		{
 			return false;
 		}
+    
+    if ($token !== $_SESSION['token'])
+    {
+      return false;
+    }
     
     if (!$this->checkAttemptTime())
     {

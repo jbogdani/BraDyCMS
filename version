@@ -1,3 +1,4 @@
+3.7.0[] = "Security enhancement: Login form has now a security token to prevent authentication from unauthorized clients"
 3.7.0[] = "Security enhancement: Too much log attempts in limited time from the same IP address will be refused"
 3.7.0[] = "Security enhancement: only few objects and methods can be run without authentication"
 3.7.0[] = "Feature enhancement: new userform having an already used form id will not be created and will throw an error"

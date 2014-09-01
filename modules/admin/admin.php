@@ -10,7 +10,12 @@ class admin_ctrl extends Controller
 {
   public function showLoginForm()
   {
-    $this->render('admin', 'loginForm', array('version'=>  version::current()));
+    if (!$_SESSION['token'])
+    {
+      $_SESSION['token'] = md5(uniqid(rand(), true));
+    }
+    
+    $this->render('admin', 'loginForm', array('version'=>  version::current(), 'token' => $_SESSION['token']));
   }
   
   public function showCreateInstallForm()

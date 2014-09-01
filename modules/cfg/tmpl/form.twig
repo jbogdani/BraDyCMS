@@ -575,7 +575,7 @@ $('#form-{{ uid }}').on('submit', function(){
 		admin.message(data.text, data.status);
 		if(data.status === 'success'){
 			admin.tabs.reloadActive();
-      btn.button('reset');
+      $('#submit-{{ uid }}').button('reset');
 		}
 	}, 'json');
 });

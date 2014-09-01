@@ -8,18 +8,36 @@
  
 class log_ctrl extends Controller
 {
-	
-	public function out()
-	{
-		$users_log = './sites/default/users.log';
-    
-    if (!file_exists($users_log))
+  
+  private function updateUsersLog($user, $action = 'in')
+  {
+    $users_log = './sites/default/users.log';
+		
+		// Create users log if it does not exist
+		if (!file_exists($users_log))
 		{
 			$fh = @fopen($users_log, 'w');
 			@fclose($fh);
 		}
-		
-		error_log('user:' . $_SESSION['user_confirmed'] . ' logged OUT on ' . date('r') . ' using IP :' . $_SERVER['REMOTE_ADDR'] . "\n", 3, $users_log);
+    
+    if (!file_exists($users_log))
+    {
+      return false;
+    }
+    
+    $log_str = $user
+      . ' logged ' . $action
+      . ' on: ' . date('r') . '( unix microtime: ' . microtime(true) . ')'
+      . ' from IP: ' . $_SERVER['REMOTE_ADDR']
+      . "\n";
+					
+      error_log($log_str, 3, $users_log);
+      return true;
+  }
+	
+	public function out()
+	{
+    $this->updateUsersLog($_SESSION['user_confirmed'], 'out');
 		
 		$_SESSION['user_confirmed'] = false;
 		$_SESSION['user_admin'] = false;
@@ -48,26 +66,60 @@ class log_ctrl extends Controller
 			return $password;
 		}
 	}
+  
+  private function checkAttemptTime()
+  {
+    /**
+     * if file exists read lastAttempt file
+     *  checks if actual IP was the last IP to try to enter
+     *  if so, checks if now isat least 1 sec after last attempt
+     */
+    $logAttempt = './sites/default/logAttempts.log';
+    
+    $ip = $_SERVER['REMOTE_ADDR'];
+    
+    $now = microtime(true);
+    
+    if (file_exists($logAttempt))
+    {
+      $lastAttempt = file($logAttempt);
+      $lastIP = str_replace(array("\n", "\r\n"), null, $lastAttempt[0]);
+      $lastTime = floatval(str_replace(array("\n", "\r\n"), null, $lastAttempt[1]));
+      
+      if ($lastIP === $id)
+      {
+        if ($now < ($lastTime + 1000) )
+        {
+          return false;
+        }
+      }
+    }
+    
+    return utils::write_in_file($logAttempt, $ip . "\n" . $now);
+  }
 	
 	public function in()
 	{
+    if (!filter_var($this->post['username'], FILTER_VALIDATE_EMAIL))
+    {
+      return false;
+    }
+    
 		$username = $this->post['username'];
-		
+    
 		$password = $this->post['password'];
 		
-		if (!$username && !$password)
+		if (!$username || !$password)
 		{
 			return false;
 		}
+    
+    if (!$this->checkAttemptTime())
+    {
+      error_log('To much login attempts in limited time');
+      return false;
+    }
 		
-		$users_log = './sites/default/users.log';
-		
-		// Create users log if it does not exist
-		if (!file_exists($users_log))
-		{
-			$fh = @fopen($users_log, 'w');
-			@fclose($fh);
-		}
 		
 		$cfg_users = cfg::get('users');
 		
@@ -75,20 +127,14 @@ class log_ctrl extends Controller
 		{
 			if($username === $user['name'] && $this->encodePwd($password) === $user['pwd'])
 			{
+        session_regenerate_id(true);
 				$_SESSION['user_confirmed'] = $username;
 				if ($user['admin'] === 'admin')
 				{
 					$_SESSION['user_admin'] = true;
 				}
-				
-				//$json = json_decode(file_get_contents("http://api.easyjquery.com/ips/?ip=" . $_SERVER['REMOTE_ADDR'] . "&full=true"));
-        $log_str = 'user:' . $username 
-          . ' logged IN on ' . date('r') 
-          . ' using IP :'  . $_SERVER['REMOTE_ADDR'] 
-          . (is_object($json) ? ' from ' .$json->countryName . ', ' . $json->cityName : '') 
-          . "\n";
-					
-				error_log($log_str, 3, $users_log);
+        
+        $this->updateUsersLog($username);
 				
 				echo json_encode(array('status' => 'success'));
 				return;

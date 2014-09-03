@@ -515,5 +515,14 @@ class Out
       );
     
   }
+  
+  /**
+   * Returns installed and running version of BraDyCMS
+   * @return string
+   */
+  public function getVersion()
+  {
+    return version::current();
+  }
 	
 }

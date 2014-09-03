@@ -92,21 +92,6 @@ E.g.: `{{ html.GA }}`
 
 ---
 
-#### GUA()
-Returns javascript code for Google Universal Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
-
-E.g.: `{{ html.GUA }}`
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'GA-ID', 'auto');
-      ga('send', 'pageview');
-    </script>
-
----
-
 #### gallery('name', 'class')
 Returns HTML code with gallery data.
 - **name** string, required. Textual id of the gallery to show
@@ -127,241 +112,6 @@ E.g.: `{{ html.gallery('news', 'latest') }}`
         ...
       </ul>
     </div>
-
----
-
-#### jQuery('version')
-Returns string for jQuery library inclusion, trying first to load from Google CDN then from local host
-- **version** string, required. jQuery version (x.x.x)
-
-E.g.: `{{ html.jQuery('1.10.2') }}`
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write(\'<script src="./js/jquery-1.10.2.min.js"><\/script>\')</script>
-
----
-
-#### langMenu('flags', 'no_text')
-Returns well-formatted html of language menu. Current language's list item (li) has class current
-- **flags** boolean, optional, default false. If true image flags will be shown
-- **no_text** boolean, optional, default false. If true no language text will be shown
-
-E.g.: `{{ html.langMenu(true) }}`
-    <ul class="menu lang">
-      <li class="current">
-        <a href="/it" data-ajax="false">$360;img src="./img/flags/it.png"  alt="italiano" /> Italiano</a>
-      </li>
-      <li>
-        <a href="/en" data-ajax="false">$360;img src="./img/flags/en.png"  alt="english" /> English</a>
-      </li>
-      <li>
-        <a href="/fr" data-ajax="false">$360;img src="./img/flags/fr.png"  alt="français" /> Français</a>
-      </li>
-    </ul>
-
----
-
-#### menu('menu', 'class')
-Returns well-formatted html of menu items
-- **menu** string, required textual. Id of the menu to show
-- **class** string, optional, default false. Css class (or space separated classes) of the menu's unordered list (ul)
-
-E.g.: `{{ html.menu('main', 'nav') }}`
-    <ul class="menu nav">
-      <li class="menu-item"><a href="#">Home</a></li>
-      <li class="menu-item"><a href="#">Who we are</a></li>
-      <li class="menu-item dropdown">
-         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio</a> <b class="caret"></b>
-       <ul class="submenu dropdown-menu">
-        <li class="menu-item"><a href="#">Web</a></li>
-        <li class="menu-item"><a href="#">Print</a></li>
-      </ul>
-      </li>
-      <li class="menu-item"><a href="#" target="_blank">@Twitter</a></li>
-     </ul>
-
----
-
-#### metadata('no_og')
-Returns well-formatted html code of page html and open graph metadata and links to feeds
-- **no_og** boolean, optional, default: false. If true the open graph metadata will not be shown
-
-E.g.: `{{ html.metadata() }}`
-    <title>Home Page</title>
-    <meta name="description" content="Web sites main description" />
-    <meta name="keywords" content="home, page, keyword1, keyword2" />
-    <meta lang="en" />
-    <!-- Open Graph metadata -->
-    <meta property="og:title" content="Home Page" />
-    <meta property="og:description" content="Web sites main description" />
-    <meta property="og:url" content="http://thishost/thispage" />
-    <meta property="og:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
-
-    <!-- Feed links -->
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />
-    <link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />
-
----
-
-#### medatada_dc()
-Returns well-formatted html code with Dublin Core html metadata. Title, description, language, identifier (url), subject (keywords) are the same as html & og metadata. Date is the date of publication of the article publisher is the publsher name as defined in OAI module configuration
-
-E.g.: `{{ html.metadata_dc }}`
-    <!-- Dublin Core metadata -->
-    <meta name="DC.type" content="Text" />
-    <meta name="DC.format" content="text/html" />
-    <meta name="DC.identifier" scheme="URI" content="http://thishost/thispage_url" />
-    <meta name="DC.title" content="Home Page" />
-    <meta name="DC.description" content="Web sites main description" /<
-    <meta name="DC.language" scheme="RFC3066" content="en" />
-    <meta name="DC.creator" content="John Doe" />
-    <meta name="DC.publisher" content="John Doe publishing" />
-    <meta name="DC.subject" scheme="RFC3066" content="home, page, keyword1, keyword2" />
-    <meta name="DC.date" scheme="W3CDTF" content="2013-04-17" />
-
----
-
-#### metadata_hp()
-Returns html with Highwire Press metadata, for Google Scholar usage
-
-E.g.: `{{ html.metadata_hp }}`
-    <meta name="citation_journal_title" content=""/>
-    <meta name="citation_issn" content="Lorem ipsum"/>
-    <meta name="citation_author" content="Lorem ipsum" />
-    <meta name="citation_title" content="Lorem ipsum" />
-    <meta name="citation_date" content="0000-00-00" />
-    <meta name="citation_doi" content="10/123456.23456"/>
-    <meta name="citation_abstract_html_url" content="http://lorem.ipsum"/>
-    <meta name="citation_language" content="en" />
-    <meta name="citation_pdf_url" content="http://lorem.ipsum.pdf"/>
-
----
-
-#### TBSjs('version')
-Returns string for Twitter Bootstrap javascript library inclusion, trying first to load from CDN then from local host
-- **version** string, required. Twiter Bootstrap version (x.x.x)
-
-E.g.: `{{ html.TBSjs('3.0.1') }}`
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script><script>if(typeof($.fn.modal) === \'undefined\') { document.write('<script src="./js/bootstrap-3.0.1.min.js"><\/script>')}</script>';
-
----
-
-#### searchForm()
-Returns well-formatted html of search form input. Form submission should be done with javascript. The data attribute contains the path to the site root!
-
-E.g.: `{{ html.searchForm }}`
-    <form action="javascript:void(0);" id="searchForm" data-path="./">
-      <input class="search" type="search" placeholder="Search in web site" name="search" id="search" />
-    </form>
-
----
-
-#### searchResults()
-Returns well-formatted html with list of articles found by search. This function will return false if context is not found!
-
-E.g.: `{{ html.searchResults }}`
-    <h1>10 articles found searching <code>web</code></h1>
-    <div class="section blog search">
-      <div class="article">
-        <h3><a href="/en/web-design">Web design</a></h3>
-        <div class="content">
-          Some of our latest work on web design...
-        </div>
-        <div class="read_more">
-          <a href="/en/web-design">Read more</a>
-        </div>
-      </div>
-
-      <div class="article">
-        ...
-      </div>
-
-      ...
-    </div>
-
----
-
-#### similarBlog()
-Returns well-formatted html with list of similar articles (having the same tags) as current article.
-
-E.g.: `{{ html.similarBlog}}`
-    <div class="section blog tags">
-      <div class="article">
-        <h3><a href="/en/web-design">Web design</a></h3>
-        <div class="content">
-          Some of our latest work on web design...
-        </div>
-        <div class="read_more">
-          <a href="/en/web-design">Read more</a>
-        </div>
-      </div>
-
-      <div class="article">
-        ...
-      </div>
-
-      ...
-    </div>
-
----
-
-#### tagBlog('tag1', 'tag2', 'ecc')
-Returns well-formatted html with list of articles tagged with tags provided as arguments or present in URL
-- **tag1** string, optional, default false. First tag to use as filter
-- **tag2** string, optional, default false. Second tag to use as filter
-- **ecc** ...
-
-E.g.: `{{ html.tagBlog('news', 'web') }}`
-    <div class="section blog tags">
-      <div class="article">
-        <h3><a href="/en/web-design">Web design</a></h3>
-        <div class="content">
-          Some of our latest work on web design...
-        </div>
-        <div class="read_more">
-          <a href="/en/web-design">Read more</a>
-        </div>
-      </div>
-
-      <div class="article">
-        ...
-      </div>
-
-      ...
-    </div>
-
----
-
-#### getGallery('gallery')
-Returns array with data for gallery name
-- **gallery** string, required. Name of gallery to get data for
-
-E.g.: `{{ html.getGallery('our_works') }}`
-    array (
-      array (
-       img => sites/default/images/galleries/our_works/picture01.jpg,
-       thumb => sites/default/images/galleries/our_works/thumbs/picture01.jpg,
-       caption => Caption of picture01
-      ),
-     ...
-    );
-
----
-
-#### getDownloadNode('node')
-Returns array with data for available files in download node
-- **node** string, required. Name of download node to display
-
-E.g.: `{{ html.getDownloadNode('curricula') }}`
-    array (
-      array (
-       path => sites/default/images/downloads/curricola/jbogdani.pdf,
-       basename => jbogdani,
-       ext => pdf,
-       title => CV of Julian Bogdani,
-       description => Detailed CV of Julian Bogdani, PDF version. Last updated 2014,
-      ),
-     ...
-    );
 
 ---
 
@@ -389,19 +139,6 @@ E.g.: `{{ html.getArticle('contacts') }}`
       'url' => string,
       'full_url' => string
    )
-
-
----
-
-#### getArticleTags()
-Returns array of tags for current article
-
-E.g.: `{{ html.getArticleTags }}`
-    array(
-      'tag1',
-      'tag2',
-      'etc'
-    )
 
 ---
 
@@ -446,6 +183,18 @@ E.g.: `{{ html.getArticlesByTag('news', 'web') }}`
 
 ---
 
+#### getArticleTags()
+Returns array of tags for current article
+
+E.g.: `{{ html.getArticleTags }}`
+    array(
+      'tag1',
+      'tag2',
+      'etc'
+    )
+
+---
+
 #### getContext()
 Returns context of usage: article, tags, search or home
 
@@ -462,6 +211,24 @@ E.g.: `{{ html.getDevice }}`
 
 ---
 
+#### getDownloadNode('node')
+Returns array with data for available files in download node
+- **node** string, required. Name of download node to display
+
+E.g.: `{{ html.getDownloadNode('curricula') }}`
+    array (
+      array (
+       path => sites/default/images/downloads/curricola/jbogdani.pdf,
+       basename => jbogdani,
+       ext => pdf,
+       title => CV of Julian Bogdani,
+       description => Detailed CV of Julian Bogdani, PDF version. Last updated 2014,
+      ),
+     ...
+    );
+
+---
+
 #### getFilterTags()
 Returns array of URL tags used as filters
 
@@ -470,6 +237,22 @@ E.g.: `{{ html.getFilterTag }}`
       'news',
       'web'
     )
+
+---
+
+#### getGallery('gallery')
+Returns array with data for gallery name
+- **gallery** string, required. Name of gallery to get data for
+
+E.g.: `{{ html.getGallery('our_works') }}`
+    array (
+      array (
+       img => sites/default/images/galleries/our_works/picture01.jpg,
+       thumb => sites/default/images/galleries/our_works/thumbs/picture01.jpg,
+       caption => Caption of picture01
+      ),
+     ...
+    );
 
 ---
 
@@ -504,6 +287,14 @@ Returns document metadata array (all metadata). Available document metadata are:
 
 E.g.: `{{ html.getPageData.title }}`
     Home Page
+
+---
+
+#### getTextId()
+Returns article's text id required in URL
+
+E.g.: `{{ html.getTextId() }}`
+    contact_us
 
 ---
 
@@ -592,11 +383,56 @@ E.g.: `{{ html.getSimilar }}`
 
 ---
 
-#### getTextId()
-Returns article's text id required in URL
+#### getVersion
+Returns installed and running version of BraDyCMS according to [semver syntax](http://semver.org/)
 
-E.g.: `{{ html.getTextId() }}`
-    contact_us
+E.g.: `{{ html.getVersion }}`
+      3.7.0
+
+---
+
+#### GUA()
+Returns javascript code for Google Universal Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
+
+E.g.: `{{ html.GUA }}`
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'GA-ID', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+---
+
+#### jQuery('version')
+Returns string for jQuery library inclusion, trying first to load from Google CDN then from local host
+- **version** string, required. jQuery version (x.x.x)
+
+E.g.: `{{ html.jQuery('1.10.2') }}`
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write(\'<script src="./js/jquery-1.10.2.min.js"><\/script>\')</script>
+
+---
+
+#### langMenu('flags', 'no_text')
+Returns well-formatted html of language menu. Current language's list item (li) has class current
+- **flags** boolean, optional, default false. If true image flags will be shown
+- **no_text** boolean, optional, default false. If true no language text will be shown
+
+E.g.: `{{ html.langMenu(true) }}`
+    <ul class="menu lang">
+      <li class="current">
+        <a href="/it" data-ajax="false">$360;img src="./img/flags/it.png"  alt="italiano" /> Italiano</a>
+      </li>
+      <li>
+        <a href="/en" data-ajax="false">$360;img src="./img/flags/en.png"  alt="english" /> English</a>
+      </li>
+      <li>
+        <a href="/fr" data-ajax="false">$360;img src="./img/flags/fr.png"  alt="français" /> Français</a>
+      </li>
+    </ul>
 
 ---
 
@@ -610,6 +446,118 @@ E.g.: `{{ html.link2('news', true) }}`
 
 ---
 
+#### menu('menu', 'class')
+Returns well-formatted html of menu items
+- **menu** string, required textual. Id of the menu to show
+- **class** string, optional, default false. Css class (or space separated classes) of the menu's unordered list (ul)
+
+E.g.: `{{ html.menu('main', 'nav') }}`
+    <ul class="menu nav">
+      <li class="menu-item"><a href="#">Home</a></li>
+      <li class="menu-item"><a href="#">Who we are</a></li>
+      <li class="menu-item dropdown">
+         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio</a> <b class="caret"></b>
+       <ul class="submenu dropdown-menu">
+        <li class="menu-item"><a href="#">Web</a></li>
+        <li class="menu-item"><a href="#">Print</a></li>
+      </ul>
+      </li>
+      <li class="menu-item"><a href="#" target="_blank">@Twitter</a></li>
+     </ul>
+
+---
+
+#### metadata('no_og')
+Returns well-formatted html code of page html and open graph metadata and links to feeds
+- **no_og** boolean, optional, default: false. If true the open graph metadata will not be shown
+
+E.g.: `{{ html.metadata() }}`
+    <title>Home Page</title>
+    <meta name="description" content="Web sites main description" />
+    <meta name="keywords" content="home, page, keyword1, keyword2" />
+    <meta lang="en" />
+    <!-- Open Graph metadata -->
+    <meta property="og:title" content="Home Page" />
+    <meta property="og:description" content="Web sites main description" />
+    <meta property="og:url" content="http://thishost/thispage" />
+    <meta property="og:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
+
+    <!-- Feed links -->
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />
+    <link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />
+
+---
+
+#### medatada_dc()
+Returns well-formatted html code with Dublin Core html metadata. Title, description, language, identifier (url), subject (keywords) are the same as html & og metadata. Date is the date of publication of the article publisher is the publsher name as defined in OAI module configuration
+
+E.g.: `{{ html.metadata_dc }}`
+    <!-- Dublin Core metadata -->
+    <meta name="DC.type" content="Text" />
+    <meta name="DC.format" content="text/html" />
+    <meta name="DC.identifier" scheme="URI" content="http://thishost/thispage_url" />
+    <meta name="DC.title" content="Home Page" />
+    <meta name="DC.description" content="Web sites main description" /<
+    <meta name="DC.language" scheme="RFC3066" content="en" />
+    <meta name="DC.creator" content="John Doe" />
+    <meta name="DC.publisher" content="John Doe publishing" />
+    <meta name="DC.subject" scheme="RFC3066" content="home, page, keyword1, keyword2" />
+    <meta name="DC.date" scheme="W3CDTF" content="2013-04-17" />
+
+---
+
+#### metadata_hp()
+Returns html with Highwire Press metadata, for Google Scholar usage
+
+E.g.: `{{ html.metadata_hp }}`
+    <meta name="citation_journal_title" content=""/>
+    <meta name="citation_issn" content="Lorem ipsum"/>
+    <meta name="citation_author" content="Lorem ipsum" />
+    <meta name="citation_title" content="Lorem ipsum" />
+    <meta name="citation_date" content="0000-00-00" />
+    <meta name="citation_doi" content="10/123456.23456"/>
+    <meta name="citation_abstract_html_url" content="http://lorem.ipsum"/>
+    <meta name="citation_language" content="en" />
+    <meta name="citation_pdf_url" content="http://lorem.ipsum.pdf"/>
+
+---
+
+#### tagBlog('tag1', 'tag2', 'ecc')
+Returns well-formatted html with list of articles tagged with tags provided as arguments or present in URL
+- **tag1** string, optional, default false. First tag to use as filter
+- **tag2** string, optional, default false. Second tag to use as filter
+- **ecc** ...
+
+E.g.: `{{ html.tagBlog('news', 'web') }}`
+    <div class="section blog tags">
+      <div class="article">
+        <h3><a href="/en/web-design">Web design</a></h3>
+        <div class="content">
+          Some of our latest work on web design...
+        </div>
+        <div class="read_more">
+          <a href="/en/web-design">Read more</a>
+        </div>
+      </div>
+
+      <div class="article">
+        ...
+      </div>
+
+      ...
+    </div>
+
+---
+
+#### TBSjs('version')
+Returns string for Twitter Bootstrap javascript library inclusion, trying first to load from CDN then from local host
+- **version** string, required. Twiter Bootstrap version (x.x.x)
+
+E.g.: `{{ html.TBSjs('3.0.1') }}`
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script><script>if(typeof($.fn.modal) === \'undefined\') { document.write('<script src="./js/bootstrap-3.0.1.min.js"><\/script>')}</script>';
+
+---
+
 #### tr('string', 'args', 'escape')
 Returns the translated value for the given string in the current language
 - **string** string, required. String to translate (translation ID)
@@ -618,6 +566,65 @@ Returns the translated value for the given string in the current language
 
 E.g.: `tr('hello_world')`
     Ciao mondo!
+---
+
+#### searchForm()
+Returns well-formatted html of search form input. Form submission should be done with javascript. The data attribute contains the path to the site root!
+
+E.g.: `{{ html.searchForm }}`
+    <form action="javascript:void(0);" id="searchForm" data-path="./">
+      <input class="search" type="search" placeholder="Search in web site" name="search" id="search" />
+    </form>
+
+---
+
+#### searchResults()
+Returns well-formatted html with list of articles found by search. This function will return false if context is not found!
+
+E.g.: `{{ html.searchResults }}`
+    <h1>10 articles found searching <code>web</code></h1>
+    <div class="section blog search">
+      <div class="article">
+        <h3><a href="/en/web-design">Web design</a></h3>
+        <div class="content">
+          Some of our latest work on web design...
+        </div>
+        <div class="read_more">
+          <a href="/en/web-design">Read more</a>
+        </div>
+      </div>
+
+      <div class="article">
+        ...
+      </div>
+
+      ...
+    </div>
+
+---
+
+#### similarBlog()
+Returns well-formatted html with list of similar articles (having the same tags) as current article.
+
+E.g.: `{{ html.similarBlog}}`
+    <div class="section blog tags">
+      <div class="article">
+        <h3><a href="/en/web-design">Web design</a></h3>
+        <div class="content">
+          Some of our latest work on web design...
+        </div>
+        <div class="read_more">
+          <a href="/en/web-design">Read more</a>
+        </div>
+      </div>
+
+      <div class="article">
+        ...
+      </div>
+
+      ...
+    </div>
+
 
 <script>
 $('.active h2').after($('<input>').attr('placeholder', 'Search method').on('keyup', function(){

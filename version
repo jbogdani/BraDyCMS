@@ -1,5 +1,6 @@
-3.7.1[] = "Added the out::getVersion (html.getVersion in templates) method to return current running version"
-3.7.1[] = "Updated README.md with new websites powered by BraDyCMS: laurabassi.it, Resistenza mappe and Cartografare il presente"
+3.7.0[] = "New function: added the possibility do add per-site additional .htaccess directive in site configuration module"
+3.7.0[] = "Added the out::getVersion (html.getVersion in templates) method to return current running version"
+3.7.0[] = "Updated README.md with new websites powered by BraDyCMS: laurabassi.it, Resistenza mappe and Cartografare il presente"
 3.7.0[] = "Userform module will check for valid email addresses"
 3.7.0[] = "Security enhancement: Login form has now a security token to prevent authentication from unauthorized clients"
 3.7.0[] = "Security enhancement: Too much log attempts in limited time from the same IP address will be refused"

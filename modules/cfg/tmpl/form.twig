@@ -154,6 +154,20 @@
       folder, preceded by single slash (/), eg. /new_site</span>
     </div>
 	</div>
+    
+  <!-- MORE .htaccess Directives -->
+  <!-- moreHtaccessDirectives -->
+  <div class="form-group">
+		<label class="control-label col-sm-2">{{ tr.get('cfg-moreHtaccessDirectives') }}</label>
+		<div class="col-sm-5">
+      <textarea name="moreHtaccessDirectives" style="height:70px">{% if data.moreHtaccessDirectives %}{{ data.moreHtaccessDirectives }}{% endif %}</textarea>
+		</div>
+    <div class="col-sm-5">
+      <span class="text-muted">Enter here additional htaccess directives. These directives
+      will be automatically appended at the end of the .htaccess file after each system update.
+      If you need to enter more then one directive, please plece each directive in a new line.</span>
+    </div>
+	</div>
 	
 	<!-- DEBUG -->
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>

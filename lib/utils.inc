@@ -461,22 +461,53 @@ class utils
   {
     $rewriteBase = cfg::get('rewriteBase');
     
-    if (!$rewriteBase || $rewriteBase === '' || $rewriteBase === '/' )
+    $otherDirectives = cfg::get('moreHtaccessDirectives');
+    
+    error_log($rewriteBase);
+    error_log($otherDirectives);
+    
+    if (!$rewriteBase || $rewriteBase === '/')
     {
-      return true;
+      $rewriteBase = '/';
     }
     
     $htaccess_arr = file('.htaccess');
     
+    $startDelete = false;
     foreach($htaccess_arr as &$row)
     {
-      if (strpos($row, 'RewriteBase') === 0)
+      if (strpos($row, 'RewriteBase') === 0 && $rewriteBase && $rewriteBase !== '/')
       {
         $row = 'RewriteBase ' . $rewriteBase . "\n";
       }
+      
+      if (strpos($row, '# Additional directives') === 0)
+      {
+        $startDelete = true;
+      }
+      
+      if ($startDelete)
+      {
+        $row = '';
+      }
     }
     
-    return self::write_in_file('.htaccess', implode("", $htaccess_arr));
+    
+    if ($otherDirectives)
+    {
+      $otherDirectives = "\n\n# Additional directives\n" . $otherDirectives;
+    }
+    
+    $htaccessText = implode("", $htaccess_arr) . $otherDirectives;
+    
+    $htaccessText = str_replace(array(
+      "\r\n\r\n\r\n", "\n\n\n"
+    ), 
+      array(
+        "\r\n\r\n", "\n\n"
+      ), $htaccessText);
+    
+    return self::write_in_file('.htaccess', $htaccessText);
     
   }
 	

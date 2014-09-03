@@ -37,7 +37,6 @@ RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/?$ index.php?lang=$1  [L]
 RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_+~]+)\.all$ index.php?lang=$1&tags=$2 [QSA,L]
 RewriteRule ^([a-zA-Z0-9-_+~]+)\.all$ index.php?tags=$1 [QSA,L]
 
-
 #art_title no html
 RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2 [QSA,L]
 RewriteRule ^([a-zA-Z0-9-_]+)/?$ index.php?art_title=$1 [QSA,L]
@@ -64,7 +63,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php?art_title=not_found [L]
 
-
 <FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite|json)$">
 	order allow,deny
 	deny from all
@@ -73,3 +71,4 @@ RewriteRule . index.php?art_title=not_found [L]
 <FilesMatch "\.(png|jpg|jpeg|gif)$">
 	Header set Access-Control-Allow-Origin "*"
 </FilesMatch>
+

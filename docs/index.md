@@ -33,9 +33,9 @@ If you are not familiar with Github just email your contribution to [developer@b
   - [A commented template example](#docs/read/tmpl_example)
 - Core plugins
   - [Create and embed forms](#docs/read/userform)
+  - [Create and embed a map](#docs/read/usermap)
 - Tutorials
-  - [How to build and embed a form](#docs/read/userform)
-  - [How to build and embed a map](#docs/read/usermap)
+  
   - [How to setup an OAI-PMH interface](#docs/read/oai)
   - [How to build a custom modules](#docs/read/usermodule)
   - [How to customize database schema](#docs/read/customfields)

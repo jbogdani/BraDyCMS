@@ -17,7 +17,9 @@ Or use [direct link](#userform/view).
 
 To create a new custom form click the `Add new user form` button and enter a form id.
 **Please remember**, form ids must be unique. No spaces, dashes, hyphens or 
-other special characters are allowed in the form id.
+other special characters are allowed in the form id. Once the new form has been 
+created you can customize it to meet your needs. See the `Custom form syntax` for
+details.
 
 ---
 
@@ -41,8 +43,6 @@ text and attachments delivery.
 ---
 
 ### Custom form syntax
-
-
 The configuration of a user form must follow a simple but rigid syntax. 
 The configuration file must be a valid [json file](http://www.json.org/). 
 BraDyCMS integrates a real-time validator to help finding any syntax error.

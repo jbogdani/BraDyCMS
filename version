@@ -1,3 +1,4 @@
+3.7.0[] = "New function: added the possibility to customize the size of the thumbnails of gallery images"
 3.7.0[] = "New function: added the possibility do add per-site additional .htaccess directive in site configuration module"
 3.7.0[] = "Added the out::getVersion (html.getVersion in templates) method to return current running version"
 3.7.0[] = "Updated README.md with new websites powered by BraDyCMS: laurabassi.it, Resistenza mappe and Cartografare il presente"

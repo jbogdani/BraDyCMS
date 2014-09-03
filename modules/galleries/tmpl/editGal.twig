@@ -14,8 +14,22 @@
 		{% endfor %}
 	</div>
 
-	<div class="well well-sm">
-		<div class="uploader"></div>
+	<div class="well well-sm clearfix">
+    <div class="pull-left form-inline">
+      <div class="uploader"></div>
+    </div>
+    
+    <div class="pull-right form-inline">
+      <div class="form-group">
+      <label>{{ tr.get('thumb_dimensions') }}: </label>
+      <div class="input-group">
+        <input type="text" class="form-control"  value="{{ thumb_dimensions }}" id="{{ uid }}-th-dim" />
+        {# TODO implement galleries help
+        <div class="input-group-addon"><a href="#"><i class="icon ion-help"></i></a></div>
+        #}
+      </div>
+      </div>
+    </div>
 	</div>
 	
 	
@@ -39,7 +53,7 @@
 								<pre>{{ file.orig_descr }}</pre>
 							{% endif %}
 							<textarea data-file="{{ file.name }}" class="col-md-12" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
-							<p><button class="btn btn-success save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></p>
+							<div><button class="btn btn-success btn-block save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></div>
 						</div>
 
 						<div class="col-xs-3">
@@ -59,6 +73,16 @@
 </div>
 
 <script>
+  
+  $('#{{ uid }}-th-dim').on('change', function(){
+    var val = $(this).val();
+    
+    if (!/^([0-9]{1,4})x([0-9]{1,4})$/.test(val)){
+      admin.message(admin.tr('invalid_thumbnail_dimension'), 'error', false, true);
+      $(this).val('{{ thumb_dimensions }}');
+    }
+      
+  });
 	admin.upload(
 			$('#{{ uid }} div.uploader')[0],
 			'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=removeSpaces',
@@ -71,10 +95,10 @@
 	
 	$('#{{ uid }} button.create_thumb').on('click', function(){
 		var $this = $(this);
-    $.post('controller.php?obj=galleries_ctrl&method=makeThumbs&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
+    $.post('controller.php?obj=galleries_ctrl&method=makeThumbs&param[]={{ upload_dir }}&param[]=' + $(this).data('file') + '&param[]=' + $('#{{ uid }}-th-dim').val(), function(data){
 			admin.message(data.text, data.status);
-			if (data.status == 'success'){
-        $this.prev('.img-thumb').html('<img src="' + data.thumb + '" />');
+			if (data.status === 'success'){
+        $this.prev('.img-thumb').html('<img src="' + data.thumb + '?' + new Date().getTime() + '" />');
 				//admin.tabs.reloadActive();
 			}
 		}, 'json');
@@ -151,18 +175,6 @@
 		});
     
     return;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
   });
 	
 </script>

@@ -74,14 +74,13 @@ class galleries_ctrl extends Controller
 		}
 		
 		$this->render('galleries', 'editGal', array(
-				'tr' => new tr(),
 				'gallery'=> $this->get['param'][0],
 				'files'	=> $files,
 				'thumbs'=> $thumbs,
-				'uid'	=> uniqid('gals'),
 				'upload_dir'=> $this->path . $this->get['param'][0],
 				'langs' => cfg::get('languages'),
-				'translation' => $lang
+				'translation' => $lang,
+        'thumb_dimensions' => cfg::get('thumbs_dimensions') ? cfg::get('thumbs_dimensions') : '200x200'
 				));
 		
 	}
@@ -115,9 +114,15 @@ class galleries_ctrl extends Controller
 	{
 		$path = $this->get['param'][0];
 		$file = $this->get['param'][1];
-		
-		$thumbs_dimensions = cfg::get('thumbs_dimensions') ? cfg::get('thumbs_dimensions') : '200x200';
-		
+		$thumbs_dimensions = $this->get['param'][2];
+    
+    if (!$thumbs_dimensions || !preg_match('/^([0-9]{1,4})x([0-9]{1,4})$/', $thumbs_dimensions))
+    {
+      $thumbs_dimensions = cfg::get('thumbs_dimensions') ? cfg::get('thumbs_dimensions') : '200x200';
+    }
+    
+    error_log($thumbs_dimensions);
+    
 		if (!is_dir($path . '/thumbs'))
 		{
 			mkdir($path . '/thumbs', 0777, true);

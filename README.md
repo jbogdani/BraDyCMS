@@ -51,7 +51,6 @@ A five-step guide to install and get running BraDyCMS
 
 ## Websites already using BraDyCMS
 
-### Version 3.x
 * [belightproject.com](http://belightproject.com)
 * [books.bradypus.net](http://books.bradypus.net)
 * [bradypus.net](http://bradypus.net)
@@ -64,15 +63,17 @@ A five-step guide to install and get running BraDyCMS
 * [santamariainportuno.it](http://www.santamariainportuno.it)
 * [storicamente.org](http://storicamente.org)
 * [tozziindustries.com] (http://tozziindustries.com)
+* [laurabassi.it](http://laurabassi.it)
 
-
-### Comming soon (Version 3.x)
+### Comming soon
 * Ghazni-project
-* liceo Laura Bassi, Bologna
+* Resistenza mappe
+* Cartografare il presente
+
 
 ## Tecnical features
 
-* Works with php >= 5.3, best with 5.4
+* Works with php >= 5.3, best with >= 5.4
 
 ### External libraries
 

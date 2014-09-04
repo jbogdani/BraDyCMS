@@ -130,7 +130,6 @@ $_lang['gallery_not_deleted'] = "Errore. La gallerina non è stata cancellata. M
 $_lang['gal_name_formatting'] = "Attenzione. Il nome della galleria non deve contenere spazi o caratteri speciali e deve essere tutto in caratteri minuscoli. I seguenti carateri: <code> ,''</code> verranno sostituiti con _ e le maiuscole verrano convertite in minuscole";
 $_lang['thumbnail_created'] = "L'anteprima è stata creata";
 $_lang['thumbnail_not_created'] = "Errore. L'anteprima non è stata creata";
-$_lang['gallery_does_not_exist'] = "Errore. La galleria %s non esiste";
 $_lang['gallery_not_well_formatted'] = "Errore. La galleria %s non è formattata bene";
 $_lang['gallery_updated'] = "La galleria è stata aggiornata";
 $_lang['gallery_not_updated'] = "Errore. La galleria non è stata aggiornata";

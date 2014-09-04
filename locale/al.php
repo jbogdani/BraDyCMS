@@ -125,7 +125,6 @@ $_lang['gallery_not_deleted'] = "Gabim. Galeria nuk u fshi. Për më shumë info
 $_lang['gal_name_formatting'] = "Kujdes. Emri i galerisë nuk duhet të përmbaje hapsira o shkronja të veçanta, dhe duhet të shkruhet me shkronja të vogla. Këto shkronja <code>,''</code> do të zëvendësohen me <code>_</code> dhe shkronjat e mëdha do të zevendësohen me të vogla.";
 $_lang['thumbnail_created'] = "";
 $_lang['thumbnail_not_created'] = "";
-$_lang['gallery_does_not_exist'] = "Gabim. Galeria %s nuk ekziston";
 $_lang['gallery_not_well_formatted'] = "Gabim. galeria %s nuk është formatuar korrektësisht.";
 $_lang['gallery_updated'] = "Galeria u përditësua";
 $_lang['gallery_not_updated'] = "Gabim. Galeria nuk u përditësua";

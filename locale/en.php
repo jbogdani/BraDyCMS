@@ -130,7 +130,6 @@ $_lang['gallery_not_deleted'] = "Error. The gallery was not deleted. Please find
 $_lang['gal_name_formatting'] = "Pay attention. The gallery name must not contain spaces or special characters. All characters must be lower case. The following characters: <code>,''</code> will be replaced with _ and all upper case characters will be converted in lower case.";
 $_lang['thumbnail_created'] = "Thumbnail created";
 $_lang['thumbnail_not_created'] = "Error. Thumbnail non created";
-$_lang['gallery_does_not_exist'] = "Error. Gallery %s does not exist";
 $_lang['gallery_not_well_formatted'] = "Error. Gallery %s is not well formatted.";
 $_lang['gallery_updated'] = "Gallery updated";
 $_lang['gallery_not_updated'] = "Error. Gallery not updated";

@@ -23,14 +23,14 @@ class Gallery{
     }
     else
     {
-    	throw new Exception('gallery_does_not_exist');
+    	throw new Exception('Gallery ' . $gal . ' does not exist');
 		}
     
 		$captions = @json_decode(file_get_contents($file), 1);
 	
 		if (!is_array($captions))
 		{
-      throw new Exception('gallery_not_well_formatted');
+      throw new Exception('Gallery ' . $gal . ' is not well formatted');
 		}
 		krsort($captions);
     

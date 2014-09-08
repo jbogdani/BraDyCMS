@@ -5,12 +5,34 @@
     </div>
     <div class="pull-right">
       <ul class="shorthands">
-        <li><a href="#article/all" title="{{ tr.get('show_all_articles') }}"><i class="icon big ion-ios7-eye-outline"></i></a></li>
-        <li><a href="#article/addNew" title="{{ tr.get('add_new_article') }}"><i class="icon big ion-ios7-plus-outline"></i></a></li>
-        <li><a href="#menu/all" title="{{ tr.get('show_all_menus') }}"><i class="icon big ion-navicon"></i></a></li>
-        <li><a href="#media/all" title="{{ tr.get('media') }}"><i class="icon big ion-ios7-photos-outline"></i></a></li>
-        <li><a href="./" target="_blank" title="{{ tr.get('view_site') }}"><i class="icon big ion-ios7-monitor-outline"></i></a></li>
-        <li><a href="#docs/read/index" title="{{ tr.get('docs') }}"><i class="icon big ion-ios7-information-outline"></i></a>
+        <li><a href="#article/all" title="{{ tr.get('show_all_articles') }}" 
+             data-toggle="tooltip" data-placement="bottom">
+            <i class="icon big ion-ios7-eye-outline"></i>
+          </a></li>
+        <li><a href="#article/addNew" title="{{ tr.get('add_new_article') }}" 
+               data-toggle="tooltip" data-placement="bottom">
+            <i class="icon big ion-ios7-plus-outline"></i>
+          </a></li>
+        <li><a href="#menu/all" title="{{ tr.get('show_all_menus') }}" 
+               data-toggle="tooltip" data-placement="bottom">
+            <i class="icon big ion-navicon"></i>
+          </a></li>
+        <li><a href="#media/all" title="{{ tr.get('media') }}" 
+               data-toggle="tooltip" data-placement="bottom">
+            <i class="icon big ion-ios7-photos-outline"></i>
+          </a></li>
+        <li><a href="./" target="_blank" title="{{ tr.get('view_site') }}" 
+               data-toggle="tooltip" data-placement="bottom">
+            <i class="icon big ion-ios7-monitor-outline"></i>
+          </a></li>
+        <li><a href="#docs/read/index" title="{{ tr.get('docs') }}" 
+               data-toggle="tooltip" data-placement="bottom">
+            <i class="icon big ion-ios7-information-outline"></i></a>
+            
+        <li><a href="#log/out" title="{{ tr.get('logout') }}"
+               data-toggle="tooltip" data-placement="bottom">
+            <i class="icon big ion-log-out"></i>
+          </a></li>
       </ul>
     </div>
   </div>

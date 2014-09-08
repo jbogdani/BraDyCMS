@@ -299,22 +299,43 @@ var admin = {
 	    },
 	    
 	    reloadActive: function(){
-	    	var d_active = $('div.tab-content div.active'), 
-	    	opts = tab.find('li.active').data('opts');
-	    	
+        this.reload();
+	    },
+      
+      reloadThis: function(el){
+        if(!(el instanceof jQuery)){
+          var el = $(el);
+        }
+        var index = el.parents('.tab-pane').index();
+        if (index){
+          this.reload(index);
+        }
+      },
+      
+      reload: function(index){
+        
+        if (!index){
+          var pane = $('div.tab-content div.active');
+          var opts = tab.find('li.active').data('opts');
+        } else {
+          var pane = $('div.tab-content .tab-pane').get(index);
+          pane = $(pane);
+          var opts = $(tab.find('li').get(index)).data('opts');
+        }
+        
 	    	var url = 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' );
 	    	
-	    	d_active.html('<img src="img/spinner.gif" alt="loading..." />');//.load(url, opts.data);
+	    	pane.html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i>');
         
         $.ajax({
 	        		'url': url,
 	        		'data': opts.data
 	        	})
 	        	.done(function(data){
-	        		d_active.html(data);
+	        		pane.html(data);
 	        	})
             .fail(function(){
-              d_active.html('<p class="text-danger">' + admin.tr('error_check_log') + '</p>');
+              pane.html('<p class="text-danger">' + admin.tr('error_check_log') + '</p>');
             });
 	    },
 	    
@@ -322,11 +343,11 @@ var admin = {
 	    	var active = tab.find('li.active');
 	    	admin.tabs.closeTab(active, state);
 	    },
-	    
+      
 	    closeTab: function(li, state){
 				
         // only one tab is left, the Welcome tab. This should never be closed!
-				if(tab.find('li').length == 1){
+				if(tab.find('li').length === 1){
 					if (state){
             location.hash = '#' + state;
 					}
@@ -341,7 +362,7 @@ var admin = {
 						var actualState = location.hash.substr(1);
             
             
-            if (actualState == state){
+            if (actualState === state){
               admin.tabs.reloadActive();
               return;
               //  $(window).trigger( "hashchange" );
@@ -538,4 +559,6 @@ $(document).ready(function () {
     e.preventDefault();
     return false;
   });
+  
+  $('[data-toggle="tooltip"]').tooltip();
 });

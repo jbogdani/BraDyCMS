@@ -52,7 +52,7 @@
 							{% if file.orig_descr %}
 								<pre>{{ file.orig_descr }}</pre>
 							{% endif %}
-							<textarea data-file="{{ file.name }}" class="col-md-12" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
+							<textarea data-file="{{ file.name }}" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
 							<div><button class="btn btn-success btn-block save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></div>
 						</div>
 

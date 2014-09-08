@@ -31,12 +31,13 @@ If you are not familiar with Github just email your contribution to [developer@b
   - [About CSS, Less and the Twitter Bootstrap Framework](#docs/read/tmpl_less)
   - [The `html` object](#docs/read/tmpl_html)
   - [A commented template example](#docs/read/tmpl_example)
+
 - Core plugins
   - [Create and embed forms](#docs/read/userform)
   - [Create and embed a map](#docs/read/usermap)
+
 - Tutorials
-  
   - [How to setup an OAI-PMH interface](#docs/read/oai)
-  - [How to build a custom modules](#docs/read/usermodule)
+  - [How to build a new plugin](#docs/read/customplugin)
   - [How to customize database schema](#docs/read/customfields)
   - [How to use the RESTful API](#docs/read/api)

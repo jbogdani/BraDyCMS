@@ -6,11 +6,11 @@ File: `./sites/default/index.twig`
     <html>
     <head>
   
-      <!-- Print metadata -->
+      <!-- Prints site metadata -->
       {{ html.metadata }}
   
-      <!-- Load site favicon -->
-      <link rel="shortcut icon" href="./sites/default/css/favicon.ico">
+      <!-- Loads site favicon -->
+      <link rel="shortcut icon" href="./sites/default/css/favicon.png">
   
       <!-- Load site styles -->
       <link rel="stylesheet" href="./sites/default/css/styles.css" type="text/css" />
@@ -39,7 +39,7 @@ File: `./sites/default/index.twig`
       <!-- MAIN BODY -->
       <div class="body container">
     
-        <!-- Start ofonditional displaying of content, depending on context (html.getContext) -->
+        <!-- Start of conditional displaying of content, depending on context (html.getContext) -->
         <!-- 1. Context is HOME -->
         {% if html.getContext == 'home' %}
           <div class="row">

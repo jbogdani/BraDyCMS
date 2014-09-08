@@ -1,3 +1,4 @@
+3.7.2[] = "Documentation enhancement"
 3.7.1[] = "Bug fixed: custom tag [[gallery]] does not throw error anymore if gallery does not exists or is not well formatted: error message will be logged and false will be returned"
 3.7.0[] = "New function: added the possibility to customize the size of the thumbnails of gallery images"
 3.7.0[] = "New function: added the possibility do add per-site additional .htaccess directive in site configuration module"

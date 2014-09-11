@@ -88,10 +88,7 @@ class log_ctrl extends Controller
       
       if ($lastIP === $id)
       {
-        if ($now < ($lastTime + 1000) )
-        {
-          return false;
-        }
+        return ($now >= ($lastTime + 1000) );
       }
     }
     
@@ -100,59 +97,67 @@ class log_ctrl extends Controller
 	
 	public function in()
 	{
-    if (!filter_var($this->post['username'], FILTER_VALIDATE_EMAIL))
+    
+    try
     {
-      return false;
+      if (!filter_var($this->post['username'], FILTER_VALIDATE_EMAIL))
+      {
+        throw new Exception(tr::get('invalid_email'));
+      }
+      
+      $username = $this->post['username'];
+    
+      $password = $this->post['password'];
+
+      $token = $this->post['token'];
+      
+      if (!$token || !$username || !$password)
+      {
+        throw new Exception(tr::get('access_denied'));
+      }
+      
+      if ($token !== $_SESSION['token'])
+      {
+        throw new Exception('invalid_token');
+      }
+      
+      if (!$this->checkAttemptTime())
+      {
+        throw new Exception('too_much_attempts');
+      }
+      
+      $cfg_users = cfg::get('users');
+		
+      foreach ($cfg_users as $user)
+      {
+        if($username === $user['name'] && $this->encodePwd($password) === $user['pwd'])
+        {
+          session_regenerate_id(true);
+          $_SESSION['user_confirmed'] = $username;
+          if ($user['admin'] === 'admin')
+          {
+            $_SESSION['user_admin'] = true;
+          }
+
+          $this->updateUsersLog($username);
+
+          echo json_encode(array('status' => 'success'));
+          return;
+        }
+        else
+        {
+          continue;
+        }
+      }
+      
+      throw new Exception(tr::get('access_denied'));
+      
+    }
+    catch(Exception $e)
+    {
+      echo json_encode(array('status' => 'error', 'text' => $e->getMessage()));
+      return;
     }
     
-		$username = $this->post['username'];
-    
-		$password = $this->post['password'];
-    
-    $token = $this->post['token'];
-    
-		
-		if (!$token || !$username || !$password)
-		{
-			return false;
-		}
-    
-    if ($token !== $_SESSION['token'])
-    {
-      return false;
-    }
-    
-    if (!$this->checkAttemptTime())
-    {
-      error_log('To much login attempts in limited time');
-      return false;
-    }
-		
-		
-		$cfg_users = cfg::get('users');
-		
-		foreach ($cfg_users as $user)
-		{
-			if($username === $user['name'] && $this->encodePwd($password) === $user['pwd'])
-			{
-        session_regenerate_id(true);
-				$_SESSION['user_confirmed'] = $username;
-				if ($user['admin'] === 'admin')
-				{
-					$_SESSION['user_admin'] = true;
-				}
-        
-        $this->updateUsersLog($username);
-				
-				echo json_encode(array('status' => 'success'));
-				return;
-			}
-			else
-			{
-				continue;
-			}
-		}
-		
-		echo json_encode(array('status' => 'error', 'text' => tr::get('access_denied')));
 	}
 }

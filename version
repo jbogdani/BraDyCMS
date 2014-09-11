@@ -1,3 +1,4 @@
+3.7.4[] = "More verbose login reports"
 3.7.3[] = "Added admin.tabs.reload(index) as a generic function and admin.tabs.reloadThis(el)"
 3.7.3[] = "Added tooltips on shortcut icons"
 3.7.2[] = "Bug fixed with save button in Edit galleries module, in Mozilla Firefox"

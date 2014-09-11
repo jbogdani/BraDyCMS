@@ -2,9 +2,19 @@
 
 	<div class="well well-sm">File: <code>{{ filename }}</code></div>
 
-	<div><button class="btn btn-success pull-right save"><i class="icon ion-checkmark"></i> Save</button></div>
+	<div>
+    <button class="btn btn-success btn-block save" data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
+      <i class="icon ion-checkmark"></i> {{ tr.get('save' )}}
+    </button>
+  </div>
 	
 	<pre class="prettyprint {% if lang %} lang-{{ lang }}{% endif %}" id="txt_{{ uid }}" contenteditable="true">{{ content }}</pre>
+  
+  <div>
+    <button class="btn btn-success btn-block save" data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
+      <i class="icon ion-checkmark"></i> {{ tr.get('save' )}}
+    </button>
+  </div>
 	
 </div>
 
@@ -16,9 +26,16 @@
 	prettyPrint();
 	
 	$('#{{ uid }} .save').on('click', function(){
-    var html = $('#txt_{{ uid }}').html().replace(/<div>/, "\n").replace('/<\/div>', '').replace(/<br>/, "\n");
+    
+    var self =  $(this);
+    self.button('loading');
+    
+    var html = $('#txt_{{ uid }}').html().replace(/<div>/gi,'<br>').replace(/<\/div>/gi,'').replace(/<br>/gi, "\n").replace(/<br \/>/, "\n");
+    
+    console.log($(html).text());
 		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: $(html).text() }, function(data){
-			admin.message(data.text, data.type);
+			admin.message(data.text, data.status);
+      self.button('reset');
 		}, 'json');
 	});
 </script>

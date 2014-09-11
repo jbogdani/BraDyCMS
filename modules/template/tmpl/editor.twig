@@ -32,7 +32,6 @@
     
     var html = $('#txt_{{ uid }}').html().replace(/<div>/gi,'<br>').replace(/<\/div>/gi,'').replace(/<br>/gi, "\n").replace(/<br \/>/, "\n");
     
-    console.log($(html).text());
 		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: $(html).text() }, function(data){
 			admin.message(data.text, data.status);
       self.button('reset');

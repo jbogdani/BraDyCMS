@@ -172,8 +172,13 @@ class template_ctrl extends Controller
 	
 	public function dashboard()
 	{
+		$file = $this->get['param'][0];
+    $type = pathinfo($file, PATHINFO_EXTENSION);
+    
 		$this->render('template', 'list', array(
-      files => $this->getList()
+      'files' => $this->getList(),
+      'file' => $file,
+      'type' => $type
 		));
 	}
   

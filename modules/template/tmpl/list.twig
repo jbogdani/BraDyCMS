@@ -78,9 +78,16 @@
   });
 	
 	$('#{{ uid }} .file').on('click', function(){
+    _ignorehash = true;
+    location.hash = '#template/dashboard/' + $(this).data('file');
 		$('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
       .load('controller.php?obj=template_ctrl&method=edit&param[]=' + $(this).data('file') + '&param[]=' + $(this).data('type'));
 	});
+  
+{% if file and type %}
+  $('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
+      .load('controller.php?obj=template_ctrl&method=edit&param[]={{ file }}&param[]={{ type }}');
+{% endif %}
   
   $('#{{ uid }} .download').each(function(i, el){
     var url = './sites/default/';

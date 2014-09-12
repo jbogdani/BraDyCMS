@@ -11,9 +11,10 @@
 			{% for lang in ['twig', 'css', 'less', 'js', 'md'] %}
 				
 				{% for f in files[lang] %}
-				<p>
-					<button class="btn btn-info btn-block file" data-file="{{ f }}" data-type="{{ lang }}">{{ f }}</button>
-				</p>
+				<div class="btn-group" style="margin: 3px 0;">
+					<button class="btn btn-info file" data-file="{{ f }}" data-type="{{ lang }}">{{ f }}</button>
+          <a class="btn btn-warning download" data-file="{{ f }}" data-type="{{ lang }}"><i class="icon ion-android-download"></i></a>
+        </div>
 				{% endfor %}
 				
 			{% endfor %}
@@ -79,6 +80,31 @@
 	$('#{{ uid }} .file').on('click', function(){
 		$('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
       .load('controller.php?obj=template_ctrl&method=edit&param[]=' + $(this).data('file') + '&param[]=' + $(this).data('type'));
+	});
+  
+  $('#{{ uid }} .download').each(function(i, el){
+    var url = './sites/default/';
+    switch($(el).data('type')){
+      case 'twig':
+      case 'md':
+        url += $(el).data('file');
+        break;
+      case 'less':
+      case 'css':
+        url += 'css/' + $(el).data('file');
+        break;
+      case 'js':
+        url += 'js/' + $(el).data('file');
+        break;
+      default:
+        return false;
+        break;
+    }
+    
+    $(el).attr('href', url);
+    $(el).attr('target', '_blank');
+    $(el).attr('download', $(el).data('file'));
+		
 	});
 	
 	$('#{{ uid }} .compile').on('click', function(){

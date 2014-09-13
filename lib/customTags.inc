@@ -209,6 +209,7 @@ class customTags
 	{
     $gal = $data['content'];
 		$class = $data['class'];
+    $rel = $data['rel'] ? $data['rel'] : $gal;
     
     try
     {
@@ -224,7 +225,7 @@ class customTags
          * </ul>
          */
         $html .= '<div class="gallery-container">'
-          . '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . 'data-rel="' . $gal . '"' . '>';
+          . '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . 'data-rel="' . $rel . '"' . '>';
 
         foreach ($gal_data as $item)
         {
@@ -240,12 +241,12 @@ class customTags
       {
         $html .= '<div class="gallery-container">'
           . '<ul class="gallery ' . $gal 
-          . ($class ? ' ' . $class : '') . '" data-rel="' . $gal . '">';
+          . ($class ? ' ' . $class : '') . '" data-rel="' . $rel . '">';
 
         foreach ($gal_data as $item)
         {
           $html .= '<li data-id="' . basename($item['img']) . '">'
-            . '<a href="' . $item['img'] . '" class="fancybox" title="' . str_replace('"', '\"', $item['caption']). '"  rel="' . $gal . '" >'
+            . '<a href="' . $item['img'] . '" class="fancybox" title="' . str_replace('"', '\"', $item['caption']). '"  rel="' . $rel . '" >'
             . '<img src="' . $item['thumb'] . '" alt="' . str_replace('"', '\"', $item['caption']). '" />'
             . '</a>'
             . '<div class="caption">' . $item['caption'] . '</div>'

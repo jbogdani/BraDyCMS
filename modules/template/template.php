@@ -13,7 +13,7 @@ class template_ctrl extends Controller
   public function confirm_delete_file()
   {
     $file = $this->get['param'][0];
-    $ext = $ext = pathinfo($file, PATHINFO_EXTENSION);
+    $ext = pathinfo($file, PATHINFO_EXTENSION);
     
     $path = 'sites/default/';
     try

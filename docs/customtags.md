@@ -49,12 +49,14 @@ Complete example:
 Displays imageless galleries, for conditional image loading. This custom tags should be used together with the provided jquery.cl_gallery.js javascript plugin
 - **content**, string, required. Name of gallery
 - **class**, string, optional. One or more (space separated) CSS class to apply to main ul tag
+= **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster 
+images in slideshows. If not provided the gallery name will be used
 
 Minimal example:
     [[cl_gallery]]gallery_name[[/cl_gallery]]
 
 Complete example:
-    [[cl_gallery class="horizontal small"]]gallery_name[[/cl_gallery]]
+    [[cl_gallery class="horizontal small" rel="gallery-one"]]gallery_name[[/cl_gallery]]
 
 ---
 
@@ -189,12 +191,14 @@ Complete example:
 Displays an existing image gallery
 - **content**, string, required. Name of gallery
 - **class**, string, optional. One or more (space separated) CSS class to apply to main ul tag
+= **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster 
+images in slideshows. If not provided the gallery name will be used
 
 Minimal example:
     [[gallery]]gallery_name[[/gallery]]
 
 Complete example:
-    [[gallery class="horizontal small"]]gallery_name[[/gallery]]
+    [[gallery class="horizontal small" rel="gallery_one"]]gallery_name[[/gallery]]
 
 ---
 

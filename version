@@ -1,3 +1,4 @@
+3.8.0[] = "System translate is now a function limited to admin users"
 3.8.0[] = "Delete & restore backup are now functions limited to admin users"
 3.8.0[] = "Template manager is now a function limited to admin users"
 3.8.0[] = "Added the possibility to limit the execution of modules to admin users in Controller object"

@@ -9,6 +9,10 @@
 
 class sys_translate_ctrl extends Controller
 {
+  
+  public $adminRequired = array('addLine', 'add_locale', 'save',
+    'showForm', 'showList');
+  
 	public function showList($opened_lang=false)
 	{
     $context = $this->get['param'][0];

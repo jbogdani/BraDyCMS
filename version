@@ -7,6 +7,7 @@
 3.8.0[] = "Template manager is now a function limited to admin users"
 3.8.0[] = "Added the possibility to limit the execution of modules to admin users in Controller object"
 
+3.7.7[] = "seo_ctrl::* added to Controllers' white list"
 3.7.6[] = "Rel attribute of galleries can be set externally (using customtag attributes)"
 3.7.5[] = "Filenames in editing are now showed in the window hash (url support for filenames)"
 3.7.5[] = "Template manager permits now to download javascript, template, less, css and welcome.md files"

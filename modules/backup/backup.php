@@ -10,6 +10,8 @@
 class backup_ctrl extends Controller
 {
   
+  public $adminRequired = array('deleteBackup', 'restoreBackup');
+  
   public function listAll()
   {
     if (!file_exists(SITE_DIR . 'cfg/database.sqlite'))

@@ -10,7 +10,7 @@ class Controller
 {
 	/**
 	 *
-	 * @var array arrau of $_GET data
+	 * @var array array of $_GET data
 	 */
 	protected $get;
 	
@@ -27,7 +27,7 @@ class Controller
 	protected $request;
 
 	/**
-	 * Starts object and sets $get, $post and $request
+	 * Initializes object and sets $get, $post and $request variables
 	 */
 	public function __construct()
 	{
@@ -37,7 +37,7 @@ class Controller
 	}
 
 	/**
-	 * Renders a TWIG template in a module folder
+	 * Renders a TWIG template in a module folder, setting default tr and uid variables
 	 * @param string $module module name
 	 * @param string $template template (no extension) file name
 	 * @param array $data array of data to inject in template (uid and tr object are available by default)
@@ -56,6 +56,13 @@ class Controller
 		echo $twig->render($template . '.twig', $data );
 	}
   
+  /**
+   * Checks if $object and $method are present in the whitelist of objects&method
+   * that can be run even if no session variables are set
+   * @param string $object object name
+   * @param string $method method name
+   * @return boolean
+   */
   private function nonNeed2Auth($object, $method)
   {
     $permitted = [
@@ -74,7 +81,9 @@ class Controller
   }
 
 	/**
-	 * Main routing method
+	 * Main routing system. Uses the GET/POST/REQUEST parameters to run modules.
+   * If no valid session data are present the safe whitelist will be checked
+   * Also, foreach object, the admin blacklist will be checked
 	 * @throws Exception
 	 */
 	public function route()

@@ -396,19 +396,23 @@ class customTags
 	/**
 	 * 
 	 * @param array $data
-	 * 					content: html to show. Default: addthis small image
-	 * 					only_js: if true no html will be showed
+   *      pubid: public id string provided by addthis.
+   *      content: html to show. Default: addthis small image
+   *      only_js: if true no html will be showed
 	 * @return string
 	 */
 	public static function addThis($data)
 	{
+    $pubid = $data['pubid'] ? $data['pubid'] : 'pubid=ra-4d8b051f4951c18f';
+    
 		return ( $data['only_js'] ? '' :  
-				'<!-- AddThis Button BEGIN -->' .
-				'<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-4d8b051f4951c18f">' .
-					( $data['content'] ? $data['content'] : '<img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/>') .
-				'</a>' ) .
-				'<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d8b051f4951c18f"></script>' .
-			'<!-- AddThis Button END -->';
+      ( $data['content'] ? 
+        '<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=' . $pubid . '">' . $data['content'] . '</a>'
+        :
+        '<div class="addthis_sharing_toolbox"></div>'
+      )
+      )
+      . '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $pubid . '"></script>';
 	}
 	
 	/**
@@ -716,4 +720,5 @@ class customTags
     
     return $html;
   }
+  
 }

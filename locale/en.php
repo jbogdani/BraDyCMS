@@ -367,6 +367,5 @@ $_lang['confirm_restore_backup'] = "Are you sure you want to restore this backup
 $_lang['error_deleting_backup'] = "Error. Backup file was not deleted";
 $_lang['ok_deleting_backup'] = "Backup file was successfully deleted";
 $_lang['error_restore_backup'] = "Error. Database could not be restored. More details in error log.";
-$_lang['ok_restore_backup'] = "";
-$_lang[''] = "";
+$_lang['ok_restore_backup'] = "Backup restored";
 $_lang['open'] = "Open";

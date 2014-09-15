@@ -9,6 +9,9 @@
 class template_ctrl extends Controller
 {
   
+  public $adminRequired = array('confirm_delete_file', 'create_file', 'new_file',
+    'delete_file', 'compile', 'edit', 'dashboard', 'save'
+    );
   
   public function confirm_delete_file()
   {

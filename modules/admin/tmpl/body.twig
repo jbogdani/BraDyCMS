@@ -92,9 +92,12 @@
           <ul class="sub">
             <li><a href="#sys_translate/showList/front"><i class="icon big ion-shuffle"></i> {{ tr.get('front_translate') }}</a></li>
             <li><a href="#cfg/edit"><i class="icon big ion-wrench"></i> {{ tr.get('cfg_editor') }}</a></li>
+            {% if is_admin %}
             <li><a href="#template/dashboard"><i class="icon big ion-compose"></i> {{ tr.get('template_mng') }}</a></li>
+            {% endif %}
             <li><a href="#sys_translate/showList/admin"><i class="icon big ion-shuffle"></i> {{ tr.get('sys_translate') }}</a></li>
             <li><a href="#update/main"><i class="icon big ion-ios7-cloud-download-outline"></i> {{ tr.get('auto_updates') }}</a></li>
+            
             <li><a href="#backup/listAll"><i class="icon big ion-ios7-download-outline"></i> {{ tr.get('backup_restore_db') }}</a></li>
           </ul>
         </li>

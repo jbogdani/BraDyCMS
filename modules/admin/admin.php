@@ -64,6 +64,7 @@ class admin_ctrl extends Controller
       'custom_mods' => $custom_mods,
       'welcome' => $welcome_text,
       'user' => $_SESSION['user_confirmed'],
+      'is_admin' => $_SESSION['user_admin'],
       'gravatar' => md5( strtolower( trim( $_SESSION['user_confirmed'] ) ) )
       )
     );

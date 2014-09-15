@@ -48,9 +48,10 @@ E.g.: `{{ html.articleBody('lorem_ipsum') }}`
 #### ct('customtag', 'params')
 Returns html produced by custom tag or user module
 - **customtag** string, required. Custom tag to run
-- **params** string, optional, default: false. Json encoded key-value pairs to use as parameters
+- **params** array|string, optional, default: false. Array or JSON encoded 
+key-value pairs array (string) to use as parameters
 
-E.g.: `{{ html.ct('addThis', '{"content": "share"}') }}`
+E.g.: `{{ html.ct('addThis', {"content": "share", "pubid": "ra-4d8b051f4951c18f"}) }}`
     <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&pubid=ra-4d8b051f4951c18f">share</a>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d8b051f4951c18f"></script>
 

@@ -1,3 +1,4 @@
+3.8.0[] = "Second parameter of OutHtml::ct (html.ct) can be an array or a json encoded string"
 3.8.0[] = "Updated sitemap.xml to match google's latest requisites"
 3.8.0[] = "System translate is now a function limited to admin users"
 3.8.0[] = "Delete & restore backup are now functions limited to admin users"

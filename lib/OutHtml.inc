@@ -546,11 +546,15 @@ class OutHtml extends Out
 	/**
 	 * Runs method of customTags object and returns html
 	 * @param string $method method of customTags object to call
-	 * @param string $param json with method parameters
+	 * @param string|array $param array or json encoded array with method parameters
 	 */
-	public function ct($method, $param = false)
+	public function ct($method, $param = array())
 	{
-    $param = $param ? json_decode($param, true) : array();
+    
+    if ($param && is_string($param))
+    {
+      $param = json_decode($param, true);
+    }
     
     if (method_exists('customTags', $method))
 		{

@@ -45,11 +45,9 @@ EOD;
     
     $xml = <<<EOD
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+      xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 <url>
   <loc>{$home}</loc>
   <changefreq>monthly</changefreq>
@@ -57,6 +55,8 @@ EOD;
 EOD;
     
     $all_arts = Article::getAllValid(false, true);
+    
+    $artimgs = cfg::get('art_img');
     
     if (is_array($all_arts))
     {
@@ -70,6 +70,13 @@ EOD;
           . "\n\t" . '<loc>' 
             . utils::getBaseUrl() . str_replace('./', null, link::to_article($art['textid']))
           . '</loc>'
+          . (
+              file_exists('./sites/default/images/articles/' . $artimgs[0] . '/' . $art['id'] . '.jpg') ? 
+              "\n\t<image:image>\n\t\t<image:loc>"
+              . utils::getBaseUrl() . 'sites/default/images/articles/' . $artimgs[0] . '/' . $art['id'] . '.jpg'
+              . "</image:loc>\n\t</image:image>"
+              : ''
+          )
           . ($art['updated'] ? "\n\t" . '<lastmod>' . date('Y-m-d', strtotime($art['updated'])) . '</lastmod>' : '')
           . "\n\t" . '<changefreq>monthly</changefreq>'
         . "\n". '</url>';

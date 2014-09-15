@@ -69,7 +69,7 @@ class Controller
     
     return (
       $permitted[$object] === '*' ||
-      in_array($method, $permitted[$object])
+      ( is_array($permitted[$object]) && in_array($method, $permitted[$object]))
       );
   }
 
@@ -98,13 +98,32 @@ class Controller
 			
 			$param = array_merge((array)$this->get['param'], array('post'=>$this->post));
 	
-			if (get_parent_class($obj) == 'Controller')
+			if (get_parent_class($obj) === 'Controller')
 			{
 				$_aa = new $obj($this->get, $this->post, $this->request);
+        
+        if($_aa->adminRequired 
+          && is_array($_aa->adminRequired) 
+          && in_array($method, $_aa->adminRequired)
+          && !$_SESSION['user_admin'])
+        {
+          throw new Exception('Permission denied');
+        }
+        
 				$_aa->$method();
 			}
 			else
 			{
+        if (property_exists($obj, 'adminRequired'))
+        {
+          $ref = new ReflectionClass($obj);
+          $def_prop = $ref->getDefaultProperties();
+          $admin_methods = $def_prop['adminRequired'];
+          if (is_array($admin_methods) && in_array($method, $admin_methods) && !$_SESSION['user_admin'])
+          {
+            throw new Exception('Permission denied');
+          }
+        }
 				call_user_func_array(array($obj, $method), $param);
 			}
 		}

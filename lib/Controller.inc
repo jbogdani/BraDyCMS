@@ -64,7 +64,8 @@ class Controller
       'addsite_ctrl' => '*',
       'admin_ctrl' => '*',
       'api_ctrl' => ['run'],
-      'userform_ctrl' => ['process']
+      'userform_ctrl' => ['process'],
+      'seo_ctrl' => '*'
     ];
     
     return (

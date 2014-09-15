@@ -41,13 +41,13 @@ EOD;
   
   public function sitemap()
   {
-    $home = utils::getBaseUrl();
+    $home = htmlspecialchars(utils::getBaseUrl());
     
     $xml = <<<EOD
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-      xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 <url>
   <loc>{$home}</loc>
   <changefreq>monthly</changefreq>
@@ -68,12 +68,12 @@ EOD;
         }
         $xml .= "\n" . '<url>'
           . "\n\t" . '<loc>' 
-            . utils::getBaseUrl() . str_replace('./', null, link::to_article($art['textid']))
+            . htmlspecialchars(utils::getBaseUrl() . str_replace('./', null, link::to_article($art['textid'])))
           . '</loc>'
           . (
               file_exists('./sites/default/images/articles/' . $artimgs[0] . '/' . $art['id'] . '.jpg') ? 
               "\n\t<image:image>\n\t\t<image:loc>"
-              . utils::getBaseUrl() . 'sites/default/images/articles/' . $artimgs[0] . '/' . $art['id'] . '.jpg'
+              . htmlspecialchars(utils::getBaseUrl() . 'sites/default/images/articles/' . $artimgs[0] . '/' . $art['id'] . '.jpg')
               . "</image:loc>\n\t</image:image>"
               : ''
           )

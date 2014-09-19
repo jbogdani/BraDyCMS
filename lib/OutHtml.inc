@@ -200,7 +200,7 @@ class OutHtml extends Out
 				"\n  " . '<meta name="citation_doi" ' .
           'content="' . ( $this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() . '.' : '') . 
             ( $art[$this->getMD()->getTable('id')] ? 
-              '.' . $art[$this->getMD()->getTable('id')] : '' ). '"/>' .
+              $art[$this->getMD()->getTable('id')] : '' ). '"/>' .
 		
 				// article abstract url
 				"\n  " . '<meta name="citation_abstract_html_url" ' .

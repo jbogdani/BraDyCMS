@@ -6,7 +6,7 @@ $('#userformID').on('submit', function(){
 	
 	var messageContainer = $(this).find('.message');
 
-		messageContainer.removeClass('text-danger, text-success').html('<img src="./img/spinner.gif" alt="loading..." /> Loading...');
+		messageContainer.removeClass('text-danger, text-success').html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i> Loading...');
 		var stop = false;
 		$.each($(this).find(':input:not(.btn)'), function(i, el){
 			

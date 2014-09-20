@@ -188,7 +188,7 @@ var admin = {
 				}
 
 			} else if (opts.obj && opts.method){
-				dialog.find('.modal-body').html('<img src="./img/spinner.gif" />');
+				dialog.find('.modal-body').html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i>');
 				$.ajax({
 	        		'type': opts.post ? 'POST' : 'GET',
 	        		'url': 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
@@ -271,7 +271,7 @@ var admin = {
             
 	        } else if (opts.obj && opts.method){
 	        	admin.tabs.tab.next('div.tab-content')
-              .append('<div class="tab-pane" id="added' + id + '"><img src="img/spinner.gif" alt="loading..." /></div>');
+              .append('<div class="tab-pane" id="added' + id + '"><i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i></div>');
             
 	        	admin.tabs.start(tab);
             

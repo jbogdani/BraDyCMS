@@ -237,7 +237,7 @@
               return;
             }
             
-            $('#modal .modal-body').html('<img src="./img/spinner.gif" /> {{ tr.get('please_wait', true) }}');
+            $('#modal .modal-body').html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i> {{ tr.get('please_wait', true) }}');
             
             var url = 'controller.php?' +
               'obj=media_ctrl&' +

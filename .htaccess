@@ -31,30 +31,30 @@ RewriteRule ^admin:debug?$ admin.php?debug=1
 RewriteRule ^admin:mini?$ admin.php?mini=1
 
 #safe home page 
-RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/?$ index.php?lang=$1  [L]
+RewriteRule ^([a-z]{2})/?$ index.php?lang=$1  [L]
 
 #tags
-RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_+~]+)\.all$ index.php?lang=$1&tags=$2 [QSA,L]
+RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+)\.all$ index.php?lang=$1&tags=$2 [QSA,L]
 RewriteRule ^([a-zA-Z0-9-_+~]+)\.all$ index.php?tags=$1 [QSA,L]
 
 #art_title no html
-RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2 [QSA,L]
+RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2 [QSA,L]
 RewriteRule ^([a-zA-Z0-9-_]+)/?$ index.php?art_title=$1 [QSA,L]
 
 #art_title with html extension
-RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_]+).html$ index.php?lang=$1&art_title=$2 [QSA,L]
+RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).html$ index.php?lang=$1&art_title=$2 [QSA,L]
 RewriteRule ^([a-zA-Z0-9-_]+).html$ index.php?art_title=$1 [QSA,L]
 
 #art_title, draft
-RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1 [L]
+RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1 [L]
 RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true [L]
 
 #search
-RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/search:([a-zA-Z0-1-_\.\s]+)$ index.php?lang=$1&search=$2 [L]
+RewriteRule ^([a-z]{2})/search:([a-zA-Z0-1-_\.\s]+)$ index.php?lang=$1&search=$2 [L]
 RewriteRule ^search:([a-zA-Z0-9-_\.\s]+)$ index.php?search=$1 [L]
 
 #search tags
-RewriteRule ^(it|en|es|fr|ar|de|al|el|jp)/([a-zA-Z0-9-_+~]+).search$ index.php?lang=$1&tags=$2&is_search=1 [L]
+RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+).search$ index.php?lang=$1&tags=$2&is_search=1 [L]
 RewriteRule ^([a-zA-Z0-9-_+~]+).search$ index.php?tags=$1&is_search=1 [L]
 
 #all non existing, non image content to index.php http://jrgns.net/redirect_request_to_index/

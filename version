@@ -1,3 +1,4 @@
+3.8.0[] = "Languages codes are now rendered dynamically in .htaccess file (two letters, lowercase)"
 3.8.0[] = "sitemap.xml content is now passed throw htmlspecialchars() function"
 3.8.0[] = "Custom tag addthis accepts new option: pubid with AddThis' user public id"
 3.8.0[] = "Second parameter of OutHtml::ct (html.ct) can be an array or a json encoded string"

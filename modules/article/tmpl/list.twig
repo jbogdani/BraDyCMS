@@ -50,7 +50,7 @@
 </div>
 <script>
 $('#{{ uid }} a.reload').click(function(){
-	admin.tabs.reloadActive();
+	admin.tabs.reloadThis(this);
 	return false;
 });
 
@@ -113,7 +113,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
                       $.get('controller.php?obj=article_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
                         admin.message(data.text, data.type);
                         if (data.type === 'success'){
-                          admin.tabs.reloadActive();
+                          admin.tabs.reloadThis('#{{ uid }}');
                         }
                       }, 'json')
                     }

@@ -181,14 +181,14 @@ $('#resize-{{ uid}}').submit(function(){
 		$.get('controller.php?obj=media_ctrl&method=resize&param[]={{ file }}&param[]=' + width, function(data){
 			admin.message(data.text, data.status);
 			if(data.status == 'success'){
-				admin.tabs.reloadActive();
+				admin.tabs.reloadThis('#resize-{{ uid }}');
 			}
 		}, 'json');
 	}
 });
 
 
-$('#crop-{{ uid}}').submit(function(){
+$('#crop-{{ uid }}').submit(function(){
 	var width = parseInt($(this).find(':input[name="width"]').val()),
 	height = parseInt($(this).find(':input[name="height"]').val()),
 	offset_x = parseInt($(this).find('input[name="offset_x"]').val()),
@@ -202,7 +202,7 @@ $('#crop-{{ uid}}').submit(function(){
 		$.get('controller.php?obj=media_ctrl&method=crop&param[]={{ file }}&param[]=' + arguments, function(data){
 			admin.message(data.text, data.status);
 			if(data.status == 'success'){
-				admin.tabs.reloadActive();
+				admin.tabs.reloadThis('#crop-{{ uid }}');
 			}
 		}, 'json');
 	}
@@ -210,12 +210,12 @@ $('#crop-{{ uid}}').submit(function(){
 
 $('#convert-{{ uid}}').submit(function(){
 	var format = $(this).find(':input[name="format"]').val(); 
-	if (format == '{{ pathinfo.extension }}'){
+	if (format === '{{ pathinfo.extension }}'){
 		admin.message('{{ tr.get('no_change_to_save') }}', 'error');
 	} else {
 		$.get('controller.php?obj=media_ctrl&method=convert&param[]={{ file }}&param[]={{ pathinfo.dirname }}/{{ pathinfo.filename }}.' + format, function(data){
 			admin.message(data.text, data.status);
-			if (data.status == 'success'){
+			if (data.status === 'success'){
 				admin.tabs.closeActive();
 				admin.tabs.reloadActive();
 			}

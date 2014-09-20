@@ -38,7 +38,7 @@
               $.get('controller.php?obj=sys_translate_ctrl&method=add_locale&param[]=' + new_locale, function(data){
                 admin.message(data.text, data.status);
                 if (data.status == 'success'){
-                  admin.tabs.reloadActive();
+                  admin.tabs.reloadThis('#but_{{ uid }}');
                 }
               }, 'json');
             }

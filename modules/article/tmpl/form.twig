@@ -280,7 +280,7 @@
   {% endif %}
     
 	$('a.reload').click(function(){
-		admin.tabs.reloadActive();
+		admin.tabs.reloadThis(this);
 		return false;
 	});
   
@@ -351,7 +351,7 @@
               
               if (data.status === 'success'){
                 $('#edit_form{{ uid }}').submit();
-                admin.tabs.reloadActive();
+                admin.tabs.reloadThis('#file_uploader_{{ uid }}');
               }
 					}, 'json');
 				}
@@ -373,7 +373,7 @@
             if (data.status === 'success')
             {
               $('#edit_form{{ uid }}').submit();
-              admin.tabs.reloadActive();
+              admin.tabs.reloadThis('#{{ uid }}');
             }
 
           }, 'json');
@@ -386,19 +386,18 @@
 		$.get('controller.php?obj=article_ctrl&method=delete_art_img&param[]={{ art.id }}', function(data){
 			admin.message(data.text, data.status);
 			$('#edit_form{{ uid }}').submit();
-			admin.tabs.reloadActive();
+			admin.tabs.reloadThis('#{{ uid }}');
 		}, 'json');
 	});
   
   $('#{{ uid }} .create_gallery').on('click', function(){
     var name = $(this).data('name');
-    console.log(name);
-    
+    var $this = this;
     $.getJSON('controller.php?obj=galleries_ctrl&method=addGallery&param[]=' + name, function(data){
       admin.message(data.text, data.status);
       if (data.status === 'success'){
         $('#edit_form{{ uid }}').submit();
-        admin.tabs.reloadActive();
+        admin.tabs.reloadThis('#{{ uid }}');
         window.location = '#galleries/edit/' + name;
       }
     });

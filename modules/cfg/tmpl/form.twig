@@ -588,7 +588,7 @@ $('#form-{{ uid }}').on('submit', function(){
   $.post('controller.php?obj=cfg_ctrl&method=save', $(this).serialize(), function(data){
 		admin.message(data.text, data.status);
 		if(data.status === 'success'){
-			admin.tabs.reloadActive();
+			admin.tabs.reloadThis('#form-{{ uid }}');
       $('#submit-{{ uid }}').button('reset');
 		}
 	}, 'json');

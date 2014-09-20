@@ -55,9 +55,10 @@
     
 <script>
   $('#{{ uid }} .create_backup').on('click', function(){
+    var $this = this;
     $.getJSON('controller.php?obj=backup_ctrl&method=createNew', function(data){
       if (data.status === 'success'){
-        admin.tabs.reloadActive();
+        admin.tabs.reloadThis('#{{ uid }}');
       }
       
       admin.message(data.text, data.status);
@@ -80,7 +81,7 @@
           'click': function(){
             $.getJSON('controller.php?obj=backup_ctrl&method=deleteBackup&param[]=' + file, function(data){
               if (data.status === 'success'){
-                admin.tabs.reloadActive();
+                admin.tabs.reloadThis('#{{ uid }}');
               }
               
               admin.message(data.text, data.status);
@@ -113,7 +114,7 @@
             
             $.getJSON('controller.php?obj=backup_ctrl&method=restoreBackup&param[]=' + file, function(data){
               if (data.status === 'success'){
-                admin.tabs.reloadActive();
+                admin.tabs.reloadThis('#{{ uid }}');
               }
               
               admin.message(data.text, data.status);

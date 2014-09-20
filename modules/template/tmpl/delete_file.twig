@@ -50,7 +50,7 @@
 			admin.message(data.text, data.status);
       
       if (data.status === 'success'){
-        admin.tabs.reloadActive();
+        admin.tabs.reloadThis('#{{ uid }}');
       }
 		}, 'json');
   });

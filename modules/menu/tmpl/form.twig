@@ -68,7 +68,7 @@
 				<div class="btn-group">
 					<button class="btn btn-success" type="submit"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
 
-					<button class="btn btn-default" type="button" onclick="admin.tabs.reloadActive()"><i class="icon ion-refresh"></i> Reload</button>
+					<button class="btn btn-default" type="button" onclick="admin.tabs.reloadThis(this)"><i class="icon ion-refresh"></i> Reload</button>
 					{% if menu.id %}
 					<button class="btn btn-danger delete" type="button" data-id="{{ menu.id }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
 					{% endif %}
@@ -324,7 +324,7 @@
 			admin.message(data.text, data.status);
 			
 			if (data.status == 'success'){
-				admin.tabs.reloadActive();
+				admin.tabs.reloadThis('#{{ uid }}');
 			}
 		}, 'json');
 	});

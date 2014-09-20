@@ -39,7 +39,7 @@ class error_log_ctrl
 		?>
 			<script>
 				$('.log-reload').click(function(){
-					admin.tabs.reloadActive();
+					admin.tabs.reloadThis(this);
 				});
 				$('.log-delete').click(function(){
 					$.get('controller.php?obj=error_log_ctrl&method=delete', function(data){

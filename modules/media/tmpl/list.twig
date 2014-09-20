@@ -9,7 +9,7 @@
 	<div class="clearfix well well-sm">
     
     <button class="btn btn-success btn-sm" title="{{ tr.get('reload') }}" 
-            onclick="admin.tabs.reloadActive();">
+            onclick="admin.tabs.reloadThis(this);">
       <i class="icon ion-refresh"></i>
     </button>
 
@@ -124,13 +124,14 @@
 	});
 	
 	admin.upload(
-			$('#file-uploader_{{ uid }}')[0],
-			'controller.php?obj=utils&method=upload&param[]={{ path }}',
-			{
-				loaded: function(){
-					admin.tabs.reloadActive();
-				}
-			});
+    $('#file-uploader_{{ uid }}')[0],
+    'controller.php?obj=utils&method=upload&param[]={{ path }}',
+    {
+      loaded: function(){
+        admin.tabs.reloadThis('#file-uploader_{{ uid }}');
+      }
+    }
+  );
 
 	$('#{{ uid }} li.openpop').popover({
 		html:true,
@@ -254,7 +255,7 @@
                 admin.message('{{ tr.get('ok_all_thumbails_created', true) }}', 'success');
               }
               $('#modal').modal('hide');
-              admin.tabs.reloadActive();
+              admin.tabs.reloadThis('#{{ uid }}');
             });
 
           }

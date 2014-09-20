@@ -62,7 +62,7 @@
 							admin.message(data.text, data.status);
 							if (data.status == 'success'){
 								$('#modal').modal('hide');
-								admin.tabs.reloadActive();
+								admin.tabs.reloadThis('#{{ uid }}');
 							}
 						}, 'json');
 					}

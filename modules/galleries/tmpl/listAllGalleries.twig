@@ -5,7 +5,7 @@
 	<div class="well well-sm clearfix">
 		<div class="btn-group">
 			<a class="btn btn-info add_new" href="#" title="{{ tr.get('new_gallery') }}"><i class="icon ion-plus"></i> {{ tr.get('new_gallery') }}</a>
-			<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
+			<a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
 		</div>
 			<div class="pull-right col-sm-2">
 				<input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />

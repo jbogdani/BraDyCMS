@@ -5,7 +5,7 @@
 		{% if files|length == 0 %}
 			<button class="btn btn-danger delete-node" type="button">{{ tr.get('delete_download_node') }}</button>
 		{% endif %}
-		<a class="btn btn-default reload" onclick="admin.tabs.reloadActive();" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
+		<a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
 		{% for lng in langs %}
 		<a class="btn btn-default" href="#downloads/edit/{{ node }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}"><i class="icon ion-shuffle"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}</a>
 		{% endfor %}
@@ -98,7 +98,7 @@
       'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=removeSpaces',
       {
 				loaded: function(){
-					admin.tabs.reloadActive();
+					admin.tabs.reloadThis('#{{ uid }}');
 				}
 			}
 			);
@@ -124,7 +124,7 @@
         if ($this.parents('div.listitem').siblings().length > 0){
           $this.parents('div.listitem').remove();
 				} else {
-					admin.tabs.reloadActive();
+					admin.tabs.reloadThis('#{{ uid }}');
 				}
 			}
 		}, 'json');

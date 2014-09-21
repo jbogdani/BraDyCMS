@@ -1,3 +1,4 @@
+3.8.0[] = "user.log and logAttempts.log files are now moved to main logs directory and a full control to check if folder and files are writable is performed"
 3.8.0[] = "Replaced spinner.gif with ion-loading-c in HTML and CSS"
 3.8.0[] = "Replaced (almost) all instances of admin.tabs.reloadActive with admin.tabs.reloadThis"
 3.8.0[] = "Removed deprecated admin:debug and admin:mini directive from .htaccess"

@@ -11,7 +11,7 @@ class log_ctrl extends Controller
   
   private function updateUsersLog($user, $action = ' in')
   {
-    $users_log = './sites/default/users.log';
+    $users_log = MAIN_DIR . 'logs/users.log';
 		
 		// Create users log if it does not exist
 		if (!file_exists($users_log))
@@ -74,7 +74,7 @@ class log_ctrl extends Controller
      *  checks if actual IP was the last IP to try to enter
      *  if so, checks if now isat least 1 sec after last attempt
      */
-    $logAttempt = './sites/default/logAttempts.log';
+    $logAttempt = MAIN_DIR . 'logs/logAttempts.log';
     
     $ip = $_SERVER['REMOTE_ADDR'];
     

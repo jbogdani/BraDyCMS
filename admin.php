@@ -38,7 +38,19 @@ catch (Exception $e)
     
     if ($stop_error)
     {
-      $admin->showError($stop_error);
+      
+      if ($admin)
+      {
+        $admin->showError($stop_error);
+      }
+      else
+      {
+        echo '<div class="container">'
+          . '<div class="alert alert-danger text-center">Something went wrong! '
+            . $stop_error 
+          . '</div>'
+        . '</div>';
+      }
     }
     else if (defined('CREATE_SITE'))
     {

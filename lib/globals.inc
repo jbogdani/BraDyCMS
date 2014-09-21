@@ -39,8 +39,34 @@ if (!is_dir(MAIN_DIR . 'logs'))
 
 if (!file_exists(MAIN_DIR . 'logs/error.log'))
 {
-  touch(MAIN_DIR . 'logs/error.log');
+  @touch(MAIN_DIR . 'logs/error.log');
 }
+
+if (!file_exists(MAIN_DIR . 'logs/users.log'))
+{
+  if (file_exists('sites/default/users.log'))
+  {
+    @rename('sites/default/users.log', MAIN_DIR . 'logs/users.log');
+  }
+  
+  if (!file_exists(MAIN_DIR . 'logs/users.log'))
+  {
+    @touch(MAIN_DIR . 'logs/users.log');
+  }
+}
+
+if (!file_exists(MAIN_DIR . 'logs/logAttempts.log'))
+{
+  // TODO: remove
+  if (file_exists('sites/default/logAttempts.log'))
+  {
+    @rename('sites/default/logAttempts.log', MAIN_DIR . 'logs/logAttempts.log');
+  }
+  if (!file_exists(MAIN_DIR . 'logs/logAttempts.log')){
+    @touch(MAIN_DIR . 'logs/logAttempts.log');
+  }
+}
+
 
 // SETS ERROR REPORTING
 $err_code = 6135; // E_ALL & ~E_NOTICE, i.e.: 6143 (E_ALL) - 8 (E_NOTICE)
@@ -136,4 +162,24 @@ else if (cfg::get('db_connection'))
 if(defined('CREATE_SITE') || (!defined('CREATE_SITE') && !cfg::get('debug')))
 {
   R::freeze( true );
+}
+
+
+$writeables = array(
+  MAIN_DIR . 'logs',
+  ERR_LOG,
+  MAIN_DIR . 'logs/users.log',
+  MAIN_DIR . 'logs/logAttempts.log',
+  TMP_DIR,
+  IMG_DIR,
+  LOCALE_DIR,
+  CACHE_DIR
+);
+
+foreach ($writeables as $f)
+{
+  if (!is_writable($f))
+  {
+    throw new Exception(tr::sget('permission_error', $f));
+  }
 }

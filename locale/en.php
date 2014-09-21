@@ -159,6 +159,7 @@ $_lang['img_deleted_thumb_json_not_deleted'] = "Warning. The image was deleted, 
 $_lang['img_thumb_data_deleted'] = "The image, the thumbnail and the image data were successfully deleted";
 $_lang['translation_in_lang'] = "Translate in %s";
 $_lang['error_check_log'] = "Error. Something went wrong! Check error log for details";
+$_lang['permission_error'] = "The file or folder %s is not writeable! Please check file permissions.";
 $_lang['please_sign_in'] = "Please sign in";
 $_lang['email_address'] = "Email address";
 $_lang['password'] = "Password";

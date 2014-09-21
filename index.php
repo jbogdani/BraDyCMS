@@ -46,6 +46,7 @@ try
 }
 catch (Exception $e)
 {
+  header('Content-Type: text/html; charset=utf-8');
 	if ($_SESSION['debug'])
 	{
 		var_dump($e);

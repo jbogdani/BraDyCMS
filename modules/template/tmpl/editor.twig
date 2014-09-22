@@ -35,9 +35,9 @@
       .replace(/<\/div>/gi,'')
       .replace(/<br>/gi, "\n")
       .replace(/<br \/>/gi, "\n")
-      .replace(/%/gi, '\%');
-    var text = $(html).text();
-		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: text }, function(data){
+      .replace(/%/gi, '\%')
+    ;
+		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: $(html).text() }, function(data){
 			admin.message(data.text, data.status);
       self.button('reset');
 		}, 'json');

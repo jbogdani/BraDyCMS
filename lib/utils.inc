@@ -393,18 +393,28 @@ class utils
    */
 	public static function write_in_file ( $file, $text = false, $type = false )
 	{
-		if ( $type != 'gz' )
+    if (!is_writable($file))
+    {
+      error_log('File ' . $file . ' is not writable');
+      return false;
+    }
+		if ( $type !== 'gz' )
 		{
 			$f = fopen($file, 'w');
 				
       if (!$f)
       {
+        error_log('Can not open file ' . $file);
         return false;
       }
 				
 			if ($text)
 			{
-				if ( !@fwrite ( $f, ($type == 'json'  ?  json_encode($text, ((phpversion() >= 5.4) ? JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT : false)) : $text ) ) ) return false;
+				if ( !@fwrite ( $f, ($type === 'json'  ?  json_encode($text, ((phpversion() >= 5.4) ? JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT : false)) : $text ) ) )
+        {
+          error_log('Can not write in ' . $file);
+          return false;
+        }
 			}
 				
 			@fclose($f);
@@ -417,9 +427,17 @@ class utils
 				
 			$gzh = @gzopen($file,'w9');
 				
-			if ( !$gzh ) return false;
+			if ( !$gzh )
+      {
+        error_log('Can not open gzipped file ' . $file);
+        return false;
+      }
 	
-			if ( !@gzwrite($gzh, $text) ) return false;
+			if ( !@gzwrite($gzh, $text) )
+      {
+        return false;
+        error_log('Can not write in ' . $file);
+      }
 				
 			@gzclose($gzh);
 				

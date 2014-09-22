@@ -13,6 +13,7 @@
 3.8.0[] = "Template manager is now a function limited to admin users"
 3.8.0[] = "Added the possibility to limit the execution of modules to admin users in Controller object"
 
+3.7.10[]  = "Metadata policy changed: if present custom_title will be used only for html and OpenGraph metadata set"
 3.7.9[] = "utils::write_in_file returns false if file is not writable"
 3.7.9[] = "Minor bug fixed in missing email message"
 3.7.8[] = "Bug fixed with template editor and  metacharacter"

@@ -102,7 +102,7 @@ class log_ctrl extends Controller
     {
       if (!filter_var($this->post['username'], FILTER_VALIDATE_EMAIL))
       {
-        throw new Exception(tr::get('invalid_email'));
+        throw new Exception(tr::sget('invalid_email', tr::get('email_address')));
       }
       
       $username = $this->post['username'];

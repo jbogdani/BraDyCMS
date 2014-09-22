@@ -308,10 +308,10 @@ class Out
     // customtitle field is set in cfg and is not empty
     if ($this->data['article'][$this->get['art_title']]['customtitle'])
     {
-      $this->data['page']['title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customtitle']);
+      $this->data['page']['custom_title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customtitle']);
     }
     // article title
-    else if ($this->data['article'][$this->get['art_title']]['title'])
+    if ($this->data['article'][$this->get['art_title']]['title'])
     {
       $this->data['page']['title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['title']);
     }

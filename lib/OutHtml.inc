@@ -19,7 +19,7 @@ class OutHtml extends Out
 		$html = "\n  <!-- HTML metadata -->" .
 				"\n  " . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />' .
 				"\n  " . '<meta name="robots" content="' . $this->getPageData('robots') . '" />' .
-				"\n  " . '<title>' . $this->getPageData('title') . '</title>' .
+				"\n  " . '<title>' . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title') : $this->getPageData('title') ) . '</title>' .
 				"\n  " . '<meta name="description" content="' . $this->getPageData('description', true) . '" />' .
 				"\n  " . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />' .
 				"\n  " . '<meta lang="' . $this->getPageData('lang', true) . '" />' .
@@ -29,7 +29,9 @@ class OutHtml extends Out
 		if (!$no_og)
 		{
 			$html .= "\n\n  <!-- Open Graph metadata -->" .
-					"\n  " . '<meta property="og:title" content="' . $this->getPageData('title', true) . '" />' .
+					"\n  " . '<meta property="og:title" content="' 
+            . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) ) 
+            . '" />' .
 					"\n  " . '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />' .
 					"\n  " . '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />' .
 					( $this->getPageData('image') ? "\n  " . '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />' : '' )

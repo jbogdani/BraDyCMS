@@ -1,3 +1,4 @@
+3.7.9[] = "utils::write_in_file returns false if file is not writable"
 3.7.9[] = "Minor bug fixed in missing email message"
 3.7.8[] = "Bug fixed with template editor and  metacharacter"
 3.7.8[] = "Bug fixed with missing DOI prefix"

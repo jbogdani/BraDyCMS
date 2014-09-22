@@ -29,10 +29,15 @@
     
     var self =  $(this);
     self.button('loading');
-    
-    var html = $('#txt_{{ uid }}').html().replace(/<div>/gi,'<br>').replace(/<\/div>/gi,'').replace(/<br>/gi, "\n").replace(/<br \/>/, "\n");
-    
-		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: $(html).text() }, function(data){
+    var html = $('#txt_{{ uid }}')
+      .html()
+      .replace(/<div>/gi,'<br>')
+      .replace(/<\/div>/gi,'')
+      .replace(/<br>/gi, "\n")
+      .replace(/<br \/>/gi, "\n")
+      .replace(/%/gi, '\%');
+    var text = $(html).text();
+		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: text }, function(data){
 			admin.message(data.text, data.status);
       self.button('reset');
 		}, 'json');

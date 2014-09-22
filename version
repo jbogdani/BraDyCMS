@@ -1,4 +1,5 @@
 3.7.9[] = "Minor bug fixed in missing email message"
+3.7.8[] = "Bug fixed with template editor and  metacharacter"
 3.7.8[] = "Bug fixed with missing DOI prefix"
 3.7.7[] = "seo_ctrl::* added to Controllers' white list"
 3.7.6[] = "Rel attribute of galleries can be set externally (using customtag attributes)"

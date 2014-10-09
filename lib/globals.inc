@@ -55,7 +55,7 @@ if (!file_exists(MAIN_DIR . 'logs/users.log'))
   }
 }
 
-if (!file_exists(MAIN_DIR . 'logs/logAttempts.log'))
+if (!defined('MAIN_DIR') && !file_exists(MAIN_DIR . 'logs/logAttempts.log'))
 {
   // TODO: remove
   if (file_exists('sites/default/logAttempts.log'))
@@ -66,6 +66,7 @@ if (!file_exists(MAIN_DIR . 'logs/logAttempts.log'))
     @touch(MAIN_DIR . 'logs/logAttempts.log');
   }
 }
+
 
 
 // SETS ERROR REPORTING
@@ -176,10 +177,13 @@ $writeables = array(
   CACHE_DIR
 );
 
-foreach ($writeables as $f)
+if (!defined('MAIN_DIR'))
 {
-  if (!is_writable($f))
+foreach ($writeables as $f)
   {
-    throw new Exception(tr::sget('permission_error', $f));
+    if (!is_writable($f))
+    {
+      throw new Exception(tr::sget('permission_error', $f));
+    }
   }
 }

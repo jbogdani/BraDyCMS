@@ -393,7 +393,7 @@ class utils
    */
 	public static function write_in_file ( $file, $text = false, $type = false )
 	{
-    if (!is_writable($file))
+    if (file_exists($file) && !is_writable($file))
     {
       error_log('File ' . $file . ' is not writable');
       return false;

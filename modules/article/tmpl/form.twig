@@ -311,7 +311,7 @@
 	
 	$('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
 
-	$('#edit_form{{ uid }}').submit( function(){
+	$('#edit_form{{ uid }}').on('submit', function(){
 
 		var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
 

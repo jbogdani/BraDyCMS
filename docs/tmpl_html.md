@@ -184,6 +184,46 @@ E.g.: `{{ html.getArticlesByTag('news', 'web') }}`
 
 ---
 
+#### getArticlesByTagArray(tags, dontparse)
+Returns array of articles arrays matching all tags provided in tags array.
+If dontparse is not null, articles texts will not be parsed (customtags will not be replaced)
+- **tags** array, requited. Array of tags
+- **dontparse** boolean, default false. If true article texts will not be parsed
+
+E.g.: `{{ html.getArticlesByTag(['news', 'web']) }}`
+    array(
+      array(
+        'id' => integer,
+        'title' => string,
+        'textid' => string,
+        'sort' => integer,
+        'summary' => string,
+        'text' => string,
+        'keywords' => string,
+        'author' => string,
+        'status' => string,
+        'section' => string,
+        'tags' => array('string', 'string', 'etc..'),
+        'created' => datestamp,
+        'publish' => datestamp,
+        'expires' => datestamp,
+        'updated' => boolean,
+        'url' => string,
+        'full_url' => string
+      ), 
+      array(
+        'id' => integer,
+        'title' => string,
+        'textid' => string,
+        'sort' => integer,
+        'summary' => string,
+        'text' => string,
+        ...
+      ),
+      ...
+    )
+---
+
 #### getArticleTags()
 Returns array of tags for current article
 

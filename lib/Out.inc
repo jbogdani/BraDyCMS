@@ -237,11 +237,11 @@ class Out
 	 * @param array $tags array of tags
 	 * @return type
 	 */
-	public function getArticlesByTagArray($tags)
+	public function getArticlesByTagArray($tags, $dontparse = false)
 	{
     $arts = Article::getByTag($tags, $this->lang, $this->get['tag_all']);
     
-    if (is_array($arts))
+    if (is_array($arts) && !$dontparse)
     {
       foreach($arts as &$art)
       {

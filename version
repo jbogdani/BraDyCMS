@@ -1,3 +1,4 @@
+3.8.0[] = "html.getArticlesByTagArray accepts now a second parameter that avoids article text from custom tags parsing"
 3.8.0[] = "Bug fixed with new site creation procedure"
 3.8.0[] = "Shortcut menu of administrator backend is hidden in xs displays"
 3.8.0[] = "user.log and logAttempts.log files are now moved to main logs directory and a full control to check if folder and files are writable is performed"

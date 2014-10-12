@@ -16,14 +16,15 @@ class OutHtml extends Out
 	 */
 	public function metadata($no_og = false)
 	{
-		$html = "\n  <!-- HTML metadata -->" .
-				"\n  " . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />' .
-				"\n  " . '<meta name="robots" content="' . $this->getPageData('robots') . '" />' .
-				"\n  " . '<title>' . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title') : $this->getPageData('title') ) . '</title>' .
-				"\n  " . '<meta name="description" content="' . $this->getPageData('description', true) . '" />' .
-				"\n  " . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />' .
-				"\n  " . '<meta lang="' . $this->getPageData('lang', true) . '" />' .
-				"\n  " . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+		$html = "\n  <!-- HTML metadata -->"
+      . "\n  " . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
+      . "\n  " . '<meta name="robots" content="' . $this->getPageData('robots') . '" />'
+      . "\n  " . '<title>' . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title') : $this->getPageData('title') ) . '</title>'
+      . "\n  " . '<meta name="description" content="' . $this->getPageData('description', true) . '" />'
+      . "\n  " . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />'
+      . "\n  " . '<meta lang="' . $this->getPageData('lang', true) . '" />'
+      . "\n  " . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+      . "\n  " . '<meta name="generator" content="BraDyCMS ' . $this->getVersion() . '">'
 			;
 
 		if (!$no_og)

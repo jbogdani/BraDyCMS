@@ -164,7 +164,7 @@ class template_ctrl extends Controller
 				break;
 		}
 		
-		$content = file_get_contents($file);
+		$content = file_exists($file) ? file_get_contents($file) : '';
 
 		$this->render('template', 'editor', array(
 				'filename' => $file,
@@ -227,17 +227,19 @@ class template_ctrl extends Controller
 	public function save()
 	{
 		$file = $this->get['param'][0];
-		$post = $this->post;
+		$text = $this->post['text'];
+    
+    error_log(var_export($this->post, true));
 		
 		if ($file)
 		{
-			try
+      try
 			{
-				if (!utils::write_in_file($file, $post['text']))
+				if (!utils::write_in_file($file, $text))
 				{
-					throw new Exception('Can not write in file ' . $full_file);
+          throw new Exception('Can not write in file ' . $file);
 				}
-				$ret = array('status' => 'success', 'text' => 'File updated');
+        $ret = array('status' => 'success', 'text' => 'File updated');
 			}
 			catch(Exception $e)
 			{

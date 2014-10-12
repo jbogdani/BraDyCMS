@@ -31,13 +31,16 @@
     self.button('loading');
     var html = $('#txt_{{ uid }}')
       .html()
-      .replace(/<div>/gi,'<br>')
+      .replace(/<div>/gi,"\n")
       .replace(/<\/div>/gi,'')
       .replace(/<br>/gi, "\n")
       .replace(/<br \/>/gi, "\n")
-      .replace(/%/gi, '\%')
+      .replace(/%/gi, '\%');
     ;
-		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: $(html).text() }, function(data){
+    
+    var tmpdiv = $('<div></div>').html(html);
+    
+		$.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: tmpdiv.text() }, function(data){
 			admin.message(data.text, data.status);
       self.button('reset');
 		}, 'json');

@@ -391,58 +391,34 @@ class utils
    * @param string $type gz|json|false. If gz the $file will be gzipped, if json $text will be json_encoded
    * @return boolean
    */
-	public static function write_in_file ( $file, $text = false, $type = false )
+	public static function write_in_file ( $file, $text = '', $type = false )
 	{
     if (file_exists($file) && !is_writable($file))
     {
       error_log('File ' . $file . ' is not writable');
       return false;
     }
-		if ( $type !== 'gz' )
-		{
-			$f = fopen($file, 'w');
-				
-      if (!$f)
-      {
-        error_log('Can not open file ' . $file);
-        return false;
-      }
-				
-			if ($text)
-			{
-				if ( !@fwrite ( $f, ($type === 'json'  ?  json_encode($text, ((phpversion() >= 5.4) ? JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT : false)) : $text ) ) )
-        {
-          error_log('Can not write in ' . $file);
-          return false;
-        }
-			}
-				
-			@fclose($f);
-				
-			return true;
-		}
-		else
-		{
-			$file .= '.gz';
-				
-			$gzh = @gzopen($file,'w9');
-				
-			if ( !$gzh )
-      {
-        error_log('Can not open gzipped file ' . $file);
-        return false;
-      }
-	
-			if ( !@gzwrite($gzh, $text) )
-      {
-        return false;
-        error_log('Can not write in ' . $file);
-      }
-				
-			@gzclose($gzh);
-				
-			return true;
-		}
+    
+    if ($type === 'json')
+    {
+      $text = json_encode($text, ((phpversion() >= 5.4) ? JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT : false));
+    }
+    
+    if ($type === 'gz')
+    {
+      $file .= '.gz';
+      $text = gzencode($text, 9);
+    }
+    
+    $result = @file_put_contents($file, $text);
+    
+    if ($result === false)
+    {
+      error_log('Can not write in ' . $file);
+      return false;
+    }
+    return true;
+		
 	}
 	
   /**

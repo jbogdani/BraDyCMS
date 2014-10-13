@@ -1,3 +1,4 @@
+3.8.0[] = "Bug fixed with update .htaccess function: RewriteBase / was not written"
 3.8.0[] = "Added html meta tag generator in html.metadata"
 3.8.0[] = "Bug fixed with text parsing in template editor module"
 3.8.0[] = "utils::write_in_file uses now file_put_contents to write text"

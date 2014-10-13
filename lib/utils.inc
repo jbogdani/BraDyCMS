@@ -457,9 +457,6 @@ class utils
     
     $otherDirectives = cfg::get('moreHtaccessDirectives');
     
-    error_log($rewriteBase);
-    error_log($otherDirectives);
-    
     if (!$rewriteBase || $rewriteBase === '/')
     {
       $rewriteBase = '/';
@@ -470,7 +467,7 @@ class utils
     $startDelete = false;
     foreach($htaccess_arr as &$row)
     {
-      if (strpos($row, 'RewriteBase') === 0 && $rewriteBase && $rewriteBase !== '/')
+      if (strpos($row, 'RewriteBase') === 0 )
       {
         $row = 'RewriteBase ' . $rewriteBase . "\n";
       }

@@ -312,6 +312,14 @@
 	$('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
 
 	$('#edit_form{{ uid }}').on('submit', function(){
+    
+    var textid = $(this).find('input[name="textid"]').val();
+    if (!textid || textid === ''){
+      admin.message(admin.tr('textid_cannot_be_empty'), 'error');
+      $(this).find('input[name="textid"]').focus();
+      return false;
+    }
+    
 
 		var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
 

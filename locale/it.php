@@ -47,6 +47,7 @@ $_lang['save'] = "Salva";
 $_lang['reset'] = "Annulla";
 $_lang['custom_fields'] = "Campi personalizzati";
 $_lang['duplicate_textid'] = "Il valore %s è già stato usato come ID testuale. Si prega di cambiarlo prima di procedere";
+$_lang['textid_cannot_be_empty'] = "L'ID testuale dell'articolo non può essere vuoto. Si prega di inserire un valore prima di continuare.";
 $_lang['article_image'] = "Immagine dell'articolo";
 $_lang['no_art_img_available'] = "Questo articolo non dispone di una immagine associata";
 $_lang['cfg_art_img_missing'] = "Manca la configurazione delle dimensioni dell'immagine di articolo";

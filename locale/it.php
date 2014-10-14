@@ -138,6 +138,7 @@ $_lang['error_gallery_does_not_exist'] = "Errore. La galleria non esiste";
 $_lang['error_new_gallery_name_exist'] = "Errore. Il nome inserito è già stato usato per una galleria. Si prega di inserire un nome diverso e di riprovare";
 $_lang['ok_gallery_renamed'] = "La galleria è stata rinominata con successo";
 $_lang['rename_gallery'] = "Rinomina galleria";
+$_lang['file_names_will_be_sanitized'] = "I nomi dei file saranno normalizzati: i nomi e le estensioni verrano riportati in carattere minuscolo, gli spazi verranno sostituiti da linea bassa, e i seguenti caratteri verranno eliminati: ()[]'',{}";
 $_lang['downloads'] = "Scaricamenti";
 $_lang['new_download_node'] = "Aggiungi un nuovo nodo scaricamenti";
 $_lang['download_node_name'] = "Nome del nodo";

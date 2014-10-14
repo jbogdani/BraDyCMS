@@ -95,7 +95,7 @@
 <script>
   admin.upload(
     $('#{{ uid }} div.uploader')[0],
-      'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=removeSpaces',
+      'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize',
       {
 				loaded: function(){
 					admin.tabs.reloadThis('#{{ uid }}');

@@ -265,9 +265,9 @@ class utils
 	/**
    * Upload file and returns information about uploaded file
    * @param string $upload_dir  Directrory where the file will be uploaded
-   * @param boolean $removeSpaces
+   * @param boolean $sanitize
    */
-	public static function upload($upload_dir, $removeSpaces = false)
+	public static function upload($upload_dir, $sanitize = false)
 	{
 		$allowedExtensions = array();
 		
@@ -275,7 +275,7 @@ class utils
 		
 		$uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
 		
-		$result = $uploader->handleUpload($upload_dir . '/', false, $removeSpaces);
+		$result = $uploader->handleUpload($upload_dir . '/', false, $sanitize);
 		
 		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 	}

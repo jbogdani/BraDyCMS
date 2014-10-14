@@ -31,6 +31,15 @@
       </div>
     </div>
 	</div>
+      
+  <div class="well well-sm clearfix">
+    <div class="text-info">
+      <i class="icon ion-information-circled"></i>
+      {{ tr.get('file_names_will_be_sanitized') }}
+    </div>
+  </div>
+      
+  
 	
 	
 	<div class="row">
@@ -76,16 +85,15 @@
   
   $('#{{ uid }}-th-dim').on('change', function(){
     var val = $(this).val();
-    
     if (!/^([0-9]{1,4})x([0-9]{1,4})$/.test(val)){
       admin.message(admin.tr('invalid_thumbnail_dimension'), 'error', false, true);
       $(this).val('{{ thumb_dimensions }}');
     }
-      
   });
+  
 	admin.upload(
 			$('#{{ uid }} div.uploader')[0],
-			'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=removeSpaces',
+			'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize',
 			{
 				loaded: function(){
 					admin.tabs.reloadThis('#{{ uid }}');

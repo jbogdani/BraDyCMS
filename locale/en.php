@@ -138,6 +138,7 @@ $_lang['error_gallery_does_not_exist'] = "Error. Original gallery does not exist
 $_lang['error_new_gallery_name_exist'] = "Error. The name you entered has already been used for a gallery. Please enter a new name and retry.";
 $_lang['ok_gallery_renamed'] = "The gallery was successfully renamed";
 $_lang['rename_gallery'] = "Rename gallery";
+$_lang['file_names_will_be_sanitized'] = "Filenames will be normalized: All file names and extension will be converted to lower case, spaces will be replaces by underscore and the following characters will be removed: ()[]'\",{}";
 $_lang['downloads'] = "Download";
 $_lang['new_download_node'] = "Add new download node";
 $_lang['download_node_name'] = "Node name";

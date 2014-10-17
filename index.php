@@ -7,19 +7,19 @@
  */
 try
 {
-	require_once 'lib/globals.inc';
+  require_once 'lib/globals.inc';
   
   if (defined('CREATE_SITE'))
   {
     header('location: ./admin');
   }
 
-	$outHtml = new OutHtml($_GET, $_SESSION['lang']);
+  $outHtml = new OutHtml($_GET, $_SESSION['lang']);
 	
-	$settings = unserialize(CACHE);
-	$settings['autoescape'] = false; 
+  $settings = unserialize(CACHE);
+  $settings['autoescape'] = false; 
 	
-	$twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), $settings);
+  $twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), $settings);
 	
 	if ($_SESSION['debug'])
 	{

@@ -273,7 +273,7 @@ E.g.: `{{ html.getDownloadNode('curricula') }}`
 #### getFilterTags()
 Returns array of URL tags used as filters
 
-E.g.: `{{ html.getFilterTag }}`
+E.g.: `{{ html.getFilterTags }}`
     array(
       'news',
       'web'

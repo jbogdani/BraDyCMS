@@ -1,3 +1,4 @@
+3.8.0[] = "Bug fixed with metadata exposing DOI"
 3.8.0[] = "Gallery filenames are sanitized before being saved to disk"
 3.8.0[] = "Template editor module sets hash on file delete and create actions"
 3.8.0[] = "Articles without Text ID will not be saved anymore"

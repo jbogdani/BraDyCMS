@@ -91,7 +91,7 @@ class OutHtml extends Out
 				
 				// Identifier.DOI
 				"\n  " . '<meta name="DC.Identifier.DOI" ' . 
-          'content="' . ($this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() . '.' : '') . 
+          'content="' . ($this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() : '') . 
           $art[$this->getMD()->getTable('id')] . '" />' .
 				
 				// Titile
@@ -201,7 +201,7 @@ class OutHtml extends Out
 				
 				// article doi
 				"\n  " . '<meta name="citation_doi" ' .
-          'content="' . ( $this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() . '.' : '') . 
+          'content="' . ( $this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() : '') . 
             ( $art[$this->getMD()->getTable('id')] ? 
               $art[$this->getMD()->getTable('id')] : '' ). '"/>' .
 		

@@ -326,12 +326,18 @@ Adds necessary HTML code to embed a Youtube video
 - **width**, int, optional. Video's width in pixels
 - **height**, int, optional. Video's height in pixels
 - **ratio**, string, optional. Can be '16by9' or '4by3'. No other values are allowed. If defined the Twitter Bootstrap responsive layout will be used (http://getbootstrap.com/components/#responsive-embed) and width and height values will be ignored. Twitter Bootstrap >= 3.2 is required
+- **align**, string, optional, default false. Can be left, right or center. If the align value is defined the container div will
+have the text-{align value} CSS class
 
 Minimal example:
     [[youtube]]youtube_id[[/youtube]]
 
 Complete example:
     [[youtube width="560" height="315"]]you_tube_id[[/youtube]]
+or
+    [[youtube ratio="4by3"]]you_tube_id[[/youtube]]
+or 
+    [[youtube width="560" height="315" align="center"]]you_tube_id[[/youtube]]
 
 ---
 

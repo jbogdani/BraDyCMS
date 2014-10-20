@@ -274,16 +274,27 @@ class customTags
    *  ratio: Video ratio: 4by3 or 16by9. If defined the Twitter Bootstrap responsive layout will be used (http://getbootstrap.com/components/#responsive-embed)
    *  width: if ratio is not defined the width will be used, default value is 560
    *  height: if ratio is not defined the height will be used, default value is 315
+   *  align: left, right, center, default false
    * @return string
    */
 	public static function youTube($data)
 	{
 		$code = $data['content'];
+    
+    if (!$code)
+    {
+      return;
+    }
 		$width = $data['width'] ? $data['width'] : 560;
 		$height = $data['height'] ? $data['height'] : 315;
     $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '' ? : '';
+    $align = $data['align'];
 		
-		return '<div' . ($ratio ? ' class="embed-responsive embed-responsive-' . $ratio . '"' : '') . '>'
+		return '<div' . ($ratio || $align ? ' class="'
+        . ($align ? ' text-' . $align : '')
+        . ($ratio ? ' embed-responsive embed-responsive-' . $ratio . '' : '')
+        . '"'
+      : '') . '>'
       . '<iframe '
         . ( $ratio ? ' class="embed-responsive-item" ' : ' width="' . $width . '" height="' . $height . '" ')
         .'src="http://www.youtube.com/embed/' . $code . '?rel=0" frameborder="0" allowfullscreen></iframe>'

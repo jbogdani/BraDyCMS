@@ -1,3 +1,4 @@
+3.8.0[] = "New site model refers now to Twitter Bootstrap 3.2.0"
 3.8.0[] = "Rounded user image in admin home page"
 3.8.0[] = "youtube custom tag accepts alignment setting"
 3.8.0[] = "bug fixed wilt youtube custom tag with missing youtube video id"

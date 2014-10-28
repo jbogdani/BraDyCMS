@@ -423,7 +423,7 @@ class customTags
         '<div class="addthis_sharing_toolbox"></div>'
       )
       )
-      . '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $pubid . '"></script>';
+      . '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $pubid . '" async="async"></script>';
 	}
 	
 	/**

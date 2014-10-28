@@ -1,3 +1,4 @@
+3.8.1[] = "AddThis custom tag code updated with async parameter"
 3.8.1[] = "OAI added to Controller's white list"
 3.8.0[] = "Updated Bootstrap Datepicker"
 3.8.0[] = "New site model refers now to Twitter Bootstrap 3.2.0"

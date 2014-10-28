@@ -57,18 +57,21 @@ A five-step guide to install and get running BraDyCMS
 * [http://cliffyoungltd.com](http://cliffyoungltd.com)
 * [costruzioniartigiane.it](http://costruzioniartigiane.it)
 * [e-review.it](http://e-review.it)
+* [Ghazni-project](http://ghazni.bradypus.net)
 * [iraq.routes-assn.org](http://iraq.routes-assn.org)
 * [medantico.org](http://medantico.org/)
 * [pastandpresent.al](http://pastandpresent.al)
+* [Resistenza mappe](http://resistenzamappe.it/admin)
 * [santamariainportuno.it](http://www.santamariainportuno.it)
 * [storicamente.org](http://storicamente.org)
-* [tozziindustries.com] (http://tozziindustries.com)
+* [tozziindustries.com](http://tozziindustries.com)
 * [laurabassi.it](http://laurabassi.it)
 
 ### Comming soon
-* Ghazni-project
-* Resistenza mappe
 * Cartografare il presente
+* Mission Archéologique Franco-Ouzbèke dans l'Oasis de Boukhara (Musée du Louvre)
+* Visualizzare Ravenna
+* Visualize Versilia
 
 
 ## Tecnical features

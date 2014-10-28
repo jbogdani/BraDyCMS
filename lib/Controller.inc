@@ -72,7 +72,8 @@ class Controller
       'admin_ctrl' => '*',
       'api_ctrl' => ['run'],
       'userform_ctrl' => ['process'],
-      'seo_ctrl' => '*'
+      'seo_ctrl' => '*',
+      'OAI_ctrl' => '*'
     ];
     
     return (

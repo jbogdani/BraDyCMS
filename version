@@ -1,3 +1,4 @@
+3.8.2[] = "Bug fixed with link to translation form in article list"
 3.8.1[] = "Updated list of sites using BraDyCMS"
 3.8.1[] = "AddThis custom tag code updated with async parameter"
 3.8.1[] = "OAI added to Controller's white list"

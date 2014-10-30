@@ -78,7 +78,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
           + '<a href="#article/edit/' + row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="icon ion-edit"></i></a>'
           
 						{% for lang in cfg_langs %}
-							+ ' <a href="#article/translate/{{ lang.id }}/{{ art.id }}" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="icon ion-shuffle"></i> {{ lang.id|upper }}</a>'
+							+ ' <a href="#article/translate/{{ lang.id }}/'+ row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="icon ion-shuffle"></i> {{ lang.id|upper }}</a>'
 						{% endfor %}
           + '<a href="#" class="btn btn-default btn-sm delete_article" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
           + '</div>'

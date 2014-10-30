@@ -14,24 +14,25 @@ class myTokenStore implements \oaiprovider\tokens\TokenStore
   {
     $sql = "
       CREATE TABLE IF NOT EXISTS oaitoken (
+        `id`  integer,
         `token` varchar(255) NOT NULL,
         `data` longtext NOT NULL,
-        `expirationDate` datetime NOT NULL,
-        PRIMARY KEY (`token`)
+        `expirationdate` datetime NOT NULL,
+        PRIMARY KEY (`id`)
       )
       ";
     R::exec($sql);
   }
   
-  function storeToken($token, $data, $expirationDate)
+  function storeToken($token, $data, $expirationdate)
   {
-    $this->assertTable();
+    //$this->assertTable();
     
     $tokObj = R::dispense('oaitoken');
     
     $tokObj->token = $token;
     $tokObj->data = $data;
-    $tokObj->expirationDate = date('Y-m-d H:i:s', $expirationDate);
+    $tokObj->expirationdate = date('Y-m-d H:i:s', $expirationdate);
       
     $id = R::store($tokObj);
    
@@ -39,8 +40,9 @@ class myTokenStore implements \oaiprovider\tokens\TokenStore
   
   function fetchToken($token)
   {
-    $this->assertTable();
-    return R::getCell( 'SELECT data FROM oai_resumptiontoken WHERE token=:token', array(':token', $token) );
+    //$this->assertTable();
+    $q = 'SELECT data FROM oaitoken WHERE token=' . $token;
+    return R::getCell( 'SELECT data FROM oaitoken WHERE token=:token', array(':token' => $token) );
   }
   
 }

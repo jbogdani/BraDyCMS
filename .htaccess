@@ -1,8 +1,6 @@
 RewriteEngine on
 RewriteBase /
 
-ErrorDocument 404 /index.php?art_title=not_found
-
 # robots
 RewriteRule ^robots.txt$ controller.php?obj=seo_ctrl&method=robots
 
@@ -60,6 +58,7 @@ RewriteCond %{REQUEST_URI} !\.(gif|jpg|png)$
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php?art_title=not_found [L]
+#ErrorDocument 404 /index.php?art_title=not_found
 
 <FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite|json)$">
 	order allow,deny

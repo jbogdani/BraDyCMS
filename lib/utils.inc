@@ -453,6 +453,8 @@ class utils
    */
   public static function update_htaccess()
   {
+    $file = file_exists('.htaccess-new') ? '.htaccess-new' : '.htaccess';
+      
     $rewriteBase = cfg::get('rewriteBase');
     
     $otherDirectives = cfg::get('moreHtaccessDirectives');
@@ -462,7 +464,7 @@ class utils
       $rewriteBase = '/';
     }
     
-    $htaccess_arr = file('.htaccess');
+    $htaccess_arr = file($file);
     
     $startDelete = false;
     foreach($htaccess_arr as &$row)
@@ -498,7 +500,32 @@ class utils
         "\r\n\r\n", "\n\n"
       ), $htaccessText);
     
-    return self::write_in_file('.htaccess', $htaccessText);
+    $ret = self::write_in_file($file, $htaccessText);
+    
+    if ($file === '.htaccess')
+    {
+      return $ret;
+    }
+    
+    if (!$ret)
+    {
+      return false;
+    }
+    
+    if(!@copy($file, '.htaccess'))
+    {
+      error_log('Can not copy file: ' . $file . ' to .htaccess');
+      return false;
+    }
+    
+    if (!@unlink($file))
+    {
+      error_log('Can not delete file: ' . $file);
+      return false;
+    }
+    
+    return true;;
+    
     
   }
 	

@@ -121,7 +121,7 @@ class Update
    * @return boolean
    * @throws Exception
    */
-  public function install($path, $dest)
+  public function install($path, $dest, $dontOvewriteHtacess = false)
   {
     if( is_dir($path) )
     {
@@ -147,11 +147,15 @@ class Update
           }
           else
           {
-              @copy( $path . '/' . $file, $dest . '/' . $file );
-              if(!file_exists($dest . '/' . $file))
-              {
-                throw new Exception('Can not copy file: ' . $dest . '/' . $file);
-              }
+            if ($file === '.htaccess' && $dontOvewriteHtacess)
+            {
+              $newfile = '.htaccess-new';
+            }
+            @copy( $path . '/' . $file, $dest . '/' . ($newfile ? $newfile : $file) );
+            if(!file_exists($dest . '/' . $file))
+            {
+              throw new Exception('Can not copy file: ' . $dest . '/' . $file);
+            }
           }
         }
       }

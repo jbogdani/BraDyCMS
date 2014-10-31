@@ -359,7 +359,7 @@
               
               if (data.status === 'success'){
                 $('#edit_form{{ uid }}').submit();
-                admin.tabs.reloadThis('#file_uploader_{{ uid }}');
+                admin.tabs.reloadThis('#{{ uid }}');
               }
 					}, 'json');
 				}
@@ -378,8 +378,7 @@
           function(data){
             admin.message(data.text, data.status);
             
-            if (data.status === 'success')
-            {
+            if (data.status === 'success'){
               $('#edit_form{{ uid }}').submit();
               admin.tabs.reloadThis('#{{ uid }}');
             }

@@ -190,7 +190,7 @@
 3.4.0[] = "Sitemap.xml is now handled as module"
 3.4.0[] = "Robots.txt is now handled as module and submits sitemap.xml"
 3.4.0[] = "index, follow added as option for robots meta tags"
-3.4.0[] = "Search extended also in textid and author fields 				"
+3.4.0[] = "Search extended also in textid and author fields"
 3.4.0[] = "Less compiler uses now oyejorge/less.php instead of leafo/lessphp"
 3.4.0[] = "OutHtml::ct has now a reference to main object as third argument"
 3.4.0[] = "Bug fixed: OAI interface was looking in erroneous directory for main configuration file"

@@ -1,4 +1,4 @@
-3.9.0[] = ".htaccess returne not found for image files and redirects to not_found article for other resources"
+3.9.0[] = ".htaccess returns not found for image files and redirects to not_found article for other resources"
 3.9.0[] = "Bug fixed with update module and .htaccess file being written before being updated with site customization"
 3.8.3[] = "Bug fixed with OAI interface (RedBead compatibility issue)"
 3.8.2[] = "Bug fixed with link to translation form in article list"

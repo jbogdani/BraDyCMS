@@ -73,6 +73,7 @@ class Controller
       'api_ctrl' => ['run'],
       'userform_ctrl' => ['process'],
       'seo_ctrl' => '*',
+      'feeds_ctrl' => '*',
       'OAI_ctrl' => '*'
     ];
     
@@ -95,12 +96,7 @@ class Controller
 			$obj = $this->request['obj'];
 			$method = $this->request['method'];
       
-      if (!$_SESSION['user_confirmed'] && !$this->nonNeed2Auth($obj, $method))
-      {
-        throw new Exception('Permission denied');
-      }
-			
-			unset($this->request['obj']);
+      unset($this->request['obj']);
 			unset($this->request['method']);
 			unset($this->get['obj']);
 			unset($this->get['method']);
@@ -108,6 +104,14 @@ class Controller
 			unset($this->post['method']);
 			
 			$param = array_merge((array)$this->get['param'], array('post'=>$this->post));
+      
+      $trace_params = $obj . '::' . $method . '(' . var_export($param, true) . ')';
+      
+      
+      if (!$_SESSION['user_confirmed'] && !$this->nonNeed2Auth($obj, $method))
+      {
+        throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
+      }
 	
 			if (get_parent_class($obj) === 'Controller')
 			{
@@ -118,7 +122,7 @@ class Controller
           && in_array($method, $_aa->adminRequired)
           && !$_SESSION['user_admin'])
         {
-          throw new Exception('Permission denied');
+          throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
         }
         
 				$_aa->$method();
@@ -132,7 +136,7 @@ class Controller
           $admin_methods = $def_prop['adminRequired'];
           if (is_array($admin_methods) && in_array($method, $admin_methods) && !$_SESSION['user_admin'])
           {
-            throw new Exception('Permission denied');
+            throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
           }
         }
 				call_user_func_array(array($obj, $method), $param);

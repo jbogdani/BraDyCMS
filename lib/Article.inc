@@ -396,12 +396,13 @@ class Article
 	}
 	
 	
-	/**
-	 * Returns aray of beams matching string in title, summary, text or keywords
-	 * @param string $string string to search for
-	 * @param string $lang
-	 * @return array of beams objects or false
-	 */
+  /**
+   * Returns array of beams matching string in title, summary, text or keywords
+   * @param string $string string to search for
+   * @param string $lang two-character langiage code
+   * @param boolean $dontseparate if true the whole string will be searches, otherwoze the single words will be searced separately
+   * @return boolean
+   */
 	public static function search($string, $lang = false, $dontseparate = false)
 	{
     $searcheableFields = array('title', 'textid', 'author', 'summary', 'text', 'keywords');

@@ -46,8 +46,8 @@ RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&d
 RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true [L]
 
 #search
-RewriteRule ^([a-z]{2})/search:([a-zA-Z0-1-_\.\s]+)$ index.php?lang=$1&search=$2 [L]
-RewriteRule ^search:([a-zA-Z0-9-_\.\s]+)$ index.php?search=$1 [L]
+RewriteRule ^([a-z]{2})/search:(.+)$ index.php?lang=$1&search=$2 [L]
+RewriteRule ^search:(.+)$ index.php?search=$1 [L]
 
 #search tags
 RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+).search$ index.php?lang=$1&tags=$2&is_search=1 [L]

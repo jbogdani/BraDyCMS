@@ -464,7 +464,9 @@ class Out
 	{
     if ($this->get['search'])
     {
-      return Article::search($this->get['search'], $this->lang);
+      $str = preg_replace('/^"(.+)"$/', '$1', $this->get['search'], -1, $tot);
+      
+      return Article::search($str, $this->lang, ($tot > 0));
     }
     else
     {

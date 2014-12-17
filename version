@@ -1,3 +1,4 @@
+3.9.0[] = "The content of search form will be automatically encoded in frontend.js"
 3.9.0[] = "Search module supports both strict mode (string must be wrapped in double-quotes) and loose mode"
 3.8.6[] = "Bug fixed with new map creation function of usermap module"
 3.8.5[] = ".htaccess returns not found for image files and redirects to not_found article for other resources"

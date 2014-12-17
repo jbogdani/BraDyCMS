@@ -143,6 +143,52 @@ E.g.: `{{ html.getArticle('contacts') }}`
 
 ---
 
+#### getArticlesByFilter('filter', 'connector', 'dontparse')
+Returns array of articles matching query parameters contained in $filter of false if nothing is matched
+- ***filter*** array, required. (Multidimensional) array with query parameters (field, value, operator)
+- ***connector*** boolean, optional, default AND. Logical connector to use for query parts (AND, OR, etc.).
+- ***dontparse*** boolean, optional, default false. If true the articles' content will not be parsed.
+
+E.g.: `{{ html.getArticlesByFilter(['author', 'BraDypUS']) }}`
+
+or
+
+`{{ html.getArticlesByFilter([['author', '%BraDypUS%', 'LIKE'], ['title', '%hello%', 'LIKE']], 'OR', true) }}`
+
+    array(
+      array(
+        'id' => integer,
+        'title' => string,
+        'textid' => string,
+        'sort' => integer,
+        'summary' => string,
+        'text' => string,
+        'keywords' => string,
+        'author' => string,
+        'status' => string,
+        'section' => string,
+        'tags' => array('string', 'string', 'etc..'),
+        'created' => datestamp,
+        'publish' => datestamp,
+        'expires' => datestamp,
+        'updated' => boolean,
+        'url' => string,
+        'full_url' => string
+      ), 
+      array(
+        'id' => integer,
+        'title' => string,
+        'textid' => string,
+        'sort' => integer,
+        'summary' => string,
+        'text' => string,
+        ...
+      ),
+      ...
+    )
+
+---
+
 #### getArticlesByTag('tag1', 'tag2', 'ecc')
 Returns array of articles arrays matching all the provided tags. If no tag is provided as argument, URL tags will be used
 - **tag1** string, optional, default false. First filtering tag

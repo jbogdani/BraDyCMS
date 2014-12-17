@@ -329,6 +329,57 @@ class Article
 		
 		return self::parseArt($article, $lang);
 	}
+  
+  /**
+   * Returns array of articles matching query parameters contained in $filter of false if nothing is matched
+   * @param array $filter (Multidimensional) array with query parameters:
+   *      [field, value, operator] or
+   *      [[field, value, operator], [field, value, operator], ...]
+   * @param string $lang  Current language
+   * @param string|false $connector Logical connector to use for query parts; Default AND
+   * @return array|false array of articles of false
+   */
+  public static function getByFilter($filter, $lang, $connector = 'AND')
+  {
+    if (!is_array($filter))
+    {
+      return false;
+    }
+    
+    if (is_string($filter[0]))
+    {
+      $filter = array($filter);
+    }
+    
+    $sql_parts = array();
+    $values = array();
+    
+    foreach($filter as $el)
+    {
+      $fld = $el[0];
+      $val = $el[1];
+      $op = $el[2] ? $el[2] : '=';
+      
+      array_push($sql_parts, " `{$fld}` {$op} :{$fld} ");
+      
+      $values[':' . $fld] = $val;
+    }
+    
+    $sql = implode(' ' . $connector . ' ', $sql_parts);
+    
+    $articles = R::find(
+      self::art_tb(),
+      $sql,
+      $values
+		);
+		
+		if (!is_array($articles))
+		{
+			return false;
+		}
+		
+		return self::parseArt($articles, $lang);
+  }
 	
 	
 	/**

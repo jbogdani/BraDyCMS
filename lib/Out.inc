@@ -235,6 +235,7 @@ class Out
 	/**
 	 * Return list of articles filtered by one or more tags
 	 * @param array $tags array of tags
+   * @param boolean $dontparse if true article content will not be parsed. Default false
 	 * @return type
 	 */
 	public function getArticlesByTagArray($tags, $dontparse = false)
@@ -526,6 +527,28 @@ class Out
   public function getVersion()
   {
     return version::current();
+  }
+  /**
+   * Returns array of articles matching query parameters contained in $filter of false if nothing is matched
+   * @param array $filter (Multidimensional) array with query parameters:
+   *      [field, value, operator] or
+   *      [[field, value, operator], [field, value, operator], ...]
+   * @param string|false $connector Logical connector to use for query parts; Default AND
+   * @param boolean $dontparse If true article content will not be parsed. Default false
+   * @return array|false array of articles of false
+   */
+  public function getArticlesByFilter($filter, $connector = false, $dontparse = false)
+  {
+    $arts = Article::getByFilter($filter, $this->lang, $connector);
+    
+    if (is_array($arts) && !$dontparse)
+    {
+      foreach($arts as &$art)
+      {
+        $art['text'] = customTags::parseContent($art['text']);
+      }
+    }
+    return $arts;
   }
 	
 }

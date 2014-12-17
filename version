@@ -1,3 +1,4 @@
+3.8.6[] = "Bug fixed with new map creation function of usermap module"
 3.8.5[] = ".htaccess returns not found for image files and redirects to not_found article for other resources"
 3.8.5[] = "Bug fixed with update module and .htaccess file being written before being updated with site customization"
 3.8.5[] = "Enhanced Controller logs"

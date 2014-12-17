@@ -23,10 +23,10 @@ class usermap_ctrl extends Controller
 			'zoom'=>'7',
 			'center'=>array(44.51618, 11.34238),
 			'zoomToBounds'=>false,
-			'markers'=>[
+			'markers'=>[[
         "coord" =>  array(44.51618,	11.34238),
         "name" => "<big><strong>BraDypUS</strong></big>.<br />Via A. Fioravanti, 72.<br />40129 Bologna Italy"
-        ]
+        ]]
   
 			);
 		

@@ -459,11 +459,14 @@ class Out
 	
 	/**
 	 * Returns list of articles containing the searched string 
+   * @param string $string Custom string to search in the database
 	 * @return array|false
 	 */
-	public function getSearchResults()
+	public function getSearchResults($string = false)
 	{
-    if ($this->get['search'])
+    $string = $string ? $string : $this->get['search'];
+    
+    if ($string)
     {
       $str = preg_replace('/^"(.+)"$/', '$1', $this->get['search'], -1, $tot);
       

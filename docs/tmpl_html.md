@@ -385,10 +385,12 @@ E.g.: `{{ html.getTextId() }}`
 
 ---
 
-#### getSearchResults()
+#### getSearchResults('string')
+- ***string*** string, optional, default false. If present this string will be used to filter articles, otherwise the URL search parameter will be used.
 Returns array of article arrays matching the searched string
 
-E.g.: `{{ html.getSearchResults }}`
+E.g.: `{{ html.getSearchResults }}` or `{{ html.getSearchResults('something') }}`
+
     array(
       array(
         'id' => integer,

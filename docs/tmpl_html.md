@@ -377,8 +377,9 @@ E.g.: `{{ html.getSearchResults }}`
 
 ---
 
-#### getSearchString()
+#### getSearchString('escape')
 Returns string used as filter in URL. Available only if the context is found
+- **escape** boolean, optional, default false. If true all applicable characters of the string will be converted to HTML entities
 
 E.g.: ` {{html.getSearchString }}`
     web

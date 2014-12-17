@@ -323,15 +323,16 @@ class OutHtml extends Out
 	 */
 	public function searchForm()
 	{
-		$html = '<form action="javascript:void(0);" ' .
-          'id="searchForm" ' .
-          'data-path="' . $this->link2('home') . '">' .
-      '<input class="search-query" ' .
-          'type="search" ' .
-          'placeholder="' . tr::get('search_site') . '" ' .
-          'name="search" ' .
-          'id="search" />' .
-      '</form>';
+		$html = '<form action="javascript:void(0);" '
+          . 'id="searchForm" '
+          . 'data-path="' . $this->link2('home') . '">'
+      . '<input class="search-query" '
+          . 'type="search" '
+          . 'placeholder="' . tr::get('search_site') . '" '
+          . 'name="search" '
+          . 'id="search"'
+          . ( $this->getSearchString() ? ' value="' . $this->getSearchString(true) . '"' : '') . ' />'
+      . '</form>';
 		return $html;
 	}
 	

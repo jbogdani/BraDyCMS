@@ -476,11 +476,12 @@ class Out
 	
 	/**
 	 * Returns, if available, the searched string
+   * @param boolean $escape
 	 * @return string|false
 	 */
-	public function getSearchString()
+	public function getSearchString($escape = false)
 	{
-		return $this->get['search'];
+		return $escape ? htmlentities($this->get['search']) : $this->get['search'];
 	}
 	
 	

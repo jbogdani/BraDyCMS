@@ -152,7 +152,7 @@ class Out
     switch($tags)
     {
       case 'search':
-        $url = link::to_search($art, $this->lang, $page, $this->get['is_search']);
+        $url = link::to_search($art, $this->lang, $page, $this->get['is_search'], $page);
         break;
       case true:
         $url = link::to_tags($art, $this->lang, $page);

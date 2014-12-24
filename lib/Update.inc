@@ -30,10 +30,6 @@
 class Update
 {
 
-  public function __construct()
-  {
-  }
-  
   /**
    * Parses remote version ini file and compares versions
    * @param type $localVersion  semver formatted local current version

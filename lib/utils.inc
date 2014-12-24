@@ -454,7 +454,7 @@ class utils
   public static function update_htaccess()
   {
     $file = file_exists('.htaccess-new') ? '.htaccess-new' : '.htaccess';
-      
+
     $rewriteBase = cfg::get('rewriteBase');
     
     $otherDirectives = cfg::get('moreHtaccessDirectives');

@@ -8,41 +8,109 @@
  
 class link
 {
-	private static function getPath()
+	/**
+   * Returns path to main domain root
+   * @return string
+   */
+  private static function getPath()
 	{
-		$path = $_REQUEST['lang'] ? '..' : '.';
-		$path .= ($_REQUEST['section'] && $_REQUEST['tags']) ? '/..' : '';
-		
-		return $path;
+    $parts = array();
+    
+    if ($_REQUEST['lang'])
+    {
+      array_push($parts, '..');
+    }
+    
+    if ($_REQUEST['page'])
+    {
+      array_push($parts, '..');
+    }
+    
+    if ($_REQUEST['section'] && $_REQUEST['tags'])
+    {
+      array_push($parts, '..');
+    }
+    
+    return implode('/', $parts);
 	}
-	
+  
+  /**
+   * Returns URL safe string
+   * @param string $href url to link 2
+   * @return string
+   */
 	private static function formatHref($href)
 	{
 		return str_replace(' ', '+', $href);
 	}
+  
+  /**
+   * Returns well-formatted URL string
+   * @param string $string Searched string or stringified list of tags
+   * @param string $lang  Two-difigts language code
+   * @param int $page Page number
+   * @param boolean $isTag If true I'm searching for tags
+   * @return string
+   */
+  public static function to_search($string, $lang = false, $page = false, $isTag = false)
+  {
+    if (!$isTag)
+    {
+      $string = 'search:' . $string;
+    }
+    return self::getPath()
+      . '/' .  ($lang ? $lang . '/' : '')
+      . self::format($string)
+      . ($isTag ? '.search' : '')
+      . ($page && $isTag ? '/' . $page : '');
+  }
 	
-	public static function to_article($textid, $lang = false)
+  /**
+   * Return well formatted link string
+   * @param string $textid Article's textid to link to
+   * @param string $lang two-digits languagae code, default false
+   * @param int|false $page Page number, default false.
+   * @return string
+   */
+	public static function to_article($textid, $lang = false, $page = false)
 	{
-		return self::getPath() . '/' . ( $lang ? $lang . '/' : '') . self::formatHref($textid);
+		return self::getPath() 
+      . '/' . ( $lang ? $lang . '/' : '') 
+      . self::formatHref($textid)
+      . ($page ? '/' . $page : '');
 	}
 	
-	
-	public static function to_tags($tags, $lang = false)
+	/**
+   * Return well formatted link string
+   * @param string|array $tags string of single tag or array of tags to link to
+   * @param string $lang two-digits languagae code, default false
+   * @param int|false $page Page number, default false.
+   * @return string
+   */
+	public static function to_tags($tags, $lang = false, $page = false)
 	{
 		if (!is_array($tags))
 		{
 			$tags = array($tags);
 		}
-		return self::getPath() . '/' . ( $lang ? $lang . '/' : '') . self::format(implode('-', $tags)) . '.all';
+		return self::getPath() 
+      . '/' . ( $lang ? $lang . '/' : '') 
+      . self::format(implode('-', $tags)) . '.all'
+      . ($page ? '/' . $page : '');
 	}
 	
-	
+	/**
+   * Returns formatted href
+   * @param string $href unformatted href
+   * @param string $lang two-digits language code
+   * @return string
+   */
 	public static function format($href, $lang = false)
 	{
 		$href = self::formatHref($href);
 		
 		$path = self::getPath();
-	
+    
 		// absolute url is not processed
 		if (preg_match('/^https?:\/\/(.+)/', $href))
 		{
@@ -68,9 +136,9 @@ class link
 		}
 	
 		// links to home page is not processed
-		if ($href == '')
+		if ($href == '' || $href == './')
 		{
-			return $path;
+      return $path;
 		}
 	
 		// add language to href
@@ -78,7 +146,7 @@ class link
 		{
 			$href = $lang . '/' . $href;
 		}
-		
-		return $path . '/' . $href;
+    
+    return $path . '/' . $href;
 	}
 }

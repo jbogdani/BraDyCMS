@@ -29,29 +29,29 @@ RewriteRule ^admin/?$ admin.php
 #safe home page 
 RewriteRule ^([a-z]{2})/?$ index.php?lang=$1  [L]
 
-#tags
-RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+)\.all$ index.php?lang=$1&tags=$2 [QSA,L]
-RewriteRule ^([a-zA-Z0-9-_+~]+)\.all$ index.php?tags=$1 [QSA,L]
+#tags: (ln/)some-tag.all !paginate
+RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+)\.all(/[0-9]{1,2})?$ index.php?lang=$1&tags=$2&page=$3 [QSA,L]
+RewriteRule ^([a-zA-Z0-9-_+~]+)\.all(/[0-9]{1,2})?$ index.php?tags=$1&page=$2 [QSA,L]
 
-#art_title no html
+#article title: (ln/)sometitle
 RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2 [QSA,L]
 RewriteRule ^([a-zA-Z0-9-_]+)/?$ index.php?art_title=$1 [QSA,L]
 
-#art_title with html extension
+#article title + html extansion: (ln/)sometitle.html
 RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).html$ index.php?lang=$1&art_title=$2 [QSA,L]
 RewriteRule ^([a-zA-Z0-9-_]+).html$ index.php?art_title=$1 [QSA,L]
 
-#art_title, draft
+#Drafts: article title: (ln/)sometitle.draft
 RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1 [L]
 RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true [L]
 
-#search
-RewriteRule ^([a-z]{2})/search:(.+)$ index.php?lang=$1&search=$2 [L]
-RewriteRule ^search:(.+)$ index.php?search=$1 [L]
+#search string: (ln/)search:some string !paginate
+RewriteRule ^([a-z]{2})/search:(.+)(/[0-9]{1,2})?$ index.php?lang=$1&search=$2&page=$3 [L]
+RewriteRule ^search:(.+)(/[0-9]{1,2})?$ index.php?search=$1&page=$2 [L]
 
-#search tags
-RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+).search$ index.php?lang=$1&tags=$2&is_search=1 [L]
-RewriteRule ^([a-zA-Z0-9-_+~]+).search$ index.php?tags=$1&is_search=1 [L]
+#search tags: (ln/)some-tags.search !paginate
+RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+).search(/[0-9]{1,2})?$ index.php?lang=$1&tags=$2&is_search=1&page=$3 [L]
+RewriteRule ^([a-zA-Z0-9-_+~]+).search(/[0-9]{1,2})?$ index.php?tags=$1&is_search=1&page=$2 [L]
 
 #all non existing, non image content to index.php http://jrgns.net/redirect_request_to_index/
 RewriteCond %{REQUEST_URI} !\.(gif|jpg|png)$

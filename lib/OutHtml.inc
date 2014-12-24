@@ -637,5 +637,79 @@ class OutHtml extends Out
         )
       );
   }
-		
+  
+  /**
+   * 
+   * @param string $className Css class name for main ul
+   * @return boolean|string Well formatted ul with pagination links
+   */
+  public function pagination($className = false)
+  {
+    $pagination = $this->getPagination();
+    
+    if (!$pagination)
+    {
+      return false;
+    }
+    
+    $href = false;
+    
+    $html = '<ul class="pagination' . ( $className ? ' ' . $className : '') . '">';
+    
+    $showed_end = $showed_start = false;
+    
+    for ($x = $pagination['start']; $x<=$pagination['end']; $x++)
+    {
+      switch($this->getContext())
+      {
+        case 'tags':
+          $href = link::to_tags(
+            implode( ($this->get['tagg_all'] ? '~' : '-'), $this->getFilterTags()),
+            $this->lang,
+            $x
+            );
+          break;
+        
+        case 'search':
+          $string = $this->get['is_search'] ? 
+            implode( ($this->get['tagg_all'] ? '~' : '-') , $this->getFilterTags()) :
+            $this->getSearchString();
+          $href = link::to_search($string, $this->lang, $x, $this->get['is_search']);
+          break;
+        
+        default:
+          return false;
+          break;
+      }
+      
+      
+      
+      if ($x != $pagination['start'] && $x != $pagination['end'] && 
+        ($x < $pagination['current'] - 2 || $x > $pagination['current'] + 2)
+        )
+      {
+        if ($x < $pagination['current'] && !$showed_start)
+        {
+          $html .= '<li class="disabled"><a class="disabled" href="#">...</a>';
+          $showed_start = true;
+        }
+        if ($x > $pagination['current'] && !$showed_end)
+        {
+          $html .= '<li class="disabled"><a class="disabled" href="#">...</a>';
+          $showed_end = true;
+        }
+      }
+      else
+      {
+        $html .= "<li" . ($x == $pagination['current'] ? ' class="active" ' : '') . ">"
+            . '<a href="' . $href . '">' . $x . '</a>'
+          . "</li>";
+      }
+    }
+    
+    $html .= '</ul>';
+    
+    return $html;
+  }
+  
 }

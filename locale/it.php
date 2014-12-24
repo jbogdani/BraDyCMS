@@ -261,6 +261,7 @@ $_lang['cfg-robots'] = "Valore predefinito per il meta tag robots";
 $_lang['cfg-translate'] = "Da tradurre";
 $_lang['cfg-richtext'] = "Testo ricco";
 $_lang['cfg-update-channel'] = "Canale di aggiornamento";
+$_lang['cfg-pagination'] = "Divisione in pagine";
 $_lang['encrypted_passw'] = "Password criptata";
 $_lang['one_way_encrypt_passw'] = "Cripta la password";
 $_lang['on'] = "attivata";

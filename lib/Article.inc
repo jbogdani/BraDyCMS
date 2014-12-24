@@ -337,9 +337,12 @@ class Article
    *      [[field, value, operator], [field, value, operator], ...]
    * @param string $lang  Current language
    * @param string|false $connector Logical connector to use for query parts; Default AND
-   * @return array|false array of articles of false
+   * @param integer $start Start id for LIMIT statement
+   * @param integer $max Max number of records for LIMIT statement
+   * @param boolean $returnCount If true te total records will be returned   * @return array|false array of articles of false
+   * @return mixed
    */
-  public static function getByFilter($filter, $lang, $connector = 'AND')
+  public static function getByFilter($filter, $lang, $connector = 'AND', $start = false, $max = false, $returnCount = false)
   {
     if (!is_array($filter))
     {
@@ -367,6 +370,13 @@ class Article
     
     $sql = implode(' ' . $connector . ' ', $sql_parts);
     
+    if ($returnCount)
+    {
+      return R::count( self::art_tb(), $sql, $values );
+    }
+    
+    $sql .= ($start !== false && $max ? ' LIMIT ' . (int)$start . ', ' . (int)$max : '');
+    
     $articles = R::find(
       self::art_tb(),
       $sql,
@@ -388,11 +398,35 @@ class Article
 	 * @param string $lang
 	 * @param boolean $lax if true all returned articles must have all tags in tags array
    * @param boolean $admin  if true all articles will be returned else onvly valid (published) articles
+   * @param integer $start Start id for LIMIT statement
+   * @param integer $max Max number of records for LIMIT statement
+   * @param boolean $returnCount If true te total records will be returned
 	 * @return array of beams objects or false
 	 */
-	public static function getByTag($tags, $lang = false, $lax = false, $admin = false)
+	public static function getByTag($tags, $lang = false, $lax = false, $admin = false, $start = false, $max = false, $returnCount = false)
 	{
-		$articles = $lax ? R::tagged( self::art_tb(), $tags ) : R::taggedAll(self::art_tb(), $tags);
+    if ($returnCount)
+    {
+      $t = "SELECT COUNT(`id`) as `tot` FROM `" . self::art_tb() . "` WHERE `id` IN ("
+          . "SELECT `articles_id` FROM `articles_tag` WHERE `tag_id` IN("
+            . "SELECT `id` FROM `tag` WHERE `title`='" . implode("' " . ($lax ? ' AND ' : ' OR ') . " `tag`='", $tags) . "'"
+          . ")"
+        . ")";
+      return R::getCell($t);
+    }
+    
+    $values = array();
+    $sql = false;
+    
+    if ($start !== false && $max)
+    {
+      $sql = ' LIMIT ?, ?';
+      array_push($values, (int)$start, (int)$max);
+    }
+    
+		$articles = $lax ? 
+      R::tagged( self::art_tb(), $tags, $sql, $values) : 
+      R::taggedAll(self::art_tb(), $tags, $sql, $values);
     
 		if (!is_array($articles) || empty($articles))
 		{
@@ -438,7 +472,12 @@ class Article
       if (
         $art['status'] == 1 && 
         (
-          $articles['expires'] == '0000-00-00 00:00:00' || $art['expires'] == '0000-00-00' || $art['expires'] == $art['publish'] || $art['expires'] > date("Y-m-d H:i:s") ) )
+          $articles['expires'] == '0000-00-00 00:00:00' || 
+          $art['expires'] == '0000-00-00' || 
+          $art['expires'] == $art['publish'] || 
+          $art['expires'] > date("Y-m-d H:i:s") 
+          )
+        )
         {
         $new_art_list[$id] = $art;
         }
@@ -452,9 +491,10 @@ class Article
    * @param string $string string to search for
    * @param string $lang two-character langiage code
    * @param boolean $dontseparate if true the whole string will be searches, otherwoze the single words will be searced separately
+   * @param boolean $returnCount If true te total records will be returned
    * @return boolean
    */
-	public static function search($string, $lang = false, $dontseparate = false)
+	public static function search($string, $lang = false, $dontseparate = false, $returnCount = false)
 	{
     $searcheableFields = array('title', 'textid', 'author', 'summary', 'text', 'keywords');
   
@@ -486,6 +526,11 @@ class Article
     }
     
     $sql = implode(' OR ', $sql_part);
+    
+    if ($returnCount)
+    {
+      return R::count(self::art_tb(), $sql, $values);
+    }
     
 		$articles = R::find(
 				self::art_tb(),
@@ -611,7 +656,7 @@ class Article
       return false;
     }
 	}
-	
+  
 	
 	
 }

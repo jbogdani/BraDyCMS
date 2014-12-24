@@ -11,12 +11,14 @@
 class Out
 {
 	private 
-		$get,		// GET data
 		$context,	// context: article, tags, search, home
 		$data,	//
 		$metadata,
-    $mobiledetect
+    $mobiledetect,
+    $totalArticles
 		;
+  protected $get;
+  
 	public 
 		$session_lang, // different from $lang whitch if is the same of sys_lang is not set!
 		$lang;		// current language ( = session['lang'] set in globals, same as get['lang'])
@@ -28,9 +30,14 @@ class Out
 	 */
 	public function __construct($get, $lang = false)
 	{
-		//Set get
+		/**
+     * Set get
+     */
 		$this->get = $get;
 		
+    /**
+     * Explode tags using ~ or - (AND or OR)
+     */
 		if ($this->get['tags'])
 		{
 			if(preg_match('/~/', $this->get['tags']))
@@ -43,7 +50,18 @@ class Out
 				$this->get['tags'] = utils::csv_explode($this->get['tags'], '-');
 			}
 		}
+    
+    /**
+     * Set page
+     */
+    if ($this->get['page'])
+    {
+      $this->get['page'] = str_replace('/', null, $this->get['page']);
+    }
 		
+    /**
+     * Set language
+     */
 		if ($lang AND ( $lang != cfg::get('sys_lang') ) )
 		{
 			$this->lang = $lang;
@@ -54,7 +72,9 @@ class Out
 			$this->session_lang = $lang;
 		}
 		
-		// Set context
+		/**
+     * Set context
+     */
 		if ( $get['art_title'] )
 		{
 			$this->context = 'article';
@@ -76,6 +96,11 @@ class Out
 		}
 	}
   
+  /**
+   * 
+   * @param string $gal
+   * @return boolean|false Array with gallery data or fale if gallery does not exist or is not well-formatted
+   */
   public function getGallery($gal)
 	{
     try
@@ -115,11 +140,29 @@ class Out
 	 * 
 	 * @param array|string $art	article or section name
 	 * @param boolean $tags	arrbay of tags to use for filtering section articles
+   * @param integer $page Page number, default false
 	 * @return string
 	 */
-	public function link2($art, $tags = false)
+	public function link2($art, $tags = false, $page = false)
 	{
-		return $tags ? link::to_tags($art, $this->lang) : link::to_article($art == 'home' ? './' : $art, $this->lang);
+    $page = $page ? $page : $this->get['page'];
+    
+    $url = '';
+    
+    switch($tags)
+    {
+      case 'search':
+        $url = link::to_search($art, $this->lang, $page, $this->get['is_search']);
+        break;
+      case true:
+        $url = link::to_tags($art, $this->lang, $page);
+        break;
+      default:
+        $url = link::to_article($art == 'home' ? './' : $art, $this->lang, $page);
+        break;
+    }
+    
+		return $url;
 	}
 	
 	
@@ -156,8 +199,6 @@ class Out
 			{
 				return false;
 			}
-
-
 			$this->data['article'][$article]['tags'] =  R::tag($art);
 		}
 		
@@ -176,15 +217,15 @@ class Out
 	
 	/**
 	 * Returns array of similar articles
-	 * @param string $article articles textid
+	 * @param string $textid articles' textid. Default false (current art_title will be used)
    * @param int $max maximum number of array elements to return
 	 * @return array of beans|false
 	 */
 	public function getSimilar($textid = false, $max = false)
 	{
-		$article = $this->getArticle($textid);
+		$textid = $textid ? $textid : $this->get['art_title'];
 		
-		return Article::getSimilar($article['tags'], $article['textid'], $this->lang, $max);
+		return $textid ? Article::getSimilar($article['tags'], $textid, $this->lang, $max) : false;
 	}
 
 		/**
@@ -222,14 +263,30 @@ class Out
 
 	/**
 	 * Returns list of articles filtered by one or more tags. The tags can be specified as method arguments, if not current GET tags will be used
-	 * @param $tag, $tag, if present, the first and other parameters are assumed to be the tags.
+	 * @param $tag, $tag, if present, the list of arguments to be the filtering tags. If one of the parameters isan array, this is assumed to be the pagination information: [$page, $max]
 	 * @return array|false
 	 */
 	public function getArticlesByTag()
 	{
 		$tags = func_get_args() ? func_get_args() : $this->getFilterTags();
     
-    return $this->getArticlesByTagArray($tags);
+    if (!is_array($tags))
+    {
+      return false;
+    }
+    
+    foreach ($tags as $x=>&$t)
+    {
+      if(is_array($t))
+      {
+        list($page, $max) = $t;
+        unset($tags[$x]);
+      }
+    }
+    
+    $this->totalArticles = Article::getByTag($tags, false, false, false, false, false, true);
+    
+    return $this->getArticlesByTagArray($tags, false, $page, $max);
 	}
 	
 	/**
@@ -238,9 +295,29 @@ class Out
    * @param boolean $dontparse if true article content will not be parsed. Default false
 	 * @return type
 	 */
-	public function getArticlesByTagArray($tags, $dontparse = false)
+	public function getArticlesByTagArray($tags, $dontparse = false, $page = false, $max = false)
 	{
-    $arts = Article::getByTag($tags, $this->lang, $this->get['tag_all']);
+    $max_cfg = cfg::get('pagination');
+    
+    if ($page || $this->get['page'] || $max_cfg)
+    {
+      if ($page)
+      {
+        $page = $this->get['page'] ? $this->get['page'] - 1 : 1;
+      }
+      
+      if (!$max)
+      {
+        $max = $max_cfg ? $max_cfg : 20;
+      }
+      
+      $start = $page * $max;
+    }
+    
+    
+    $this->totalArticles = Article::getByTag($tags, $this->lang, $this->get['tag_all'], false, false, false, true);
+    
+    $arts = Article::getByTag($tags, $this->lang, $this->get['tag_all'], false, $start, $max);
     
     if (is_array($arts) && !$dontparse)
     {
@@ -466,16 +543,11 @@ class Out
 	{
     $string = $string ? $string : $this->get['search'];
     
-    if ($string)
-    {
-      $str = preg_replace('/^"(.+)"$/', '$1', $this->get['search'], -1, $tot);
-      
-      return Article::search($str, $this->lang, ($tot > 0));
-    }
-    else
-    {
-      return $this->getArticlesByTag();
-    }
+    $string = preg_replace('/^"(.+)"$/', '$1', $string, -1, $tot);
+    
+    $this->totalArticles = Article::search($string, $this->lang, ($tot > 0), true);
+
+    return Article::search($string, $this->lang, ($tot > 0));
 	}
 	
 	/**
@@ -540,9 +612,28 @@ class Out
    * @param boolean $dontparse If true article content will not be parsed. Default false
    * @return array|false array of articles of false
    */
-  public function getArticlesByFilter($filter, $connector = false, $dontparse = false)
+  public function getArticlesByFilter($filter, $connector = false, $dontparse = false, $page = false, $max = false)
   {
-    $arts = Article::getByFilter($filter, $this->lang, $connector);
+    $max_cfg = cfg::get('pagination');
+    
+    if ($page || $this->get['page'] || $max_cfg)
+    {
+      if ($page)
+      {
+        $page = $this->get['page'] ? $this->get['page'] - 1 : 1;
+      }
+      
+      if (!$max)
+      {
+        $max = $max_cfg ? $max_cfg : 20;
+      }
+      
+      $start = $page * $max;
+    }
+    
+    $this->totalArticles = Article::getByFilter($filter, $this->lang, $connector, false, false, true);
+    
+    $arts = Article::getByFilter($filter, $this->lang, $connector, $start, $max);
     
     if (is_array($arts) && !$dontparse)
     {
@@ -553,5 +644,27 @@ class Out
     }
     return $arts;
   }
-	
+  
+  /**
+   * 
+   * @return array: Array with pagination data for current page: start, end, current
+   */
+  public function getPagination()
+  {
+    // TODO: get $max from cfg
+    $return = false;
+    $max = 20;
+    $page = $this->get['page'] ? $this->get['page'] : 1;
+    $tot = $this->totalArticles;
+    
+    if ($tot && $max)
+    {
+      $return['start'] = '1';
+      $return['end'] = ceil($tot/$max);
+      $return['current'] = $page;
+    }
+    
+    return $return;
+  }
+  
 }

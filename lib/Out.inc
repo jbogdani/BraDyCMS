@@ -653,11 +653,11 @@ class Out
   {
     // TODO: get $max from cfg
     $return = false;
-    $max = 20;
+    $max = cfg::get('pagination') ? cfg::get('pagination') : 20;
     $page = $this->get['page'] ? $this->get['page'] : 1;
     $tot = $this->totalArticles;
     
-    if ($tot && $max)
+    if ($tot && $max && $tot > $max)
     {
       $return['start'] = '1';
       $return['end'] = ceil($tot/$max);

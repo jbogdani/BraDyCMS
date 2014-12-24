@@ -14,7 +14,7 @@ class link
    */
   private static function getPath()
 	{
-    $parts = array();
+    $parts = array('.');
     
     if ($_REQUEST['lang'])
     {
@@ -22,11 +22,6 @@ class link
     }
     
     if ($_REQUEST['page'])
-    {
-      array_push($parts, '..');
-    }
-    
-    if ($_REQUEST['section'] && $_REQUEST['tags'])
     {
       array_push($parts, '..');
     }
@@ -58,11 +53,11 @@ class link
     {
       $string = 'search:' . $string;
     }
-    return self::getPath()
-      . '/' .  ($lang ? $lang . '/' : '')
-      . self::format($string)
-      . ($isTag ? '.search' : '')
-      . ($page && $isTag ? '/' . $page : '');
+    else
+    {
+      $string .= '.search';
+    }
+    return self::format($string, $lang, $page);
   }
 	
   /**
@@ -74,10 +69,7 @@ class link
    */
 	public static function to_article($textid, $lang = false, $page = false)
 	{
-		return self::getPath() 
-      . '/' . ( $lang ? $lang . '/' : '') 
-      . self::formatHref($textid)
-      . ($page ? '/' . $page : '');
+		return self::formatHref($textid, $lang, $page);
 	}
 	
 	/**
@@ -93,19 +85,18 @@ class link
 		{
 			$tags = array($tags);
 		}
-		return self::getPath() 
-      . '/' . ( $lang ? $lang . '/' : '') 
-      . self::format(implode('-', $tags)) . '.all'
-      . ($page ? '/' . $page : '');
+    
+    return self::format(implode('-', $tags) . '.all', $lang, $page);
 	}
 	
 	/**
    * Returns formatted href
    * @param string $href unformatted href
    * @param string $lang two-digits language code
+   * @param int $page Page number
    * @return string
    */
-	public static function format($href, $lang = false)
+	public static function format($href, $lang = false, $page = false)
 	{
 		$href = self::formatHref($href);
 		
@@ -136,7 +127,7 @@ class link
 		}
 	
 		// links to home page is not processed
-		if ($href == '' || $href == './')
+		if ($href == '' || $href == './' || $href == 'home')
 		{
       return $path;
 		}
@@ -146,6 +137,12 @@ class link
 		{
 			$href = $lang . '/' . $href;
 		}
+    
+    // add page to href
+    if ($page)
+    {
+      $href .= '/' . $page; 
+    }
     
     return $path . '/' . $href;
 	}

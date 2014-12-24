@@ -612,8 +612,7 @@ class Article
 	{
 		if (!$tags && $textid)
 		{
-			$art = self::getByTextid($textid);
-			$tags = R::tag($art);
+      $art = self::getByTextid($textid);
 		}
 		
 		

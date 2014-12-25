@@ -66,8 +66,6 @@ class tr
       require_once SITE_DIR . 'locale/' . $_SESSION['adm_lang'] . '.php';
     }
     
-		
-		
 		$_SESSION['language_strings'] = array_merge($en, $_lang);
 		
 	}
@@ -99,8 +97,16 @@ class tr
 	public static function get($string, $escape = false)
 	{
 		$lang = $_SESSION['language_strings'];
-	
-		$ret = $lang[$string] ? $lang[$string] : $string;
+    
+    if ($lang[$string])
+    {
+      $ret = $lang[$string];
+    }
+    else
+    {
+      error_log('Missing translation for {' . $string . '}');
+      $ret = $string;
+    }
 	
 		return $escape ? str_replace("'", "\'", $ret) : $ret;
 	}

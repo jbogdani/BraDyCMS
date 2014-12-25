@@ -13,11 +13,17 @@
 
 </div>
 
-<hr />
+<hr>
 <div id="cont_{{ uid }}" class="transl-content"></div>
 
 <script>
+  {% if lang %}
+    $('#cont_{{ uid }}').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lang }}');
+  {% endif %}
+    
 	$('#but_{{ uid }} button.lang').on('click', function(){
+    _ignorehash = true;
+    location.hash = '#sys_translate/showList/{{ context }}/' + $(this).data('lang');
 		$('#cont_{{ uid }}').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]=' + $(this).data('lang'));
 	});
   

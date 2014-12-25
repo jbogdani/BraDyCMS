@@ -16,6 +16,8 @@ class sys_translate_ctrl extends Controller
 	public function showList($opened_lang=false)
 	{
     $context = $this->get['param'][0];
+    $lang = $this->get['param'][1];
+    
     switch($context)
     {
       case 'admin':
@@ -33,13 +35,12 @@ class sys_translate_ctrl extends Controller
         break;
     }
     
-		$uid = uniqid('transl');
-		
 		$this->render('sys_translate', 'list', array(
       'opened_lang' => $opened_lang,
       'langs' => $langs,
       'add_lang' => $add_lang,
-      'context' => $context
+      'context' => $context,
+      'lang' => $lang
 		));
 	}
 	

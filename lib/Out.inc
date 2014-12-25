@@ -546,7 +546,7 @@ class Out
     $string = preg_replace('/^"(.+)"$/', '$1', $string, -1, $tot);
     
     $this->totalArticles = Article::search($string, $this->lang, ($tot > 0), true);
-
+    
     return Article::search($string, $this->lang, ($tot > 0));
 	}
 	

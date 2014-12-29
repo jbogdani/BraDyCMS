@@ -409,7 +409,7 @@ class Article
     {
       $t = "SELECT COUNT(`id`) as `tot` FROM `" . self::art_tb() . "` WHERE `id` IN ("
           . "SELECT `articles_id` FROM `articles_tag` WHERE `tag_id` IN("
-            . "SELECT `id` FROM `tag` WHERE `title`='" . implode("' " . ($lax ? ' AND ' : ' OR ') . " `tag`='", $tags) . "'"
+            . "SELECT `id` FROM `tag` WHERE `title`='" . implode("' " . ($lax ? ' AND ' : ' OR ') . " `title`='", $tags) . "'"
           . ")"
         . ")";
       return R::getCell($t);
@@ -482,7 +482,7 @@ class Article
         $new_art_list[$id] = $art;
         }
     }
-		return $new_art_list;
+    return $new_art_list;
 	}
 	
 	

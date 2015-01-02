@@ -373,3 +373,15 @@ $_lang['ok_deleting_backup'] = "Backup file was successfully deleted";
 $_lang['error_restore_backup'] = "Error. Database could not be restored. More details in error log.";
 $_lang['ok_restore_backup'] = "Backup restored";
 $_lang['open'] = "Open";
+
+$_lang['tag_renamed'] = "Tag successfully renamed";
+$_lang['tag_not_renamed'] = "Error. Can not rename the tag";
+$_lang['tag_not_deleted'] = "Error. Can not delete the tag";
+$_lang['tag_deleted'] = "The tag was successfully deleted";
+$_lang['tag_not_added'] = "The tag was successfully added";
+$_lang['tag_manager'] = "Tag manager";
+$_lang['add_new_tag'] = "Add a new tag";
+$_lang['tag_cannot_be_empty'] = "Tag value can not be empty";
+$_lang['tag_already_used'] = "The tag %s has already been used";
+$_lang['confirm_delete_tag'] = "Are you sure you want to delete this tag? This action can not be undone.";
+$_lang['add_new_tag_title'] = "Add new text for tag";

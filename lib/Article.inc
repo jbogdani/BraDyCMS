@@ -238,7 +238,7 @@ class Article
 	 */
 	public static function getTags()
 	{
-		return R::getCol('SELECT `title` FROM `' . PREFIX. 'tag` ORDER BY `title` ASC');
+		return Tag::getAllTitles();
 	}
 	
 	/**

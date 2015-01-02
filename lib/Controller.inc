@@ -147,4 +147,12 @@ class Controller
 			throw new Exception('No data to load');
 		}
 	}
+  
+  protected function responseJson($status, $text)
+  {
+    return json_encode(array(
+      'status' => $status,
+      'text' => $text
+    ));
+  }
 }

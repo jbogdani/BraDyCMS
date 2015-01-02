@@ -1,3 +1,4 @@
+3.9.0[] = "Added new tag manager"
 3.9.0[] = "Strings missing translations are logged in error log"
 3.9.0[] = "System & frontend translator support language codes URL"
 3.9.0[] = "PHP Mailer updated to version 5.2.9"

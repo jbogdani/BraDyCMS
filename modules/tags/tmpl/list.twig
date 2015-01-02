@@ -1,0 +1,154 @@
+<div id="{{ uid }}">
+  <h2><i class="icon ion-pricetags"></i> {{ tr.get('tag_manager') }}</h2>
+  
+  <div class="btn-group" style="padding:20px 0;">
+    <a class="btn btn-info add_new" title="{{ tr.get('add_new_tag') }}">
+      <i class="icon ion-plus"></i> {{ tr.get('add_new_tag') }}
+    </a>
+    
+		<a class="btn btn-default reload" title="{{ tr.get('reload') }}">
+      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+    </a>
+	</div>
+    
+  <table class="table table-bordered table-hover table-responsive table-striped">
+    {% for id, tag in tags %}
+      <tr>
+        <td>
+          <i class="icon ion-pricetag"></i> {{ tag.title }}
+        </td>
+        <td>
+          <button data-id="{{ tag.id }}" data-title="{{ tag.title}}" 
+                  class="rename btn btn-info">
+            <i class="icon ion-edit"></i> {{ tr.get('rename') }}
+          </button>
+        </td>
+        <td>
+          <button data-id="{{ tag.id }}" class="delete btn btn-danger">
+            <i class="icon ion-trash-a"></i> {{ tr.get('delete') }}
+          </button>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+
+<script>
+  $('#{{ uid }} a.reload').on('click', function(){
+    admin.tabs.reloadThis(this);
+    return false;
+  });
+  
+  $('#{{ uid }} .add_new').on('click', function(){
+    admin.dialog({
+			html: '<input type="text" class="tag" style="margin: 30px 0;" placeholder="' + admin.tr('add_new_tag') + '">',
+			
+			loaded: function(modal){
+				modal.find('input.tag').focus();
+        admin.removeNotValid(modal.find('input.tag'), {
+          'replace': '_',
+          'toLower': true,
+          'permit': ['_']
+        });
+			},
+			buttons:[
+			         {
+			        	 text: admin.tr('save'),
+			        	 addclass: 'btn-success',
+			        	 click: function(){
+			        		 var tag = $('.modal input.tag').val();
+			        		 if (!tag){
+			        			 admin.message(admin.tr('tag_cannot_be_empty'), 'error');
+			        		 } else {
+			        			 $.get('controller.php?obj=tags_ctrl&method=addTag&param[]=' + tag, function(data){
+			        				 admin.message(data.text, data.status);
+			        				 
+			        				 if (data.status == 'success'){
+                         $('#modal').modal('hide');
+                         admin.tabs.reloadThis($('#{{ uid }}'));
+			        				 }
+			        			 }, 'json');
+			        		 }
+			        	 }
+			         },
+			         {
+				         text: admin.tr('close'),
+				         action: 'close'
+			         }
+			         ]
+		});
+  });
+  
+  $('#{{ uid }} .rename').on('click', function(){
+    var id = $(this).data('id');
+    var title = $(this).data('title');
+    
+    admin.dialog({
+      title: admin.tr('rename'),
+			html: '<input type="text" class="tag" style="margin: 30px 0;" value="' + title + '">',
+			
+			loaded: function(modal){
+				modal.find('input.tag').focus();
+        admin.removeNotValid(modal.find('input.tag'), {
+          'replace': '_',
+          'toLower': true,
+          'permit': ['_']
+        });
+			},
+			buttons:[
+        {
+          text: admin.tr('save'),
+          addclass: 'btn-success',
+          click: function(){
+            var tag = $('.modal input.tag').val();
+            if (!tag){
+              admin.message(admin.tr('tag_cannot_be_empty'), 'error');
+            } else {
+              $.get('controller.php?obj=tags_ctrl&method=renameTag&param[]=' + id + '&param[]=' + tag, function(data){
+                admin.message(data.text, data.status);
+
+                if (data.status == 'success'){
+                  $('#modal').modal('hide');
+                  admin.tabs.reloadThis($('#{{ uid }}'));
+                }
+              }, 'json');
+            }
+          }
+        },
+        {
+          text: admin.tr('close'),
+          action: 'close'
+        }
+        ]
+		});
+  });
+  
+  $('#{{ uid }} .delete').on('click', function(){
+    var id = $(this).data('id');
+    admin.dialog({
+			html: '<p class="lead text-danger">' + admin.tr('confirm_delete_tag') + '</p>',
+			buttons:[
+        {
+          text: admin.tr('delete'),
+          addclass: 'btn-danger',
+          click: function(){
+            $.get('controller.php?obj=tags_ctrl&method=removeTag&param[]=' + id, function(data){
+              admin.message(data.text, data.status);
+
+             if (data.status == 'success'){
+               $('#modal').modal('hide');
+               admin.tabs.reloadThis($('#{{ uid }}'));
+             }
+           }, 'json');
+
+          }
+        },
+        {
+          text: admin.tr('close'),
+          action: 'close'
+        }
+        ]
+    });
+  });
+</script>

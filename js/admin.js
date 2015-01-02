@@ -7,8 +7,24 @@
 var _ignorehash;
 
 var admin = {
-  
   wysiwyg:{
+    add: function(id){
+      var $el = $('#' + id),
+      height = $el.height();
+      $el.summernote({
+        height: height
+      });
+    },
+    preSave: function(){
+      
+      //tinyMCE.triggerSave();
+    },
+    setValue: function(id, text){
+      $('#' + id).code(text);
+    }
+  },
+  
+  wysiwyg2:{
     add: function(elId){
       tinyMCE.execCommand("mceAddControl", false, elId);
     },
@@ -509,32 +525,7 @@ $(function () {
     		});
     	}
     }).trigger('hashchange');
-    
-		
-    tinyMCE.init({
-    	// General options
-    	mode : "exact",
-    	theme : 'advanced',
-    	plugins : 'pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist',
-    	
-    	// Theme options
-    	theme_advanced_toolbar_location : 'top',
-    	theme_advanced_toolbar_align : 'left',
-    	extended_valid_elements : 'script[language|type]',
-    	theme_advanced_resizing : true,
-    	content_css : './sites/default/css/styles.css',
-    	
-    	theme_advanced_statusbar_location : 'bottom',
-    	
-    	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
-    	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,",
-    	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup",
-    	theme_advanced_buttons4 : "charmap,iespell,media,|,ltr,rtl,|,fullscreen,|,attribs,|,link,unlink,anchor,image,cleanup,code,|,preview,|,forecolor,backcolor",
-    	
-    	forced_root_block: '',
-    	force_p_newlines: true,
-    	theme_advanced_blockformats: "p,address,pre,h1,h2,h3,h4,h5,h6,div"
-	});
+
 });
 
 

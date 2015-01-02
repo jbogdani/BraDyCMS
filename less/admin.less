@@ -6,6 +6,7 @@
 
 @import 'bootstrap/bootstrap.less';
 @import 'ionicons/ionicons.less';
+@import 'font-awesome/font-awesome.less';
 /*@import '../css/dataTable-bootstrap.css';*/
 @import '../css/pnotify.custom.min.css';
 @import '../css/select2.css';
@@ -13,6 +14,7 @@
 @import '../css/datepicker.css';
 @import '../css/fileuploader.css';
 @import '../css/prettify.css';
+@import 'summernote/summernote.less';
 
 .icon{
   display: inline-block;
@@ -46,24 +48,26 @@ html{
   height: @navbar-height;
   z-index:1000;
   
+  
+}
+.navbar{
   a{
     color: @navbar-inverse-link-color;
   }
-  
-  .shorthands{
-    margin: 10px;
-    padding:0;
-    list-style: none;
-    li{
-      margin: 0 10px;
+}
+.shorthands{
+  margin: 10px;
+  padding:0;
+  list-style: none;
+  li{
+    margin: 0 10px;
+    display: inline-block;
+    vertical-align: center;
+
+    a{
       display: inline-block;
-      vertical-align: center;
-      
-      a{
-        display: inline-block;
-        padding: 0 5px;
-        color: #fff;
-      }
+      padding: 0 5px;
+      color: #fff;
     }
   }
 }

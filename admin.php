@@ -23,10 +23,10 @@ catch (Exception $e)
 <html lang="en">
   <head>
     
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>bdus.CMS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./css/admin.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/admin.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -77,7 +77,8 @@ catch (Exception $e)
   <script src="./js/pnotify.custom.min.js"></script>
   <script src="./js/bootstrap-datepicker.js"></script>
   <script src="./js/select2.min.js"></script>
-  <script src="./tiny_mce/tiny_mce.js"></script>
+  <script src="./js/summernote.min.js"></script>
+<!--  <script src="./tiny_mce/tiny_mce.js"></script>-->
   <script src="./js/fileuploader.js"></script>
   <script src="./js/prettify.js"></script>
   

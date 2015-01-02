@@ -1,4 +1,4 @@
-<div class="" id="{{ uid }}">
+<div id="{{ uid }}">
   
   {# Main button menu #}
   <div class="btn-group" style="padding:20px 0;">
@@ -271,11 +271,12 @@
 </div> {# Start of general container #}
 
 <script>
-	tinyMCE.execCommand("mceAddControl", false, "summary{{ uid }}");
-	tinyMCE.execCommand("mceAddControl", false, "text{{ uid }}");
+  admin.wysiwyg.add("summary{{ uid }}");
+  admin.wysiwyg.add("text{{ uid }}");
+  
   {% if custom_fields %}
     {% for fld in custom_fields if fld.richtext %}
-      tinyMCE.execCommand("mceAddControl", false, "richtext{{ uid ~ fld.name }}");
+      admin.wysiwyg.add("richtext{{ uid ~ fld.name }}");
     {% endfor %}
   {% endif %}
     
@@ -322,9 +323,9 @@
     
 
 		var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
+    
+    admin.wysiwyg.preSave();
 
-		tinyMCE.triggerSave();
-		
 		$.post(
 			url,
 			$('#edit_form{{ uid }}').serialize(),

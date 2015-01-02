@@ -102,7 +102,7 @@ html{
   z-index: 0;
   
   &.shown{
-    .transition(.3s);
+    .transition('all, .3s');
     .translate3d(260px,0,0);
     z-index: 999999;
     
@@ -118,7 +118,7 @@ html{
       margin: 5px auto;
     
       a{
-        .transition(.5s);
+        .transition('all, .5s');
         color: darken(#fff, 20%);
         display: block;
         padding: 10px 10px 10px 20px;
@@ -159,7 +159,7 @@ html{
   background: #fff;
   .clearfix();
   overflow-x: hidden;
-  .transition(.3s);
+  .transition('.3s');
   
   &.shown{
     .translate3d(250px,0,0);

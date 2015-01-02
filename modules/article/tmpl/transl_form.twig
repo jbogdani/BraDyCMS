@@ -95,7 +95,7 @@
 <script>
 	$('#form{{ uid }}').on('submit', function(){
 	
-	tinyMCE.triggerSave();
+	admin.wysiwyg.preSave();
 	
 	$.post(
 			'controller.php?obj=article_ctrl&method=saveTransl&param[]={{ art.id }}',
@@ -111,11 +111,11 @@
 		);	
 });
 
-	tinyMCE.execCommand("mceAddControl", true, "summary{{ uid }}");
-	tinyMCE.execCommand("mceAddControl", true, "text{{ uid }}");
+  admin.wysiwyg.add("summary{{ uid }}");
+  admin.wysiwyg.add("text{{ uid }}");
   {% if custom_fields %}
     {% for field in custom_fields %}
-      tinyMCE.execCommand("mceAddControl", true, "richtext{{ uid ~ field.name }}");
+      admin.wysiwyg.add("richtext{{ uid ~ field.name }}");
     {% endfor %}
   {% endif %}
 
@@ -124,7 +124,7 @@
 		input = $(this).parents('.form-group').find('.transl > :input');
 		
 		if (input.hasClass('tiny')){
-			tinyMCE.get(input.attr('id')).setContent(text);
+      admin.wysiwyg.setValue(input.attr('id'), text);
 		} else {
 			input.val(text);
 		}

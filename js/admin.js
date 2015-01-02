@@ -8,6 +8,18 @@ var _ignorehash;
 
 var admin = {
   
+  wysiwyg:{
+    add: function(elId){
+      tinyMCE.execCommand("mceAddControl", false, elId);
+    },
+    preSave: function(){
+      tinyMCE.triggerSave();
+    },
+    setValue: function(id, text){
+      tinyMCE.get(id).setContent(text);
+    }
+  },
+  
   removeNotValid: function(input, opts){
     /**
      * available opts:

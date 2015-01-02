@@ -224,8 +224,8 @@ class Out
 	public function getSimilar($textid = false, $max = false)
 	{
 		$textid = $textid ? $textid : $this->get['art_title'];
-		
-		return $textid ? Article::getSimilar($article['tags'], $textid, $this->lang, $max) : false;
+    
+		return $textid ? Article::getSimilar(false, $textid, $this->lang, $max) : false;
 	}
 
 		/**

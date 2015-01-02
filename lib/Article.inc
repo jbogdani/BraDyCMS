@@ -613,6 +613,7 @@ class Article
 		if (!$tags && $textid)
 		{
       $art = self::getByTextid($textid);
+      $tags = $art['tags'];
 		}
 		
 		

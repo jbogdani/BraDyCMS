@@ -67,20 +67,7 @@ catch (Exception $e)
     ?>
   
   <script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
-  <script src="./js/jquery-2.1.1.min.js"></script>
-  <script src="./js/jquery.nestable.js"></script>
-  <script src="./js/bootstrap-3.3.1.min.js"></script>
-  <script src="./js/jquery.dataTables.js"></script>
-  <script src="./js/dataTable-bootstrap.js"></script>
-  
-  <script src="./js/admin.js"></script>
-  <script src="./js/pnotify.custom.min.js"></script>
-  <script src="./js/bootstrap-datepicker.js"></script>
-  <script src="./js/select2.min.js"></script>
-  <script src="./js/summernote.min.js"></script>
-<!--  <script src="./tiny_mce/tiny_mce.js"></script>-->
-  <script src="./js/fileuploader.js"></script>
-  <script src="./js/prettify.js"></script>
+  <script src="./js/all.min.js"></script>
   
   <?php if (!$_SESSION['user_confirmed']): ?>
 

@@ -1,3 +1,6 @@
+3.9.0[] = "Added basic support for custom tags in Summernote wysiwyg editor"
+3.9.0[] = "Javascript files are minified using grunt"
+3.9.0[] = "TinyMCE replaced by Summernote"
 3.9.0[] = "All TinyMCE functionalities are now abstracted in admin.wysiwyg object"
 3.9.0[] = "Added new tag manager"
 3.9.0[] = "Strings missing translations are logged in error log"

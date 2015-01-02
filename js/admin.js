@@ -8,31 +8,35 @@ var _ignorehash;
 
 var admin = {
   wysiwyg:{
-    add: function(id){
-      var $el = $('#' + id),
-      height = $el.height();
-      $el.summernote({
-        height: height
-      });
+    add: function(id, opts){
+      if (!opts) var opts = {};
+      var $el = $('#' + id);
+      
+      // ['insert', ['customTag']]
+      var default_opts = {
+        height: $el.height(),
+        toolbar:[
+          ['style', ['style']],
+          ['font', ['bold', 'italic', 'underline', 'clear']],
+          ['fontname', ['fontname']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          ['table', ['table']],
+          ['insert', ['link', /*'picture'*/, 'hr', 'customTag']],
+          ['view', ['fullscreen', 'codeview']],
+          ['help', ['help']]
+        ]
+      };
+      
+      $.extend(default_opts, opts);
+        
+      $el.summernote(default_opts);
     },
     preSave: function(){
-      
-      //tinyMCE.triggerSave();
     },
     setValue: function(id, text){
       $('#' + id).code(text);
-    }
-  },
-  
-  wysiwyg2:{
-    add: function(elId){
-      tinyMCE.execCommand("mceAddControl", false, elId);
-    },
-    preSave: function(){
-      tinyMCE.triggerSave();
-    },
-    setValue: function(id, text){
-      tinyMCE.get(id).setContent(text);
     }
   },
   

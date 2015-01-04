@@ -69,8 +69,8 @@ var usermap = {
   
   loadLeaflet: function(callback){
     if (typeof L === 'undefined'){
-      $('head').append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />');
-        $.getScript('http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js', function(){
+      $('head').append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />');
+        $.getScript('http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', function(){
           callback();
         });
     } else{

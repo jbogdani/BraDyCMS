@@ -56,7 +56,6 @@
 
     events: { // events
       customTag: function (layoutInfo, value) {
-        console.log(value);
         // Get current editable node
         var $editable = layoutInfo.editable();
 

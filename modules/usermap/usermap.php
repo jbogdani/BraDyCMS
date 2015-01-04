@@ -103,6 +103,8 @@ class usermap_ctrl extends Controller
 		$html = '<div'
       . ' id="' . uniqid() . '"'
       . ' class="usermap"'
+      . ($param['marker'] ? ' data-marker="' . $param['marker'] . '"' : '')
+      . ($param['zoom'] ? ' data-zoom="' . $param['zoom'] . '"' : '')
       . ' data-cfg="' . $param['content'] . '"'
       . ' style="'
         . 'width: ' . ($param['width'] ? $param['width'] : '100%') . ';'

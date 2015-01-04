@@ -24,6 +24,24 @@ var usermap = {
     var $this = this;
     
     this.loadLeaflet(function(){
+      if ($(el).data('marker') && $(el).data('zoom')){
+        var coordinates = $(el).data('marker').split(',');
+        var data = {
+          zoom: parseInt($(el).data('zoom')),
+          scrollWheelZoom: $(el).data('scrollWheelZoom'),
+          center: [ parseFloat(coordinates[0]), parseFloat(coordinates[1]) ],
+          markers: [
+            {
+              coord: [ parseFloat(coordinates[0]), parseFloat(coordinates[1]) ],
+              name: $(el).data('cfg')
+            }
+          ]
+        };
+        
+        console.log(data.center);
+        $this.run(el, data);
+        return;
+      }
       $.ajax({
         url: 'sites/default/modules/usermaps/' + cfgFile + '.map',
         dataType: 'json',
@@ -68,7 +86,6 @@ var usermap = {
   },
   
   loadLeaflet: function(callback){
-    console.log(callback);
     if (typeof L === 'undefined'){
       $('head').append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />');
         $.getScript('http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', function(){

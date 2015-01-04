@@ -4,6 +4,26 @@ BraDyCMS has a built-in (core) plugin that helps you to easily create and embed
 in articles bodies beautiful dynamic maps. We use [Leaflet.js](http://leafletjs.com) 
 and [OpenStreetMap](http://osm.org) to build your maps.
 
+---
+
+### Simple map
+
+`Hands up`: Since version 3.9 you do not have to create a custom map to include a 
+simple map with only one marker in your articles.
+
+You can use the custom tag `map` with a few attributes, e.g.:
+
+    [[map marker="44.51618,11.34238" zoom="7"]]BraDypUS[[/map]]
+
+The `marker` attribute is **required** and should contain the `x`,`y` coordinates of 
+the single marker you want to show on your map, separated by comma (`,`).
+
+The `zoom` attribute is **required** and should contain the initial zoom of the map.
+
+The `content` of the tag will be used as text for the marker popup. Please note that
+you **can use rich HTML** text here!
+
+---
 
 The plugin is located in: 
 
@@ -79,7 +99,7 @@ latitude and longitude, e.g.: `[44.51618,11.34238]`
 
 ---
 
-### Example of a simple contact form
+### Example of a simple map, with only one marker
 
     {
       "scrollWheelZoom": "false",

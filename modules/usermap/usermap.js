@@ -24,7 +24,7 @@ var usermap = {
     var $this = this;
     
     this.loadLeaflet(function(){
-      if ($(el).data('marker') && $(el).data('zoom')){
+      if ($(el).data('marker')){
         var coordinates = $(el).data('marker').split(',');
         var data = {
           zoom: parseInt($(el).data('zoom')),
@@ -37,8 +37,6 @@ var usermap = {
             }
           ]
         };
-        
-        console.log(data.center);
         $this.run(el, data);
         return;
       }
@@ -76,10 +74,10 @@ var usermap = {
     $.each(cfg.markers, function(i, marker){
       bounds.push(marker.coord);
       L.marker(marker.coord).addTo(map)
-      .bindPopup(marker.name);
+        .bindPopup(marker.name);
     });
     
-    if (cfg.zoomToBounds && cfg.zoomToBounds !== 'false'){
+    if (!cfg.zoom || cfg.zoomToBounds && cfg.zoomToBounds !== 'false'){
       map.fitBounds(bounds);
     }
     

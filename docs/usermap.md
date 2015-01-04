@@ -13,12 +13,16 @@ simple map with only one marker in your articles.
 
 You can use the custom tag `map` with a few attributes, e.g.:
 
+    [[map marker="44.51618,11.34238"]]BraDypUS[[/map]]
+or
     [[map marker="44.51618,11.34238" zoom="7"]]BraDypUS[[/map]]
 
 The `marker` attribute is **required** and should contain the `x`,`y` coordinates of 
 the single marker you want to show on your map, separated by comma (`,`).
 
-The `zoom` attribute is **required** and should contain the initial zoom of the map.
+The `zoom` attribute is **optional**, but **recommended** and should contain 
+the initial zoom of the map. If not provided an the best zoom level 
+will be automatically calculated.
 
 The `content` of the tag will be used as text for the marker popup. Please note that
 you **can use rich HTML** text here!

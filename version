@@ -1,3 +1,4 @@
+3.9.0[] = "Usermap module automatically resolves js & css dependencies"
 3.9.0[] = "Default Leaflet automatic inclusion library for usermap module updated to v 0.7.3"
 3.9.0[] = "Added basic support for custom tags in Summernote wysiwyg editor"
 3.9.0[] = "Javascript files are minified using grunt"

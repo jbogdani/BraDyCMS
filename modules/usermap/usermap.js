@@ -68,6 +68,7 @@ var usermap = {
   },
   
   loadLeaflet: function(callback){
+    console.log(callback);
     if (typeof L === 'undefined'){
       $('head').append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />');
         $.getScript('http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', function(){

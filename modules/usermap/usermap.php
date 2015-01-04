@@ -107,8 +107,8 @@ class usermap_ctrl extends Controller
       . ' style="'
         . 'width: ' . ($param['width'] ? $param['width'] : '100%') . ';'
         . 'height:' . ($param['height'] ? $param['height'] : '400px') . ';"'
-      . '></div>';
-    
+      . '></div>'. "\n"
+      . '<script>window.usermap || document.write(\'<script src="./modules/usermap/usermap.js"><\/script>\');</script>';
     return $html;
 	}
 	

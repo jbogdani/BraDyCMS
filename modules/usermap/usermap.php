@@ -105,6 +105,8 @@ class usermap_ctrl extends Controller
       . ' class="usermap"'
       . ($param['marker'] ? ' data-marker="' . $param['marker'] . '"' : '')
       . ($param['zoom'] ? ' data-zoom="' . $param['zoom'] . '"' : '')
+      . ($param['platform'] ? ' data-platform="' . $param['platform'] . '"' : '')
+      . ($param['type'] ? ' data-type="' . $param['type'] . '"' : '')
       . ' data-cfg="' . $param['content'] . '"'
       . ' style="'
         . 'width: ' . ($param['width'] ? $param['width'] : '100%') . ';'

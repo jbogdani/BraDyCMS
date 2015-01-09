@@ -1,3 +1,4 @@
+3.9.0[] = "Usermaps can now be rendered using also Google Maps"
 3.9.0[] = "Usermap custom tag can be used without a pre-defined map to display one-marker simple maps"
 3.9.0[] = "Usermap module automatically resolves js & css dependencies"
 3.9.0[] = "Default Leaflet automatic inclusion library for usermap module updated to v 0.7.3"

@@ -1,8 +1,9 @@
 # Build and embed maps
 
 BraDyCMS has a built-in (core) plugin that helps you to easily create and embed 
-in articles bodies beautiful dynamic maps. We use [Leaflet.js](http://leafletjs.com) 
-and [OpenStreetMap](http://osm.org) to build your maps.
+in articles bodies beautiful dynamic maps. You can use both [Leaflet.js](http://leafletjs.com) 
+paired with [OpenStreetMap](http://osm.org) (**default option**) or [Google Maps](https://developers.google.com/maps/) 
+to build your maps.
 
 ---
 
@@ -16,6 +17,14 @@ You can use the custom tag `map` with a few attributes, e.g.:
     [[map marker="44.51618,11.34238"]]BraDypUS[[/map]]
 or
     [[map marker="44.51618,11.34238" zoom="7"]]BraDypUS[[/map]]
+
+If you want to use Google Maps, instead of Leaflet, you should add the 
+`platform` attribute:
+
+    [[map platform="google" marker="44.51618,11.34238"]]BraDypUS[[/map]]
+or
+    [[map platform="google" marker="44.51618,11.34238" zoom="7"]]BraDypUS[[/map]]
+
 
 The `marker` attribute is **required** and should contain the `x`,`y` coordinates of 
 the single marker you want to show on your map, separated by comma (`,`).
@@ -82,6 +91,8 @@ BraDyCMS integrates a real-time validator to help finding any syntax error.
 
 #### General data
 
+- `platform`, string, optional, default: *leaflet*. Use *google* to use Google Maps
+as mapping platform
 - `scrollWheelZoom`, boolean, optional, default false. Enables or disables 
 the scroll wheel zoom.
 - `attribution`, string, optional, default false. A html string to display 
@@ -92,6 +103,12 @@ map expressed as an array of latitude and longitude, e.g.: `[44.51618,11.34238]`
 - `zoomToBounds`, boolean, optional, default false. If true the map will 
 automatically zoom and center to show all markers.
 - `markers`, array, required. Array of markers. See below for a in-depth marker description.
+- `type`, string, optional, default *ROADMAP*. This option is available only with
+Google Maps platform. Set this to one the following values (case insensitive):
+  - *ROADMAP* (normal, default 2D map),
+  - *SATELLITE* (photographic map),
+  - *HYBRID* (photographic map + roads and city names),
+  - *TERRAIN (map with mountains, rivers, etc.)*.
 
 ---
 

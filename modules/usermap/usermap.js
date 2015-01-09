@@ -54,6 +54,8 @@
       var cfgFile = $(el).data('cfg');
       var platform = $(el).data('platform') || 'leaflet';
       
+      $this = this;
+      
       // simple map from markup
       if ($(el).data('marker')){
         loadLib(platform, function(){
@@ -72,10 +74,10 @@
           
           switch(platform){
             case 'leaflet':
-              this.runLeaflet(el, data);
+              $this.runLeaflet(el, data);
               break;
             case 'google':
-              this.runGoogleMaps(el, data);
+              $this.runGoogleMaps(el, data);
               break;
             default:
               return false;
@@ -86,7 +88,6 @@
       }
       
       // map from configuration
-      var $this = this;
       $.ajax({
         url: 'sites/default/modules/usermaps/' + cfgFile + '.map',
         dataType: 'json',

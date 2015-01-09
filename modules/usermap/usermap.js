@@ -64,6 +64,7 @@
             zoom: parseInt($(el).data('zoom')),
             scrollWheelZoom: $(el).data('scrollWheelZoom'),
             center: [ parseFloat(coordinates[0]), parseFloat(coordinates[1]) ],
+            type: $(el).data('type'),
             markers: [
               {
                 coord: [ parseFloat(coordinates[0]), parseFloat(coordinates[1]) ],

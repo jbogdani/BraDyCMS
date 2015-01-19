@@ -396,7 +396,7 @@ class Article
 	 * Return articles array of beams filtered by tags array
 	 * @param array $tags
 	 * @param string $lang
-	 * @param boolean $lax if true all returned articles must have all tags in tags array
+	 * @param boolean $lax if false, default option, articles must have all tags in tags array
    * @param boolean $admin  if true all articles will be returned else onvly valid (published) articles
    * @param integer $start Start id for LIMIT statement
    * @param integer $max Max number of records for LIMIT statement
@@ -407,12 +407,13 @@ class Article
 	{
     if ($returnCount)
     {
-      $t = "SELECT COUNT(`id`) as `tot` FROM `" . self::art_tb() . "` WHERE `id` IN ("
-          . "SELECT `articles_id` FROM `articles_tag` WHERE `tag_id` IN("
-            . "SELECT `id` FROM `tag` WHERE `title`='" . implode("' " . ($lax ? ' AND ' : ' OR ') . " `title`='", $tags) . "'"
-          . ")"
-        . ")";
-      return R::getCell($t);
+      $t = "SELECT `articles`.`id` FROM `articles` "
+        . "INNER JOIN `articles_tag` ON `articles_id` = `articles`.`id` "
+        . "INNER JOIN `tag` ON `articles_tag`.`tag_id` = `tag`.`id` "
+        . "WHERE `tag`.`title` IN ('" . implode("', '", $tags). "') "
+        . "GROUP BY `articles`.`id` "
+        . "HAVING count(`articles`.`id`) >= " . ($lax ? 1 : count($tags));
+      return count(R::getAll($t));
     }
     
     $values = array();

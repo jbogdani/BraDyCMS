@@ -124,6 +124,15 @@ class Out
   }
   
   /**
+   * Returns number of all articles found by a query, search ot tag filtering 
+   * @return int
+   */
+  public function getTotal()
+  {
+    return $this->totalArticles;
+  }
+  
+  /**
    * Returns translated string
    * @param string $string  string to translate
    * @param mixed: string|array|false $args if true tr::sget will be used
@@ -284,10 +293,9 @@ class Out
       }
     }
     
-    $this->totalArticles = Article::getByTag($tags, false, false, false, false, false, true);
-    
     return $this->getArticlesByTagArray($tags, false, $page, $max);
 	}
+  
 	
 	/**
 	 * Return list of articles filtered by one or more tags

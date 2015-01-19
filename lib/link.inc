@@ -12,7 +12,7 @@ class link
    * Returns path to main domain root
    * @return string
    */
-  private static function getPath($page = false)
+  private static function getPath()
 	{
     $parts = array('.');
     
@@ -21,7 +21,7 @@ class link
       array_push($parts, '..');
     }
     
-    if ($_REQUEST['page'] || $page)
+    if ($_REQUEST['page'])
     {
       array_push($parts, '..');
     }
@@ -119,7 +119,7 @@ class link
     
     $href = self::formatHref($href);
 		
-		$path = self::getPath($page);
+		$path = self::getPath();
     
     // links to nothing is not processed
 		if ($href == '#')

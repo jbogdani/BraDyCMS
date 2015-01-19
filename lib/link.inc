@@ -12,7 +12,7 @@ class link
    * Returns path to main domain root
    * @return string
    */
-  private static function getPath()
+  private static function getPath($page = false)
 	{
     $parts = array('.');
     
@@ -21,7 +21,7 @@ class link
       array_push($parts, '..');
     }
     
-    if ($_REQUEST['page'])
+    if ($_REQUEST['page'] || $page)
     {
       array_push($parts, '..');
     }
@@ -69,7 +69,7 @@ class link
    */
 	public static function to_article($textid, $lang = false, $page = false)
 	{
-		return self::formatHref($textid, $lang, $page);
+		return self::format($textid, $lang, $page);
 	}
 	
 	/**
@@ -98,26 +98,16 @@ class link
    */
 	public static function format($href, $lang = false, $page = false)
 	{
-		$href = self::formatHref($href);
-		
-		$path = self::getPath();
-    
-		// absolute url is not processed
+    // absolute url is not processed
 		if (preg_match('/^https?:\/\/(.+)/', $href))
 		{
 			return $href;
 		}
-	
-		// incomplete absolute url is completed with http:// prefix and not processed further
+    
+    // incomplete absolute url is completed with http:// prefix and not processed further
 		if (preg_match('/^www\.(.+)/', $href))
 		{
 			return 'http://' . $href;
-		}
-	
-		// links to nothing is not processed
-		if ($href == '#')
-		{
-			return ($path != '.' ? $path : '') . $href;
 		}
     
     // skype  & callto links
@@ -126,7 +116,18 @@ class link
 			return $href;
 		}
 	
-		// links to home page is not processed
+    
+    $href = self::formatHref($href);
+		
+		$path = self::getPath($page);
+    
+    // links to nothing is not processed
+		if ($href == '#')
+		{
+			return ($path != '.' ? $path : '') . $href;
+		}
+    
+    // links to home page is not processed
 		if ($href == '' || $href == './' || $href == 'home')
 		{
       return $path;

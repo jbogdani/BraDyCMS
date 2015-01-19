@@ -145,7 +145,7 @@ class Out
 	 */
 	public function link2($art, $tags = false, $page = false)
 	{
-    $page = $page ? $page : $this->get['page'];
+    !$page ? $page = $this->get['page'] : '';
     
     $url = '';
     
@@ -297,23 +297,7 @@ class Out
 	 */
 	public function getArticlesByTagArray($tags, $dontparse = false, $page = false, $max = false)
 	{
-    $max_cfg = cfg::get('pagination');
-    
-    if ($page || $this->get['page'] || $max_cfg)
-    {
-      if (!$page)
-      {
-        $page = $this->get['page'] ? $this->get['page'] : 1;
-      }
-      
-      if (!$max)
-      {
-        $max = $max_cfg ? $max_cfg : 20;
-      }
-      
-      $start = ( ($page -1 ) * $max);
-    }
-    
+    list($start, $max) = $this->page2limit($page, $max);
     
     $this->totalArticles = Article::getByTag($tags, $this->lang, $this->get['tag_all'], false, false, false, true);
     
@@ -547,22 +531,7 @@ class Out
     
     $this->totalArticles = Article::search($string, false, false, false, false, true);
     
-    $max_cfg = cfg::get('pagination');
-    
-    if ($page || $this->get['page'] || $max_cfg)
-    {
-      if (!$page)
-      {
-        $page = $this->get['page'] ? $this->get['page'] : 1;
-      }
-      
-      if (!$max)
-      {
-        $max = $max_cfg ? $max_cfg : 20;
-      }
-      
-      $start = ( ($page -1 ) * $max);
-    }
+    list($start, $max) = $this->page2limit($page, $max);
     
     return Article::search($string, ($tot > 0), $this->lang, $start, $max);
 	}
@@ -631,24 +600,9 @@ class Out
    */
   public function getArticlesByFilter($filter, $connector = false, $dontparse = false, $page = false, $max = false)
   {
-    $max_cfg = cfg::get('pagination');
+    list($start, $max) = $this->page2limit($page, $max);
     
-    if ($page || $this->get['page'] || $max_cfg)
-    {
-      if ($page)
-      {
-        $page = $this->get['page'] ? $this->get['page'] - 1 : 1;
-      }
-      
-      if (!$max)
-      {
-        $max = $max_cfg ? $max_cfg : 20;
-      }
-      
-      $start = $page * $max;
-    }
-    
-    $this->totalArticles = Article::getByFilter($filter, $this->lang, $connector, false, false, true);
+    $this->totalArticles = Article::getByFilter($filter, false, $connector, false, false, true);
     
     $arts = Article::getByFilter($filter, $this->lang, $connector, $start, $max);
     
@@ -660,6 +614,34 @@ class Out
       }
     }
     return $arts;
+  }
+  
+  /**
+   * Returns array with start and max
+   * @param int $page Current page name, default: 1
+   * @param int $max Maximum of records to show on page. A per-site default value can be set in the config file, otherwize 20
+   * @return array Array with calculated start and $max values
+   */
+  private function page2limit($page = false, $max = false)
+  {
+    $max_cfg = cfg::get('pagination');
+    
+    if ($page || $this->get['page'] || $max_cfg)
+    {
+      if (!$page)
+      {
+        $page = $this->get['page'] ? $this->get['page'] : 1;
+      }
+      
+      if (!$max)
+      {
+        $max = $max_cfg ? $max_cfg : 20;
+      }
+      
+      $start = ( ($page -1 ) * $max);
+    }
+    
+    return array($start, $max);
   }
   
   /**

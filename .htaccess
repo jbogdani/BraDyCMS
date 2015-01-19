@@ -46,8 +46,8 @@ RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&d
 RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true [L]
 
 #search string: (ln/)search:some string !paginate
-RewriteRule ^([a-z]{2})/search:(.+)(/[0-9]{1,2})?$ index.php?lang=$1&search=$2&page=$3 [QSA,L]
-RewriteRule ^search:(.+)(/[0-9]{1,2})?$ index.php?search=$1&page=$2 [QSA,L]
+RewriteRule ^([a-z]{2})/search:([^\/]+)(/[0-9]{1,2})?$ index.php?lang=$1&search=$2&page=$3 [QSA,L]
+RewriteRule ^search:([^\/]+)(/[0-9]{1,2})?$ index.php?search=$1&page=$2 [QSA,L]
 
 #search tags: (ln/)some-tags.search !paginate
 RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+).search(/[0-9]{1,2})?$ index.php?lang=$1&tags=$2&is_search=1&page=$3 [QSA,L]

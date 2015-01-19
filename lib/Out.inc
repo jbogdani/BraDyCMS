@@ -263,7 +263,7 @@ class Out
 
 	/**
 	 * Returns list of articles filtered by one or more tags. The tags can be specified as method arguments, if not current GET tags will be used
-	 * @param $tag, $tag, if present, the list of arguments to be the filtering tags. If one of the parameters isan array, this is assumed to be the pagination information: [$page, $max]
+	 * @param $tag, $tag, if present, the list of arguments to be the filtering tags. If one of the parameters is an array, this is assumed to be the pagination information: [$page, $max]
 	 * @return array|false
 	 */
 	public function getArticlesByTag()
@@ -301,9 +301,9 @@ class Out
     
     if ($page || $this->get['page'] || $max_cfg)
     {
-      if ($page)
+      if (!$page)
       {
-        $page = $this->get['page'] ? $this->get['page'] - 1 : 1;
+        $page = $this->get['page'] ? $this->get['page'] : 1;
       }
       
       if (!$max)
@@ -311,7 +311,7 @@ class Out
         $max = $max_cfg ? $max_cfg : 20;
       }
       
-      $start = $page * $max;
+      $start = ( ($page -1 ) * $max);
     }
     
     

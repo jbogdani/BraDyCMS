@@ -1,3 +1,4 @@
+3.9.0[] = "Added support for pagination in simple search results"
 3.9.0[] = "Bug fixed with pagination of articles filtered by tags"
 3.9.0[] = "Usermaps can now be rendered using also Google Maps"
 3.9.0[] = "Usermap custom tag can be used without a pre-defined map to display one-marker simple maps"

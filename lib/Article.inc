@@ -491,10 +491,12 @@ class Article
    * @param string $string String to search for
    * @param string $lang Two-character langiage code
    * @param boolean $dontseparate If true the whole string will be searched, otherwize the single words will be splitted using spaces and searched separately, using AND operator
+   * @param integer $start Start id for LIMIT statement
+   * @param integer $max Max number of records for LIMIT statement
    * @param boolean $returnCount If true te total records will be returned
    * @return boolean
    */
-  public static function search($string, $lang = false, $dontseparate = false, $returnCount = false)
+  public static function search($string, $lang = false, $dontseparate = false, $start = false, $max = false, $returnCount = false)
 	{
     $searcheableFields = array('title', 'textid', 'author', 'summary', 'text', 'keywords');
   
@@ -512,6 +514,7 @@ class Article
     }
     
     $sql_part = false;
+    $values = array();
     
     foreach ($searcheableFields as $fld)
     {
@@ -520,7 +523,7 @@ class Article
       foreach ($string_arr as $str)
       {
         $sql_micro_part[] = "`" . $fld . "` LIKE ?";
-        $values[] = "%" . $str . "%";
+        array_push($values, "%" . $str . "%");
       }
       $sql_part[] = ' (' . implode(' AND ', $sql_micro_part) . ') ';
     }
@@ -530,6 +533,12 @@ class Article
     if ($returnCount)
     {
       return R::count(self::art_tb(), $sql, $values);
+    }
+    
+    if ($start !== false && $max)
+    {
+      $sql .= " LIMIT ?, ?";
+      array_push($values, (int)$start, (int)$max);
     }
     
 		$articles = R::find(

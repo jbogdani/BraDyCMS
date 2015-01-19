@@ -327,7 +327,6 @@ class Out
       }
     }
     return $arts;
-
 	}
 	
 	/**
@@ -537,17 +536,35 @@ class Out
 	/**
 	 * Returns list of articles containing the searched string 
    * @param string $string Custom string to search in the database
+   * @param int $page Current page number, default 1
+   * @param inr $max Maximum of records to show in each page, default 20
 	 * @return array|false
 	 */
-	public function getSearchResults($string = false)
+	public function getSearchResults($string = false, $page = false, $max = false)
 	{
     $string = $string ? $string : $this->get['search'];
-    
     $string = preg_replace('/^"(.+)"$/', '$1', $string, -1, $tot);
     
-    $this->totalArticles = Article::search($string, $this->lang, ($tot > 0), true);
+    $this->totalArticles = Article::search($string, false, false, false, false, true);
     
-    return Article::search($string, $this->lang, ($tot > 0));
+    $max_cfg = cfg::get('pagination');
+    
+    if ($page || $this->get['page'] || $max_cfg)
+    {
+      if (!$page)
+      {
+        $page = $this->get['page'] ? $this->get['page'] : 1;
+      }
+      
+      if (!$max)
+      {
+        $max = $max_cfg ? $max_cfg : 20;
+      }
+      
+      $start = ( ($page -1 ) * $max);
+    }
+    
+    return Article::search($string, ($tot > 0), $this->lang, $start, $max);
 	}
 	
 	/**

@@ -375,7 +375,12 @@ class Article
       return R::count( self::art_tb(), $sql, $values );
     }
     
-    $sql .= ($start !== false && $max ? ' LIMIT ' . (int)$start . ', ' . (int)$max : '');
+    if ($start !== false && $max)
+    {
+      $sql .= " ORDER BY `articles`.publish DESC "
+      . " LIMIT " . (int)$start . ", " . (int)$max;
+    }
+    
     
     $articles = R::find(
       self::art_tb(),
@@ -405,35 +410,56 @@ class Article
 	 */
 	public static function getByTag($tags, $lang = false, $lax = false, $admin = false, $start = false, $max = false, $returnCount = false)
 	{
-    if ($returnCount)
-    {
-      $t = "SELECT `articles`.`id` FROM `articles` "
+    $sql = "SELECT `articles`." . ($returnCount ? 'id' : '*') . " FROM `articles` "
         . "INNER JOIN `articles_tag` ON `articles_id` = `articles`.`id` "
         . "INNER JOIN `tag` ON `articles_tag`.`tag_id` = `tag`.`id` "
-        . "WHERE `tag`.`title` IN ('" . implode("', '", $tags). "') "
-        . "GROUP BY `articles`.`id` "
+        . "WHERE `tag`.`title` IN ('" . implode("', '", $tags). "') ";
+    if (!$admin)
+    {
+      $sql .= " AND `articles`.status = 1 AND ("
+        . "`articles`.expires = '0000-00-00 00:00:00' OR "
+        . "`articles`.expires = '0000-00-00' OR "
+        . "`articles`.expires = '0000-00-00' OR "
+        . "`articles`.expires = `articles`.publish OR "
+        . "`articles`.expires > '" . date("Y-m-d H:i:s") . "' "
+        . ")";
+    }
+    $sql .= "GROUP BY `articles`.`id` "
         . "HAVING count(`articles`.`id`) >= " . ($lax ? 1 : count($tags));
-      return count(R::getAll($t));
+    
+    if ($returnCount)
+    {
+      return count(R::getAll($sql));
     }
     
     $values = array();
-    $sql = false;
+    
+    if (!$admin && $start !== false && $max)
+    {
+      $sql .= " ORDER BY `articles`.publish DESC ";
+    }
     
     if ($start !== false && $max)
     {
-      $sql = ' LIMIT ?, ?';
+      $sql .= ' LIMIT ?, ?';
       array_push($values, (int)$start, (int)$max);
     }
     
-		$articles = $lax ? 
-      R::tagged( self::art_tb(), $tags, $sql, $values) : 
-      R::taggedAll(self::art_tb(), $tags, $sql, $values);
+    
+    $articles = R::getAll($sql, $values);
+    
+    foreach($articles as &$art)
+    {
+      $article = R::dispense(self::art_tb());
+      $article->import($art);
+      $art = $article;
+    }
     
 		if (!is_array($articles) || empty($articles))
 		{
 			return false;
 		}
-		
+
 		$art_list = self::parseArt($articles, $lang);
 		
 		usort($art_list, function($a, $b){
@@ -451,7 +477,7 @@ class Article
         {
           return 0;
         }
-        return ($a['created'] > $b['created']) ? -1 : 1;
+        return (strtotime($a['created']) > strtotime($b['created'])) ? -1 : 1;
       }
       else
       {
@@ -464,26 +490,7 @@ class Article
         
 		});
     
-    if ($admin)
-    {
-      return $art_list;
-    }
-    foreach ($art_list as $id => $art)
-    {
-      if (
-        $art['status'] == 1 && 
-        (
-          $articles['expires'] == '0000-00-00 00:00:00' || 
-          $art['expires'] == '0000-00-00' || 
-          $art['expires'] == $art['publish'] || 
-          $art['expires'] > date("Y-m-d H:i:s") 
-          )
-        )
-        {
-        $new_art_list[$id] = $art;
-        }
-    }
-    return $new_art_list;
+    return $art_list;
 	}
 	
 	

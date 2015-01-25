@@ -422,7 +422,7 @@ class Article
         . "`articles`.expires = '0000-00-00' OR "
         . "`articles`.expires = `articles`.publish OR "
         . "`articles`.expires > '" . date("Y-m-d H:i:s") . "' "
-        . ")";
+        . ") ";
     }
     $sql .= "GROUP BY `articles`.`id` "
         . "HAVING count(`articles`.`id`) >= " . ($lax ? 1 : count($tags));
@@ -445,7 +445,7 @@ class Article
       array_push($values, (int)$start, (int)$max);
     }
     
-    
+
     $articles = R::getAll($sql, $values);
     
     foreach($articles as &$art)

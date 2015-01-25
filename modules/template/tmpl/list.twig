@@ -1,51 +1,67 @@
 <div id="{{ uid }}">
+  
 		
 	<div class="row">
-	
-		<div class="col-md-2">
-      
+		<div class="col-sm-2">
       <p>
-				<button class="btn btn-warning btn-block create">
-          <i class="icon ion-wand"></i> {{ tr.get('create_file')}}
-        </button>
-			</p>
-      
-			{% for lang in ['twig', 'css', 'less', 'js', 'md'] %}
-				
-				{% for f in files[lang] %}
-				<div class="btn-group" style="margin: 3px 0;">
-					<button class="btn btn-info file" data-file="{{ f }}" data-type="{{ lang }}">{{ f }}</button>
-          <a class="btn btn-warning download" data-file="{{ f }}" data-type="{{ lang }}"><i class="icon ion-android-download"></i></a>
-        </div>
-				{% endfor %}
-				
-			{% endfor %}
-			<p>
-				<button class="btn btn-warning btn-block compile" data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-          <i class="icon ion-gear-a"></i> {{ tr.get('compile_less') }}
-        </button>
-			</p>
-			<p>
-				<button class="btn btn-warning btn-block empty_cache" data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-          <i class="icon ion-trash-a"></i> {{ tr.get('empty_cache') }}
-        </button>
-			</p>
-      
-			
-			<p>
-				<button class="btn btn-default btn-block refresh"><i class="icon ion-refresh"></i> {{ tr.get('reload')}}</button>
-			</p>
-			
-      <hr />
-
+      <button class="btn btn-warning create btn-block">
+        <i class="icon ion-wand"></i> {{ tr.get('create_file')}}
+      </button>
+      </p>
       <p>
-				<button class="btn btn-danger btn-block delete"><i class="icon ion-trash-a"></i> {{ tr.get('delete_file')}}</button>
-			</p>
-
+      <button class="btn btn-warning compile btn-block" data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
+        <i class="icon ion-gear-a"></i> {{ tr.get('compile_less') }}
+      </button>
+      </p>
+      <p>
+      <button class="btn btn-warning empty_cache btn-block" data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
+        <i class="icon ion-trash-a"></i> {{ tr.get('empty_cache') }}
+      </button>
+      </p>
+      <p>
+      <button class="btn btn-default refresh btn-block">
+        <i class="icon ion-refresh"></i> {{ tr.get('reload')}}
+      </button>
+      </p>
+      <p>
+      <button class="btn btn-danger delete btn-block">
+        <i class="icon ion-trash-a"></i> {{ tr.get('delete_file')}}
+      </button>
+    
 		</div>
 		
-		<div class="col-md-10">
-			<div>
+		<div class="col-sm-10">
+			<div class="input-group">
+        <select class="form-control fileselect">
+        {% for lang in ['twig', 'css', 'less', 'js', 'md'] %}
+          <optgroup label="{{ lang|upper }}">
+          {% for f in files[lang] %}
+
+            <option data-file="{{ f }}" data-type="{{ lang }}">{{ f }}</option>
+
+          {#<div class="btn-group" style="margin: 3px 0;">
+            <button class="btn btn-info file" data-file="{{ f }}" data-type="{{ lang }}">{{ f }}</button>
+            <a class="btn btn-warning download" data-file="{{ f }}" data-type="{{ lang }}"><i class="icon ion-android-download"></i></a>
+          </div>#}
+          {% endfor %}
+          </optgroup>
+        {% endfor %}
+        </select>
+        <div class="input-group-btn">
+          <button class="btn btn-primary editfile" data-file="{{ f }}" data-type="{{ lang }}">
+            <i class="icon ion-edit"></i>
+            {{ tr.get('edit') }}
+          </button>
+          <button class="btn btn-info download" data-file="{{ f }}" data-type="{{ lang }}">
+            <i class="icon ion-android-download"></i>
+            {{ tr.get('open_download') }}
+          </button>
+        </div>
+      </div>
+				
+			<div class="editor" style="margin-top:30px;"></div>
+      
+      <div style="margin-top:20px;">
 				<div class="well well-sm clearfix">
 					<i class="icon ion-speakerphone" style="font-size:1.5em;"></i> {{ tr.get('empty_cache_to_use_twig') }}
 					<div class="pull-right">
@@ -60,8 +76,6 @@
 					</div>
 				</div>
 			</div>
-				
-			<div class="editor"></div>
 		</div>
 		
 	</div>
@@ -94,39 +108,43 @@
       .load('controller.php?obj=template_ctrl&method=delete_file');
   });
 	
-	$('#{{ uid }} .file').on('click', function(){
+	$('#{{ uid }} .editfile').on('click', function(){
     _ignorehash = true;
+    var file = $('#{{ uid }} select.fileselect').find('option:selected').data('file');
+    var type = $('#{{ uid }} select.fileselect').find('option:selected').data('type');
     location.hash = '#template/dashboard/' + $(this).data('file');
 		$('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
-      .load('controller.php?obj=template_ctrl&method=edit&param[]=' + $(this).data('file') + '&param[]=' + $(this).data('type'));
+      .load('controller.php?obj=template_ctrl&method=edit&param[]=' + file + '&param[]=' + type);
 	});
  
 
+$('#{{ uid }} .download').on('click', function(){
+  var file = $('#{{ uid }} select.fileselect').find('option:selected').data('file');
+  var type = $('#{{ uid }} select.fileselect').find('option:selected').data('type');
+  var url = './sites/default/';
   
-  $('#{{ uid }} .download').each(function(i, el){
-    var url = './sites/default/';
-    switch($(el).data('type')){
+  switch(type){
       case 'twig':
       case 'md':
-        url += $(el).data('file');
+        url += file;
         break;
       case 'less':
       case 'css':
-        url += 'css/' + $(el).data('file');
+        url += 'css/' + file;
         break;
       case 'js':
-        url += 'js/' + $(el).data('file');
+        url += 'js/' + file;
         break;
       default:
         return false;
         break;
     }
     
-    $(el).attr('href', url);
-    $(el).attr('target', '_blank');
-    $(el).attr('download', $(el).data('file'));
-		
-	});
+    window.open(url, '_blank');
+
+});
+  
+  
 	
 	$('#{{ uid }} .compile').on('click', function(){
     var self =  $(this);

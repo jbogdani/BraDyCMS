@@ -15,6 +15,7 @@ var admin = {
       // ['insert', ['customTag']]
       var default_opts = {
         height: $el.height(),
+        disableDragAndDrop: true,
         toolbar:[
           ['style', ['style']],
           ['font', ['bold', 'italic', 'underline', 'clear']],

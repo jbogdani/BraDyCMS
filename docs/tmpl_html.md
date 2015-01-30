@@ -557,7 +557,7 @@ E.g.: `{{ html.menu('main', 'nav') }}`
 
 ---
 
-#### metadata('no_og')
+#### metadata('no_og', 'no_twitter')
 Returns well-formatted html code of page html and open graph metadata and links to feeds
 - **no_og** boolean, optional, default: false. If true the open graph metadata will not be shown
 
@@ -609,6 +609,20 @@ E.g.: `{{ html.metadata_hp }}`
     <meta name="citation_abstract_html_url" content="http://lorem.ipsum"/>
     <meta name="citation_language" content="en" />
     <meta name="citation_pdf_url" content="http://lorem.ipsum.pdf"/>
+
+---
+
+#### metadata_twitter('twitter_id')
+Returns well-formatted html code with Twitter card summary metadata (https://dev.twitter.com/cards/types/summary).
+
+E.g.: `{{ html.metadata_twitter('TheBraDypUS') }}`
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@TheBraDypUS" />
+    <meta name="twitter:title" content="Lorem ipsum" />
+    <meta name="twitter:description" content="Lorem ipsum" />
+    <meta name="twitter:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
+    <meta name="twitter:url" content="http://thishost/thispage_url" />
 
 ---
 

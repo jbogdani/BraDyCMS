@@ -38,13 +38,29 @@ class OutHtml extends Out
 					( $this->getPageData('image') ? "\n  " . '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />' : '' )
 			;
 		}
-				
-		$html .= "\n\n  <!-- Feed links -->" .
+    
+    $html .= "\n\n  <!-- Feed links -->" .
 				"\n  " . '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />' .
 				"\n  " . '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />';
 		
 		return $html;
 	}
+  
+  public function metadata_twitter($twitter_id)
+  {
+    $html = "\n\n  <!-- Twitter Card -->"
+        . "\n  " . '<meta name="twitter:card" content="summary" />'
+        . "\n  " . '<meta name="twitter:site" content="@' . $twitter_id . '" />'
+        . "\n  " . '<meta name="twitter:title" content="'
+            . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) ) . 
+            '" />'
+        . "\n  " . '<meta name="twitter:description" content="' . $this->getPageData('description', true) . '" />'
+        . ($this->getPageData('image') ? 
+            "\n  " . '<meta name="twitter:image" content="' . $this->getPageData('image', true) . '" />'
+            :  '')
+        . "\n  " . '<meta name="twitter:url" content="' . $this->getPageData('url', true) . '" />';
+    return $html;
+  }
 	
 	/**
 	 * Returns html with Dublin Core metadata

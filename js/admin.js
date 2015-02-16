@@ -29,11 +29,11 @@ var admin = {
           ['help', ['help']]
         ],
         onCreateLink: function (url) {
-          if (url.indexOf('http://') !== 0  && 
-            url.indexOf('#') !== 0 && 
-            url.indexOf('mailto:') !== 7) {
-            url = 'http://' + url;
-          }
+//          if (url.indexOf('http://') !== 0  && 
+//            url.indexOf('#') !== 0 && 
+//            url.indexOf('mailto:') !== 7) {
+//            url = 'http://' + url;
+//          }
           return url;
         }
       };

@@ -1,11 +1,11 @@
 # The `html` object
 
 The `html` object is the core of the BraDyCMS template system. The `html` object
-is organized in methods that can return everything relative to the CMS content: 
+is organized in methods that can return everything relative to the CMS content:
 strings, html pieces of code, php arrays to use in iterations and also complex php objects.
 This object is used following the [Twig syntax](#docs/read/tmpl_twig).
 
-Calling a method of the `html` object is as simple as writing the method name after 
+Calling a method of the `html` object is as simple as writing the method name after
 the `html` string separating them by a dot (.), e.g.: `html.methodName`.
 
 Methods can have zero, one or more arguments, e.g.:
@@ -18,9 +18,9 @@ Some arguments may be *required*, i.e. if not provided an error occurs, or *opti
 
 Arguments can be strings (also pieces of html), arrays or other objects.
 
-In general, there are two types of methods/attributes of the `html` objects: 
-the ones that return well-formatted and rich HTML 
-and the ones that return strings, arrays or PHP objects. These methods can be 
+In general, there are two types of methods/attributes of the `html` objects:
+the ones that return well-formatted and rich HTML
+and the ones that return strings, arrays or PHP objects. These methods can be
 identified by the prefix `get`, ex: `{{ html.getContext }}`.
 
 ---
@@ -48,7 +48,7 @@ E.g.: `{{ html.articleBody('lorem_ipsum') }}`
 #### ct('customtag', 'params')
 Returns html produced by custom tag or user module
 - **customtag** string, required. Custom tag to run
-- **params** array|string, optional, default: false. Array or JSON encoded 
+- **params** array|string, optional, default: false. Array or JSON encoded
 key-value pairs array (string) to use as parameters
 
 E.g.: `{{ html.ct('addThis', {"content": "share", "pubid": "ra-4d8b051f4951c18f"}) }}`
@@ -174,7 +174,7 @@ or
         'updated' => boolean,
         'url' => string,
         'full_url' => string
-      ), 
+      ),
       array(
         'id' => integer,
         'title' => string,
@@ -190,12 +190,17 @@ or
 ---
 
 #### getArticlesByTag('tag1', 'tag2', 'ecc')
-Returns array of articles arrays matching all the provided tags. If no tag is provided as argument, URL tags will be used
+Returns array of articles arrays matching all the provided tags.
+If no tag is provided as argument, URL tags will be used.
+If any of the arguments is an array in the form of `['page', 'max']` these two
+values will be used for pagination
 - **tag1** string, optional, default false. First filtering tag
 - **tag2** string, optional, default false. Second filtering tag
 - **ecc** ...
 
-E.g.: `{{ html.getArticlesByTag('news', 'web') }}`
+E.g.: `{{ html.getArticlesByTag('news', 'web') }}` or
+
+E.g.: `{{ html.getArticlesByTag([1, 10], 'news', 'web') }}`
     array(
       array(
         'id' => integer,
@@ -215,7 +220,7 @@ E.g.: `{{ html.getArticlesByTag('news', 'web') }}`
         'updated' => boolean,
         'url' => string,
         'full_url' => string
-      ), 
+      ),
       array(
         'id' => integer,
         'title' => string,
@@ -230,11 +235,13 @@ E.g.: `{{ html.getArticlesByTag('news', 'web') }}`
 
 ---
 
-#### getArticlesByTagArray(tags, dontparse)
+#### getArticlesByTagArray(tags, dontparse, page, max)
 Returns array of articles arrays matching all tags provided in tags array.
 If dontparse is not null, articles texts will not be parsed (customtags will not be replaced)
 - **tags** array, requited. Array of tags
 - **dontparse** boolean, default false. If true article texts will not be parsed
+- **page** integer, default 1. Current page number
+- **max** integer, default 20. Maximum of records to show in each page
 
 E.g.: `{{ html.getArticlesByTag(['news', 'web']) }}`
     array(
@@ -256,7 +263,7 @@ E.g.: `{{ html.getArticlesByTag(['news', 'web']) }}`
         'updated' => boolean,
         'url' => string,
         'full_url' => string
-      ), 
+      ),
       array(
         'id' => integer,
         'title' => string,
@@ -363,7 +370,7 @@ E.g.: `html.getLanguages`
 Tries to include Metadata object file, initializes object and returnes it.
 
 E.g.: ` {{ html.getMD }}`
-    
+
 
 ---
 
@@ -377,6 +384,24 @@ E.g.: `{{ html.getPageData.title }}`
 
 ---
 
+#### getMenu('menuName')
+Returns structured array of menu data for $menu_name.
+- **menuname** string, required. Name of menu to show
+
+---
+
+#### getPagination()
+Array with pagination data for current page: start, end, current
+
+E.g.: `{{ html.getPagination }}`
+
+    array(
+      'start' => '1',
+      'end' => 10,
+      'current' => 7
+    )
+---
+
 #### getTextId()
 Returns article's text id required in URL
 
@@ -385,9 +410,15 @@ E.g.: `{{ html.getTextId() }}`
 
 ---
 
-#### getSearchResults('string')
-- ***string*** string, optional, default false. If present this string will be used to filter articles, otherwise the URL search parameter will be used.
+#### getTotal()
+Returns total number of articles available for current filter. Useful for paginaton
+---
+
+#### getSearchResults('string', 'page', 'max')
 Returns array of article arrays matching the searched string
+- **string** string, optional, default false. If present this string will be used to filter articles, otherwise the URL search parameter will be used.
+- **page**, integer, optional, default 1. Current page number
+- **max**, integer, optional, default 20. Maximum of records to show in each page
 
 E.g.: `{{ html.getSearchResults }}` or `{{ html.getSearchResults('something') }}`
 
@@ -410,7 +441,7 @@ E.g.: `{{ html.getSearchResults }}` or `{{ html.getSearchResults('something') }}
         'updated' => boolean,
         'url' => string,
         'full_url' => string
-      ), 
+      ),
       array(
         'id' => integer,
         'title' => string,
@@ -434,9 +465,10 @@ E.g.: ` {{html.getSearchString }}`
 
 ---
 
-#### getSimilar('textid')
+#### getSimilar('textid', 'max')
 Returns array of article arrays matching the most similar (having the same tags) results compared to the article with given textid or to the current article
 - **textid** string, optional, default false. Text id to use for comparison
+- **max** integer, optional default false. Number of articles to return
 
 E.g.: `{{ html.getSimilar }}`
     array(
@@ -458,7 +490,7 @@ E.g.: `{{ html.getSimilar }}`
         'updated' => boolean,
         'url' => string,
         'full_url' => string
-      ), 
+      ),
       array(
         'id' => integer,
         'title' => string,
@@ -526,10 +558,12 @@ E.g.: `{{ html.langMenu(true) }}`
 
 ---
 
-#### link2('resource', 'is_tag')
+#### link2('resource', 'is_tag', 'page')
 Returns relative link string to resource or to site homepage (if resource is home), depending on current url
 - **resource** string|array, required. If string, it's textid of an article. If home, then a link to the homepage will be created. If an array and tags is true, a link to a list of tags will be created
--- **is_tag**, boolean, default false. If true, resources will be treated as tag or tag list
+- **is_tag**, boolean, default false. If true, resources will be treated as tag or tag list
+- **page**, integer, optional, default false. If provided the link will have a fixed
+reference to a page
 
 E.g.: `{{ html.link2('news', true) }}`
     ./news.all
@@ -557,7 +591,7 @@ E.g.: `{{ html.menu('main', 'nav') }}`
 
 ---
 
-#### metadata('no_og', 'no_twitter')
+#### metadata('no_og')
 Returns well-formatted html code of page html and open graph metadata and links to feeds
 - **no_og** boolean, optional, default: false. If true the open graph metadata will not be shown
 
@@ -623,6 +657,24 @@ E.g.: `{{ html.metadata_twitter('TheBraDypUS') }}`
     <meta name="twitter:description" content="Lorem ipsum" />
     <meta name="twitter:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
     <meta name="twitter:url" content="http://thishost/thispage_url" />
+
+---
+
+#### pagination('cssClass')
+Returns well-formatted html with unordered list (ul) of pagination data when available
+depending on context. Current page will have css class `active`
+- **cssClass** string, optional, default false. Css class to apply to main `ul`
+
+E.g.: `{{ pagination('pagination') }}`
+    <ul class="pagination">
+      <li class="disabled"><a href="page1">1</a>
+      <li class="disabled"><a href="page2">2</a>
+      <li class="disabled"><a class="disabled" href="#">...</a>
+      <li class="disabled"><a class="active" href="page7">7</a>
+      <li class="disabled"><a class="disabled" href="#">...</a>
+      <li class="disabled"><a href="page15">15</a>
+      <li class="disabled"><a href="page16">16</a>
+    </ul>
 
 ---
 
@@ -707,8 +759,9 @@ E.g.: `{{ html.searchResults }}`
 
 ---
 
-#### similarBlog()
+#### similarBlog('max')
 Returns well-formatted html with list of similar articles (having the same tags) as current article.
+- **max** integer, optional default false. Number of articles to return
 
 E.g.: `{{ html.similarBlog}}`
     <div class="section blog tags">

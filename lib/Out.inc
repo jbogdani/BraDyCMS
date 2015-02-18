@@ -301,7 +301,9 @@ class Out
 	 * Return list of articles filtered by one or more tags
 	 * @param array $tags array of tags
    * @param boolean $dontparse if true article content will not be parsed. Default false
-	 * @return type
+   * @param int $page Current page number, default 1
+   * @param int $max Maximum of records to show in each page, default 20
+   * @return type
 	 */
 	public function getArticlesByTagArray($tags, $dontparse = false, $page = false, $max = false)
 	{
@@ -529,7 +531,7 @@ class Out
 	 * Returns list of articles containing the searched string 
    * @param string $string Custom string to search in the database
    * @param int $page Current page number, default 1
-   * @param inr $max Maximum of records to show in each page, default 20
+   * @param int $max Maximum of records to show in each page, default 20
 	 * @return array|false
 	 */
 	public function getSearchResults($string = false, $page = false, $max = false)

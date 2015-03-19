@@ -324,14 +324,18 @@ class customTags
 	
 	private static function fb_sdk()
 	{
-		return '<div id="fb-root"></div> ' .
-				'<script>(function(d, s, id) {' .
-					' var js, fjs = d.getElementsByTagName(s)[0];' .
-					' if (d.getElementById(id)) return;' .
-					' js = d.createElement(s); js.id = id;' .
-					' js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1";' .
-					' fjs.parentNode.insertBefore(js, fjs);' .
-					' }(document, \'script\', \'facebook-jssdk\'));</script>';
+		$html = <<<EOD
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+EOD;
+      
+    return $html;
 	}
 	
 	
@@ -359,22 +363,28 @@ class customTags
 					' ></div>';
 	}
 	
+  /**
+   * Facebook like box widget (https://developers.facebook.com/docs/plugins/like-box-for-pages)
+   * @param array $data array of parameters. All parameters except href are optional
+   * @return string
+   */
 	public static function fb_like_box($data)
 	{
-		$width = $data['width'] ? $data['width'] : 292;
-	
-		return self::fb_sdk() . '<div class="fb-like-box" ' .
-				' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
-				' data-show-faces="' . ($data['show-faces'] ? 'true': 'false' ). '" ' .
-				' data-width="' . $width . '"' .
-				($data['height'] ? ' data-height="' . $data['height'] . '" ' : '') .
-				($data['show_faces'] ? ' data-show_faces="' . $data['show_faces'] . '" ' : '') .
-				($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
-				($data['stream'] ? ' data-stream="' . $data['stream'] . '" ' : '') .
-				($data['header'] ? ' data-header="' . $data['header'] . '" ' : '') .
-				($data['border_color'] ? ' data-border_color="' . $data['border_color'] . '" ' : '') .
-				($data['force_wall'] ? ' data-force_wall="' . $data['force_wall'] . '" ' : '') .
-				' ></div>';
+    if (!$data['href'] && !$data['content'])
+    {
+      return;
+    }
+		$html = self::fb_sdk() 
+      . '<div class="fb-like-box" ' .
+				' data-href="' . ($data['content'] ? $data['content'] : $data['href']) . '" ';
+    foreach (array('colorscheme', 'force_wall', 'header', 'height', 'show_border', 'show_faces', 'stream', 'width') as $el)
+    {
+      if ($data[$el]){
+        $html .= ' data-' . str_replace('_', '-', $el) . '="' . $data[$el] . '"';
+      }
+    }
+    $html .= '></div>';
+    return $html;
 	}
 	
 	public static function fb_like($data)

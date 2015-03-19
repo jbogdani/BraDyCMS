@@ -116,12 +116,13 @@ Minimal example:
 
 ---
 
-#### fb_like_box('width','num_posts','colorscheme')
-Adds the necessary HTML and javascript code to display Facebook's Like-box widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/like-box
+#### fb_like_box(data)
+Adds the necessary HTML and javascript code to display Facebook's Like-box widget. 
+For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/like-box
 - **content**, -
 
 Minimal example:
-    [[fb_like_box]][[/fb_like_box]]
+    [[fb_like_box]]https://www.facebook.com/BraDypUS.net[[/fb_like_box]]
 
 ---
 

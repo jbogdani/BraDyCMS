@@ -277,6 +277,23 @@ Complete example:
 
 ---
 
+#### twitt_share('data')
+Adds the necessary HTML and javascript code to show a Twitter share button
+- **content**, string, optional, default: current page. URL to share
+- **data.via**, string, optional, default: false. A Twitter username
+- **data.text**, string, optional, default: false. The Tweet's default text
+- **data.hashtags**, string, optional, default: false. The Tweet's default hashtags
+- **data.count**, string, optional, default: false. If 'none' no count will be shown
+- **data.lang**, string, optional, default: false. Two-digits language code
+
+Minimal example:
+    [[twitt_share]][[/twitt_share]]
+
+Complete Example
+    [[twitt_share via="TheBraDypUS" text="BraDypUS rocks!" hashtags="bradycms" lang="en"]]http://bradypus.net[[/twitt_share]]
+
+---
+
 #### twitter('twitter_username','id')
 Adds the necessary HTML and javascript code to show a Twitter widget
 - **content**, string, optional. The text that will be shown if something goes wrong and Twitter widget fails to be initialized.

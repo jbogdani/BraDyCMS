@@ -412,19 +412,16 @@ EOD;
 	}
 	
 	/**
-   * Facebook like button widget (https://developers.facebook.com/docs/plugins/follow-button
+   * Facebook like button widget https://developers.facebook.com/docs/plugins/like-button
    * @param array $data array of parameters. All parameters, except content (or href) are optional
    * @return string
    */
   public static function fb_like($data)
 	{
-		if (!$data['href'] && !$data['content'])
-    {
-      return false;
-    }
+		$url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
     
 		$html = self::fb_sdk() 
-      . '<div class="fb-like" data-href="' . ($data['href'] ? $data['href'] : $data['content']) . '" ';
+      . '<div class="fb-like" data-href="' . $url . '" ';
     
     foreach (array('action', 'colorscheme', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces', 'width') as $el)
     {
@@ -446,6 +443,44 @@ EOD;
 				($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
 				' ></div>';
 	}
+  
+  private static function twitt_sdk()
+  {
+    return <<<EOD
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+EOD;
+  }
+  
+  /**
+   * Twitter share button
+   * @param array $data: available option:
+   *      via: Twitter username without @
+   *      text: Tweet's text
+   *      hashtag: Tweet's hashtag
+   *      count: if 'none' no count will be shown 
+   *      lang: two-digits language id
+   *      content: URL to share
+   * @return string
+   */
+  public static function twitt_share($data)
+  {
+    if ($data['content'])
+    {
+      $data['url'] = $data['content'];
+    }
+    $html = '<a href="https://twitter.com/share" class="twitter-share-button"';
+    
+    foreach (array('via', 'text', 'hashtags', 'count', 'url', 'lang') as $el)
+    {
+      if ($data[$el]){
+        $html .= ' data-' . $el . '="' . $data[$el] . '"';
+      }
+    }
+    
+    $html .= '>Tweet</a>' . self::twitt_sdk();
+    
+    return $html;
+  }
 	
 	/**
 	 * 

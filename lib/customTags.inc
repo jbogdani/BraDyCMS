@@ -338,29 +338,53 @@ EOD;
     return $html;
 	}
 	
-	
+	/**
+   * Facebook like box widget (https://developers.facebook.com/docs/plugins/comments
+   * @param array $data array of parameters. All parameters are optional
+   * @return string
+   */
 	public static function fb_comments($data)
 	{
-		$width = $data['width'] ? $data['width'] : 470;
-		$num_posts = $data['num_posts'] ? $data['num_posts'] : 10;
-		$dark = $data['dark'];
+    $url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+    
+    $html = self::fb_sdk() . '<div class="fb-comments" data-href="' . $url . '" ';
+    
+    foreach (array('colorscheme', 'mobile', 'num_posts', 'order_by', 'width') as $el)
+    {
+      if ($data[$el]){
+        $html .= ' data-' . str_replace('_', '-', $el) . '="' . $data[$el] . '"';
+      }
+    }
+    $html .= '></div>';
 		
-		return self::fb_sdk() . '<div class="fb-comments" data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" data-width="' . $width . '" data-num-posts="' . $num_posts . '" data-colorscheme="' . ($data['colorscheme'] == 'darl' ? 'dark' : 'light') . '"></div>';
+		return $html;
+    
 	}
 	
-	
+	/**
+   * Facebook follow button widget (https://developers.facebook.com/docs/plugins/follow-button
+   * @param array $data array of parameters. All parameters, except content (or href) are optional
+   * @return string
+   */
 	public static function fb_follow($data)
 	{
-		$width = $data['width'] ? $data['width'] : 470;
+    if (!$data['href'] && !$data['content'])
+    {
+      return false;
+    }
+    
+		$html = self::fb_sdk() 
+      . '<div class="fb-follow" data-href="' . ($data['href'] ? $data['href'] : $data['content']) . '" ';
+    
+    foreach (array('colorscheme', 'kid_directed_site', 'layout', 'show_faces', 'width') as $el)
+    {
+      if ($data[$el]){
+        $html .= ' data-' . str_replace('_', '-', $el) . '="' . $data[$el] . '"';
+      }
+    }
+    $html .= '></div>';
 		
-		return self::fb_sdk() . '<div class="fb-follow" ' .
-					' data-href="' . $data['content'] . '" ' .
-					' data-show-faces="' . ($data['show-faces'] ? 'true': 'false' ). '" ' .
-					' data-width="' . $width . '"' .
-					($data['layout'] ? ' data-layout="' . $data['layout'] . '" ' : '') .
-					($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
-					($data['font'] ? ' data-colorscheme="' . $data['font'] . '" ' : '') .
-					' ></div>';
+		return $html;
 	}
 	
   /**
@@ -387,21 +411,30 @@ EOD;
     return $html;
 	}
 	
-	public static function fb_like($data)
+	/**
+   * Facebook like button widget (https://developers.facebook.com/docs/plugins/follow-button
+   * @param array $data array of parameters. All parameters, except content (or href) are optional
+   * @return string
+   */
+  public static function fb_like($data)
 	{
-		$width = $data['width'] ? $data['width'] : 450;
-	
-		return self::fb_sdk() . '<div class="fb-like" ' .
-				' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
-				($data['layout'] ? ' data-layout="' . $data['layout'] . '" ' : '') .
-				' data-show-faces="' . ($data['show-faces'] ? 'true': 'false' ). '" ' .
-				' data-width="' . $width . '"' .
-				
-				($data['action'] ? ' data-action="' . $data['action'] . '" ' : '') .
-				($data['font'] ? ' data-font="' . $data['font'] . '" ' : '') .
-				($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
-				($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
-				' ></div>';
+		if (!$data['href'] && !$data['content'])
+    {
+      return false;
+    }
+    
+		$html = self::fb_sdk() 
+      . '<div class="fb-like" data-href="' . ($data['href'] ? $data['href'] : $data['content']) . '" ';
+    
+    foreach (array('action', 'colorscheme', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces', 'width') as $el)
+    {
+      if ($data[$el]){
+        $html .= ' data-' . str_replace('_', '-', $el) . '="' . $data[$el] . '"';
+      }
+    }
+    $html .= '></div>';
+		
+		return $html;
 	}
 	
 	public static function fb_send($data)

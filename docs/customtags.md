@@ -83,22 +83,16 @@ Complete example:
 
 ---
 
-#### fb_comments('width','num_posts','colorscheme')
+#### fb_comments(content)
 Adds the necessary HTML and javascript code to display Facebook's comments widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/comments
-- **content**, -
-- **width**, int, optional, default: 470. Widget's width, in pixels.
-- **num_posts**, int, required, default: 10. Number of posts to display
-- **colorscheme**, string, optional, default: light, available values: light, dark.The color scheme to use
+- **content**, - URL of the page to comment. If not provided the current page will be commented
 
 Minimal example:
     [[fb_comments]][[/fb_comments]]
 
-Complete example:
-    [[fb_comments width="470" posts="10" colorscheme="dark"]][[/fb_comments]]
-
 ---
 
-#### fb_follow('width','num_posts','colorscheme')
+#### fb_follow(content)
 Adds the necessary HTML and javascript code to display Facebook's follow widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/follow
 - **content**, string, required. URL of the Facebook page to follow
 
@@ -107,9 +101,9 @@ Minimal example:
 
 ---
 
-#### fb_like('width','num_posts','colorscheme')
+#### fb_like(content)
 Adds the necessary HTML and javascript code to display Facebook's Like widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/like
-- **content**, -
+- **content**, - URL to like
 
 Minimal example:
     [[fb_like]][[/fb_like]]

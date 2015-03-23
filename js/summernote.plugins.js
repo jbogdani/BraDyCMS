@@ -41,7 +41,7 @@
         
         var dropdown = '<ul class="dropdown-menu">';
         $.each(list, function(i, el){
-          dropdown += '<li><a data-event="customTag" href="#" data-value="' + el.value +'">' + el.text + '</a></li>';
+          dropdown += '<li><a data-event="customTag" href="javascript:void(0);" data-value="' + el.value +'">' + el.text + '</a></li>';
         });
         dropdown += '</ul>';
 
@@ -55,11 +55,9 @@
     },
 
     events: { // events
-      customTag: function (layoutInfo, value) {
+      customTag: function (event, editor, layoutInfo, value) {
         // Get current editable node
         var $editable = layoutInfo.editable();
-
-        // Call insertText with 'hello'
         editor.insertText($editable, ' [[' + value + ']]editme[[/' + value + ']] ');
       }
     }

@@ -9,7 +9,7 @@ var _ignorehash;
 var admin = {
   wysiwyg:{
     add: function(id, opts){
-      if (!opts) var opts = {};
+      opts = opts || {};
       var $el = $('#' + id);
       
       // ['insert', ['customTag']]
@@ -24,7 +24,7 @@ var admin = {
           ['para', ['ul', 'ol', 'paragraph']],
           ['height', ['height']],
           ['table', ['table']],
-          ['insert', ['link', /*'picture'*/, 'hr', 'customTag']],
+          ['insert', ['link', 'picture', 'hr', 'customTag']],
           ['view', ['fullscreen', 'codeview']],
           ['help', ['help']]
         ],

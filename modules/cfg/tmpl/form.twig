@@ -539,7 +539,11 @@
 			<input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]" />
 		</div>
 		<div class="col-sm-2">
-			<button class="btn btn-info encrypt" type="button"><i class="icon ion-ios7-locked-outline"></i> {{ tr.get('one_way_encrypt_passw') }}</button>
+			<button class="btn btn-info encrypt" 
+              type="button"
+              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
+        <i class="icon ion-ios7-locked-outline"></i> {{ tr.get('one_way_encrypt_passw') }}
+      </button>
 		</div>
 	</div>
 	
@@ -609,13 +613,16 @@ $('#form-{{ uid }}').on('submit', function(){
 });
 
 $('#form-{{ uid }} button.encrypt').on('click', function(){
-  var pwd = $(this).parents('.form-group').find('input.pwd');
+  var button = $(this);
+  button.button('loading')
+  var pwd = button.parents('.form-group').find('input.pwd');
 	
 	if (!pwd.val()){
 		admin.message('Please enter a password to encrypt!', 'error');
 		pwd.focus();
 	} else {
 		$.post('controller.php?obj=log_ctrl&method=encodePwd&echo=true', {'password': pwd.val()}, function(data){
+      button.button('reset');
 			pwd.val(data);
 		});
 	}

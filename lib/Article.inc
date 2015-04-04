@@ -436,7 +436,7 @@ class Article
     
     if (!$admin && $start !== false && $max)
     {
-      $sql .= " ORDER BY `articles`.publish DESC ";
+      $sql .= " ORDER BY `articles`.sort DESC, `articles`.publish DESC";
     }
     
     if ($start !== false && $max)
@@ -445,7 +445,6 @@ class Article
       array_push($values, (int)$start, (int)$max);
     }
     
-
     $articles = R::getAll($sql, $values);
     
     foreach($articles as &$art)
@@ -461,6 +460,10 @@ class Article
 		}
 
 		$art_list = self::parseArt($articles, $lang);
+    if ($start !== false && $max)
+    {
+      return $art_list;
+    }
 		
 		usort($art_list, function($a, $b){
       if ($a['sort'] && $b['sort'])

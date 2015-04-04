@@ -1,3 +1,4 @@
+3.9.0[] = "Added option to activate/deactivate third level www domains"
 3.9.0[] = "Minor UI improvements in admin backend"
 3.9.0[] = "Fixed issue with summernote plugins not working correctly (https://github.com/summernote/summernote/commit/6fb38e8e8050685f03e31d55f5523a9fdea98268)"
 3.9.0[] = "Added new custom tag: twitt_share"

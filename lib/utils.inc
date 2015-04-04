@@ -467,8 +467,33 @@ class utils
     $htaccess_arr = file($file);
     
     $startDelete = false;
+    
     foreach($htaccess_arr as &$row)
     {
+      
+      if (
+        cfg::get('enableWWW') == 1 &&
+        (
+          trim($row) == 'RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]'
+          ||
+          trim($row) == 'RewriteRule ^(.*)$ http://%1/$1 [R=301,L]'
+        )
+        
+      ){
+        $row = '#' . $row;
+      }
+      
+      if(
+        cfg::get('enableWWW') != 1 &&
+        (
+          trim($row) == '#RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]'
+          ||
+          trim($row) == '#RewriteRule ^(.*)$ http://%1/$1 [R=301,L]'
+        )
+        ){
+        $row = str_replace('#', null, $row);
+      }
+      
       if (strpos($row, 'RewriteBase') === 0 )
       {
         $row = 'RewriteBase ' . $rewriteBase . "\n";

@@ -264,6 +264,7 @@ $_lang['cfg-translate'] = "Translatable";
 $_lang['cfg-richtext'] = "Rich text";
 $_lang['cfg-update-channel'] = "Update channel";
 $_lang['cfg-pagination'] = "Pagination";
+$_lang['cfg-enableWWW'] = "Enable www third level";
 $_lang['encrypted_passw'] = "Encrypted password";
 $_lang['one_way_encrypt_passw'] = "Encrypt password";
 $_lang['on'] = "on";

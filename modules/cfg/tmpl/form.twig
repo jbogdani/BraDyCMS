@@ -154,6 +154,22 @@
       folder, preceded by single slash (/), eg. /new_site</span>
     </div>
 	</div>
+  
+  <!-- enable www -->
+  <div class="form-group">
+		<label class="control-label col-sm-2">{{ tr.get('cfg-enableWWW') }}</label>
+		<div class="col-sm-5">
+      <select name="enableWWW">
+        <option value="1" {% if data.enableWWW %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
+				<option value="0" {% if data.enableWWW == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
+      </select>
+		</div>
+    <div class="col-sm-5">
+      <span class="text-muted">By default BraDyCMS will redirect third level domain
+        www.* main level domain, removing www. If this option is enabled you can 
+        use <code>www</code> in the domain name.</span>
+    </div>
+	</div>
     
   <!-- MORE .htaccess Directives -->
   <!-- moreHtaccessDirectives -->

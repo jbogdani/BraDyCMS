@@ -549,7 +549,7 @@ class utils
       return false;
     }
     
-    return true;;
+    return true;
     
     
   }

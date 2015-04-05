@@ -97,7 +97,7 @@ class update_ctrl extends Controller
         break;
       
         case 'install':
-          $update->install($basePath . $this->getPath('package'), '.');
+          $update->install($basePath . $this->getPath('package'), '.', true);
           $resp = array('status' => 'success', 'text' => tr::get('update_installed'), 'step' => 'update_htaccess', 'remoteVersion' => $this->get['remoteVersion']);
           break;
         

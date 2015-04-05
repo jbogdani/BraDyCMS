@@ -143,10 +143,10 @@ class Update
           }
           else
           {
-            if ($file === '.htaccess' && $dontOvewriteHtacess)
-            {
-              $newfile = '.htaccess-new';
-            }
+            $newfile = ($file === '.htaccess' && $dontOvewriteHtacess) ? 
+              '.htaccess-new' : 
+              $file;
+            
             @copy( $path . '/' . $file, $dest . '/' . ($newfile ? $newfile : $file) );
             if(!file_exists($dest . '/' . $file))
             {

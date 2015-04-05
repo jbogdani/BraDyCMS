@@ -99,7 +99,7 @@
             <div class="form-group">
               <label>{{ tr.get('status') }}</label>
               <select name="status" class="col-md-12">
-                <option value="0" {% if !art.status %} selected="true" {% endif %}>{{ tr.get('draft') }}</option>
+                <option value="0" {% if art.status == false %} selected="true" {% endif %}>{{ tr.get('draft') }}</option>
                 <option value="1" {% if art.status %} selected="true" {% endif %}>{{ tr.get('published') }}</option>
               </select>
             </div>

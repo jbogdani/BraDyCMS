@@ -144,10 +144,9 @@ class Update
           else
           {
             $newfile = ($file === '.htaccess' && $dontOvewriteHtacess) ? 
-              '.htaccess-new' : 
-              $file;
+              '.htaccess-new' : $file;
             
-            @copy( $path . '/' . $file, $dest . '/' . ($newfile ? $newfile : $file) );
+            @copy( $path . '/' . $file, $dest . '/' . $newfile );
             if(!file_exists($dest . '/' . $file))
             {
               throw new Exception('Can not copy file: ' . $dest . '/' . $file);

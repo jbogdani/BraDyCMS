@@ -14,7 +14,7 @@ class Article
 	 * Valid article SQL statement
 	 * @var string
 	 */
-	private static $valid_art = " ( `status` = 1 AND ( `expires` = '0000-00-00 00:00:00' OR `expires` = '0000-00-00' OR `expires` = `publish` OR `expires` > DATE('now') ) ) ";
+	private static $valid_art = " ( `status` = 1 AND `publish` < DATE('now') AND ( `expires` = '0000-00-00 00:00:00' OR `expires` = '0000-00-00' OR `expires` = `publish` OR `expires` > DATE('now') ) ) ";
 	
 	
 	/**

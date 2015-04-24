@@ -1,3 +1,4 @@
+3.9.0[] = "Bug fixed with articles' scheduled publishing date"
 3.9.0[] = "Update modules works on a safe copy of htaccess file before copying"
 3.9.0[] = "Articles filtered by tags are sorted primary by sort field and then by publishing date"
 3.9.0[] = "Added option to activate/deactivate third level www domains"

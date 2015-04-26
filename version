@@ -1,3 +1,4 @@
+3.9.0[] = "Twitter Bootstrap updated to v 3.3.4"
 3.9.0[] = "Summernote modal bug fixed as in https://github.com/summernote/summernote/issues/978"
 3.9.0[] = "Summernote updated to v. 0.6.5"
 3.9.0[] = "Bug fixed with articles' scheduled publishing date"

@@ -1,3 +1,4 @@
+3.9.0[] = "Summernote updated to v. 0.6.5"
 3.9.0[] = "Bug fixed with articles' scheduled publishing date"
 3.9.0[] = "Update modules works on a safe copy of htaccess file before copying"
 3.9.0[] = "Articles filtered by tags are sorted primary by sort field and then by publishing date"

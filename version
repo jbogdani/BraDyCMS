@@ -1,3 +1,4 @@
+3.9.0[] = "Twitter Bootstrap modal temporary fix of https://github.com/twbs/bootstrap/issues/16148"
 3.9.0[] = "Added gulp file for development"
 3.9.0[] = "Rewrite rule for css, js, fonts etc., is only applied if required file does not exist"
 3.9.0[] = "Removed support for Twitter Bootstrap 3.3.2"

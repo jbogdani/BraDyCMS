@@ -18,9 +18,10 @@
 @import 'summernote/summernote.less';
 
 /* summernote dialog fix as in https://github.com/summernote/summernote/issues/978 */
+/* removed fix, applied twitter bootstrap fix: https://github.com/twbs/bootstrap/issues/16148 */
 .note-dialog{
   .modal-dialog{
-    z-index: @zindex-modal;
+    //z-index: @zindex-modal;
   }
 }
 .icon{

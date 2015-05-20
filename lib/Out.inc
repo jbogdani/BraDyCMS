@@ -12,12 +12,12 @@ class Out
 {
 	private 
 		$context,	// context: article, tags, search, home
-		$data,	//
+		$data = array(),	//
 		$metadata,
     $mobiledetect,
     $totalArticles
 		;
-  protected $get;
+  protected $get = array();
   
 	public 
 		$session_lang, // different from $lang whitch if is the same of sys_lang is not set!

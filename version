@@ -1,3 +1,5 @@
+3.9.0[] = "Added the possibility to use different locales in the Facebook custom tags"
+3.9.0[] = "Facebook SDK updated to version 2.3"
 3.9.0[] = "Bug fixed with publishing date evaluation"
 3.9.0[] = "Twitter Bootstrap modal temporary fix of https://github.com/twbs/bootstrap/issues/16148"
 3.9.0[] = "Added gulp file for development"

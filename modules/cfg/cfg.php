@@ -24,7 +24,7 @@ class cfg_ctrl extends Controller
 		}
 		else
 		{
-			$resp = array('status' => 'success', 'text' => tr::get('error_cfg_update'));
+			$resp = array('status' => 'error', 'text' => tr::get('error_cfg_update'));
 		}
 		
 		echo json_encode($resp);

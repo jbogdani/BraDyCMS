@@ -86,6 +86,7 @@ Complete example:
 #### fb_comments(content)
 Adds the necessary HTML and javascript code to display Facebook's comments widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/comments
 - **content**, - URL of the page to comment. If not provided the current page will be commented
+- **lang**, - 5-digits language definition of Fabebook SDK (eg: en_US or it_IT, etc)
 
 Minimal example:
     [[fb_comments]][[/fb_comments]]
@@ -95,6 +96,7 @@ Minimal example:
 #### fb_follow(content)
 Adds the necessary HTML and javascript code to display Facebook's follow widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/follow
 - **content**, string, required. URL of the Facebook page to follow
+- **lang**, - 5-digits language definition of Fabebook SDK (eg: en_US or it_IT, etc)
 
 Minimal example:
     [[fb_follow]]http://facebook.com/rest_of_the_url_to_follow[[/fb_follow]]
@@ -104,6 +106,7 @@ Minimal example:
 #### fb_like(content)
 Adds the necessary HTML and javascript code to display Facebook's Like widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/like
 - **content**, - URL to like
+- **lang**, - 5-digits language definition of Fabebook SDK (eg: en_US or it_IT, etc)
 
 Minimal example:
     [[fb_like]][[/fb_like]]
@@ -114,6 +117,7 @@ Minimal example:
 Adds the necessary HTML and javascript code to display Facebook's Like-box widget. 
 For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/like-box
 - **content**, -
+- **lang**, - 5-digits language definition of Fabebook SDK (eg: en_US or it_IT, etc)
 
 Minimal example:
     [[fb_like_box]]https://www.facebook.com/BraDypUS.net[[/fb_like_box]]
@@ -123,6 +127,7 @@ Minimal example:
 #### fb_send('width','num_posts','colorscheme')
 Adds the necessary HTML and javascript code to display Facebook's Send widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/send
 - **content**, -
+- **lang**, - 5-digits language definition of Fabebook SDK (eg: en_US or it_IT, etc)
 
 Minimal example:
     [[fb_send]][[/fb_send]]

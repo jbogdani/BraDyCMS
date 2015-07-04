@@ -321,16 +321,26 @@ class customTags
 			'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
 	}
 	
-	
-	private static function fb_sdk()
+	/**
+   * Requires and initializates Facebook's SDK
+   * @param string $lang Two digits language definition
+   * @return sting
+   */
+	private static function fb_sdk($lang = false)
 	{
+    if (!isset($lang) || !preg_match('/([a-z]{2})_([A-Z]{2})/', $lang))
+    {
+      $lang = $_SESSION['lang'] ? $_SESSION['lang'] : cfg::get('sys_lang');
+      $lang = strtolower($lang) . '_' . strtoupper($lang);
+    }
+    
 		$html = <<<EOD
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.0";
+  js.src = "//connect.facebook.net/{$lang}/sdk.js#xfbml=1&version=v2.3";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 EOD;
@@ -347,7 +357,7 @@ EOD;
 	{
     $url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
     
-    $html = self::fb_sdk() . '<div class="fb-comments" data-href="' . $url . '" ';
+    $html = self::fb_sdk($data['lang']) . '<div class="fb-comments" data-href="' . $url . '" ';
     
     foreach (array('colorscheme', 'mobile', 'num_posts', 'order_by', 'width') as $el)
     {
@@ -356,8 +366,8 @@ EOD;
       }
     }
     $html .= '></div>';
-		
-		return $html;
+    
+    return $html;
     
 	}
 	
@@ -373,7 +383,7 @@ EOD;
       return false;
     }
     
-		$html = self::fb_sdk() 
+		$html = self::fb_sdk($data['lang']) 
       . '<div class="fb-follow" data-href="' . ($data['href'] ? $data['href'] : $data['content']) . '" ';
     
     foreach (array('colorscheme', 'kid_directed_site', 'layout', 'show_faces', 'width') as $el)
@@ -398,7 +408,7 @@ EOD;
     {
       return;
     }
-		$html = self::fb_sdk() 
+		$html = self::fb_sdk($data['lang'])
       . '<div class="fb-like-box" ' .
 				' data-href="' . ($data['content'] ? $data['content'] : $data['href']) . '" ';
     foreach (array('colorscheme', 'force_wall', 'header', 'height', 'show_border', 'show_faces', 'stream', 'width') as $el)
@@ -420,7 +430,7 @@ EOD;
 	{
 		$url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
     
-		$html = self::fb_sdk() 
+		$html = self::fb_sdk($data['lang']) 
       . '<div class="fb-like" data-href="' . $url . '" ';
     
     foreach (array('action', 'colorscheme', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces', 'width') as $el)
@@ -436,7 +446,7 @@ EOD;
 	
 	public static function fb_send($data)
 	{
-		return self::fb_sdk() . '<div class="fb-like" ' .
+		return self::fb_sdk($data['lang']) . '<div class="fb-like" ' .
 				' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
 				($data['font'] ? ' data-font="' . $data['font'] . '" ' : '') .
 				($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .

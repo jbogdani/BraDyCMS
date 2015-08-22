@@ -634,8 +634,9 @@ EOD;
     }
     
     // Format ALT text
-    $alt = $data['caption'] ? $data['caption'] : $data['content'];
-    $alt = str_replace('"', '', strip_tags($alt));
+    $alt = str_replace('"', '', strip_tags(
+      $data['caption'] ? $data['caption'] : $data['content']
+      ));
     
     // filename will the thumbanail filename if fancybox parameter is true and thumb exists
     if( $data['fancybox'])
@@ -677,8 +678,9 @@ EOD;
     {
       $html .= '<a ' 
         . ($data['gal'] && $data['gal'] !== '' ? 'rel="' . $data['gal'] . '"' : '') 
-        . ' href="' . ($dest_file ? $dest_file : $data['href']) . '" '
+        . ' href="' . ($data['href'] ? $data['href'] : $dest_file ) . '" '
         . 'class="fancybox' . ($data['href_class'] ? ' ' . $data['href_class'] .' ' : '') . '"'
+        . ($data['fancybox'] && $data['href'] ? ' data-fancybox-type="iframe" ' : '')
         . ($data['caption'] ? ' title="' . $alt . '" ' : '')
         . '>';
     }

@@ -12,7 +12,7 @@ var changingJS = [
   'js/bootstrap-3.3.4.min.js',
   'js/jquery.dataTables.js',
   'js/dataTable-bootstrap.js',
-  'js/summernote.min.js',
+  'js/summernote.js',
   'js/summernote.plugins.js',
   'js/admin.js',
   'js/pnotify.custom.min.js',

@@ -8,8 +8,6 @@
 (function ($) {
   // template, editor
   var tmpl = $.summernote.renderer.getTemplate();
-  var editor = $.summernote.eventHandler.getEditor();
-
   // add plugin
   $.summernote.addPlugin({
     name: 'customTag', // name of plugin

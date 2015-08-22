@@ -21,9 +21,13 @@
 /* removed fix, applied twitter bootstrap fix: https://github.com/twbs/bootstrap/issues/16148 */
 .note-dialog{
   .modal-dialog{
-    //z-index: @zindex-modal;
+   z-index: @zindex-modal;
   }
 }
+.modal-backdrop, .modal-backdrop.in{
+  display: none;
+}
+
 .icon{
   display: inline-block;
   

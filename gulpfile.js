@@ -9,7 +9,7 @@ var gulp  = require('gulp'),
 var changingJS = [
   'js/jquery-2.1.3.min.js',
   'js/jquery.nestable.js',
-  'js/bootstrap-3.3.4.min.js',
+  'js/bootstrap-3.3.5.min.js',
   'js/jquery.dataTables.js',
   'js/dataTable-bootstrap.js',
   'js/summernote.js',

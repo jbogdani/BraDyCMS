@@ -16,6 +16,7 @@ var admin = {
       var default_opts = {
         height: $el.height(),
         disableDragAndDrop: true,
+        styleWithSpan: false,
         toolbar:[
           ['style', ['style']],
           ['font', ['bold', 'italic', 'underline', 'clear']],

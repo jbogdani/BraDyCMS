@@ -58,8 +58,8 @@ A five-step guide to install and get running BraDyCMS
 
 #### Javascript/CSS
 
-* [jQuery v. 1.11.1 & v. 2.1.1](http://jquery.com/)
-* [Twitter Bootstrap v.3.2.0](http://getbootstrap.com/)
+* [jQuery v. 1.11.2 & v. 2.1.3](http://jquery.com/)
+* [Twitter Bootstrap v.3.3.5](http://getbootstrap.com/)
 * [Datepicker for Bootstrap](http://www.eyecon.ro/bootstrap-datepicker/)
 * [DataTables v. 1.9.4](https://datatables.net/)
 * [FineUploader 3.8.2](http://fineuploader.com/)
@@ -68,10 +68,11 @@ A five-step guide to install and get running BraDyCMS
 * [Pnotify v. 2.0.1](https://github.com/sciactive/pnotify)
 * [google-code-prettify](https://code.google.com/p/google-code-prettify/)
 * [select2 v. 3.4.8](http://ivaynberg.github.io/select2/)
+* [tinyMCE v. 4.2](http://www.tinymce.com/)
 
 #### PHP
 
-* [RedBeanPHP v. 4.0.4](http://www.redbeanphp.com/)
+* [RedBeanPHP v. 4.3.0](http://www.redbeanphp.com/)
 * [TWIG v. 1.15.1](http://twig.sensiolabs.org/)
 * [FeedWriter](https://github.com/mibe/FeedWriter)
 * [Mobile_Detect v. 2.8.0](https://github.com/serbanghita/Mobile-Detect)

@@ -7,47 +7,43 @@
 var _ignorehash;
 
 var admin = {
-  wysiwyg:{
+  
+  wysiwyg: {
     add: function(id, opts){
+      
       opts = opts || {};
-      var $el = $('#' + id);
-      
-      // ['insert', ['customTag']]
+
       var default_opts = {
-        height: $el.height(),
-        disableDragAndDrop: true,
-        styleWithSpan: false,
-        toolbar:[
-          ['style', ['style']],
-          ['font', ['bold', 'italic', 'underline', 'clear']],
-          ['fontname', ['fontname']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', ['height']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'hr', 'customTag']],
-          ['view', ['fullscreen', 'codeview']],
-          ['help', ['help']]
+        selector: '#' + id,
+        content_css: './sites/default/css/styles.css',
+        plugins: [
+         "advlist autolink link image lists charmap preview hr anchor",
+         "searchreplace wordcount visualblocks visualchars code fullscreen media nonbreaking",
+         "save table contextmenu directionality paste textcolor template imagetools"
         ],
-        onCreateLink: function (url) {
-//          if (url.indexOf('http://') !== 0  && 
-//            url.indexOf('#') !== 0 && 
-//            url.indexOf('mailto:') !== 7) {
-//            url = 'http://' + url;
-//          }
-          return url;
-        }
+        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink link image | print preview media fullpage | forecolor backcolor | code",
+        image_advtab: true,
+        removed_menuitems: 'newdocument',
+        templates: [
+          {title: 'download', content: '[[download]]editme[[/download]]'},
+          {title: 'fig', content: '[[fig]]editme[[/fig]]'},
+          {title: 'gallery', content: '[[gallery]]editme[[/gallery]]'},
+          {title: 'link', content: '[[link]]editme[[/link]]'},
+          {title: 'map', content: '[[map]]editme[[/map]]'},
+          {title: 'userform', content: '[[userform]]editme[[/userform]]'},
+          {title: 'vimeo', content: '[[vimeo]]editme[[/vimeo]]'},
+          {title: 'youtube', content: '[[youtube]]editme[[/youtube]]'}
+        ]
       };
-      
       $.extend(default_opts, opts);
-        
-      $el.summernote(default_opts);
+      
+      tinymce.init(default_opts);
+
     },
-    preSave: function(){
-    },
-    setValue: function(id, text){
-      $('#' + id).code(text);
-    }
+    
+    preSave: function(){},
+    
+    setValue: function(id, text){}
   },
   
   removeNotValid: function(input, opts){

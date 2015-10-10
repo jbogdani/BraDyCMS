@@ -8,25 +8,13 @@
 
 @import 'ionicons/ionicons.less';
 @import 'font-awesome/font-awesome.less';
-/*@import '../css/dataTable-bootstrap.css';*/
+/*@import '../css/jquery.dataTables.css';*/
 @import '../css/pnotify.custom.min.css';
 @import '../css/select2.css';
 @import '../css/select2-bootstrap.css';
 @import '../css/datepicker.css';
 @import '../css/fileuploader.css';
 @import '../css/prettify.css';
-@import 'summernote/summernote.less';
-
-/* summernote dialog fix as in https://github.com/summernote/summernote/issues/978 */
-/* removed fix, applied twitter bootstrap fix: https://github.com/twbs/bootstrap/issues/16148 */
-.note-dialog{
-  .modal-dialog{
-   z-index: @zindex-modal;
-  }
-}
-.modal-backdrop, .modal-backdrop.in{
-  display: none;
-}
 
 .icon{
   display: inline-block;
@@ -261,7 +249,7 @@ body.login{
 }
 
 
-input:not([type="checkbox"]), textarea, select{
+input:not([type="checkbox"]):not(.mce-textbox), textarea:not(.mce-textbox), select:not(.mce-textbox){
 	.form-control;
 }
 

@@ -27,6 +27,7 @@ catch (Exception $e)
     <title>bdus.CMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css/admin.css" rel="stylesheet">
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

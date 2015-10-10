@@ -12,8 +12,6 @@ var changingJS = [
   'js/bootstrap-3.3.5.min.js',
   'js/jquery.dataTables.js',
   'js/dataTable-bootstrap.js',
-  'js/summernote.js',
-  'js/summernote.plugins.js',
   'js/admin.js',
   'js/pnotify.custom.min.js',
   'js/bootstrap-datepicker.js',

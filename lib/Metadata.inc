@@ -140,7 +140,16 @@ class Metadata
 	 */
 	public function getISSN()
 	{
-		return $this->metadata['issn'];
+		return $this->metadata['issn'] ? $this->metadata['issn'] : $this->metadata['eissn'];
+	}
+  
+  /**
+	 * Returns EISSN number
+	 * @return string
+	 */
+	public function getEISSN()
+	{
+		return $this->metadata['eissn'];
 	}
 	
 	/**

@@ -1,3 +1,4 @@
+3.9.0[] = "Metadata gets support for EISSN"
 3.9.0[] = "Summernote uses now tags instead of styled spans"
 3.9.0[] = "Twitter Bootstrap updated to v. 3.3.5"
 3.9.0[] = "Ugly fix for https://github.com/summernote/summernote/issues/978"

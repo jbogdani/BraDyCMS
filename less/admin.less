@@ -4,21 +4,16 @@
  * @license			MIT, See LICENSE file
  */
 
-@import 'bootstrap/bootstrap.less';
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,700,700italic);
 
-@import 'ionicons/ionicons.less';
-@import 'font-awesome/font-awesome.less';
-/*@import '../css/jquery.dataTables.css';*/
-@import '../css/pnotify.custom.min.css';
-@import '../css/select2.css';
-@import '../css/select2-bootstrap.css';
-@import '../css/datepicker.css';
-@import '../css/fileuploader.css';
-@import '../css/prettify.css';
+@import '../bower_components/bootstrap/less/bootstrap.less';
+
+@font-family-sans-serif: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@icon-font-path: "../bower_components/bootstrap/dist/fonts/";
 
 .icon{
   display: inline-block;
-  
+
   &.big{
     font-size: 1.5em;
     line-height: 1 !important;
@@ -47,8 +42,8 @@ html{
   color: @navbar-inverse-color;
   height: @navbar-height;
   z-index:1000;
-  
-  
+
+
 }
 .navbar{
   a{
@@ -77,13 +72,13 @@ html{
   height: @navbar-height;
   display: block;
   vertical-align: middle;
-  
-  
+
+
   &:hover{
     text-decoration: none;
     background: lighten(@navbar-inverse-bg, 3%);
   }
-  
+
   i{
     font-size: 2.5em;
     vertical-align: middle;
@@ -104,23 +99,23 @@ html{
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 0;
-  
+
   &.shown{
     .transition('all, .3s');
     .translate3d(260px,0,0);
     z-index: 999999;
-    
+
   }
   .translate3d(0,0,0);
-  
+
   ul{
     list-style: none;
     margin: 0;
     padding: 0;
-    
+
     li{
       margin: 5px auto;
-    
+
       a{
         .transition('all, .5s');
         color: darken(#fff, 20%);
@@ -134,7 +129,7 @@ html{
       }
     }
   }
-  
+
   ul.sub{
     margin-left: 15px;
     border-left: 1px dashed lighten(#000, 50%);
@@ -145,12 +140,12 @@ html{
       }
     }
     display: none;
-    
+
     &.show{
       display: block;
     }
   }
-  
+
   li.divider{
     padding: 0;
     margin: 6px 0;
@@ -164,7 +159,7 @@ html{
   .clearfix();
   overflow-x: hidden;
   .transition('.3s');
-  
+
   &.shown{
     .translate3d(250px,0,0);
     opacity: .1;
@@ -232,7 +227,7 @@ body.login{
 	padding-top: 40px;
 	padding-bottom: 40px;
 	background-color: #f5f5f5;
-	
+
 	.form-signin {
 		max-width: 300px;
 		padding: 19px 29px 29px;
@@ -248,19 +243,19 @@ body.login{
 	}
 }
 
-
-input:not([type="checkbox"]):not(.mce-textbox), textarea:not(.mce-textbox), select:not(.mce-textbox){
+// All inputs excepts checkboxes, tinymce inputs and select2 inputs
+input:not([type="checkbox"]):not(.mce-textbox):not(.select2-input), textarea:not(.mce-textbox), select:not(.mce-textbox){
 	.form-control;
 }
 
 body{
 	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-	
+
 	div.tab-pane{
 		padding-top: 40px;
 	}
 }
-      
+
 button.close{
     margin: -2px 0 0 10px;
     font-size: 18px;
@@ -290,10 +285,10 @@ button.close{
 			font-size:6em;
 			margin: 0 0 20px 0;
 			color: lighten(#222, 15%);
-			
+
 			&.thumbs{
 				color: lighten(#ff0000, 15%);
-				
+
 				&:hover{
 					color: lighten(#ff0000, 5%);
 				}
@@ -311,7 +306,7 @@ button.close{
 		.img-wrapper{
 			height: 150px;
 			overflow: hidden;
-			
+
 			img{
 				min-height: 150px;
 				max-height: 150px;
@@ -335,7 +330,7 @@ section{
 }
 
 @media screen and (min-width: 992px) {
-  
+
 	.affix,
 	.affix-top,
 	.affix-bottom{
@@ -420,7 +415,7 @@ li.placeholder {
 		margin: 0;
 		padding: 0;
 		list-style: none;
-		
+
 		.dd-item{
 			padding: 3px 0;
 		}
@@ -438,7 +433,7 @@ li.placeholder {
 		.dd-item > button {
 			display: none;
 		}
-		
+
 		.dd-placeholder{
 			margin: 5px 0;
 			padding: 0;
@@ -468,5 +463,3 @@ li.placeholder {
 .note-group-select-from-files{
   display: none;
 }
-
-

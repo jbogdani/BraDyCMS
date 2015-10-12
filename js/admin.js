@@ -7,10 +7,10 @@
 var _ignorehash;
 
 var admin = {
-  
+
   wysiwyg: {
     add: function(id, opts){
-      
+
       opts = opts || {};
 
       var default_opts = {
@@ -21,7 +21,7 @@ var admin = {
          "searchreplace wordcount visualblocks visualchars code fullscreen media nonbreaking",
          "save table contextmenu directionality paste textcolor template imagetools"
         ],
-        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink link image | print preview media fullpage | forecolor backcolor | code",
+        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor | code",
         image_advtab: true,
         removed_menuitems: 'newdocument',
         templates: [
@@ -36,16 +36,20 @@ var admin = {
         ]
       };
       $.extend(default_opts, opts);
-      
+
       tinymce.init(default_opts);
 
     },
-    
-    preSave: function(){},
-    
-    setValue: function(id, text){}
+
+    preSave: function(){
+
+    },
+
+    setValue: function(id, text){
+
+    }
   },
-  
+
   removeNotValid: function(input, opts){
     /**
      * available opts:
@@ -53,12 +57,10 @@ var admin = {
      *  toLower: boolean
      *  permit: array
      */
-    if (!opts){
-      var opts = {};
-    }
-    
+     opts = opts || {};
+
     var pattern = "_,=\.\\s\\?'\"\\-";
-    
+
     if (opts.permit){
       $.each(opts.permit, function(i, item){
         pattern = pattern.replace(item, '');
@@ -68,42 +70,40 @@ var admin = {
     input.on('keyup', function(e){
       if (
         //http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
-           e.keyCode === 13 //enter
-        || e.keyCode === 37 //left-arrow
-        || e.keyCode === 38 //up-arrow
-        || e.keyCode === 39 //right-arrow
-        || e.keyCode === 40 //down-arrow
-        || e.keyCode === 8 //backspace
-        || e.keyCode === 46 //delete
-        || e.keyCode === 16 //shift
-        || e.keyCode === 17 //CTRL
-        || e.keyCode === 18 //alt
-        || e.keyCode === 91 //left window
-        || e.keyCode === 93 //select key
+           e.keyCode === 13  || //enter
+        e.keyCode === 37  || //left-arrow
+        e.keyCode === 38  || //up-arrow
+        e.keyCode === 39  ||  //right-arrow
+        e.keyCode === 40  ||  //down-arrow
+        e.keyCode === 8  ||  //backspace
+        e.keyCode === 46  ||  //delete
+        e.keyCode === 16  ||  //shift
+        e.keyCode === 17  ||  //CTRL
+        e.keyCode === 18  ||  //alt
+        e.keyCode === 91  ||  //left window
+        e.keyCode === 93  //select key
         ){
         return;
       }
-      
+
       var val = $(this).val();
       if (val && val !== ''){
-        var newVal = val.replace(new RegExp("([" + pattern + "])", "gi"), opts.replace ? opts.replace : ''); 
-        opts.toLower ? newVal = newVal.toLowerCase() : '';
+        var newVal = val.replace(new RegExp("([" + pattern + "])", "gi"), opts.replace ? opts.replace : '');
+        newVal = opts.toLower ? newVal.toLowerCase() : newVal;
         $(this).val(newVal);
       }
     });
   },
-  
+
   /**
-   * 
+   *
    * opts.sizeLimit
    * opts.minSizeLimit
    * opts.allowedExtensions
    * opts.loaded(id, filename, responseJSON)
    */
   upload: function(element, action, opts){
-    if (!opts){
-      var opts = {};
-    }
+    opts = opts || {};
 
     new qq.FileUploader({
       element: element,
@@ -112,12 +112,12 @@ var admin = {
       sizeLimit: opts.sizeLimit ? opts.sizeLimit : 0,
       minSizeLimit: opts.minSizeLimit ? opts.minSizeLimit : 0,
       onComplete: function(id, filename, responseJSON){
-        opts.loaded ? opts.loaded(id, filename, responseJSON) : false;
+        return opts.loaded ? opts.loaded(id, filename, responseJSON) : false;
       }
     });
   },
-		
-		
+
+
 		/**
 		 * Filters elements with class search-container by text contained in search-text
 		 * @param string filter	string to use as filter
@@ -126,25 +126,25 @@ var admin = {
 		 * @returns {undefined}
 		 */
 		filterList: function(filter, container, parent_class){
-			
+
 			if (filter && filter !== '') {
 				if (parent_class){
 					container.find('.search-text:not(:Contains(' + filter + '))').parents('.search-container').fadeOut();
 					container.find('.search-text:Contains(' + filter + ')').parents('.search-container').fadeOut();
-					
+
 				} else {
-					
+
 					container.find('.search-text:not(:Contains(' + filter + '))').fadeOut();
 					container.find('.search-text:Contains(' + filter + ')').fadeIn();
 				}
-					
+
 			} else {
 		     container.find( '.' + (parent_class ? 'search-container' : 'search-text') ).fadeIn();
 			}
 		},
-		
+
 		/**
-		 * 
+		 *
 		 * @param opts
 		 * 		title
 		 * 		html
@@ -161,30 +161,30 @@ var admin = {
 			if ($('#modal').length > 0){
 				$('#modal').modal('hide');
 			}
-			
+
 			var dialog =  $('<div />').attr('id', 'modal').addClass('modal fade').append(
 						'<div class="modal-dialog">' +
 							'<div class="modal-content">' +
 								(opts.title ? '<div class="modal-header"><h4>' + opts. title + '</h4></div>' : '') +
 							'</div>' +
 						'</div>'
-						
+
 						).appendTo('body');
-			
+
 			if (opts.width){
 					dialog.css({
 						width:opts.width,
 						'margin-left':'-' + (opts.width/2) + 'px'
 					});
 			}
-			
+
 			var body = $('<div />').addClass('modal-body').appendTo(dialog.find('div.modal-content')),
 				URLstring = 'controller.php?';
-			
+
 			if (opts.buttons && typeof opts.buttons == 'object'){
-				
+
 				var footer = $('<div />').addClass('modal-footer').appendTo(dialog.find('div.modal-content'));
-					
+
 				$.each(opts.buttons, function(index, but){
 					var a = $('<a />')
             .addClass('btn'+ (but.addclass ? ' ' + but.addclass : ' btn-primary'))
@@ -209,15 +209,15 @@ var admin = {
 					a.appendTo(footer);
 				});
 			}
-			
+
 			dialog.modal({'keyboard':true});
-			
+
 			dialog.on('hidden.bs.modal', function(){
 				$('body').removeClass('modal-open');
 				dialog.remove();
 			});
-			
-			
+
+
 			if (opts.html){
 				body.html(opts.html);
 
@@ -244,7 +244,7 @@ var admin = {
 			}
 		},
 		/**
-		 * 
+		 *
 		 * @param text
 		 * @param title
 		 * @param type : false, info, success, error
@@ -259,7 +259,7 @@ var admin = {
         styling: 'bootstrap3'
       });
 		},
-		
+
 	tabs : {
 	    tab: '',
 	    set: function(el){
@@ -275,7 +275,7 @@ var admin = {
 	            e.preventDefault();
 	            $(this).tab('show');
 	        });
-	        
+
 	        tab.find('button.close').click(function(e){
 	            var li = $(this).parents('li');
 	            admin.tabs.closeTab(li);
@@ -283,36 +283,36 @@ var admin = {
 	        });
 	    },
 	    /**
-	     * 
+	     *
 	     * @param opts object
 	     * 		title
-	     * 
+	     *
 	     * 		html
-	     * 
+	     *
 	     * 		obj
 	     * 		method
 	     */
 	    add: function(opts){
-	    	
+
 	    	var title = opts.title ? opts.title : '',
 	    	tab = this.tab,
 	    	id = Math.floor(Math.random()*1000) + '' + tab.find('li').length;
-	        
+
 	        this.tab.append('<li><a href="#added' + id + '">' + title + '<button class="close" type="button">×</button></a></li>');
-	        
+
 	        if (opts.html){
 	        	this.tab.next('div.tab-content').append('<div class="tab-pane" id="added' + id + '">' + opts.html + '</div>');
 	        	this.start(tab);
         		this.tab.find('li a:last').tab('show');
 						this.tab.find('li:last').data('url', location.hash.substring(1));
 						this.tab.find('li:last').data('opts', opts);
-            
+
 	        } else if (opts.obj && opts.method){
 	        	admin.tabs.tab.next('div.tab-content')
               .append('<div class="tab-pane" id="added' + id + '"><i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i></div>');
-            
+
 	        	admin.tabs.start(tab);
-            
+
         		admin.tabs.tab.find('li a:last').tab('show');
 						this.tab.find('li:last').data('url', location.hash.substring(1));
 						this.tab.find('li:last').data('opts', opts);
@@ -335,36 +335,37 @@ var admin = {
             location.hash = '#' + $(this).data('url');
           });
 	    },
-	    
+
 	    reloadActive: function(){
         this.reload();
 	    },
-      
+
       reloadThis: function(el){
         if(!(el instanceof jQuery)){
-          var el = $(el);
+          el = $(el);
         }
         var index = el.parents('.tab-pane').index();
         if (index){
           this.reload(index);
         }
       },
-      
+
       reload: function(index){
-        
+        var pane, opts;
+
         if (!index){
-          var pane = $('div.tab-content div.active');
-          var opts = tab.find('li.active').data('opts');
+          pane = $('div.tab-content div.active');
+          opts = tab.find('li.active').data('opts');
         } else {
-          var pane = $('div.tab-content .tab-pane').get(index);
+          pane = $('div.tab-content .tab-pane').get(index);
           pane = $(pane);
-          var opts = $(tab.find('li').get(index)).data('opts');
+          opts = $(tab.find('li').get(index)).data('opts');
         }
-        
+
 	    	var url = 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' );
-	    	
+
 	    	pane.html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i>');
-        
+
         $.ajax({
 	        		'url': url,
 	        		'data': opts.data
@@ -376,14 +377,14 @@ var admin = {
               pane.html('<p class="text-danger">' + admin.tr('error_check_log') + '</p>');
             });
 	    },
-	    
+
 	    closeActive: function(state){
 	    	var active = tab.find('li.active');
 	    	admin.tabs.closeTab(active, state);
 	    },
-      
+
 	    closeTab: function(li, state){
-				
+
         // only one tab is left, the Welcome tab. This should never be closed!
 				if(tab.find('li').length === 1){
 					if (state){
@@ -391,40 +392,40 @@ var admin = {
 					}
 					return;
 				}
-        
+
 				// I'm closing the active tab
 				if (li.hasClass('active')){
-          
+
           // if state is defined load new tab and then remove old one
 					if (state){
 						var actualState = location.hash.substr(1);
-            
-            
+
+
             if (actualState === state){
               admin.tabs.reloadActive();
               return;
               //  $(window).trigger( "hashchange" );
-              
+
             } else {
               location.hash = '#' + state;
               //$(window).trigger( "hashchange" );
-              
+
               tab.find('li a:last').tab('show');
             }
-            
+
             // remove tab-pane
             $('#' + li.find('a').attr('href').replace('#', '')).remove();
-            
+
             // remove li element
             li.remove();
-              
+
           } else {
             // remove tab-pane
             $('#' + li.find('a').attr('href').replace('#', '')).remove();
-            
+
             // remove li element
             li.remove();
-            
+
             tab.find('li a:last').tab('show');
 
             var prevState = tab.find('li:last').data('url');
@@ -442,17 +443,17 @@ var admin = {
 				}
 	    }
 	},
-	
+
 	tr: function (string) {
-		
+
 		return lang[string] ? lang[string] : string;
 	},
-	
+
 	media: {
 		go2dir: function(dir){
 			admin.tabs.closeActive('media/all/' + dir);
 		},
-		
+
 		deleteDir: function(path){
 			$.get('controller.php?obj=media_ctrl&method=delete&param[]=' + path, function(data){
 				admin.message(data.text, data.status);
@@ -461,8 +462,8 @@ var admin = {
 				}
 			}, 'json');
 		},
-		
-		
+
+
 		deleteFile: function(full_path){
 			admin.dialog({
 				title: admin.tr('pay_attention_please'),
@@ -478,7 +479,7 @@ var admin = {
                 if (data.status == 'success'){
                   admin.tabs.closeActive('media/all/' + data.new_path);
                 }
-              }, 'json')
+              }, 'json');
             }
           },
           {
@@ -487,9 +488,9 @@ var admin = {
           },
         ]
 			});
-			
+
 		},
-		
+
 		filterDir: function(filter, uid){
 			if (filter) {
 		      $('#media-' + uid + ' div.searcheable:not(:Contains(' + filter + '))').parents('li').fadeOut();
@@ -505,28 +506,28 @@ var admin = {
 
 
 $(function () {
-	
-	
+
+
 	admin.tabs.set('#tabs');
 	admin.tabs.start();
 
 
     $(window).on( 'hashchange', function(e) {
-			
+
 			if (_ignorehash){
 				_ignorehash = false;
 				return;
 			}
-			
+
     	var url = location.hash.substring(1);
-			
+
     	if (!url || url.match(/nt-/)){
-				
+
 				return;
     	} else {
-				
+
     		var url_arr = url.split('/');
-    		
+
     		admin.tabs.add({
     			'title': url_arr[0] + '/' + url_arr[1] + (url_arr[2] ? '/' + url_arr[2].substr(0, 5) + '...' : ''),
     			'obj': url_arr[0] + '_ctrl',
@@ -546,7 +547,7 @@ jQuery.expr[':'].Contains = function(a,i,m){
 $('a.ftpopover').popover({html:true});
 
 $(document).ready(function () {
-  
+
   $('.toggleMenu').on('click', function(e){
     $('#menu, #content').toggleClass('shown');
     if ($(this).attr('href') === '#'){
@@ -557,21 +558,21 @@ $(document).ready(function () {
     $('#menu, #content').removeClass('shown');
     $('#menu ul.sub').removeClass('show');
   });
-  
+
   $('#menu a').on('click', function(){
     if ($(this).attr('href') !== '#'){
       $('#menu ul.sub').removeClass('show');
       $('#menu, #content').removeClass('shown');
     }
   });
-  
+
   $('#menu a.sub-toggle').on('click', function(e){
     $(this).next('ul.sub').toggleClass('show');
     $('#menu ul.sub').not($(this).next('ul.sub')).removeClass('show');
-    
+
     e.preventDefault();
     return false;
   });
-  
+
   $('[data-toggle="tooltip"]').tooltip();
 });

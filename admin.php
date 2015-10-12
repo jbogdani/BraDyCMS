@@ -9,37 +9,47 @@ try
 {
   $root = './';
   require_once $root . 'lib/globals.inc';
-  
+
   $admin = new admin_ctrl();
 }
 catch (Exception $e)
 {
   error_log($e->getTraceAsString());
-  
+
   $stop_error = $e->getMessage() ;
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    
+
     <meta charset="utf-8">
     <title>bdus.CMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="./bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="./bower_components/pnotify/src/pnotify.core.min.css" rel="stylesheet">
+    <link href="./bower_components/select2/select2.css" rel="stylesheet">
+    <link href="./bower_components/select2/select2-bootstrap.css" rel="stylesheet">
+    <link href="./bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="./bower_components/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <link href="./bower_components/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="./css/fileuploader.css" rel="stylesheet">
     <link href="./css/admin.css" rel="stylesheet">
-    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body<?php if (!$_SESSION['user_confirmed']) { echo ' class="login" '; }?>>
-    
+
     <?php
-    
+
     if ($stop_error)
     {
-      
+
       if ($admin)
       {
         $admin->showError($stop_error);
@@ -48,7 +58,7 @@ catch (Exception $e)
       {
         echo '<div class="container">'
           . '<div class="alert alert-danger text-center">Something went wrong! '
-            . $stop_error 
+            . $stop_error
           . '</div>'
         . '</div>';
       }
@@ -66,10 +76,12 @@ catch (Exception $e)
       $admin->showBody();
     }
     ?>
-  
+
   <script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
-  <script src="./js/all.min.js"></script>
-  
+  <!-- <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script> -->
+  <script src="./bower_components/tinymce/tinymce.min.js"></script>
+  <script src="./js/admin.min.js"></script>
+
   <?php if (!$_SESSION['user_confirmed']): ?>
 
   <script>
@@ -89,7 +101,7 @@ catch (Exception $e)
   </script>
   <?php
   endif;
-  
+
   if (defined('CREATE_SITE')):
   ?>
   <script>
@@ -105,6 +117,6 @@ catch (Exception $e)
     })
   </script>
   <?php endif; ?>
-  
+
   </body>
 </html>

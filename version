@@ -1,5 +1,7 @@
+3.10.0[] = "New option for CDN or static usage for common assets"
+3.10.0[] = "Enhanced readability of site configuration module"
 3.10.0[] = "Ionicons updated to v. 2.0.1"
-3.10.0[] = "Removed supporto for .html extention in url"
+3.10.0[] = "Removed support for .html extention in url"
 3.10.0[] = "A better workflow management with gulp"
 3.10.0[] = "External javascript and css resources are handled with bower"
 3.9.0[] = "RedbeanPHP updated to version 4.3.0"

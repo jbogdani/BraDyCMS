@@ -2,11 +2,11 @@
 
 <div id="but_{{ uid }}">
 	{% for lang in langs %}
-	
-		<button type="button" data-lang="{{ lang|replace({'.php': ''})}}" class="lang btn btn-info"><i class="icon ion-ios7-world"></i> {{ lang|replace({'.php': ''})|capitalize}}</button>
-		
+
+		<button type="button" data-lang="{{ lang|replace({'.php': ''})}}" class="lang btn btn-info"><i class="icon ion-ios-world"></i> {{ lang|replace({'.php': ''})|capitalize}}</button>
+
 	{% endfor %}
-	
+
   {% if add_lang %}
 	<button type="button" class="add-locale btn btn-warning"><i class="icon ion-checkmark"></i> {{ tr.get('add_locale') }}</button>
   {% endif %}
@@ -20,13 +20,13 @@
   {% if lang %}
     $('#cont_{{ uid }}').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lang }}');
   {% endif %}
-    
+
 	$('#but_{{ uid }} button.lang').on('click', function(){
     _ignorehash = true;
     location.hash = '#sys_translate/showList/{{ context }}/' + $(this).data('lang');
 		$('#cont_{{ uid }}').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]=' + $(this).data('lang'));
 	});
-  
+
 	{% if add_lang %}
   $('#but_{{ uid }} button.add-locale').on('click', function(){
     admin.dialog({
@@ -57,7 +57,7 @@
     });
 	});
   {% endif %}
-	
+
 	{% if opened_lang %}
 		$('#cont_{{ uid }}').load('controller.php?obj=sys_translate_ctrl&method=showForm&&param[]={{ context }}param[]={{ opened_lang }}');
 	{% endif %}

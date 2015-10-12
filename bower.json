@@ -1,0 +1,75 @@
+{
+  "name": "BraDyCMS",
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.3.5",
+    "bootstrap-datepicker": "~1.4.1",
+    "datatables": "~1.10.9",
+    "google-code-prettify": "~1.0.4",
+    "jquery-nestable": "*",
+    "select2": "~3.5.4",
+    "pnotify": "~2.1.0",
+    "font-awesome": "~4.4.0",
+    "Ionicons": "ionicons#~2.0.1",
+    "fancyBox": "~2.1.5",
+    "tinymce": "~4.2.6"
+  },
+  "preen": {
+    "jquery": [
+      "dist/*.min.js"
+    ],
+    "bootstrap": [
+      "dist/fonts/*",
+      "dist/css/bootstrap.min.css",
+      "dist/js/*.min.js",
+      "less/*",
+      "less/*/*"
+    ],
+    "bootstrap-datepicker": [
+      "dist/css/bootstrap-datepicker.min.css",
+      "dist/js/*.min.js"
+    ],
+    "datatables": [
+      "media/images/*",
+      "media/css/dataTables.bootstrap.min.css",
+      "media/js/jquery.dataTables.min.js",
+      "media/js/dataTables.bootstrap.min.js"
+    ],
+    "google-code-prettify": [
+      "bin/prettify.min*"
+    ],
+    "jquery-nestable": [
+      "*.js"
+    ],
+    "select2": [
+      "select2.min.js",
+      "*.png",
+      "*.gif",
+      "*.css",
+      "dist/js/select2.full.min*"
+    ],
+    "pnotify": [
+      "src/*core.min*"
+    ],
+    "font-awesome": [
+      "fonts/*",
+      "css/font-awesome.min*"
+    ],
+    "Ionicons": [
+      "css/ionicons.min*",
+      "fonts/*"
+    ],
+    "fancyBox": [
+      "source/*fancybox.pack*",
+      "source/jquery.fancybox.css",
+      "source/*.gif",
+      "source/*.png"
+    ],
+    "tinymce": [
+      "plugins/*/plugin.min.js",
+      "skins/**/*",
+      "themes/**/*",
+      "tinymce.min*"
+    ]
+  }
+}

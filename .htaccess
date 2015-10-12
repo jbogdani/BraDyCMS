@@ -9,7 +9,7 @@ RewriteRule ^sitemap.xml$ controller.php?obj=seo_ctrl&method=sitemap
 
 # www to non-www url syntax
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-RewriteRule ^(.*)$ http://%1/$1 [R=301,L] 
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
 #safe site, js and css, tiny_mce
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -24,10 +24,10 @@ RewriteRule ^(OAI|oai)$ controller.php?obj=OAI_ctrl&method=run [QSA,L]
 #api
 RewriteRule ^(api|API)/?(.+)$ controller.php?obj=api_ctrl&method=run&$1 [QSA,L]
 
-#admin 
+#admin
 RewriteRule ^admin/?$ admin.php
 
-#safe home page 
+#safe home page
 RewriteRule ^([a-z]{2})/?$ index.php?lang=$1  [L]
 
 #tags: (ln/)some-tag.all !paginate
@@ -37,10 +37,6 @@ RewriteRule ^([a-zA-Z0-9-_+~]+)\.all(/[0-9]{1,2})?$ index.php?tags=$1&page=$2 [Q
 #article title: (ln/)sometitle
 RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2 [QSA,L]
 RewriteRule ^([a-zA-Z0-9-_]+)/?$ index.php?art_title=$1 [QSA,L]
-
-#article title + html extansion: (ln/)sometitle.html
-RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).html$ index.php?lang=$1&art_title=$2 [QSA,L]
-RewriteRule ^([a-zA-Z0-9-_]+).html$ index.php?art_title=$1 [QSA,L]
 
 #Drafts: article title: (ln/)sometitle.draft
 RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1 [L]
@@ -69,4 +65,3 @@ RewriteRule . index.php?art_title=not_found [L]
 <FilesMatch "\.(png|jpg|jpeg|gif)$">
 	Header set Access-Control-Allow-Origin "*"
 </FilesMatch>
-

@@ -3,30 +3,60 @@ var gulp  = require('gulp'),
   concat  = require('gulp-concat'),
   less = require('gulp-less'),
   minifyCSS = require('gulp-minify-css'),
-  rename = require("gulp-rename");
+  preen = require('preen'),
+  del = require('del'),
+  bower = require('gulp-bower');
 
 // Minify js
-var changingJS = [
-  'js/jquery-2.1.3.min.js',
-  'js/jquery.nestable.js',
-  'js/bootstrap-3.3.5.min.js',
-  'js/jquery.dataTables.js',
-  'js/dataTable-bootstrap.js',
-  'js/admin.js',
-  'js/pnotify.custom.min.js',
-  'js/bootstrap-datepicker.js',
-  'js/select2.min.js',
-  'js/fileuploader.js',
-  'js/prettify.js'
+var minifiedJs = [
+  'bower_components/jquery/dist/jquery.min.js',
+  'bower_components/bootstrap/dist/js/bootstrap.min.js',
+  'bower_components/datatables/media/js/jquery.dataTables.min.js',
+  'bower_components/datatables/media/js/dataTables.bootstrap.min.js',
+  'bower_components/pnotify/src/pnotify.core.min.js',
+  'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+  'bower_components/select2/select2.min.js',
+  'bower_components/google-code-prettify/bin/prettify.min.js'
 ];
 
-gulp.task('minifyAdm', function(){
-  gulp.src(changingJS)
-    .pipe(concat('all.min.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('./js/'));
-  //.pipe(reload({stream: true}));
+var changingJS = [
+  'bower_components/jquery-nestable/jquery.nestable.js',
+  'js/admin.js',
+  'js/fileuploader.js'
+];
+
+gulp.task('packJS', function(){
+
+  // concat already minified files
+  gulp.src(minifiedJs)
+    .pipe(concat('minified1.js'))
+    .pipe(gulp.dest('./js/'))
+    .on('end', function(){
+
+      // uglify & concat  plain files
+      gulp.src(changingJS)
+        .pipe(concat('minified2.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./js/'))
+        .on('end', function(){
+
+          // Concat temporary files
+          gulp.src(['./js/minified1.js', './js/minified2.js'])
+            .pipe(concat('admin.min.js'))
+            .pipe(gulp.dest('./js/'))
+            .on('end', function(){
+
+              // Delete temporary files
+              del(['./js/minified1.js', './js/minified2.js'])
+                .then(function(){
+                  console.log('Javascript packed!');
+                });
+            });
+        });
+    });
 });
+
+
 
 gulp.task('frontCSS', function () {
   gulp.src('sites/default/css/styles.less')
@@ -44,9 +74,18 @@ gulp.task('adminCSS', function () {
     //.pipe(reload({stream: true}));
 });
 
+gulp.task('bower', function(){
+  bower().pipe(gulp.dest('bower_components/'))
+  .on('end', function(){
+    preen.preen({});
+    gulp.start('packJS');
+    gulp.start('adminCSS');
+  });
+});
+
 
 gulp.task('default', [], function(){
-  gulp.watch(changingJS, ['minifyAdm']);
+  gulp.watch(changingJS, ['packJS']);
 //  gulp.watch(['index.php', 'sites/default/**/*.twig'], [reload]);
   gulp.watch(['less/**/*.less', '!less/admin.less'], ['frontCSS', 'adminCSS']);
   gulp.watch(['sites/default/css/styles.less'], ['frontCSS']);

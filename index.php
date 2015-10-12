@@ -8,38 +8,38 @@
 try
 {
   require_once 'lib/globals.inc';
-  
+
   if (defined('CREATE_SITE'))
   {
     header('location: ./admin');
   }
 
   $outHtml = new OutHtml($_GET, $_SESSION['lang']);
-	
+
   $settings = unserialize(CACHE);
-  $settings['autoescape'] = false; 
-	
+  $settings['autoescape'] = false;
+
   $twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), $settings);
-	
+
 	if ($_SESSION['debug'])
 	{
 		$twig->addExtension(new Twig_Extension_Debug());
 	}
-	
+
 	$function = new Twig_SimpleFunction('file_exists', function ($file) {
 		return file_exists($file);
 	});
-	
+
 	$twig->addFunction($function);
-  
-  
+
+
   $filter = new Twig_SimpleFilter('parseTags', function ($string)
     {
       return customTags::parseContent($string);
     });
-  
+
   $twig->addFilter($filter);
-	
+
 	echo $twig->render('index.twig', array(
 			'html'=>$outHtml
 	));

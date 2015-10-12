@@ -1,3 +1,4 @@
+3.10.0[] = "New html.asset method for more easily adding assets to frontend"
 3.10.0[] = "New option for CDN or static usage for common assets"
 3.10.0[] = "Enhanced readability of site configuration module"
 3.10.0[] = "Ionicons updated to v. 2.0.1"

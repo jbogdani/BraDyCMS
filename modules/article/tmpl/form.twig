@@ -1,31 +1,31 @@
 <div id="{{ uid }}">
-  
+
   {# Main button menu #}
   <div class="btn-group" style="padding:20px 0;">
-    <a class="btn btn-info" href="#article/addNew" 
+    <a class="btn btn-info" href="#article/addNew"
        title="{{ tr.get('add_new_article') }}">
-      <i class="icon ion-plus"></i> 
+      <i class="icon ion-plus"></i>
       {{ tr.get('add_new_article') }}
     </a>
-    
+
 		{% if art.id %}
       {% for lang in cfg_langs %}
-        <a href="#article/translate/{{ lang.id }}/{{ art.id }}" 
-           class="btn btn-default" 
+        <a href="#article/translate/{{ lang.id }}/{{ art.id }}"
+           class="btn btn-default"
            title="{{ tr.sget('translate_article_in', lang.string) }}">
-          <i class="icon ion-shuffle"></i> 
+          <i class="icon ion-shuffle"></i>
           {{ lang.id|upper }}
         </a>
       {% endfor %}
 		{% endif %}
-		<a class="btn btn-default reload" 
+		<a class="btn btn-default reload"
        title="{{ tr.get('reload') }}">
       <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
     </a>
 	</div>{# End of main button menu #}
-  
+
 	<form action="javascript:void(0)" id="edit_form{{ uid }}">
-    
+
     <div class="btn-group">
       <button class="btn btn-success" type="submit"
               data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
@@ -42,7 +42,7 @@
         <i class="icon ion-close"></i> {{ tr.get('reset') }}
       </button>
     </div>
-    
+
 		{# Tag choise #}
     <hr />
     <div class="form-group">
@@ -52,17 +52,17 @@
       </div>
     </div>
     <hr />{# End of tag choise #}
-    
-    
+
+
     {#
     |----------10----------|--2--|
     |-----6----|-----6-----|     |
     |----------------------|     |
     #}
-    
-    
+
+
     <div class="row"><!-- main form container -->
-      
+
       <div class="col-sm-10"><!-- form  fileds container -->
         <div class="row">
           <div class="col-sm-5">
@@ -78,10 +78,10 @@
 
             <div class="form-group">
               <label>{{ tr.get('sorting') }}</label>
-              <input type="text" name="sort" value="{% 
-                if art.sort %}{{ 
-                  art.sort }}{% 
-                else 
+              <input type="text" name="sort" value="{%
+                if art.sort %}{{
+                  art.sort }}{%
+                else
               %}0{%
                 endif %}" class="col-md-12" />
             </div>
@@ -127,7 +127,7 @@
               {{ art.updated }}
             </div>
           </div>
-        
+
           <div class="col-sm-7">
             <div class="form-group">
               <label>{{ tr.get('summary') }}</label>
@@ -141,18 +141,18 @@
 
           </div>
         </div>
-            
+
         <div class="row"><!-- custom fields row -->
           {% if custom_fields %}
             <hr />
-            <h4>{{ tr.get('custom_fields') }}</h4>  
+            <h4>{{ tr.get('custom_fields') }}</h4>
 
             {# Rich text custom fields #}
             {% for fld in custom_fields if fld.richtext %}
               <div class="form-group">
                 <label>{{ fld.label|upper }}</label>
-                <textarea name="{{ fld.name }}" 
-                          style="width:100%; height: 150px;" 
+                <textarea name="{{ fld.name }}"
+                          style="width:100%; height: 150px;"
                           id="richtext{{ uid ~ fld.name }}">{{ art[fld.name] }}</textarea>
               </div>
             {% endfor %}
@@ -185,9 +185,9 @@
             </div>
           {% endif %}
         </div><!--/ custom fields row -->
-        
+
       </div><!--/ form  fileds container -->
-      
+
       <div class="col-sm-2"><!-- images container -->
         {% if art.id %}
           {# Article images panel #}
@@ -203,7 +203,7 @@
                     <img src ="{{ file }}?{{ uid }}" class="img-responsive"/>
                     <br />
                     <p><a class="delete_attach_img btn btn-danger btn-block">
-                        <i class="icon ion-trash-a"></i> 
+                        <i class="icon ion-trash-a"></i>
                         {{ tr.get('delete') }}</a>
                     </p>
                   {% endif %}
@@ -242,7 +242,7 @@
             </div>
 
           </div>{# End of article media panel #}
-          
+
           {# Article gallery panel #}
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -267,10 +267,10 @@
         {% endif %}{# check article.id #}
       </div><!--/ images container -->
     </div><!--/ main form container -->
-    
-    
+
+
     <hr />
-    
+
     <div class="btn-group">
       <button class="btn btn-success" type="submit"
               data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
@@ -287,27 +287,27 @@
         <i class="icon ion-close"></i> {{ tr.get('reset') }}
       </button>
     </div>
-    
-    
+
+
   </form> {# end of article data form #}
-		
+
 </div> {# Start of general container #}
 
 <script>
   admin.wysiwyg.add("summary{{ uid }}");
   admin.wysiwyg.add("text{{ uid }}");
-  
+
   {% if custom_fields %}
     {% for fld in custom_fields if fld.richtext %}
       admin.wysiwyg.add("richtext{{ uid ~ fld.name }}");
     {% endfor %}
   {% endif %}
-    
+
 	$('a.reload').click(function(){
 		admin.tabs.reloadThis(this);
 		return false;
 	});
-  
+
   admin.removeNotValid($('#edit_form{{ uid }} input[name="textid"]'), {
     'replace': '_',
     'toLower': true,
@@ -316,7 +316,7 @@
 
 	$('#edit_form{{ uid }} input[name="textid"]').on('change', function(){
 		$this = $(this);
-		
+
 		if ($this.val() != '{{ art.textid }}'){
 			$.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val(), function(data){
 				if (data){
@@ -326,35 +326,35 @@
 			});
 		}
 	});
-	
+
 	$('#edit_form{{ uid }} input[name="tags"]').select2({
 		tags: [{{ imploded_tags|raw }}]
-	
+
 	});
-	
-	
+
+
 	$('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
 
 	$('#edit_form{{ uid }}').on('submit', function(){
 
     $(this).find('button[type="submit"]').button('loading');
-    
+
     var textid = $(this).find('input[name="textid"]').val();
     if (!textid || textid === ''){
       admin.message(admin.tr('textid_cannot_be_empty'), 'error');
       $(this).find('input[name="textid"]').focus();
       return false;
     }
-    
+
 
 		var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
-    
+
     admin.wysiwyg.preSave();
 
 		$.post(
 			url,
 			$('#edit_form{{ uid }}').serialize(),
-			
+
 			function(data) {
         $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
 				admin.message(data.text, data.type);
@@ -362,10 +362,10 @@
 				if (data.type === 'success'){
 					admin.tabs.closeActive('article/edit/' + data.id);
 				}
-				{% endif %} 
+				{% endif %}
 			},
 			'json'
-		);			
+		);
 	});
 
 	{% if art.id %}
@@ -383,7 +383,7 @@
             '&param[]=' + responseJSON.filename + '.' + responseJSON.ext,
             function(data){
               admin.message(data.text, data.status);
-              
+
               if (data.status === 'success'){
                 $('#edit_form{{ uid }}').submit();
                 admin.tabs.reloadThis('#{{ uid }}');
@@ -391,7 +391,7 @@
 					}, 'json');
 				}
 			});
-      
+
   {# article media upload #}
   admin.upload(
     $('#{{ uid }} .media_uploader')[0],
@@ -404,7 +404,7 @@
             '&param[]=' +responseJSON.filename + '.' + responseJSON.ext,
           function(data){
             admin.message(data.text, data.status);
-            
+
             if (data.status === 'success'){
               $('#edit_form{{ uid }}').submit();
               admin.tabs.reloadThis('#{{ uid }}');
@@ -413,9 +413,9 @@
           }, 'json');
       }
     });
-  
-  
-	
+
+
+
 	$('a.delete_attach_img').on('click', function(){
 		$.get('controller.php?obj=article_ctrl&method=delete_art_img&param[]={{ art.id }}', function(data){
 			admin.message(data.text, data.status);
@@ -423,7 +423,7 @@
 			admin.tabs.reloadThis('#{{ uid }}');
 		}, 'json');
 	});
-  
+
   $('#{{ uid }} .create_gallery').on('click', function(){
     var name = $(this).data('name');
     var $this = this;
@@ -438,7 +438,7 @@
   });
 	{% endif %}
 
-	
+
 </script>
 <!--
 TRANSLATE:

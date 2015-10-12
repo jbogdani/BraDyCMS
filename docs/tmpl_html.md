@@ -29,6 +29,17 @@ identified by the prefix `get`, ex: `{{ html.getContext }}`.
 
 ---
 
+### assets('asset', 'version')
+Returns well-formatted html string to include assest (js o css file). If the general configuration is set to use CDN, then the CDN version will be loaded (version number should be supplied).
+- **asset** string, required. Asset to load. One of the following is supported: jquery, bootstrap (both js and css files will be loaded), bootstrapJs (only js file will be uploaded), bootstrapCss (only css file will be uploaded), fancybox.
+
+E.g.: `{{ html.asset('jquery', '1.11.3') }}`
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+or
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+
+---
+
 #### articleBody('article_text_id')
 Returns well-formatted html with article content. If article_text_id is present the matching article will be shown, otherwise the current article will appear
 - **article_text_id** string, optional, required: false. Article's textual id

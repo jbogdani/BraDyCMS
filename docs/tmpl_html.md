@@ -29,7 +29,7 @@ identified by the prefix `get`, ex: `{{ html.getContext }}`.
 
 ---
 
-### assets('asset', 'version')
+### asset('asset', 'version')
 Returns well-formatted html string to include assest (js o css file). If the general configuration is set to use CDN, then the CDN version will be loaded (version number should be supplied).
 - **asset** string, required. Asset to load. One of the following is supported: jquery, bootstrap (both js and css files will be loaded), bootstrapJs (only js file will be uploaded), bootstrapCss (only css file will be uploaded), fancybox.
 

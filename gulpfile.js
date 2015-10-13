@@ -88,6 +88,6 @@ gulp.task('default', [], function(){
   gulp.watch(changingJS, ['packJS']);
 //  gulp.watch(['index.php', 'sites/default/**/*.twig'], [reload]);
   gulp.watch(['less/**/*.less', '!less/admin.less'], ['frontCSS', 'adminCSS']);
-  gulp.watch(['sites/default/css/*.less'], ['frontCSS']);
+  gulp.watch(['sites/default/css/styles.less'], ['frontCSS']);
   gulp.watch(['less/admin.less'], ['adminCSS']);
 });

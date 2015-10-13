@@ -1,4 +1,3 @@
-3.10.0[] = "Gulp listens to all less file in frontend directory"
 3.10.0[] = "Solved bug with changing columns widths on table sorting in article list view"
 3.10.0[] = "New html.asset method for more easily adding assets to frontend"
 3.10.0[] = "New option for CDN or static usage for common assets"

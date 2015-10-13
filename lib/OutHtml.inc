@@ -71,7 +71,7 @@ class OutHtml extends Out
     {
       $html .=  '<link rel="stylesheet" href="'
        . ((cfg::get('cdn') || $force_cdn) && $version ? $cdnCss : $staticCss)
-       . '">"';
+       . '">';
     }
 
     return $html;

@@ -29,14 +29,28 @@ identified by the prefix `get`, ex: `{{ html.getContext }}`.
 
 ---
 
-### asset('asset', 'version')
-Returns well-formatted html string to include assest (js o css file). If the general configuration is set to use CDN, then the CDN version will be loaded (version number should be supplied).
-- **asset** string, required. Asset to load. One of the following is supported: jquery, bootstrap (both js and css files will be loaded), bootstrapJs (only js file will be uploaded), bootstrapCss (only css file will be uploaded), fancybox.
+#### asset('asset', 'type', 'version')
+Returns a well-formatted html string to use for requiring and including an
+asset, typically a javascript or css file, in a html document. The asset type
+should be specified as the second argument ($type) as 'js' or 'css'.
+If missing it will be guessed by the url extension (.js or .css). Some very common
+presets (shortcuts) are available: query|bootstrap|fancybox|frontend.
+If $version is present this version will be loaded
+If the system is setted to use CDN, the the available CDN version will be loaded
+instead of the local version.
+- **asset**, string, required. The asset url or one of the following presets: query|bootstrap|fancybox|frontend
+- **type**, string, optional, default: js. The asset type: js|css. If missing the system will try to guess
+by looking at the extension of the url; for presets the default js value will be used
+- **version**, string, optional. A specific version to load. By default the following
+versions will be loaded for the presets: jquery: 1.11.3; boostrap: 3.3.5; fancybox: 2.1.5
+- **asset** string, required. Asset to load; can be an url or one of the following:
+jquery, bootstrap, fancybox, frontend
 
-E.g.: `{{ html.asset('jquery', '1.11.3') }}`
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-or
-    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+E.g.: `{{ html.asset('bootstrap') }}`
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+E.g.: `{{ html.asset('bootstrap', 'css', '3.3.4') }}`
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 ---
 

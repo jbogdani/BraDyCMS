@@ -9,68 +9,105 @@
 class OutHtml extends Out
 {
   /**
-   * Returns well-formatted html string to include assest (js o css file).
-   * If the general configuration is set to use CDN, then the CDN version will
-   * be loaded (version number should be supplied).
-   * @param string $asset     Asset name
-   * @param string $version   asset version
+   * Returns a well-formatted html string to use for requiring and including an
+   * asset, typically a javascript or css file, in a html document. The asset type
+   * should be specified as the second argument ($type) as 'js' or 'css'.
+   * If missing it will be guessed by the url extension (.js or .css). Some very common
+   * presets (shortcuts) are available: query|bootstrap|fancybox|frontend.
+   * If $version is present this version will be loaded
+   * If the system is setted to use CDN, the the available CDN version will be loaded
+   * instead of the local version.
+   * @param string $asset   The asset url or one of the following presets: query|bootstrap|fancybox|frontend
+   * @param string|false $type    The asset type: js|css. If missing the system will try to guess
+   * by looking at the extension of the url; for presets the default js value will be used
+   * @param string|false $version A specific version to load. By default the following
+   * versions will be loaded for the presets: jquery: 1.11.3; boostrap: 3.3.5; fancybox: 2.1.5
    */
-  public function asset($asset, $version = false)
+  public function asset($asset, $type = false, $version = false)
   {
     switch($asset){
       case 'jquery':
         $staticJs = './bower_components/jquery/dist/jquery.min.js';
-        $cdnJs = '//ajax.googleapis.com/ajax/libs/jquery/' . $version . '/jquery.min.js';
+        $cdnJs = '//ajax.googleapis.com/ajax/libs/jquery/'
+          . ($version ? $version : '1.11.3')
+          . '/jquery.min.js';
       break;
 
       case 'bootstrap':
         $staticJs = './bower_components/bootstrap/dist/js/bootstrap.min.js';
-        $cdnJs = 'https://maxcdn.bootstrapcdn.com/bootstrap/' . $version . '/js/bootstrap.min.js';
+        $cdnJs = 'https://maxcdn.bootstrapcdn.com/bootstrap/'
+          . ($version ? $version : '3.3.5')
+          . '/js/bootstrap.min.js';
+
         $staticCss = './bower_components/bootstrap/dist/css/bootstrap.min.css';
-        $cdnCss = 'https://maxcdn.bootstrapcdn.com/bootstrap/' . $version . '/css/bootstrap.min.css';
+        $cdnCss = 'https://maxcdn.bootstrapcdn.com/bootstrap/'
+          . ($version ? $version : '3.3.5')
+          . '/css/bootstrap.min.css';
       break;
-
-     case 'bootstrapJs':
-       $staticJs = './bower_components/bootstrap/dist/js/bootstrap.min.js';
-       $cdnJs = 'https://maxcdn.bootstrapcdn.com/bootstrap/' . $version . '/js/bootstrap.min.js';
-     break;
-
-     case 'bootstrapCss':
-       $staticCss = './bower_components/bootstrap/dist/css/bootstrap.min.css';
-       $cdnCss = 'https://maxcdn.bootstrapcdn.com/bootstrap/' . $version . '/css/bootstrap.min.css';
-     break;
 
      case 'fancybox':
       $staticJs = './bower_components/fancyBox/source/jquery.fancybox.pack.js';
-      $cdnJs = 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/' . $version . '/jquery.fancybox.pack.js';
+      $cdnJs = 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/'
+        . ($version ? $version : '2.1.5')
+        . '/jquery.fancybox.pack.js';
 
       $staticCss = './bower_components/fancyBox/source/jquery.fancybox.css';
-      $cdnCss = 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/' . $version . '/jquery.fancybox.min.js';
+      $cdnCss = 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/'
+        . ($version ? $version : '2.1.5')
+        . '/jquery.fancybox.min.js';
+     break;
+
+     case 'frontend':
+       $staticJs = './sites/default/js/frontend.js';
+       $staticCss = './sites/default/css/styles.css';
      break;
 
      default:
-       return false;
+      if (strtolower($type) === 'js' || (!$type && strtolower(substr($asset, -2)) === 'js'))
+      {
+        return '<script src="' . $asset . '"></script>';
+      }
+      elseif (strtolower($type) === 'css' || (!$type && strtolower(substr($asset, -3)) === 'css'))
+      {
+        return '<link rel="stylesheet" href="' . $asset . '">';
+      }
+      else
+      {
+        return false;
+      }
      break;
     }
 
     $html = '';
 
-    if ($staticJs && $cdnJs)
+    if (
+      ($staticJs || $cdnJs)
+      &&
+      (!$type || strtolower($type) === 'js' || strtolower($type) === 'all')
+    )
     {
       $html .= '<script src="'
-        . ((cfg::get('cdn') || $force_cdn) && $version ? $cdnJs : $staticJs)
+        . (cfg::get('cdn') && $cdnJs ? $cdnJs : $staticJs)
         . '"></script>';
     }
 
-    if ($staticJs && $cdnJs && $staticCss && $cdnCss)
+    if (
+      ($staticJs || $cdnJs)
+      &&
+      ($staticCss || $cdnCss)
+      &&
+      (!$type || strtolower($type) === 'all'))
     {
       $html .= "\n  ";
     }
 
-    if ($staticCss && $cdnCss)
+    if (
+      ($staticCss || $cdnCss)
+      &&
+      (strtolower($type) === 'css') || strtolower($type) === 'all')
     {
       $html .=  '<link rel="stylesheet" href="'
-       . ((cfg::get('cdn') || $force_cdn) && $version ? $cdnCss : $staticCss)
+       . (cfg::get('cdn') && $cdnCss ? $cdnCss : $staticCss)
        . '">';
     }
 

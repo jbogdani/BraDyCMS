@@ -18,7 +18,7 @@ try
 
   $settings = unserialize(CACHE);
   $settings['autoescape'] = false;
-  
+
   $twig = new Twig_Environment(
     new Twig_Loader_Filesystem('./sites/default' . ($_SESSION['sandbox'] ? '/' . $_SESSION['sandbox'] : '')),
     $settings
@@ -34,7 +34,6 @@ try
 	});
 
 	$twig->addFunction($fn_file_exists);
-  
 
   $filter = new Twig_SimpleFilter('parseTags', function ($string)
     {

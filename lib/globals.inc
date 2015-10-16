@@ -187,3 +187,15 @@ foreach ($writeables as $f)
     }
   }
 }
+
+
+// Sandbox templates
+if ($_GET['sandbox'] && file_exists('./sites/default/' . $_GET['sandbox']))
+{
+  $_SESSION['sandbox'] = $_GET['sandbox'];
+}
+
+if ($_GET['sandbox'] =='stop')
+{
+  unset($_SESSION['sandbox']);
+}

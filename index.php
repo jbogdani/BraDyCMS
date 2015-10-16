@@ -18,20 +18,23 @@ try
 
   $settings = unserialize(CACHE);
   $settings['autoescape'] = false;
-
-  $twig = new Twig_Environment(new Twig_Loader_Filesystem('./sites/default'), $settings);
+  
+  $twig = new Twig_Environment(
+    new Twig_Loader_Filesystem('./sites/default' . ($_SESSION['sandbox'] ? '/' . $_SESSION['sandbox'] : '')),
+    $settings
+  );
 
 	if ($_SESSION['debug'])
 	{
 		$twig->addExtension(new Twig_Extension_Debug());
 	}
 
-	$function = new Twig_SimpleFunction('file_exists', function ($file) {
+	$fn_file_exists = new Twig_SimpleFunction('file_exists', function ($file) {
 		return file_exists($file);
 	});
 
-	$twig->addFunction($function);
-
+	$twig->addFunction($fn_file_exists);
+  
 
   $filter = new Twig_SimpleFilter('parseTags', function ($string)
     {

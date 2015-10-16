@@ -13,7 +13,7 @@ RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
 #safe site, js and css, tiny_mce
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule (css|sites|js|tiny_mce|img|xsl|fonts)/(.+) $1/$2
+RewriteRule (css|sites|js|img|xsl|fonts)/(.+) $1/$2
 
 RewriteRule ^feed/rss$ controller.php?obj=feeds_ctrl&method=rss2 [QSA,L]
 RewriteRule ^feed/atom$ controller.php?obj=feeds_ctrl&method=atom [QSA,L]

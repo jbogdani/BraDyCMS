@@ -1,3 +1,4 @@
+3.10.0[] = "Solved bug with preview button not working correctly when textid field was updated"
 3.10.0[] = "Added support for sandbox templates"
 3.10.0[] = "Gulp watches all *.less files in sites/default/css directory"
 3.10.0[] = "Solved bug with changing columns widths on table sorting in article list view"

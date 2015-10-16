@@ -33,9 +33,9 @@
       </button>
 
       {% if art.id %}
-      <a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview" >
+      <button type="button" class="btn btn-default preview" >
         <i class="icon ion-monitor"></i> {{ tr.get('preview_draft') }}
-      </a>
+      </button>
       {% endif %}
 
       <button class="btn btn-default" type="reset">
@@ -278,9 +278,9 @@
       </button>
 
       {% if art.id %}
-      <a href="./{{ art.textid }}.draft" target="_blank" class="btn btn-default preview">
+      <button type="button" class="btn btn-default preview">
         <i class="icon ion-monitor"></i> {{ tr.get('preview_draft') }}
-      </a>
+      </button>
       {% endif %}
 
       <button class="btn btn-default" type="reset">
@@ -334,6 +334,12 @@
 
 
 	$('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
+
+  {% if art.id %}
+    $('#{{ uid }} .preview').on('click', function(){
+      window.open('./' + $('#edit_form{{ uid }} input[name="textid"]').val() + '.draft');
+    });
+  {% endif %}
 
 	$('#edit_form{{ uid }}').on('submit', function(){
 

@@ -25,93 +25,32 @@ class OutHtml extends Out
    */
   public function asset($asset, $type = false, $version = false)
   {
-    switch($asset){
-      case 'jquery':
-        $staticJs = './bower_components/jquery/dist/jquery.min.js';
-        $cdnJs = '//ajax.googleapis.com/ajax/libs/jquery/'
-          . ($version ? $version : '1.11.3')
-          . '/jquery.min.js';
-      break;
 
-      case 'bootstrap':
-        $staticJs = './bower_components/bootstrap/dist/js/bootstrap.min.js';
-        $cdnJs = 'https://maxcdn.bootstrapcdn.com/bootstrap/'
-          . ($version ? $version : '3.3.5')
-          . '/js/bootstrap.min.js';
+    if (in_array($asset, Assets::getNames()))
+    {
+      $data = Assets::resolve($asset, $type, $version, cfg::get('cdn'));
 
-        $staticCss = './bower_components/bootstrap/dist/css/bootstrap.min.css';
-        $cdnCss = 'https://maxcdn.bootstrapcdn.com/bootstrap/'
-          . ($version ? $version : '3.3.5')
-          . '/css/bootstrap.min.css';
-      break;
-
-     case 'fancybox':
-      $staticJs = './bower_components/fancyBox/source/jquery.fancybox.pack.js';
-      $cdnJs = 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/'
-        . ($version ? $version : '2.1.5')
-        . '/jquery.fancybox.pack.js';
-
-      $staticCss = './bower_components/fancyBox/source/jquery.fancybox.css';
-      $cdnCss = 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/'
-        . ($version ? $version : '2.1.5')
-        . '/jquery.fancybox.min.js';
-     break;
-
-     case 'frontend':
-       $staticJs = './sites/default/js/frontend.js';
-       $staticCss = './sites/default/css/styles.css';
-     break;
-
-     default:
-      if (strtolower($type) === 'js' || (!$type && strtolower(substr($asset, -2)) === 'js'))
+      if (!$data)
       {
-        return '<script src="' . $asset . '"></script>';
-      }
-      elseif (strtolower($type) === 'css' || (!$type && strtolower(substr($asset, -3)) === 'css'))
-      {
-        return '<link rel="stylesheet" href="' . $asset . '">';
+        return '<!-- Asset: ' . $asset . ' not found! -->';
       }
       else
       {
-        return false;
+        $asset = $data['path'];
+        $type = $data['type'];
       }
-     break;
     }
 
-    $html = '';
-
-    if (
-      ($staticJs || $cdnJs)
-      &&
-      (!$type || strtolower($type) === 'js' || strtolower($type) === 'all')
-    )
+    if (strtolower($type) === 'js' || (!$type && strtolower(substr($asset, -2)) === 'js'))
     {
-      $html .= '<script src="'
-        . (cfg::get('cdn') && $cdnJs ? $cdnJs : $staticJs)
-        . '"></script>';
+      return '<script src="' . $asset . '"></script>';
     }
-
-    if (
-      ($staticJs || $cdnJs)
-      &&
-      ($staticCss || $cdnCss)
-      &&
-      (!$type || strtolower($type) === 'all'))
+    elseif (strtolower($type) === 'css' || (!$type && strtolower(substr($asset, -3)) === 'css'))
     {
-      $html .= "\n  ";
+      return '<link rel="stylesheet" href="' . $asset . '">';
     }
+    return false;
 
-    if (
-      ($staticCss || $cdnCss)
-      &&
-      (strtolower($type) === 'css') || strtolower($type) === 'all')
-    {
-      $html .=  '<link rel="stylesheet" href="'
-       . (cfg::get('cdn') && $cdnCss ? $cdnCss : $staticCss)
-       . '">';
-    }
-
-    return $html;
   }
 
   /**

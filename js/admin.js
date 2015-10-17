@@ -574,5 +574,7 @@ $(document).ready(function () {
     return false;
   });
 
-  $('[data-toggle="tooltip"]').tooltip();
+  if(!('ontouchstart' in document.documentElement)){
+    $('[data-toggle="tooltip"]').tooltip();
+  }
 });

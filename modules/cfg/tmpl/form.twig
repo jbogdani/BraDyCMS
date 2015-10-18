@@ -6,7 +6,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">{{ tr.get('cfg-name') }}</label>
 		<div class="col-sm-5">
-			<input type="text" value="{{ data.name }}" name="name" />
+			<input type="text" value="{{ data.name }}" name="name">
 		</div>
     <div class="col-sm-5">
        <span class="text-muted">Site's short name.</span>
@@ -64,7 +64,7 @@
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-sm-2">{{ tr.get('cfg-sys_lang') }}</label>
 		<div class="col-sm-2">
-			<input type="text" value="{{ data.sys_lang }}" name="sys_lang" maxlength="2" />
+			<input type="text" value="{{ data.sys_lang }}" name="sys_lang" maxlength="2">
 		</div>
     <div class="col-sm-8">
       <span class="text-muted">Two digits main language id, eg. en. Actually the
@@ -78,7 +78,7 @@
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-sm-2">{{ tr.get('cfg-sys_lang_string') }}</label>
 		<div class="col-sm-5">
-			<input type="text" value="{{ data.sys_lang_string }}" name="sys_lang_string" />
+			<input type="text" value="{{ data.sys_lang_string }}" name="sys_lang_string">
 		</div>
     <div class="col-sm-5">
       <span class="text-muted">Main language name. Please enter only lower case digits.</span>
@@ -111,7 +111,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">{{ tr.get('cfg-timezone') }}</label>
 		<div class="col-sm-5">
-			<input type="text" value="{{ data.timezone }}" name="timezone" />
+			<input type="text" value="{{ data.timezone }}" name="timezone">
 		</div>
     <div class="col-sm-5">
       <span class="text-muted">Please enter a  valid timezone. Supported timezones:
@@ -123,7 +123,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">{{ tr.get('cfg-rewriteBase') }}</label>
 		<div class="col-sm-5">
-			<input type="text" value="{% if data.rewriteBase %}{{ data.rewriteBase }}{% else %}/{% endif %}" name="rewriteBase" />
+			<input type="text" value="{% if data.rewriteBase %}{{ data.rewriteBase }}{% else %}/{% endif %}" name="rewriteBase">
 		</div>
     <div class="col-sm-5">
       <span class="text-muted">If your site is not located in the root directory
@@ -158,7 +158,7 @@
     <div class="col-sm-5">
       <span class="text-muted">Enter here additional htaccess directives. These directives
       will be automatically appended at the end of the .htaccess file after each system update.
-      If you need to enter more then one directive, please plece each directive in a new line.</span>
+      If you need to enter more then one directive, please place each directive in a new line.</span>
     </div>
 	</div>
 
@@ -169,7 +169,7 @@
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-sm-2">{{ tr.get('cfg-db_connection') }}</label>
 		<div class="col-sm-5">
-			<input type="text" value="{{ data.db_connection }}" name="db_connection" />
+			<input type="text" value="{{ data.db_connection }}" name="db_connection">
 		</div>
     <div class="col-sm-5">
       <span class="text-muted">Database full DNS (eg.:
@@ -182,7 +182,7 @@
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-sm-2">{{ tr.get('cfg-db_user') }}</label>
 		<div class="col-sm-5">
-			<input type="text" value="{{ data.db_user }}" name="db_user" />
+			<input type="text" value="{{ data.db_user }}" name="db_user">
 		</div>
     <div class="col-sm-5">
       <span class="text-muted">Database username. Leave blank if you are using
@@ -194,7 +194,7 @@
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-sm-2">{{ tr.get('cfg-db_pass') }}</label>
 		<div class="col-sm-5">
-			<input type="text" value="{{ data.db_pass }}" name="db_pass" />
+			<input type="text" value="{{ data.db_pass }}" name="db_pass">
 		</div>
     <div class="col-sm-5">
       <span class="text-muted">Database password. Leave blank if you are using
@@ -206,7 +206,7 @@
 	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
 		<label class="control-label col-md-2">{{ tr.get('cfg-prefix') }}</label>
 		<div class="col-md-8">
-			<input type="text" value="{{ data.prefix }}" name="prefix" />
+			<input type="text" value="{{ data.prefix }}" name="prefix">
 		</div>
 	</div>
 	-->
@@ -269,7 +269,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">{{ tr.get('cfg-thumbs_dimensions') }}</label>
 		<div class="col-sm-2">
-			<input type="text" value="{{ data.thumbs_dimensions }}" name="thumbs_dimensions" />
+			<input type="text" value="{{ data.thumbs_dimensions }}" name="thumbs_dimensions">
 		</div>
     <div class="col-sm-8">
       <span class="text-muted">BraDyCMS has a built in system for image management.
@@ -323,13 +323,13 @@
 
 
 	<!-- GA_ID -->
-	<hr />
+	<hr>
 	<p class="lead">{{ tr.get('cfg-ga') }}</p>
 
 	<div class="form-group">
 		<label class="control-label col-sm-2">{{ tr.get('cfg-ga_id') }}</label>
 		<div class="col-sm-4">
-			<input type="text" value="{{ data.ga_id }}" name="ga_id" />
+			<input type="text" value="{{ data.ga_id }}" name="ga_id">
 		</div>
     <div class="col-sm-6">
       <span class="text-muted">Your Google Analytics CODE ID</span>
@@ -340,7 +340,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">{{ tr.get('cfg-ga_domain') }}</label>
 		<div class="col-sm-4">
-			<input type="text" value="{{ data.ga_domain }}" name="ga_domain" />
+			<input type="text" value="{{ data.ga_domain }}" name="ga_domain">
 		</div>
     <div class="col-sm-6">
       <span class="text-muted">If you enter here a domain (yourdomain.ext) the Google analytics code will be shown only if domain matches. This is very usefull if you have a localhost copy of your website and you do not want to update your analytics from localhost domain.</span>
@@ -348,7 +348,7 @@
 	</div>
 
 	<!-- LANGUAGES -->
-	<hr />
+	<hr>
 	<p class="lead">{{ tr.get('cfg-languages') }}</p>
 
 	<div class="row">
@@ -361,11 +361,11 @@
 	{% for lang in data.languages %}
 	<div class="form-group">
 			<div class="col-sm-2 col-sm-offset-2">
-				<input type="text" value="{{ lang.id }}" maxlength="2" name="languages[{{ loop.index0 }}][id]" />
+				<input type="text" value="{{ lang.id }}" maxlength="2" name="languages[{{ loop.index0 }}][id]">
 			</div>
 
 			<div class="col-sm-4">
-				<input type="text" value="{{ lang.string }}" name="languages[{{ loop.index0 }}][string]" />
+				<input type="text" value="{{ lang.string }}" name="languages[{{ loop.index0 }}][string]">
 			</div>
 
 			<div class="col-sm-2">
@@ -379,11 +379,11 @@
 
 	<div class="form-group">
 		<div class="col-sm-2 col-sm-offset-2">
-			<input type="text" maxlength="2" name="languages[{{ data.languages|length }}][id]" />
+			<input type="text" maxlength="2" name="languages[{{ data.languages|length }}][id]">
 		</div>
 
 		<div class="col-sm-4">
-			<input type="text" name="languages[{{ data.languages|length }}][string]" />
+			<input type="text" name="languages[{{ data.languages|length }}][string]">
 		</div>
 
 		<div class="col-sm-2">
@@ -397,11 +397,11 @@
     <div class="col-sm-12">
         <span class="text-muted">Use the fields above to add new languages
           to your site. For each language please provide a two-digits code
-          and a lower-case language name.<br />Actually the following languages
+          and a lower-case language name.<br>Actually the following languages
           are supported: it, en, es, fr, ar, de, al. If you plan to support
           any language different from these please you should edit also the
           main .htaccess file!. If the "is published" flag is turned to "on"
-          the language will be available in main site language menu.<br />
+          the language will be available in main site language menu.<br>
           You can have many languages. Just save the form to have a new
           blank row added.</span>
     </div>
@@ -411,7 +411,7 @@
 
 	<!-- CUSTOM_FIELDS -->
 	<div {% if is_admin == false %}style="display:none"{% endif %}>
-		<hr />
+		<hr>
 		<p class="lead">{{ tr.get('custom_fields') }}</p>
 
 
@@ -427,7 +427,7 @@
 		{% for fld in data.custom_fields %}
 		<div class="form-group">
 			<div class="col-sm-2">
-				<input type="text" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]" />
+				<input type="text" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]">
 			</div>
 
 			<div class="col-sm-2">
@@ -440,11 +440,11 @@
 			</div>
 
 			<div class="col-sm-2">
-				<input type="text" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]" />
+				<input type="text" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]">
 			</div>
 
 			<div class="col-sm-4">
-				<input type="text" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]" />
+				<input type="text" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]">
 			</div>
 
 			<div class="col-sm-1">
@@ -467,7 +467,7 @@
 		<div class="form-group">
 			<div class="controls">
 				<div class="col-sm-2">
-					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][name]" />
+					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][name]">
 				</div>
 
 				<div class="col-sm-2">
@@ -480,11 +480,11 @@
 				</div>
 
 				<div class="col-sm-2">
-					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][label]" />
+					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][label]">
 				</div>
 
 				<div class="col-sm-4">
-					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]" />
+					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]">
 				</div>
 
         <div class="col-sm-1">
@@ -511,44 +511,44 @@
         using no spaces, dashes, underscores or other special characters; a
         field type, a label, and eventually a default value.
         If you chose "select" as field type you should enter a comma separated
-        list of values as default fields to use as select options.<br />
+        list of values as default fields to use as select options.<br>
         <strong>Please remember</strong> that you should update the database
-        manually to include the new fields.<br />
+        manually to include the new fields.<br>
         <strong>Special fields</strong> The fieldname <code>customtitle</code>
         is a special field. If provided it's value will be used to throughout the
-        website for the HTML <code>title</code> metatag output.<br />
+        website for the HTML <code>title</code> metatag output.<br>
         You can add many custom fields. Just save the form to have a new
         blank row added.</p>
     </div>
   </div>
 
 	<!-- PATHS -->
-	<hr />
+	<hr>
 	<p class="lead">{{ tr.get('cfg-paths') }}</p>
 
 	<div class="form-group">
 		<label class="control-label col-sm-2">convert</label>
 		<div class="col-sm-3">
-			<input type="text" value="{{ data.paths.convert }}" name="paths[convert]" />
+			<input type="text" value="{{ data.paths.convert }}" name="paths[convert]">
 		</div>
     <div class="col-sm-7">
       <span class="text-muted">If you are planing to use <a
           href="http://php.net/manual/en/book.imagick.php" target="_blank">php
           Imagick extension</a> for image manipulation enter here the string
-          <code>imagick</code>.<br />
+          <code>imagick</code>.<br>
         If you plan to use <a href="http://www.imagemagick.org/script/index.php"
         target="_blank">Imagemagick binary</a> (<strong>recommended choise,
           if available</strong>) please enter here the
         <strong>absolute</strong> path to the Imagemagick convert command
         (usually <code>/usr/bin/convert</code> or <code>/usr/local/bin/convert</code>
-        on most *nix systems). <br />
+        on most *nix systems). <br>
         This setting is  fundamental for the image manipulating system to work.
         Settings depend on your hosting plans.</span>
     </div>
 	</div>
 
 	<!-- USERS -->
-	<hr />
+	<hr>
 	<p class="lead">{{ tr.get('cfg-users') }}</p>
 
 	<div class="row">
@@ -564,10 +564,10 @@
 	{% for user in data.users %}
 	<div class="form-group">
 		<div class="col-sm-5 col-sm-offset-2">
-			<input type="email" value="{{ user.name }}" name="users[{{ loop.index0 }}][name]" {% if user.admin and is_admin == false %} readonly="true" {% endif %} />
+			<input type="email" value="{{ user.name }}" name="users[{{ loop.index0 }}][name]" {% if user.admin and is_admin == false %} readonly="true" {% endif %}>
 		</div>
 		<div class="col-sm-3">
-			<input type="text" name="users[{{ loop.index0 }}][pwd]" value="{{ user.pwd }}" {% if user.admin and is_admin == false %} readonly="true" {% endif %} />
+			<input type="text" name="users[{{ loop.index0 }}][pwd]" value="{{ user.pwd }}" {% if user.admin and is_admin == false %} readonly="true" {% endif %}>
 		</div>
 
 		<div class="col-sm-2" {% if is_admin == false %}style="display:none"{% endif %}>
@@ -581,10 +581,10 @@
 
 	<div class="form-group">
 		<div class="col-sm-5 col-sm-offset-2">
-			<input type="email" name="users[{{ data.users|length }}][name]" />
+			<input type="email" name="users[{{ data.users|length }}][name]">
 		</div>
 		<div class="col-sm-3">
-			<input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]" />
+			<input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]">
 		</div>
 		<div class="col-sm-2">
 			<button class="btn btn-info encrypt"
@@ -597,12 +597,12 @@
 
   <div class="row">
     <div class="col-md-12">
-      <span class="text-muted">Be sure to use the "encrypt password tool" before submitting a new user. Only system admins can grant admin privileges to other users.<br /> You can add many users. Just save the form to have a new blank row added.</span>
+      <span class="text-muted">Be sure to use the "encrypt password tool" before submitting a new user. Only system admins can grant admin privileges to other users.<br> You can add many users. Just save the form to have a new blank row added.</span>
     </div>
   </div>
 
 
-	<hr />
+	<hr>
   <div class="row">
     <div class="col-sm-3">
       <button class="btn btn-success btn-lg btn-block submit"

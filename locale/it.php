@@ -256,7 +256,6 @@ $_lang['cfg-paths'] = "Percorsi del sistema";
 $_lang['cfg-users'] = "Utenti";
 $_lang['cfg-debug'] = "Modalità debug";
 $_lang['cfg-img-settings'] = "Impostazioni immagini";
-$_lang['cfg-thumbs_dimensions'] = "Dimensioni anteprime";
 $_lang['cfg-art_img_dimensions'] = "Dimensioni delle immagini degli articoli";
 $_lang['cfg-fld_name'] = "Nome del campo";
 $_lang['cfg-type'] = "Tipo del campo";

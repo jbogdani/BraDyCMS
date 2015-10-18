@@ -251,7 +251,6 @@ $_lang['cfg-ga_domain'] = "Kufizo Google Analytics te domain";
 $_lang['cfg-paths'] = "Shtigjet e sistemit";
 $_lang['cfg-users'] = "Përdoruesit";
 $_lang['cfg-debug'] = "Mënyra debug";
-$_lang['cfg-thumbs_dimensions'] = "";
 $_lang['cfg-art_img_dimensions'] = "Dimensione e imazheve te artikujve";
 $_lang['cfg-fld_name'] = "Emri i fushës";
 $_lang['cfg-type'] = "Tipi i fushës";

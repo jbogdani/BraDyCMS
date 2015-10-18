@@ -202,7 +202,6 @@ $_lang['cfg-ga_domain'] = "Περιορισμός του Google Analytics στο
 $_lang['cfg-paths'] = "Διαδρομές συστήματος";
 $_lang['cfg-users'] = "Χρήστες";
 $_lang['cfg-debug'] = "Τρόπος λειτουργίας εκσφαλμάτωσης";
-$_lang['cfg-thumbs_dimensions'] = "Διαστάσεις μικρογραφίας";
 $_lang['cfg-art_img_dimensions'] = "Διαστάσεις εικόνων του άρθρου";
 $_lang['cfg-fld_name'] = "Όνομα πεδίου";
 $_lang['cfg-type'] = "Τύπος πεδίου";

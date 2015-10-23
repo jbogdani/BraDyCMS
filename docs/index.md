@@ -5,7 +5,7 @@ This is the documentary section of **BraDyCMS**, that we are ceaselessly improvi
 Some sections need to be updated, other need to be written, other need heavy revisions.
 
 For this reason any **help** in improving and maintaining this documentation will be **much appreciated**.
-The documentation is written in [Markdown](http://daringfireball.net/projects/markdown/) format, which is 
+The documentation is written in [Markdown](http://daringfireball.net/projects/markdown/) format, which is
 an easy-to-read, easy-to-write plain text format; then, it can be converted to structurally valid XHTML (or HTML).
 Check the basic tools of the Markdown syntax here: http://daringfireball.net/projects/markdown/basics and
 the full syntax documentation here: http://daringfireball.net/projects/markdown/syntax.
@@ -31,6 +31,7 @@ If you are not familiar with Github just email your contribution to [developer@b
   - [About CSS, Less and the Twitter Bootstrap Framework](#docs/read/tmpl_less)
   - [The `html` object](#docs/read/tmpl_html)
   - [A commented template example](#docs/read/tmpl_example)
+- [Site configuration](#docs/read/cfg)
 
 - Core plugins
   - [Create and embed forms](#docs/read/userform)

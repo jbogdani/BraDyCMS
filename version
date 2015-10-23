@@ -1,3 +1,4 @@
+3.10.0[] = "Solved bug with rich text fields in translations forms not being saved"
 3.10.0[] = "Dropped support for thumbs_dimensions setting in main configuration file"
 3.10.0[] = "Solved bug with preview button not working correctly when textid field was updated"
 3.10.0[] = "Added support for sandbox templates"
@@ -428,7 +429,7 @@
 1.1[] = "Added fancybox support"
 1.0[] = "SQLite support"
 1.0[] = "Sub menu support"
-1.0[] = "class selected in menu items is applied to <li> not to <a> element"
+1.0[] = "class selected in menu items is applied to < li > not to < a > element"
 1.0[] = "publicHtml::printLangSelelect() changed in publicHtml::printLangSelect()"
 1.0[] = "DB structure changes: article.order renamed to article.sort"
 1.0[] = "DB structure changes: menu.order renamed to menu.sort"

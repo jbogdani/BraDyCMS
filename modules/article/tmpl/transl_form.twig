@@ -93,8 +93,6 @@
 </form>
 
 <script>
-	$('#form{{ uid }}').on('submit', function(){
-	
   admin.wysiwyg.add("summary{{ uid }}");
   admin.wysiwyg.add("text{{ uid }}");
   {% if custom_fields %}
@@ -102,8 +100,10 @@
       admin.wysiwyg.add("richtext{{ uid ~ field.name }}");
     {% endfor %}
   {% endif %}
-
-	admin.wysiwyg.preSave();
+    
+	$('#form{{ uid }}').on('submit', function(){
+	
+  admin.wysiwyg.preSave();
 	
 	$.post(
 			'controller.php?obj=article_ctrl&method=saveTransl&param[]={{ art.id }}',

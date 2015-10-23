@@ -95,6 +95,14 @@
 <script>
 	$('#form{{ uid }}').on('submit', function(){
 	
+  admin.wysiwyg.add("summary{{ uid }}");
+  admin.wysiwyg.add("text{{ uid }}");
+  {% if custom_fields %}
+    {% for field in custom_fields %}
+      admin.wysiwyg.add("richtext{{ uid ~ field.name }}");
+    {% endfor %}
+  {% endif %}
+
 	admin.wysiwyg.preSave();
 	
 	$.post(
@@ -110,14 +118,6 @@
 			'json'
 		);	
 });
-
-  admin.wysiwyg.add("summary{{ uid }}");
-  admin.wysiwyg.add("text{{ uid }}");
-  {% if custom_fields %}
-    {% for field in custom_fields %}
-      admin.wysiwyg.add("richtext{{ uid ~ field.name }}");
-    {% endfor %}
-  {% endif %}
 
 	$('#form{{ uid }} .copy').on('click', function(){
 		var text = $(this).parents('.form-group').find('.orig').html();

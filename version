@@ -1,3 +1,4 @@
+3.9.1[] = "Solved bug with rich text fields in translations forms not being saved"
 3.9.0[] = "RedbeanPHP updated to version 4.3.0"
 3.9.0[] = "Metadata gets support for EISSN"
 3.9.0[] = "Twitter Bootstrap updated to v. 3.3.5"

@@ -28,7 +28,7 @@ class OutHtml extends Out
 
     if (in_array($asset, Assets::getNames()))
     {
-      $data = Assets::resolve($asset, $type, $version, cfg::get('cdn'));
+      $data = Assets::resolve($asset, $type, cfg::get('cdn'), $version);
 
       if (!$data)
       {
@@ -642,19 +642,7 @@ class OutHtml extends Out
    */
   public function jQuery($version)
   {
-    if (!$version)
-    {
-      return false;
-    }
-
-    $html = $_SESSION['debug'] ?
-      '<script src="./bower_components/jquery/dist/jquery.min.js"></script>'
-      :
-      '<script src="//ajax.googleapis.com/ajax/libs/jquery/' .
-      $version . '/jquery.min.js"></script>' .
-      '<script>window.jQuery || document.write(\'<script src="./bower_components/jquery/dist/jquery.min.js"><\/script>\')</script>';
-
-    return $html;
+    return $this->asset('jquery', false, $version);
   }
 
   /**
@@ -664,21 +652,7 @@ class OutHtml extends Out
    */
   public function TBSjs($version)
   {
-    if (!$version)
-    {
-      return false;
-    }
-
-    $html = $_SESSION['debug'] ?
-      '<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>'
-      :
-      '<script src="//netdna.bootstrapcdn.com/bootstrap/'
-        . $version . '/js/bootstrap.min.js"></script>'
-        . '<script>if(typeof($.fn.modal) === \'undefined\') { '
-        . 'document.write(\'<script src="./js/bootstrap-' . $version . '.min.js"><\/script>\')'
-      . '}</script>';
-
-    return $html;
+    return $this->asset('bootstrap', 'js', $version);
   }
 
   /**

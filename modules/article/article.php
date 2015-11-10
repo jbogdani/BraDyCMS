@@ -5,18 +5,18 @@
  * @license			MIT, See LICENSE file
  * @since			Dec 1, 2012
  */
- 
+
 
 class article_ctrl extends Controller
 {
-	
+
   public function sql2json()
   {
     $aColumns = array( 'id', 'title', 'textid', 'sort', 'author', 'status', 'publish');
-    
+
     $sIndexColumn = 'id';
-    
-    
+
+
     // Paging
     $sLimit = '';
     if ( isset( $this->request['iDisplayStart'] ) && $this->request['iDisplayLength'] != '-1' )
@@ -24,12 +24,12 @@ class article_ctrl extends Controller
       $sLimit = "LIMIT " . $this->request['iDisplayStart'] .", "
         . $this->request['iDisplayLength'];
     }
-    
+
     // Ordering
     if ( isset( $this->request['iSortCol_0'] ) )
     {
       $sOrder = "ORDER BY  ";
-      
+
       for ( $i=0 ; $i<intval( $this->request['iSortingCols'] ) ; $i++ )
       {
         if ( $this->request[ 'bSortable_' . intval($this->request['iSortCol_' . $i]) ] == "true" )
@@ -38,20 +38,20 @@ class article_ctrl extends Controller
             " . $this->request['sSortDir_'.$i] . ", ";
         }
       }
-      
+
       $sOrder = substr_replace( $sOrder, "", -2 );
-      
+
       if ( $sOrder == "ORDER BY" )
       {
         $sOrder = "";
       }
     }
-    
-    
+
+
     if (is_array($this->request['param']) && !empty($this->request['param'][0]))
     {
       $tag_ids = R::getCol("SELECT `id` FROM `tag` WHERE `title` IN ('" . implode("','", $this->request['param']) . "')");
-      
+
       // If tag does not exist > return 0 records!!!
       if(empty($tag_ids)){
         $output = array(
@@ -65,13 +65,13 @@ class article_ctrl extends Controller
         echo json_encode($output);
         return;
       }
-      
+
       $tmp = array();
       foreach($tag_ids as $tagid)
       {
         $tmp[] = "`tag_id` = " . $tagid;
       }
-      
+
       $sWhere = "WHERE  `id` IN ( "
           . "SELECT `articles_id` FROM `articles_tag` WHERE " . implode(' OR ', $tmp) . " GROUP BY `articles_id` HAVING count(*) = ". count($tmp)
         . " ) ";
@@ -80,8 +80,8 @@ class article_ctrl extends Controller
     {
       $sWhere = "";
     }
-    
-    
+
+
     // Filtering
     if ( $this->request['sSearch'] != "" )
     {
@@ -93,7 +93,7 @@ class article_ctrl extends Controller
       $sWhere = substr_replace( $sWhere, "", -3 );
       $sWhere .= ')';
     }
-    
+
     $totalRows = $this->request['iTotalRecords'] ? $this->request['iTotalRecords'] : R::getCell(" SELECT count(*) FROM `articles` " . $sWhere);
 
     /* Individual column filtering */
@@ -112,37 +112,37 @@ class article_ctrl extends Controller
         $sWhere .= $aColumns[$i]." LIKE '%" . $this->request['sSearch_'.$i] ."%' ";
       }
     }
-    
+
     $sQuery = "
       SELECT `" . implode('`, `', $aColumns ). "` FROM `articles`
         $sWhere
         $sOrder
         $sLimit
       ";
-    
+
     $result = R::getAll($sQuery);
-    
+
     $output = array(
       "sEcho" => intval($this->request['sEcho']),
       "iTotalRecords" => count($result),
       "iTotalDisplayRecords" => $totalRows,
       "aaData" => $result
       );
-    
+
     header('Content-type: application/json');
     echo json_encode($output);
   }
 
-  
+
 	public function all()
 	{
 		$tags = Article::getTags();
-    
+
     if (!is_array($tags))
     {
       $tags = array();
     }
-		
+
 		$this->render('article', 'list', array(
       'tags' => $tags,
       'imploded_tags' => '"' . implode('","', $tags) . '"',
@@ -151,7 +151,7 @@ class article_ctrl extends Controller
       'cfg_langs' => cfg::get('languages')
       ));
 	}
-	
+
 	public function deleteTag()
 	{
 		try
@@ -161,7 +161,7 @@ class article_ctrl extends Controller
 		catch (Exception $e)
 		{
 			error_log($e->getMessage());
-			
+
 			echo tr::get('error_delete_tag');
 		}
 	}
@@ -175,7 +175,7 @@ class article_ctrl extends Controller
 		catch (Exception $e)
 		{
 			error_log($e->getMessage());
-			
+
 			echo tr::get('error_delete_tag');
 		}
 	}
@@ -183,24 +183,24 @@ class article_ctrl extends Controller
 	public function check_duplicates()
 	{
 		$val = $this->get['param'][0];
-		
+
 		$res = Article::getByTextid($val, false, true);
-		
+
 		if ($res)
 		{
 			echo tr::sget('duplicate_textid', $val);
 		}
 	}
-	
-	
+
+
 	public function edit()
 	{
 		$id = $this->get['param'][0];
-		
+
 		// check if art_img files exist
 		$art_img = cfg::get('art_img');
     $art_img[] = 'orig';
-		
+
     // get list of (different dimensions of) article's images, if present
 		if (is_array($art_img))
 		{
@@ -212,28 +212,28 @@ class article_ctrl extends Controller
 				}
 			}
 		}
-    
+
     // get list of all available image files
     if (is_dir(IMG_DIR . 'articles/media/' . $id))
     {
       $art_media = utils::dirContent(IMG_DIR . 'articles/media/' . $id);
-      
+
       if(($key = array_search('thumbs', $art_media)) !== false)
       {
         unset($art_media[$key]);
       }
     }
-		
+
 		$art = Article::getById($id);
-		
+
 		$available_tags = Article::getTags();
-		
+
 		if (!is_array($available_tags))
 		{
 			$available_tags = array();
 		}
 		$customflds = cfg::get('custom_fields');
-    
+
     if (is_array($customflds))
     {
       foreach ($customflds as &$a)
@@ -244,7 +244,7 @@ class article_ctrl extends Controller
         }
       }
     }
-    
+
 		$this->render('article', 'form', array(
       'art'=>$art,
       'custom_fields' => $customflds,
@@ -257,16 +257,16 @@ class article_ctrl extends Controller
       'art_gallery' => ( $art['textid'] && file_exists(GALLERY_DIR . $art['textid']) && is_dir(GALLERY_DIR . $art['textid']))
 		));
 	}
-	
+
 	public function saveTransl()
 	{
 		$data = $this->post;
 		$art_id = $this->get['param'][0];
-		
+    
 		try
 		{
 			Article::translate($art_id, $data);
-			
+
 			$out['text'] = tr::get('ok_translation_saved');
 			$out['status'] = 'success';
 		}
@@ -276,10 +276,10 @@ class article_ctrl extends Controller
 			$out['text'] = tr::get('error_translation_not_saved');
 			$out['status'] = 'error';
 		}
-		
+
 		echo json_encode($out);
 	}
-	
+
 	/**
 	 * Displays articles's translation form
 	 * param[0] is translation language
@@ -289,10 +289,10 @@ class article_ctrl extends Controller
 	{
 		$id = $this->get['param'][1];
 		$lang = $this->get['param'][0];
-		
+
 		$article = Article::getById($id, false, true);
 		$translations = $article->ownArttrans;
-		
+
 		if (is_array($translations))
 		{
 			foreach ($translations as $trans)
@@ -301,17 +301,17 @@ class article_ctrl extends Controller
 				{
 					$art_translation = $trans->export();
 				}
-				
+
 			}
 		}
-		
+
 		if (!$art_translation)
 		{
 			$art_translation = array('lang' => 'en', 'status' => 0, 'art_id' => $id);
 		}
-		
+
 		$article_array = $article->export();
-		
+
 		foreach (cfg::get('languages') as $langs)
 		{
 			if ($lang == $langs['id'])
@@ -319,17 +319,17 @@ class article_ctrl extends Controller
 				$lang_arr = $langs;
 			}
 		}
-		
+
 		$this->render('article', 'transl_form', array(
-      'art'=>$article_array, 
+      'art'=>$article_array,
       'custom_fields' => cfg::get('custom_fields'),
       'transl' => $art_translation,
       'lang' => $lang_arr
       ));
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Alias for article_ctrl::edit
 	 */
@@ -337,8 +337,8 @@ class article_ctrl extends Controller
 	{
 		$this->edit();
 	}
-	
-	
+
+
 	public function delete()
 	{
 		$id = $this->get['param'][0];
@@ -356,19 +356,19 @@ class article_ctrl extends Controller
 			$out['type'] = 'error';
 			$out['text'] = $e->getMessage();
 		}
-		
+
 		echo json_encode($out);
 	}
-	
+
 	public function save()
 	{
 		$id = $this->get['param'][0];
 		$data = $this->post;
-		
+
 		try
 		{
 			$new_id = Article::save($id, $data);
-			
+
 			if (!$new_id)
 			{
 				throw new Exception(tr::get('save_article_error'));
@@ -385,7 +385,7 @@ class article_ctrl extends Controller
 		}
 		echo json_encode($out);
 	}
-	
+
 	public function delete_art_img($return = false)
 	{
 		$id = $this->get['param'][0];
@@ -393,7 +393,7 @@ class article_ctrl extends Controller
 		{
 			$dimensions = cfg::get('art_img');
       $dimensions[] = 'orig';
-			
+
 			// check if cfg::art_img is available
 			if (!is_array($dimensions))
 			{
@@ -402,11 +402,11 @@ class article_ctrl extends Controller
 			foreach($dimensions as $dim)
 			{
 				$file = IMG_DIR . 'articles/' . $dim . '/' . $id . '.jpg';
-				
+
 				if (file_exists($file))
 				{
 					@unlink($file);
-					
+
 					if (file_exists($file))
 					{
 						$error[] = $file;
@@ -430,7 +430,7 @@ class article_ctrl extends Controller
 				$msg['text'] = $e->getMessage();
 			}
 		}
-		
+
 		if ($return)
 		{
 			return array('ok'=> $ok, 'error' => $error);
@@ -453,14 +453,14 @@ class article_ctrl extends Controller
 				$msg['text'] = tr::get('art_img_deleted');
 			}
 		}
-		
+
 		echo json_encode($msg);
 	}
-	
+
 	/**
-	 * Creates image files using configuration dimensions 
+	 * Creates image files using configuration dimensions
 	 * and places this images in appropriate directories (./sites/images/articles/dim_widthxdim_height/art_id.jpg)
-	 * 
+	 *
 	 * @param int $id article ID
 	 * @param string $file full path to uploaded file in temporary dire
 	 * @throws Exception on erros
@@ -469,46 +469,46 @@ class article_ctrl extends Controller
 	{
 		$id = $this->get['param'][0];
 		$file = $this->get['param'][1];
-    
+
     try{
-      
+
 			$dimensions = cfg::get('art_img');
       $dimensions[] = 'orig';
-      
+
 			// check if cfg::art_img is available
 			if (!is_array($dimensions))
 			{
 				throw new Exception(tr::get('cfg_art_img_missing'));
 			}
-			
+
 			// loop in dimensions
 			foreach($dimensions as $dim)
 			{
         // define image directory
 				$dir = IMG_DIR . 'articles/' . $dim;
-				
+
 				// if image dir does not exist, try to create it
 				if(!is_dir($dir))
 				{
 					@mkdir($dir, 0777, true);
 				}
-				
+
 				// if image dir does not exist, throw exception
 				if(!is_dir($dir))
 				{
 					throw new Exception(tr::sget('create_dir_error', $dir));
 				}
-				
-				// if image dir is not writeable, throw exception				
+
+				// if image dir is not writeable, throw exception
 				if(!is_writable($dir))
 				{
 					throw new Exception(tr::sget('dir_is_not_writable', $dir));
 				}
-				
-				
+
+
 				// make thumbnails in jpg format, using original file
 				$output = $dir . '/' . $id . '.jpg';
-				
+
         if ($dim === 'orig')
         {
           @copy(TMP_DIR . $file, $output);
@@ -529,7 +529,7 @@ class article_ctrl extends Controller
           }
         }
 			}
-			
+
 			$msg['status'] = 'success';
 			$msg['text'] = tr::get('art_images_created');
 		}
@@ -540,17 +540,17 @@ class article_ctrl extends Controller
 		}
 		echo json_encode($msg);
 	}
-  
-  
+
+
   public function attachMedia()
 	{
 		$id = $this->get['param'][0];
 		$file = $this->get['param'][1];
-    
-    
+
+
     // define image directory
     $dir = IMG_DIR . 'articles/media/' . $id;
-    
+
     try
     {
       // if image dir does not exist, try to create it
@@ -565,22 +565,22 @@ class article_ctrl extends Controller
         throw new Exception(tr::sget('create_dir_error', $dir));
       }
 
-      // if image dir is not writeable, throw exception				
+      // if image dir is not writeable, throw exception
       if(!is_writable($dir))
       {
         throw new Exception(tr::sget('dir_is_not_writable', $dir));
       }
-      
+
       // set output file full path
       $output = $dir . '/' . $file;
-      
+
       // copy file to destination
       @copy(TMP_DIR . $file, $output);
       if (!file_exists($output))
       {
         throw new Exception(tr::get('error_copying_file'));
       }
-      
+
       $msg['status'] = 'success';
 			$msg['text'] = tr::get('ok_file_uploaded');
       $msg['all_media'] = utils::dirContent($dir);
@@ -590,9 +590,9 @@ class article_ctrl extends Controller
       $msg['status'] = 'error';
 			$msg['text'] = tr::get('error_file_not_uploaded');
     }
-    
+
     echo json_encode($msg);
 	}
-  
-  
+
+
 }

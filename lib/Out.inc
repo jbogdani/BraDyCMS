@@ -7,10 +7,10 @@
  * @uses			utils
  * @used			cfg
  */
- 
+
 class Out
 {
-	private 
+	private
 		$context,	// context: article, tags, search, home
 		$data = array(),	//
 		$metadata,
@@ -18,11 +18,11 @@ class Out
     $totalArticles
 		;
   protected $get = array();
-  
-	public 
+
+	public
 		$session_lang, // different from $lang whitch if is the same of sys_lang is not set!
 		$lang;		// current language ( = session['lang'] set in globals, same as get['lang'])
-	
+
 	/**
 	 * Starts object, sets context and language data
 	 * @param array $get	array of $_GET data
@@ -34,7 +34,7 @@ class Out
      * Set get
      */
 		$this->get = $get;
-		
+
     /**
      * Explode tags using ~ or - (AND or OR)
      */
@@ -50,7 +50,7 @@ class Out
 				$this->get['tags'] = utils::csv_explode($this->get['tags'], '-');
 			}
 		}
-    
+
     /**
      * Set page
      */
@@ -58,7 +58,7 @@ class Out
     {
       $this->get['page'] = str_replace('/', null, $this->get['page']);
     }
-		
+
     /**
      * Set language
      */
@@ -66,19 +66,19 @@ class Out
 		{
 			$this->lang = $lang;
 		}
-		
+
 		if ($lang)
 		{
 			$this->session_lang = $lang;
 		}
-		
+
 		/**
      * Set context
      */
 		if ( $get['art_title'] )
 		{
 			$this->context = 'article';
-			
+
 			// load curent article's data in $data['article'] array
 			$this->data['article'][$get['art_title']] = Article::getByTextid($get['art_title'], $this->lang, $this->get['draft']);
 		}
@@ -95,9 +95,9 @@ class Out
 			$this->context = 'home';
 		}
 	}
-  
+
   /**
-   * 
+   *
    * @param string $gal
    * @return boolean|false Array with gallery data or fale if gallery does not exist or is not well-formatted
    */
@@ -113,7 +113,7 @@ class Out
       return false;
     }
 	}
-  
+
   /**
    * Returns textid specified in URL
    * @return string
@@ -122,16 +122,16 @@ class Out
   {
     return $this->get['art_title'];
   }
-  
+
   /**
-   * Returns number of all articles found by a query, search ot tag filtering 
+   * Returns number of all articles found by a query, search ot tag filtering
    * @return int
    */
   public function getTotal()
   {
     return $this->totalArticles;
   }
-  
+
   /**
    * Returns translated string
    * @param string $string  string to translate
@@ -143,10 +143,10 @@ class Out
   {
     return $args ? tr::sget($string, $args, $escape) : tr::get($string, $escape);
   }
-  
+
 	/**
 	 * Returns full link to provided content (article or section)
-	 * 
+	 *
 	 * @param array|string $art	article or section name
 	 * @param boolean $tags	arrbay of tags to use for filtering section articles
    * @param integer $page Page number, default false
@@ -155,9 +155,9 @@ class Out
 	public function link2($art, $tags = false, $page = false)
 	{
     !$page ? $page = $this->get['page'] : '';
-    
+
     $url = '';
-    
+
     switch($tags)
     {
       case 'search':
@@ -170,20 +170,20 @@ class Out
         $url = link::to_article($art == 'home' ? './' : $art, $this->lang, $page);
         break;
     }
-    
+
 		return $url;
 	}
-	
-	
+
+
 	/**
-	 * Returns array of currently used tags. 
+	 * Returns array of currently used tags.
 	 * @return array|string
 	 */
 	public function getFilterTags()
 	{
 		return $this->get['tags'];
 	}
-	
+
 	/**
 	 * Returns array of tags used by current article
 	 * @return array|false
@@ -194,12 +194,12 @@ class Out
 		{
 			$article = $this->get['art_title'];
 		}
-    
+
 		if ($this->context !== 'article')
 		{
 			return false;
 		}
-		
+
 		if (!$this->data['article'][$article]['tags'])
 		{
 			$art = $this->getArticle();
@@ -210,10 +210,10 @@ class Out
 			}
 			$this->data['article'][$article]['tags'] =  R::tag($art);
 		}
-		
+
 		return $this->data['article'][$article]['tags'];
 	}
-	
+
 	/**
 	 * Returns curent context. Can be one of the following: article, tags, search, home
 	 * @return string
@@ -222,8 +222,8 @@ class Out
 	{
 		return $this->context;
 	}
-	
-	
+
+
 	/**
 	 * Returns array of similar articles
 	 * @param string $textid articles' textid. Default false (current art_title will be used)
@@ -233,7 +233,7 @@ class Out
 	public function getSimilar($textid = false, $max = false)
 	{
 		$textid = $textid ? $textid : $this->get['art_title'];
-    
+
 		return $textid ? Article::getSimilar(false, $textid, $this->lang, $max) : false;
 	}
 
@@ -245,30 +245,30 @@ class Out
 	public function getArticle($article = false, $draft = false)
 	{
 		$draft = $draft ? $draft : $this->get['draft'];
-		
+
 		if (!$article)
 		{
 			$article = $this->get['art_title'];
 		}
-		
+
 		if ($article && $article != $this->get['art_title'])
 		{
 			$this->data['article'][$article] = Article::getByTextid($article, $this->lang, $draft);
 		}
-		
+
 		if (empty($this->data['article'][$article]))
 		{
 			return false;
 		}
-		
+
 		if ($this->data['article'][$article]['text'])
 		{
 			$this->data['article'][$article]['text'] = customTags::parseContent($this->data['article'][$article]['text']);
 		}
-		
+
 		return $this->data['article'][$article];
 	}
-	
+
 
 	/**
 	 * Returns list of articles filtered by one or more tags. The tags can be specified as method arguments, if not current GET tags will be used
@@ -278,12 +278,12 @@ class Out
 	public function getArticlesByTag()
 	{
 		$tags = func_get_args() ? func_get_args() : $this->getFilterTags();
-    
+
     if (!is_array($tags))
     {
       return false;
     }
-    
+
     foreach ($tags as $x=>&$t)
     {
       if(is_array($t))
@@ -292,11 +292,11 @@ class Out
         unset($tags[$x]);
       }
     }
-    
+
     return $this->getArticlesByTagArray($tags, false, $page, $max);
 	}
-  
-	
+
+
 	/**
 	 * Return list of articles filtered by one or more tags
 	 * @param array $tags array of tags
@@ -308,11 +308,11 @@ class Out
 	public function getArticlesByTagArray($tags, $dontparse = false, $page = false, $max = false)
 	{
     list($start, $max) = $this->page2limit($page, $max);
-    
+
     $this->totalArticles = Article::getByTag($tags, $this->lang, $this->get['tag_all'], false, false, false, true);
-    
+
     $arts = Article::getByTag($tags, $this->lang, $this->get['tag_all'], false, $start, $max);
-    
+
     if (is_array($arts) && !$dontparse)
     {
       foreach($arts as &$art)
@@ -322,7 +322,7 @@ class Out
     }
     return $arts;
 	}
-	
+
 	/**
 	 * Returns metadata about the current page, filtered by $el
 	 * @param string $el page element to return
@@ -335,11 +335,11 @@ class Out
 		{
 			$this->setPageData();
 		}
-	
+
 		return $el ? ( $escape ? str_replace('"', '\"', $this->data['page'][$el]) : $this->data['page'][$el] ) : $this->data['page'];
 	}
-	
-  
+
+
   /**
    * Return device type; one of: computer | tablet | phone
    * @return string one of: computer|tablet|phone
@@ -350,10 +350,10 @@ class Out
     {
       $this->mobiledetect = new Mobile_Detect();
     }
-    
+
     return ($this->mobiledetect->isMobile() ? ($this->mobiledetect->isTablet() ? 'tablet' : 'phone') : 'computer');
   }
-	
+
 	/**
 	 * Sets $data['page'] info
 	 */
@@ -361,7 +361,7 @@ class Out
 	{
     // SITE NAME
     $this->data['page']['site_name'] = cfg::get('name');
-    
+
     // ROBOTS
     if ($this->data['article'][$this->get['art_title']]['robots'])
     {
@@ -395,7 +395,7 @@ class Out
       $this->data['page']['title'] = str_replace('"', '&quot;', cfg::get('title'));
     }
 		//$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ? $this->data['article'][$this->get['art_title']]['title'] : cfg::get('title');
-		
+
 		// DESCRIPTION
     if ($this->data['article'][$this->get['art_title']]['customdescription'])
     {
@@ -409,31 +409,31 @@ class Out
     {
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description') . ' / ' .  implode(', ', $this->getFilterTags()));
     }
-    
+
 		else
 		{
 			$this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description'));
 		}
-			
+
 		if (strlen($this->data['page']['description']) > 500)
 		{
 			$this->data['page']['description'] = str_replace('"', '&quot;', substr($this->data['page']['description'], 0, 497) . '...');
 		}
-		
+
 		// KEYWORDS
 		$this->data['page']['keywords'] = $this->data['article'][$this->get['art_title']]['keywords'] ? $this->data['article'][$this->get['art_title']]['keywords'] : cfg::get('keywords');
-		
+
 		// LANG
 		$this->data['page']['lang'] = $this->lang ? $this->lang: cfg::get('sys_lang');
-			
+
 		// URL
 		$this->data['page']['url']  = utils::getBaseUrl() . $_SERVER['REQUEST_URI'];
-			
+
 		// MISSION
 		$this->data['page']['mission'] = cfg::get('mission');
-			
+
 		$art_img_paths = cfg::get('art_img');
-			
+
 		if (file_exists('./sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg'))
 		{
 			$this->data['page']['image'] = utils::getBaseUrl() . 'sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg';
@@ -442,21 +442,21 @@ class Out
 		{
 			$xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->get['art_title']]['text']));
 			$src = $xpath->evaluate("string(//img/@src)");
-		
+
 			$this->data['page']['image'] = ( !preg_match('/http/', $src) ? utils::getBaseUrl() . '/' : '') . $src;
 		}
-			
+
 		if ($this->data['article'][$this->get['art_title']]['author'] && $this->data['article'][$this->get['art_title']]['author'] != '')
 		{
 			$this->data['page']['author'] = $this->data['article'][$this->get['art_title']]['author'];
 		}
-			
+
 		if ($this->data['article'][$this->get['art_title']]['publish'] && $this->data['article'][$this->get['art_title']]['publish'] != '0000-00-00')
-		{		
+		{
 			$this->data['page']['date'] = $this->data['article'][$this->get['art_title']]['publish'];
 		}
 	}
-	
+
 	/**
 	 * Returns structured array of menu data for $menu_name.
 	 * @param string $menu_name menu name to retrieve from the database
@@ -467,13 +467,13 @@ class Out
 		if (!$this->data['menu'][$menu_name])
 		{
 			$tmp = Menu::get_structured_menu($menu_name, $this->lang);
-			
+
 			$this->data['menu'][$menu_name] = $this->recursiveRichMenu($tmp);
-			
+
 		}
 		return $this->data['menu'][$menu_name];
 	}
-	
+
 	/**
 	 * Private function, used by getMenu to structure sub menu items in main menu list
 	 * @param string $menu
@@ -485,7 +485,7 @@ class Out
 		{
 			return false;
 		}
-		
+
 		foreach ($menu as &$item)
 		{
 			if ($this->get['art_title'] && $this->get['art_title'] == $item['href'])
@@ -497,15 +497,15 @@ class Out
 				$item['current'] = true;
 			}
       else if ($this->context === 'tags' && (
-        $item['href'] === implode('-', $this->getFilterTags()) . '.all' || 
+        $item['href'] === implode('-', $this->getFilterTags()) . '.all' ||
         $item['href'] === implode('~', $this->getFilterTags()) . '.all' ||
-        $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' || 
+        $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' ||
         $item['href'] === './' . implode('~', $this->getFilterTags()) . '.all'
         ))
       {
         $item['current'] = true;
       }
-			
+
 			if (is_array($item['sub']))
 			{
 				$item['sub'] = $this->recursiveRichMenu($item['sub']);
@@ -513,7 +513,7 @@ class Out
 		}
 		return $menu;
 	}
-	
+
 	/**
 	 * Returns structured array of available system languages
 	 * @return array
@@ -526,9 +526,9 @@ class Out
 		}
 		return $this->data['languages'];
 	}
-	
+
 	/**
-	 * Returns list of articles containing the searched string 
+	 * Returns list of articles containing the searched string
    * @param string $string Custom string to search in the database
    * @param int $page Current page number, default 1
    * @param int $max Maximum of records to show in each page, default 20
@@ -538,14 +538,14 @@ class Out
 	{
     $string = $string ? $string : $this->get['search'];
     $string = preg_replace('/^"(.+)"$/', '$1', $string, -1, $tot);
-    
+
     $this->totalArticles = Article::search($string, false, false, false, false, true);
-    
+
     list($start, $max) = $this->page2limit($page, $max);
-    
+
     return Article::search($string, ($tot > 0), $this->lang, $start, $max);
 	}
-	
+
 	/**
 	 * Returns, if available, the searched string
    * @param boolean $escape
@@ -555,8 +555,8 @@ class Out
 	{
 		return $escape ? htmlentities($this->get['search']) : $this->get['search'];
 	}
-	
-	
+
+
 	/**
 	 * Returns, if available, a new instance of object M(eta)D(ata)_repository
 	 * @return boolean|Metadata
@@ -567,10 +567,10 @@ class Out
 		{
       $this->metadata = new Metadata('./sites/default/modules/metadataRepo/metadata.json');
 		}
-    
+
     return $this->metadata;
 	}
-  
+
   /**
    * Returns array of data for download node. Foreach file the following information is returned:
    *  path
@@ -588,9 +588,9 @@ class Out
         'getObject' => true
         )
       );
-    
+
   }
-  
+
   /**
    * Returns installed and running version of BraDyCMS
    * @return string
@@ -611,11 +611,11 @@ class Out
   public function getArticlesByFilter($filter, $connector = false, $dontparse = false, $page = false, $max = false)
   {
     list($start, $max) = $this->page2limit($page, $max);
-    
+
     $this->totalArticles = Article::getByFilter($filter, false, $connector, false, false, true);
-    
+
     $arts = Article::getByFilter($filter, $this->lang, $connector, $start, $max);
-    
+
     if (is_array($arts) && !$dontparse)
     {
       foreach($arts as &$art)
@@ -625,7 +625,7 @@ class Out
     }
     return $arts;
   }
-  
+
   /**
    * Returns array with start and max
    * @param int $page Current page name, default: 1
@@ -635,27 +635,27 @@ class Out
   private function page2limit($page = false, $max = false)
   {
     $max_cfg = cfg::get('pagination');
-    
+
     if ($page || $this->get['page'] || $max_cfg)
     {
       if (!$page)
       {
         $page = $this->get['page'] ? $this->get['page'] : 1;
       }
-      
+
       if (!$max)
       {
         $max = $max_cfg ? $max_cfg : 20;
       }
-      
+
       $start = ( ($page -1 ) * $max);
     }
-    
+
     return array($start, $max);
   }
-  
+
   /**
-   * 
+   *
    * @return array: Array with pagination data for current page: start, end, current
    */
   public function getPagination()
@@ -665,15 +665,15 @@ class Out
     $max = cfg::get('pagination') ? cfg::get('pagination') : 20;
     $page = $this->get['page'] ? $this->get['page'] : 1;
     $tot = $this->totalArticles;
-    
+
     if ($tot && $max && $tot > $max)
     {
       $return['start'] = '1';
       $return['end'] = ceil($tot/$max);
       $return['current'] = $page;
     }
-    
+
     return $return;
   }
-  
+
 }

@@ -103,29 +103,28 @@
 
 	$('#form{{ uid }}').on('submit', function(){
 
-	admin.wysiwyg.preSave();
+  	admin.wysiwyg.preSave();
 
-	$.post(
-			'controller.php?obj=article_ctrl&method=saveTransl&param[]={{ art.id }}',
-			$('#form{{ uid }}').serialize(),
-			function(data){
-				admin.message(data.text, data.status);
+		$.post(
+				'controller.php?obj=article_ctrl&method=saveTransl&param[]={{ art.id }}',
+				$('#form{{ uid }}').serialize(),
+				function(data){
+					admin.message(data.text, data.status);
 
-				if (data.status == 'success'){
-					admin.tabs.closeActive('article/translate/{{ lang.id }}/{{ art.id }}');
-				}
-			},
-			'json'
-		);
-});
-
+					if (data.status == 'success'){
+						admin.tabs.closeActive('article/translate/{{ lang.id }}/{{ art.id }}');
+					}
+				},
+				'json'
+			);
+	});
 
 	$('#form{{ uid }} .copy').on('click', function(){
 		var text = $(this).parents('.form-group').find('.orig').html();
 		input = $(this).parents('.form-group').find('.transl > :input');
 
 		if (input.hasClass('tiny')){
-      admin.wysiwyg.setValue(input.attr('id'), text);
+	    admin.wysiwyg.setValue(input.attr('id'), text);
 		} else {
 			input.val(text);
 		}

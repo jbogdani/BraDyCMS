@@ -55,7 +55,7 @@ class Assets
         ),
         'css' => array(
           'local' => './bower_components/fancyBox/source/jquery.fancybox.css',
-          'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/--version--/jquery.fancybox.min.js'
+          'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/--version--/jquery.fancybox.min.css'
         )
       ),
 

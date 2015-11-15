@@ -1,4 +1,5 @@
-3.10.0[] = "gulp does not stop anumore on less compilig errors"
+3.10.0[] = "Template for custom tag fig enhanced in tinymce"
+3.10.0[] = "gulp does not stop anymore on less compiling errors"
 3.10.0[] = "Resolved bug with Fancybox CDN repository URI"
 3.10.0[] = "Solved bug with rich text fields in translations forms not being saved"
 3.10.0[] = "Dropped support for thumbs_dimensions setting in main configuration file"

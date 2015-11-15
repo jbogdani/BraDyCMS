@@ -26,7 +26,7 @@ var admin = {
         removed_menuitems: 'newdocument',
         templates: [
           {title: 'download', content: '[[download]]editme[[/download]]'},
-          {title: 'fig', content: '[[fig]]editme[[/fig]]'},
+          {title: 'fig', content: '[[fig path="./sites/default/images/"]]caption[[/fig]]'},
           {title: 'gallery', content: '[[gallery]]editme[[/gallery]]'},
           {title: 'link', content: '[[link]]editme[[/link]]'},
           {title: 'map', content: '[[map]]editme[[/map]]'},

@@ -60,7 +60,7 @@ gulp.task('packJS', function(){
 
 gulp.task('frontCSS', function () {
   gulp.src('sites/default/css/styles.less')
-    .pipe(less())
+    .pipe(less().on('error', function(err){ console.log(err.message); }))
     .pipe(minifyCSS())
     .pipe(gulp.dest('sites/default/css/'));
     //.pipe(reload({stream: true}));
@@ -68,7 +68,7 @@ gulp.task('frontCSS', function () {
 
 gulp.task('adminCSS', function () {
   gulp.src('less/admin.less')
-    .pipe(less())
+    .pipe(less().on('error', function(err){ console.log(err.message); }))
     .pipe(minifyCSS())
     .pipe(gulp.dest('css/'));
     //.pipe(reload({stream: true}));

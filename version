@@ -1,3 +1,4 @@
+3.10.0[] = "New site template updated with assets"
 3.10.0[] = "Template for custom tag fig enhanced in tinymce"
 3.10.0[] = "gulp does not stop anymore on less compiling errors"
 3.10.0[] = "Resolved bug with Fancybox CDN repository URI"

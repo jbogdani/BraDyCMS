@@ -1,26 +1,28 @@
 <!DOCTYPE html >
-<html>
+<html class="no-js" lang="it">
 <head>
-  
+
   <!-- Print metadata -->
   {{ html.metadata }}
-  
+
   <!-- Load site favicon -->
   <link rel="shortcut icon" href="./sites/default/css/favicon.png">
-  
-  <!-- Load site styles -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type="text/css" />
-  <link rel="stylesheet" href="./sites/default/css/styles.css" type="text/css" />
+
+  <!-- Load Bootstrap css -->
+  {{ html.asset('bootstrap', 'css') }}
+
+  <!-- Load site default css file -->
+  {{ html.asset('frontend', 'css') }}
 </head>
 
 <body>
-  
+
   <!-- Site Header -->
   <div class="header container">
     <h1>My new Web Site</h1>
     <p class="bigFont">This is my new web site build with BraDyCMS!</p>
   </div> <!-- end of header-->
-    
+
   <!-- Main Menu -->
   <div class="container">
     <div class="navigation">
@@ -28,37 +30,37 @@
       {{ html.menu('main', 'navigation-menu') }}
     </div>
   </div><!-- end of main menu -->
-    
-    
+
+
   <!-- Main body -->
   <div class="body container">
-    
+
     <!-- Start of conditional displaying of content, depending on context (html.getContext) -->
     <!-- 1. Context is "home";  this is the site's home page -->
     {% if html.getContext == 'home' %}
       <div class="row">
-      
+
         <!-- Show in a big column the body of the welcome article -->
         <div class="big-left-column">
-        
+
         <!-- Retrieve from database article with textid: "welcome" and display the title: -->
           <h1>{{ html.getArticle('welcome').title }}</h1>
-          
+
           <!-- Retrieve from database article with textid: "welcome" and display the main text: -->
           {{ html.getArticle('welcome').text }}
         </div><!-- end of .big-left-column -->
 
         <!-- Show in a side column -->
         <div class="small-right-column">
-        
+
         	<!-- Retrieve from database all articles tagged with both tags "news" AND "web" and display list as html -->
           {{ html.tagBlog('news', 'web') }}
-          
+
         </div> <!-- end of .small-right-column -->
 
       </div><!--  end of context=home part -->
 
-        
+
     <!-- 2. Context is "article".  -->
     {% elseif html.getContext == 'article' %}
       <div class="row">
@@ -66,15 +68,15 @@
           <!-- Show formatted article in main column -->
           {{ html.articleBody }}
         </div><!-- end of .big-left-column -->
-        
+
         <div class="small-right-column">
           <div class="well">
             <!-- Show list of similar articles, ie. articles having as much tags in common with the present one as possible, in left column -->
             {{ html.similarBlog }}
           </div><!-- end of .small-right-column -->
-          
+
       </div><!-- end of article section -->
-        
+
     <!-- 3. Context is "tags" one or more tags are present in the url separated by dashes or tildes -->
     {% elseif html.getContext == 'tags' %}
       <div class="row">
@@ -83,7 +85,7 @@
           {{ html.tagBlog }}
         </div><!-- end of big-left-column -->
       </div><!-- end of context=tags part -->
-      
+
     <!-- 4. Context is "search" -->
     {% elseif html.getContext == 'search' %}
      <div class="row">
@@ -95,8 +97,8 @@
     {% endif %} <!-- end of conditional contents displaying -->
 
   </div> <!-- end of main body container (.body .container) -->
-  
-  
+
+
   <!-- FOOTER -->
   <div class="footer">
     <div class="container">
@@ -108,9 +110,9 @@
   </div><!-- Footer end -->
 
   <!-- Load jQuery -->
-  {{ html.jQuery('1.11.1') }}
-  
+  {{ html.asset('jquery') }}
+
   <!-- Load frontend.js -->
-  <script src="./sites/default/js/frontend.js"></script>
+  {{ html.asset('frontend', 'js') }}
 </body>
 </html>

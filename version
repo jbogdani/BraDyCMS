@@ -1,3 +1,4 @@
+3.10.0[] = "Solved bug with OutHtml::asset non getting correctly config value for cdn usage"
 3.10.0[] = "New site's frontend.js updated"
 3.10.0[] = "New site template updated with assets"
 3.10.0[] = "Template for custom tag fig enhanced in tinymce"

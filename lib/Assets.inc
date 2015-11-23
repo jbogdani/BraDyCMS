@@ -152,19 +152,19 @@ class Assets
     }
 
     // Set $source
-    if (!$source && isset($asset[$type]['cdn']) && isset($asset[$type]['local']))
+    // 1. No custom source supplied: use default value: CDN, if available
+    if (!$source && isset($asset[$type]['cdn']))
     {
       $source = 'cdn';
     }
-    elseif (!$source && !isset($asset[$type]['cdn']) && isset($asset[$type]['local']))
+    // 2. No custom source supplied, no available CDN value: use LOCAL if available
+    elseif (!$source && isset($asset[$type]['local']))
     {
       $source = 'local';
     }
-    elseif (!$source && isset($asset[$type]['cdn']) && !isset($asset[$type]['local']))
-    {
-      $source = 'cdn';
-    }
-    elseif (!isset($asset[$type][$source]))
+    // 3. Source supplied and is one of cdn|local.
+    // If custom value is not available check for alternative value or return false
+    elseif ($source && !isset($asset[$type][$source]))
     {
       if (isset($asset[$type]['cdn']))
       {

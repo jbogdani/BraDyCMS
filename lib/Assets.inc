@@ -69,7 +69,8 @@ class Assets
       'font-awesome' => array(
         'version' => '4.4.0',
         'css' => array(
-          'cdn' => 'https://maxcdn.bootstrapcdn.com/font-awesome/--version--/css/font-awesome.min.css'
+          'cdn' => 'https://maxcdn.bootstrapcdn.com/font-awesome/--version--/css/font-awesome.min.css',
+          'local' => './bower_components/font-awesome/css/font-awesome.min.css'
         )
       )
 

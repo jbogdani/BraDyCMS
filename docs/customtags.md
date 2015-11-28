@@ -1,12 +1,12 @@
 # Customtags
 BraDyCMS has a built-in support for a number of **customtags**, i.e., a fast way
-of adding dynamic content, snippets, external addons, etc., in template files or 
+of adding dynamic content, snippets, external addons, etc., in template files or
 inside article's content.
 
 All custom tags have a name, may have content and may none, one or more have attributes.
 All custom tags **should be enclosed in double square brackets** and **should always be closed**.
 This way you should always have an opening tag, e.g.: `[[mycustomtag]]` and a closing
-tag, e.g.: `[[/mycustomtag]]. In between you may have some content. 
+tag, e.g.: `[[/mycustomtag]]. In between you may have some content.
 
 You can also have none, one or more parameters. Parameters should be inserted in the opening
 tag, e.g.: [[mycustomtag param1="param1 value" param2="param2 value" etc...]]
@@ -18,9 +18,9 @@ For example the following examples are all valid:
 rich html text, but tag **must** contain only plain text!
 - `[[mycustomtag param1="param 1 value"]]some content[[/mycustomtag]]`: some content
 and one paramter, named `param1` and having value `param 1 value` are provided
-- `[[mycustomtag param1="param 1 value" param2="param 2 value"]]some content[[/mycustomtag]]`: 
+- `[[mycustomtag param1="param 1 value" param2="param 2 value"]]some content[[/mycustomtag]]`:
 some content and two parameters are provided
-- `[[mycustomtag param1="param 1 value" param2="param 2 value"]][[/mycustomtag]]`: 
+- `[[mycustomtag param1="param 1 value" param2="param 2 value"]][[/mycustomtag]]`:
 two parameters and no content is provided
 
 
@@ -49,7 +49,7 @@ Complete example:
 Displays imageless galleries, for conditional image loading. This custom tags should be used together with the provided jquery.cl_gallery.js javascript plugin
 - **content**, string, required. Name of gallery
 - **class**, string, optional. One or more (space separated) CSS class to apply to main ul tag
-= **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster 
+= **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster
 images in slideshows. If not provided the gallery name will be used
 
 Minimal example:
@@ -114,7 +114,7 @@ Minimal example:
 ---
 
 #### fb_like_box(data)
-Adds the necessary HTML and javascript code to display Facebook's Like-box widget. 
+Adds the necessary HTML and javascript code to display Facebook's Like-box widget.
 For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/like-box
 - **content**, -
 - **lang**, - 5-digits language definition of Fabebook SDK (eg: en_US or it_IT, etc)
@@ -191,7 +191,7 @@ Complete example:
 Displays an existing image gallery
 - **content**, string, required. Name of gallery
 - **class**, string, optional. One or more (space separated) CSS class to apply to main ul tag
-= **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster 
+= **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster
 images in slideshows. If not provided the gallery name will be used
 
 Minimal example:
@@ -199,6 +199,14 @@ Minimal example:
 
 Complete example:
     [[gallery class="horizontal small" rel="gallery_one"]]gallery_name[[/gallery]]
+
+---
+
+#### gplus_plusone('href','href','annotation', 'width', 'align', 'expandTo', 'callback', 'onstartinteraction', 'onendinteraction', 'recommendations', 'count')
+Adds the necessary HTML and javascript code to display GooglePlus' +1 widget. For a list of all the available options check this link: https://developers.google.com/+/web/+1button/
+
+Minimal example:
+    [[gplus_plusone]][[/gplus_plusone]]
 
 ---
 
@@ -353,7 +361,7 @@ Complete example:
     [[youtube width="560" height="315"]]you_tube_id[[/youtube]]
 or
     [[youtube ratio="4by3"]]you_tube_id[[/youtube]]
-or 
+or
     [[youtube width="560" height="315" align="center"]]you_tube_id[[/youtube]]
 
 ---

@@ -5,52 +5,52 @@
  * @license			MIT, See LICENSE file
  * @since			Apr 7, 2013
  */
- 
+
 class customTags
 {
 
-  
+
   public static function parseContent($html)
 	{
     if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html))
     {
       return $html;
     }
-    
+
     //return customTagParser::do_shortcode($html);
 		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
-		
+
     foreach ($customTags as $customTag)
 		{
       $attributes = array();
 			$rawAttributes = array();
 			$formatedAttributes = array();
-			
+
 			$originalTag = '/' . preg_quote($customTag[0], '/') . '/';
-		
+
 			$tag = $customTag[1];
-		
+
 			$rawAttributes = $customTag[2];
-		
+
 			$content = $customTag[3];
-      
+
 			preg_match_all('/([^=\s]+)="([^"]+)"/', $rawAttributes, $attributes, PREG_SET_ORDER);
-		
+
 			$formatedAttributes['content'] = $content;
-		
+
 			foreach ($attributes as $attribute)
 			{
 				$formatedAttributes[$attribute[1]] = $attribute[2];
 			}
-			
+
 			$formatedAttributes['lang'] =
         ( ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ) ?
           $_SESSION['lang'] : false);
-			
+
 			if (method_exists('customTags', $tag))
 			{
 				$replace = call_user_func(array('customTags', $tag), $formatedAttributes);
-		
+
 				$html = preg_replace($originalTag, $replace, $html, 1);
 			}
 			else
@@ -58,14 +58,14 @@ class customTags
         if (method_exists($tag, 'init'))
         {
           $replace = call_user_func(array($tag, 'init'), $formatedAttributes);
-          
+
           $html = preg_replace($originalTag, $replace, $html, 1);
-          
+
           $pending[$tag] = true;
         }
 			}
 		}
-		
+
 		if (is_array($pending) && !empty($pending))
 		{
 			foreach ($pending as $obj => $true)
@@ -78,7 +78,7 @@ class customTags
 		}
 		return $html;
 	}
-	
+
   /**
 	 * Displays a user defined form
 	 * @param array $data
@@ -90,10 +90,10 @@ class customTags
 	public static function map($data)
 	{
 		$f = new usermap_ctrl();
-		
+
 		return $f->showMap($data);
 	}
-  
+
 	/**
 	 * Displays a user defined form
 	 * @param array $data
@@ -104,12 +104,12 @@ class customTags
 	public static function userform($data)
 	{
 		$f = new userform_ctrl();
-		
+
 		return $f->showForm($data);
 	}
-	
+
   /**
-   * 
+   *
    * @param type $data
    *  content: node name
    *  getObject: if false a well formatted html table will be returned, otherwize an array
@@ -119,32 +119,32 @@ class customTags
   public static function download($data)
   {
     $path2node = './sites/default/images/downloads/' . $data['content'];
-    
-    $json_file = $path2node . '/data' 
+
+    $json_file = $path2node . '/data'
       . ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ? '_' . $_SESSION['lang'] : '')
       . '.json';
-    
+
     if (
-      !file_exists($path2node) 
-      || 
+      !file_exists($path2node)
+      ||
       !file_exists($json_file)
     )
     {
       return false;
     }
-    
+
     $fileData = json_decode(file_get_contents($json_file), true);
-    
+
     if (!$fileData || !is_array($fileData))
     {
       return false;
     }
-    
+
     $node_content = utils::dirContent($path2node);
-    
+
     $files = array();
-    
-    
+
+
     foreach ($node_content as $file)
     {
       if (preg_match('/data_?([a-z]{2})?\.json/', $file))
@@ -152,7 +152,7 @@ class customTags
         continue;
       }
       $formattedName = str_replace('.', '__x__', $file);
-      
+
       $files[] = array(
         'path' => $path2node . '/' . $file,
         'basename' => pathinfo($file, PATHINFO_FILENAME),
@@ -160,26 +160,26 @@ class customTags
         'title' => $fileData[$formattedName]['title'] ? $fileData[$formattedName]['title'] : $file,
         'description' => $fileData[$formattedName]['description'],
         'sort' => $fileData[$formattedName]['sort']
-        ); 
+        );
     }
-    
+
     usort($files, function($a, $b){
       if ($a['sort'] === $b['sort'])
       {
         return 0;
       }
-      
+
       return ($a['sort'] > $b['sort']) ? -1 : 1;
     });
-    
+
     if ($data['getObject'])
     {
       return $files;
     }
-    
+
     $html = '<table ' . ($data['class'] ? 'class="' . $data['class'] . '"' : '' ) . '>'
       . '<tbody>';
-    
+
     foreach($files as $d)
     {
       $html .= '<tr>'
@@ -188,32 +188,32 @@ class customTags
         . '<td><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('open_download') . '</a></td>'
         . '</tr>';
     }
-    
+
     $html .= '</tbody>'
       . '</table>';
-    
+
     return $html;
   }
-  
+
 	public static function cl_gallery($data)
 	{
 		return self::format_gallery($data, true);
 	}
-	
+
 	public static function gallery($data)
 	{
 		return self::format_gallery($data);
 	}
-	
+
 	private static function format_gallery($data, $responsive = false)
 	{
     $gal = $data['content'];
 		$class = $data['class'];
     $rel = $data['rel'] ? $data['rel'] : $gal;
-    
+
     try
     {
-    
+
       $gal_data = Gallery::getGallery($gal);
 
       if ($responsive)
@@ -240,7 +240,7 @@ class customTags
       else
       {
         $html .= '<div class="gallery-container">'
-          . '<ul class="gallery ' . $gal 
+          . '<ul class="gallery ' . $gal
           . ($class ? ' ' . $class : '') . '" data-rel="' . $rel . '">';
 
         foreach ($gal_data as $item)
@@ -265,10 +265,10 @@ class customTags
       return false;
     }
 	}
-  
-  
+
+
   /**
-   * 
+   *
    * @param array $data
    *  content: YouTube video ID
    *  ratio: Video ratio: 4by3 or 16by9. If defined the Twitter Bootstrap responsive layout will be used (http://getbootstrap.com/components/#responsive-embed)
@@ -280,7 +280,7 @@ class customTags
 	public static function youTube($data)
 	{
 		$code = $data['content'];
-    
+
     if (!$code)
     {
       return;
@@ -289,7 +289,7 @@ class customTags
 		$height = $data['height'] ? $data['height'] : 315;
     $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '' ? : '';
     $align = $data['align'];
-		
+
 		return '<div' . ($ratio || $align ? ' class="'
         . ($align ? ' text-' . $align : '')
         . ($ratio ? ' embed-responsive embed-responsive-' . $ratio . '' : '')
@@ -300,27 +300,27 @@ class customTags
         .'src="http://www.youtube.com/embed/' . $code . '?rel=0" frameborder="0" allowfullscreen></iframe>'
     . '</div>';
 	}
-	
+
 	public static function vimeo($data)
 	{
 		$code = $data['content'];
 		$width = $data['width'] ? $data['width'] : 560;
 		$height = $data['height'] ? $data['height'] : 315;
-		
+
 		return '<iframe src="http://player.vimeo.com/video/' . $code . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 	}
-	
-	
+
+
 	public static function twitter($data)
 	{
 		$user = $data['user'];
 		$widget_id = $data['id'];
 		$content = $data['content'] ? $data['content'] : 'Tweets by @' . $data['user'];
-		 
+
 		return '<a class="twitter-timeline"  href="https://twitter.com/' . $user . '"  data-widget-id="' . $widget_id . '">' . $content. '</a>' .
 			'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
 	}
-	
+
 	/**
    * Requires and initializates Facebook's SDK
    * @param string $lang Two digits language definition
@@ -333,7 +333,7 @@ class customTags
       $lang = $_SESSION['lang'] ? $_SESSION['lang'] : cfg::get('sys_lang');
       $lang = strtolower($lang) . '_' . strtoupper($lang);
     }
-    
+
 		$html = <<<EOD
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -344,10 +344,10 @@ class customTags
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 EOD;
-      
+
     return $html;
 	}
-	
+
 	/**
    * Facebook like box widget (https://developers.facebook.com/docs/plugins/comments
    * @param array $data array of parameters. All parameters are optional
@@ -356,9 +356,9 @@ EOD;
 	public static function fb_comments($data)
 	{
     $url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-    
+
     $html = self::fb_sdk($data['lang']) . '<div class="fb-comments" data-href="' . $url . '" ';
-    
+
     foreach (array('colorscheme', 'mobile', 'num_posts', 'order_by', 'width') as $el)
     {
       if ($data[$el]){
@@ -366,11 +366,11 @@ EOD;
       }
     }
     $html .= '></div>';
-    
+
     return $html;
-    
+
 	}
-	
+
 	/**
    * Facebook follow button widget (https://developers.facebook.com/docs/plugins/follow-button
    * @param array $data array of parameters. All parameters, except content (or href) are optional
@@ -382,10 +382,10 @@ EOD;
     {
       return false;
     }
-    
-		$html = self::fb_sdk($data['lang']) 
+
+		$html = self::fb_sdk($data['lang'])
       . '<div class="fb-follow" data-href="' . ($data['href'] ? $data['href'] : $data['content']) . '" ';
-    
+
     foreach (array('colorscheme', 'kid_directed_site', 'layout', 'show_faces', 'width') as $el)
     {
       if ($data[$el]){
@@ -393,10 +393,10 @@ EOD;
       }
     }
     $html .= '></div>';
-		
+
 		return $html;
 	}
-	
+
   /**
    * Facebook like box widget (https://developers.facebook.com/docs/plugins/like-box-for-pages)
    * @param array $data array of parameters. All parameters except href are optional
@@ -420,7 +420,7 @@ EOD;
     $html .= '></div>';
     return $html;
 	}
-	
+
 	/**
    * Facebook like button widget https://developers.facebook.com/docs/plugins/like-button
    * @param array $data array of parameters. All parameters, except content (or href) are optional
@@ -429,10 +429,10 @@ EOD;
   public static function fb_like($data)
 	{
 		$url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-    
-		$html = self::fb_sdk($data['lang']) 
+
+		$html = self::fb_sdk($data['lang'])
       . '<div class="fb-like" data-href="' . $url . '" ';
-    
+
     foreach (array('action', 'colorscheme', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces', 'width') as $el)
     {
       if ($data[$el]){
@@ -440,10 +440,10 @@ EOD;
       }
     }
     $html .= '></div>';
-		
+
 		return $html;
 	}
-	
+
 	public static function fb_send($data)
 	{
 		return self::fb_sdk($data['lang']) . '<div class="fb-like" ' .
@@ -453,21 +453,21 @@ EOD;
 				($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
 				' ></div>';
 	}
-  
+
   private static function twitt_sdk()
   {
     return <<<EOD
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 EOD;
   }
-  
+
   /**
    * Twitter share button
    * @param array $data: available option:
    *      via: Twitter username without @
    *      text: Tweet's text
    *      hashtag: Tweet's hashtag
-   *      count: if 'none' no count will be shown 
+   *      count: if 'none' no count will be shown
    *      lang: two-digits language id
    *      content: URL to share
    * @return string
@@ -479,21 +479,49 @@ EOD;
       $data['url'] = $data['content'];
     }
     $html = '<a href="https://twitter.com/share" class="twitter-share-button"';
-    
+
     foreach (array('via', 'text', 'hashtags', 'count', 'url', 'lang') as $el)
     {
-      if ($data[$el]){
+      if ($data[$el])
+      {
         $html .= ' data-' . $el . '="' . $data[$el] . '"';
       }
     }
-    
+
     $html .= '>Tweet</a>' . self::twitt_sdk();
-    
+
     return $html;
   }
-	
+
+  private static function gplus_sdk()
+  {
+    return <<<EOD
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+EOD;
+  }
+
+  public static function gplus_plusone($data)
+  {
+    if ($data['content'])
+    {
+      $data['href'] = $data['content'];
+    }
+    $html = '<div class="g-plusone"';
+
+    foreach (array('href', 'size', 'annotation', 'width', 'align', 'expandTo', 'callback', 'onstartinteraction', 'onendinteraction', 'recommendations', 'count') as $el)
+    {
+      if ($data[$el])
+      {
+        $html .= ' data-' . $el . '="' . $data[$el] . '"';
+      }
+    }
+    $html .= '></div>' . self::gplus_sdk();
+
+    return $html;
+  }
+
 	/**
-	 * 
+	 *
 	 * @param array $data
    *      pubid: public id string provided by addthis.
    *      content: html to show. Default: addthis small image
@@ -503,9 +531,9 @@ EOD;
 	public static function addThis($data)
 	{
     $pubid = $data['pubid'] ? $data['pubid'] : 'pubid=ra-4d8b051f4951c18f';
-    
-		return ( $data['only_js'] ? '' :  
-      ( $data['content'] ? 
+
+		return ( $data['only_js'] ? '' :
+      ( $data['content'] ?
         '<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=' . $pubid . '">' . $data['content'] . '</a>'
         :
         '<div class="addthis_sharing_toolbox"></div>'
@@ -513,9 +541,9 @@ EOD;
       )
       . '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $pubid . '" async="async"></script>';
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param array $data
 	 * 					content*: skype username
 	 * 					type: call, chat, dropdown. Default: call
@@ -525,8 +553,8 @@ EOD;
 	public static function skype($data)
 	{
 		$uid = uniqid('skype');
-		
-		return '<script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>' . 
+
+		return '<script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>' .
 			'<div id="' . $uid . '">' .
 				'<script type="text/javascript">' .
 					'Skype.ui({' .
@@ -534,13 +562,13 @@ EOD;
 						'"element": "' . $uid . '",' .
 						'"participants": ["' . $data['content'] . '"],' .
 						'"imageSize": ' . ( $data['imageSize'] ? $data['imageSize'] : '32' ) . '' .
-					'});' . 
+					'});' .
 				'</script>' .
 			'</div>';
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param array $data
 	 * 		content*: file url
 	 * 		width: widget's width, default 100%
@@ -563,9 +591,9 @@ EOD;
 				'show_artwork=' . ( ($data['artwork'] && $data['artwork'] != 'false' ) ?  'true' : 'false') . '">' .
 		'</iframe>';
 	}
-	
+
   /**
-	 * 
+	 *
 	 * @param array $data
 	 * 		path*: image file relative url
 	 * 		width:	main div (container) width
@@ -575,7 +603,7 @@ EOD;
 	 * 		href: href of image link
 	 * 		href_class: css class of href link
    *    gal: string or false. If true the string will be used as rel attribute to create fancybox galleries
-	 * 
+	 *
 	 * @return string
 	 */
   public static function fig($data)
@@ -585,7 +613,7 @@ EOD;
     {
       return false;
     }
-    
+
     $new_data['content'] = $data['path'];
     $new_data['width'] = $data['width'];
     $new_data['height'] = $data['height'];
@@ -595,13 +623,13 @@ EOD;
     $new_data['href'] = $data['href'];
     $new_data['href_class'] = $data['href_class'];
     $new_data['gal'] = $data['gal'];
-    
+
     return self::figure($new_data);
   }
-  
-  
+
+
 	/**
-	 * 
+	 *
 	 * @param array $data
 	 * 		content*: image file relative url
 	 * 		width:	main div (container) width
@@ -610,7 +638,7 @@ EOD;
 	 * 		align: image alignent (left|right)
 	 * 		href: href of image link
 	 * 		href_class: css class of href link
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function figure($data)
@@ -632,17 +660,17 @@ EOD;
     {
       return false;
     }
-    
+
     // Format ALT text
     $alt = str_replace('"', '', strip_tags(
       $data['caption'] ? $data['caption'] : $data['content']
       ));
-    
+
     // filename will the thumbanail filename if fancybox parameter is true and thumb exists
     if( $data['fancybox'])
     {
       $dest_file = $filename;
-      
+
       // Get the file name (clean path data)
       $name = basename($filename);
 
@@ -668,41 +696,41 @@ EOD;
         $figure_width = $file_dim[0] . 'px';
       }
 		}
-    
-		
-		$html = '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" ' 
+
+
+		$html = '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" '
       . ($figure_width ? ' style="max-width: ' . $figure_width . '"' : '') . '>' .
 			'<div class="image">';
-    
+
     if ($dest_file || $data['href'])
     {
-      $html .= '<a ' 
-        . ($data['gal'] && $data['gal'] !== '' ? 'rel="' . $data['gal'] . '"' : '') 
+      $html .= '<a '
+        . ($data['gal'] && $data['gal'] !== '' ? 'rel="' . $data['gal'] . '"' : '')
         . ' href="' . ($data['href'] ? $data['href'] : $dest_file ) . '" '
         . 'class="fancybox' . ($data['href_class'] ? ' ' . $data['href_class'] .' ' : '') . '"'
         . ($data['fancybox'] && $data['href'] ? ' data-fancybox-type="iframe" ' : '')
         . ($data['caption'] ? ' title="' . $alt . '" ' : '')
         . '>';
     }
-    
+
     $html .= '<img src="' . $filename . '" alt="' . $alt . '" />';
-    
+
     if ($dest_file || $data['href'])
     {
       $html .= '</a>';
     }
     $html .= '</div>' .
 			($data['caption'] ?
-					'<div class="caption">' . $data['caption'] . '</div>' 
-					: 
+					'<div class="caption">' . $data['caption'] . '</div>'
+					:
 					'') .
 		'</div>';
-    
+
     return $html;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param array $data
 	 * 			content*: prezi id
 	 * 			width
@@ -725,11 +753,11 @@ EOD;
 			'width="' . ( $data['width'] ? $data['width'] : '550') . '" ' .
 			'height="' . ( $data['height'] ? $data['height'] : '550') . '" ' .
 			'frameBorder="0"></iframe>';
-		
+
 		return $html;
 	}
-	
-	
+
+
 	/**
    * Enables Disqus comments in page. Disqus shortname should be provided as tag content
 	 * @param array $data
@@ -742,7 +770,7 @@ EOD;
     {
       return false;
     }
-    
+
 		$html = '<div id="disqus_thread"></div>' .
 						'<script type="text/javascript">' .
 							"var disqus_shortname = '{$data['content']}';" .
@@ -754,8 +782,8 @@ EOD;
 					"</script>";
 	return $html;
 	}
-  
-  
+
+
   /**
    * @param type $data
    *    content: (required) path to swf file.
@@ -770,7 +798,7 @@ EOD;
     {
       return false;
     }
-    
+
     //http://stackoverflow.com/questions/1333202/embed-flash-in-html
     $html = '<object ' .
         'type="application/x-shockwave-flash" ' .
@@ -786,12 +814,12 @@ EOD;
         $html .= '<param name="' . $k . '" value="' . $v . '" />';
       }
     }
-    
-    $html .= '<embed src="' . $data['content'] . '" quality="high" />' . 
+
+    $html .= '<embed src="' . $data['content'] . '" quality="high" />' .
       '</object>';
     return $html;
   }
-  
+
   /**
    * Returns well formatted html with link to internal article
    * @param array $data
@@ -801,7 +829,7 @@ EOD;
    *    rel: rel attribute, optional
    *    class: class attribute, optional
    *    id: id attribute, optiona
-   *  
+   *
    * @return string
    */
   public static function link($data)
@@ -809,7 +837,7 @@ EOD;
     $lang =
         ( ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ) ?
           $_SESSION['lang'] : false);
-    
+
     $html = '<a '
       . ($data['title'] ? ' title="' . $data['title']. '"' : '')
       . ($data['rel'] ? ' rel="' . $data['rel']. '"' : '')
@@ -818,8 +846,8 @@ EOD;
       . 'href="' . (
       link::to_article($data['art'] === 'home' ? './' : $data['art'], $lang)) .
       '">' . $data['content'] . '</a>';
-    
+
     return $html;
   }
-  
+
 }

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013 
- * @license			MIT, See LICENSE file
- * @since				Sep 27, 2013
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013 
+ * @license      MIT, See LICENSE file
+ * @since        Sep 27, 2013
  */
 
 class update_ctrl extends Controller
@@ -113,7 +113,7 @@ class update_ctrl extends Controller
           break;
         case 'empty_cache':
           $error = utils::recursive_delete(CACHE_DIR, true);
-		
+    
           if(count($error) > 0)
           {
             throw new Exception(tr::get('cache_not_emptied'));
@@ -125,7 +125,7 @@ class update_ctrl extends Controller
           break;
         case 'empty_trash':
           $error = utils::recursive_delete(TMP_DIR, true);
-		
+    
           if(count($error) > 0)
           {
             throw new Exception(tr::get('trash_not_emptied'));

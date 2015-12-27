@@ -1,380 +1,380 @@
 <div id="{{ uid }}">
-	<div class="row">
-		<div class="col-md-5">
-			<form action="javascript: void(0)" id="menu_edit{{ uid }}" class="form-horizontal">
+  <div class="row">
+    <div class="col-md-5">
+      <form action="javascript: void(0)" id="menu_edit{{ uid }}" class="form-horizontal">
 
-				{% if menu.id %}
-				<div class="form-group">
-					<label class="col-md-3">{{ tr.get('id') }}</label>
-					<div class="col-md-7">
-						<input type="text" name="id" readonly="readonly" value="{{ menu.id }}" />
-					</div>
-				</div>
-				{% endif %}
+        {% if menu.id %}
+        <div class="form-group">
+          <label class="col-md-3">{{ tr.get('id') }}</label>
+          <div class="col-md-7">
+            <input type="text" name="id" readonly="readonly" value="{{ menu.id }}" />
+          </div>
+        </div>
+        {% endif %}
 
-				<div class="form-group">
-					<label class="col-md-3">{{ tr.get('text') }}</label>
-					<div class="col-md-7">
-						<input type="text" name="item" value="{{ menu.item }}" />
-					</div>
-				</div>
+        <div class="form-group">
+          <label class="col-md-3">{{ tr.get('text') }}</label>
+          <div class="col-md-7">
+            <input type="text" name="item" value="{{ menu.item }}" />
+          </div>
+        </div>
 
-				<div class="form-group">
-					<label class="col-md-3">{{ tr.get('link') }}</label>
-					<div class="col-md-7">
-						<input type="text" name="href" value="{{ menu.href }}" />
-					</div>
-				</div>
+        <div class="form-group">
+          <label class="col-md-3">{{ tr.get('link') }}</label>
+          <div class="col-md-7">
+            <input type="text" name="href" value="{{ menu.href }}" />
+          </div>
+        </div>
 
-				<div class="form-group">
-					<label class="col-md-3">{{ tr.get('target') }}</label>
-					<div class="col-md-7">
-						<select name="target">
-							<option></option>
-							<option{% if menu.target == '_blank' %} selected="true"{% endif %}>_blank</option>
-						</select>
-					</div>
-				</div>
+        <div class="form-group">
+          <label class="col-md-3">{{ tr.get('target') }}</label>
+          <div class="col-md-7">
+            <select name="target">
+              <option></option>
+              <option{% if menu.target == '_blank' %} selected="true"{% endif %}>_blank</option>
+            </select>
+          </div>
+        </div>
 
-				<div class="form-group">
-					<label class="col-md-3">{{ tr.get('title') }}</label>
-					<div class="col-md-7">
-						<input type="text" name="title" value="{{ menu.title }}" />
-					</div>
-				</div>
+        <div class="form-group">
+          <label class="col-md-3">{{ tr.get('title') }}</label>
+          <div class="col-md-7">
+            <input type="text" name="title" value="{{ menu.title }}" />
+          </div>
+        </div>
 
-				<div class="form-group">
-					<label class="col-md-3">{{ tr.get('menu') }}</label>
-					<div class="col-md-7">
-						<input type="text" name="menu" value="{{ menu.menu }}" style="width:100%" />
-					</div>
-				</div>
+        <div class="form-group">
+          <label class="col-md-3">{{ tr.get('menu') }}</label>
+          <div class="col-md-7">
+            <input type="text" name="menu" value="{{ menu.menu }}" style="width:100%" />
+          </div>
+        </div>
 
-				<div class="form-group">
-					<label class="col-md-4">{{ tr.get('sub_of') }}</label>
-					<div class="col-md-6">
-						<select name="subof">
-						</select>
-					</div>
-				</div>
+        <div class="form-group">
+          <label class="col-md-4">{{ tr.get('sub_of') }}</label>
+          <div class="col-md-6">
+            <select name="subof">
+            </select>
+          </div>
+        </div>
 
-				<div class="form-group">
-					<label class="col-md-3">{{ tr.get('sorting') }}</label>
-					<div class="col-md-7">
-						<input type="text" name="sort" value="{{ menu.sort }}" />
-					</div>
-				</div>
-				
-				<div class="btn-group">
-					<button class="btn btn-success" type="submit"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
+        <div class="form-group">
+          <label class="col-md-3">{{ tr.get('sorting') }}</label>
+          <div class="col-md-7">
+            <input type="text" name="sort" value="{{ menu.sort }}" />
+          </div>
+        </div>
+        
+        <div class="btn-group">
+          <button class="btn btn-success" type="submit"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
 
-					<button class="btn btn-default" type="button" onclick="admin.tabs.reloadThis(this)"><i class="icon ion-refresh"></i> Reload</button>
-					{% if menu.id %}
-					<button class="btn btn-danger delete" type="button" data-id="{{ menu.id }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
-					{% endif %}
+          <button class="btn btn-default" type="button" onclick="admin.tabs.reloadThis(this)"><i class="icon ion-refresh"></i> Reload</button>
+          {% if menu.id %}
+          <button class="btn btn-danger delete" type="button" data-id="{{ menu.id }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
+          {% endif %}
 
-				</div>
+        </div>
 
-			</form>
+      </form>
 
-		</div>
+    </div>
 
-		<div class="col-md-7">
+    <div class="col-md-7">
 
-			<h3>Link help</h3>
+      <h3>Link help</h3>
 
-			<div class="panel-group" id="accordion{{ uid }}">
+      <div class="panel-group" id="accordion{{ uid }}">
 
-				{% if articles %}
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse1{{ uid }}">
-								<i class="icon ion-document-text"></i> {{ tr.get('articles') }}
-							</a>
-						</h4>
-					</div>
-					
-					<div id="collapse1{{ uid }}" class="panel-collapse collapse">
-						<div class="panel-body" style="max-height:300px; overflow: auto;">
-							<div class="has-success">
-								<input type="text" placeholder="{{ tr.get('search') }}" class="search form-control" style="margin-bottom: 10px;" />
-							</div>
-							<div class="tagscontainer">
-								{% for art in articles %}
-									<button type="button" class="btn btn-default art search-text"><i class="icon ion-document-text text-muted"></i> {{ art }}</button>
-								{% endfor %}
-							</div>
-						</div>
-					</div>
-				</div>
-				{% endif %}
+        {% if articles %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse1{{ uid }}">
+                <i class="icon ion-document-text"></i> {{ tr.get('articles') }}
+              </a>
+            </h4>
+          </div>
+          
+          <div id="collapse1{{ uid }}" class="panel-collapse collapse">
+            <div class="panel-body" style="max-height:300px; overflow: auto;">
+              <div class="has-success">
+                <input type="text" placeholder="{{ tr.get('search') }}" class="search form-control" style="margin-bottom: 10px;" />
+              </div>
+              <div class="tagscontainer">
+                {% for art in articles %}
+                  <button type="button" class="btn btn-default art search-text"><i class="icon ion-document-text text-muted"></i> {{ art }}</button>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
-				{% if tags %}
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse2{{ uid }}">
-							<i class="icon ion-pricetag"></i> {{ tr.get('tags') }}
-							</a>
-						</h4>
-					</div>
+        {% if tags %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse2{{ uid }}">
+              <i class="icon ion-pricetag"></i> {{ tr.get('tags') }}
+              </a>
+            </h4>
+          </div>
 
-					<div id="collapse2{{ uid }}" class="panel-collapse collapse">
-						<div class="panel-body">
-							
-							<div class="has-success">
-								<input type="text" placeholder="{{ tr.get('search') }}" class="search form-control" style="margin-bottom: 10px;" />
-							</div>
-							<div class="tagscontainer">
-								{% for tag in tags %}
-									<button type="button" class="btn btn-default tags search-text"><i class="icon ion-pricetag text-muted"></i> {{ tag }}</button>
-								{% endfor %}
-							</div>
-						</div>
-					</div>
-				</div>
-				{% endif %}
+          <div id="collapse2{{ uid }}" class="panel-collapse collapse">
+            <div class="panel-body">
+              
+              <div class="has-success">
+                <input type="text" placeholder="{{ tr.get('search') }}" class="search form-control" style="margin-bottom: 10px;" />
+              </div>
+              <div class="tagscontainer">
+                {% for tag in tags %}
+                  <button type="button" class="btn btn-default tags search-text"><i class="icon ion-pricetag text-muted"></i> {{ tag }}</button>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
-				
-				
-				
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse3{{ uid }}">
-								<i class="icon ion-more"></i> {{ tr.get('other') }}
-							</a>
-						</h4>
-					</div>
+        
+        
+        
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse3{{ uid }}">
+                <i class="icon ion-more"></i> {{ tr.get('other') }}
+              </a>
+            </h4>
+          </div>
 
-					<div id="collapse3{{ uid }}" class="panel-collapse collapse">
-						<div class="panel-body">
-							<button class="btn btn-default home"><i class="icon ion-home text-muted"></i> {{ tr.get('link2home') }}</button>
-							<button class="btn btn-default none"><i class="icon ion-close text-muted"></i> {{ tr.get('link2none') }}</button>
-						</div>
-					</div>
-				</div>
+          <div id="collapse3{{ uid }}" class="panel-collapse collapse">
+            <div class="panel-body">
+              <button class="btn btn-default home"><i class="icon ion-home text-muted"></i> {{ tr.get('link2home') }}</button>
+              <button class="btn btn-default none"><i class="icon ion-close text-muted"></i> {{ tr.get('link2none') }}</button>
+            </div>
+          </div>
+        </div>
 
-			</div>
-			
-			
-			
-			{% if menu.id %}
+      </div>
+      
+      
+      
+      {% if menu.id %}
 
-			<div class="panel-group" id="menu-acc{{ uid }}">
-				<h3>{{ tr.get('translations') }}</h3>
-				
-				{% for lang in cfg_langs %}
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu-acc{{ uid }}" href="#menu-collapse{{ loop.index }}{{ uid }}">
-							{{ lang.string|upper }}
-							</a>
-						</h4>
-					</div>
+      <div class="panel-group" id="menu-acc{{ uid }}">
+        <h3>{{ tr.get('translations') }}</h3>
+        
+        {% for lang in cfg_langs %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#menu-acc{{ uid }}" href="#menu-collapse{{ loop.index }}{{ uid }}">
+              {{ lang.string|upper }}
+              </a>
+            </h4>
+          </div>
 
-					<div id="menu-collapse{{ loop.index }}{{ uid }}" class="panel-collapse collapse">
-						<div class="panel-body" style="max-height:300px; overflow: auto;">
-							<form class="menuTranslation form-horizontal" action="javascript: void(0);">
-								
-								<input type="hidden" name="id" value="{{ translated[lang.id]['id'] }}" />
-								
-								<input type="hidden" name="lang" value="{{ lang.id }}" />
-								
-								<div class="form-group">
-									<label class="col-sm-2 control-label">{{ tr.get('text') }}</label>
-									<div class="col-sm-10">
-										<input type="text" name="item" value="{{ translated[lang.id]['item'] }}" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">{{ tr.get('title') }}</label>
-									<div class="col-sm-10">
-										<input type="text" name="title" value="{{ translated[lang.id]['title'] }}" />
-									</div>
-								</div>
-								
-								<!-- STATUS -->
-								<div class="row form-group">
-									<div class="col-sm-2"><label>Status</label></div>
-									<div class="col-sm-5">
-										<select name="status">
-											<option{% if translated[lang.id]['status'] == false %} selected="selected"{% endif %} value="0">{{ tr.get('not_translated') }}</option>
-											<option{% if translated[lang.id]['status'] %} selected="selected"{% endif %} value="1">{{ tr.get('translated') }}</option>
-										</select>
-									</div>
-								</div>
-								
-								<div class="btn-group">
-									<button type="submit" class="btn btn-success"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-			</div>
-			
-			{% endif %}
-		</div>
-	</div>
+          <div id="menu-collapse{{ loop.index }}{{ uid }}" class="panel-collapse collapse">
+            <div class="panel-body" style="max-height:300px; overflow: auto;">
+              <form class="menuTranslation form-horizontal" action="javascript: void(0);">
+                
+                <input type="hidden" name="id" value="{{ translated[lang.id]['id'] }}" />
+                
+                <input type="hidden" name="lang" value="{{ lang.id }}" />
+                
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ tr.get('text') }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="item" value="{{ translated[lang.id]['item'] }}" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ tr.get('title') }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="title" value="{{ translated[lang.id]['title'] }}" />
+                  </div>
+                </div>
+                
+                <!-- STATUS -->
+                <div class="row form-group">
+                  <div class="col-sm-2"><label>Status</label></div>
+                  <div class="col-sm-5">
+                    <select name="status">
+                      <option{% if translated[lang.id]['status'] == false %} selected="selected"{% endif %} value="0">{{ tr.get('not_translated') }}</option>
+                      <option{% if translated[lang.id]['status'] %} selected="selected"{% endif %} value="1">{{ tr.get('translated') }}</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="btn-group">
+                  <button type="submit" class="btn btn-success"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      
+      {% endif %}
+    </div>
+  </div>
 
 </div>
 
 <script>
-	
-	// Filter tags and articles buttons
-	$('#{{ uid }} .search').on('keyup', function(){
-		admin.filterList($(this).val(), $('#{{ uid }} .tagscontainer'));
-	});
-	
-	// Articles button click	
-	$('#{{ uid }} button.art').click(function(){
-		$('#menu_edit{{ uid }} input[name="href"]').val('' + $.trim($(this).text()));
-	});
-	
-	// Tags button click
-	$('#{{ uid }} button.home').click(function(){
-		$('#menu_edit{{ uid }} input[name="href"]').val('./');
-	});
-	
-	// None button click
-	$('#{{ uid }} button.none').click(function(){
-		$('#menu_edit{{ uid }} input[name="href"]').val('#');
-	});
-		
-	$('#{{ uid }} button.tags').click(function(){
-		var addTag = $(this).text().trim().replace(' ', '+'),
-		existTag = $('#menu_edit{{ uid }} input[name="href"]').val(),
-		href;
+  
+  // Filter tags and articles buttons
+  $('#{{ uid }} .search').on('keyup', function(){
+    admin.filterList($(this).val(), $('#{{ uid }} .tagscontainer'));
+  });
+  
+  // Articles button click  
+  $('#{{ uid }} button.art').click(function(){
+    $('#menu_edit{{ uid }} input[name="href"]').val('' + $.trim($(this).text()));
+  });
+  
+  // Tags button click
+  $('#{{ uid }} button.home').click(function(){
+    $('#menu_edit{{ uid }} input[name="href"]').val('./');
+  });
+  
+  // None button click
+  $('#{{ uid }} button.none').click(function(){
+    $('#menu_edit{{ uid }} input[name="href"]').val('#');
+  });
+    
+  $('#{{ uid }} button.tags').click(function(){
+    var addTag = $(this).text().trim().replace(' ', '+'),
+    existTag = $('#menu_edit{{ uid }} input[name="href"]').val(),
+    href;
 
 
-		if (existTag.match(/\.all/)){
-			existTag = existTag.replace('.all', '');
-			var existTagArr = existTag.split('-');
-			var index = $.inArray(addTag, existTagArr);
-			if (index > -1){
-				existTagArr.splice(index, 1);
-			} else {
-				existTagArr.push(addTag);
-			}
-			href = existTagArr.join('-') + '.all';
-		} else {
-			href = addTag + '.all';
-		}
-		$('#menu_edit{{ uid }} input[name="href"]').val(href.replace(' ', '+'));
-	});
-		
-	$('#{{ uid }} table.list').dataTable({
-		"bPaginate": false,
-		"bInfo": false,
-		"bSort": false,
-		//"iDisplayLength": 10,
-		"sPaginationType": "bootstrap",
-		"bDestroy": true
-	});
+    if (existTag.match(/\.all/)){
+      existTag = existTag.replace('.all', '');
+      var existTagArr = existTag.split('-');
+      var index = $.inArray(addTag, existTagArr);
+      if (index > -1){
+        existTagArr.splice(index, 1);
+      } else {
+        existTagArr.push(addTag);
+      }
+      href = existTagArr.join('-') + '.all';
+    } else {
+      href = addTag + '.all';
+    }
+    $('#menu_edit{{ uid }} input[name="href"]').val(href.replace(' ', '+'));
+  });
+    
+  $('#{{ uid }} table.list').dataTable({
+    "bPaginate": false,
+    "bInfo": false,
+    "bSort": false,
+    //"iDisplayLength": 10,
+    "sPaginationType": "bootstrap",
+    "bDestroy": true
+  });
 
 
-	function setValue(){
-		var menu =$('#menu_edit{{ uid }}').find('input[name="menu"]').val(); 
+  function setValue(){
+    var menu =$('#menu_edit{{ uid }}').find('input[name="menu"]').val(); 
 
-		var subof = $('#menu_edit{{ uid }}').find('select[name="subof"]');
-		if (menu){
-			$.get('controller.php?obj=menu_ctrl&method=getMenuItems&param[]=' + menu, function(data){
-				subof.html('<option></option>');
-				$.each(data, function(i, el){
-					subof.append('<option value="' + el.id + '"{% if menu.subof %}' + (el.id == {{ menu.subof }} ? ' selected="true" ' : '') + '{% endif %}>' + el.item + '</option>');
-				});
-			}, 'json');
-		}
-	}
-		
-	setValue();
-		
-	{% if menu_list %}
-	$('#menu_edit{{ uid }} input[name="menu"]').select2({
-			placeholder: "{{ tr.get('select_menu') }}",
-			data: [
-					 {% for i, m in menu_list %}
-					 {id:'{{ m }}', text: '{{ m }}'},
-					 {% endfor %}
-					 ],
-			createSearchChoice: function(term){
+    var subof = $('#menu_edit{{ uid }}').find('select[name="subof"]');
+    if (menu){
+      $.get('controller.php?obj=menu_ctrl&method=getMenuItems&param[]=' + menu, function(data){
+        subof.html('<option></option>');
+        $.each(data, function(i, el){
+          subof.append('<option value="' + el.id + '"{% if menu.subof %}' + (el.id == {{ menu.subof }} ? ' selected="true" ' : '') + '{% endif %}>' + el.item + '</option>');
+        });
+      }, 'json');
+    }
+  }
+    
+  setValue();
+    
+  {% if menu_list %}
+  $('#menu_edit{{ uid }} input[name="menu"]').select2({
+      placeholder: "{{ tr.get('select_menu') }}",
+      data: [
+           {% for i, m in menu_list %}
+           {id:'{{ m }}', text: '{{ m }}'},
+           {% endfor %}
+           ],
+      createSearchChoice: function(term){
         return {id: term, text: term};
       },
-			initSelection:function(el, callback){
-				var value = $(el).val();
-				callback({id: value, text:value});
-			}
-		});
-	{% endif %}
-		
-	$('#menu_edit{{ uid }} input[name="menu"]').change(function(){
-		setValue();
-	});
-		
-		
-	{% if menu.id %}
-			
-	$('#{{ uid }} form.menuTranslation').on('submit', function(){
-		
-		$.post('controller.php?obj=menu_ctrl&method=saveTransl&param[]={{ menu.id }}', $(this).serialize(), function(data){
-			admin.message(data.text, data.status);
-			
-			if (data.status == 'success'){
-				admin.tabs.reloadThis('#{{ uid }}');
-			}
-		}, 'json');
-	});
-		
-	$('#{{ uid }} button.delete').click(function(){
-		var $this = $(this);
-		admin.dialog({
-			title: '{{ tr.get('pay_attention_please') }}',
-			html: '{{ tr.get('confirm_delete_menu_item') }}',
-			buttons:[
-						{
-						 text: '{{ tr.get('close') }}',
-						 action: 'close'
-						},
-						{
-						 text: '{{ tr.get('delete') }}',
-						 addclass: 'btn-danger',
-						 action: 'close',
-						 click: function(){
-							 $.get('controller.php?obj=menu_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
-								 admin.message(data.text, data.type);
-								 if (data.type == 'success'){
-									 admin.tabs.closeActive();
-								 }
-							 }, 'json')
-						 }
-						}
-						]
-		});
-	});
-	{% endif %}
+      initSelection:function(el, callback){
+        var value = $(el).val();
+        callback({id: value, text:value});
+      }
+    });
+  {% endif %}
+    
+  $('#menu_edit{{ uid }} input[name="menu"]').change(function(){
+    setValue();
+  });
+    
+    
+  {% if menu.id %}
+      
+  $('#{{ uid }} form.menuTranslation').on('submit', function(){
+    
+    $.post('controller.php?obj=menu_ctrl&method=saveTransl&param[]={{ menu.id }}', $(this).serialize(), function(data){
+      admin.message(data.text, data.status);
+      
+      if (data.status == 'success'){
+        admin.tabs.reloadThis('#{{ uid }}');
+      }
+    }, 'json');
+  });
+    
+  $('#{{ uid }} button.delete').click(function(){
+    var $this = $(this);
+    admin.dialog({
+      title: '{{ tr.get('pay_attention_please') }}',
+      html: '{{ tr.get('confirm_delete_menu_item') }}',
+      buttons:[
+            {
+             text: '{{ tr.get('close') }}',
+             action: 'close'
+            },
+            {
+             text: '{{ tr.get('delete') }}',
+             addclass: 'btn-danger',
+             action: 'close',
+             click: function(){
+               $.get('controller.php?obj=menu_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
+                 admin.message(data.text, data.type);
+                 if (data.type == 'success'){
+                   admin.tabs.closeActive();
+                 }
+               }, 'json')
+             }
+            }
+            ]
+    });
+  });
+  {% endif %}
 
-	$('#menu_edit{{ uid }}').submit( function(){
+  $('#menu_edit{{ uid }}').submit( function(){
 
-		var url = 'controller.php?obj=menu_ctrl&method=save';
+    var url = 'controller.php?obj=menu_ctrl&method=save';
 
-		$.post(
-			url,
-			$('#menu_edit{{ uid }}').serialize(),
+    $.post(
+      url,
+      $('#menu_edit{{ uid }}').serialize(),
 
-			function(data) {
-				admin.message(data.text, data.type);
-				{% if menu.id == false %}
-				if (data.type == 'success'){
-					admin.tabs.closeActive('menu/addNew');
-				}
-				{% endif %} 
-			},
-			'json'
-		);			
-	});
-	
+      function(data) {
+        admin.message(data.text, data.type);
+        {% if menu.id == false %}
+        if (data.type == 'success'){
+          admin.tabs.closeActive('menu/addNew');
+        }
+        {% endif %} 
+      },
+      'json'
+    );      
+  });
+  
 </script>

@@ -1,9 +1,9 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			October 16, 2015
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      October 16, 2015
  */
 
 class Assets

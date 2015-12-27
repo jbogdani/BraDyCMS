@@ -1,20 +1,20 @@
 <div id="{{ uid }}">
-	<h2>{{ tr.get('edit_gallery') }}: {{ gallery }}</h2>
-	
-	<div class="btn-group" style="padding:20px 0;">
-		{% if files|length == 0 %}
-			<button class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
-		{% endif %}
-		<a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
+  <h2>{{ tr.get('edit_gallery') }}: {{ gallery }}</h2>
+  
+  <div class="btn-group" style="padding:20px 0;">
+    {% if files|length == 0 %}
+      <button class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
+    {% endif %}
+    <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
     <a class="btn btn-default rename" title="{{ tr.get('reload') }}"><i class="icon ion-edit"></i> {{ tr.get('rename_gallery') }}</a>
-		{% for lng in langs %}
-		<a class="btn btn-default" href="#galleries/edit/{{ gallery }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}">
+    {% for lng in langs %}
+    <a class="btn btn-default" href="#galleries/edit/{{ gallery }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}">
       <i class="icon ion-shuffle"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}
     </a>
-		{% endfor %}
-	</div>
+    {% endfor %}
+  </div>
 
-	<div class="well well-sm clearfix">
+  <div class="well well-sm clearfix">
     <div class="pull-left form-inline">
       <div class="uploader"></div>
     </div>
@@ -30,7 +30,7 @@
       </div>
       </div>
     </div>
-	</div>
+  </div>
       
   <div class="well well-sm clearfix">
     <div class="text-info">
@@ -40,45 +40,45 @@
   </div>
       
   
-	
-	
-	<div class="row">
-		{% if files|length > 0 %}
-			<form action="javascript:void(0)">
-				{% for file in files %}
-					<div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
-						<div class="col-xs-2">
-							<h4>{{ file.name }}</h4>
-							<p><button class="btn btn-danger delete" data-file="{{ file.name }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button></p>
-						</div>
+  
+  
+  <div class="row">
+    {% if files|length > 0 %}
+      <form action="javascript:void(0)">
+        {% for file in files %}
+          <div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
+            <div class="col-xs-2">
+              <h4>{{ file.name }}</h4>
+              <p><button class="btn btn-danger delete" data-file="{{ file.name }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button></p>
+            </div>
 
-						<div class="col-xs-4">
-							<img src="{{ file.fullpath }}" class="img-responsive" />
-							<pre>{{ tr.get('img_dimensions') }}: {{ file.finfo.0 }}x{{ file.finfo.1 }}px</pre>
-						</div>
+            <div class="col-xs-4">
+              <img src="{{ file.fullpath }}" class="img-responsive" />
+              <pre>{{ tr.get('img_dimensions') }}: {{ file.finfo.0 }}x{{ file.finfo.1 }}px</pre>
+            </div>
 
-						<div class="col-xs-3">
-							{% if file.orig_descr %}
-								<pre>{{ file.orig_descr }}</pre>
-							{% endif %}
-							<textarea data-file="{{ file.name }}" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
-							<div><button class="btn btn-success btn-block save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></div>
-						</div>
+            <div class="col-xs-3">
+              {% if file.orig_descr %}
+                <pre>{{ file.orig_descr }}</pre>
+              {% endif %}
+              <textarea data-file="{{ file.name }}" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
+              <div><button class="btn btn-success btn-block save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></div>
+            </div>
 
-						<div class="col-xs-3">
-							<div class="img-thumb">
-							{% if file.thumb %}
-								<img src="{{ file.thumb }}" class="img-responsive" />
-							{% endif %}
-							</div>
-							<button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="icon ion-qr-scanner"></i> {{ tr.get('re_create_thumb') }}</button>
-						</div>
+            <div class="col-xs-3">
+              <div class="img-thumb">
+              {% if file.thumb %}
+                <img src="{{ file.thumb }}" class="img-responsive" />
+              {% endif %}
+              </div>
+              <button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="icon ion-qr-scanner"></i> {{ tr.get('re_create_thumb') }}</button>
+            </div>
 
-					</div>
-				{% endfor %}
-			</form>
-		{% endif %}
-	</div>
+          </div>
+        {% endfor %}
+      </form>
+    {% endif %}
+  </div>
 </div>
 
 <script>
@@ -91,80 +91,80 @@
     }
   });
   
-	admin.upload(
-			$('#{{ uid }} div.uploader')[0],
-			'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize',
-			{
-				loaded: function(){
-					admin.tabs.reloadThis('#{{ uid }}');
-				}
-			}
-			);
-	
-	$('#{{ uid }} button.create_thumb').on('click', function(){
-		var $this = $(this);
+  admin.upload(
+      $('#{{ uid }} div.uploader')[0],
+      'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize',
+      {
+        loaded: function(){
+          admin.tabs.reloadThis('#{{ uid }}');
+        }
+      }
+      );
+  
+  $('#{{ uid }} button.create_thumb').on('click', function(){
+    var $this = $(this);
     $.post('controller.php?obj=galleries_ctrl&method=makeThumbs&param[]={{ upload_dir }}&param[]=' + $(this).data('file') + '&param[]=' + $('#{{ uid }}-th-dim').val(), function(data){
-			admin.message(data.text, data.status);
-			if (data.status === 'success'){
+      admin.message(data.text, data.status);
+      if (data.status === 'success'){
         $this.prev('.img-thumb').html('<img src="' + data.thumb + '?' + new Date().getTime() + '" />');
-				//admin.tabs.reloadActive();
-			}
-		}, 'json');
-	});
-	
-	$('#{{ uid }} button.save').on('click', function(){
-		$.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ upload_dir }}{% if translation %}&param[]={{ translation }}{% endif %}', $('#{{ uid }} form').serializeArray(), function(data){
-			admin.message(data.text, data.status);
-		}, 'json');
-	});
-	
-	
-	$('#{{ uid }} button.delete').on('click', function(){
-		$this = $(this);
-		$.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
-			admin.message(data.text, data.status);
-			
-			if (data.status !== 'error'){
+        //admin.tabs.reloadActive();
+      }
+    }, 'json');
+  });
+  
+  $('#{{ uid }} button.save').on('click', function(){
+    $.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ upload_dir }}{% if translation %}&param[]={{ translation }}{% endif %}', $('#{{ uid }} form').serializeArray(), function(data){
+      admin.message(data.text, data.status);
+    }, 'json');
+  });
+  
+  
+  $('#{{ uid }} button.delete').on('click', function(){
+    $this = $(this);
+    $.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
+      admin.message(data.text, data.status);
+      
+      if (data.status !== 'error'){
         if ($this.parents('div.listitem').siblings().length > 0){
           $this.parents('div.listitem').remove();
-				} else {
-					admin.tabs.reloadThis('#{{ uid }}');
-				}
-			}
-		}, 'json');
-	});
-	
-	
-	$('#{{ uid }} .delete-gal').on('click', function(){
-		$.get('controller.php?obj=galleries_ctrl&method=deleteGallery&param[]={{ upload_dir }}', function(data){
-			admin.message(data.text, data.status);
-			
-			if (data.status == 'success'){
-				admin.tabs.closeActive();
-			}	
-		}, 'json');
-	});
+        } else {
+          admin.tabs.reloadThis('#{{ uid }}');
+        }
+      }
+    }, 'json');
+  });
+  
+  
+  $('#{{ uid }} .delete-gal').on('click', function(){
+    $.get('controller.php?obj=galleries_ctrl&method=deleteGallery&param[]={{ upload_dir }}', function(data){
+      admin.message(data.text, data.status);
+      
+      if (data.status == 'success'){
+        admin.tabs.closeActive();
+      }  
+    }, 'json');
+  });
   
   
   $('#{{ uid }} .rename').on('click', function(){
     admin.dialog({
-			html: '<input type="text" class="gal" placeholder="' + admin.tr('gallery_name') + '" />'
-				+ '<p class="text-danger">' + admin.tr('gal_name_formatting') + '</p>',
-			title: admin.tr('rename_gallery') + ': {{ gallery }}',
-			loaded: function(modal){
-				modal.find('input.gal').focus();
+      html: '<input type="text" class="gal" placeholder="' + admin.tr('gallery_name') + '" />'
+        + '<p class="text-danger">' + admin.tr('gal_name_formatting') + '</p>',
+      title: admin.tr('rename_gallery') + ': {{ gallery }}',
+      loaded: function(modal){
+        modal.find('input.gal').focus();
         admin.removeNotValid(modal.find('input.gal'), {
           'replace': '-',
           'toLower': true,
           'permit': ['\\-', '_']
         });
-			},
-			buttons:[
-			         {
-			        	 text: admin.tr('save'),
-			        	 addclass: 'btn-success',
-			        	 click: function(){
-			        		 var gal = $('.modal input.gal').val();
+      },
+      buttons:[
+               {
+                 text: admin.tr('save'),
+                 addclass: 'btn-success',
+                 click: function(){
+                   var gal = $('.modal input.gal').val();
                    $.get('controller.php?obj=galleries_ctrl&method=renameGallery&param[]={{ gallery }}&param[]=' + gal, function(data){
                      admin.message(data.text, data.status);
                      
@@ -174,15 +174,15 @@
                      }
                    }, 'json');
                  }
-			         },
-			         {
-				         text: admin.tr('close'),
-				         action: 'close'
-			         }
-			         ]
-		});
+               },
+               {
+                 text: admin.tr('close'),
+                 action: 'close'
+               }
+               ]
+    });
     
     return;
   });
-	
+  
 </script>

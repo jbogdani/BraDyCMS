@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2014 
- * @license			All rights reserved
- * @since				Feb 7, 2014
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2014 
+ * @license      All rights reserved
+ * @since        Feb 7, 2014
  * 
  * GET:
  *  action: string, required. Actually only read is supported

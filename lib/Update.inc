@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013 
- * @license			MIT, See LICENSE file
- * @since				Sep 26, 2013
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since        Sep 26, 2013
  * @example     try
  *              {
  *                $update = new Update();
@@ -43,73 +43,73 @@ class Update
   public function checkUpdate($localVersion, $iniPath)
   {
     $iniContent = @file_get_contents($iniPath);
-    
+
     if (!$iniContent)
     {
       throw new Exception('Can not get content of remote ini file');
     }
-    
-    
+
+
     $va = parse_ini_string($iniContent);
-    
-		$remote_version = array_keys($va);
+
+    $remote_version = array_keys($va);
     $remote_version = $remote_version[0];
-    
+
     $remote_version_arr = explode('.', $remote_version);
     $local_version_arr = explode('.', $localVersion);
-    
+
     $resp['remote_vers'] = $remote_version;
     $resp['local_vers'] = $localVersion;
-    
+
     try
     {
       if ($remote_version_arr[0] > $local_version_arr[0])
       {
         throw new Exception('not_updateable');
       }
-      
+
       if ($remote_version_arr[0] < $local_version_arr[0])
       {
         throw new Exception('local_dev');
       }
-      
+
       if ($remote_version_arr[1] > $local_version_arr[1])
       {
         throw new Exception('updateable_warning');
       }
-      
+
       if ($remote_version_arr[1] < $local_version_arr[1])
       {
         throw new Exception('local_dev');
       }
-      
+
       if ($remote_version_arr[2] === $local_version_arr[2])
       {
         throw new Exception('already_updated');
       }
-      
+
       if ($remote_version_arr[2] > $local_version_arr[2])
       {
         throw new Exception('updateable');
       }
-      
+
       if ($remote_version_arr[2] < $local_version_arr[2])
       {
         throw new Exception('local_dev');
       }
-      
+
       throw new Exception('...');
-      
+
     }
     catch (Exception $e)
     {
       $resp['status'] = $e->getMessage();
     }
 
-    
+
     return $resp;
   }
-  
+
   /**
    * Recursively copies files and forlders from $path to $dest
    * @param string $path  full path to root main path
@@ -122,14 +122,14 @@ class Update
     if( is_dir($path) )
     {
       @mkdir( $dest );
-      
+
       if (!is_dir($dest))
       {
         throw new Exception('Can not create dir: ' . $dest);
       }
-      
+
       $objects = scandir($path);
-      
+
       if( count($objects) > 0 )
       {
         foreach( $objects as $file )
@@ -143,9 +143,9 @@ class Update
           }
           else
           {
-            $newfile = ($file === '.htaccess' && $dontOvewriteHtacess) ? 
+            $newfile = ($file === '.htaccess' && $dontOvewriteHtacess) ?
               '.htaccess-new' : $file;
-            
+
             @copy( $path . '/' . $file, $dest . '/' . $newfile );
             if(!file_exists($dest . '/' . $file))
             {
@@ -159,21 +159,21 @@ class Update
     else if ( is_file($path) )
     {
         @copy($path, $dest);
-        
+
         if (!file_exists($dest))
         {
           throw new Exception('Can not copy file: ' . $dest);
         }
-        
+
         return true;
     }
     else
     {
         return false;
     }
-    
+
   }
-  
+
   /**
    * Download ZIP file from  remore to localpath
    * @param string $gitZip  full path to remote ZIP archive
@@ -184,22 +184,22 @@ class Update
   public function downloadZip($gitZip, $localZipPath)
   {
     $update = @file_get_contents($gitZip);
-    
+
     if (!$update)
     {
       throw new Exception('Can not download zip file: ' . $gitZip);
     }
-    
+
     @file_put_contents($localZipPath, $update);
-    
+
     if (!file_exists($localZipPath))
     {
       throw new Exception('Can not write to temporary file');
     }
-    
+
     return true;
   }
-  
+
   /**
    * Recursively unzips main ZIP archive (http://php.net/manual/en/ref.zip.php)
    * @param string $src_file  full oath to zip archive
@@ -208,25 +208,25 @@ class Update
    * @param boolean $overwrite Overwrite existing files (true) or not (false)
    * @return boolean Successfull or not
    */
-  function unzip($src_file, $dest_dir = false, $create_zip_name_dir = true, $overwrite = true) 
+  function unzip($src_file, $dest_dir = false, $create_zip_name_dir = true, $overwrite = true)
   {
-    if ($zip = zip_open($src_file)) 
+    if ($zip = zip_open($src_file))
     {
-      if ($zip) 
+      if ($zip)
       {
         $splitter = ($create_zip_name_dir === true) ? "." : "/";
         if ($dest_dir === false) $dest_dir = substr($src_file, 0, strrpos($src_file, $splitter))."/";
-        
+
         // Create the directories to the destination dir if they don't already exist
         @mkdir($dest_dir, 0777, true);
-        
+
         if (!is_dir($dest_dir))
         {
           throw new Exception('Can not create directory: ' . $dest_dir);
         }
 
         // For every file in the zip-packet
-        while ($zip_entry = zip_read($zip)) 
+        while ($zip_entry = zip_read($zip))
         {
           // Now we're going to create the directories in the destination directories
 
@@ -243,7 +243,7 @@ class Update
           }
 
           // Open the entry
-          if (zip_entry_open($zip,$zip_entry,"r")) 
+          if (zip_entry_open($zip,$zip_entry,"r"))
           {
 
             // The name of the file to save on the disk
@@ -266,12 +266,12 @@ class Update
 
             // Close the entry
             zip_entry_close($zip_entry);
-          }       
+          }
         }
         // Close the zip-file
         zip_close($zip);
       }
-    } 
+    }
     else
     {
       return false;

@@ -1,16 +1,16 @@
 <div id="{{ uid }}">
   <h1>{{ tr.get('manage_articles') }}</h1>
 
-	<div class="btn-group" style="padding:20px 0;">
-		<a class="btn btn-info" href="#article/addNew" title="{{ tr.get('add_new_article') }}">
+  <div class="btn-group" style="padding:20px 0;">
+    <a class="btn btn-info" href="#article/addNew" title="{{ tr.get('add_new_article') }}">
       <i class="icon ion-plus"></i> {{ tr.get('add_new_article') }}
     </a>
-		<a class="btn btn-default reload" title="{{ tr.get('reload') }}">
+    <a class="btn btn-default reload" title="{{ tr.get('reload') }}">
       <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
     </a>
-	</div>
+  </div>
 
-	<div class="row well">
+  <div class="row well">
     <div class="col-xs-1">
       <i class="icon ion-pricetag" style="font-size:2em;"></i>
     </div>
@@ -37,34 +37,34 @@
 
 
 
-	<table class="table table-striped table-bordered table-hover data_table table-responsive">
-		<thead>
-			<tr>
-				<th>{{ tr.get('id') }}</th>
-				<th>{{ tr.get('title') }}</th>
-				<th>{{ tr.get('textid') }}</th>
+  <table class="table table-striped table-bordered table-hover data_table table-responsive">
+    <thead>
+      <tr>
+        <th>{{ tr.get('id') }}</th>
+        <th>{{ tr.get('title') }}</th>
+        <th>{{ tr.get('textid') }}</th>
         <th>{{ tr.get('sorting') }}</th>
         <th>{{ tr.get('author') }}</th>
         <th>{{ tr.get('status') }}</th>
         <th>{{ tr.get('published') }}</th>
         <th style="min-width:150px;"></th>
-			</tr>
-		</thead>
+      </tr>
+    </thead>
 
-		<tbody>
-		</tbody>
+    <tbody>
+    </tbody>
 
-	</table>
+  </table>
 </div>
 <script>
 $('#{{ uid }} a.reload').click(function(){
-	admin.tabs.reloadThis(this);
-	return false;
+  admin.tabs.reloadThis(this);
+  return false;
 });
 
 var tb = $('#{{ uid }} table.data_table').dataTable({
-	"iDisplayLength": 10,
-	"bDestroy": true,
+  "iDisplayLength": 10,
+  "bDestroy": true,
   "bProcessing": true,
   "bServerSide": true,
   "sAjaxSource": "./controller.php?obj=article_ctrl&method=sql2json{{ imploded_active_tags|raw }}",
@@ -85,9 +85,9 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
         return '<div class="btn-group">'
           + '<a href="#article/edit/' + row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="icon ion-edit"></i></a>'
 
-						{% for lang in cfg_langs %}
-							+ ' <a href="#article/translate/{{ lang.id }}/'+ row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="icon ion-shuffle"></i> {{ lang.id|upper }}</a>'
-						{% endfor %}
+            {% for lang in cfg_langs %}
+              + ' <a href="#article/translate/{{ lang.id }}/'+ row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="icon ion-shuffle"></i> {{ lang.id|upper }}</a>'
+            {% endfor %}
           + '<a href="#" class="btn btn-default btn-sm delete_article" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
           + '</div>'
       }, "orderable": false

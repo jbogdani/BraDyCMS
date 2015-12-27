@@ -1,8 +1,8 @@
 <div id="{{ uid }}">
   
-		
-	<div class="row">
-		<div class="col-sm-2">
+    
+  <div class="row">
+    <div class="col-sm-2">
       <p>
       <button class="btn btn-warning create btn-block">
         <i class="icon ion-wand"></i> {{ tr.get('create_file')}}
@@ -28,10 +28,10 @@
         <i class="icon ion-trash-a"></i> {{ tr.get('delete_file')}}
       </button>
     
-		</div>
-		
-		<div class="col-sm-10">
-			<div class="input-group">
+    </div>
+    
+    <div class="col-sm-10">
+      <div class="input-group">
         <select class="form-control fileselect">
         {% for lang in ['twig', 'css', 'less', 'js', 'md'] %}
           <optgroup label="{{ lang|upper }}">
@@ -58,27 +58,27 @@
           </button>
         </div>
       </div>
-				
-			<div class="editor" style="margin-top:30px;"></div>
+        
+      <div class="editor" style="margin-top:30px;"></div>
       
       <div style="margin-top:20px;">
-				<div class="well well-sm clearfix">
-					<i class="icon ion-speakerphone" style="font-size:1.5em;"></i> {{ tr.get('empty_cache_to_use_twig') }}
-					<div class="pull-right">
-						<a class="btn btn-default" href="#docs/read/tmpl_twig"><i class="icon ion-help-circled"></i> {{ tr.get('what_is_twig') }}</a>
-					</div>
-				</div>
-				
-				<div class="well well-sm clearfix">
-					<i class="icon ion-speakerphone" style="font-size:1.5em;"></i> {{ tr.get('compile_less_to_apply_changes') }}
-					<div class="pull-right">
-						<a class="btn btn-default" href="#docs/read/tmpl_less"><i class="icon ion-help-circled"></i> {{ tr.get('what_is_less') }}</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-	</div>
+        <div class="well well-sm clearfix">
+          <i class="icon ion-speakerphone" style="font-size:1.5em;"></i> {{ tr.get('empty_cache_to_use_twig') }}
+          <div class="pull-right">
+            <a class="btn btn-default" href="#docs/read/tmpl_twig"><i class="icon ion-help-circled"></i> {{ tr.get('what_is_twig') }}</a>
+          </div>
+        </div>
+        
+        <div class="well well-sm clearfix">
+          <i class="icon ion-speakerphone" style="font-size:1.5em;"></i> {{ tr.get('compile_less_to_apply_changes') }}
+          <div class="pull-right">
+            <a class="btn btn-default" href="#docs/read/tmpl_less"><i class="icon ion-help-circled"></i> {{ tr.get('what_is_less') }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
 </div>
 
 <script>
@@ -107,15 +107,15 @@
     $('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
       .load('controller.php?obj=template_ctrl&method=delete_file');
   });
-	
-	$('#{{ uid }} .editfile').on('click', function(){
+  
+  $('#{{ uid }} .editfile').on('click', function(){
     _ignorehash = true;
     var file = $('#{{ uid }} select.fileselect').find('option:selected').data('file');
     var type = $('#{{ uid }} select.fileselect').find('option:selected').data('type');
     location.hash = '#template/dashboard/' + $(this).data('file');
-		$('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
+    $('#{{ uid }} .editor').html('<i class="icon ion-load-c ion-loading-c"></i> Loading...')
       .load('controller.php?obj=template_ctrl&method=edit&param[]=' + file + '&param[]=' + type);
-	});
+  });
  
 
 $('#{{ uid }} .download').on('click', function(){
@@ -145,26 +145,26 @@ $('#{{ uid }} .download').on('click', function(){
 });
   
   
-	
-	$('#{{ uid }} .compile').on('click', function(){
-    var self =  $(this);
-    self.button('loading');
-		$.get('controller.php?obj=template_ctrl&method=compile', function(data){
-			admin.message(data.text, data.status);
-      self.button('reset');
-		}, 'json');
-	});
-	
-	$('#{{ uid }} .empty_cache').on('click', function(){
-    var self =  $(this);
-    self.button('loading');
-		$.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
-			admin.message(data.text, data.status);
-      self.button('reset');
-		}, 'json');
-	});
   
-	$('#{{ uid }} .refresh').on('click', function(){
-		admin.tabs.reloadThis(this);
-	});
+  $('#{{ uid }} .compile').on('click', function(){
+    var self =  $(this);
+    self.button('loading');
+    $.get('controller.php?obj=template_ctrl&method=compile', function(data){
+      admin.message(data.text, data.status);
+      self.button('reset');
+    }, 'json');
+  });
+  
+  $('#{{ uid }} .empty_cache').on('click', function(){
+    var self =  $(this);
+    self.button('loading');
+    $.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
+      admin.message(data.text, data.status);
+      self.button('reset');
+    }, 'json');
+  });
+  
+  $('#{{ uid }} .refresh').on('click', function(){
+    admin.tabs.reloadThis(this);
+  });
 </script>

@@ -1,15 +1,15 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			Apr 12, 2013
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      Apr 12, 2013
  */
  
 class OAI_ctrl extends Controller
 {
-	public function run()
-	{
+  public function run()
+  {
     if(!file_exists('./sites/default/modules/metadataRepo/metadata.json'))
     {
       echo tr::get('no_oai_config_for_site');
@@ -26,5 +26,5 @@ class OAI_ctrl extends Controller
     unset($this->get['method']);
 
     \oaiprovider\handleRequest($this->get, new myRepository($metadata), new myTokenStore(), 'xsl/oai2.xsl');
-	}
+  }
 }

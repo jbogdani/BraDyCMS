@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net, Julian Bogdani <jbogdani@gmail.com>
- * @license			See file LICENSE distributed with this code
- * @since				Jun 9, 2014
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net, Julian Bogdani <jbogdani@gmail.com>
+ * @license      See file LICENSE distributed with this code
+ * @since        Jun 9, 2014
  */
 
 class backup_ctrl extends Controller

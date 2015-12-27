@@ -8,7 +8,7 @@
       {{ tr.get('add_new_article') }}
     </a>
 
-		{% if art.id %}
+    {% if art.id %}
       {% for lang in cfg_langs %}
         <a href="#article/translate/{{ lang.id }}/{{ art.id }}"
            class="btn btn-default"
@@ -17,14 +17,14 @@
           {{ lang.id|upper }}
         </a>
       {% endfor %}
-		{% endif %}
-		<a class="btn btn-default reload"
+    {% endif %}
+    <a class="btn btn-default reload"
        title="{{ tr.get('reload') }}">
       <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
     </a>
-	</div>{# End of main button menu #}
+  </div>{# End of main button menu #}
 
-	<form action="javascript:void(0)" id="edit_form{{ uid }}">
+  <form action="javascript:void(0)" id="edit_form{{ uid }}">
 
     <div class="btn-group">
       <button class="btn btn-success" type="submit"
@@ -43,7 +43,7 @@
       </button>
     </div>
 
-		{# Tag choise #}
+    {# Tag choise #}
     <hr />
     <div class="form-group">
       <div class="input-group">
@@ -303,10 +303,10 @@
     {% endfor %}
   {% endif %}
 
-	$('a.reload').click(function(){
-		admin.tabs.reloadThis(this);
-		return false;
-	});
+  $('a.reload').click(function(){
+    admin.tabs.reloadThis(this);
+    return false;
+  });
 
   admin.removeNotValid($('#edit_form{{ uid }} input[name="textid"]'), {
     'replace': '_',
@@ -314,26 +314,26 @@
     'permit': ['\\-', '_']
     });
 
-	$('#edit_form{{ uid }} input[name="textid"]').on('change', function(){
-		$this = $(this);
+  $('#edit_form{{ uid }} input[name="textid"]').on('change', function(){
+    $this = $(this);
 
-		if ($this.val() != '{{ art.textid }}'){
-			$.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val(), function(data){
-				if (data){
-					$this.focus();
-					admin.message(data, 'error');
-				}
-			});
-		}
-	});
+    if ($this.val() != '{{ art.textid }}'){
+      $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val(), function(data){
+        if (data){
+          $this.focus();
+          admin.message(data, 'error');
+        }
+      });
+    }
+  });
 
-	$('#edit_form{{ uid }} input[name="tags"]').select2({
-		tags: [{{ imploded_tags|raw }}]
+  $('#edit_form{{ uid }} input[name="tags"]').select2({
+    tags: [{{ imploded_tags|raw }}]
 
-	});
+  });
 
 
-	$('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  $('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
 
   {% if art.id %}
     $('#{{ uid }} .preview').on('click', function(){
@@ -341,7 +341,7 @@
     });
   {% endif %}
 
-	$('#edit_form{{ uid }}').on('submit', function(){
+  $('#edit_form{{ uid }}').on('submit', function(){
 
     $(this).find('button[type="submit"]').button('loading');
 
@@ -353,37 +353,37 @@
     }
 
 
-		var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
+    var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
 
     admin.wysiwyg.preSave();
 
-		$.post(
-			url,
-			$('#edit_form{{ uid }}').serialize(),
+    $.post(
+      url,
+      $('#edit_form{{ uid }}').serialize(),
 
-			function(data) {
+      function(data) {
         $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
-				admin.message(data.text, data.type);
-				{% if art.id == false %}
-				if (data.type === 'success'){
-					admin.tabs.closeActive('article/edit/' + data.id);
-				}
-				{% endif %}
-			},
-			'json'
-		);
-	});
+        admin.message(data.text, data.type);
+        {% if art.id == false %}
+        if (data.type === 'success'){
+          admin.tabs.closeActive('article/edit/' + data.id);
+        }
+        {% endif %}
+      },
+      'json'
+    );
+  });
 
-	{% if art.id %}
+  {% if art.id %}
 
   {# article image upload #}
-	admin.upload(
-			$('#file_uploader_{{ uid }}')[0],
-			'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}',
-			{
+  admin.upload(
+      $('#file_uploader_{{ uid }}')[0],
+      'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}',
+      {
         allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-				loaded: function(id, filename, responseJSON){
-					$.get('controller.php?obj=article_ctrl' +
+        loaded: function(id, filename, responseJSON){
+          $.get('controller.php?obj=article_ctrl' +
             '&method=attachImage' +
             '&param[]={{ art.id }}' +
             '&param[]=' + responseJSON.filename + '.' + responseJSON.ext,
@@ -394,9 +394,9 @@
                 $('#edit_form{{ uid }}').submit();
                 admin.tabs.reloadThis('#{{ uid }}');
               }
-					}, 'json');
-				}
-			});
+          }, 'json');
+        }
+      });
 
   {# article media upload #}
   admin.upload(
@@ -422,13 +422,13 @@
 
 
 
-	$('a.delete_attach_img').on('click', function(){
-		$.get('controller.php?obj=article_ctrl&method=delete_art_img&param[]={{ art.id }}', function(data){
-			admin.message(data.text, data.status);
-			$('#edit_form{{ uid }}').submit();
-			admin.tabs.reloadThis('#{{ uid }}');
-		}, 'json');
-	});
+  $('a.delete_attach_img').on('click', function(){
+    $.get('controller.php?obj=article_ctrl&method=delete_art_img&param[]={{ art.id }}', function(data){
+      admin.message(data.text, data.status);
+      $('#edit_form{{ uid }}').submit();
+      admin.tabs.reloadThis('#{{ uid }}');
+    }, 'json');
+  });
 
   $('#{{ uid }} .create_gallery').on('click', function(){
     var name = $(this).data('name');
@@ -442,7 +442,7 @@
       }
     });
   });
-	{% endif %}
+  {% endif %}
 
 
 </script>

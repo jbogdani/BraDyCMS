@@ -14,7 +14,7 @@
               {% endif %}
             {% endfor %}
           </optgroup>
-			{% endfor %}
+      {% endfor %}
         
       </select>
     </div>
@@ -47,11 +47,11 @@
     var file = $('#{{ uid }} .filename').val();
     
     $.get('controller.php?obj=template_ctrl&method=confirm_delete_file&param[]=' + file, function(data){
-			admin.message(data.text, data.status);
+      admin.message(data.text, data.status);
       
       if (data.status === 'success'){
         admin.tabs.reloadThis('#{{ uid }}');
       }
-		}, 'json');
+    }, 'json');
   });
 </script>

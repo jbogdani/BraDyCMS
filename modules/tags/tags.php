@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net, Julian Bogdani <jbogdani@gmail.com>
- * @license			See file LICENSE distributed with this code
- * @since				Jan 2, 2015
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net, Julian Bogdani <jbogdani@gmail.com>
+ * @license      See file LICENSE distributed with this code
+ * @since        Jan 2, 2015
  */
 
 class tags_ctrl extends Controller

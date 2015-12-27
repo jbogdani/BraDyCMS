@@ -1,384 +1,384 @@
 <form class="form-horizontal" action="javascript:void(0);" id="form-{{ uid }}">
 
-	<p class="lead">{{ tr.get('cfg-site_metadata') }}</p>
+  <p class="lead">{{ tr.get('cfg-site_metadata') }}</p>
 
-	<!-- NAME -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-name') }}</label>
-		<div class="col-sm-5">
-			<input type="text" value="{{ data.name }}" name="name">
-		</div>
+  <!-- NAME -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-name') }}</label>
+    <div class="col-sm-5">
+      <input type="text" value="{{ data.name }}" name="name">
+    </div>
     <div class="col-sm-5">
        <span class="text-muted">Site's short name.</span>
     </div>
-	</div>
+  </div>
 
 
-	<!-- MISSION -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-mission') }}</label>
-		<div class="col-sm-5">
+  <!-- MISSION -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-mission') }}</label>
+    <div class="col-sm-5">
       <textarea name="mission">{{ data.mission }}</textarea>
-		</div>
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Site's mission.</span>
     </div>
-	</div>
+  </div>
 
 
-	<!-- TITLE -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-title') }}</label>
-		<div class="col-sm-5">
+  <!-- TITLE -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-title') }}</label>
+    <div class="col-sm-5">
       <textarea name="title">{{ data.title }}</textarea>
-		</div>
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Site's pages default title</span>
     </div>
-	</div>
+  </div>
 
-	<!-- DESCRIPTION -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-description') }}</label>
-		<div class="col-sm-5">
+  <!-- DESCRIPTION -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-description') }}</label>
+    <div class="col-sm-5">
       <textarea name="description">{{ data.description }}</textarea>
-		</div>
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Site's pages default description</span>
     </div>
-	</div>
+  </div>
 
 
-	<!-- KEYWORDS -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-keywords') }}</label>
-		<div class="col-sm-5">
+  <!-- KEYWORDS -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-keywords') }}</label>
+    <div class="col-sm-5">
       <textarea name="keywords">{{ data.keywords }}</textarea>
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Site's pages default comma separated keywords</span>
     </div>
-	</div>
+  </div>
 
-		<!-- SYS_LANG -->
-	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-sys_lang') }}</label>
-		<div class="col-sm-2">
-			<input type="text" value="{{ data.sys_lang }}" name="sys_lang" maxlength="2">
-		</div>
+    <!-- SYS_LANG -->
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+    <label class="control-label col-sm-2">{{ tr.get('cfg-sys_lang') }}</label>
+    <div class="col-sm-2">
+      <input type="text" value="{{ data.sys_lang }}" name="sys_lang" maxlength="2">
+    </div>
     <div class="col-sm-8">
       <span class="text-muted">Two digits main language id, eg. en. Actually the
         following languages are supported: it, en, es, fr, ar, de, al. If you
         plan to support any language different from these please you should edit
         also the main .htaccess file!</span>
     </div>
-	</div>
+  </div>
 
-	<!-- SYS_LANG_STRING -->
-	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-sys_lang_string') }}</label>
-		<div class="col-sm-5">
-			<input type="text" value="{{ data.sys_lang_string }}" name="sys_lang_string">
-		</div>
+  <!-- SYS_LANG_STRING -->
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+    <label class="control-label col-sm-2">{{ tr.get('cfg-sys_lang_string') }}</label>
+    <div class="col-sm-5">
+      <input type="text" value="{{ data.sys_lang_string }}" name="sys_lang_string">
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Main language name. Please enter only lower case digits.</span>
     </div>
-	</div>
+  </div>
 
-	<hr>
+  <hr>
 
-	<p class="lead">{{ tr.get('cfg-server_settings') }}</p>
-	<hr>
+  <p class="lead">{{ tr.get('cfg-server_settings') }}</p>
+  <hr>
 
-	<!-- ROBOTS -->
+  <!-- ROBOTS -->
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-robots') }}</label>
-		<div class="col-sm-3">
-			<select name="robots">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-robots') }}</label>
+    <div class="col-sm-3">
+      <select name="robots">
         <option></option>
         {% for val in ['index, follow', 'noindex, follow', 'index, nofollow', 'noindex, nofollow'] %}
           <option value="{{ val }}" {% if val == data.robots %}selected="selected"{% endif %}>{{ val }}</option>
         {% endfor %}
 
-			</select>
-		</div>
+      </select>
+    </div>
     <div class="col-sm-7">
       <span class="text-muted">This is the global default value for <em>robots</em> meta tag (<a href="https://support.google.com/webmasters/answer/79812" target="_blank">more info</a>).</span>
     </div>
-	</div>
+  </div>
 
-	<!-- TIMEZONE -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-timezone') }}</label>
-		<div class="col-sm-5">
-			<input type="text" value="{{ data.timezone }}" name="timezone">
-		</div>
+  <!-- TIMEZONE -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-timezone') }}</label>
+    <div class="col-sm-5">
+      <input type="text" value="{{ data.timezone }}" name="timezone">
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Please enter a  valid timezone. Supported timezones:
         <a href="http://php.net/manual/en/timezones.php" target="_blank">http://php.net/manual/en/timezones.php</a> </span>
     </div>
-	</div>
+  </div>
 
   <!-- REWRITEBASE -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-rewriteBase') }}</label>
-		<div class="col-sm-5">
-			<input type="text" value="{% if data.rewriteBase %}{{ data.rewriteBase }}{% else %}/{% endif %}" name="rewriteBase">
-		</div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-rewriteBase') }}</label>
+    <div class="col-sm-5">
+      <input type="text" value="{% if data.rewriteBase %}{{ data.rewriteBase }}{% else %}/{% endif %}" name="rewriteBase">
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">If your site is not located in the root directory
       of the domain, please enter here the relative path to the installation
       folder, preceded by single slash (/), eg. /new_site</span>
     </div>
-	</div>
+  </div>
 
   <!-- enable www -->
   <div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-enableWWW') }}</label>
-		<div class="col-sm-5">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-enableWWW') }}</label>
+    <div class="col-sm-5">
       <select name="enableWWW">
         <option value="1" {% if data.enableWWW %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
-				<option value="0" {% if data.enableWWW == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
+        <option value="0" {% if data.enableWWW == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
       </select>
-		</div>
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">By default BraDyCMS will redirect third level domain
         www.* main level domain, removing www. If this option is enabled you can
         use <code>www</code> in the domain name.</span>
     </div>
-	</div>
+  </div>
 
   <!-- MORE .htaccess Directives -->
   <!-- moreHtaccessDirectives -->
   <div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-moreHtaccessDirectives') }}</label>
-		<div class="col-sm-5">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-moreHtaccessDirectives') }}</label>
+    <div class="col-sm-5">
       <textarea name="moreHtaccessDirectives" style="height:70px">{% if data.moreHtaccessDirectives %}{{ data.moreHtaccessDirectives }}{% endif %}</textarea>
-		</div>
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Enter here additional htaccess directives. These directives
       will be automatically appended at the end of the .htaccess file after each system update.
       If you need to enter more then one directive, please place each directive in a new line.</span>
     </div>
-	</div>
+  </div>
 
-	<hr>
-	<p class="lead">{{ tr.get('cfg-db_settings') }}</p>
+  <hr>
+  <p class="lead">{{ tr.get('cfg-db_settings') }}</p>
 
-	<!-- DB_CONNECTION -->
-	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-db_connection') }}</label>
-		<div class="col-sm-5">
-			<input type="text" value="{{ data.db_connection }}" name="db_connection">
-		</div>
+  <!-- DB_CONNECTION -->
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+    <label class="control-label col-sm-2">{{ tr.get('cfg-db_connection') }}</label>
+    <div class="col-sm-5">
+      <input type="text" value="{{ data.db_connection }}" name="db_connection">
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Database full DNS (eg.:
         mysql:host=localhost;dbname=bduscms). Leave blank if you are using the
         default SQLITE database. </span>
     </div>
-	</div>
+  </div>
 
   <!-- DB_USER -->
-	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-db_user') }}</label>
-		<div class="col-sm-5">
-			<input type="text" value="{{ data.db_user }}" name="db_user">
-		</div>
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+    <label class="control-label col-sm-2">{{ tr.get('cfg-db_user') }}</label>
+    <div class="col-sm-5">
+      <input type="text" value="{{ data.db_user }}" name="db_user">
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Database username. Leave blank if you are using
         the default SQLITE database. </span>
     </div>
-	</div>
+  </div>
 
   <!-- DB_PASS -->
-	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-db_pass') }}</label>
-		<div class="col-sm-5">
-			<input type="text" value="{{ data.db_pass }}" name="db_pass">
-		</div>
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+    <label class="control-label col-sm-2">{{ tr.get('cfg-db_pass') }}</label>
+    <div class="col-sm-5">
+      <input type="text" value="{{ data.db_pass }}" name="db_pass">
+    </div>
     <div class="col-sm-5">
       <span class="text-muted">Database password. Leave blank if you are using
         the default SQLITE database. </span>
     </div>
-	</div>
+  </div>
 
-	<!-- PREFIX
-	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-md-2">{{ tr.get('cfg-prefix') }}</label>
-		<div class="col-md-8">
-			<input type="text" value="{{ data.prefix }}" name="prefix">
-		</div>
-	</div>
-	-->
+  <!-- PREFIX
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+    <label class="control-label col-md-2">{{ tr.get('cfg-prefix') }}</label>
+    <div class="col-md-8">
+      <input type="text" value="{{ data.prefix }}" name="prefix">
+    </div>
+  </div>
+  -->
 
-	<hr>
-	<p class="lead">{{ tr.get('cfg-dev_settings') }}</p>
+  <hr>
+  <p class="lead">{{ tr.get('cfg-dev_settings') }}</p>
 
-	<!-- DEBUG -->
-	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-debug') }}</label>
-		<div class="col-sm-2">
-			<select name="debug">
-				<option value="1" {% if data.debug %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
-				<option value="0" {% if data.debug == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
-			</select>
-		</div>
+  <!-- DEBUG -->
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+    <label class="control-label col-sm-2">{{ tr.get('cfg-debug') }}</label>
+    <div class="col-sm-2">
+      <select name="debug">
+        <option value="1" {% if data.debug %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
+        <option value="0" {% if data.debug == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
+      </select>
+    </div>
     <div class="col-sm-8">
       <span class="text-muted">If you turn off debug mode remember to clear the application cache (see below).</span>
     </div>
-	</div>
+  </div>
 
   <!-- UPDATE CHANNEL -->
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-update_channel') }}</label>
-		<div class="col-sm-6">
-			<select name="updatechannel">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-update_channel') }}</label>
+    <div class="col-sm-6">
+      <select name="updatechannel">
         <option value="master" {% if data.updatechannel == 'master' or data.updatechannel ==false %} selected="selected"{% endif %}>
           MASTER (https://github.com/jbogdani/BraDyCMS)
         </option>
         <option value="dev" {% if data.updatechannel == 'dev' %} selected="selected"{% endif %}>
           DEVELOPMENT (https://github.com/jbogdani/BraDyCMS/tree/dev)
         </option>
-			</select>
-		</div>
+      </select>
+    </div>
     <div class="col-sm-4">
       <span class="text-muted">For a stable use please use the MASTER branch. Use development branch on your own risk.</span>
     </div>
-	</div>
+  </div>
 
-	<!-- CDN -->
-	<div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-		<label class="control-label col-sm-2">{{ tr.get('cfg-cdn') }}</label>
-		<div class="col-sm-2">
-			<select name="cdn">
-				<option value="1" {% if data.cdn %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
-				<option value="0" {% if data.cdn == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
-			</select>
-		</div>
+  <!-- CDN -->
+  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
+    <label class="control-label col-sm-2">{{ tr.get('cfg-cdn') }}</label>
+    <div class="col-sm-2">
+      <select name="cdn">
+        <option value="1" {% if data.cdn %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
+        <option value="0" {% if data.cdn == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
+      </select>
+    </div>
     <div class="col-sm-8">
       <span class="text-muted">If turned on CDN (where available) will be used to load
-				third parties libraries (eg. jQuery, Twitter Bootstrap, etc).</span>
+        third parties libraries (eg. jQuery, Twitter Bootstrap, etc).</span>
     </div>
-	</div>
+  </div>
 
-	<hr>
+  <hr>
 
-	<p class="lead">{{ tr.get('cfg-img-settings') }}</p>
+  <p class="lead">{{ tr.get('cfg-img-settings') }}</p>
 
-	<!-- ART_IMG_DIMENSIONS -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-art_img_dimensions') }}</label>
-		<div class="col-sm-2">
-			<input type="text" value="{{ art_img }}" name="art_img[]">
-		</div>
-		<div class="col-sm-8">
+  <!-- ART_IMG_DIMENSIONS -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-art_img_dimensions') }}</label>
+    <div class="col-sm-2">
+      <input type="text" value="{{ art_img }}" name="art_img[]">
+    </div>
+    <div class="col-sm-8">
       <span class="text-muted">Check <a href="#docs/read/general">General concepts</a> t
-				o learn more about article images. Please enter here a valid format expressed in pixels
-				({width}x{height}, eg. 800x400). You can have many dimension steps.
-				Just save the form to have a new blank field added.</span>
+        o learn more about article images. Please enter here a valid format expressed in pixels
+        ({width}x{height}, eg. 800x400). You can have many dimension steps.
+        Just save the form to have a new blank field added.</span>
     </div>
-	</div>
-	{% if data.art_img|length > 0 %}
-		{% for art_img in data.art_img %}
-			<div class="form-group">
-				<label class="control-label col-sm-2">{{ tr.get('cfg-art_img_dimensions') }}</label>
-				<div class="col-sm-2">
-					<input type="text"  value="{{ art_img }}" name="art_img[]">
-				</div>
-			</div>
-		{% endfor %}
-	{% endif %}
+  </div>
+  {% if data.art_img|length > 0 %}
+    {% for art_img in data.art_img %}
+      <div class="form-group">
+        <label class="control-label col-sm-2">{{ tr.get('cfg-art_img_dimensions') }}</label>
+        <div class="col-sm-2">
+          <input type="text"  value="{{ art_img }}" name="art_img[]">
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
 
-	<hr>
+  <hr>
 
-	<!-- ACTIVATE PAGINATION -->
-	<p class="lead">{{ tr.get('cfg-pagination') }}</p>
+  <!-- ACTIVATE PAGINATION -->
+  <p class="lead">{{ tr.get('cfg-pagination') }}</p>
 
-	<div class="form-group">
-		<div class="col-sm-2 col-sm-offset-2">
-			<input type ="text" name="pagination" value="{{ data.pagination }}">
-		</div>
-		<div class="col-sm-8">
-			<span class="text-muted">Enter here the maximum number of articles you
-				want to show in a single page. If empty the pagination will be disabled</span>
-		</div>
-	</div>
-
-
+  <div class="form-group">
+    <div class="col-sm-2 col-sm-offset-2">
+      <input type ="text" name="pagination" value="{{ data.pagination }}">
+    </div>
+    <div class="col-sm-8">
+      <span class="text-muted">Enter here the maximum number of articles you
+        want to show in a single page. If empty the pagination will be disabled</span>
+    </div>
+  </div>
 
 
 
-	<!-- GA_ID -->
-	<hr>
-	<p class="lead">{{ tr.get('cfg-ga') }}</p>
 
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-ga_id') }}</label>
-		<div class="col-sm-4">
-			<input type="text" value="{{ data.ga_id }}" name="ga_id">
-		</div>
+
+  <!-- GA_ID -->
+  <hr>
+  <p class="lead">{{ tr.get('cfg-ga') }}</p>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-ga_id') }}</label>
+    <div class="col-sm-4">
+      <input type="text" value="{{ data.ga_id }}" name="ga_id">
+    </div>
     <div class="col-sm-6">
       <span class="text-muted">Your Google Analytics CODE ID</span>
     </div>
-	</div>
+  </div>
 
-	<!-- GA_DOMAIN -->
-	<div class="form-group">
-		<label class="control-label col-sm-2">{{ tr.get('cfg-ga_domain') }}</label>
-		<div class="col-sm-4">
-			<input type="text" value="{{ data.ga_domain }}" name="ga_domain">
-		</div>
+  <!-- GA_DOMAIN -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-ga_domain') }}</label>
+    <div class="col-sm-4">
+      <input type="text" value="{{ data.ga_domain }}" name="ga_domain">
+    </div>
     <div class="col-sm-6">
       <span class="text-muted">If you enter here a domain (yourdomain.ext) the Google analytics code will be shown only if domain matches. This is very usefull if you have a localhost copy of your website and you do not want to update your analytics from localhost domain.</span>
     </div>
-	</div>
+  </div>
 
-	<!-- LANGUAGES -->
-	<hr>
-	<p class="lead">{{ tr.get('cfg-languages') }}</p>
+  <!-- LANGUAGES -->
+  <hr>
+  <p class="lead">{{ tr.get('cfg-languages') }}</p>
 
-	<div class="row">
-		<div class="col-sm-2 col-sm-offset-2"><label>{{ tr.get('cfg-lang_id') }}</label></div>
-		<div class="col-sm-4"><label>{{ tr.get('cfg-lang_name') }}</label></div>
-		<div class="col-sm-2"><label>{{ tr.get('cfg-lang_published') }}</label></div>
-	</div>
+  <div class="row">
+    <div class="col-sm-2 col-sm-offset-2"><label>{{ tr.get('cfg-lang_id') }}</label></div>
+    <div class="col-sm-4"><label>{{ tr.get('cfg-lang_name') }}</label></div>
+    <div class="col-sm-2"><label>{{ tr.get('cfg-lang_published') }}</label></div>
+  </div>
 
-	<!-- LANGUAGES -->
-	{% for lang in data.languages %}
-	<div class="form-group">
-			<div class="col-sm-2 col-sm-offset-2">
-				<input type="text" value="{{ lang.id }}" maxlength="2" name="languages[{{ loop.index0 }}][id]">
-			</div>
+  <!-- LANGUAGES -->
+  {% for lang in data.languages %}
+  <div class="form-group">
+      <div class="col-sm-2 col-sm-offset-2">
+        <input type="text" value="{{ lang.id }}" maxlength="2" name="languages[{{ loop.index0 }}][id]">
+      </div>
 
-			<div class="col-sm-4">
-				<input type="text" value="{{ lang.string }}" name="languages[{{ loop.index0 }}][string]">
-			</div>
+      <div class="col-sm-4">
+        <input type="text" value="{{ lang.string }}" name="languages[{{ loop.index0 }}][string]">
+      </div>
 
-			<div class="col-sm-2">
-				<select name="languages[{{ loop.index0 }}][published]">
-					<option></option>
-					<option{% if lang.published %} selected="selected "{% endif %}>1</option>
-				</select>
-			</div>
-	</div>
-	{% endfor %}
+      <div class="col-sm-2">
+        <select name="languages[{{ loop.index0 }}][published]">
+          <option></option>
+          <option{% if lang.published %} selected="selected "{% endif %}>1</option>
+        </select>
+      </div>
+  </div>
+  {% endfor %}
 
-	<div class="form-group">
-		<div class="col-sm-2 col-sm-offset-2">
-			<input type="text" maxlength="2" name="languages[{{ data.languages|length }}][id]">
-		</div>
-
-		<div class="col-sm-4">
-			<input type="text" name="languages[{{ data.languages|length }}][string]">
-		</div>
-
-		<div class="col-sm-2">
-			<select name="languages[{{ data.languages|length }}][published]">
-				<option></option>
-				<option>1</option>
-			</select>
+  <div class="form-group">
+    <div class="col-sm-2 col-sm-offset-2">
+      <input type="text" maxlength="2" name="languages[{{ data.languages|length }}][id]">
     </div>
-	</div>
+
+    <div class="col-sm-4">
+      <input type="text" name="languages[{{ data.languages|length }}][string]">
+    </div>
+
+    <div class="col-sm-2">
+      <select name="languages[{{ data.languages|length }}][published]">
+        <option></option>
+        <option>1</option>
+      </select>
+    </div>
+  </div>
   <div class="row">
     <div class="col-sm-12">
         <span class="text-muted">Use the fields above to add new languages
@@ -395,83 +395,83 @@
 
 
 
-	<!-- CUSTOM_FIELDS -->
-	<div {% if is_admin == false %}style="display:none"{% endif %}>
-		<hr>
-		<p class="lead">{{ tr.get('custom_fields') }}</p>
+  <!-- CUSTOM_FIELDS -->
+  <div {% if is_admin == false %}style="display:none"{% endif %}>
+    <hr>
+    <p class="lead">{{ tr.get('custom_fields') }}</p>
 
 
-		<div class="form-group">
-			<div class="col-sm-2"><label>{{ tr.get('cfg-fld_name') }}</label></div>
-			<div class="col-sm-2"><label>{{ tr.get('cfg-type') }}</label></div>
-			<div class="col-sm-2"><label>{{ tr.get('cfg-label') }}</label></div>
-			<div class="col-sm-4"><label>{{ tr.get('cfg-values') }}</label></div>
+    <div class="form-group">
+      <div class="col-sm-2"><label>{{ tr.get('cfg-fld_name') }}</label></div>
+      <div class="col-sm-2"><label>{{ tr.get('cfg-type') }}</label></div>
+      <div class="col-sm-2"><label>{{ tr.get('cfg-label') }}</label></div>
+      <div class="col-sm-4"><label>{{ tr.get('cfg-values') }}</label></div>
       <div class="col-sm-1"><label>{{ tr.get('cfg-translate') }}</label></div>
       <div class="col-sm-1"><label>{{ tr.get('cfg-richtext') }}</label></div>
-		</div>
+    </div>
 
-		{% for fld in data.custom_fields %}
-		<div class="form-group">
-			<div class="col-sm-2">
-				<input type="text" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]">
-			</div>
+    {% for fld in data.custom_fields %}
+    <div class="form-group">
+      <div class="col-sm-2">
+        <input type="text" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]">
+      </div>
 
-			<div class="col-sm-2">
-				<select name="custom_fields[{{ loop.index0 }}][type]">
-					<option></option>
-					<option{% if fld.type == 'input' or fdl.type == false %} selected="selected"{% endif %}>input</option>
-					<option{% if fld.type == 'longtext'%} selected="selected"{% endif %}>longtext</option>
-					<option{% if fld.type == 'select'%} selected="selected"{% endif %}>select</option>
-				</select>
-			</div>
+      <div class="col-sm-2">
+        <select name="custom_fields[{{ loop.index0 }}][type]">
+          <option></option>
+          <option{% if fld.type == 'input' or fdl.type == false %} selected="selected"{% endif %}>input</option>
+          <option{% if fld.type == 'longtext'%} selected="selected"{% endif %}>longtext</option>
+          <option{% if fld.type == 'select'%} selected="selected"{% endif %}>select</option>
+        </select>
+      </div>
 
-			<div class="col-sm-2">
-				<input type="text" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]">
-			</div>
+      <div class="col-sm-2">
+        <input type="text" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]">
+      </div>
 
-			<div class="col-sm-4">
-				<input type="text" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]">
-			</div>
+      <div class="col-sm-4">
+        <input type="text" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]">
+      </div>
 
-			<div class="col-sm-1">
-				<select value="{{ fld.translate }}" name="custom_fields[{{ loop.index0 }}][translate]">
+      <div class="col-sm-1">
+        <select value="{{ fld.translate }}" name="custom_fields[{{ loop.index0 }}][translate]">
           <option value=""></option>
           <option value="1"{% if fld.translate %} selected="selected" {% endif %}>1</option>
         </select>
-			</div>
+      </div>
 
       <div class="col-sm-1">
-				<select value="{{ fld.richtext }}" name="custom_fields[{{ loop.index0 }}][richtext]">
+        <select value="{{ fld.richtext }}" name="custom_fields[{{ loop.index0 }}][richtext]">
           <option value=""></option>
           <option value="1"{% if fld.richtext %} selected="selected" {% endif %}>1</option>
         </select>
-			</div>
+      </div>
 
-		</div>
-		{% endfor %}
+    </div>
+    {% endfor %}
 
-		<div class="form-group">
-			<div class="controls">
-				<div class="col-sm-2">
-					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][name]">
-				</div>
+    <div class="form-group">
+      <div class="controls">
+        <div class="col-sm-2">
+          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][name]">
+        </div>
 
-				<div class="col-sm-2">
-					<select name="custom_fields[{{ data.custom_fields|length }}][type]">
-						<option></option>
-						<option>input</option>
-						<option>longtext</option>
-						<option>select</option>
-					</select>
-				</div>
+        <div class="col-sm-2">
+          <select name="custom_fields[{{ data.custom_fields|length }}][type]">
+            <option></option>
+            <option>input</option>
+            <option>longtext</option>
+            <option>select</option>
+          </select>
+        </div>
 
-				<div class="col-sm-2">
-					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][label]">
-				</div>
+        <div class="col-sm-2">
+          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][label]">
+        </div>
 
-				<div class="col-sm-4">
-					<input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]">
-				</div>
+        <div class="col-sm-4">
+          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]">
+        </div>
 
         <div class="col-sm-1">
           <select value="{{ fld.translate }}" name="custom_fields[{{ data.custom_fields|length }}][translate]">
@@ -487,8 +487,8 @@
           </select>
         </div>
 
-			</div>
-		</div>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
@@ -508,15 +508,15 @@
     </div>
   </div>
 
-	<!-- PATHS -->
-	<hr>
-	<p class="lead">{{ tr.get('cfg-paths') }}</p>
+  <!-- PATHS -->
+  <hr>
+  <p class="lead">{{ tr.get('cfg-paths') }}</p>
 
-	<div class="form-group">
-		<label class="control-label col-sm-2">convert</label>
-		<div class="col-sm-3">
-			<input type="text" value="{{ data.paths.convert }}" name="paths[convert]">
-		</div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">convert</label>
+    <div class="col-sm-3">
+      <input type="text" value="{{ data.paths.convert }}" name="paths[convert]">
+    </div>
     <div class="col-sm-7">
       <span class="text-muted">If you are planing to use <a
           href="http://php.net/manual/en/book.imagick.php" target="_blank">php
@@ -531,55 +531,55 @@
         This setting is  fundamental for the image manipulating system to work.
         Settings depend on your hosting plans.</span>
     </div>
-	</div>
+  </div>
 
-	<!-- USERS -->
-	<hr>
-	<p class="lead">{{ tr.get('cfg-users') }}</p>
+  <!-- USERS -->
+  <hr>
+  <p class="lead">{{ tr.get('cfg-users') }}</p>
 
-	<div class="row">
-		<div class="col-sm-5 col-sm-offset-2">
-			<label>{{ tr.get('email_address') }}</label>
-		</div>
+  <div class="row">
+    <div class="col-sm-5 col-sm-offset-2">
+      <label>{{ tr.get('email_address') }}</label>
+    </div>
 
-		<div class="col-sm-3">
-			<label>{{ tr.get('encrypted_passw') }}</label>
-		</div>
-	</div>
+    <div class="col-sm-3">
+      <label>{{ tr.get('encrypted_passw') }}</label>
+    </div>
+  </div>
 
-	{% for user in data.users %}
-	<div class="form-group">
-		<div class="col-sm-5 col-sm-offset-2">
-			<input type="email" value="{{ user.name }}" name="users[{{ loop.index0 }}][name]" {% if user.admin and is_admin == false %} readonly="true" {% endif %}>
-		</div>
-		<div class="col-sm-3">
-			<input type="text" name="users[{{ loop.index0 }}][pwd]" value="{{ user.pwd }}" {% if user.admin and is_admin == false %} readonly="true" {% endif %}>
-		</div>
+  {% for user in data.users %}
+  <div class="form-group">
+    <div class="col-sm-5 col-sm-offset-2">
+      <input type="email" value="{{ user.name }}" name="users[{{ loop.index0 }}][name]" {% if user.admin and is_admin == false %} readonly="true" {% endif %}>
+    </div>
+    <div class="col-sm-3">
+      <input type="text" name="users[{{ loop.index0 }}][pwd]" value="{{ user.pwd }}" {% if user.admin and is_admin == false %} readonly="true" {% endif %}>
+    </div>
 
-		<div class="col-sm-2" {% if is_admin == false %}style="display:none"{% endif %}>
-			<select name="users[{{ loop.index0 }}][admin]">
-				<option></option>
-				<option{% if user.admin %} selected="selected"{% endif %}>admin</option>
-			</select>
-		</div>
-	</div>
-	{% endfor %}
+    <div class="col-sm-2" {% if is_admin == false %}style="display:none"{% endif %}>
+      <select name="users[{{ loop.index0 }}][admin]">
+        <option></option>
+        <option{% if user.admin %} selected="selected"{% endif %}>admin</option>
+      </select>
+    </div>
+  </div>
+  {% endfor %}
 
-	<div class="form-group">
-		<div class="col-sm-5 col-sm-offset-2">
-			<input type="email" name="users[{{ data.users|length }}][name]">
-		</div>
-		<div class="col-sm-3">
-			<input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]">
-		</div>
-		<div class="col-sm-2">
-			<button class="btn btn-info encrypt"
+  <div class="form-group">
+    <div class="col-sm-5 col-sm-offset-2">
+      <input type="email" name="users[{{ data.users|length }}][name]">
+    </div>
+    <div class="col-sm-3">
+      <input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]">
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-info encrypt"
               type="button"
               data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
         <i class="icon ion-ios-locked-outline"></i> {{ tr.get('one_way_encrypt_passw') }}
       </button>
-		</div>
-	</div>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-md-12">
@@ -588,7 +588,7 @@
   </div>
 
 
-	<hr>
+  <hr>
   <div class="row">
     <div class="col-sm-3">
       <button class="btn btn-success btn-lg btn-block submit"
@@ -638,12 +638,12 @@
 $('#form-{{ uid }}').on('submit', function(){
   $('#submit-{{ uid }}').button('loading');
   $.post('controller.php?obj=cfg_ctrl&method=save', $(this).serialize(), function(data){
-		admin.message(data.text, data.status);
-		if(data.status === 'success'){
-			admin.tabs.reloadThis('#form-{{ uid }}');
+    admin.message(data.text, data.status);
+    if(data.status === 'success'){
+      admin.tabs.reloadThis('#form-{{ uid }}');
       $('#submit-{{ uid }}').button('reset');
-		}
-	}, 'json');
+    }
+  }, 'json');
 });
 
 $('#form-{{ uid }} button.encrypt').on('click', function(){
@@ -651,45 +651,45 @@ $('#form-{{ uid }} button.encrypt').on('click', function(){
   button.button('loading')
   var pwd = button.parents('.form-group').find('input.pwd');
 
-	if (!pwd.val()){
-		admin.message('Please enter a password to encrypt!', 'error');
-		pwd.focus();
-	} else {
-		$.post('controller.php?obj=log_ctrl&method=encodePwd&echo=true', {'password': pwd.val()}, function(data){
+  if (!pwd.val()){
+    admin.message('Please enter a password to encrypt!', 'error');
+    pwd.focus();
+  } else {
+    $.post('controller.php?obj=log_ctrl&method=encodePwd&echo=true', {'password': pwd.val()}, function(data){
       button.button('reset');
-			pwd.val(data);
-		});
-	}
+      pwd.val(data);
+    });
+  }
 });
 
 $('#cache-{{ uid }}').on('click', function(){
   var btn = $(this);
   btn.button('loading');
-	$.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
-		admin.message(data.text, data.status);
+  $.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
+    admin.message(data.text, data.status);
     btn.button('reset');
-	}, 'json');
+  }, 'json');
 });
 
 $('#trash-{{ uid }}').on('click', function(){
   var btn = $(this);
   btn.button('loading');
-	$.get('controller.php?obj=cfg_ctrl&method=empty_trash', function(data){
-		admin.message(data.text, data.status);
+  $.get('controller.php?obj=cfg_ctrl&method=empty_trash', function(data){
+    admin.message(data.text, data.status);
     btn.button('reset');
-	}, 'json');
+  }, 'json');
 });
 
 $('#htaccess-{{ uid }}').on('click', function(){
   var btn = $(this);
   btn.button('loading');
-	$.get('controller.php?obj=cfg_ctrl&method=update_htaccess', function(data){
-		admin.message(data.text, data.status);
+  $.get('controller.php?obj=cfg_ctrl&method=update_htaccess', function(data){
+    admin.message(data.text, data.status);
     btn.button('reset');
-	}, 'json');
+  }, 'json');
 });
 
 $('.delete-custom_field').on('click', function(){
-	$(this).parents('div.controls').hide().find(':input').val('');
+  $(this).parents('div.controls').hide().find(':input').val('');
 });
 </script>

@@ -51,30 +51,30 @@
 </div>
 
 <script>
-	$('#form-{{ uid }}').submit(function(){
-		$.post('controller.php?obj=sys_translate_ctrl&method=save&param[]={{ context }}', 
+  $('#form-{{ uid }}').submit(function(){
+    $.post('controller.php?obj=sys_translate_ctrl&method=save&param[]={{ context }}', 
       $(this).serialize(), 
       function(data){
-			admin.message(data.text, data.status);
-			if (data.status === 'success'){
-				$('#{{ uid }}')
+      admin.message(data.text, data.status);
+      if (data.status === 'success'){
+        $('#{{ uid }}')
           .parents('div.transl-content')
           .load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lng }}');
-			}
-		}, 'json');
-	});
-	
-	$('#{{ uid }} button.toggleVisible').on('click', function(){
-		$(this).toggleClass('btn-danger');
-		if ($(this).hasClass('btn-danger')){
-			$('#tbl-{{ uid }} tbody tr.error').fadeIn();
-			$('#tbl-{{ uid }} tbody tr:not(.error)').fadeOut();
-			$(this).html("<i class='icon ion-eye'></i> {{ tr.get('show_all_translations') }}")
-		} else {
-			$('#tbl-{{ uid }} tbody tr').fadeIn();
-			$(this).html("<i class='icon ion-eye-disabled'></i> {{ tr.get('show_incomplete_translations') }}")
-		}
-	});
+      }
+    }, 'json');
+  });
+  
+  $('#{{ uid }} button.toggleVisible').on('click', function(){
+    $(this).toggleClass('btn-danger');
+    if ($(this).hasClass('btn-danger')){
+      $('#tbl-{{ uid }} tbody tr.error').fadeIn();
+      $('#tbl-{{ uid }} tbody tr:not(.error)').fadeOut();
+      $(this).html("<i class='icon ion-eye'></i> {{ tr.get('show_all_translations') }}")
+    } else {
+      $('#tbl-{{ uid }} tbody tr').fadeIn();
+      $(this).html("<i class='icon ion-eye-disabled'></i> {{ tr.get('show_incomplete_translations') }}")
+    }
+  });
   
   {% if can_add %}
   $('#{{ uid }} button.addstring').on('click', function(){

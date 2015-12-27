@@ -1,9 +1,9 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			Apr 7, 2013
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      Apr 7, 2013
  */
 
 class customTags
@@ -11,50 +11,50 @@ class customTags
 
 
   public static function parseContent($html)
-	{
+  {
     if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html))
     {
       return $html;
     }
 
     //return customTagParser::do_shortcode($html);
-		preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
+    preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
 
     foreach ($customTags as $customTag)
-		{
+    {
       $attributes = array();
-			$rawAttributes = array();
-			$formatedAttributes = array();
+      $rawAttributes = array();
+      $formatedAttributes = array();
 
-			$originalTag = '/' . preg_quote($customTag[0], '/') . '/';
+      $originalTag = '/' . preg_quote($customTag[0], '/') . '/';
 
-			$tag = $customTag[1];
+      $tag = $customTag[1];
 
-			$rawAttributes = $customTag[2];
+      $rawAttributes = $customTag[2];
 
-			$content = $customTag[3];
+      $content = $customTag[3];
 
-			preg_match_all('/([^=\s]+)="([^"]+)"/', $rawAttributes, $attributes, PREG_SET_ORDER);
+      preg_match_all('/([^=\s]+)="([^"]+)"/', $rawAttributes, $attributes, PREG_SET_ORDER);
 
-			$formatedAttributes['content'] = $content;
+      $formatedAttributes['content'] = $content;
 
-			foreach ($attributes as $attribute)
-			{
-				$formatedAttributes[$attribute[1]] = $attribute[2];
-			}
+      foreach ($attributes as $attribute)
+      {
+        $formatedAttributes[$attribute[1]] = $attribute[2];
+      }
 
-			$formatedAttributes['lang'] =
+      $formatedAttributes['lang'] =
         ( ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ) ?
           $_SESSION['lang'] : false);
 
-			if (method_exists('customTags', $tag))
-			{
-				$replace = call_user_func(array('customTags', $tag), $formatedAttributes);
+      if (method_exists('customTags', $tag))
+      {
+        $replace = call_user_func(array('customTags', $tag), $formatedAttributes);
 
-				$html = preg_replace($originalTag, $replace, $html, 1);
-			}
-			else
-			{
+        $html = preg_replace($originalTag, $replace, $html, 1);
+      }
+      else
+      {
         if (method_exists($tag, 'init'))
         {
           $replace = call_user_func(array($tag, 'init'), $formatedAttributes);
@@ -63,50 +63,50 @@ class customTags
 
           $pending[$tag] = true;
         }
-			}
-		}
+      }
+    }
 
-		if (is_array($pending) && !empty($pending))
-		{
-			foreach ($pending as $obj => $true)
-			{
-				if (method_exists($obj, 'end'))
-				{
-					$html .= call_user_func(array($obj, 'end'));
-				}
-			}
-		}
-		return $html;
-	}
+    if (is_array($pending) && !empty($pending))
+    {
+      foreach ($pending as $obj => $true)
+      {
+        if (method_exists($obj, 'end'))
+        {
+          $html .= call_user_func(array($obj, 'end'));
+        }
+      }
+    }
+    return $html;
+  }
 
   /**
-	 * Displays a user defined form
-	 * @param array $data
-	 *			$data[content]  is the name of the map to display (i.e. the name of the json file with configuration)
-	 *			$data[width],   the width of the map container element (default value: 100%)
+   * Displays a user defined form
+   * @param array $data
+   *      $data[content]  is the name of the map to display (i.e. the name of the json file with configuration)
+   *      $data[width],   the width of the map container element (default value: 100%)
    *      $data[height],  the height of the map container element (default value: 400px)
-	 * @return type
-	 */
-	public static function map($data)
-	{
-		$f = new usermap_ctrl();
+   * @return type
+   */
+  public static function map($data)
+  {
+    $f = new usermap_ctrl();
 
-		return $f->showMap($data);
-	}
+    return $f->showMap($data);
+  }
 
-	/**
-	 * Displays a user defined form
-	 * @param array $data
-	 *			$data[content]	is the name of the form to display (i.e. the name of the json file with configuration)
-	 *			$data[nojs],		if true, no JS code will be printed
-	 * @return type
-	 */
-	public static function userform($data)
-	{
-		$f = new userform_ctrl();
+  /**
+   * Displays a user defined form
+   * @param array $data
+   *      $data[content]  is the name of the form to display (i.e. the name of the json file with configuration)
+   *      $data[nojs],    if true, no JS code will be printed
+   * @return type
+   */
+  public static function userform($data)
+  {
+    $f = new userform_ctrl();
 
-		return $f->showForm($data);
-	}
+    return $f->showForm($data);
+  }
 
   /**
    *
@@ -195,20 +195,20 @@ class customTags
     return $html;
   }
 
-	public static function cl_gallery($data)
-	{
-		return self::format_gallery($data, true);
-	}
+  public static function cl_gallery($data)
+  {
+    return self::format_gallery($data, true);
+  }
 
-	public static function gallery($data)
-	{
-		return self::format_gallery($data);
-	}
+  public static function gallery($data)
+  {
+    return self::format_gallery($data);
+  }
 
-	private static function format_gallery($data, $responsive = false)
-	{
+  private static function format_gallery($data, $responsive = false)
+  {
     $gal = $data['content'];
-		$class = $data['class'];
+    $class = $data['class'];
     $rel = $data['rel'] ? $data['rel'] : $gal;
 
     try
@@ -220,8 +220,8 @@ class customTags
       {
         /**
          * <ul data-rel="sth" class="a b c cl_gallery">
-         * 	<li data-img="img_src" data-thumb="thumb_img_src">caption text</li>
-         * 	...
+         *   <li data-img="img_src" data-thumb="thumb_img_src">caption text</li>
+         *   ...
          * </ul>
          */
         $html .= '<div class="gallery-container">'
@@ -264,7 +264,7 @@ class customTags
       error_log($e->getMessage());
       return false;
     }
-	}
+  }
 
 
   /**
@@ -277,20 +277,20 @@ class customTags
    *  align: left, right, center, default false
    * @return string
    */
-	public static function youTube($data)
-	{
-		$code = $data['content'];
+  public static function youTube($data)
+  {
+    $code = $data['content'];
 
     if (!$code)
     {
       return;
     }
-		$width = $data['width'] ? $data['width'] : 560;
-		$height = $data['height'] ? $data['height'] : 315;
+    $width = $data['width'] ? $data['width'] : 560;
+    $height = $data['height'] ? $data['height'] : 315;
     $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '' ? : '';
     $align = $data['align'];
 
-		return '<div' . ($ratio || $align ? ' class="'
+    return '<div' . ($ratio || $align ? ' class="'
         . ($align ? ' text-' . $align : '')
         . ($ratio ? ' embed-responsive embed-responsive-' . $ratio . '' : '')
         . '"'
@@ -299,42 +299,42 @@ class customTags
         . ( $ratio ? ' class="embed-responsive-item" ' : ' width="' . $width . '" height="' . $height . '" ')
         .'src="http://www.youtube.com/embed/' . $code . '?rel=0" frameborder="0" allowfullscreen></iframe>'
     . '</div>';
-	}
+  }
 
-	public static function vimeo($data)
-	{
-		$code = $data['content'];
-		$width = $data['width'] ? $data['width'] : 560;
-		$height = $data['height'] ? $data['height'] : 315;
+  public static function vimeo($data)
+  {
+    $code = $data['content'];
+    $width = $data['width'] ? $data['width'] : 560;
+    $height = $data['height'] ? $data['height'] : 315;
 
-		return '<iframe src="http://player.vimeo.com/video/' . $code . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-	}
+    return '<iframe src="http://player.vimeo.com/video/' . $code . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+  }
 
 
-	public static function twitter($data)
-	{
-		$user = $data['user'];
-		$widget_id = $data['id'];
-		$content = $data['content'] ? $data['content'] : 'Tweets by @' . $data['user'];
+  public static function twitter($data)
+  {
+    $user = $data['user'];
+    $widget_id = $data['id'];
+    $content = $data['content'] ? $data['content'] : 'Tweets by @' . $data['user'];
 
-		return '<a class="twitter-timeline"  href="https://twitter.com/' . $user . '"  data-widget-id="' . $widget_id . '">' . $content. '</a>' .
-			'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
-	}
+    return '<a class="twitter-timeline"  href="https://twitter.com/' . $user . '"  data-widget-id="' . $widget_id . '">' . $content. '</a>' .
+      '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+  }
 
-	/**
+  /**
    * Requires and initializates Facebook's SDK
    * @param string $lang Two digits language definition
    * @return sting
    */
-	private static function fb_sdk($lang = false)
-	{
+  private static function fb_sdk($lang = false)
+  {
     if (!isset($lang) || !preg_match('/([a-z]{2})_([A-Z]{2})/', $lang))
     {
       $lang = $_SESSION['lang'] ? $_SESSION['lang'] : cfg::get('sys_lang');
       $lang = strtolower($lang) . '_' . strtoupper($lang);
     }
 
-		$html = <<<EOD
+    $html = <<<EOD
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -346,15 +346,15 @@ class customTags
 EOD;
 
     return $html;
-	}
+  }
 
-	/**
+  /**
    * Facebook like box widget (https://developers.facebook.com/docs/plugins/comments
    * @param array $data array of parameters. All parameters are optional
    * @return string
    */
-	public static function fb_comments($data)
-	{
+  public static function fb_comments($data)
+  {
     $url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 
     $html = self::fb_sdk($data['lang']) . '<div class="fb-comments" data-href="' . $url . '" ';
@@ -369,21 +369,21 @@ EOD;
 
     return $html;
 
-	}
+  }
 
-	/**
+  /**
    * Facebook follow button widget (https://developers.facebook.com/docs/plugins/follow-button
    * @param array $data array of parameters. All parameters, except content (or href) are optional
    * @return string
    */
-	public static function fb_follow($data)
-	{
+  public static function fb_follow($data)
+  {
     if (!$data['href'] && !$data['content'])
     {
       return false;
     }
 
-		$html = self::fb_sdk($data['lang'])
+    $html = self::fb_sdk($data['lang'])
       . '<div class="fb-follow" data-href="' . ($data['href'] ? $data['href'] : $data['content']) . '" ';
 
     foreach (array('colorscheme', 'kid_directed_site', 'layout', 'show_faces', 'width') as $el)
@@ -394,23 +394,23 @@ EOD;
     }
     $html .= '></div>';
 
-		return $html;
-	}
+    return $html;
+  }
 
   /**
    * Facebook like box widget (https://developers.facebook.com/docs/plugins/like-box-for-pages)
    * @param array $data array of parameters. All parameters except href are optional
    * @return string
    */
-	public static function fb_like_box($data)
-	{
+  public static function fb_like_box($data)
+  {
     if (!$data['href'] && !$data['content'])
     {
       return;
     }
-		$html = self::fb_sdk($data['lang'])
+    $html = self::fb_sdk($data['lang'])
       . '<div class="fb-like-box" ' .
-				' data-href="' . ($data['content'] ? $data['content'] : $data['href']) . '" ';
+        ' data-href="' . ($data['content'] ? $data['content'] : $data['href']) . '" ';
     foreach (array('colorscheme', 'force_wall', 'header', 'height', 'show_border', 'show_faces', 'stream', 'width') as $el)
     {
       if ($data[$el]){
@@ -419,18 +419,18 @@ EOD;
     }
     $html .= '></div>';
     return $html;
-	}
+  }
 
-	/**
+  /**
    * Facebook like button widget https://developers.facebook.com/docs/plugins/like-button
    * @param array $data array of parameters. All parameters, except content (or href) are optional
    * @return string
    */
   public static function fb_like($data)
-	{
-		$url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+  {
+    $url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 
-		$html = self::fb_sdk($data['lang'])
+    $html = self::fb_sdk($data['lang'])
       . '<div class="fb-like" data-href="' . $url . '" ';
 
     foreach (array('action', 'colorscheme', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces', 'width') as $el)
@@ -441,18 +441,18 @@ EOD;
     }
     $html .= '></div>';
 
-		return $html;
-	}
+    return $html;
+  }
 
-	public static function fb_send($data)
-	{
-		return self::fb_sdk($data['lang']) . '<div class="fb-like" ' .
-				' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
-				($data['font'] ? ' data-font="' . $data['font'] . '" ' : '') .
-				($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
-				($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
-				' ></div>';
-	}
+  public static function fb_send($data)
+  {
+    return self::fb_sdk($data['lang']) . '<div class="fb-like" ' .
+        ' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
+        ($data['font'] ? ' data-font="' . $data['font'] . '" ' : '') .
+        ($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
+        ($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
+        ' ></div>';
+  }
 
   private static function twitt_sdk()
   {
@@ -520,19 +520,19 @@ EOD;
     return $html;
   }
 
-	/**
-	 *
-	 * @param array $data
+  /**
+   *
+   * @param array $data
    *      pubid: public id string provided by addthis.
    *      content: html to show. Default: addthis small image
    *      only_js: if true no html will be showed
-	 * @return string
-	 */
-	public static function addThis($data)
-	{
+   * @return string
+   */
+  public static function addThis($data)
+  {
     $pubid = $data['pubid'] ? $data['pubid'] : 'pubid=ra-4d8b051f4951c18f';
 
-		return ( $data['only_js'] ? '' :
+    return ( $data['only_js'] ? '' :
       ( $data['content'] ?
         '<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=' . $pubid . '">' . $data['content'] . '</a>'
         :
@@ -540,72 +540,72 @@ EOD;
       )
       )
       . '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $pubid . '" async="async"></script>';
-	}
-
-	/**
-	 *
-	 * @param array $data
-	 * 					content*: skype username
-	 * 					type: call, chat, dropdown. Default: call
-	 * 					imageSize: 10, 12, 14, 16, 24, 32. Default: 32
-	 * @return string
-	 */
-	public static function skype($data)
-	{
-		$uid = uniqid('skype');
-
-		return '<script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>' .
-			'<div id="' . $uid . '">' .
-				'<script type="text/javascript">' .
-					'Skype.ui({' .
-						'"name": "' . ( $data['type'] ? $data['type'] : 'call' ) . '",' .
-						'"element": "' . $uid . '",' .
-						'"participants": ["' . $data['content'] . '"],' .
-						'"imageSize": ' . ( $data['imageSize'] ? $data['imageSize'] : '32' ) . '' .
-					'});' .
-				'</script>' .
-			'</div>';
-	}
-
-	/**
-	 *
-	 * @param array $data
-	 * 		content*: file url
-	 * 		width: widget's width, default 100%
-	 * 		height: widget's height, default 166
-	 * 		color: widget's color, default #ff6600
-	 * 		autoplay: if true autoplay will be enabled, default false
-	 * 		artwork: if true artwork will be shown, default false
-	 * @return string
-	 */
-	public static function soundcloud($data)
-	{
-		return '<iframe ' .
-			' width="' . ($data['width'] ? $data['width'] : '100%') . '" ' .
-			' height="' . ($data['height'] ? $data['height'] : '166') . '" scrolling="no" ' .
-			' frameborder="no" ' .
-			' src="https://w.soundcloud.com/player/?' .
-				'url=' . $data['content'] . '&amp;' .
-				'color=' . ( $data['color'] ? $data['color'] : '#ff6600') . '&amp;' .
-				'auto_play=' . ( ($data['autoplay'] && $data['autoplay'] != 'false' ) ?  'true' : 'false') . '&amp;' .
-				'show_artwork=' . ( ($data['artwork'] && $data['artwork'] != 'false' ) ?  'true' : 'false') . '">' .
-		'</iframe>';
-	}
+  }
 
   /**
-	 *
-	 * @param array $data
-	 * 		path*: image file relative url
-	 * 		width:	main div (container) width
-	 * 		content: image caption
+   *
+   * @param array $data
+   *           content*: skype username
+   *           type: call, chat, dropdown. Default: call
+   *           imageSize: 10, 12, 14, 16, 24, 32. Default: 32
+   * @return string
+   */
+  public static function skype($data)
+  {
+    $uid = uniqid('skype');
+
+    return '<script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>' .
+      '<div id="' . $uid . '">' .
+        '<script type="text/javascript">' .
+          'Skype.ui({' .
+            '"name": "' . ( $data['type'] ? $data['type'] : 'call' ) . '",' .
+            '"element": "' . $uid . '",' .
+            '"participants": ["' . $data['content'] . '"],' .
+            '"imageSize": ' . ( $data['imageSize'] ? $data['imageSize'] : '32' ) . '' .
+          '});' .
+        '</script>' .
+      '</div>';
+  }
+
+  /**
+   *
+   * @param array $data
+   *     content*: file url
+   *     width: widget's width, default 100%
+   *     height: widget's height, default 166
+   *     color: widget's color, default #ff6600
+   *     autoplay: if true autoplay will be enabled, default false
+   *     artwork: if true artwork will be shown, default false
+   * @return string
+   */
+  public static function soundcloud($data)
+  {
+    return '<iframe ' .
+      ' width="' . ($data['width'] ? $data['width'] : '100%') . '" ' .
+      ' height="' . ($data['height'] ? $data['height'] : '166') . '" scrolling="no" ' .
+      ' frameborder="no" ' .
+      ' src="https://w.soundcloud.com/player/?' .
+        'url=' . $data['content'] . '&amp;' .
+        'color=' . ( $data['color'] ? $data['color'] : '#ff6600') . '&amp;' .
+        'auto_play=' . ( ($data['autoplay'] && $data['autoplay'] != 'false' ) ?  'true' : 'false') . '&amp;' .
+        'show_artwork=' . ( ($data['artwork'] && $data['artwork'] != 'false' ) ?  'true' : 'false') . '">' .
+    '</iframe>';
+  }
+
+  /**
+   *
+   * @param array $data
+   *     path*: image file relative url
+   *     width:  main div (container) width
+   *     content: image caption
    *    fancybox: boolean, if true the thumbnail will be displayed and the original file will be shown on click
-	 * 		align: image alignent (left|right)
-	 * 		href: href of image link
-	 * 		href_class: css class of href link
+   *     align: image alignent (left|right)
+   *     href: href of image link
+   *     href_class: css class of href link
    *    gal: string or false. If true the string will be used as rel attribute to create fancybox galleries
-	 *
-	 * @return string
-	 */
+   *
+   * @return string
+   */
   public static function fig($data)
   {
     $new_data = array();
@@ -628,21 +628,21 @@ EOD;
   }
 
 
-	/**
-	 *
-	 * @param array $data
-	 * 		content*: image file relative url
-	 * 		width:	main div (container) width
-	 * 		caption: image caption
+  /**
+   *
+   * @param array $data
+   *     content*: image file relative url
+   *     width:  main div (container) width
+   *     caption: image caption
    *    fancybox: boolean, if true the thumbnail will be displayed and the original file will be shown on click
-	 * 		align: image alignent (left|right)
-	 * 		href: href of image link
-	 * 		href_class: css class of href link
-	 *
-	 * @return string
-	 */
-	public static function figure($data)
-	{
+   *     align: image alignent (left|right)
+   *     href: href of image link
+   *     href_class: css class of href link
+   *
+   * @return string
+   */
+  public static function figure($data)
+  {
     // Look for file inside images/articles OR images/ folder
     if (file_exists('./sites/default/images/articles/' . $data['content']))
     {
@@ -685,7 +685,7 @@ EOD;
 
     // Set figure_width if width or align attributes are privided
     if ($data['align'] || $data['width'])
-		{
+    {
       if ($data['width'])
       {
         $figure_width = $data['width'];
@@ -695,12 +695,12 @@ EOD;
         $file_dim = getimagesize($filename);
         $figure_width = $file_dim[0] . 'px';
       }
-		}
+    }
 
 
-		$html = '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" '
+    $html = '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" '
       . ($figure_width ? ' style="max-width: ' . $figure_width . '"' : '') . '>' .
-			'<div class="image">';
+      '<div class="image">';
 
     if ($dest_file || $data['href'])
     {
@@ -720,68 +720,68 @@ EOD;
       $html .= '</a>';
     }
     $html .= '</div>' .
-			($data['caption'] ?
-					'<div class="caption">' . $data['caption'] . '</div>'
-					:
-					'') .
-		'</div>';
+      ($data['caption'] ?
+          '<div class="caption">' . $data['caption'] . '</div>'
+          :
+          '') .
+    '</div>';
 
     return $html;
-	}
+  }
 
-	/**
-	 *
-	 * @param array $data
-	 * 			content*: prezi id
-	 * 			width
-	 * 			height
-	 * 			bgcolor
-	 * 			lock_to_path
-	 * 			autoplay
-	 * 			autohide_ctrls
-	 * @return string
-	 */
-	public static function prezi($data)
-	{
-		$html = '<iframe ' .
-			'src="http://prezi.com/embed/' . $data['content'] . '/?' .
-			'bgcolor=' . ($data['bgcolor'] ? $data['bgcolor'] : 'ffffff') . '&amp;' .
-			'lock_to_path=' . ( $data['lock_to_path'] ? $data['lock_to_path'] : '0') . '&amp;' .
-			'autoplay=' . ($data['autoplay'] ? $data['autoplay'] : '0') . '&amp;' .
-			'autohide_ctrls=' . ($data['autohide_ctrls'] ? $data['autohide_ctrls'] : '0') . '&amp;' .
-			'features=undefined&amp;disabled_features=undefined" ' .
-			'width="' . ( $data['width'] ? $data['width'] : '550') . '" ' .
-			'height="' . ( $data['height'] ? $data['height'] : '550') . '" ' .
-			'frameBorder="0"></iframe>';
+  /**
+   *
+   * @param array $data
+   *       content*: prezi id
+   *       width
+   *       height
+   *       bgcolor
+   *       lock_to_path
+   *       autoplay
+   *       autohide_ctrls
+   * @return string
+   */
+  public static function prezi($data)
+  {
+    $html = '<iframe ' .
+      'src="http://prezi.com/embed/' . $data['content'] . '/?' .
+      'bgcolor=' . ($data['bgcolor'] ? $data['bgcolor'] : 'ffffff') . '&amp;' .
+      'lock_to_path=' . ( $data['lock_to_path'] ? $data['lock_to_path'] : '0') . '&amp;' .
+      'autoplay=' . ($data['autoplay'] ? $data['autoplay'] : '0') . '&amp;' .
+      'autohide_ctrls=' . ($data['autohide_ctrls'] ? $data['autohide_ctrls'] : '0') . '&amp;' .
+      'features=undefined&amp;disabled_features=undefined" ' .
+      'width="' . ( $data['width'] ? $data['width'] : '550') . '" ' .
+      'height="' . ( $data['height'] ? $data['height'] : '550') . '" ' .
+      'frameBorder="0"></iframe>';
 
-		return $html;
-	}
+    return $html;
+  }
 
 
-	/**
+  /**
    * Enables Disqus comments in page. Disqus shortname should be provided as tag content
-	 * @param array $data
-	 *		content: (required) site shortname in disqus
-	 * @example [[disqus]]cliffyoungltd[[/disqus]]
-	 */
-	public static function disqus($data)
-	{
+   * @param array $data
+   *    content: (required) site shortname in disqus
+   * @example [[disqus]]cliffyoungltd[[/disqus]]
+   */
+  public static function disqus($data)
+  {
     if (!$data['content'])
     {
       return false;
     }
 
-		$html = '<div id="disqus_thread"></div>' .
-						'<script type="text/javascript">' .
-							"var disqus_shortname = '{$data['content']}';" .
-							"(function() {" .
-								"var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;" .
-								"dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';" .
-								"(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);" .
-						"})();" .
-					"</script>";
-	return $html;
-	}
+    $html = '<div id="disqus_thread"></div>' .
+            '<script type="text/javascript">' .
+              "var disqus_shortname = '{$data['content']}';" .
+              "(function() {" .
+                "var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;" .
+                "dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';" .
+                "(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);" .
+            "})();" .
+          "</script>";
+  return $html;
+  }
 
 
   /**

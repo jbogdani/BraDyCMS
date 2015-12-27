@@ -68,12 +68,12 @@
     
     
     $.get('controller.php?obj=template_ctrl&method=create_file&param[]=' + file, function(data){
-			admin.message(data.text, data.status);
+      admin.message(data.text, data.status);
       
       if (data.status === 'success'){
         admin.tabs.reloadThis('#{{ uid }}');
       }
-		}, 'json');
+    }, 'json');
     
     
     

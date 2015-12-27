@@ -2,10 +2,10 @@
 
 /**
  * Manages tags
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net, Julian Bogdani <jbogdani@gmail.com>
- * @license			See file LICENSE distributed with this code
- * @since				Jan 2, 2015
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net, Julian Bogdani <jbogdani@gmail.com>
+ * @license      See file LICENSE distributed with this code
+ * @since        Jan 2, 2015
  */
 
 class Tag
@@ -18,7 +18,7 @@ class Tag
   {
     return R::getCol('SELECT `title` FROM `' . PREFIX. 'tag` ORDER BY `title` ASC');
   }
-    
+
   /**
    * Returns complete array of tags (id + title)
    * @return array|false
@@ -27,7 +27,7 @@ class Tag
   {
     return R::getAll('SELECT * FROM `' . PREFIX. 'tag` ORDER BY `title` ASC');
   }
-  
+
   /**
    * Adds new tag
    * @param sting $title
@@ -37,7 +37,7 @@ class Tag
   {
     return R::exec( 'INSERT INTO `' . PREFIX . 'tag` (`title`) VALUES (?)', array($title) );
   }
-  
+
   /**
    * Deletes a tag
    * @param int $tagId Tag id
@@ -48,7 +48,7 @@ class Tag
     return (R::exec( 'DELETE FROM `' . PREFIX . 'tag` WHERE `id` = ?', array($tagId) ) ||
       Article::deleteUnusedTags());
   }
-  
+
   /**
    * Rename a tag's title
    * @param string $title New title
@@ -59,7 +59,7 @@ class Tag
   {
     return R::exec( 'UPDATE `' . PREFIX . 'tag` SET `title`= ? WHERE id = ?', array($title, $tagId) );
   }
-  
+
 }
 
 ?>

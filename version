@@ -1,4 +1,5 @@
-3.10.0.[] = "Assets uses link class to resolve path to root"
+3.10.0[] = "Hard tabs replaced with soft tabs"
+3.10.0[] = "Assets uses link class to resolve path to root"
 3.10.0[] = "Added new custom tag: gplus_plusone"
 3.10.0[] = "Solved bug with OutHtml::asset non getting correctly config value for cdn usage"
 3.10.0[] = "New site's frontend.js updated"

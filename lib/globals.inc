@@ -1,16 +1,16 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			05/mar/2011
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      05/mar/2011
  */
 
 session_start();
 
 if (@!$root)
 {
-	$root = './';
+  $root = './';
 }
 
 define('MAIN_DIR', $root);
@@ -48,7 +48,7 @@ if (!file_exists(MAIN_DIR . 'logs/users.log'))
   {
     @rename('sites/default/users.log', MAIN_DIR . 'logs/users.log');
   }
-  
+
   if (!file_exists(MAIN_DIR . 'logs/users.log'))
   {
     @touch(MAIN_DIR . 'logs/users.log');
@@ -72,7 +72,7 @@ if (!defined('MAIN_DIR') && !file_exists(MAIN_DIR . 'logs/logAttempts.log'))
 // SETS ERROR REPORTING
 $err_code = 6135; // E_ALL & ~E_NOTICE, i.e.: 6143 (E_ALL) - 8 (E_NOTICE)
 
-( ini_get('error_reporting') <> $err_code )	?	ini_set('error_reporting', $err_code) : '';
+( ini_get('error_reporting') <> $err_code )  ?  ini_set('error_reporting', $err_code) : '';
 
 ini_set('error_log', './logs/error.log');
 
@@ -81,32 +81,32 @@ ini_set('display_errors', 'off');
 
 if (@$_GET['lang'])
 {
-	$_SESSION['lang'] = $_GET['lang'];
+  $_SESSION['lang'] = $_GET['lang'];
 }
 
 if (get_magic_quotes_gpc())
 {
-	$process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+  $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
 
-	while (list($key, $val) = each($process))
-	{
-		foreach ($val as $k => $v)
-		{
-			unset($process[$key][$k]);
-				
-			if (is_array($v))
-			{
-				$process[$key][stripslashes($k)] = $v;
+  while (list($key, $val) = each($process))
+  {
+    foreach ($val as $k => $v)
+    {
+      unset($process[$key][$k]);
 
-				$process[] = &$process[$key][stripslashes($k)];
-			}
-			else
-			{
-				$process[$key][stripslashes($k)] = stripslashes($v);
-			}
-		}
-	}
-	unset($process);
+      if (is_array($v))
+      {
+        $process[$key][stripslashes($k)] = $v;
+
+        $process[] = &$process[$key][stripslashes($k)];
+      }
+      else
+      {
+        $process[$key][stripslashes($k)] = stripslashes($v);
+      }
+    }
+  }
+  unset($process);
 }
 
 require_once $root . 'lib/Autoloader.inc';
@@ -122,14 +122,14 @@ if (defined('CREATE_SITE') || !cfg::get('timezone'))
 }
 else
 {
-	date_default_timezone_set(cfg::get('timezone'));
+  date_default_timezone_set(cfg::get('timezone'));
 }
 
-!defined('CREATE_SITE') ? define ( 'PREFIX',	cfg::get('prefix') ) : '';
+!defined('CREATE_SITE') ? define ( 'PREFIX',  cfg::get('prefix') ) : '';
 !defined('CREATE_SITE') ? define ( 'SYS_LANG',cfg::get('default_lang') ) : '';
 define ( 'MOD_DIR', MAIN_DIR . 'modules/');
 define ( 'LIB_DIR', MAIN_DIR . 'lib/');
-define ( 'ERR_LOG',	MAIN_DIR . 'logs/error.log');
+define ( 'ERR_LOG',  MAIN_DIR . 'logs/error.log');
 define ( 'TMP_DIR', MAIN_DIR . 'tmp/');
 define ( 'LOCALE_DIR', MAIN_DIR . 'locale/');
 define ( 'SITE_DIR', MAIN_DIR . 'sites/default/');
@@ -143,11 +143,11 @@ define ( 'CACHE_DIR', MAIN_DIR . 'cache/');
 
 if (defined('CREATE_SITE') || $_SESSION['debug'])
 {
-	define('CACHE', serialize(array('debug' => true)));
+  define('CACHE', serialize(array('debug' => true)));
 }
 else
 {
-	define('CACHE', serialize(array('cache' => CACHE_DIR)));
+  define('CACHE', serialize(array('cache' => CACHE_DIR)));
 }
 tr::load_file(@$_GET['lang'], defined('CREATE_SITE'));
 

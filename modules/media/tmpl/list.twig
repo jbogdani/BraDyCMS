@@ -1,12 +1,12 @@
 <div id="{{ uid }}">
-	{% if error_create %}
-		<div class="alert alert-danger">{{ error_create|raw }}</div>
-	{% endif%}
+  {% if error_create %}
+    <div class="alert alert-danger">{{ error_create|raw }}</div>
+  {% endif%}
 
-	{% set part_path = '' %}
+  {% set part_path = '' %}
 
 
-	<div class="clearfix well well-sm">
+  <div class="clearfix well well-sm">
     
     <button class="btn btn-success btn-sm" title="{{ tr.get('reload') }}" 
             onclick="admin.tabs.reloadThis(this);">
@@ -40,7 +40,7 @@
         </span>
       </div>
     </div>
-	</div>
+  </div>
     
   <div class="row">
     <div class="col-sm-4">
@@ -69,61 +69,61 @@
     
 
 
-	
+  
 
-	{% if rel_path and files|length ==0 %}
-	<!-- Delete directory button -->
-	<p style="text-align: center">
-		<button class="btn btn-danger btn-lg deleteFolder">
-			<i class="icon ion-trash-a"></i> {{ tr.get('delete_directory') }}
-		</button>
-	</p>
+  {% if rel_path and files|length ==0 %}
+  <!-- Delete directory button -->
+  <p style="text-align: center">
+    <button class="btn btn-danger btn-lg deleteFolder">
+      <i class="icon ion-trash-a"></i> {{ tr.get('delete_directory') }}
+    </button>
+  </p>
 
-	{% else %}
-	<!-- Media list UL -->
-	<ul class="mediaList" id="media-{{ uid }}">
-	{% for file in files %}
+  {% else %}
+  <!-- Media list UL -->
+  <ul class="mediaList" id="media-{{ uid }}">
+  {% for file in files %}
 
-		{# Folders #}
-		{% if file.type == 'folder' %}
-		<li class="img">
-			<a data-href="media/all/{{ file.href }}" href="javascript:void(0)" class="navigation">
-				<i class="icon ion-folder{% if file.name == 'thumbs' %} thumbs{% endif %}"></i>
-				<div class="caption searcheable">{{ file.name }}</div>
-			</a>
-		</li>
-		{% endif %}
+    {# Folders #}
+    {% if file.type == 'folder' %}
+    <li class="img">
+      <a data-href="media/all/{{ file.href }}" href="javascript:void(0)" class="navigation">
+        <i class="icon ion-folder{% if file.name == 'thumbs' %} thumbs{% endif %}"></i>
+        <div class="caption searcheable">{{ file.name }}</div>
+      </a>
+    </li>
+    {% endif %}
 
 
-		{# Files #}
-		{% if file.type == 'file' %}
-		<li class="openpop img"
-			data-file="{{ file.href }}"
-			data-name="{{ file.name }}" 
-			{% if file.image %}
-			data-image="true"
-			{% endif %}
-			>
-			<div class="img-wrapper">
-				<img src="{{ file.src }}" />
-			</div>
+    {# Files #}
+    {% if file.type == 'file' %}
+    <li class="openpop img"
+      data-file="{{ file.href }}"
+      data-name="{{ file.name }}" 
+      {% if file.image %}
+      data-image="true"
+      {% endif %}
+      >
+      <div class="img-wrapper">
+        <img src="{{ file.src }}" />
+      </div>
 
-			<div class="caption searcheable">{{ file.name }}</div>
-		</li>
-		{% endif%}
-	{% endfor %}
-	</ul>
-	{% endif %}
+      <div class="caption searcheable">{{ file.name }}</div>
+    </li>
+    {% endif%}
+  {% endfor %}
+  </ul>
+  {% endif %}
 </div>
 
 
 <script>
-	
-	$('#{{ uid }} .navigation').on('click', function(){
-		admin.tabs.closeActive($(this).data('href'));
-	});
-	
-	admin.upload(
+  
+  $('#{{ uid }} .navigation').on('click', function(){
+    admin.tabs.closeActive($(this).data('href'));
+  });
+  
+  admin.upload(
     $('#file-uploader_{{ uid }}')[0],
     'controller.php?obj=utils&method=upload&param[]={{ path }}',
     {
@@ -133,50 +133,50 @@
     }
   );
 
-	$('#{{ uid }} li.openpop').popover({
-		html:true,
+  $('#{{ uid }} li.openpop').popover({
+    html:true,
     content:function(){
-			var file = $(this).data('file');
+      var file = $(this).data('file');
       var name = $(this).data('name');
       var is_image = $(this).data('image');
-			
-			return $('<div />').append(
-					'File URL:',
-					'<input type="text" value="./sites/default/images/' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
-					$('<div />').addClass('input-append'),
-					$('<div class="btn-group"></div>').append(
-						'<a class="btn btn-default" target="_blank" href="{{ path }}/' + name + '" title="{{ tr.get('open_download') }}"><i class="icon big ion-arrow-down-c"></i></a>',
-						( is_image ? $('<a href="#media/edit/{{ rel_path }}/' + name + '" class="btn btn-default" title="{{ tr.get('edit_file') }}"><i class="icon big ion-settings"></i>') : ''),
-						$('<a class="btn btn-danger" href="javascript:void(0);" title="{{ tr.get('delete') }}"><i class="icon big ion-trash-a"></i>')
-							.click(function(){
-								admin.media.deleteFile('{{ rel_path }}/' + name);
-							})
-							)
-						);
-		},
-		title: function(){
-			return  '<h5>' + $(this).data('name') + '</h5>';
-		}
-	});
-	
-	$('#{{ uid }} .newFolder').click(function(){
-		var val = $('#{{ uid }} .folderName').val();
-		if (!val){
-			admin.message('{{ tr.get('missing_directory_name') }}', 'error');
-			$(this).prev().focus();
-		} else {
-			admin.media.go2dir({% if rel_path %}'{{ rel_path }}/' + {% endif %}val);
-		}
-	});
-	
-	
-	$('#{{ uid }} .deleteFolder').click(function(){
-		admin.media.deleteDir('{{ rel_path }}');
-	});
-	
-	$('#input_{{ uid }}').on('keyup', function(){
-		admin.media.filterDir($(this).val(), '{{ uid }}');
-	});
+      
+      return $('<div />').append(
+          'File URL:',
+          '<input type="text" value="./sites/default/images/' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
+          $('<div />').addClass('input-append'),
+          $('<div class="btn-group"></div>').append(
+            '<a class="btn btn-default" target="_blank" href="{{ path }}/' + name + '" title="{{ tr.get('open_download') }}"><i class="icon big ion-arrow-down-c"></i></a>',
+            ( is_image ? $('<a href="#media/edit/{{ rel_path }}/' + name + '" class="btn btn-default" title="{{ tr.get('edit_file') }}"><i class="icon big ion-settings"></i>') : ''),
+            $('<a class="btn btn-danger" href="javascript:void(0);" title="{{ tr.get('delete') }}"><i class="icon big ion-trash-a"></i>')
+              .click(function(){
+                admin.media.deleteFile('{{ rel_path }}/' + name);
+              })
+              )
+            );
+    },
+    title: function(){
+      return  '<h5>' + $(this).data('name') + '</h5>';
+    }
+  });
+  
+  $('#{{ uid }} .newFolder').click(function(){
+    var val = $('#{{ uid }} .folderName').val();
+    if (!val){
+      admin.message('{{ tr.get('missing_directory_name') }}', 'error');
+      $(this).prev().focus();
+    } else {
+      admin.media.go2dir({% if rel_path %}'{{ rel_path }}/' + {% endif %}val);
+    }
+  });
+  
+  
+  $('#{{ uid }} .deleteFolder').click(function(){
+    admin.media.deleteDir('{{ rel_path }}');
+  });
+  
+  $('#input_{{ uid }}').on('keyup', function(){
+    admin.media.filterDir($(this).val(), '{{ uid }}');
+  });
   
   $('#{{ uid }} .makeThumbs').on('click', function(){
     admin.dialog({

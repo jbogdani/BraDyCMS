@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2014 
- * @license			All rights reserved
- * @since				Feb 28, 2014
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2014 
+ * @license      All rights reserved
+ * @since        Feb 28, 2014
  */
 
 class seo_ctrl extends Controller

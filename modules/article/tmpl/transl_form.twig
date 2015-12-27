@@ -1,67 +1,67 @@
 <h3>{{ tr.sget('translate_article_in', lang.string|upper) }}</h3>
 <form action="javascript:void(0)" id ="form{{ uid }}">
 
-	<input type="hidden" name="id" value="{{ transl.id }}" />
+  <input type="hidden" name="id" value="{{ transl.id }}" />
   <input type="hidden" name="lang" value="{{ lang.id }}" />
-	<!-- STATUS -->
-	<div class="row form-group">
-		<div class="col-sm-1"><label>Status</label></div>
-		<div class="col-sm-2 col-sm-offset-5">
-			<select name="status">
-				<option{% if transl.status == false %} selected="selected"{% endif %} value="0">{{ tr.get('not_translated') }}</option>
-				<option{% if transl.status %} selected="selected"{% endif %} value="1">{{ tr.get('translated') }}</option>
-			</select>
-		</div>
-	</div>
+  <!-- STATUS -->
+  <div class="row form-group">
+    <div class="col-sm-1"><label>Status</label></div>
+    <div class="col-sm-2 col-sm-offset-5">
+      <select name="status">
+        <option{% if transl.status == false %} selected="selected"{% endif %} value="0">{{ tr.get('not_translated') }}</option>
+        <option{% if transl.status %} selected="selected"{% endif %} value="1">{{ tr.get('translated') }}</option>
+      </select>
+    </div>
+  </div>
 
-	<!-- TITLE -->
-	<div class="row form-group">
-		<div class="col-sm-1"><label>Title</label></div>
-		<div class="col-sm-4">
-			<div class="well orig">{{ art.title }}</div>
-		</div>
-		<div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
-		<div class="col-sm-6 transl">
-			<input type="text" name="title" value="{{ transl.title }}" />
-		</div>
-	</div>
-
-	<!-- Keywords -->
-	<div class="row form-group">
-		<div class="col-sm-1"><label>Keywords</label></div>
-		<div class="col-sm-4">
-			<div class="well orig" style="overflow: auto; height: 100px;">{{ art.keywords }}</div>
-		</div>
-		<div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
-		<div class="col-sm-6 transl">
-			<textarea name="keywords" style="width:100%; height: 100px;">{{ transl.keywords }}</textarea>
-		</div>
-	</div>
-
-
-	<!-- SUMMARY -->
-	<div class="row form-group">
-		<div class="col-sm-1"><label>Summary</label></div>
-		<div class="col-sm-4">
-			<div class="well orig" style="overflow: auto; height: 200px;">{{ art.summary|raw }}</div>
-		</div>
+  <!-- TITLE -->
+  <div class="row form-group">
+    <div class="col-sm-1"><label>Title</label></div>
+    <div class="col-sm-4">
+      <div class="well orig">{{ art.title }}</div>
+    </div>
     <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
-		<div class="col-sm-6 transl">
-			<textarea name="summary" class="tiny" id="summary{{ uid }}" style="width: 100%; height: 200px;">{{ transl.summary }}</textarea>
-		</div>
-	</div>
+    <div class="col-sm-6 transl">
+      <input type="text" name="title" value="{{ transl.title }}" />
+    </div>
+  </div>
 
-	<!-- TEXT -->
-	<div class="row form-group">
-		<div class="col-sm-1"><label>Text</label></div>
-		<div class="col-sm-4">
-			<div class="well orig" style="overflow: auto; height: 300px;">{{ art.text|raw }}</div>
-		</div>
-		<div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
-		<div class="col-sm-6 transl">
-			<textarea name="text" class="tiny" id="text{{ uid }}" style="width: 100%; height: 300px;">{{ transl.text }}</textarea>
-		</div>
-	</div>
+  <!-- Keywords -->
+  <div class="row form-group">
+    <div class="col-sm-1"><label>Keywords</label></div>
+    <div class="col-sm-4">
+      <div class="well orig" style="overflow: auto; height: 100px;">{{ art.keywords }}</div>
+    </div>
+    <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
+    <div class="col-sm-6 transl">
+      <textarea name="keywords" style="width:100%; height: 100px;">{{ transl.keywords }}</textarea>
+    </div>
+  </div>
+
+
+  <!-- SUMMARY -->
+  <div class="row form-group">
+    <div class="col-sm-1"><label>Summary</label></div>
+    <div class="col-sm-4">
+      <div class="well orig" style="overflow: auto; height: 200px;">{{ art.summary|raw }}</div>
+    </div>
+    <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
+    <div class="col-sm-6 transl">
+      <textarea name="summary" class="tiny" id="summary{{ uid }}" style="width: 100%; height: 200px;">{{ transl.summary }}</textarea>
+    </div>
+  </div>
+
+  <!-- TEXT -->
+  <div class="row form-group">
+    <div class="col-sm-1"><label>Text</label></div>
+    <div class="col-sm-4">
+      <div class="well orig" style="overflow: auto; height: 300px;">{{ art.text|raw }}</div>
+    </div>
+    <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
+    <div class="col-sm-6 transl">
+      <textarea name="text" class="tiny" id="text{{ uid }}" style="width: 100%; height: 300px;">{{ transl.text }}</textarea>
+    </div>
+  </div>
 
   <!-- CUSTOM FIELDS -->
   {% if custom_fields %}
@@ -85,49 +85,49 @@
       {% endif %}
     {% endfor %}
   {% endif %}
-	<p>
-		<button type="submit" class="btn btn-success">{{ tr.get('save') }}</button>
-		<button type="reset" class="btn btn-default">{{ tr.get('reset') }}</button>
-	</p>
+  <p>
+    <button type="submit" class="btn btn-success">{{ tr.get('save') }}</button>
+    <button type="reset" class="btn btn-default">{{ tr.get('reset') }}</button>
+  </p>
 
 </form>
 
 <script>
-	admin.wysiwyg.add("summary{{ uid }}");
-	admin.wysiwyg.add("text{{ uid }}");
-	{% if custom_fields %}
-		{% for field in custom_fields %}
-			admin.wysiwyg.add("richtext{{ uid ~ field.name }}");
-		{% endfor %}
-	{% endif %}
+  admin.wysiwyg.add("summary{{ uid }}");
+  admin.wysiwyg.add("text{{ uid }}");
+  {% if custom_fields %}
+    {% for field in custom_fields %}
+      admin.wysiwyg.add("richtext{{ uid ~ field.name }}");
+    {% endfor %}
+  {% endif %}
 
-	$('#form{{ uid }}').on('submit', function(){
+  $('#form{{ uid }}').on('submit', function(){
 
-  	admin.wysiwyg.preSave();
+    admin.wysiwyg.preSave();
 
-		$.post(
-				'controller.php?obj=article_ctrl&method=saveTransl&param[]={{ art.id }}',
-				$('#form{{ uid }}').serialize(),
-				function(data){
-					admin.message(data.text, data.status);
+    $.post(
+        'controller.php?obj=article_ctrl&method=saveTransl&param[]={{ art.id }}',
+        $('#form{{ uid }}').serialize(),
+        function(data){
+          admin.message(data.text, data.status);
 
-					if (data.status == 'success'){
-						admin.tabs.closeActive('article/translate/{{ lang.id }}/{{ art.id }}');
-					}
-				},
-				'json'
-			);
-	});
+          if (data.status == 'success'){
+            admin.tabs.closeActive('article/translate/{{ lang.id }}/{{ art.id }}');
+          }
+        },
+        'json'
+      );
+  });
 
-	$('#form{{ uid }} .copy').on('click', function(){
-		var text = $(this).parents('.form-group').find('.orig').html();
-		input = $(this).parents('.form-group').find('.transl > :input');
+  $('#form{{ uid }} .copy').on('click', function(){
+    var text = $(this).parents('.form-group').find('.orig').html();
+    input = $(this).parents('.form-group').find('.transl > :input');
 
-		if (input.hasClass('tiny')){
-	    admin.wysiwyg.setValue(input.attr('id'), text);
-		} else {
-			input.val(text);
-		}
+    if (input.hasClass('tiny')){
+      admin.wysiwyg.setValue(input.attr('id'), text);
+    } else {
+      input.val(text);
+    }
 
-	});
+  });
 </script>

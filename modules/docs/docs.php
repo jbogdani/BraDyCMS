@@ -1,16 +1,16 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			Dec 21, 2012
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      Dec 21, 2012
  */
  
 class docs_ctrl extends Controller
 {
-	public function read()
-	{
-		$file = $this->get['param'][0];
+  public function read()
+  {
+    $file = $this->get['param'][0];
     
     if (file_exists('docs/' . $file . '.md'))
     {
@@ -25,16 +25,16 @@ class docs_ctrl extends Controller
       ;
     }
     else if (file_exists(MOD_DIR . 'docs/tmpl/' . $file . '.twig'))
-		{
-			$this->render('docs', $file, array(
-				'art_arr'=>$art_array,
-				'docs' => ($file === 'template' ? $this->stuctured_docs() : ''),
+    {
+      $this->render('docs', $file, array(
+        'art_arr'=>$art_array,
+        'docs' => ($file === 'template' ? $this->stuctured_docs() : ''),
         'ct' => ($file === 'customtags' ? $this->structuredCustomTags() : '')
-				
-			));
-		}
-	}
-	
+        
+      ));
+    }
+  }
+  
   
   public function structuredCustomTags()
   {
@@ -342,5 +342,5 @@ class docs_ctrl extends Controller
     );
      */
   }
-	
+  
 }

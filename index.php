@@ -1,9 +1,9 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			Dec 1, 2012
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      Dec 1, 2012
  */
 try
 {
@@ -24,16 +24,16 @@ try
     $settings
   );
 
-	if ($_SESSION['debug'])
-	{
-		$twig->addExtension(new Twig_Extension_Debug());
-	}
+  if ($_SESSION['debug'])
+  {
+    $twig->addExtension(new Twig_Extension_Debug());
+  }
 
-	$fn_file_exists = new Twig_SimpleFunction('file_exists', function ($file) {
-		return file_exists($file);
-	});
+  $fn_file_exists = new Twig_SimpleFunction('file_exists', function ($file) {
+    return file_exists($file);
+  });
 
-	$twig->addFunction($fn_file_exists);
+  $twig->addFunction($fn_file_exists);
 
   $filter = new Twig_SimpleFilter('parseTags', function ($string)
     {
@@ -42,17 +42,17 @@ try
 
   $twig->addFilter($filter);
 
-	echo $twig->render('index.twig', array(
-			'html'=>$outHtml
-	));
+  echo $twig->render('index.twig', array(
+      'html'=>$outHtml
+  ));
 }
 catch (Exception $e)
 {
   header('Content-Type: text/html; charset=utf-8');
-	if ($_SESSION['debug'])
-	{
-		var_dump($e);
-	}
-	echo tr::get('error_check_log');
-	error_log($e->getMessage());
+  if ($_SESSION['debug'])
+  {
+    var_dump($e);
+  }
+  echo tr::get('error_check_log');
+  error_log($e->getMessage());
 }

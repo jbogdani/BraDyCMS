@@ -1,15 +1,15 @@
 <?php
 
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013 
- * @license			MIT, See LICENSE file
- * @since				Nov 4, 2013
- * @example    
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since        Nov 4, 2013
+ * @example
  * try
  * {
  *   $citation = new Citation();
- * 
+ *
  *   $citation->type = 'ejournal';
  *   $citation->author = 'Julian Bogdani';
  *   $citation->author_address = 'Via Antonio Zannoni, 41. Bologna. Italy';
@@ -27,7 +27,7 @@
  *   $citation->publisher = 'BraDypUS';
  *   $citation->issn = '1234-5678';
  *   $citation->url = 'http://bradypus.net';
- * 
+ *
  *   echo '<pre>' . $citation->export('plaintext') . '</pre>';
  *   echo '<pre>' . $citation->export('endnote') . '</pre>';
  *   echo '<pre>' . $citation->export('bibtext') . '</pre>';
@@ -78,12 +78,12 @@ class Citation
   {
     $all_keys = $this->required_keys;
     $all_keys[] = 'abstract';
-    
+
     if (!in_array($key, $all_keys))
     {
       throw new Exception($key . ' is not a valid key.');
     }
-    
+
     if ($key === 'keywords' && is_string($value) )
     {
       $this->data[$key][] = $value;
@@ -107,7 +107,7 @@ class Citation
     }
     return false;
   }
-  
+
   /**
    * Checks data structure and throws Exception on erros
    * @return boolean
@@ -122,9 +122,9 @@ class Citation
         throw new Exception('Error! Required value ' . $key . ' is not set!');
       }
     }
-    
+
     $types = array('ejournal');
-    
+
     if (!in_array($this->data['type'], $types ))
     {
       throw new Exception('Type is not valid. One of the following mus be used: ' .
@@ -132,7 +132,7 @@ class Citation
     }
     return true;
   }
-  
+
   /**
    * Exports citation dat in specified format
    * @param string $format one of plaintext|endnote|bibtext|refman|html
@@ -143,7 +143,7 @@ class Citation
   public function export($format, $echo = false)
   {
     $this->checkStructure();
-    
+
     switch($format)
     {
       case 'plaintext':
@@ -154,7 +154,7 @@ class Citation
         if (method_exists($this, $format))
         {
           $text = call_user_func(array($this, $format));
-          
+
           if ($echo)
           {
             echo $text;
@@ -169,39 +169,39 @@ class Citation
           throw new Exception($format . ' export has not been implemented yet!');
         }
         break;
-      
+
       default:
         throw new Exception($format . ' is not a valid export format!');
         break;
     }
   }
-  
+
   /**
    * Returns citation in RefMan format
-   * @return string 
+   * @return string
    */
   private function refman()
   {
     $text = '';
-    
+
     switch ($this->data['type'])
     {
       case 'ejournal':
         $text .= "TY  -  EJOUR\n";
         break;
     }
-    
+
     $text .= 'AU  -  ' . $this->author . "\n" .
       'T1  -  ' . $this->title . "\n" .
-      'AD  -  ' . $this->author_address . "\n" . 
-      'DO  -  ' . $this->doi . "\n" . 
+      'AD  -  ' . $this->author_address . "\n" .
+      'DO  -  ' . $this->doi . "\n" .
       'CY  -  ' . $this->city . "\n";
-    
+
     foreach ($this->data['keywords'] as $kw)
     {
       $text .= 'KW  -  ' . $kw . "\n";
     }
-    
+
     $text .= 'LA  -  ' . $this->data['language'] . "\n" .
       'M3  -  Editorial Material' . "\n" .
       'VL  -  ' . $this->data['volume'] . "\n" .
@@ -214,22 +214,22 @@ class Citation
       'T2  -  ' . $this->data['journal'] . "\n" .
       'UR  -  ' . $this->data['url'] . "\n"
       ;
-    
+
     return $text;
   }
 
   /**
    * Alias for refman
-   * @return string 
+   * @return string
    */
   private function plaintext()
   {
     return $this->refman();
   }
-  
+
   /**
    * Returns citation in EndNote format
-   * @return string 
+   * @return string
    */
   private function endnote()
   {
@@ -239,19 +239,19 @@ class Citation
         $text = "%0\tElectronic Article\n";
         break;
     }
-    
+
     $text .= "%A\t" . $this->author . "\n" .
       "%T\t" . $this->title . "\n" .
-      "%+\t" . $this->author_address . "\n" . 
-      "%C\t" . $this->city . "\n" . 
-      "%R\t" . $this->doi . "\n" . 
+      "%+\t" . $this->author_address . "\n" .
+      "%C\t" . $this->city . "\n" .
+      "%R\t" . $this->doi . "\n" .
       "%K\t" . implode("\n", $this->data['keywords']) . "\n";
-    
+
     foreach ($this->data['keywords'] as $kw)
     {
       $text .= 'KW  -  ' . $kw . "\n";
     }
-    
+
     $text .= 'LA  -  ' . $this->data['language'] . "\n" .
       "%9\tEditorial Material" . "\n" .
       "%V\t" . $this->data['volume'] . "\n" .
@@ -264,13 +264,13 @@ class Citation
       "%B\t" . $this->data['journal'] . "\n" .
       "%U\t" . $this->data['url'] . "\n"
       ;
-    
+
     return $text;
   }
-  
+
   /**
    * Returns citation in BiBTeX format
-   * @return string 
+   * @return string
    */
   private function bibtext()
   {
@@ -284,21 +284,21 @@ class Citation
       "\tISBN = {{$this->data['issn']}},\n" .
       "\tyear = {" . date('Y', strtotime($this->data['date'])) . "}\n" .
       "}";
-    
+
     return $text;
   }
-  
+
   /**
    * Returns citation in HTML format
-   * @return string 
+   * @return string
    */
   private function html()
   {
-    $text = $this->author . ', ' . 
+    $text = $this->author . ', ' .
       '<em>' . $this->title . '</em>,' .
       '"' . $this->journal . '", ' .
       $this->data['volume'] . '(' . date('Y', strtotime($this->data['date'])) . ')' .
-      '# ' . $this->data['art_no'] . 
+      '# ' . $this->data['art_no'] .
       'DOI: <a href="http://dx.doi.org/' . $this->doi . '">' . $this->doi . '</a>';
   }
 }

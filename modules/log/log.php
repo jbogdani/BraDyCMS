@@ -1,9 +1,9 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			Apr 3, 2013
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      Apr 3, 2013
  */
  
 class log_ctrl extends Controller
@@ -12,13 +12,13 @@ class log_ctrl extends Controller
   private function updateUsersLog($user, $action = ' in')
   {
     $users_log = MAIN_DIR . 'logs/users.log';
-		
-		// Create users log if it does not exist
-		if (!file_exists($users_log))
-		{
-			$fh = @fopen($users_log, 'w');
-			@fclose($fh);
-		}
+    
+    // Create users log if it does not exist
+    if (!file_exists($users_log))
+    {
+      $fh = @fopen($users_log, 'w');
+      @fclose($fh);
+    }
     
     if (!file_exists($users_log))
     {
@@ -30,42 +30,42 @@ class log_ctrl extends Controller
       . ' on: ' . date('r') . ' (unix microtime: ' . microtime(true) . ')'
       . ' from IP: ' . $_SERVER['REMOTE_ADDR']
       . "\n";
-					
+          
       error_log($log_str, 3, $users_log);
       return true;
   }
-	
-	public function out()
-	{
+  
+  public function out()
+  {
     $this->updateUsersLog($_SESSION['user_confirmed'], 'out');
-		
-		$_SESSION['user_confirmed'] = false;
-		$_SESSION['user_admin'] = false;
     
-		utils::emptyTmp();
+    $_SESSION['user_confirmed'] = false;
+    $_SESSION['user_admin'] = false;
+    
+    utils::emptyTmp();
     
     session_destroy();
     
-		echo '<script>window.location = "./admin"</script>';
-	}
-	
-	public function encodePwd($password = false, $echo = false)
-	{
-		$password = $password ? $password : $this->request['password'];
-		
-		$echo = $echo ? $echo : $this->request['echo'];
-		
-		$password = sha1($password);
-		
-		if($echo)
-		{
-			echo $password;
-		}
-		else
-		{
-			return $password;
-		}
-	}
+    echo '<script>window.location = "./admin"</script>';
+  }
+  
+  public function encodePwd($password = false, $echo = false)
+  {
+    $password = $password ? $password : $this->request['password'];
+    
+    $echo = $echo ? $echo : $this->request['echo'];
+    
+    $password = sha1($password);
+    
+    if($echo)
+    {
+      echo $password;
+    }
+    else
+    {
+      return $password;
+    }
+  }
   
   private function checkAttemptTime()
   {
@@ -94,9 +94,9 @@ class log_ctrl extends Controller
     
     return utils::write_in_file($logAttempt, $ip . "\n" . $now);
   }
-	
-	public function in()
-	{
+  
+  public function in()
+  {
     
     try
     {
@@ -127,7 +127,7 @@ class log_ctrl extends Controller
       }
       
       $cfg_users = cfg::get('users');
-		
+    
       foreach ($cfg_users as $user)
       {
         if($username === $user['name'] && $this->encodePwd($password) === $user['pwd'])
@@ -159,5 +159,5 @@ class log_ctrl extends Controller
       return;
     }
     
-	}
+  }
 }

@@ -1,9 +1,9 @@
 <?php
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license			MIT, See LICENSE file
- * @since			Feb 1, 2013
+ * @author      Julian Bogdani <jbogdani@gmail.com>
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+ * @license      MIT, See LICENSE file
+ * @since      Feb 1, 2013
  */
  
 class template_ctrl extends Controller
@@ -105,15 +105,15 @@ class template_ctrl extends Controller
   {
     $this->render('template', 'delete_file', array(
       files => $this->getList()
-		));
+    ));
   }
   
   
-	
-	public function compile()
-	{
-		try
-		{
+  
+  public function compile()
+  {
+    try
+    {
       $opts = array(
         'compress'=>true
       );
@@ -121,94 +121,94 @@ class template_ctrl extends Controller
       $parser->parseFile( SITE_DIR .  "css/styles.less");
       $css = $parser->getCss();
       file_put_contents(SITE_DIR . "css/styles.css", $css);
-			
-			$ret['status'] = 'success';
-			$ret['text'] = tr::get('ok_compiling_less');
-		}
-		catch (Exception $e)
-		{
+      
+      $ret['status'] = 'success';
+      $ret['text'] = tr::get('ok_compiling_less');
+    }
+    catch (Exception $e)
+    {
       error_log($e->getTraceAsString());
-			$ret['status'] = 'error';
-			$ret['text'] = tr::get('error_compiling_less');
-		}
-		
-		echo json_encode($ret);
-	}
-	
-	public function edit()
-	{
-		$file = $this->get['param'][0];
-		$type = $this->get['param'][1];
-		
-		switch ($type)
-		{
-			case 'twig':
-				$file = SITE_DIR . $file;
-				break;
-				
-			case 'css':
-			case 'less':
-				$file = SITE_DIR . 'css/' . $file;
-				break;
+      $ret['status'] = 'error';
+      $ret['text'] = tr::get('error_compiling_less');
+    }
+    
+    echo json_encode($ret);
+  }
+  
+  public function edit()
+  {
+    $file = $this->get['param'][0];
+    $type = $this->get['param'][1];
+    
+    switch ($type)
+    {
+      case 'twig':
+        $file = SITE_DIR . $file;
+        break;
+        
+      case 'css':
+      case 'less':
+        $file = SITE_DIR . 'css/' . $file;
+        break;
       
       case 'js':
-			$file = SITE_DIR . 'js/' . $file;
+      $file = SITE_DIR . 'js/' . $file;
           break;
         
       case 'md':
         $file = SITE_DIR . $file;
         break;
       
-			default:
-				return false;
-				break;
-		}
-		
-		$content = file_exists($file) ? file_get_contents($file) : '';
+      default:
+        return false;
+        break;
+    }
+    
+    $content = file_exists($file) ? file_get_contents($file) : '';
 
-		$this->render('template', 'editor', array(
-				'filename' => $file,
-				'content'=>$content,
-				'lang' => $file
-		));
-	}
-	
-	public function dashboard()
-	{
-		$file = $this->get['param'][0];
+    $this->render('template', 'editor', array(
+        'filename' => $file,
+        'content'=>$content,
+        'lang' => $file
+    ));
+  }
+  
+  public function dashboard()
+  {
+    $file = $this->get['param'][0];
     $type = pathinfo($file, PATHINFO_EXTENSION);
     
-		$this->render('template', 'list', array(
+    $this->render('template', 'list', array(
       'files' => $this->getList(),
       'file' => $file,
       'type' => $type
-		));
-	}
+    ));
+  }
   
   
   private function getList()
   {
     foreach (utils::dirContent(SITE_DIR) as $f)
-		{
-			if (preg_match('/\.twig/', $f))
-			{
-				$twig[] = $f;
-			}
-		}
-		
-		
-		foreach (utils::dirContent(SITE_DIR . 'css') as $f)
-		{
-			if (preg_match('/\.css/', $f))
-			{
-				$css[] = $f;
-			}
-			
-			if (preg_match('/\.less/', $f))
-			{
-				$less[] = $f;
-			}
-		}
+    {
+      if (preg_match('/\.twig/', $f))
+      {
+        $twig[] = $f;
+      }
+    }
+    
+    
+    foreach (utils::dirContent(SITE_DIR . 'css') as $f)
+    {
+      if (preg_match('/\.css/', $f))
+      {
+        $css[] = $f;
+      }
+      
+      if (preg_match('/\.less/', $f))
+      {
+        $less[] = $f;
+      }
+    }
     
     $md[] = 'welcome.md';
     
@@ -223,33 +223,33 @@ class template_ctrl extends Controller
       'md' => $md
     );
   }
-	
-	public function save()
-	{
-		$file = $this->get['param'][0];
-		$text = $this->post['text'];
+  
+  public function save()
+  {
+    $file = $this->get['param'][0];
+    $text = $this->post['text'];
     
     error_log(var_export($this->post, true));
-		
-		if ($file)
-		{
+    
+    if ($file)
+    {
       try
-			{
-				if (!utils::write_in_file($file, $text))
-				{
+      {
+        if (!utils::write_in_file($file, $text))
+        {
           throw new Exception('Can not write in file ' . $file);
-				}
+        }
         $ret = array('status' => 'success', 'text' => 'File updated');
-			}
-			catch(Exception $e)
-			{
-				$ret = array('status' => 'error', 'text' => $e->getMessage());
-			}
-			
-			echo json_encode($ret);
+      }
+      catch(Exception $e)
+      {
+        $ret = array('status' => 'error', 'text' => $e->getMessage());
+      }
+      
+      echo json_encode($ret);
 
-		}
-	}
-	
-	
+    }
+  }
+  
+  
 }

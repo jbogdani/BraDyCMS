@@ -46,7 +46,7 @@ var admin = {
     },
 
     setValue: function(id, text){
-
+      tinymce.get(id).setContent(text);
     }
   },
 

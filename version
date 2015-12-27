@@ -1,3 +1,4 @@
+3.10.0[] = "Solved bug that was preventing copying text from original to translated textarea"
 3.10.0[] = "Hard tabs replaced with soft tabs"
 3.10.0[] = "Assets uses link class to resolve path to root"
 3.10.0[] = "Added new custom tag: gplus_plusone"

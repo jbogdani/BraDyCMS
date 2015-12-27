@@ -25,7 +25,6 @@ class OutHtml extends Out
    */
   public function asset($asset, $type = false, $version = false)
   {
-
     if (in_array($asset, Assets::getNames()))
     {
       $data = Assets::resolve($asset, $type, cfg::get('cdn') ? 'cdn':'local', $version);

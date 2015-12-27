@@ -20,13 +20,13 @@ class Out
   protected $get = array();
 
 	public
-		$session_lang, // different from $lang whitch if is the same of sys_lang is not set!
+		$session_lang, // different from $lang which if is the same of sys_lang is not set!
 		$lang;		// current language ( = session['lang'] set in globals, same as get['lang'])
 
 	/**
 	 * Starts object, sets context and language data
 	 * @param array $get	array of $_GET data
-	 * @param string $lang	language
+	 * @param string $lang	language, set in index using $_SESSION['lang'] variable
 	 */
 	public function __construct($get, $lang = false)
 	{
@@ -161,13 +161,13 @@ class Out
     switch($tags)
     {
       case 'search':
-        $url = link::to_search($art, $this->lang, $page, $this->get['is_search'], $page);
+        $url = link::to_search($art, $this->session_lang, $page, $this->get['is_search'], $page);
         break;
       case true:
-        $url = link::to_tags($art, $this->lang, $page);
+        $url = link::to_tags($art, $this->session_lang, $page);
         break;
       default:
-        $url = link::to_article($art == 'home' ? './' : $art, $this->lang, $page);
+        $url = link::to_article($art == 'home' ? './' : $art, $this->session_lang, $page);
         break;
     }
 

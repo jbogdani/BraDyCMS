@@ -16,21 +16,23 @@ class Assets
   private static function allAssets()
   {
 
+    $path = link::to_article('home') . '/';
+
     $assets = array(
 
       'frontend' => array(
         'js' => array(
-          'local' => './sites/default/js/frontend.js'
+          'local' => $path . 'sites/default/js/frontend.js'
         ),
         'css' => array(
-          'local' => './sites/default/css/styles.css'
+          'local' => $path . 'sites/default/css/styles.css'
         )
       ),
 
       'jquery' => array(
         'version' => '1.11.3',
         'js' => array(
-          'local' => './bower_components/jquery/dist/jquery.min.js',
+          'local' => $path . 'bower_components/jquery/dist/jquery.min.js',
           'cdn' => '//ajax.googleapis.com/ajax/libs/jquery/--version--/jquery.min.js'
         )
       ),
@@ -38,11 +40,11 @@ class Assets
       'bootstrap' => array(
         'version' => '3.3.5',
         'js' => array(
-          'local' => './bower_components/bootstrap/dist/js/bootstrap.min.js',
+          'local' => $path . 'bower_components/bootstrap/dist/js/bootstrap.min.js',
           'cdn' => 'https://maxcdn.bootstrapcdn.com/bootstrap/--version--/js/bootstrap.min.js'
         ),
         'css' => array(
-          'local' => './bower_components/bootstrap/dist/css/bootstrap.min.css',
+          'local' => $path . 'bower_components/bootstrap/dist/css/bootstrap.min.css',
           'cdn' => 'https://maxcdn.bootstrapcdn.com/bootstrap/--version--/css/bootstrap.min.css'
         )
       ),
@@ -50,11 +52,11 @@ class Assets
       'fancybox' => array(
         'version' => '2.1.5',
         'js' => array(
-          'local' => './bower_components/fancyBox/source/jquery.fancybox.pack.js',
+          'local' => $path . 'bower_components/fancyBox/source/jquery.fancybox.pack.js',
           'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/--version--/jquery.fancybox.pack.js'
         ),
         'css' => array(
-          'local' => './bower_components/fancyBox/source/jquery.fancybox.css',
+          'local' => $path . 'bower_components/fancyBox/source/jquery.fancybox.css',
           'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/--version--/jquery.fancybox.min.css'
         )
       ),
@@ -70,7 +72,7 @@ class Assets
         'version' => '4.4.0',
         'css' => array(
           'cdn' => 'https://maxcdn.bootstrapcdn.com/font-awesome/--version--/css/font-awesome.min.css',
-          'local' => './bower_components/font-awesome/css/font-awesome.min.css'
+          'local' => $path . 'bower_components/font-awesome/css/font-awesome.min.css'
         )
       )
 
@@ -98,7 +100,7 @@ class Assets
    */
   public static function getNames()
   {
-    return array_keys(self::allAssets());
+    return array_keys(self::allAssets($path));
   }
 
   /**

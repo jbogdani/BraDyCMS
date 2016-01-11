@@ -18,8 +18,8 @@
       checkVar = 'google';
       return;
     } else if (platform == 'leaflet'){
-      jsPath = 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js';
-      cssPath = 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css';
+      jsPath = 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js';
+      cssPath = 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css';
       checkVar = 'L';
     } else {
       return false;

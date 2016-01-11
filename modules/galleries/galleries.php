@@ -193,6 +193,7 @@ class galleries_ctrl extends Controller
     {
       $file = $this->get['param'][0] . '/' . $this->get['param'][1];
 
+      // Delete main image file
       if(file_exists($file))
       {
         @unlink($file);
@@ -203,6 +204,7 @@ class galleries_ctrl extends Controller
         }
       }
 
+      // Delete thumbnail file
       if (file_exists($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]))
       {
         @unlink($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]);
@@ -213,6 +215,7 @@ class galleries_ctrl extends Controller
         }
       }
 
+      // get all data files, main and translations
       $data_file[] = $this->get['param'][0] . '/data.json';
 
       foreach (cfg::get('languages') as $lng)

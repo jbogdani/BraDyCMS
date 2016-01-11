@@ -262,7 +262,7 @@ class article_ctrl extends Controller
   {
     $data = $this->post;
     $art_id = $this->get['param'][0];
-    
+
     try
     {
       Article::translate($art_id, $data);

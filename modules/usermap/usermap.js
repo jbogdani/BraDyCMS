@@ -1,22 +1,22 @@
 /**
  * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2014 
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2014
  * @license      All rights reserved
  * @since        Mar 1, 2014
  */
 
 (function(window){
-  
+
   loadLib = function(platform, callback){
-    
+
     var jsPath, cssPath, checkVar;
     if (!platform || platform == 'google'){
       $.getScript('https://www.google.com/jsapi', function(){
-        google.load('maps', '3', { other_params: 'sensor=false', callback:  callback });
+        google.load('maps', '3', {callback:  callback });
       });
-      return;
       jsPath = 'https://maps.googleapis.com/maps/api/js';
       checkVar = 'google';
+      return;
     } else if (platform == 'leaflet'){
       jsPath = 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js';
       cssPath = 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css';
@@ -24,9 +24,7 @@
     } else {
       return false;
     }
-    
-    
-    
+
     if(typeof window[checkVar] == 'undefined'){
       if(typeof cssPath != 'undefined'){
         $('head').append('<link rel="stylesheet" href="' + cssPath + '" />');
@@ -36,13 +34,13 @@
       });
     }
   };
-  
+
   var usermap = {
 
     init: function(){
       if($('.usermap').length > 0){
         var $this = this;
-        
+
         $.each($('.usermap'), function(i, el){
           $this.buildMap(el);
         });
@@ -52,10 +50,10 @@
 
     buildMap: function(el,platform){
       var cfgFile = $(el).data('cfg');
-      var platform = $(el).data('platform') || 'leaflet';
-      
+      if (!platform) platform = $(el).data('platform') || 'leaflet';
+
       $this = this;
-      
+
       // simple map from markup
       if ($(el).data('marker')){
         loadLib(platform, function(){
@@ -72,7 +70,7 @@
               }
             ]
           };
-          
+
           switch(platform){
             case 'leaflet':
               $this.runLeaflet(el, data);
@@ -82,58 +80,60 @@
               break;
             default:
               return false;
-              break;
           }
           return;
         });
+
+
+      } else {
+
+        // map from configuration
+        $.ajax({
+          url: 'sites/default/modules/usermaps/' + cfgFile + '.map',
+          dataType: 'json',
+          success: function( data ) {
+            platform = data.platform || false;
+
+            loadLib(platform, function(){
+              switch(platform){
+                case 'leaflet':
+                  $this.runLeaflet(el, data);
+                  break;
+                case 'google':
+                  $this.runGoogleMaps(el, data, window.google);
+                  break;
+                default:
+                  return false;
+              }
+            });
+          },
+          error: function( data ) {
+            $('el').html('Error in loading map configuration file. The map can not be build');
+          }
+        });
       }
-      
-      // map from configuration
-      $.ajax({
-        url: 'sites/default/modules/usermaps/' + cfgFile + '.map',
-        dataType: 'json',
-        success: function( data ) {
-          data.platform ? platform = data.platform : '';
-          
-          loadLib(platform, function(){
-            switch(platform){
-              case 'leaflet':
-                $this.runLeaflet(el, data);
-                break;
-              case 'google':
-                $this.runGoogleMaps(el, data, window.google);
-                break;
-              default:
-                return false;
-                break;
-            }
-          });
-        },
-        error: function( data ) {
-          $('el').html('Error in loading map configuration file. The map can not be build');
-        }
-      });
-      
     },
-    
+
     runGoogleMaps: function(el, cfg){
       if (!cfg.markers){
         console.log('No marker is defined in the map configuration file');
         return false;
       }
       var mapOptions = {};
-      cfg.zoom            ? mapOptions.zoom = cfg.zoom : '';
-      cfg.center          ? mapOptions.center = new google.maps.LatLng(cfg.center[0], cfg.center[1]) : '';
+      mapOptions.zoom = parseInt(cfg.zoom) || false;
+      mapOptions.center = cfg.center ? new google.maps.LatLng(parseFloat(cfg.center[0]), parseFloat(cfg.center[1])) : false;
       mapOptions.scrollwheel = (cfg.scrollWheelZoom && cfg.scrollWheelZoom != 'false') ? true : false;
-      
-      (cfg.type && ['SATELLITE', 'TERRAIN', 'HYBRID', 'ROADMAP'].indexOf(cfg.type.toUpperCase()) > -1) ? mapOptions.mapTypeId = google.maps.MapTypeId[cfg.type.toUpperCase()] : ''
+
+      mapOptions.mapTypeId = (cfg.type && ['SATELLITE', 'TERRAIN', 'HYBRID', 'ROADMAP'].indexOf(cfg.type.toUpperCase()) > -1) ? google.maps.MapTypeId[cfg.type.toUpperCase()] : 'ROADMAP';
+
+      console.log(mapOptions);
 
       var map = new google.maps.Map($(el)[0], mapOptions);
       var bounds = new google.maps.LatLngBounds();
       var infowindow = new google.maps.InfoWindow({
         maxWidth: 150
       });
-  
+
       $.each(cfg.markers, function(i, marker){
         var latLng = new google.maps.LatLng(marker.coord[0], marker.coord[1]);
         bounds.extend(latLng);
@@ -150,9 +150,9 @@
       if (!cfg.zoom || (cfg.zoomToBounds && cfg.zoomToBounds !== 'false')){
         map.fitBounds(bounds);
       }
-      
+
     },
-    
+
     runLeaflet: function(el, cfg){
       /**
        * cfg
@@ -200,4 +200,3 @@
 $(document).ready(function(){
   usermap.init();
 });
-

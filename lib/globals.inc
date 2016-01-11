@@ -44,15 +44,7 @@ if (!file_exists(MAIN_DIR . 'logs/error.log'))
 
 if (!file_exists(MAIN_DIR . 'logs/users.log'))
 {
-  if (file_exists('sites/default/users.log'))
-  {
-    @rename('sites/default/users.log', MAIN_DIR . 'logs/users.log');
-  }
-
-  if (!file_exists(MAIN_DIR . 'logs/users.log'))
-  {
-    @touch(MAIN_DIR . 'logs/users.log');
-  }
+  @touch(MAIN_DIR . 'logs/users.log');
 }
 
 if (!defined('MAIN_DIR') && !file_exists(MAIN_DIR . 'logs/logAttempts.log'))

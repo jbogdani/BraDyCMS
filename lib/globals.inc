@@ -47,16 +47,8 @@ if (!file_exists(MAIN_DIR . 'logs/users.log'))
   @touch(MAIN_DIR . 'logs/users.log');
 }
 
-if (!defined('MAIN_DIR') && !file_exists(MAIN_DIR . 'logs/logAttempts.log'))
-{
-  // TODO: remove
-  if (file_exists('sites/default/logAttempts.log'))
-  {
-    @rename('sites/default/logAttempts.log', MAIN_DIR . 'logs/logAttempts.log');
-  }
-  if (!file_exists(MAIN_DIR . 'logs/logAttempts.log')){
-    @touch(MAIN_DIR . 'logs/logAttempts.log');
-  }
+if (!file_exists(MAIN_DIR . 'logs/logAttempts.log')){
+  @touch(MAIN_DIR . 'logs/logAttempts.log');
 }
 
 

@@ -12,9 +12,9 @@
     var jsPath, cssPath, checkVar;
     if (!platform || platform == 'google'){
       $.getScript('https://www.google.com/jsapi', function(){
-        google.load('maps', '3', {callback:  callback });
+        google.load('maps', '3', {callback:  callback});
       });
-      jsPath = 'https://maps.googleapis.com/maps/api/js';
+      jsPath = 'http://maps.google.com/maps/api/js';
       checkVar = 'google';
       return;
     } else if (platform == 'leaflet'){
@@ -120,13 +120,16 @@
         return false;
       }
       var mapOptions = {};
+
       mapOptions.zoom = parseInt(cfg.zoom) || false;
+
       mapOptions.center = cfg.center ? new google.maps.LatLng(parseFloat(cfg.center[0]), parseFloat(cfg.center[1])) : false;
+
       mapOptions.scrollwheel = (cfg.scrollWheelZoom && cfg.scrollWheelZoom != 'false') ? true : false;
 
-      mapOptions.mapTypeId = (cfg.type && ['SATELLITE', 'TERRAIN', 'HYBRID', 'ROADMAP'].indexOf(cfg.type.toUpperCase()) > -1) ? google.maps.MapTypeId[cfg.type.toUpperCase()] : 'ROADMAP';
+      cfg.type = (cfg.type && ['SATELLITE', 'TERRAIN', 'HYBRID', 'ROADMAP'].indexOf(cfg.type.toUpperCase()) > -1) ? cfg.type : 'ROADMAP';
 
-      console.log(mapOptions);
+      mapOptions.mapTypeId = google.maps.MapTypeId[cfg.type.toUpperCase()];
 
       var map = new google.maps.Map($(el)[0], mapOptions);
       var bounds = new google.maps.LatLngBounds();

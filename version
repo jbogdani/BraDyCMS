@@ -1,3 +1,4 @@
+3.10.1[] = "Code optimization in usermap module"
 3.10.1[] = "Removed legacy support for automatic rename of user log files"
 3.10.0[] = "TinyMCE updated to v. 4.2.8"
 3.10.0[] = "Datatables updated to v. 1.10.10"

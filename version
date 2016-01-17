@@ -1,3 +1,4 @@
+3.10.1[] = "Minor typo fixes and few translations updated"
 3.10.1[] = "Leaflet, used in usermap module, updated to v. 0.0.7"
 3.10.1[] = "Code optimization in usermap module"
 3.10.1[] = "Removed legacy support for automatic rename of user logAttempts files"

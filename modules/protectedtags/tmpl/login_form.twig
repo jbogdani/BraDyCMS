@@ -16,10 +16,18 @@
 
   <input type="hidden" name="token" value="{{ token }}">
 
+  {% if grc_sitekey %}
+  <div class="g-recaptcha" data-sitekey="{{ grc_sitekey }}"></div>
+  {% endif %}
+
   <div class="submit {{ css.submit_cont }}">
     <input type="submit" class="submit {{ css.submit_input }}">
   </div>
 </form>
+
+{% if grc_sitekey %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+{% endif %}
 
 <script>
 (function(){

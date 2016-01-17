@@ -69,7 +69,6 @@ class log_ctrl extends Controller
 
   public function in()
   {
-
     try
     {
       if (!filter_var($this->post['username'], FILTER_VALIDATE_EMAIL))
@@ -88,14 +87,14 @@ class log_ctrl extends Controller
         throw new Exception(tr::get('access_denied'));
       }
 
-      if ($token !== $_SESSION['token'])
+      if (!$_SESSION['token'] || $token !== $_SESSION['token'])
       {
         throw new Exception(tr::get('invalid_token'));
       }
 
       if (!utils::checkAttemptTime())
       {
-        throw new Exception('too_much_attempts');
+        throw new Exception(tr::get('too_much_attempts'));
       }
 
       $cfg_users = cfg::get('users');

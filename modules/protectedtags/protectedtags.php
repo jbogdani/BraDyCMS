@@ -229,6 +229,17 @@ class protectedtags_ctrl extends Controller
   }
 
   /**
+   * Deletes user session data
+   * @return string JSON string with success status
+   */
+  public function logout()
+  {
+    session_regenerate_id(true);
+    unset($_SESSION['user_email']);
+    echo json_encode(array('status' => 'success'));
+  }
+
+  /**
    * Tries to authenticate user using POST data.
    * @return string JSON encoded message containing status (error|success) and text (in case of error) data.
    */
@@ -345,6 +356,16 @@ class protectedtags_ctrl extends Controller
       'grc_sitekey' => cfg::get('grc_sitekey'),
       'css' => $css
     ));
+  }
+
+  public function logoutButton($css)
+  {
+    if ($_SESSION['user_email'])
+    {
+      $this->render('protectedtags', 'logout_button', array(
+        'css' => $css
+      ));
+    }
   }
 
 }

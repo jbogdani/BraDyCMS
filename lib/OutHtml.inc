@@ -774,10 +774,16 @@ class OutHtml extends Out
    * @param  [type] $css [description]
    * @return [type]      [description]
    */
-  public function loginForm($css=false)
+  public function loginForm($css = false)
   {
     $protectedtags = new protectedtags_ctrl();
-return $protectedtags->loginForm($css);
+    return $protectedtags->loginForm($css);
+  }
+
+  public function logoutButton($css = false)
+  {
+    $protectedtags = new protectedtags_ctrl();
+    return $protectedtags->logoutButton($css);
   }
 
 }

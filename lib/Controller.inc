@@ -75,7 +75,7 @@ class Controller
       'seo_ctrl' => '*',
       'feeds_ctrl' => '*',
       'OAI_ctrl' => '*',
-      'protectedtags_ctrl' => ['login']
+      'protectedtags_ctrl' => ['login', 'logout']
     ];
 
     return (

@@ -1,0 +1,21 @@
+<div class="logout_cont {{ css.logout_cont }}">
+  <button id="logoutbutton" class="{{ css.logout_input }}">
+    {{ tr.get("logout") }}
+  </button>
+</div>
+
+<script>
+(function(){
+if (!window.jQuery){
+  console.log('Jquery is not loaded');
+  return;
+}
+$('#logoutbutton').on('click', function(){
+  $.get('controller.php?obj=protectedtags_ctrl&method=logout', function(data){
+    if (data.status === 'success'){
+        location.reload();
+      }
+    }, 'json');
+});
+})();
+</script>

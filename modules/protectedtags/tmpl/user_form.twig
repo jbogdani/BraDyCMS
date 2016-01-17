@@ -6,9 +6,18 @@
         value="{{ user.email }}">
     </div>
     <div class="form-group">
-      <input type="text" name="password"
-        placeholder="{{ tr.get('password') }}"
-        value="{{ user.password }}">
+      <div class="input-group">
+        <input type="text" name="password"
+          placeholder="{{ tr.get('password') }}"
+          value="{{ user.password }}">
+        <span class="input-group-addon">
+          <a title="Strong password example"
+          target="_blank"
+          href="http://passwordsgenerator.net/?length=8&symbols=1&numbers=1&lowercase=1&uppercase=1&similar=1&ambiguous=0&client=0&autoselect=1">
+            <i class="icon ion-help-buoy"></i>
+          </a>
+        </span>
+      </div>
     </div>
 
     <div class="form-group">

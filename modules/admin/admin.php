@@ -1,7 +1,7 @@
 <?php
 /**
  * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013 
+ * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
  * @license      MIT, See LICENSE file
  * @since        Sep 16, 2013
  */
@@ -14,24 +14,27 @@ class admin_ctrl extends Controller
     {
       $_SESSION['token'] = md5(uniqid(rand(), true));
     }
-    
-    $this->render('admin', 'loginForm', array('version'=>  version::current(), 'token' => $_SESSION['token']));
+
+    $this->render('admin', 'loginForm', array(
+      'version'=>  version::current(),
+      'token' => $_SESSION['token'])
+    );
   }
-  
+
   public function showCreateInstallForm()
   {
     $addsite = new addsite_ctrl();
-    
+
     $this->render('admin', 'createInstallForm', array('preInstallErrors' => $addsite->preInstallErrors()));
   }
-  
+
   public function showError($error)
   {
     echo '<div class="container">' .
     '<div class="alert alert-danger text-center">Something went wrong! '. $stop_error . '</div>' .
     '</div>';
   }
-  
+
   public function showBody()
   {
     $usr_mods = utils::dirContent('./sites/default/modules');
@@ -50,7 +53,7 @@ class admin_ctrl extends Controller
         }
       }
     }
-    
+
     if (file_exists('./sites/default/welcome.md')){
       $welcome_text = Parsedown::instance()->text(file_get_contents('./sites/default/welcome.md'));
     }
@@ -58,7 +61,7 @@ class admin_ctrl extends Controller
     {
       $welcome_text = file_get_contents('./sites/default/welcome.html');
     }
-    
+
     $this->render('admin', 'body', array(
       'version' => version::current(),
       'custom_mods' => $custom_mods,

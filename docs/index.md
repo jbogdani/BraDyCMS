@@ -36,6 +36,7 @@ If you are not familiar with Github just email your contribution to [developer@b
 - Core plugins
   - [Create and embed forms](#docs/read/userform)
   - [Create and embed a map](#docs/read/usermap)
+  - [Password protect sections of your site with passwords](#docs/read/protectedtags)
 
 - Tutorials
   - [How to setup an OAI-PMH interface](#docs/read/oai)

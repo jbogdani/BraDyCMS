@@ -70,6 +70,11 @@ E.g.: `{{ html.articleBody('lorem_ipsum') }}`
 
 ---
 
+#### canView()
+Returns true if content (article tag blog or single article) is not password protected and false if it's protected
+
+---
+
 #### ct('customtag', 'params')
 Returns html produced by custom tag or user module
 - **customtag** string, required. Custom tag to run
@@ -88,12 +93,12 @@ Returns well-formatted html showing table element with data for available files 
 - **class** string, optional, css class or space separated css classes to attache to main table element
 
 E.g.: `{{ html.downloadNode('curricula', 'table-stripped') }}`
-    <table class=\"table-stripped\">
+    <table class="table-stripped">
       <tbody>
         <tr>
-          <td><a href="{ full path to file }" class="downloadFile" target="_blank">{ file title }</a></td>
-          <td><a href="{ full path to file }" class="downloadFile" target="_blank">{ file description }</a></td>
-          <td><a href="{ full path to file }" class="downloadFile" target="_blank">Download</a></td>
+          <td><a href="full-path-to-file" class="downloadFile">file-title</a></td>
+          <td><a href="full-path-to-file" class="downloadFile">file-description }</a></td>
+          <td><a href="full-path-to-file" class="downloadFile">Download</a></td>
         </tr>
         <tr>...</tr>
       <tbody>
@@ -106,8 +111,8 @@ Returns javascript code for Google Analytics Tracking. Google Analytics id must 
 
 E.g.: `{{ html.GA }}`
     <script>
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'GA-ID']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'GA-ID']);
       _gaq.push(['_trackPageview']);
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -437,6 +442,7 @@ E.g.: `{{ html.getTextId() }}`
 
 #### getTotal()
 Returns total number of articles available for current filter. Useful for paginaton
+
 ---
 
 #### getSearchResults('string', 'page', 'max')
@@ -593,6 +599,67 @@ reference to a page
 E.g.: `{{ html.link2('news', true) }}`
     ./news.all
 
+---
+
+#### loginForm(css)
+Returns well formatted html and javascript (jquery is required and should be already loaded) code to securely perform a login action
+- **css** object, optional. An object containing several css classes to use for the form output. The following options are sypported
+  - css.form: class to apply to main form element
+  - css.error: class to apply to error text container
+  - css.email_cont: class to apply to email input container
+  - css.email_input: class to apply to email input element
+  - css.password_cont: class to apply to password input container
+  - css.password_input: class to apply to password input element
+  - css.submit_cont: class to apply to submit input container
+  - css.submit_input: class to apply to submit input element
+
+E.g.: `{{ html.loginForm }}` (simple) or `{{ html.loginForm({'form':'form-inline', 'error':'text-error', 'email_cont': 'form-group', 'email_input': 'form-control', 'password_cont': 'form-group', 'password_input': 'form-control', 'submit_cont': 'form-group', 'submit_input': 'btn btn-success' }) }}` (full)
+    <form action="javascript:void(0);" id="loginform" class="form-inline">
+
+      <div id="error" class="text-error"></div>
+
+      <div class="email form-group">
+        <input type="email" name="email"
+          placeholder="Email address"
+          class="form-control">
+      </div>
+
+      <div class="password form-group">
+        <input type="password" name="password"
+          placeholder="Password"
+          class="form-control">
+      </div>
+
+      <input type="hidden" name="token" value="token-value">
+
+      <div class="submit form-group">
+        <input type="submit" class="submit form-control">
+      </div>
+    </form>
+
+
+    <script>
+      form submission script...
+    </script>
+---
+
+#### logoutButton(css)
+Returns well formatted html and javascript (jquery is required and should be already loaded) code to securely perform a logout action
+- **css** object, optional. An object containing several css classes to use for the form output. The following options are sypported
+  - css.logout_cont: class to apply to button container
+  - css.logout_input: class to apply to button element
+
+E.g.: `{{ html.logoutButton }}` (simple) or `{{ html.logoutButton({'logout_cont': 'form-group', 'logout_input': 'form-control' }) }}` (full)
+
+    <div class="logout_cont form-group">
+      <button id="logoutbutton" class="form-control">
+        Logout
+      </button>
+    </div>
+
+    <script>
+      Logout script here...
+    </script>
 ---
 
 #### menu('menu', 'class')

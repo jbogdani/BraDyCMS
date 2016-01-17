@@ -550,8 +550,41 @@ class utils
     }
 
     return true;
+  }
 
+  /**
+   * Reads log file with login attempt and checks the timestamp
+   * if any record is found for present IP address. Returns true is attempt is valid
+   * (no log available, or max time is greater than $time) or false if atempts is not valid
+   * @param  string|false  $logfile full path to log file, if false default (admin) log file wil be used
+   * @param  integer $time Minimum time in millisecond between two attemps; default 1000 (1sec)
+   * @return boolean       true if is a valid attempt, false if attemmpt is not allowed
+   */
+  public static function checkAttemptTime($logfile = false, $time = 1000)
+  {
+    if (!$logfile)
+    {
+      $logfile = MAIN_DIR . 'logs/logAttempts.log';
+    }
 
+    $logfile = MAIN_DIR . 'logs/logAttempts.log';
+
+    $ip = $_SERVER['REMOTE_ADDR'];
+
+    $now = microtime(true);
+
+    if (file_exists($logfile))
+    {
+      $lastAttempt = file($logfile);
+      $lastIP = trim(str_replace(array("\n", "\r\n"), null, $lastAttempt[0]));
+      $lastTime = floatval(trim(str_replace(array("\n", "\r\n"), null, $lastAttempt[1])));
+
+      if ($lastIP === $id)
+      {
+        return ($now >= ($lastTime + $time) );
+      }
+    }
+    return utils::write_in_file($logfile, $ip . "\n" . $now);
   }
 
 

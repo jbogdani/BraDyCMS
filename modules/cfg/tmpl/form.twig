@@ -593,7 +593,14 @@
       <input type="email" name="users[{{ data.users|length }}][name]">
     </div>
     <div class="col-sm-3">
-      <input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]">
+      <div class="input-group">
+        <input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]">
+        <span class="input-group-addon">
+          <a title="Strong password example"
+          target="_blank"
+          href="http://passwordsgenerator.net/?length=8&symbols=1&numbers=1&lowercase=1&uppercase=1&similar=1&ambiguous=0&client=0&autoselect=1">
+            <i class="icon ion-help-buoy"></i>
+      </div>
     </div>
     <div class="col-sm-2">
       <button class="btn btn-info encrypt"

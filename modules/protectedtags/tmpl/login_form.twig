@@ -1,0 +1,50 @@
+<form action="javascript:void(0);" id="loginform" class="{{ css.form }}">
+
+  <div id="error" class="{{ css.error }}"></div>
+
+  <div class="email {{ css.email_cont }}">
+    <input type="email" name="email"
+      placeholder="{{ tr.get('email_address') }}"
+      class="{{ css.email_input }}">
+  </div>
+
+  <div class="password {{ css.password_cont }}">
+    <input type="password" name="password"
+      placeholder="{{ tr.get('password') }}"
+      class="{{ css.password_input }}">
+  </div>
+
+  <input type="hidden" name="token" value="{{ token }}">
+
+  <div class="submit {{ css.submit_cont }}">
+    <input type="submit" class="submit {{ css.submit_input }}">
+  </div>
+</form>
+
+<script>
+(function(){
+if (!window.jQuery){
+  console.log('Jquery is not loaded');
+  return;
+}
+$('#loginform').on('submit', function(){
+  if (!$(this).find('input[name="email"]').val()){
+    $('#form_err').text('email_required');
+    return false;
+  }
+  if (!$(this).find('input[name="password"]').val()){
+    $('#form_err').text('password_required');
+    return false;
+  }
+  $.post('controller.php?obj=protectedtags_ctrl&method=login', $(this).serialize(), function(data){
+    if (data.status === 'success'){
+        location.reload();
+        return true;
+      } else {
+        $('#form_err').text(data.text);
+      }
+    }, 'json');
+});
+
+})();
+</script>

@@ -744,4 +744,40 @@ class OutHtml extends Out
     return $html;
   }
 
+  /**
+   * Checks if current user can view or not the current page
+   * @return boolean
+   */
+  public function canView()
+  {
+    switch($this->getContext())
+    {
+      case 'tags':
+        $tags = $this->getFilterTags();
+        break;
+      case 'article':
+        $tags = $this->getArticleTags;
+        break;
+      case 'home':
+      case 'search':
+      default:
+        return false;
+        break;
+    }
+
+    $protectedtags = new protectedtags_ctrl();
+    return $protectedtags->canUserRead($tags);
+  }
+
+  /**
+   * Shows login form for protected tags
+   * @param  [type] $css [description]
+   * @return [type]      [description]
+   */
+  public function loginForm($css=false)
+  {
+    $protectedtags = new protectedtags_ctrl();
+return $protectedtags->loginForm($css);
+  }
+
 }

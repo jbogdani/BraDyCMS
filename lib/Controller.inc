@@ -74,7 +74,8 @@ class Controller
       'userform_ctrl' => ['process'],
       'seo_ctrl' => '*',
       'feeds_ctrl' => '*',
-      'OAI_ctrl' => '*'
+      'OAI_ctrl' => '*',
+      'protectedtags_ctrl' => ['login']
     ];
 
     return (

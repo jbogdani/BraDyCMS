@@ -1,0 +1,28 @@
+<div id="{{ uid }}">
+  <form action="javascript:void(0)" id="new_protectd_pages_user">
+    <div class="form-group">
+      <input type="email" name="email"
+        placeholder="{{ tr.get('email_address') }}"
+        value="{{ user.email }}">
+    </div>
+    <div class="form-group">
+      <input type="text" name="password"
+        placeholder="{{ tr.get('password') }}"
+        value="{{ user.password }}">
+    </div>
+
+    <div class="form-group">
+      <input type="tags" name="tags"
+        style="width:100%"
+        placeholder="{{ tr.get('tags') }}"
+        value="{{ user.tags }}">
+    </div>
+
+    <input type="hidden" name="id" value="{{ user.id }}">
+  </form>
+</div>
+<script>
+$('#{{ uid }} input[name="tags"]').select2({
+  tags: [{{ imploded_tags|raw }}]
+});
+</script>

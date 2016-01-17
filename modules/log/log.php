@@ -97,6 +97,35 @@ class log_ctrl extends Controller
         throw new Exception(tr::get('too_much_attempts'));
       }
 
+      // Google reCAPTCHA check
+      if (cfg::get(grc_sitekey))
+      {
+        $response = $this->post['g-recaptcha-response'];
+        $secret = cfg::get('grc_secretkey');
+
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+
+    		$curl = new \Curl($url);
+
+    		$curl->POST = true;
+
+    		$post = array(
+    				'secret' => $secret,
+    				'response'	=> $response,
+            'remoteip' => $_SERVER['HTTP_CLIENT_IP']
+
+    		);
+    		$curl->POSTFIELDS = $post;
+
+        $data = json_decode($curl->fetch(), true);
+
+        if (!$data['success'] || $data['success'] != 'true')
+        {
+          error_log(var_export($data, true));
+          throw new Exception(tr::get('captcha_error'));
+        }
+      }
+
       $cfg_users = cfg::get('users');
 
       foreach ($cfg_users as $user)

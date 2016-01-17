@@ -1,3 +1,4 @@
+3.11.0[] = "New security fix: added the possibility to implement, per domain, Google reCAPTCHA in admin login form"
 3.11.0[] = "New core function added: password protected pages (tags)"
 3.10.1[] = "Minor typo fixes and few translations updated"
 3.10.1[] = "Leaflet, used in usermap module, updated to v. 0.0.7"

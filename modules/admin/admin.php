@@ -16,8 +16,10 @@ class admin_ctrl extends Controller
     }
 
     $this->render('admin', 'loginForm', array(
-      'version'=>  version::current(),
-      'token' => $_SESSION['token'])
+      'version'=> version::current(),
+      'token' => $_SESSION['token'],
+      'grc_sitekey' => cfg::get('grc_sitekey')
+      )
     );
   }
 

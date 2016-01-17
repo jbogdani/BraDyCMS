@@ -16,12 +16,18 @@
     <div class="form-group">
       <input type="password" class="form-control" placeholder="{{ tr.get('password') }}" name="password">
     </div>
+
+    {% if grc_sitekey %}
+    <div class="g-recaptcha" data-sitekey="{{ grc_sitekey }}"></div>
+    {% endif %}
+
     <button class="btn btn-lg btn-primary btn-block"
-            id="login-button"
-            type="submit" 
-            data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading...."
-            onclick="$(this).button('loading');"
-            ><i class="icon ion-unlocked"></i> {{ tr.get('sign_in') }}</button>
+        id="login-button"
+        type="submit"
+        data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading...."
+        onclick="$(this).button('loading');">
+      <i class="icon ion-unlocked"></i> {{ tr.get('sign_in') }}
+    </button>
   </form>
-  
+
 </div>

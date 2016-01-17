@@ -83,6 +83,9 @@ catch (Exception $e)
   <script src="./js/admin.min.js"></script>
 
   <?php if (!$_SESSION['user_confirmed']): ?>
+    <?php if (cfg::get('grc_sitekey')): ?>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <?php endif; ?>
 
   <script>
     $('#signin').on('submit', function(){

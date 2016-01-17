@@ -761,7 +761,7 @@ class OutHtml extends Out
       case 'home':
       case 'search':
       default:
-        return false;
+        return true;
         break;
     }
 

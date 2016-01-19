@@ -1,21 +1,21 @@
 <?php
 /**
- * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license      MIT, See LICENSE file
- * @since        Aug 29, 2013
- */
+* @author      Julian Bogdani <jbogdani@gmail.com>
+* @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
+* @license      MIT, See LICENSE file
+* @since        Aug 29, 2013
+*/
 
 
 class userform_ctrl extends Controller
 {
   private $data;
-  
-  
+
+
   public function createNew()
   {
     $name = $this->get['param'][0] . '.json';
-    
+
     try
     {
       if (file_exists('./sites/default/modules/userforms/' . $name))
@@ -40,8 +40,8 @@ class userform_ctrl extends Controller
             'is_required' => 'true|false',
             'email' => 'true|false',
           )
-          )
-        );
+        )
+      );
 
 
       if (!is_dir('./sites/default/modules/userforms'))
@@ -62,10 +62,10 @@ class userform_ctrl extends Controller
     {
       $resp = array('status' => 'error', 'text' => $e->getMessage() );
     }
-    
+
     echo json_encode($resp);
   }
-  
+
   public function save()
   {
     if (utils::write_in_file('./sites/default/modules/userforms/' . $this->get['param'][0], $this->post['data'], 'json'))
@@ -77,7 +77,7 @@ class userform_ctrl extends Controller
       echo json_encode(array('status' => 'error', 'text' => tr::get('error_form_config_not_saved') ));
     }
   }
-  
+
   public function erase()
   {
     if (unlink('./sites/default/modules/userforms/' . $this->get['param'][0]))
@@ -89,29 +89,29 @@ class userform_ctrl extends Controller
       echo json_encode(array('status' => 'error', 'text' => tr::get('error_form_ot_deleted') ));
     }
   }
-  
+
   public function edit_form()
   {
     $form = $this->get['param'][0];
-    
+
     $content = file_get_contents('./sites/default/modules/userforms/' . $form);
     $this->render('userform', 'edit_form', array(
-        'form' => $form,
-        'content'=> $content
+      'form' => $form,
+      'content'=> $content
     ));
   }
-  
-  
+
+
   public function view()
   {
     $this->render('userform', 'list', array(
-        'forms' => utils::dirContent('./sites/default/modules/userforms')
+      'forms' => utils::dirContent('./sites/default/modules/userforms')
     ));
   }
-  
+
   /**
-   * Loads json file with form data in $this->data 
-   */
+  * Loads json file with form data in $this->data
+  */
   private function loadForm($form)
   {
     if (!$this->data)
@@ -124,44 +124,64 @@ class userform_ctrl extends Controller
       }
     }
   }
-  
+
   /**
-   * Processes post data and echoes json with status: error|success and verbous text
-   * @throws Exception
-   */
+  * Processes post data and echoes json with status: error|success and verbous text
+  * @throws Exception
+  */
   public function process()
   {
     try
     {
+
+      $error = array();
+
+      // Get form id
       $form = $this->get['param'][0];
 
+      // Load form data
       $this->loadForm($form);
 
-      $data = $_POST;
-      
+      // load user data
+      $data = $this->post;
+
+      // change user subject if custom subject is set
       if ($data['customsubject'])
       {
         $this->data['subject'] = $data['customsubject'];
         unset($data['customsubject']);
       }
 
+      // Validate reCAPTCHA
+      if (reCAPTCHA::isProtected())
+      {
+        try
+        {
+          reCAPTCHA::validate($this->post['g-recaptcha-response']);
+        }
+        catch(Exception $e)
+        {
+          array_push($error, '<p>' . tr::get('captcha_error') . '</p>');
+        }
+      }
+
       /**
-       * Check for error in POST data
-       */
+      * Check for error in POST data
+      */
       foreach ($this->data['elements'] as $el)
       {
         // Check required element
         if ($el['is_required'] && !$data[$el['name']])
         {
-          $error .= '<p>' . tr::sget('missing_required', $el['name']) . '</p>';
+          array_push($error, '<p>' . tr::sget('missing_required', $el['name']) . '</p>');
         }
-        
+
         if ($el['email'] && $el['email'] !== 'false' && !filter_var($data[$el['name']], FILTER_VALIDATE_EMAIL))
         {
-          $error .= '<p>' . tr::sget('invalid_email', $el['name']) . '</p>';
+          array_push($error, '<p>' . tr::sget('invalid_email', $el['name']) . '</p>');
           continue;
         }
-        
+
         if ($el['type'] === 'upload')
         {
           if (file_exists($data[$el['name']]))
@@ -171,17 +191,17 @@ class userform_ctrl extends Controller
         }
         else
         {
-          $text .= "\n" 
-            . ($el['label'] ? $el['label'] . ': ' : ($el['placeholder'] ? $el['placeholder'] . ': ' : '')) 
-            . htmlentities($data[$el['name']]);
+          $text .= "\n"
+          . ($el['label'] ? $el['label'] . ': ' : ($el['placeholder'] ? $el['placeholder'] . ': ' : ''))
+          . htmlentities($data[$el['name']]);
         }
       }
 
-      if ($error)
+      if (!empty($error))
       {
-        throw new Exception($error);
+        throw new Exception('<p>' . implode('</p><p>', $error) . '</p>');
       }
-      
+
       try
       {
         $message = new PHPMailer();
@@ -190,7 +210,7 @@ class userform_ctrl extends Controller
         $message->addAddress($this->data['to']);
         $message->Subject = $this->data['subject'];
         $message->Body = $text;
-        
+
         if (is_array($attach))
         {
           foreach ($attach as $file)
@@ -198,167 +218,161 @@ class userform_ctrl extends Controller
             $message->addAttachment($file);
           }
         }
-        
+
         $message->send();
-        
+
         echo json_encode(array('status' => 'success', 'text' => $this->data['success_text']));
       }
-      
+
       catch (phpmailerException $e)
       {
         error_log($e->getTraceAsString());
-        
+
         throw new Exception($this->data['error_text']);
       }
       catch (Exception $e)
       {
         error_log($e->getTraceAsString());
-        
+
         throw new Exception($this->data['error_text']);
       }
-      
-      
-      
-    /*
-      if ($_SESSION['queue']['file_path'] AND is_array($_SESSION['queue']['file_path']))
-      {
+}
+catch (Exception $e)
+{
+  echo json_encode(array('status'=>'error', 'text'=>$e->getMessage()));
+}
+}
 
-        foreach ($_SESSION['queue']['file_path'] as $fp)
-        {
-          $message->attach(Swift_Attachment::fromPath($fp));
-        }
-      }
-   
-   */
-      
-    }
-    catch (Exception $e)
-    {
-      echo json_encode(array('status'=>'error', 'text'=>$e->getMessage()));
-    }
-  }
 
-  
-  /**
-   * Formats and return HTML with form data
-   * @param array $param general parameters.
-   *  Mandatory value: $param['content']: the form to show
-   *  Optional value: subject, overrites the config subject
-   * @return string
-   */
-  public function showForm($param)
+/**
+* Formats and return HTML with form data
+* @param array $param general parameters.
+*  Mandatory value: $param['content']: the form to show
+*  Optional value: subject, overrites the config subject
+* @return string
+*/
+public function showForm($param)
+{
+  $this->loadForm($param['content']);
+
+  if ($param['inline'])
   {
-    $this->loadForm($param['content']);
-      
-    if ($param['inline'])
-    {
-      $form_class = 'form-inline';
-      $label_class = 'col-md-3';
-      $input_class = 'col-md-9';
-      $buttons_class = 'col-md-offset-3';
-    }
-    
-    if (!$this->data)
-    {
-      return '<p class="text-danger">Error loading data for user form <strong>' . $param['content'] . '</strong></p>';
-    }
-    
-    $html = '<form action="javascript:void(0)" class="' . $form_class . '" id="' . $param['content'] . '">';
-    
-    if ($param['subject'])
-    {
-      $html .= '<input type="hidden" name="customsubject" value="' . $param['subject'] . '" />';
-    }
-    
-    foreach ($this->data['elements'] as $el)
-    {
-      
-      $checkClass = ($el['is_required'] ? ' required' : '') . ($el['is_email'] ? ' email' : '');
-      
-      $html .= '<div class="form-group">' .
-              ( $el['label'] ? '<div class="' . $label_class . ' control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' : '' ) .
-              '<div class="' . $input_class . '">';
-      
-      switch ($el['type'])
-      {
-        case 'text':
-        default:
-          $html .= '<input type="text" ' . 
-            ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-            ' name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '" />';
-          break;
-        
-        case 'longtext';
-          $html .= '<textarea ' .
-            ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-            'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
-          break;
-        
-        case 'select':
-          $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
-            '<option></option>';
-          foreach ($el['options'] as $opt)
-          {
-            $html .= '<option>' . $opt . '</option>';
-          }
-          
-          $html .= '</select>';
-          break;
-        
-        case 'upload':
-          $upload[$el['name']] = array();
-          
-          if ($el['allowedExtensions'])
-          {
-            $upload[$el['name']]['allowedExtensions'] = $el['allowedExtensions'];
-          }
-          
-          if ($el['sizeLimit'])
-          {
-            $upload[$el['name']]['sizeLimit'] = $el['sizeLimit'];
-          }
-          
-          $html .= '<div class="upload_content">' .
-            '<div class="upl_' . $el['name'] . '"></div>' .
-            '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
-            '<div class="preview"></div>' .
-            '</div>';
-          break;
-        
-      }
-      
-      $html .= '</div>' .
-            '</div>';
-    }
-    $html .= '<div class="clearfix">' .
-              '<div class="' . $input_class . ' ' . $buttons_class . '">' .
-                '<div class="message"></div>' .
-                '<input class="btn btn-success" type="submit" /> ' .
-                '<input class="btn btn-default" type="reset" />' .
-              '</div>' .
-            '</div>' .
-            '</form>';
-    
-    if (!$data['nojs'])
-    {
-      $js = file_get_contents(MOD_DIR . 'userform/userform.js');
-      
-      $html .= '<script>' .
-        str_replace('userformID', $param['content'], $js);
-      
-      if (is_array($upload))
-      {
-        foreach($upload as $el=>$opts)
-        {
-          $html .= "\n upload_file('upl_" . $el . "', " . json_encode($opts). ");";
-        }
-      }
-      $html .=  '</script>';
-    }
-    
-  return $html;
+    $form_class = 'form-inline';
+    $label_class = 'col-md-3';
+    $input_class = 'col-md-9';
+    $buttons_class = 'col-md-offset-3';
   }
-  
+
+  if (!$this->data)
+  {
+    return '<p class="text-danger">Error loading data for user form <strong>' . $param['content'] . '</strong></p>';
+  }
+
+  $html = '<form action="javascript:void(0)" class="' . $form_class . '" id="' . $param['content'] . '">';
+
+  if ($param['subject'])
+  {
+    $html .= '<input type="hidden" name="customsubject" value="' . $param['subject'] . '" />';
+  }
+
+  foreach ($this->data['elements'] as $el)
+  {
+
+    $checkClass = ($el['is_required'] ? ' required' : '') . ($el['is_email'] ? ' email' : '');
+
+    $html .= '<div class="form-group">' .
+    ( $el['label'] ? '<div class="' . $label_class . ' control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' : '' ) .
+    '<div class="' . $input_class . '">';
+
+    switch ($el['type'])
+    {
+      case 'text':
+      default:
+      $html .= '<input type="text" ' .
+      ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+      ' name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '" />';
+      break;
+
+      case 'longtext';
+      $html .= '<textarea ' .
+      ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+      'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
+      break;
+
+      case 'select':
+      $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
+      '<option></option>';
+      foreach ($el['options'] as $opt)
+      {
+        $html .= '<option>' . $opt . '</option>';
+      }
+
+      $html .= '</select>';
+      break;
+
+      case 'upload':
+      $upload[$el['name']] = array();
+
+      if ($el['allowedExtensions'])
+      {
+        $upload[$el['name']]['allowedExtensions'] = $el['allowedExtensions'];
+      }
+
+      if ($el['sizeLimit'])
+      {
+        $upload[$el['name']]['sizeLimit'] = $el['sizeLimit'];
+      }
+
+      $html .= '<div class="upload_content">' .
+      '<div class="upl_' . $el['name'] . '"></div>' .
+      '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
+      '<div class="preview"></div>' .
+      '</div>';
+      break;
+    }
+
+    $html .= '</div>' .
+    '</div>';
+  }
+  $html .= '<div class="clearfix">';
+
+  // Show Google reCAPTCHA if settings are present
+  if (cfg::get('grc_sitekey'))
+  {
+    $html .= '<div class="g-recaptcha" data-sitekey="' . cfg::get('grc_sitekey') . '"></div>' .
+    '<script src="https://www.google.com/recaptcha/api.js"></script>';
+
+  }
+
+  $html .= '<div class="' . $input_class . ' ' . $buttons_class . '">' .
+  '<div class="message"></div>' .
+  '<input class="btn btn-success" type="submit" /> ' .
+  '<input class="btn btn-default" type="reset" />' .
+  '</div>';
+
+  $html .= '</div>' .
+  '</form>';
+
+  if (!$data['nojs'])
+  {
+    $js = file_get_contents(MOD_DIR . 'userform/userform.js');
+
+    $html .= '<script>' .
+    str_replace('userformID', $param['content'], $js);
+
+    if (is_array($upload))
+    {
+      foreach($upload as $el=>$opts)
+      {
+        $html .= "\n upload_file('upl_" . $el . "', " . json_encode($opts). ");";
+      }
+    }
+    $html .=  '</script>';
+  }
+
+  return $html;
+}
+
 }
 
 ?>

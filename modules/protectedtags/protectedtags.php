@@ -270,33 +270,19 @@ class protectedtags_ctrl extends Controller
       }
 
       // Google reCAPTCHA check
-      if (cfg::get(grc_sitekey))
+      if (reCAPTCHA::isProtected())
       {
-        $response = $this->post['g-recaptcha-response'];
-        $secret = cfg::get('grc_secretkey');
-
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-
-    		$curl = new \Curl($url);
-
-    		$curl->POST = true;
-
-    		$post = array(
-    				'secret' => $secret,
-    				'response'	=> $response,
-            'remoteip' => $_SERVER['HTTP_CLIENT_IP']
-
-    		);
-    		$curl->POSTFIELDS = $post;
-
-        $data = json_decode($curl->fetch(), true);
-
-        if (!$data['success'] || $data['success'] != 'true')
+        try
         {
-          error_log(var_export($data, true));
+          reCAPTCHA::validate($this->post['g-recaptcha-response']);
+        }
+        catch (Exception $e)
+        {
+          error_log($e);
           throw new Exception(tr::get('captcha_error'));
         }
       }
+      
 
       // Finally check email/password
       $users = $this->getData('users');

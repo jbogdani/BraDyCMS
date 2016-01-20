@@ -173,7 +173,7 @@ class Assets
       {
         $source = 'cdn';
       }
-      elseif (isset($asset[$type]['cdn']))
+      elseif (isset($asset[$type]['local']))
       {
         $source = 'local';
       }

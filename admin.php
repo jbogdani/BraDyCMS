@@ -92,7 +92,8 @@ catch (Exception $e)
       $('#logerror').hide();
       $.post('controller.php?obj=log_ctrl&method=in', $(this).serialize(), function(data){
       if (data.status === 'success'){
-          window.location.href = './admin';
+          location.reload();
+          $(window).trigger('hashchange');
           return false;
         } else {
           $('#logerror .text').html(data.text);
@@ -117,7 +118,7 @@ catch (Exception $e)
           admin.message(data.text, data.status, false, true);
         }
       }, 'json');
-    })
+    });
   </script>
   <?php endif; ?>
 

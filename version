@@ -1,3 +1,4 @@
+3.11.0[] = "Removed support for sanitize parameter in qqFileUploader class, handled externally"
 3.11.0[] = "If URL command in admin backend is present this will be executed after user authentication"
 3.11.0[] = "Bug fixed with Asset::resolve not resolving correctly local resources"
 3.11.0[] = "Added logout function and UI for protected pages"

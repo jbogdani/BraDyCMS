@@ -110,9 +110,8 @@ class qqFileUploader {
 
   /**
    * Returns array('success'=>true) or array('error'=>'error message')
-   * ADDED BY JBOGDANI: $sanitize parameter
    */
-  function handleUpload($uploadDirectory, $replaceOldFile = FALSE, $sanitize = false){
+  function handleUpload($uploadDirectory, $replaceOldFile = FALSE){
     if (!is_writable($uploadDirectory)){
       return array('error' => "Server error. Upload directory isn't writable.");
     }
@@ -133,14 +132,10 @@ class qqFileUploader {
 
     $pathinfo = pathinfo($this->file->getName());
 
-    $filename = $sanitize ? str_replace(
-      array(' ', '{', '}', ',','"', "'", '[', ']', '(', ')'),
-      array('_', null, null, null, null, null, null, null),
-      strtolower($pathinfo['filename'])
-      ) : $pathinfo['filename'];
+    $filename = $pathinfo['filename'];
 
     //$filename = md5(uniqid());
-    $ext = $sanitize ? strtolower($pathinfo['extension']) : $pathinfo['extension'];
+    $ext = $pathinfo['extension'];
 
     if($this->allowedExtensions && !in_array(strtolower($ext), $this->allowedExtensions)){
       $these = implode(', ', $this->allowedExtensions);

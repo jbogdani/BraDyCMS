@@ -33,12 +33,12 @@ class imgMng
   }
 
   /**
-   * Checks if Imagick is installed and available
+   * Checks if Convert binary is avaiilable
    * @return boolean 
    */
-  private function isImagick()
+  private function isBinary()
   {
-    return class_exists('Imagick');
+    return cfg::get('im_convert') && file_exists(cfg::get('im_convert'));
   }
 
   /**
@@ -55,7 +55,19 @@ class imgMng
 
     $tmp_file = TMP_DIR . uniqid('file');
 
-    if (self::isImagick())
+    if (self::isBinary())
+    {
+      $cmd = cfg::get('im_convert') . 
+        ' -resize ' . $width . ($height ? 'x' . $height : '') . '^ ' .
+        ' "' . $oFile . '" ' .
+        '-background none ' .
+        '-gravity center ' .
+        '-extent ' . $width . ($height ? 'x' . $height : '') .
+        ' "' . $tmp_file . '"';
+
+      @exec($cmd, $a, $b);
+    }
+    else
     {
       $img = new Imagick($oFile);
 
@@ -68,18 +80,6 @@ class imgMng
       {
         throw new Exception('Error in saving new thumbnail');
       }
-    }
-    else
-    {
-      $cmd = cfg::get('im_convert') . 
-        ' -resize ' . $width . ($height ? 'x' . $height : '') . '^ ' .
-        ' "' . $oFile . '" ' .
-        '-background none ' .
-        '-gravity center ' .
-        '-extent ' . $width . ($height ? 'x' . $height : '') .
-        ' "' . $tmp_file . '"';
-
-      @exec($cmd, $a, $b);
     }
 
     if (!file_exists($tmp_file))
@@ -105,7 +105,15 @@ class imgMng
   {
     self::checkFile($oFile);
 
-    if (self::isImagick())
+    if (self::isBinary())
+    {
+      $cmd = cfg::get('im_convert') . 
+        ' "' . $oFile . '" ' .
+        ' "' . $nFile . '"';
+
+      @exec($cmd, $a, $b);
+    }
+    else
     {
       $img = new Imagick($oFile);
 
@@ -117,14 +125,6 @@ class imgMng
       {
         throw new Exception('Error in saving new image');
       }
-    }
-    else
-    {
-      $cmd = cfg::get('im_convert') . 
-        ' "' . $oFile . '" ' .
-        ' "' . $nFile . '"';
-
-      @exec($cmd, $a, $b);
     }
 
     if (!file_exists($nFile))
@@ -160,7 +160,17 @@ class imgMng
 
     $tmp_file = TMP_DIR . uniqid('file');
 
-    if (self::isImagick())
+    if (self::isBinary())
+    {
+      $cmd = cfg::get('im_convert') . 
+        ' -resize ' . $width . ($height ? 'x' . $height : '') . ($onlyDownscale ? '\>' : '') .
+        ($resolution ? ' -density ' . $resolution : '') .
+        ' "' . $file . '" ' .
+        ' "' . $tmp_file . '"';
+
+      @exec($cmd, $a, $b);
+    }
+    else
     {
       $img = new Imagick($file);
 
@@ -176,16 +186,6 @@ class imgMng
       {
         throw new Exception('Error in saving new image');
       }
-    }
-    else
-    {
-      $cmd = cfg::get('im_convert') . 
-        ' -resize ' . $width . ($height ? 'x' . $height : '') . ($onlyDownscale ? '\>' : '') .
-        ($resolution ? ' -density ' . $resolution : '') .
-        ' "' . $file . '" ' .
-        ' "' . $tmp_file . '"';
-
-      @exec($cmd, $a, $b);
     }
 
     if (!file_exists($tmp_file))
@@ -221,7 +221,16 @@ class imgMng
 
     $tmp_file = TMP_DIR . uniqid('file');
 
-    if (self::isImagick())
+    if (self::isBinary())
+    {
+      $cmd = cfg::get('im_convert') . 
+        ' -crop ' . $width . ($height ? 'x' . $height : '') .
+        ' "' . $file . '" ' .
+        ' "' . $tmp_file . '"';
+
+      @exec($cmd, $a, $b);
+    }
+    else
     {
       $img = new Imagick($file);
 
@@ -234,15 +243,6 @@ class imgMng
       {
         throw new Exception('Error in saving new image');
       }
-    }
-    else
-    {
-      $cmd = cfg::get('im_convert') . 
-        ' -crop ' . $width . ($height ? 'x' . $height : '') .
-        ' "' . $file . '" ' .
-        ' "' . $tmp_file . '"';
-
-      @exec($cmd, $a, $b);
     }
 
     if (!file_exists($tmp_file))

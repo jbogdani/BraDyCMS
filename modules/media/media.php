@@ -56,8 +56,6 @@ class media_ctrl extends Controller
         else
         {
           $file_obj[$file]['type'] = 'folder';
-            
-          //$file_obj[$file]['src'] = './img/folder.png';
         }
       }
     }
@@ -194,46 +192,64 @@ class media_ctrl extends Controller
   
   public function crop()
   {
-    $ofile = $this->request['param'][0];
+    $file = $this->request['param'][0];
     $crop = $this->request['param'][1];
-    
-    $this->process_convert($ofile, false, 'crop', $crop);
+
+    try
+    {
+      imgMng::crop(
+        $this->request['param']['file'],
+        $this->request['param']['width'],
+        $this->request['param']['height'],
+        $this->request['param']['offset_x'],
+        $this->request['param']['offset_y']
+        );
+      echo $this->responseJson('success', tr::get('ok_cropping_file'));
+    }
+    catch (Exception $e)
+    {
+      error_log($e->getMessage());
+      echo $this->responseJson('error', tr::get('error_cropping_file'));
+    }
+
   }
   
   
   public function resize()
   {
-    $ofile = $this->request['param'][0];
-    $size = $this->request['param'][1];
+    try
+    {
+      imgMng::resize(
+        $this->request['param']['file'],
+        $this->request['param']['width']
+        );
+      echo $this->responseJson('success', tr::get('ok_resizing_file'));
+    }
+    catch (Exception $e)
+    {
+      error_log($e->getMessage());
+      echo $this->responseJson('error', tr::get('error_resizing_file'));
+    }
     
-    $this->process_convert($ofile, false, 'resize', $size);
   }
   
   
   public function convert()
   {
-    $ofile = $this->request['param'][0];
-    $nfile = $this->request['param'][1];
-    
-    $this->process_convert($ofile, $nfile);
-  }
-  
-  private function process_convert($ofile, $nfile, $type = false, $details = false)
-  {
+
     try
     {
-      $ok = imgMng::process_convert($ofile, $nfile, $type, $details);
-    
-      $out['status'] = 'success';
-      $out['text'] = tr::get($ok);
+      imgMng::convert(
+        $this->request['param']['oFile'],
+        $this->request['param']['nFile']
+        );
+      echo $this->responseJson('success', tr::get('ok_converting_file'));
     }
     catch (Exception $e)
     {
-      $out['status'] = 'error';
-      $out['text'] = tr::get($e->getMessage());
+      error_log($e->getMessage());
+      echo $this->responseJson('error', tr::get('error_converting_file'));
     }
-    
-    echo json_encode($out);
   }
   
   public function makeThumbs($dir = false, $max = false, $fixed = false, $overwrite = false, $recursive = false)
@@ -298,12 +314,20 @@ class media_ctrl extends Controller
 
           if ($w > $h)
           {
-            $details = $max. 'x' . ( $h / ( $w/$max ) );
+            $width = $max;
+            $height = ( $h / ( $w/$max ) );
           }
           else
           {
-            $details = ( $w / ( $h/$max ) ) . 'x' . $max;
+            $width = ( $w / ( $h/$max ) );
+            $height = $max;
           }
+        }
+        else
+        {
+          $expl = explode('x', $details);
+          $width = $expl[0];
+          $height = $expl[1];
         }
       
         if (!in_array($ext, $validExts))
@@ -316,16 +340,16 @@ class media_ctrl extends Controller
           @mkdir($dir . '/thumbs', 0777, true);
         }
         
-        imgMng::thumb(
-          $dir . '/' . $file,
-          $nfile,
-          $details);
-        
-        if (!file_exists($nfile))
+        try
+        {
+          imgMng::thumb($dir . '/' . $file, $nfile, intval($width), intval($height));
+        }
+        catch (Exception $e)
         {
           error_log('Error can not create thumbnail: ' . $nfile);
           $error[] = $nfile;
         }
+        
       }
     }
     

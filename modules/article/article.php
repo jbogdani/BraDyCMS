@@ -521,11 +521,13 @@ class article_ctrl extends Controller
         {
           try
           {
-            imgMng::thumb(TMP_DIR . $file, $output, $dim);
+            $dim_arr = explode('x', $dim);
+            imgMng::thumb(TMP_DIR . $file, $output, $dim_arr[0], $dim_arr[1]);
           }
           catch (Exception $e)
           {
-            throw new Exception(tr::get($e->getMessage()));
+            error_log($e->getMessage());
+            throw new Exception(tr::get('thumbnail_not_created'));
           }
         }
       }

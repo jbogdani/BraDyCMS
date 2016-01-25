@@ -16,6 +16,11 @@
 
   <div class="well well-sm clearfix">
     <div class="pull-left form-inline">
+      {% if max_img_size %}
+        <div class="text-warning">
+          {{ tr.sget('max_img_size_warning', max_img_size) }}
+        </div>
+      {% endif %}
       <div class="uploader"></div>
     </div>
     
@@ -93,7 +98,7 @@
   
   admin.upload(
       $('#{{ uid }} div.uploader')[0],
-      'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize',
+      'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize&param[]=resize',
       {
         loaded: function(){
           admin.tabs.reloadThis('#{{ uid }}');

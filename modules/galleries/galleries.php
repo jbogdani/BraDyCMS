@@ -74,14 +74,16 @@ class galleries_ctrl extends Controller
     }
 
     $this->render('galleries', 'editGal', array(
-        'gallery'=> $this->get['param'][0],
-        'files'  => $files,
-        'thumbs'=> $thumbs,
-        'upload_dir'=> $this->path . $this->get['param'][0],
-        'langs' => cfg::get('languages'),
-        'translation' => $lang,
-        'thumb_dimensions' => '200x200'
-        ));
+      'gallery'=> $this->get['param'][0],
+      'files'  => $files,
+      'thumbs'=> $thumbs,
+      'upload_dir'=> $this->path . $this->get['param'][0],
+      'langs' => cfg::get('languages'),
+      'translation' => $lang,
+      'thumb_dimensions' => '200x200',
+      'max_img_size' => cfg::get('max_img_size')
+      )
+    );
 
   }
 
@@ -129,7 +131,8 @@ class galleries_ctrl extends Controller
     $thumb_path = $path . '/thumbs/' . $file;
 
     try{
-      imgMng::thumb($path . '/' . $file, $thumb_path, $thumbs_dimensions);
+      $dims_arr = explode('x', $thumbs_dimensions);
+      imgMng::thumb($path . '/' . $file, $thumb_path, $dims_arr[0], $dims_arr[1]);
 
       $msg['text'] = tr::get('thumbnail_created');
       $msg['status'] = 'success';
@@ -137,6 +140,7 @@ class galleries_ctrl extends Controller
     }
     catch (Exception $e)
     {
+      error_log($e->getMessage());
       $msg['text'] = tr::get('thumbnail_not_created');
       $msg['status'] = 'error';
     }
@@ -218,9 +222,12 @@ class galleries_ctrl extends Controller
       // get all data files, main and translations
       $data_file[] = $this->get['param'][0] . '/data.json';
 
-      foreach (cfg::get('languages') as $lng)
+      if (is_array(cfg::get('languages')))
       {
-        $data_file[] = $this->get['param'][0] . '/data_' . $lng['id']. '.json';
+        foreach (cfg::get('languages') as $lng)
+        {
+          $data_file[] = $this->get['param'][0] . '/data_' . $lng['id']. '.json';
+        }
       }
 
 

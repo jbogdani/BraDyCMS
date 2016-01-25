@@ -1,3 +1,4 @@
+3.11.0[] = "New, more intuitive, image management class"
 3.11.0[] = "Added new site setting: max_img_size for some image size constraint in upload phase"
 3.11.0[] = "Added sanitize and resize options to utils::uploader"
 3.11.0[] = "Removed support for sanitize parameter in qqFileUploader class, handled externally"

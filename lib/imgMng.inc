@@ -1,197 +1,262 @@
 <?php
 /**
  * Main image manupilation class.
- * Uses Imagemagick binary covert of Imagick php extension, depending on system cfg.
+ * Uses Imagemagick Imagick php extension
  * @author      Julian Bogdani <jbogdani@gmail.com>
  * @copyright    BraDypUS 2007-2013
  * @license      MIT, See LICENSE file
  * @since      May 16, 2013
- * @uses cfg main configuration class
+ * @uses    Imagick
  */
 
 
 class imgMng
 {
-
+  
   /**
-   * Alias for self::process_convert($ofile, $nfile, 'thumb', $details)
-   * @param string $ofile
-   * @param string $nfile
-   * @param string $details  thumb dimensions: eg. 200x200
-   * @return true;
+   * Checks if Imagick is available and file exists and throws Exception on errors
+   * @param  string $file Path to file to be processed
+   * @return true on success
+   * @throws Exception on errors
    */
-  public static function thumb($ofile, $nfile = false, $details)
+  private function checkFile($file)
   {
-    return self::process_convert($ofile, $nfile, 'thumb', $details);
-  }
-
-
-  /**
-   * Main image manipulation method
-   * @param string $ofile path to original file
-   * @param string $nfile path to destination file
-   * @param string $type  action to perform. One of: convert (default)|crop|resize|thumb
-   * @param string $details transformation details (sizes, offsets, etc.)
-   * @return string String with successfull message
-   * @throws Exception
-   */
-  public static function process_convert($ofile, $nfile = false, $type = false, $details = false)
-  {
-    // Default type is <convert>
-    $type = $type ? $type : 'convert';
-
-    // If no new file is provided a temporary file will be created and original
-    // file will be overwritten
-    if (!$nfile)
+    if (!class_exists('Imagick') && (!cfg::get('im_convert') || !file_exists(cfg::get('im_convert'))))
     {
-      $nfile = TMP_DIR . uniqid('file');
-      $overwriteOriginal = true;
+      throw new Exception('Class Imagick or ImageMacik binary is required for image manipulation');
     }
 
-    // Get system config paths
-    $sys_paths = cfg::get('paths');
-
-    // Choose conversion engine/system depending on cfg value
-    switch ($sys_paths['convert'])
+    if (!file_exists($file))
     {
-      case 'imagick':
-        if(!class_exists('Imagick'))
+      throw new Exception('The original image file ' . $file . ' does not exist');
+    }
+  }
+
+  /**
+   * Checks if Imagick is installed and available
+   * @return boolean 
+   */
+  private function isImagick()
+  {
+    return class_exists('Imagick');
+  }
+
+  /**
+   * Creates thumbnails fro original image
+   * @param  string  $oFile  Path to original image
+   * @param  string|false $nFile  Path to destination image, $oFile will be used if not provided
+   * @param  int  $width  Thumbnail's width
+   * @param  int $height Thumbnail's height
+   * @return true on success
+   */
+  public static function thumb($oFile, $nFile = false, $width, $height = false)
+  {
+    self::checkFile($oFile);
+
+    $tmp_file = TMP_DIR . uniqid('file');
+
+    if (self::isImagick())
+    {
+      $img = new Imagick($oFile);
+
+      if (!$img->cropThumbnailImage($width, $height))
+      {
+        throw new Exception('Error in creating thumbnail');
+      }
+
+      if (!$img->writeimage($tmp_file))
+      {
+        throw new Exception('Error in saving new thumbnail');
+      }
+    }
+    else
+    {
+      $cmd = cfg::get('im_convert') . 
+        ' -resize ' . $width . ($height ? 'x' . $height : '') . '^ ' .
+        ' "' . $oFile . '" ' .
+        '-background none ' .
+        '-gravity center ' .
+        '-extent ' . $width . ($height ? 'x' . $height : '') .
+        ' "' . $tmp_file . '"';
+
+      @exec($cmd, $a, $b);
+    }
+
+    if (!file_exists($tmp_file))
+    {
+      throw new Exception('Error: new thumbnail file does not exist');
+    }
+
+    if (!@rename($tmp_file, ($nFile ? $nFile : $oFile)))
+    {
+      throw new Exception('Error in moving thumbnail');
+    }
+
+    return true;
+  }
+
+  /**
+   * Converts origial image to new file and throws Exception on errors
+   * @param  string   full path to old image file
+   * @param  string   full path to new image file
+   * @return true on succes
+   */
+  public static function convert($oFile, $nFile)
+  {
+    self::checkFile($oFile);
+
+    if (self::isImagick())
+    {
+      $img = new Imagick($oFile);
+
+      if (!$img->setImageFormat(pathinfo($nFile, PATHINFO_EXTENSION)))
+      {
+        throw new Exception('Error in setting image format');
+      }
+      if (!$img->writeimage($nFile))
+      {
+        throw new Exception('Error in saving new image');
+      }
+    }
+    else
+    {
+      $cmd = cfg::get('im_convert') . 
+        ' "' . $oFile . '" ' .
+        ' "' . $nFile . '"';
+
+      @exec($cmd, $a, $b);
+    }
+
+    if (!file_exists($nFile))
+    {
+      throw new Exception('Error: new image file does not exist');
+    }
+    
+    return true;
+  }
+
+  /**
+   * Resizes image to figen width x height x resolution and throws Exception on errors
+   * @param  string  $file          full path to image to resize
+   * @param  int|false $width       new width (if false height's value will be used)
+   * @param  int|false $height      new height (if false wisth's value will be used)
+   * @param  int|false $resolution  new height (if false wisth's value will be used)
+   * @param  boolean $onlyDownscale if true image will be scaled only id original dimension is bigger then destination dimension
+   * @return true on success
+   */
+  public static function resize($file, $width = false, $height = false, $resolution = false, $onlyDownscale = false)
+  {
+    self::checkFile($file);
+
+    if (!$width && !$height)
+    {
+      throw new Exception('One of width or height values is required.');
+    }
+
+    if ($width && $height)
+    {
+      $bestfit = true;
+    }
+
+    $tmp_file = TMP_DIR . uniqid('file');
+
+    if (self::isImagick())
+    {
+      $img = new Imagick($file);
+
+      if ($img->getImageWidth() > $width || $img->getImageHeight > $height)
+      {
+        if (!$img->scaleImage($width, $height, $bestfit))
         {
-          throw new Exception('imagick_not_available');
+          throw new Exception("Error in scaling image");
         }
-        self::process_convert_imagick($ofile, $nfile, $type, $details);
-        break;
+      }
 
-      case '':
-      case false:
-        throw new Exception('no_image_manipulation_setting_found');
-        break;
-
-      default:
-        self::process_convert_binary($ofile, $nfile, $type, $details);
-        break;
+      if (!$img->writeimage($tmp_file))
+      {
+        throw new Exception('Error in saving new image');
+      }
     }
-
-    if (!file_exists($nfile))
+    else
     {
-      throw new Exception(self::getMsg($type, 'error'));
+      $cmd = cfg::get('im_convert') . 
+        ' -resize ' . $width . ($height ? 'x' . $height : '') . ($onlyDownscale ? '\>' : '') .
+        ($resolution ? ' -density ' . $resolution : '') .
+        ' "' . $file . '" ' .
+        ' "' . $tmp_file . '"';
+
+      @exec($cmd, $a, $b);
     }
 
-    if ($overwriteOriginal)
+    if (!file_exists($tmp_file))
     {
-      @rename($nfile, $ofile);
+      throw new Exception('Error: new image file does not exist');
     }
-    return self::getMsg($type, 'ok');
-  }
 
+    if (!@rename($tmp_file, $file))
+    {
+      throw new Exception('Error in moving resized image');
+    }
 
-  /**
-   * Returns error/success messages
-   * @param string $type maniputaltion type: convert|crop|resize|thumb
-   * @param string $status message type: ok|error
-   * @return string message
-   */
-  private static function getMsg($type, $status)
-  {
-    $msg['convert']['ok'] = 'ok_converting_file';
-    $msg['convert']['error'] = 'error_converting_file';
-
-    $msg['crop']['ok'] = 'ok_cropping_file';
-    $msg['crop']['error'] = 'error_cropping_file';
-
-    $msg['resize']['ok'] = 'ok_resizing_file';
-    $msg['resize']['error'] = 'error_resizing_file';
-
-    $msg['thumb']['ok'] = 'thumbnail_created';
-    $msg['thumb']['error'] = 'thumbnail_not_created';
-
-    return $msg[$type][$status];
+    return true;
   }
 
   /**
-   * Uses binary convert executable to convert files
-   * @param string $ofile path to original file
-   * @param string $nfile path to destination file
-   * @param string $type  action to perform. One of: convert|crop|resize|thumb
-   * @param string $details transformation details (sizes, offsets, etc.)
-   * @throws Exception
+   * Crops image file to given values and throws Exception on errors
+   * @param  string     full path to image to crop
+   * @param  int|false  new image width 
+   * @param  int|false  new image height
+   * @param  int|false  The X coordinate of the cropped region's top left corner
+   * @param  int|false  The Y coordinate of the cropped region's top left corner
+   * @return true on success
    */
-  private static function process_convert_binary($ofile, $nfile = false, $type, $details = false)
+  public static function crop($file, $width = false, $height = false, $x = false, $y = false)
   {
-    $exec_path = cfg::get('paths');
+    self::checkFile($file);
 
-    switch($type)
+    if (!$width && !$height)
     {
-      case 'convert':
-        $convert = $exec_path['convert'] . ' "' . $ofile . '" "' . $nfile . '"';
-        break;
-
-      case 'crop':
-        $convert = $exec_path['convert'] . " -crop '" . $details . "' " . ' "' . $ofile . '" "' . $nfile . '"';
-        break;
-
-      case 'resize':
-        $convert = $exec_path['convert'] . " -resize '" . $details . '\'  "' . $ofile . '" "' . $nfile . '"';
-        break;
-
-      case 'thumb':
-        $convert = $exec_path['convert'] . ' -resize ' . $details . '^ "' . $ofile . '" -background none -gravity center -extent ' . $details . ' "' . $nfile . '"';
-        break;
-
-      default:
-        return;
-        break;
+      throw new Exception('One of width or height values is required.');
     }
 
-    @exec($convert, $a, $b);
-  }
+    $tmp_file = TMP_DIR . uniqid('file');
 
-  /**
-   * Uses imagick extension to convert files
-   * @param string $ofile path to original file
-   * @param string $nfile path to destination file
-   * @param string $type  action to perform. One of: convert|crop|resize|thumb
-   * @param string $details transformation details (sizes, offsets, etc.)
-   * @throws Exception
-   */
-
-  private static function process_convert_imagick($ofile, $nfile = false, $type, $details = false)
-  {
-    $img = new Imagick($ofile);
-
-    switch($type)
+    if (self::isImagick())
     {
-      case 'convert':
-        $img->setImageFormat(pathinfo($nfile, PATHINFO_EXTENSION));
-        break;
+      $img = new Imagick($file);
 
-      case 'crop':
-        $dims = explode(' ', $details);
-        $size = explode('x', $dims[0]);
+      if (!$img->cropImage($width, $height, $x, $y))
+      {
+        throw new Exception("Error in cropping image");
+      }
 
-        $img->cropimage($size[0], $size[1], $dims[1], $dims[2]);
-        break;
+      if (!$img->writeimage($tmp_file))
+      {
+        throw new Exception('Error in saving new image');
+      }
+    }
+    else
+    {
+      $cmd = cfg::get('im_convert') . 
+        ' -crop ' . $width . ($height ? 'x' . $height : '') .
+        ' "' . $file . '" ' .
+        ' "' . $tmp_file . '"';
 
-      case 'resize':
-        $size = explode('x', $details);
-
-        $img->scaleimage($size[0], $size[1], true);
-
-        $convert = $exec_path['convert'] . " -resize '" . $details . '\'  "' . $ofile . '" "' . $nfile . '"';
-        break;
-
-      case 'thumb':
-        $size = explode('x', $details);
-
-        $img->cropThumbnailImage($size[0], $size[1]);
-        break;
-
-      default:
-        return;
-        break;
+      @exec($cmd, $a, $b);
     }
 
-    $img->writeimage($nfile);
+    if (!file_exists($tmp_file))
+    {
+      throw new Exception('Error: new image file does not exist');
+    }
+
+    if (!@rename($tmp_file, $file))
+    {
+      throw new Exception('Error in moving cropped image');
+    }
+
+    return true;
   }
+
 
 }

@@ -379,7 +379,7 @@
   {# article image upload #}
   admin.upload(
       $('#file_uploader_{{ uid }}')[0],
-      'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}',
+      'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}&param[]=sanitize&param[]=resize',
       {
         allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
         loaded: function(id, filename, responseJSON){

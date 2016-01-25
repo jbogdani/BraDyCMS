@@ -42,7 +42,7 @@ $('#userformID').on('submit', function(){
         }
         messageContainer.html(data.text);
 
-      }, 'json')
+      }, 'json');
     }
   });
 
@@ -83,7 +83,7 @@ function upload_file(el, opts){
       if (responseJSON.success) {
         var filePath = responseJSON.path + responseJSON.filename + '.' + responseJSON.ext;
         input.val(filePath);
-        preview.html('<img src="' + filePath + '" class="img-responsive" />')
+        preview.html('<img src="' + filePath + '" class="img-responsive" />');
       }
     });
   }

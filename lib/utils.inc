@@ -265,9 +265,10 @@ class utils
   /**
    * Upload file and returns information about uploaded file
    * @param string $upload_dir  Directrory where the file will be uploaded
-   * @param boolean $sanitize
+   * @param boolean $sanitize if true filename will be cleaned
+   * @param int|false $resize if true (file should be an image) the image will be resided to fit dimensions
    */
-  public static function upload($upload_dir, $sanitize = false)
+  public static function upload($upload_dir, $sanitize = false, $resize = false)
   {
     $allowedExtensions = array();
 
@@ -275,7 +276,38 @@ class utils
 
     $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
 
-    $result = $uploader->handleUpload($upload_dir . '/', false, $sanitize);
+    $result = $uploader->handleUpload($upload_dir . '/', false);
+
+    if ($result['success'] && $sanitize)
+    {
+      $oPath = $result['path'] . $result['filename'] . '.' . $result['ext'];
+
+      $result['filename'] = str_replace(
+          array(' ', '{', '}', ',','"', "'", '[', ']', '(', ')'),
+          array('_', null, null, null, null, null, null, null),
+          $result['filename']);
+      $result['ext'] = strtolower($result['ext']);
+
+      $nPath = $result['path'] . $result['filename'] . '.' . $result['ext'];
+
+      if ($oPath != $nPath)
+      {
+        @rename($oPath, $nPath);
+        unlink($oPath);
+      }
+
+      if ($resize && cfg::get('max_img_size'))
+      {
+        imgMng::resize(
+          $result['path'] . $result['filename'] . '.' . $result['ext'],
+          cfg::get('max_img_size'),
+          cfg::get('max_img_size'),
+          72,
+          true
+          );
+      }
+
+    }
 
     echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
   }

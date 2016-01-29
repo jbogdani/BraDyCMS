@@ -850,4 +850,56 @@ EOD;
     return $html;
   }
 
+
+  /**
+   * Outputs well formatted html string that embeds a google calendar
+   * @param  array $data array of input data:
+   *                     content: (string) (required) google calendar id eg: something@group.calendar.google.com
+   *                     showPrint: (boolean) (optional, default false): if true the print option will be visible
+   *                     showTabs: (boolean) (optional, default false): if true the tabs will be visible
+   *                     showCalendars: (boolean) (optional, default false): if true the list of calendars be visible
+   *                     height: (int|false) (optional, default 600): the height in pixels of the calendar
+   *                     width: (int|false) (optional, default 800): the width in pixels of the calendar
+   *                     wkst: (int|false) (optional, default 2): start day of the week 1: sunday, 2 monday, etc..
+   *                     bgcolor: (string|false) (optional, default FFFFFF): background color code
+   *                     color: (string|false) (optional, default 8C500B): Text color
+   *                     ctz: (string|false) (optional, default Europe/Rome): Time zone
+   *                     mode: (string|false) (optional, default false): Calndar mode, one of: WEEK or AGENDA
+   *                     hl: (string|false) (optional, default system language): Language of the calendar
+   * @return string       valid html
+   */
+  public static function gcalendar($data)
+  {
+    if (!$data['content'])
+    {
+      return false;
+    }
+
+    $opts = array(
+      'showPrint' => $data['showPrint'] ? '1' : '0',
+      'showTabs' => $data['showTabs'] ? '1' : '0',
+      'showCalendars' => $data['showCalendars'] ? '1' : '0',
+      'showTz' => $data['showTz'] ? '1' : '0',
+      'height'  => $data['height'] ? $data['height'] : '600',
+      'width'  => $data['width'] ? $data['width'] : '800',
+      'wkst' => $data['wkst'] ? $data['wkst'] : '2', // start day of the week 1: sunday, 2 monday
+      'bgcolor' => $data['bgcolor'] ? '%23' . $data['bgcolor'] : '%23FFFFFF',
+      'src' => urlencode($data['content']),
+      'color' => $data['showTz'] ? '#' . $data['color'] : '#8C500B',
+      'ctz' => $data['ctz'] ? urlencode($data['ctz']) : 'Europe%2FRome',
+      'mode' => ($data['mode'] && in_array(strtoupper($data['mode']), array('WEEK', 'AGENDA'))) ? strtoupper($data['mode']) : false,
+      'hl' => $data['hl'] ? $data['hl'] : $_SESSION['lang']
+      );
+
+    $html = '<iframe src="https://calendar.google.com/calendar/embed?'
+      . implode('&amp;', $opts) 
+      . 'style="' . ($data['border'] ? $data['border'] : 'border-width:0') . '" '
+      . 'width="' . $opts['width'] . '" '
+      . 'height="' . $opts['width'] . '" '
+      . 'frameborder="0" '
+      . 'scrolling="no"></iframe>';
+
+    return $html;
+  }
+
 }

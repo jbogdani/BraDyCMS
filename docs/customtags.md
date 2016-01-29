@@ -191,7 +191,7 @@ Complete example:
 Displays an existing image gallery
 - **content**, string, required. Name of gallery
 - **class**, string, optional. One or more (space separated) CSS class to apply to main ul tag
-= **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster
+- **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster
 images in slideshows. If not provided the gallery name will be used
 
 Minimal example:
@@ -199,6 +199,35 @@ Minimal example:
 
 Complete example:
     [[gallery class="horizontal small" rel="gallery_one"]]gallery_name[[/gallery]]
+
+---
+
+#### gplus_plusone('href','href','annotation', 'width', 'align', 'expandTo', 'callback', 'onstartinteraction', 'onendinteraction', 'recommendations', 'count')
+Adds the necessary HTML and javascript code to display GooglePlus' +1 widget. For a list of all the available options check this link: https://developers.google.com/+/web/+1button/
+
+Minimal example:
+    [[gplus_plusone]][[/gplus_plusone]]
+
+---
+
+#### gcalendar('class')
+Outputs well formatted html string that embeds a google calendar
+- **content**, string, required. Google calendar id eg: somecalendar@group.calendar.google.com
+- **showPrint**, boolean, optional, efault false. If true the print option will be visible
+- **showTabs**, boolean, optional, default false. If true the tabs will be visible
+- **showCalendars**, boolean, optional, default false. If true the list of calendars be visible
+- **height**, int|false, optional. Default 600. The height in pixels of the calendar
+- **width**, int|false, optional, default 800. The width in pixels of the calendar
+- **wkst**, int|false, optional, default 2. Start day of the week 1: sunday, 2 monday, etc..
+- **bgcolor**, string|false, optional, default FFFFFF. Background color code
+- **color**, string|false, optional, default 8C500B. Text color
+- **ctz**, string|false, optional, default Europe/Rome. Time zone
+- **mode**, string|false, optional, default false. Calndar mode, one of: WEEK or AGENDA
+- **hl**, string|false, optional, default system language. Language of the calendar
+
+
+Minimal example:
+    [[gcalendar]]somecalendar@group.calendar.google.com[[/gcalendar]]
 
 ---
 

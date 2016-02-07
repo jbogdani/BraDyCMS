@@ -1,3 +1,4 @@
+3.11.0[] = "Fixed bug with create new site procedure and captcha module"
 3.11.0[] = "New custom tag: gcalendat for showing a Google Calendar"
 3.11.0[] = "New, more intuitive, image management class"
 3.11.0[] = "Added new site setting: max_img_size for some image size constraint in upload phase"

@@ -78,15 +78,33 @@ catch (Exception $e)
     ?>
 
   <script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
-  <!-- <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script> -->
   <script src="./bower_components/tinymce/tinymce.min.js"></script>
   <script src="./js/admin.min.js"></script>
 
-  <?php if (!$_SESSION['user_confirmed']): ?>
-    <?php if (cfg::get('grc_sitekey')): ?>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    <?php endif; ?>
-
+  <?php
+  if (defined('CREATE_SITE')):
+  ?>
+  <script>
+    $('#newsite').on('submit', function(){
+      $.post('./controller.php?obj=addsite_ctrl&method=build', $(this).serialize(), function(data){
+        if (data.status === 'success'){
+          $('#register').fadeOut();
+          $('#message').fadeIn();
+        } else {
+          admin.message(data.text, data.status, false, true);
+        }
+      }, 'json');
+    });
+    </script>
+  <?php
+  else :
+    if (!$_SESSION['user_confirmed']):
+      if (cfg::get('grc_sitekey')):
+        ?>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+        <?php
+      endif;
+      ?>
   <script>
     $('#signin').on('submit', function(){
       $('#logerror').hide();
@@ -103,24 +121,10 @@ catch (Exception $e)
       }, 'json');
     });
   </script>
-  <?php
+      <?php
+    endif;
   endif;
-
-  if (defined('CREATE_SITE')):
   ?>
-  <script>
-    $('#newsite').on('submit', function(){
-      $.post('./controller.php?obj=addsite_ctrl&method=build', $(this).serialize(), function(data){
-        if (data.status === 'success'){
-          $('#register').fadeOut();
-          $('#message').fadeIn();
-        } else {
-          admin.message(data.text, data.status, false, true);
-        }
-      }, 'json');
-    });
-  </script>
-  <?php endif; ?>
 
   </body>
 </html>

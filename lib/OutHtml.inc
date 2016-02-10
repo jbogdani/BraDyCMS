@@ -286,10 +286,11 @@ class OutHtml extends Out
    * Returns html with menu data
    * @param string $menu menu name to display
    * @param string $class CSS class or space-separated classes to attach to main UL
-   * @param array $data if aray if data is provided, these data will be shown
+   * @param boolean $strip if true no styles or other (bootstrap style) markup will be printed
+   * @param array $data if array if data is provided, these data will be shown
    * @return boolean|string
    */
-  public function menu($menu = false, $class = false, $data = false)
+  public function menu($menu = false, $class = false, $strip = false, $data = false)
   {
     if ($menu)
     {
@@ -312,7 +313,7 @@ class OutHtml extends Out
     }
 
 
-    $html = '<ul class="' . ( $menu ? 'menu ' . $class . ' ' . $menu : 'submenu dropdown-menu' ) . '">';
+    $html = '<ul class="' . ( $menu ? 'menu ' . $class . ' ' . $menu : 'submenu' . ( $strip ? '' : ' dropdown-menu') ) . '">';
 
     foreach ($menu_arr as $menu)
     {
@@ -326,16 +327,16 @@ class OutHtml extends Out
             . '<a href="' . link::format($menu['href'], $this->session_lang) . '" '
                 . ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
                 . ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')
-                . ($menu['sub'] ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')
+                . ($menu['sub'] && !$strip ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')
                 . '>'
                 . $menu['item']
-                . ($menu['sub'] ? ' <b class="caret"></b>' : '')
+                . ($menu['sub'] && !$strip ? ' <b class="caret"></b>' : '')
             . '</a>';
       }
 
       if ($menu['sub'])
       {
-        $html .= $this->menu(false, false, $menu['sub']);
+        $html .= $this->menu(false, false, $strip, $menu['sub']);
       }
       $html .= '</li>';
     }

@@ -662,10 +662,11 @@ E.g.: `{{ html.logoutButton }}` (simple) or `{{ html.logoutButton({'logout_cont'
     </script>
 ---
 
-#### menu('menu', 'class')
+#### menu('menu', 'class', 'strip')
 Returns well-formatted html of menu items
 - **menu** string, required textual. Id of the menu to show
 - **class** string, optional, default false. Css class (or space separated classes) of the menu's unordered list (ul)
+- **strip** boolean, optional, default false. If true bootstrap style markup will not be shown
 
 E.g.: `{{ html.menu('main', 'nav') }}`
     <ul class="menu nav">

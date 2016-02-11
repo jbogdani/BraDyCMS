@@ -1,3 +1,5 @@
+3.11.0[] = "Pasted text in rich text area is now transformed in plain text by default"
+3.11.0[] = "New parameter added to outHtml::menu to return free bootstrap-style markup html"
 3.11.0[] = "Fixed bug with create new site procedure and captcha module"
 3.11.0[] = "New custom tag: gcalendat for showing a Google Calendar"
 3.11.0[] = "New, more intuitive, image management class"

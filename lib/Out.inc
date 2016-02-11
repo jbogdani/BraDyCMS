@@ -356,72 +356,102 @@ class Out
 
   /**
    * Sets $data['page'] info
+   *   site_name: site name as set in main config option
+   *   robots:    as set in artcle's optional robots field, or as set in main config option, or "index, follow"
+   *   title:     
+   *   description
+   *   keywords
+   *   lang
+   *   url
+   *   mission
+   *   image
+   *   author
+   *   date
    */
   private function setPageData()
   {
+
     // SITE NAME
     $this->data['page']['site_name'] = cfg::get('name');
+
 
     // ROBOTS
     if ($this->data['article'][$this->get['art_title']]['robots'])
     {
+      // 1. get value from the custom field named robots
       $this->data['page']['robots'] = $this->data['article'][$this->get['art_title']]['robots'];
     }
     else if(cfg::get('robots'))
     {
+      // 2. get value from main site configuration (robots)
       $this->data['page']['robots'] = cfg::get('robots');
     }
     else
     {
+      // 3. default value: "index, follow"
       $this->data['page']['robots'] = 'index, follow';
     }
+
     // TITLE
-    // customtitle field is set in cfg and is not empty
     if ($this->data['article'][$this->get['art_title']]['customtitle'])
     {
+      // 1. get value from the custom field named customtitle
       $this->data['page']['custom_title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customtitle']);
     }
-    // article title
     if ($this->data['article'][$this->get['art_title']]['title'])
     {
+      // 2. use the value of the field named "title"
       $this->data['page']['title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['title']);
     }
     else if ($this->context === 'tags')
     {
+      // 3. if context is tags the main site configuration (title) will be used followed by comma-separated-list of filtering tgs 
       $this->data['page']['title'] = str_replace('"', '&quot;', cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags()));
     }
     else
     {
+      // 4. default value is main site configuration value (title)
       $this->data['page']['title'] = str_replace('"', '&quot;', cfg::get('title'));
     }
-    //$this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'] ? $this->data['article'][$this->get['art_title']]['title'] : cfg::get('title');
 
     // DESCRIPTION
     if ($this->data['article'][$this->get['art_title']]['customdescription'])
     {
+      // 1. get value from the custom field named customdescription
       $this->data['page']['description'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customdescription']);
     }
     else if ( $this->data['article'][$this->get['art_title']]['summary'] && trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])) != '' )
     {
+      // 2. use the value of the field named "summary"
       $this->data['page']['description'] = str_replace('"', '&quot;', trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])));
     }
     else if ($this->context === 'tags')
     {
+      // 3. if context is tags the main site configuration (description) will be used followed by comma-separated-list of filtering tgs 
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description') . ' / ' .  implode(', ', $this->getFilterTags()));
     }
-
     else
     {
+      // 4. default value is main site configuration value (description)
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description'));
     }
-
+    // truncate description up to 500 digits
     if (strlen($this->data['page']['description']) > 500)
     {
       $this->data['page']['description'] = str_replace('"', '&quot;', substr($this->data['page']['description'], 0, 497) . '...');
     }
 
     // KEYWORDS
-    $this->data['page']['keywords'] = $this->data['article'][$this->get['art_title']]['keywords'] ? $this->data['article'][$this->get['art_title']]['keywords'] : cfg::get('keywords');
+    if ($this->data['article'][$this->get['art_title']]['keywords'])
+    {
+      // 1. use the value of the field named "keywords"
+      $this->data['page']['keywords'] = $this->data['article'][$this->get['art_title']]['keywords'];
+    }
+    else
+    {
+      // 2. default value is main site configuration value (keywords)
+      $this->data['page']['keywords'] = cfg::get('keywords');
+    }
 
     // LANG
     $this->data['page']['lang'] = $this->lang ? $this->lang: cfg::get('sys_lang');
@@ -432,25 +462,38 @@ class Out
     // MISSION
     $this->data['page']['mission'] = cfg::get('mission');
 
+    // IMAGE
     $art_img_paths = cfg::get('art_img');
+    $path2img = 'sites/default/images/articles/' 
+                . $art_img_paths[0] . '/' 
+                . $this->data['article'][$this->get['art_title']]['id'] 
+                . '.jpg';
 
-    if (file_exists('./sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg'))
+    if (file_exists($path2img))
     {
-      $this->data['page']['image'] = utils::getBaseUrl() . 'sites/default/images/articles/' . $art_img_paths[0] . '/' . $this->data['article'][$this->get['art_title']]['id'] . '.jpg';
+      // 1. check first for article image
+      $this->data['page']['image'] = utils::getBaseUrl() . $path2img;
     }
     else if ($this->data['article'][$this->get['art_title']]['text'])
     {
+      // 2. get first image available in the article body
       $xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->get['art_title']]['text']));
       $src = $xpath->evaluate("string(//img/@src)");
 
       $this->data['page']['image'] = ( !preg_match('/http/', $src) ? utils::getBaseUrl() . '/' : '') . $src;
     }
 
-    if ($this->data['article'][$this->get['art_title']]['author'] && $this->data['article'][$this->get['art_title']]['author'] != '')
+    // AUTHOR
+    if (
+      $this->data['article'][$this->get['art_title']]['author']
+      &&
+      trim($this->data['article'][$this->get['art_title']]['author']) != ''
+    )
     {
       $this->data['page']['author'] = $this->data['article'][$this->get['art_title']]['author'];
     }
 
+    // DATE
     if ($this->data['article'][$this->get['art_title']]['publish'] && $this->data['article'][$this->get['art_title']]['publish'] != '0000-00-00')
     {
       $this->data['page']['date'] = $this->data['article'][$this->get['art_title']]['publish'];

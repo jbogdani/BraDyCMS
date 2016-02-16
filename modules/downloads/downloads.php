@@ -132,7 +132,6 @@ class downloads_ctrl extends Controller
         throw new Exception(tr::get('download_node_exists'));
       }
       @mkdir($node_name, 0777, true);
-      @mkdir($node_name . '/thumbs', 0777, true);
       
       if (!is_dir($node_name))
       {

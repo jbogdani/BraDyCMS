@@ -22,7 +22,7 @@ var admin = {
          "save table contextmenu directionality paste textcolor template imagetools paste"
         ],
         paste_as_text: true,
-        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor | code",
+        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image anchor | print preview media fullpage | forecolor backcolor | code",
         image_advtab: true,
         removed_menuitems: 'newdocument',
         templates: [

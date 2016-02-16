@@ -1,3 +1,4 @@
+3.11.0[] = "Added anchor/bookmark button in tinymce in admin UI"
 3.11.0[] = "Solved bug with New download node creation creating a directory named thumbs"
 3.11.0[] = "Out::getGallery does not log error messages, HtmlOut::gallery still does"
 3.11.0[] = "Pasted text in rich text area is now transformed in plain text by default"

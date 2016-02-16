@@ -1,3 +1,4 @@
+3.11.0[] = "Out::getGallery does not log error messages, HtmlOut::gallery still does"
 3.11.0[] = "Pasted text in rich text area is now transformed in plain text by default"
 3.11.0[] = "New parameter added to outHtml::menu to return free bootstrap-style markup html"
 3.11.0[] = "Fixed bug with create new site procedure and captcha module"

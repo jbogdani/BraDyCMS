@@ -109,7 +109,6 @@ class Out
     }
     catch (Exception $e)
     {
-      error_log($e->getMessage());
       return false;
     }
   }

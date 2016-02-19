@@ -183,9 +183,9 @@ class customTags
     foreach($files as $d)
     {
       $html .= '<tr>'
-        . '<th>' . $d['title'] . '</th>'
-        . '<td>' . $d['description'] . '</td>'
-        . '<td><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('open_download') . '</a></td>'
+        . '<th class="title">' . $d['title'] . '</th>'
+        . '<td class="description">' . $d['description'] . '</td>'
+        . '<td class="link"><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('open_download') . '</a></td>'
         . '</tr>';
     }
 

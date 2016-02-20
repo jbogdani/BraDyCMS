@@ -12,6 +12,7 @@ class customTags
 
   public static function parseContent($html)
   {
+    var_dump('ciao');
     if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html))
     {
       return $html;
@@ -193,10 +194,7 @@ class customTags
     foreach($files as $d)
     {
       $html .= '<tr>'
-<<<<<<< HEAD
         . '<td class="cover"> ' . ($d['cover'] ? '<img src="' . $d['cover'] . '" class="img-responsive">' : '') . ' </td>'
-=======
->>>>>>> master
         . '<th class="title">' . $d['title'] . '</th>'
         . '<td class="description">' . $d['description'] . '</td>'
         . '<td class="link"><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('open_download') . '</a></td>'

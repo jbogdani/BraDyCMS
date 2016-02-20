@@ -357,7 +357,7 @@ class Out
    * Sets $data['page'] info
    *   site_name: site name as set in main config option
    *   robots:    as set in artcle's optional robots field, or as set in main config option, or "index, follow"
-   *   title:     
+   *   title:
    *   description
    *   keywords
    *   lang
@@ -404,7 +404,7 @@ class Out
     }
     else if ($this->context === 'tags')
     {
-      // 3. if context is tags the main site configuration (title) will be used followed by comma-separated-list of filtering tgs 
+      // 3. if context is tags the main site configuration (title) will be used followed by comma-separated-list of filtering tgs
       $this->data['page']['title'] = str_replace('"', '&quot;', cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags()));
     }
     else
@@ -426,7 +426,7 @@ class Out
     }
     else if ($this->context === 'tags')
     {
-      // 3. if context is tags the main site configuration (description) will be used followed by comma-separated-list of filtering tgs 
+      // 3. if context is tags the main site configuration (description) will be used followed by comma-separated-list of filtering tgs
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description') . ' / ' .  implode(', ', $this->getFilterTags()));
     }
     else
@@ -463,9 +463,9 @@ class Out
 
     // IMAGE
     $art_img_paths = cfg::get('art_img');
-    $path2img = 'sites/default/images/articles/' 
-                . $art_img_paths[0] . '/' 
-                . $this->data['article'][$this->get['art_title']]['id'] 
+    $path2img = 'sites/default/images/articles/'
+                . $art_img_paths[0] . '/'
+                . $this->data['article'][$this->get['art_title']]['id']
                 . '.jpg';
 
     if (file_exists($path2img))

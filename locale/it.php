@@ -158,6 +158,7 @@ $_lang['download_node_not_deleted'] = "Errore. Non è possibile cancellare il no
 $_lang['download_node_deleted'] = "Il nodo è stato cancellato";
 $_lang['cover'] = "Immagine di copertina";
 $_lang['file_deleted_json_not_deleted'] = "Attenzione. Il file è stato cancellato, ma non è stato possibile cancellare i dati associati";
+$_lang['file_deleted_cover_not_deleted'] = "Attenzione. Il file è stato cancellato, ma non è stato possibile cancellare l'immagine di copertina";
 $_lang['file_data_deleted'] = "File cancellato";
 $_lang['img_not_deleted'] = "Errore. Non è stato possibile cancellare l'immagine";
 $_lang['img_deleted_thumb_not_deleted'] = "Attenzione. L'immagine è stata cancellata, ma non è stato possibile cancellare l'anteprima";

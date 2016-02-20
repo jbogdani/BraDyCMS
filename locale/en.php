@@ -158,6 +158,7 @@ $_lang['download_node_not_deleted'] = "Error. Can not delete download node";
 $_lang['download_node_deleted'] = "Download node deleted";
 $_lang['cover'] = "Cover image";
 $_lang['file_deleted_json_not_deleted'] = "Warning. The file was deleted, but it was not possible to delete the other data";
+$_lang['file_deleted_cover_not_deleted'] = "Warning. The file was deleted, but it was not possible to delete the cover image";
 $_lang['file_data_deleted'] = "File deleted";
 $_lang['img_not_deleted'] = "Error. It was not possible to delete the image.";
 $_lang['img_deleted_thumb_not_deleted'] = "Warning. The image was deleted, but it was not possible to delete the thumbnail.";

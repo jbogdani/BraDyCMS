@@ -1,6 +1,6 @@
 <div id="{{ uid }}">
   <h2>{{ tr.get('edit_download_node') }}: {{ node }}</h2>
-  
+
   <div class="btn-group" style="padding:20px 0;">
     {% if files|length == 0 %}
       <button class="btn btn-danger delete-node" type="button">{{ tr.get('delete_download_node') }}</button>
@@ -14,11 +14,11 @@
   <div class="well well-sm">
     <div class="uploader"></div>
   </div>
-  
-  
+
+
   <div class="row">
     {% if files|length > 0 %}
-      <form action="javascript:void(0)">
+      <form action="javascript:void(0)" id="form{{ uid }}">
 
         {% for file in files %}
 
@@ -27,17 +27,17 @@
             <div class="col-xs-4">
               <h4>{{ file.name }}</h4>
               <p>
-                <a 
+                <a
                   href="{{ file.fullpath }}"
-                  class="btn btn-info" 
+                  class="btn btn-info"
                   target="_blank">
                   <i class="icon ion-archive"></i> {{ tr.get('open_download') }}
                 </a>
               </p>
               <p>
-                <button 
+                <button
                   type="button"
-                  class="btn btn-danger delete" 
+                  class="btn btn-danger delete"
                   data-file="{{ file.name }}">
                   <i class="icon ion-trash-a"></i> {{ tr.get('delete') }}
                 </button>
@@ -49,57 +49,60 @@
                 <div class="col-xs-9">
                   <div class="form-group">
                     <label>{{ tr.get('title') }}</label>
-                    <input 
-                      type="text" 
-                      data-file="{{ file.name }}" 
+                    <input
+                      type="text"
+                      data-file="{{ file.name }}"
                       name="{{ file.formattedName }}[title]"
                       value="{{ file.title }}"
                       />
                   </div>
                 </div>
-                      
+
                 <div class="col-xs-3">
                   <div class="form-group">
                     <label>{{ tr.get('sorting') }}</label>
-                    <input 
-                      type="text" 
-                      data-file="{{ file.name }}" 
+                    <input
+                      type="text"
+                      data-file="{{ file.name }}"
                       name="{{ file.formattedName }}[sort]"
                       value="{{ file.sort }}"
                       />
                   </div>
                 </div>
               </div>
-              
+
               <div class="form-group">
                 <label>{{ tr.get('description') }}</label>
-                <textarea 
-                  data-file="{{ file.name }}" 
-                  class="col-md-12" 
-                  style="height:150px" 
+                <textarea
+                  data-file="{{ file.name }}"
+                  class="col-md-12"
+                  style="height:150px"
                   name="{{ file.formattedName }}[description]"
                   >{{ file.description }}</textarea>
               </div>
-              
+
               <p>
-                <button 
-                  class="btn btn-success save" 
+                <button
+                  type="sumbit"
+                  class="btn btn-success save"
                   data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
               </p>
             </div>
 
             <div class="col-xs-2">
               <label>{{ tr.get('cover') }}</label>
-              
+
               {% if file.cover %}
-                <img src="{{ file.cover }}" class="img-responsive">
-                <button class="delete-cover btn btn-danger btn-block" 
+                <img src="{{ file.cover }}?{{ uid }}" class="img-responsive">
+                <button
+                  type="button"
+                  class="delete-cover btn btn-danger btn-block"
                   data-file="{{ file.cover }}">
                   {{ tr.get('delete') }}
                 </button>
               {% else %}
-                <div 
-                  data-file="{{ file.name }}" 
+                <div
+                  data-file="{{ file.name }}"
                   class="cover-uploader"></div>
               {% endif %}
 
@@ -162,24 +165,22 @@
         }
       }
       );
-  
 
-  
-  $('#{{ uid }} button.save').on('click', function(){
+
+  $('#form{{ uid }}').on('submit', function(){
     $.post(
       'controller.php?obj=downloads_ctrl&method=saveData&param[]={{ upload_dir }}{% if translation %}&param[]={{ translation }}{% endif %}',
-      $('#{{ uid }} form').serializeArray(), function(data){
+      $('#form{{ uid }}').serializeArray(), function(data){
         admin.message(data.text, data.status);
       },
       'json');
   });
-  
-  
+
   $('#{{ uid }} button.delete').on('click', function(){
     $this = $(this);
     $.get('controller.php?obj=downloads_ctrl&method=deleteFile&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
       admin.message(data.text, data.status);
-      
+
       if (data.status !== 'error'){
         if ($this.parents('div.listitem').siblings().length > 0){
           $this.parents('div.listitem').remove();
@@ -189,16 +190,16 @@
       }
     }, 'json');
   });
-  
-  
+
+
   $('#{{ uid }} .delete-node').on('click', function(){
     $.get('controller.php?obj=downloads_ctrl&method=deleteNode&param[]={{ upload_dir }}', function(data){
       admin.message(data.text, data.status);
-      
+
       if (data.status == 'success'){
         admin.tabs.closeActive();
-      }  
+      }
     }, 'json');
   });
-  
+
 </script>

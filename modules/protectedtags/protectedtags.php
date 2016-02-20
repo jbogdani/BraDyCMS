@@ -33,6 +33,18 @@ class protectedtags_ctrl extends Controller
       return true;
     }
 
+    if(is_string($tags))
+    {
+      $tags = array($tags);
+    }
+
+    $restricted = array_intersect($tags, $protected_tags);
+
+    if (empty($restricted))
+    {
+      return true;
+    }
+
     if (!$user_email)
     {
       $user_email = $_SESSION['user_email'];
@@ -41,18 +53,6 @@ class protectedtags_ctrl extends Controller
     if (!$user_email)
     {
       return false;
-    }
-
-    if(is_string($tags))
-    {
-      $tags = array($tags);
-    }
-
-    $restricted = array_intersect([$tags], $protected_tags);
-
-    if (empty($restricted))
-    {
-      return true;
     }
 
     foreach ($this->data['users'] as $user)
@@ -282,7 +282,7 @@ class protectedtags_ctrl extends Controller
           throw new Exception(tr::get('captcha_error'));
         }
       }
-      
+
 
       // Finally check email/password
       $users = $this->getData('users');

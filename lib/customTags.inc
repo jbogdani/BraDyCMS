@@ -12,7 +12,6 @@ class customTags
 
   public static function parseContent($html)
   {
-    var_dump('ciao');
     if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html))
     {
       return $html;

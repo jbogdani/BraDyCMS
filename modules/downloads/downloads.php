@@ -28,6 +28,12 @@ class downloads_ctrl extends Controller
   
   public function edit()
   {
+    // Create covers directory, if does not exist
+    if (!is_dir($this->path . $this->get['param'][0] . '/covers/'))
+    {
+      mkdir($this->path . $this->get['param'][0] . '/covers', 0777, true);
+    }
+
     $node_content = utils::dirContent($this->path . $this->get['param'][0]);
     
     $lang = $this->get['param'][1];
@@ -54,7 +60,7 @@ class downloads_ctrl extends Controller
     $files = array();
     foreach ($node_content as $file)
     {
-      if ($file !== 'data.json' && !preg_match('/\.json/', $file))
+      if ($file !== 'data.json' && !preg_match('/\.json/', $file) && $file !== 'covers')
       {
         $formattedName = str_replace('.', '__x__', $file);
         
@@ -67,14 +73,17 @@ class downloads_ctrl extends Controller
           );
           $changed = true;
         }
+
+        $fullpath = $this->path . $this->get['param'][0] . '/' . $file;
         
         $files[] = array(
             'name' => $file,
             'formattedName' => $formattedName,
-            'fullpath' => $this->path . $this->get['param'][0] . '/' . $file,
+            'fullpath' => $fullpath,
             'title' => $data[$formattedName]['title'],
             'description' => $data[$formattedName]['description'],
-            'sort' => $data[$formattedName]['sort']
+            'sort' => $data[$formattedName]['sort'],
+            'cover' => file_exists($this->getCoverName($fullpath)) ? $this->getCoverName($fullpath) : false
             ); 
       }
     }
@@ -99,7 +108,8 @@ class downloads_ctrl extends Controller
         'thumbs'=> $thumbs,
         'upload_dir'=> $this->path . $this->get['param'][0],
         'langs' => cfg::get('languages'),
-        'translation' => $lang
+        'translation' => $lang,
+        'tmp_path' => TMP_DIR,
         ));
     
   }
@@ -120,6 +130,9 @@ class downloads_ctrl extends Controller
     echo json_encode($ret);
   }
   
+  /**
+   * Adds a new file to the download node
+   */
   public function add()
   {
     try{
@@ -149,12 +162,17 @@ class downloads_ctrl extends Controller
     echo json_encode($msg);
   }
   
+  /**
+   * Completeley removes a single file from the download node
+   * @return string json response
+   */
   public function deleteFile()
   {
     try
     {
       $file = $this->get['param'][0] . '/' . $this->get['param'][1];
       
+      // Deletes file if exist
       if(file_exists($file))
       {
         @unlink($file);
@@ -165,6 +183,14 @@ class downloads_ctrl extends Controller
         }
       }
       
+      // Deletes cover, if exists
+      if (file_exists($this->getCoverName($file)))
+      {
+        @unlink($this->getCoverName($file));
+        // TODO add check if file was removed
+      }
+          
+      // Load file information from data file, for each language
       $data_file[] = $this->get['param'][0] . '/data.json';
       
       foreach (cfg::get('languages') as $lng)
@@ -172,14 +198,16 @@ class downloads_ctrl extends Controller
         $data_file[] = $this->get['param'][0] . '/data_' . $lng['id']. '.json';
       }
       
-      
+      // Removes from all data files (different languages) the entry
       foreach ($data_file as $d_file)
       {
         if (file_exists($d_file))
         {
           $json = json_decode(file_get_contents($d_file), true);
+
+          $entry_id = str_replace('.', '__x__', $this->get['param'][1]);
         
-          unset($json[str_replace('.', '__x__', $this->get['param'][1])]);
+          unset($json[$entry_id]);
         
           if (!utils::write_in_file($d_file, $json, 'json'))
           {
@@ -208,6 +236,10 @@ class downloads_ctrl extends Controller
     echo json_encode($ret);
   }
   
+  /**
+   * Deletes all files in a node folder
+   * @return string json response
+   */
   public function deleteNode()
   {
     $error = utils::recursive_delete($this->get['param'][0]);
@@ -225,6 +257,67 @@ class downloads_ctrl extends Controller
     }
     
     echo json_encode($msg);
+  }
+
+
+  public function deleteCover()
+  {
+    @unlink($this->get['param']['file']);
+
+    if (file_exists($this->get['param']['file']))
+    {
+      $resp = array('status' => 'error');
+    }
+    else
+    {
+      $resp = array('status' => 'success');
+    }
+
+    echo json_encode($resp);
+  }
+
+
+  /**
+   * Moves uploaded cover from temporary directory to cover directory
+   */
+  public function addCover()
+  {
+    $destFile = $this->getCoverName($this->get['param']['path'] . DIRECTORY_SEPARATOR . $this->get['param']['refFile']);
+
+    if (file_exists($destFile))
+    {
+      @unlink($destFile);
+    }
+    error_log(TMP_DIR . '/' . $this->get['param']['tmpFile']);
+    error_log($destFile);
+
+    @rename(TMP_DIR . '/' . $this->get['param']['tmpFile'], $destFile);
+
+    if (file_exists($destFile))
+    {
+      $resp = array('status' => 'success');
+    }
+    else
+    {
+      $resp = array('status' => 'error');
+    }
+
+    echo json_encode($resp);
+  }
+
+  /**
+   * Calculates and returns cover name from file name
+   * @param  string $file file (path and) name
+   * @return string       cover (path and) name
+   */
+  public function getCoverName($file)
+  {
+    return pathinfo($file, PATHINFO_DIRNAME) 
+      . DIRECTORY_SEPARATOR
+      . 'covers'
+      . DIRECTORY_SEPARATOR
+      . pathinfo($file, PATHINFO_FILENAME)
+      . '.jpg';
   }
   
   

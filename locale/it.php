@@ -156,6 +156,7 @@ $_lang['download_node_updated'] = "Il nodo di scaricamento è stato aggiornato";
 $_lang['download_node_not_updated'] = "Errore. Non è possibile aggiornare il nodo di scaricamento.aggiornato";
 $_lang['download_node_not_deleted'] = "Errore. Non è possibile cancellare il nodo di scaricamento.aggiornato";
 $_lang['download_node_deleted'] = "Il nodo è stato cancellato";
+$_lang['cover'] = "Immagine di copertina";
 $_lang['file_deleted_json_not_deleted'] = "Attenzione. Il file è stato cancellato, ma non è stato possibile cancellare i dati associati";
 $_lang['file_data_deleted'] = "File cancellato";
 $_lang['img_not_deleted'] = "Errore. Non è stato possibile cancellare l'immagine";

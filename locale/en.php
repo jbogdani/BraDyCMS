@@ -156,6 +156,7 @@ $_lang['download_node_updated'] = "Download node updated";
 $_lang['download_node_not_updated'] = "Error. Can not update download node.";
 $_lang['download_node_not_deleted'] = "Error. Can not delete download node";
 $_lang['download_node_deleted'] = "Download node deleted";
+$_lang['cover'] = "Cover image";
 $_lang['file_deleted_json_not_deleted'] = "Warning. The file was deleted, but it was not possible to delete the other data";
 $_lang['file_data_deleted'] = "File deleted";
 $_lang['img_not_deleted'] = "Error. It was not possible to delete the image.";

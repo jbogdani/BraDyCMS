@@ -147,11 +147,19 @@ class customTags
 
     foreach ($node_content as $file)
     {
-      if (preg_match('/data_?([a-z]{2})?\.json/', $file))
+      if (preg_match('/data_?([a-z]{2})?\.json/', $file) || $file == 'covers' )
       {
         continue;
       }
       $formattedName = str_replace('.', '__x__', $file);
+
+      $cover_name = $path2node . DIRECTORY_SEPARATOR
+        . 'covers' . DIRECTORY_SEPARATOR
+        . pathinfo($file, PATHINFO_FILENAME) . '.jpg';
+      if (file_exists($cover_name))
+      {
+        $cover = $cover_name;
+      }
 
       $files[] = array(
         'path' => $path2node . '/' . $file,
@@ -159,7 +167,8 @@ class customTags
         'ext' => pathinfo($file, PATHINFO_EXTENSION),
         'title' => $fileData[$formattedName]['title'] ? $fileData[$formattedName]['title'] : $file,
         'description' => $fileData[$formattedName]['description'],
-        'sort' => $fileData[$formattedName]['sort']
+        'sort' => $fileData[$formattedName]['sort'],
+        'cover' => $cover
         );
     }
 
@@ -172,6 +181,7 @@ class customTags
       return ($a['sort'] > $b['sort']) ? -1 : 1;
     });
 
+
     if ($data['getObject'])
     {
       return $files;
@@ -183,9 +193,10 @@ class customTags
     foreach($files as $d)
     {
       $html .= '<tr>'
-        . '<th>' . $d['title'] . '</th>'
-        . '<td>' . $d['description'] . '</td>'
-        . '<td><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('open_download') . '</a></td>'
+        . '<td class="cover"> ' . ($d['cover'] ? '<img src="' . $d['cover'] . '" class="img-responsive">' : '') . ' </td>'
+        . '<th class="title">' . $d['title'] . '</th>'
+        . '<td class="description">' . $d['description'] . '</td>'
+        . '<td class="link"><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('open_download') . '</a></td>'
         . '</tr>';
     }
 
@@ -892,7 +903,7 @@ EOD;
       );
 
     $html = '<iframe src="https://calendar.google.com/calendar/embed?'
-      . implode('&amp;', $opts) 
+      . implode('&amp;', $opts)
       . 'style="' . ($data['border'] ? $data['border'] : 'border-width:0') . '" '
       . 'width="' . $opts['width'] . '" '
       . 'height="' . $opts['width'] . '" '

@@ -1,3 +1,4 @@
+3.12.0[] = "New feature: added the possibility to add cover images to download nodes"
 3.11.18[] = "Fixed bug with tinyMCE pasting twice the copied text"
 3.11.17[] = "OutHtml::asset will force the server loading of frontend js and css if debug mode is on"
 3.11.16[] = "Added anchor/bookmark button in tinymce in admin UI"

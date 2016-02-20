@@ -19,8 +19,11 @@
   <div class="row">
     {% if files|length > 0 %}
       <form action="javascript:void(0)">
+
         {% for file in files %}
+
           <div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
+
             <div class="col-xs-4">
               <h4>{{ file.name }}</h4>
               <p>
@@ -41,7 +44,7 @@
               </p>
             </div>
 
-            <div class="col-xs-8">
+            <div class="col-xs-6">
               <div class="row">
                 <div class="col-xs-9">
                   <div class="form-group">
@@ -85,6 +88,23 @@
               </p>
             </div>
 
+            <div class="col-xs-2">
+              <label>{{ tr.get('cover') }}</label>
+              
+              {% if file.cover %}
+                <img src="{{ file.cover }}" class="img-responsive">
+                <button class="delete-cover btn btn-danger btn-block" 
+                  data-file="{{ file.cover }}">
+                  {{ tr.get('delete') }}
+                </button>
+              {% else %}
+                <div 
+                  data-file="{{ file.name }}" 
+                  class="cover-uploader"></div>
+              {% endif %}
+
+            </div>
+
           </div>
         {% endfor %}
       </form>
@@ -93,6 +113,46 @@
 </div>
 
 <script>
+
+  $('.delete-cover').on('click', function(){
+    var file = $(this).data('file'),
+      form = $(this).parents('form');
+
+    $.get('controller.php?obj=downloads_ctrl' +
+            '&method=deleteCover' +
+            '&param[file]=' + file,
+            function(data){
+              if (data.status === 'success'){
+                form.submit();
+                admin.tabs.reloadThis('#{{ uid }}');
+              }
+          }, 'json');
+  });
+
+  $('.cover-uploader').each(function(i, el){
+    var file = $(el).data('file'),
+      form = $(el).parents('form');
+
+    admin.upload(el,
+      'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}&param[]=sanitize',
+      {
+        allowedExtensions: ['jpg'],
+        loaded: function(id, filename, responseJSON){
+          $.get('controller.php?obj=downloads_ctrl' +
+            '&method=addCover' +
+            '&param[path]={{ upload_dir }}' +
+            '&param[refFile]=' + file +
+            '&param[tmpFile]=' + responseJSON.filename + '.' + responseJSON.ext,
+            function(data){
+              if (data.status === 'success'){
+                form.submit();
+                admin.tabs.reloadThis('#{{ uid }}');
+              }
+          }, 'json');
+        }
+      });
+  });
+
   admin.upload(
     $('#{{ uid }} div.uploader')[0],
       'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize',

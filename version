@@ -1,3 +1,4 @@
+3.11.22[] = "Userform module supports multiple google reCAPTCHE in one page"
 3.11.21[] = "Added more semantic markup to userform module"
 3.11.20[] = "Fixed bug with protected tags function not working correctly"
 3.11.19[] = "Added semantic css classes to the main table of the download module"

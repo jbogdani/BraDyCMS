@@ -762,7 +762,8 @@ class OutHtml extends Out
         $tags = $this->getFilterTags();
         break;
       case 'article':
-        $tags = $this->getArticleTags;
+        $art = $this->getArticle();
+        $tags = $art['tags'];
         break;
       case 'home':
       case 'search':

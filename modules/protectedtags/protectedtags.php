@@ -38,6 +38,11 @@ class protectedtags_ctrl extends Controller
       $tags = array($tags);
     }
 
+    if (!is_array($tags))
+    {
+      return true;
+    }
+
     $restricted = array_intersect($tags, $protected_tags);
 
     if (empty($restricted))

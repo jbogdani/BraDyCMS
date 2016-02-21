@@ -292,22 +292,18 @@ public function showForm($param)
       $html .= '<input type="text" ' .
         ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
         ' name="' . $el['name'] . '" ' .
-        ' data-label="' . $el['label'] . '"' .
-        ' class="form-control' . $checkClass . '" />';
+        'data-label="' . $el['label'] . '" class="form-control' . $checkClass . '" />';
       break;
 
       case 'longtext';
       $html .= '<textarea ' .
-        ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-        'name="' . $el['name'] . '"' .
-        ' data-label="' . $el['label'] . '"' .
-        ' rows="10"' .
-        ' class="form-control' . $checkClass . '"></textarea>';
+      ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+      'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
       break;
 
       case 'select':
       $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
-        '<option></option>';
+      '<option></option>';
       foreach ($el['options'] as $opt)
       {
         $html .= '<option>' . $opt . '</option>';
@@ -330,9 +326,9 @@ public function showForm($param)
       }
 
       $html .= '<div class="upload_content">' .
-        '<div class="upl_' . $el['name'] . '"></div>' .
-        '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
-        '<div class="preview"></div>' .
+      '<div class="upl_' . $el['name'] . '"></div>' .
+      '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
+      '<div class="preview"></div>' .
       '</div>';
       break;
     }
@@ -343,13 +339,29 @@ public function showForm($param)
   $html .= '<div class="clearfix">';
 
   // Show Google reCAPTCHA if settings are present
-  if (cfg::get('grc_sitekey'))
+  $sitekey = cfg::get('grc_sitekey');
+  if ($sitekey)
   {
-    $html .= '<div class="g-recaptcha" data-sitekey="' . cfg::get('grc_sitekey') . '"></div>' .
-    '<script src="https://www.google.com/recaptcha/api.js"></script>';
+    $html .= <<<EOD
+<div class="g-recaptcha" data-sitekey="{$sitekey}"></div>
+<script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit"></script>
+<script>
+if (typeof recaptchaCallback !== 'function') {
+  var called = false;
+  function recaptchaCallback(){
+    if (called) return;
+    $('.g-recaptcha').each(function(i, el){
+      grecaptcha.render(el, {
+        'sitekey' : $(el).data('sitekey')
+      });
+    });
+    called = true;
+  }
+}
+</script>
+EOD;
 
   }
-
   $html .= '<div class="' . $input_class . ' ' . $buttons_class . '">' .
   '<div class="message"></div>' .
   '<input class="btn btn-success" type="submit" /> ' .

@@ -268,7 +268,8 @@ public function showForm($param)
     return '<p class="text-danger">Error loading data for user form <strong>' . $param['content'] . '</strong></p>';
   }
 
-  $html = '<form action="javascript:void(0)" class="' . $form_class . '" id="' . $param['content'] . '">';
+  $html = '<div class="userform ' . $param['content'] . '">' .
+    '<form action="javascript:void(0)" class="' . $form_class . '" id="' . $param['content'] . '">';
 
   if ($param['subject'])
   {
@@ -280,8 +281,8 @@ public function showForm($param)
 
     $checkClass = ($el['is_required'] ? ' required' : '') . ($el['is_email'] ? ' email' : '');
 
-    $html .= '<div class="form-group">' .
-    ( $el['label'] ? '<div class="' . $label_class . ' control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' : '' ) .
+    $html .= '<div class="form-group ' . $el['name'] . '">' .
+      ( $el['label'] ? '<div class="' . $label_class . ' control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' : '' ) .
     '<div class="' . $input_class . '">';
 
     switch ($el['type'])
@@ -289,19 +290,24 @@ public function showForm($param)
       case 'text':
       default:
       $html .= '<input type="text" ' .
-      ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-      ' name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '" />';
+        ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+        ' name="' . $el['name'] . '" ' .
+        ' data-label="' . $el['label'] . '"' .
+        ' class="form-control' . $checkClass . '" />';
       break;
 
       case 'longtext';
       $html .= '<textarea ' .
-      ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-      'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
+        ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+        'name="' . $el['name'] . '"' .
+        ' data-label="' . $el['label'] . '"' .
+        ' rows="10"' .
+        ' class="form-control' . $checkClass . '"></textarea>';
       break;
 
       case 'select':
       $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
-      '<option></option>';
+        '<option></option>';
       foreach ($el['options'] as $opt)
       {
         $html .= '<option>' . $opt . '</option>';
@@ -324,9 +330,9 @@ public function showForm($param)
       }
 
       $html .= '<div class="upload_content">' .
-      '<div class="upl_' . $el['name'] . '"></div>' .
-      '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
-      '<div class="preview"></div>' .
+        '<div class="upl_' . $el['name'] . '"></div>' .
+        '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
+        '<div class="preview"></div>' .
       '</div>';
       break;
     }
@@ -351,7 +357,8 @@ public function showForm($param)
   '</div>';
 
   $html .= '</div>' .
-  '</form>';
+    '</form>' .
+    '</div>';
 
   if (!$data['nojs'])
   {

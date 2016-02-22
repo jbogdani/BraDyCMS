@@ -60,7 +60,7 @@ var admin = {
      */
      opts = opts || {};
 
-    var pattern = "_,=\.\\s\\?'\"\\-";
+    var pattern = "_,=\.\\s\\?'\"\\-\$:;";
 
     if (opts.permit){
       $.each(opts.permit, function(i, item){
@@ -71,7 +71,7 @@ var admin = {
     input.on('keyup', function(e){
       if (
         //http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
-           e.keyCode === 13  || //enter
+        e.keyCode === 13  || //enter
         e.keyCode === 37  || //left-arrow
         e.keyCode === 38  || //up-arrow
         e.keyCode === 39  ||  //right-arrow
@@ -89,11 +89,18 @@ var admin = {
 
       var val = $(this).val();
       if (val && val !== ''){
-        var newVal = val.replace(new RegExp("([" + pattern + "])", "gi"), opts.replace ? opts.replace : '');
+        var newVal = val
+          .replace(new RegExp("([" + pattern + "])", "gi"), opts.replace ? opts.replace : '');
         newVal = opts.toLower ? newVal.toLowerCase() : newVal;
+        if (opts.replace){
+          newVal = newVal.replace(new RegExp(opts.replace + '+', "gi"), opts.replace)
+            .replace(new RegExp(opts.replace + '$'), '')
+            .replace(new RegExp('^' + opts.replace), '');
+        }
         $(this).val(newVal);
       }
     });
+
   },
 
   /**

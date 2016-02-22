@@ -1,0 +1,71 @@
+[21-Feb-2016 18:13:12 Europe/Rome] array (
+  'text' => '<section class="intro-header page-content">
+  <div class="container">
+    <article class="intro-message">
+      <h1>TEOXANE ITALIA TRAINING CENTER</h1>
+      <h3>Confident in your skin, Confident in your life®</h3>
+      <a href="#first_service" class="btn btn-circle page-scroll">
+        <i class="fa fa-angle-double-down animated"></i>
+      </a>
+    </article>
+  </div> <!-- /.container -->
+</section> <!-- /.intro-header -->
+
+
+<!-- Page Content -->
+<section id="first_service">
+  {% for art in html.getArticlesByTag(\'press\', [1, 6]) %}
+  <article class="content-section-{% if loop.index is odd %}a{% else %}b{% endif %}">
+    <div class="container">
+      <div class="row">
+
+        <div class="{% if loop.index is odd %}col-lg-5 col-sm-6{% else %}col-lg-5 col-lg-offset-1 col-sm-push-6 col-sm-6{% endif %}">
+          <hr class="section-heading-spacer">
+          <a href="{{ art.url }}" class="clearfix" title="{{ art.title|e(\'html\') }}">
+            <h2 class="section-heading">{{ art.title }}</h2>
+          </a>
+          <div>{{ art.summary }}</div>
+          <p>
+            <a href="{{ art.url }}" class="clearfix" title="{{ art.title|e(\'html\') }}">
+            <em>Leggi di più</em></a>
+          </p>
+        </div>
+
+        <div class="{% if loop.index is odd %}col-lg-5 col-lg-offset-2 col-sm-6{% else %}col-lg-5 col-sm-pull-6 col-sm-6{% endif %}">
+          <a href="{{ art.url }}" class="clearfix" title="{{ art.title|e(\'html\') }}">
+            <img class="img-responsive" 
+              src="sites/default/images/articles/200x300/{{ art.id }}.jpg"
+              alt="{{ art.title|e(\'html\') }}">
+          </a>
+        </div>
+        
+      </div>
+    </div><!-- /.container -->
+  </article>
+  
+  {% endfor %}
+
+  <div class="more">
+    <a href="{{ html.link2(\'press\', 1) }}"
+      title="Leggi tutti gli articoli della sezione Press"
+      class="all">
+      Leggi tutti gli articoli della sezione Press
+    </a>
+  </div>
+</section>
+',
+)
+[22-Feb-2016 15:32:36 Europe/Rome] array (
+  'success' => false,
+  'error-codes' => 
+  array (
+    0 => 'missing-input-response',
+  ),
+)
+[22-Feb-2016 15:32:36 Europe/Rome] 
+[22-Feb-2016 15:32:36 Europe/Rome] exception 'Exception' with message 'missing-input-response' in /Users/jbogdani/www/bdusCMS/lib/reCAPTCHA.inc:61
+Stack trace:
+#0 /Users/jbogdani/www/bdusCMS/modules/log/log.php(105): reCAPTCHA::validate('')
+#1 /Users/jbogdani/www/bdusCMS/lib/Controller.inc(129): log_ctrl->in()
+#2 /Users/jbogdani/www/bdusCMS/controller.php(16): Controller->route()
+#3 {main}

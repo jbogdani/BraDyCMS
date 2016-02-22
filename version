@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 3.12.0[] = "New feature: added the possibility to add cover images to download nodes"
+=======
+3.11.24[] = "Cleaner result for admin.removeNotValid function"
+>>>>>>> master
 3.11.23[] = "Fixed bug with protected tags function"
 3.11.22[] = "Userform module supports multiple google reCAPTCHE in one page"
 3.11.21[] = "Added more semantic markup to userform module"

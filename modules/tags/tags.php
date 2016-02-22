@@ -9,14 +9,14 @@
 
 class tags_ctrl extends Controller
 {
-  
+
   public function manage()
   {
     $this->render('tags', 'list', array(
       'tags' => Tag::getAll()
     ));
   }
-  
+
   /**
    * Adds a new tag in the database and returns formatted JSON
    * @param string $title Tag title
@@ -24,19 +24,19 @@ class tags_ctrl extends Controller
   public function addTag($title = false)
   {
     if(!$title) $title = $this->get['param'][0];
-    
+
     if (R::count( 'tag', ' title = ? ', [ $title ] ) > 0)
     {
       echo $this->responseJson('error', tr::sget('tag_already_used', $title));
     }
     else
     {
-      echo Tag::add($title) ? 
-        $this->responseJson('success', 'tag_added') : 
-        $this->responseJson('error', 'tag_not_added');
+      echo Tag::add($title) ?
+        $this->responseJson('success', tr::get('tag_added')) :
+        $this->responseJson('error', tr::get('tag_not_added'));
     }
   }
-  
+
   /**
    * Removes tag and returns formatted JSON response
    * @param int $tagId ID of tag to be removed
@@ -44,13 +44,13 @@ class tags_ctrl extends Controller
   public function removeTag($tagId = false)
   {
     if(!$tagId) $tagId = $this->get['param'][0];
-    
-    
-    echo Tag::delete($tagId) ? 
-        $this->responseJson('success', tr::get('tag_deleted')) : 
+
+
+    echo Tag::delete($tagId) ?
+        $this->responseJson('success', tr::get('tag_deleted')) :
         $this->responseJson('error', $e->getMessage());
   }
-  
+
   /**
    * Renames tag and returns formatted JSON response
    * @param int $tagId ID of tag to be renamed
@@ -60,14 +60,14 @@ class tags_ctrl extends Controller
   {
     if(!$tagId) $tagId = $this->get['param'][0];
     if(!$title) $title = $this->get['param'][1];
-    
+
     if (R::count( 'tag', ' title = ? ', [ $title ] ) > 0)
     {
       echo $this->responseJson('error', tr::sget('tag_already_used', $title));
     }
     else
     {
-      echo Tag::rename($title, $tagId) ? 
+      echo Tag::rename($title, $tagId) ?
         $this->responseJson('success', tr::get('tag_renamed')):
         $this->responseJson('error', tr::get('tag_not_renamed'));
     }

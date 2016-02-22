@@ -399,6 +399,8 @@ $_lang['tag_manager'] = "Tag manager";
 $_lang['add_new_tag'] = "Add a new tag";
 $_lang['tag_cannot_be_empty'] = "Tag value can not be empty";
 $_lang['tag_already_used'] = "The tag %s has already been used";
+$_lang['tag_added'] = "Tag added";
+$_lang['tag_not_added'] = "Error. Tag not added";
 $_lang['confirm_delete_tag'] = "Are you sure you want to delete this tag? This action can not be undone.";
 $_lang['add_new_tag_title'] = "Add new text for tag";
 

@@ -1,5 +1,6 @@
+3.12.1[] = "jQuery updated to v2.2.1"
 3.12.1[] = "DataTables updated to v1.10.11"
-3.12.1[] = "TinyMCE updated to ~4.3.4"
+3.12.1[] = "TinyMCE updated to v4.3.4"
 3.12.0[] = "New feature: added the possibility to add cover images to download nodes"
 3.11.24[] = "Cleaner result for admin.removeNotValid function"
 3.11.23[] = "Fixed bug with protected tags function"

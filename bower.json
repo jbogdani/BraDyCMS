@@ -12,7 +12,7 @@
     "font-awesome": "~4.4.0",
     "Ionicons": "ionicons#~2.0.1",
     "fancyBox": "~2.1.5",
-    "tinymce": "~4.2.6"
+    "tinymce": "~4.3.4"
   },
   "preen": {
     "jquery": [

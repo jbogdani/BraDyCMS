@@ -13,7 +13,7 @@ var minifiedJs = [
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'bower_components/datatables/media/js/jquery.dataTables.min.js',
   'bower_components/datatables/media/js/dataTables.bootstrap.min.js',
-  'bower_components/pnotify/src/pnotify.core.min.js',
+  'bower_components/pnotify/dist/pnotify.js',
   'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
   'bower_components/select2/select2.min.js',
   'bower_components/google-code-prettify/bin/prettify.min.js'

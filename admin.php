@@ -29,7 +29,7 @@ catch (Exception $e)
 
     <link href="./bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="./bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet">
-    <link href="./bower_components/pnotify/src/pnotify.core.min.css" rel="stylesheet">
+    <link href="./bower_components/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="./bower_components/select2/select2.css" rel="stylesheet">
     <link href="./bower_components/select2/select2-bootstrap.css" rel="stylesheet">
     <link href="./bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">

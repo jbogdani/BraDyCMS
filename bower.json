@@ -8,7 +8,7 @@
     "google-code-prettify": "~1.0.4",
     "jquery-nestable": "*",
     "select2": "~3.5.4",
-    "pnotify": "~2.1.0",
+    "pnotify": "~3.0.0",
     "font-awesome": "~4.5.0",
     "Ionicons": "ionicons#~2.0.1",
     "fancyBox": "~2.1.5",
@@ -49,7 +49,8 @@
       "dist/js/select2.full.min*"
     ],
     "pnotify": [
-      "src/*core.min*"
+      "dist/pnotify.css",
+      "dist/pnotify.js"
     ],
     "font-awesome": [
       "fonts/*",

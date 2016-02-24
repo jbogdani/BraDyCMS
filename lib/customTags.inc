@@ -903,11 +903,7 @@ EOD;
       );
 
     $html = '<iframe src="https://calendar.google.com/calendar/embed?'
-<<<<<<< HEAD
-      . implode('&amp;', $opts)
-=======
       . implode('&amp;', $opts) . '"'
->>>>>>> master
       . 'style="' . ($data['border'] ? $data['border'] : 'border-width:0') . '" '
       . 'width="' . ($data['width'] ? $data['width'] : 800) . '" '
       . 'height="' . ($data['height'] ? $data['height'] : 600) . '" '

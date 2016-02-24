@@ -887,26 +887,30 @@ EOD;
     }
 
     $opts = array(
-      'showPrint' => $data['showPrint'] ? '1' : '0',
-      'showTabs' => $data['showTabs'] ? '1' : '0',
-      'showCalendars' => $data['showCalendars'] ? '1' : '0',
-      'showTz' => $data['showTz'] ? '1' : '0',
-      'height'  => $data['height'] ? $data['height'] : '600',
-      'width'  => $data['width'] ? $data['width'] : '800',
-      'wkst' => $data['wkst'] ? $data['wkst'] : '2', // start day of the week 1: sunday, 2 monday
-      'bgcolor' => $data['bgcolor'] ? '%23' . $data['bgcolor'] : '%23FFFFFF',
-      'src' => urlencode($data['content']),
-      'color' => $data['showTz'] ? '#' . $data['color'] : '#8C500B',
-      'ctz' => $data['ctz'] ? urlencode($data['ctz']) : 'Europe%2FRome',
-      'mode' => ($data['mode'] && in_array(strtoupper($data['mode']), array('WEEK', 'AGENDA'))) ? strtoupper($data['mode']) : false,
-      'hl' => $data['hl'] ? $data['hl'] : $_SESSION['lang']
+      'showTabs='. ($data['showTabs'] ? '1' : '0'),
+      'showCalendars=' . ($data['showCalendars'] ? '1' : '0'),
+      'showTz=' . ($data['showTz'] ? '1' : '0'),
+      'showPrint=' . ($data['showPrint'] ? '1' : '0'),
+      'height='  . ($data['height'] ? $data['height'] : '600'),
+      'wkst=' . ($data['wkst'] ? $data['wkst'] : '2'), // start day of the week 1: sunday, 2 monday
+      'width='  . ($data['width'] ? $data['width'] : '800'),
+      'bgcolor=' . ($data['bgcolor'] ? '%23' . $data['bgcolor'] : '%23FFFFFF'),
+      'src=' . urlencode($data['content']),
+      'color=' . ($data['showTz'] ? '#' . $data['color'] : '#8C500B'),
+      'ctz=' . ($data['ctz'] ? urlencode($data['ctz']) : 'Europe%2FRome'),
+      'mode=' . (($data['mode'] && in_array(strtoupper($data['mode']), array('WEEK', 'AGENDA'))) ? strtoupper($data['mode']) : false),
+      'hl=' . ($data['hl'] ? $data['hl'] : $_SESSION['lang'])
       );
 
     $html = '<iframe src="https://calendar.google.com/calendar/embed?'
+<<<<<<< HEAD
       . implode('&amp;', $opts)
+=======
+      . implode('&amp;', $opts) . '"'
+>>>>>>> master
       . 'style="' . ($data['border'] ? $data['border'] : 'border-width:0') . '" '
-      . 'width="' . $opts['width'] . '" '
-      . 'height="' . $opts['width'] . '" '
+      . 'width="' . ($data['width'] ? $data['width'] : 800) . '" '
+      . 'height="' . ($data['height'] ? $data['height'] : 600) . '" '
       . 'frameborder="0" '
       . 'scrolling="no"></iframe>';
 

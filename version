@@ -5,6 +5,7 @@
 3.12.1[] = "DataTables updated to v1.10.11"
 3.12.1[] = "TinyMCE updated to v4.3.4"
 3.12.0[] = "New feature: added the possibility to add cover images to download nodes"
+3.11.25[] = "Fixed bug with gcalendar custom tag"
 3.11.24[] = "Cleaner result for admin.removeNotValid function"
 3.11.23[] = "Fixed bug with protected tags function"
 3.11.22[] = "Userform module supports multiple google reCAPTCHE in one page"

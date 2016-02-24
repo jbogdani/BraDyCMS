@@ -60,7 +60,7 @@ var admin = {
      */
      opts = opts || {};
 
-    var pattern = "_,=\.\\s\\?'\"\\-\$:;’°";
+    var pattern = "_,=\.\\s\\?'\"\\-\$:;’°“”";
 
     if (opts.permit){
       $.each(opts.permit, function(i, item){

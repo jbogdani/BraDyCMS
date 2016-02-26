@@ -38,7 +38,21 @@
 </form>
 
 {% if grc_sitekey %}
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit"></script>
+<script>
+if (typeof recaptchaCallback !== 'function') {
+  var called = false;
+  function recaptchaCallback(){
+    if (called) return;
+    $('.g-recaptcha').each(function(i, el){
+      grecaptcha.render(el, {
+        'sitekey' : $(el).data('sitekey')
+      });
+    });
+    called = true;
+  }
+}
+</script>
 {% endif %}
 
 <script>

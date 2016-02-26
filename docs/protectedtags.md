@@ -39,7 +39,7 @@ If needed some content (tags) can be protected from generic unlogged users, whil
 You can easily enable this feature by adding few information for each **tag** in the **Enable user's registration** section of the plugin:
 - **Email address** will be used as the *FROM* address in the email message sent for the confirmation to the user. This recipient will receive a copy of the email message sent to the user.
 - **Subject** will be used as the subject of the email messagge.
-- **Text** will be used as the body of the messagge. **Do not forget** to use twice the placeholder `%s`, the first time for the user's email address and the second for the confirmation code.
+- **Text** will be used as the body of the messagge. **Do not forget** to use the placeholders `%email%` and `%code%`, that will be automatically replaced with the user's email address and the confirmation code.
 
 ---
 

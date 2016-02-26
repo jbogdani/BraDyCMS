@@ -416,7 +416,7 @@ class protectedTags
       $message->addAddress($email);
       $message->addBCC($d['from']);
       $message->Subject = $d['subject'];
-      $message->Body = sprintf($d['text'], $email, $confirmationcode);
+      $message->Body = str_replace(array('%email%', '%code%'), array($email, $confirmationcode), $d['text']);
       $message->send();
       return true;
     }

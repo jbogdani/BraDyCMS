@@ -1,13 +1,19 @@
 <div id="{{ uid }}">
   <form action="javascript:void(0)" id="new_protectd_pages_user">
     <div class="form-group">
-      <input type="email" name="email"
+      <input
+        type="email"
+        name="email"
         placeholder="{{ tr.get('email_address') }}"
+        required="required"
         value="{{ user.email }}">
     </div>
     <div class="form-group">
       <div class="input-group">
-        <input type="text" name="password"
+        <input
+          type="text"
+          name="password"
+          required="required"
           placeholder="{{ tr.get('password') }}"
           value="{{ user.password }}">
         <span class="input-group-addon">
@@ -21,17 +27,52 @@
     </div>
 
     <div class="form-group">
-      <input type="tags" name="tags"
+      <input type="text" name="tags"
         style="width:100%"
         placeholder="{{ tr.get('tags') }}"
         value="{{ user.tags }}">
     </div>
 
+    <div class="form-group">
+      <input type="text" name="confirmationcode"
+        style="width:100%"
+        placeholder="{{ tr.get('confirmationcode') }}"
+        value="{{ user.confirmationcode }}">
+    </div>
+
     <input type="hidden" name="id" value="{{ user.id }}">
+    <button type="submit" style="display: none;"></button>
   </form>
 </div>
 <script>
 $('#{{ uid }} input[name="tags"]').select2({
   tags: [{{ imploded_tags|raw }}]
+});
+
+$('#new_protectd_pages_user').on('submit', function(){
+  if (!$('#new_protectd_pages_user').find('input[name="email"]').val()){
+    admin.message('{{ tr.sget('missing_required', tr.get('email_address')) }}', 'error');
+    return;
+  }
+
+  if (!$('#new_protectd_pages_user').find('input[name="password"]').val()){
+    admin.message('{{ tr.sget('missing_required', tr.get('password')) }}', 'error');
+    return;
+  }
+
+  if (!$('#new_protectd_pages_user').find('input[name="tags"]').val()){
+    admin.message('{{ tr.sget('missing_required', tr.get('tags')) }}', 'error');
+    return;
+  }
+
+  $.post(
+    'controller.php?obj=protectedtags_ctrl&method=save',
+    $('#new_protectd_pages_user').serialize(), function(data){
+      admin.message(data.text, data.status);
+      if(data.status === 'success'){
+        $('#modal').modal('hide');
+        admin.tabs.reloadThis('#{{ uid }}');
+      }
+  }, 'json');
 });
 </script>

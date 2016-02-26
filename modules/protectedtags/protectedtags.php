@@ -8,9 +8,6 @@
 
 class protectedtags_ctrl extends Controller
 {
-  private $file = './sites/default/modules/protectedtags/users.json';
-  private $data;
-
   /**
    * Check if it's allowed to read tags
    * @param  string|array $tags single tag or array of tags to check
@@ -19,104 +16,7 @@ class protectedtags_ctrl extends Controller
    */
   public function canUserRead($tags, $user_email = false)
   {
-    // No password proteciont cfg file
-    if (!file_exists($this->file))
-    {
-      return true;
-    }
-
-    $protected_tags = $this->getData('tags');
-
-    // No users defined or no protected tags saved
-    if (empty($this->data['users']) || empty($protected_tags))
-    {
-      return true;
-    }
-
-    if(is_string($tags))
-    {
-      $tags = array($tags);
-    }
-
-    if (!is_array($tags))
-    {
-      return true;
-    }
-
-    $restricted = array_intersect($tags, $protected_tags);
-
-    if (empty($restricted))
-    {
-      return true;
-    }
-
-    if (!$user_email)
-    {
-      $user_email = $_SESSION['user_email'];
-    }
-
-    if (!$user_email)
-    {
-      return false;
-    }
-
-    foreach ($this->data['users'] as $user)
-    {
-      if ($user['email'] === $user_email)
-      {
-        $current_user = $user;
-      }
-    }
-
-    if (!$current_user)
-    {
-      return false;
-    }
-
-    return (
-      count($restricted) == count(
-        array_intersect(
-          $restricted,
-          explode(',', $current_user['tags'])
-        )
-      )
-    );
-  }
-
-  /**
-   * Loads data in $this->data and returns it
-   * @param  string|false $el element on mail array data to return. If false all data will be retuned
-   * @return array     array of data
-   */
-  private function getData($el = false)
-  {
-    $this->data = json_decode(file_get_contents($this->file), true);
-
-    $ret = $el ? $this->data[$el] : $this->data;
-
-    return $ret;
-  }
-
-  /**
-   * Saves $this->data in json file and automatically updates the resticted tags array
-   * @return boolean true|false
-   */
-  private function saveData()
-  {
-    if (!$this->data)
-    {
-      $this->getData();
-    }
-    $tags_part = array();
-
-    foreach ($this->data['users'] as $user)
-    {
-      array_push($tags_part, $user['tags']);
-    }
-
-    $this->data['tags'] = array_unique(explode(',', implode(',', $tags_part)));
-
-    return utils::write_in_file($this->file, $this->data, 'json');
+    return protectedTags::canUserRead($tags, $user_email = false);
   }
 
   /**
@@ -124,19 +24,30 @@ class protectedtags_ctrl extends Controller
    */
   public function users()
   {
-    if (!is_dir('./sites/default/modules/protectedtags'))
+    $data = protectedTags::getData();
+
+    if (!is_array($data['autoregister']))
     {
-      @mkdir('./sites/default/modules/protectedtags', 0777, true);
+      $data['autoregister'] = array();
     }
 
-    if (file_exists($this->file))
-    {
-      $this->getData();
-    }
     $this->render('protectedtags', 'users', array(
-        'users' => $this->data['users'],
-        'protected' => $this->data['tags']
+        'users' => $data['users'],
+        'protected' => $data['tags'],
+        'autoregister' => $data['autoregister']
     ));
+  }
+
+  public function saveAutoregister()
+  {
+    if (protectedTags::saveAutoregister($this->post['tag'], $this->post['from'], $this->post['subject'], $this->post['text']))
+    {
+      echo $this->responseJson('success', tr::get('ok_data_saved'));
+    }
+    else
+    {
+      echo $this->responseJson('error', tr::get('error_data_not_saved'));
+    }
   }
 
 /**
@@ -148,13 +59,7 @@ class protectedtags_ctrl extends Controller
 
     if ($id)
     {
-      foreach($this->getData('users') as $user)
-      {
-        if ($user['id'] == $id)
-        {
-          $user_data = $user;
-        }
-      }
+      $user_data = protectedTags::getData('users', $id);
     }
     $this->render('protectedtags', 'user_form', array(
       'user' => $user_data,
@@ -170,24 +75,13 @@ class protectedtags_ctrl extends Controller
   {
     $id = $this->get['param'][0];
 
-    $users = $this->getData('users');
-
-    foreach($users as $x=>&$user)
+    if (protectedTags::deleteUser($id))
     {
-      if ($user['id'] == $id)
-      {
-        unset($users[$x]);
-      }
+      echo $this->responseJson('success', tr::get('ok_user_deleted'));
     }
-
-    $this->data['users'] = $users;
-
-    $resp =
-      $this->saveData() ?
-      array('status' => 'success', 'text' => tr::get('ok_user_deleted') ) :
-      array('status' => 'error', 'text' => tr::get('error_user_deleted'));
-
-    echo json_encode($resp);
+    else {
+      echo $this->responseJson('error', tr::get('error_user_deleted'));
+    }
   }
 
   /**
@@ -196,41 +90,20 @@ class protectedtags_ctrl extends Controller
    */
   public function save()
   {
-    if ($this->post['id'])
+
+    if (protectedTags::saveUser(
+        $this->post['email'],
+        $this->post['password'],
+        $this->post['tags'],
+        $this->post['id'],
+        $this->post['confirmationcode'])
+    )
     {
-      $user_id = $this->post['id'];
+      echo $this->responseJson('success', tr::get('ok_user_saved'));
     }
-
-    $users = file_exists($this->file) ? $this->getData('users') : array();
-
-    if (!$users || !is_array($users))
-    {
-      $users = array();
+    else {
+      echo $this->responseJson('error', tr::get('error_user_saved'));
     }
-
-    if ($user_id)
-    {
-      foreach ($users as &$user) {
-        if ($user['id'] == $user_id)
-        {
-          $user['email'] = $this->post['email'];
-          $user['password'] = $this->post['password'];
-          $user['tags'] = $this->post['tags'];
-        }
-      }
-    }
-    else
-    {
-      array_push($users, array('id' => base_convert(microtime(false), 10, 36)) + $this->post);
-    }
-
-    $this->data['users'] = $users;
-
-    $resp = $this->saveData() ?
-      array('status' => 'success', 'text' => tr::get('ok_user_saved') ) :
-      array('status' => 'error', 'text' => tr::get('error_user_saved'));
-
-    echo json_encode($resp);
   }
 
   /**
@@ -239,9 +112,8 @@ class protectedtags_ctrl extends Controller
    */
   public function logout()
   {
-    session_regenerate_id(true);
-    unset($_SESSION['user_email']);
-    echo json_encode(array('status' => 'success'));
+    protectedTags::logUser();
+    echo $this->responseJson('success');
   }
 
   /**
@@ -253,6 +125,9 @@ class protectedtags_ctrl extends Controller
     $email    = $this->post['email'];
     $password = $this->post['password'];
     $token    = $this->post['token'];
+    $confirmationcode = $this->post['confirmationcode'];
+    $repeatpassword = $this->post['repeatpassword'];
+    $tag = $this->post['tag'];
 
     try
     {
@@ -262,7 +137,7 @@ class protectedtags_ctrl extends Controller
         throw new Exception('access_denied');
       }
 
-      // Post token mus be the same of SESSION token (same sassion login attempt)
+      // Post token must be the same of SESSION token (same sassion login attempt)
       if (!$_SESSION['token'] || $token !== $_SESSION['token'])
       {
         throw new Exception('invalid_token');
@@ -284,39 +159,43 @@ class protectedtags_ctrl extends Controller
         catch (Exception $e)
         {
           error_log($e);
-          throw new Exception(tr::get('captcha_error'));
+          throw new Exception('captcha_error');
         }
       }
 
-
-      // Finally check email/password
-      $users = $this->getData('users');
-
-      if (!$users || !is_array($users))
+      if (!empty($confirmationcode))
       {
-        throw new Exception("no_protected_tags_users");
-      }
-
-      foreach ($users as $user)
-      {
-        if($user['email'] === $email && $user['password'] === $password)
+        if (!protectedTags::userConfirm($email, $password, $confirmationcode))
         {
-          session_regenerate_id(true);
-          $_SESSION['user_email'] = $email;
-          $resp = array(
-            'status' => 'success'
-          );
-          break;
+          throw new Exception('authentication_failed');
+        }
+        protectedTags::logUser($email);
+      }
+      elseif(!empty($repeatpassword))
+      {
+        try
+        {
+          protectedTags::registerUser($email, $password, $tag);
+        }
+        catch(Exception $e)
+        {
+          error_log($e->getMessage());
+          throw new Exception('registration_failed');
         }
       }
-
-      if (!$resp)
+      else
       {
-        $resp = array(
-          'status' => 'error',
-          'text'=> tr::get('authentication_failed')
-        );
+        if (!protectedTags::isValidUser($email, $password))
+        {
+          throw new Exception('authentication_failed');
+        }
+        protectedTags::logUser($email);
       }
+
+      $resp = array(
+        'status' => 'success'
+      );
+
     }
     catch (Exception $e)
     {
@@ -340,7 +219,6 @@ class protectedtags_ctrl extends Controller
     {
       $_SESSION['token'] = md5(uniqid(rand(), true));
     }
-    $uid = 'f' . uniqid();
 
     $this->render('protectedtags', 'login_form', array(
       'token' => $_SESSION['token'],
@@ -349,6 +227,29 @@ class protectedtags_ctrl extends Controller
     ));
   }
 
+  public function registerForm($tag, $css)
+  {
+    if (!$_SESSION['token'])
+    {
+      $_SESSION['token'] = md5(uniqid(rand(), true));
+    }
+
+    $this->render('protectedtags', 'register', array(
+      'token' => $_SESSION['token'],
+      'grc_sitekey' => cfg::get('grc_sitekey'),
+      'tag' => $tag,
+      'css' => $css
+    ));
+
+  }
+
+  /**
+   * Displays logout button
+   * @param  array $css array with CSS classes. The following can be added:
+   *                    logout_cont: container class
+   *                    logout_input: input class
+   * @return string      Valid html with logout button
+   */
   public function logoutButton($css)
   {
     if ($_SESSION['user_email'])
@@ -358,5 +259,4 @@ class protectedtags_ctrl extends Controller
       ));
     }
   }
-
 }

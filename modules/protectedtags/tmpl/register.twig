@@ -1,0 +1,146 @@
+<form action="javascript:void(0);" id="registerform" class="{{ css.form }}">
+  <input
+    type="hidden"
+    name="token"
+    value="{{ token }}">
+  <input
+    type="hidden"
+    name="tag"
+    value="{{ tag }}">
+
+  <div id="form_err" class="{{ css.error }}"></div>
+
+  <div class="email {{ css.email_cont }}">
+    <input
+      type="email"
+      name="email"
+      placeholder="{{ tr.get('email_address') }}"
+      required="true"
+      class="{{ css.email_input }}">
+  </div>
+
+  <div class="password {{ css.password_cont }}">
+    <input
+      type="password"
+      name="password"
+      placeholder="{{ tr.get('password') }}"
+      required="true"
+      class="{{ css.password_input }}">
+  </div>
+
+  <div class="select {{ css.select_cont }}">
+    <select
+      class="select {{ css.select_input }}">
+      <option value="new">{{ tr.get('new_user') }}</option>
+      <option value="confirm">{{ tr.get('confirm_user') }}</option>
+    </select>
+  </div>
+
+
+
+  <div class="confirmationcode {{ css.confirmationcode_cont }}">
+    <input
+      type="text"
+      name="confirmationcode"
+      placeholder="{{ tr.get('confirmationcode') }}"
+      class="{{ css.confirmationcode_input }}">
+  </div>
+
+  <div class="repeatpassword {{ css.password_cont }}">
+    <input
+      type="text"
+      name="repeatpassword"
+      placeholder="{{ tr.get('repeatpassword') }}"
+      class="{{ css.password_input }}">
+  </div>
+
+
+
+  {% if grc_sitekey %}
+  <div class="g-recaptcha" data-sitekey="{{ grc_sitekey }}"></div>
+  {% endif %}
+
+  <div class="submit {{ css.submit_cont }}">
+    <input type="submit" class="submit {{ css.submit_input }}">
+  </div>
+</form>
+
+{% if grc_sitekey %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+{% endif %}
+
+<script>
+(function(){
+  if (!window.jQuery){
+    console.log('Jquery is not loaded');
+    return;
+  }
+  var what = $('#registerform select.select').val();
+
+  $("#registerform div.repeatpassword").show().find('input').prop('disabled', false);
+  $("#registerform div.confirmationcode").hide().find('input').prop('disable', true);
+
+  $('#registerform select.select').on('change', function(){
+    switch($(this).val()){
+      case 'confirm':
+        what = 'confirm';
+        $("#registerform div.confirmationcode").show().find('input').prop('disabled', false);
+        $("#registerform div.repeatpassword").hide().find('input').prop('disable', true);
+        break;
+
+      case 'new':
+      default:
+        what = 'new';
+        $("#registerform div.repeatpassword").show().find('input').prop('disabled', false);
+        $("#registerform div.confirmationcode").hide().find('input').prop('disable', true);
+        break;
+    }
+  });
+
+
+  $('#registerform').on('submit', function(){
+    var form = $(this),
+      url = 'controller.php?obj=protectedtags_ctrl&method=login';
+
+    if (!form.find('input[name="email"]').val()){
+      $('#form_err').text('{{ tr.get('email_required') }}');
+      return false;
+    }
+    if (!form.find('input[name="password"]').val()){
+      $('#form_err').text('{{ tr.get('password_required') }}');
+      return false;
+    }
+    if (what == 'confirm')
+    {
+      if (!form.find('input[name="confirmationcode"]').val()){
+        $('#form_err').text('{{ tr.get('confirmationcode_required') }}');
+        return false;
+      }
+    } else if (what == 'new') {
+      if (!form.find('input[name="repeatpassword"]').val()){
+        $('#form_err').text('{{ tr.get('repeatpassword_required') }}');
+        return false;
+      }
+
+      if (form.find('input[name="repeatpassword"]').val() !== form.find('input[name="password"]').val()){
+        $('#form_err').text('{{ tr.get('passwords_does_not_match') }}');
+        return false;
+      }
+    } else {
+      return false;
+    }
+    $.post(url, $(this).serialize(), function(data){
+      if (data.status === 'success'){
+        if (what == 'confirm'){
+          location.reload();
+        } else {
+          $('#form_err').text('{{ tr.get('user_registered') }}');
+        }
+      } else {
+        $('#form_err').text(data.text);
+      }
+    }, 'json');
+  });
+
+})();
+</script>

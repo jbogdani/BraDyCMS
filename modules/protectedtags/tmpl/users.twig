@@ -2,15 +2,12 @@
   <h2>{{ tr.get('protected_tags') }}</h2>
 
   <div class="btn-group" style="padding:20px 0;">
-
     <a class="btn btn-info add_new" title="{{ tr.get('add_new_user') }}">
       <i class="icon ion-plus"></i> {{ tr.get('add_new_user') }}
     </a>
-
     <a class="btn btn-default reload" title="{{ tr.get('reload') }}">
       <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
     </a>
-
   </div>
 
   {% if (users == false) %}
@@ -27,50 +24,119 @@
       {% for t in protected %}
       <code><a href="#article/all/{{ t }}">{{ t }}</a></code>
       {% endfor %}
-      </ul>
-    </p>
-  </div>
+    </ul>
+  </p>
+</div>
 
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>{{ tr.get('email_address') }}</th>
-        <th>{{ tr.get('password') }}</th>
-        <th>{{ tr.get('tags') }}</th>
-        <th>
-          <button class="btn btn-success">
-            <i class="icon ion-checkmark"></i> {{ tr.get('save') }}
-          </button>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user in users %}
-      <tr>
-        <th>{{ loop.index }}</th>
-        <td>{{ user.email }}</td>
-        <td>{{ user.password }}</td>
-        <td>{{ user.tags }}</td>
-        <td>
-          <button class="btn btn-default btn-sm edit" data-item="{{ user.id }}">
-            <i class="icon ion-edit"></i>
-          </button>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th colspan="6">
+        <h3>{{ tr.get('users') }}</h3>
+      </th>
+    </tr>
+    <tr>
+      <th>#</th>
+      <th>{{ tr.get('email_address') }}</th>
+      <th>{{ tr.get('password') }}</th>
+      <th>{{ tr.get('tags') }}</th>
+      <th>{{ tr.get('confirmationcode') }}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <th>{{ loop.index }}</th>
+      <td>{{ user.email }}</td>
+      <td>{{ user.password }}</td>
+      <td>{{ user.tags }}</td>
+      <td>{{ user.confirmationcode }}</td>
+      <td>
+        <button class="btn btn-default btn-sm edit" data-item="{{ user.id }}">
+          <i class="icon ion-edit"></i>
+        </button>
 
-          <button class="btn btn-default btn-sm delete" data-item="{{ user.id }}">
-            <i class="icon ion-trash-a"></i>
-          </button>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
+        <button class="btn btn-default btn-sm delete" data-item="{{ user.id }}">
+          <i class="icon ion-trash-a"></i>
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
 
-  </table>
+</table>
+{% endif %}
 
-  {% endif %}
+<hr>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th colspan="5">
+        <h3>{{ tr.get('auto_register_tags') }}</h3>
+      </th>
+    </tr>
+    <tr>
+      <th>{{ tr.get('tag') }}</th>
+      <th>{{ tr.get('email_address') }}</th>
+      <th>{{ tr.get('subject') }}</th>
+      <th>{{ tr.get('text') }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in protected %}
+    <tr>
+      <th>{{ p }}</th>
+      <td>
+        <input type="email"
+        class="from"
+        value="{{ autoregister[p]['from'] }}" />
+      </td>
+      <td>
+        <input type="text"
+        class="subject"
+        value="{{ autoregister[p]['subject'] }}" />
+      </td>
+      <td>
+        <textarea class="text"
+          style="height:100px">{{ autoregister[p]['text'] }}</textarea>
+      </td>
+      <td>
+        <button class="btn btn-success btn-block save_row"
+          type="button"
+          data-tag="{{ p }}">
+          <i class="icon ion-checkmark"></i> {{ tr.get('save') }}
+        </button>
+      </td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+
 </div>
 
 <script>
+
+$('#{{ uid }} .save_row').on('click', function(){
+  var tag = $(this).data('tag'),
+    from = $(this).parents('tr').find('input.from').val(),
+    subject = $(this).parents('tr').find('input.subject').val(),
+    text = $(this).parents('tr').find('textarea.text').val();
+  $.post(
+    'controller.php?obj=protectedtags_ctrl&method=saveAutoregister',
+    {
+      "tag": tag,
+      "from": from,
+      "subject": subject,
+      "text": text
+    },
+    function(data){
+      admin.message(data.text, data.status);
+    }, 'json');
+
+});
 
 function openEditForm(id){
   admin.dialog({
@@ -83,31 +149,7 @@ function openEditForm(id){
         text: admin.tr('save'),
         addclass: 'btn-success',
         click: function(){
-
-          if (!$('#new_protectd_pages_user').find('input[name="email"]').val()){
-            admin.message('{{ tr.sget('missing_required', tr.get('email_address')) }}', 'error');
-            return;
-          }
-
-          if (!$('#new_protectd_pages_user').find('input[name="password"]').val()){
-            admin.message('{{ tr.sget('missing_required', tr.get('password')) }}', 'error');
-            return;
-          }
-
-          if (!$('#new_protectd_pages_user').find('input[name="tags"]').val()){
-            admin.message('{{ tr.sget('missing_required', tr.get('tags')) }}', 'error');
-            return;
-          }
-
-          $.post(
-            'controller.php?obj=protectedtags_ctrl&method=save',
-            $('#new_protectd_pages_user').serialize(), function(data){
-              admin.message(data.text, data.status);
-              if(data.status === 'success'){
-                $('#modal').modal('hide');
-                admin.tabs.reloadThis('#{{ uid }}');
-              }
-          }, 'json');
+          $('#new_protectd_pages_user').submit();
         }
       },
       {
@@ -137,12 +179,12 @@ $('#{{ uid }} .delete').on('click', function(){
       if(data.status === 'success'){
         admin.tabs.reloadThis('#{{ uid }}');
       }
-  }, 'json');
-});
+    }, 'json');
+  });
 
 
-// add new user
-$('#{{ uid }} .add_new').on('click', function(){
-  openEditForm();
-});
-</script>
+  // add new user
+  $('#{{ uid }} .add_new').on('click', function(){
+    openEditForm();
+  });
+  </script>

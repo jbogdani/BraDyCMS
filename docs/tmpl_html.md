@@ -603,7 +603,7 @@ E.g.: `{{ html.link2('news', true) }}`
 
 #### loginForm(css)
 Returns well formatted html and javascript (jquery is required and should be already loaded) code to securely perform a login action
-- **css** object, optional. An object containing several css classes to use for the form output. The following options are sypported
+- **css** object, optional. An object containing several css classes to use for the form output. The following options are supported
   - css.form: class to apply to main form element
   - css.error: class to apply to error text container
   - css.email_cont: class to apply to email input container
@@ -645,7 +645,7 @@ E.g.: `{{ html.loginForm }}` (simple) or `{{ html.loginForm({'form':'form-inline
 
 #### logoutButton(css)
 Returns well formatted html and javascript (jquery is required and should be already loaded) code to securely perform a logout action
-- **css** object, optional. An object containing several css classes to use for the form output. The following options are sypported
+- **css** object, optional. An object containing several css classes to use for the form output. The following options are supported
   - css.logout_cont: class to apply to button container
   - css.logout_input: class to apply to button element
 
@@ -769,6 +769,74 @@ E.g.: `{{ pagination('pagination') }}`
       <li class="disabled"><a href="page16">16</a>
     </ul>
 
+    ---
+
+    #### registerForm(tag, css)
+    Returns well formatted html and javascript (jquery is required and should be already loaded) code to securely perform user registration and regisrtation confirmation
+    -**tag** string, required. Tag for which to enable user registration
+    - **css** object, optional. An object containing several css classes to use for the form output. The following options are supported
+      - css.form: class to apply to main form element
+      - css.error: class to apply to error text container
+      - css.email_cont: class to apply to email input container
+      - css.email_input: class to apply to email input element
+      - css.select_cont: class to apply to drop-down-menu select mode (registration/confirmation) container
+      - css.select_input:class to apply to drop-down-menu select mode (registration/confirmation) input
+      - css.confirmationcode_cont: class to apply to code confirmation  container
+      - css.confirmationcode_input:class to apply to code confirmation input
+      - css.password_cont: class to apply to password input container
+      - css.password_input: class to apply to password input element
+      - css.submit_cont: class to apply to submit input container
+      - css.submit_input: class to apply to submit input element
+
+    E.g.: `{{ html.loginForm('protected') }}` (simple) or `{{ html.loginForm('protected', {'form':'form-inline', 'error':'text-error', 'email_cont': 'form-group', 'email_input': 'form-control', 'select_cont': 'form-group', 'select_input': 'form-control', 'password_cont': 'form-group', 'password_input': 'form-control', 'confirmationcode_cont': 'form-group', 'confirmationcode_input': 'form-control', 'submit_cont': 'form-group', 'submit_input': 'btn btn-success' }) }}` (full)
+        <form action="javascript:void(0);" id="registerform" class="form-inline">
+
+          <input type="hidden" name="token" value="token-value">
+          <input type="hidden" name="tag"value="protected">
+
+          <div id="error" class="text-error"></div>
+
+          <div class="email form-group">
+            <input type="email" name="email"
+              placeholder="Email address"
+              class="form-control">
+          </div>
+
+          <div class="password form-group">
+            <input type="password" name="password"
+              placeholder="Password"
+              class="form-control">
+          </div>
+
+          <div class="select form-group">
+            <select
+              class="select form-control">
+              <option value="new">New user</option>
+              <option value="confirm">Confirm user</option>
+            </select>
+          </div>
+
+          <div class="confirmationcode form-group">
+            <input type="text" name="confirmationcode"
+              class="form-control"
+              placeholder="Confirmation code">
+          </div>
+
+          <div class="repeatpassword form-group">
+            <input type="text" name="repeatpassword"
+              placeholder="Repeat password"
+              class="form-control">
+          </div>
+
+          <div class="submit form-group">
+            <input type="submit" class="submit form-control">
+          </div>
+        </form>
+
+
+        <script>
+          form submission script...
+        </script>
 ---
 
 #### tagBlog('tag1', 'tag2', 'ecc')

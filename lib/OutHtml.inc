@@ -772,14 +772,15 @@ class OutHtml extends Out
         break;
     }
 
+
     $protectedtags = new protectedtags_ctrl();
     return $protectedtags->canUserRead($tags);
   }
 
   /**
    * Shows login form for protected tags
-   * @param  [type] $css [description]
-   * @return [type]      [description]
+   * @param  array|false $css Optional array with css classes
+   * @return string      Well-formatted HTML and javascript
    */
   public function loginForm($css = false)
   {
@@ -787,6 +788,23 @@ class OutHtml extends Out
     return $protectedtags->loginForm($css);
   }
 
+  /**
+   * Shows register form for a protected tag
+   * @param  string $tag tag id
+   * @param  array|false $css Optional array with css classes
+   * @return string      Well-formatted HTML and javascript
+   */
+  public function registerForm($tag, $css = false)
+  {
+    $protectedtags = new protectedtags_ctrl();
+    return $protectedtags->registerForm($tag, $css);
+  }
+
+  /**
+   * Prints a logout button, html & javascript (jQuery requred)
+   * @param  array|false $css Optional array with css classes
+   * @return string      Well-formatted HTML and javascript
+   */
   public function logoutButton($css = false)
   {
     $protectedtags = new protectedtags_ctrl();

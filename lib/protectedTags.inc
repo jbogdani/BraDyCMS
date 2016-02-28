@@ -225,11 +225,12 @@ class protectedTags
    * @param  string $email    email / username
    * @param  string $password password
    * @param  string $tags     list of tags
+   * @param string $name      user's name
    * @param  string|false $id       user id, if false a new user will be added
    * @param string|false $confirmationcode if true a new element will be added to user row: confirmarion code
    * @return boolean           returns true in success, false on error
    */
-  public static function saveUser($email, $password, $tags, $id = false, $confirmationcode = false)
+  public static function saveUser($email, $password, $tags, $name, $id = false, $confirmationcode = false)
   {
     $users = self::getData('users');
 
@@ -243,6 +244,7 @@ class protectedTags
       foreach ($users as &$user) {
         if ($user['id'] == $id)
         {
+          $user['name'] = $name;
           $user['email'] = $email;
           $user['password'] = $password;
           $user['tags'] = $tags;
@@ -256,6 +258,7 @@ class protectedTags
         $users,
         array(
           'id' => base_convert(microtime(false), 10, 36),
+          'name' => $name,
           "email" => $email,
           "password" => $password,
           "tags" => $tags,
@@ -359,12 +362,13 @@ class protectedTags
    * Automatically registers a new user, setting the confirmationcode
    * sends an email to the new user and to the main FROM address.
    * Data (from email address, message's subject and text) are set in main config file
-   * @param  [type] $email    [description]
-   * @param  [type] $password [description]
-   * @param  [type] $tag      [description]
+   * @param  string $email    User's email address
+   * @param  string $password User's password
+   * @param  string $tag      Comma separated tags
+   * @param  string $name     Users's anme
    * @return [type]           [description]
    */
-  public function registerUser($email, $password, $tag)
+  public function registerUser($email, $password, $tag, $name)
   {
     $users = self::getData('users');
 
@@ -403,7 +407,7 @@ class protectedTags
     }
 
     // Save new user's data
-    if (!self::saveUser($email, $password, $tag, $id, $confirmationcode))
+    if (!self::saveUser($email, $password, $tag, $name, $id, $confirmationcode))
     {
       throw new Exception("error_saving_user");
     }

@@ -2,6 +2,14 @@
   <form action="javascript:void(0)" id="new_protectd_pages_user">
     <div class="form-group">
       <input
+        type="text"
+        name="name"
+        placeholder="{{ tr.get('name') }}"
+        required="required"
+        value="{{ user.name }}">
+    </div>
+    <div class="form-group">
+      <input
         type="email"
         name="email"
         placeholder="{{ tr.get('email_address') }}"
@@ -50,6 +58,10 @@ $('#{{ uid }} input[name="tags"]').select2({
 });
 
 $('#new_protectd_pages_user').on('submit', function(){
+  if (!$('#new_protectd_pages_user').find('input[name="name"]').val()){
+    admin.message('{{ tr.sget('missing_required', tr.get('name')) }}', 'error');
+    return;
+  }
   if (!$('#new_protectd_pages_user').find('input[name="email"]').val()){
     admin.message('{{ tr.sget('missing_required', tr.get('email_address')) }}', 'error');
     return;

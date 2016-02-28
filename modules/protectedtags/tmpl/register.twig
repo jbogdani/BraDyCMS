@@ -10,6 +10,15 @@
 
   <div id="form_err" class="{{ css.error }}"></div>
 
+  <div class="name {{ css.name_cont }}">
+    <input
+      type="name"
+      name="name"
+      placeholder="{{ tr.get('name_surname') }}"
+      required="true"
+      class="{{ css.name_input }}">
+  </div>
+
   <div class="email {{ css.email_cont }}">
     <input
       type="email"
@@ -117,6 +126,10 @@ if (typeof recaptchaCallback !== 'function') {
     var form = $(this),
       url = 'controller.php?obj=protectedtags_ctrl&method=login';
 
+    if (!form.find('input[name="name"]').val()){
+      $('#form_err').text('{{ tr.get('name_required') }}');
+      return false;
+    }
     if (!form.find('input[name="email"]').val()){
       $('#form_err').text('{{ tr.get('email_required') }}');
       return false;

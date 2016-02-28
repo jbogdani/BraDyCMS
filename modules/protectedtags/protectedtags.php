@@ -95,6 +95,7 @@ class protectedtags_ctrl extends Controller
         $this->post['email'],
         $this->post['password'],
         $this->post['tags'],
+        $this->post['name'],
         $this->post['id'],
         $this->post['confirmationcode'])
     )
@@ -125,6 +126,7 @@ class protectedtags_ctrl extends Controller
     $email    = $this->post['email'];
     $password = $this->post['password'];
     $token    = $this->post['token'];
+    $name     = $this->post['name'];
     $confirmationcode = $this->post['confirmationcode'];
     $repeatpassword = $this->post['repeatpassword'];
     $tag = $this->post['tag'];
@@ -175,7 +177,7 @@ class protectedtags_ctrl extends Controller
       {
         try
         {
-          protectedTags::registerUser($email, $password, $tag);
+          protectedTags::registerUser($email, $password, $tag, $name);
         }
         catch(Exception $e)
         {

@@ -694,7 +694,7 @@ EOD;
       }
     }
 
-    // Set figure_width if width or align attributes are privided
+    // Set figure_width if width or align attributes are provided
     if ($data['align'] || $data['width'])
     {
       if ($data['width'])

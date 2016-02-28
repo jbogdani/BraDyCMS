@@ -6,7 +6,7 @@ inside article's content.
 All custom tags have a name, may have content and may none, one or more have attributes.
 All custom tags **should be enclosed in double square brackets** and **should always be closed**.
 This way you should always have an opening tag, e.g.: `[[mycustomtag]]` and a closing
-tag, e.g.: `[[/mycustomtag]]. In between you may have some content.
+tag, e.g.: `[[/mycustomtag]]`. In between you may have some content.
 
 You can also have none, one or more parameters. Parameters should be inserted in the opening
 tag, e.g.: [[mycustomtag param1="param1 value" param2="param2 value" etc...]]

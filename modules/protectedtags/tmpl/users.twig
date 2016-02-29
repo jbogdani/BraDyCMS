@@ -31,8 +31,17 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th colspan="7">
+      <th colspan="6">
         <h3>{{ tr.get('users') }}</h3>
+      </th>
+      <th>
+        <a
+          href="controller.php?obj=protectedtags_ctrl&method=downloadUsers"
+          target="_blank"
+          class="btn btn-default btn-block download-csv">
+          <i class="icon ion-ios-cloud-download-outline"></i>
+          {{ tr.get('download_list') }} (CVS)
+        </a>
       </th>
     </tr>
     <tr>

@@ -8,6 +8,31 @@
 
 class protectedtags_ctrl extends Controller
 {
+
+  public function downloadUsers()
+  {
+    $users = protectedTags::getData('users');
+
+    $tmp_file = tempnam(TMP_DIR, '') . '.csv';
+
+    $fp = fopen($tmp_file, 'w');
+
+    foreach ($users as $u)
+    {
+      fputcsv($fp, $u);
+    }
+    fclose($fp);
+
+    header('Content-Description: File Transfer');
+    header("Content-type: text/csv");
+    header('Content-Length: ' . filesize($tmp_file));
+    header('Content-Disposition: attachment; filename=' . basename($tmp_file));
+    header("Pragma: no-cache");
+    header("Expires: 0");
+    readfile($tmp_file);
+  }
+
+
   /**
    * Check if it's allowed to read tags
    * @param  string|array $tags single tag or array of tags to check

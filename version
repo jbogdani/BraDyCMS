@@ -1,3 +1,4 @@
+3.12.6[] = "Users' table in ProtectedTag module uses DataTable"
 3.12.5[] = "Added the possibility to download CSV file of users"
 3.12.4[] = "Added the option to permit user registration without email verification"
 3.12.3[] = "Users in protected tags module can can have a name"

@@ -40,7 +40,14 @@ class protectedtags_ctrl extends Controller
 
   public function saveAutoregister()
   {
-    if (protectedTags::saveAutoregister($this->post['tag'], $this->post['from'], $this->post['subject'], $this->post['text']))
+    if (protectedTags::saveAutoregister(
+          $this->post['mode'],
+          $this->post['tag'],
+          $this->post['from'],
+          $this->post['subject'],
+          $this->post['text']
+        )
+    )
     {
       echo $this->responseJson('success', tr::get('ok_data_saved'));
     }
@@ -236,11 +243,14 @@ class protectedtags_ctrl extends Controller
       $_SESSION['token'] = md5(uniqid(rand(), true));
     }
 
+    $ar = protectedTags::getData('autoregister');
+
     $this->render('protectedtags', 'register', array(
       'token' => $_SESSION['token'],
       'grc_sitekey' => cfg::get('grc_sitekey'),
       'tag' => $tag,
-      'css' => $css
+      'css' => $css,
+      'mode' => is_array($ar) ? $ar[$tag]['mode'] : false
     ));
 
   }

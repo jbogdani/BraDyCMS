@@ -3,6 +3,7 @@
     type="hidden"
     name="token"
     value="{{ token }}">
+
   <input
     type="hidden"
     name="tag"
@@ -37,13 +38,15 @@
       class="{{ css.password_input }}">
   </div>
 
-  <div class="select {{ css.select_cont }}">
-    <select
-      class="select {{ css.select_input }}">
-      <option value="new">{{ tr.get('new_user') }}</option>
-      <option value="confirm">{{ tr.get('confirm_user') }}</option>
-    </select>
-  </div>
+  {% if mode != 'dont_confirm' %}
+    <div class="select {{ css.select_cont }}">
+      <select
+        class="select {{ css.select_input }}">
+        <option value="new">{{ tr.get('new_user') }}</option>
+        <option value="confirm">{{ tr.get('confirm_user') }}</option>
+      </select>
+    </div>
+  {% endif %}
 
 
 
@@ -120,11 +123,12 @@ if (typeof recaptchaCallback !== 'function') {
         break;
     }
   });
-
+{% if mode == 'dont_confirm' %}
+  what = 'new';
+{% endif %}
 
   $('#registerform').on('submit', function(){
-    var form = $(this),
-      url = 'controller.php?obj=protectedtags_ctrl&method=login';
+    var form = $(this);
 
     if (!form.find('input[name="name"]').val()){
       $('#form_err').text('{{ tr.get('name_required') }}');
@@ -157,13 +161,17 @@ if (typeof recaptchaCallback !== 'function') {
     } else {
       return false;
     }
-    $.post(url, $(this).serialize(), function(data){
+    $.post('controller.php?obj=protectedtags_ctrl&method=login', $(this).serialize(), function(data){
       if (data.status === 'success'){
+        {% if mode == 'dont_confirm' %}
+          location.reload();
+        {% else %}
         if (what == 'confirm'){
           location.reload();
         } else {
           $('#form_err').text('{{ tr.get('user_registered') }}');
         }
+        {% endif %}
       } else {
         $('#form_err').text(data.text);
       }

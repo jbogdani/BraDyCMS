@@ -271,13 +271,14 @@ class protectedTags
 
   /**
    * Saves autoregister information to database
+   * @param  string $mode   autoregistration mode: confirm (email confirmation is needed) dont_confirm (email confirmation is not needed)
    * @param  string $tag     reference tag
    * @param  string $from    from email address
    * @param  string $subject email message's subject
    * @param  string $text    email message's text
    * @return boolean          true on success, false on error
    */
-  public static function saveAutoregister($tag, $from, $subject, $text)
+  public static function saveAutoregister($mode = false, $tag, $from, $subject, $text)
   {
     $data = self::getData();
 
@@ -288,6 +289,7 @@ class protectedTags
     else
     {
       $data['autoregister'][$tag] = array(
+        "mode"=> $mode,
         "from" => $from,
         "subject" => $subject,
         "text" => $text
@@ -406,6 +408,11 @@ class protectedTags
       throw new Exception('no_autoregister_data');
     }
 
+    if($d['mode'] == 'dont_confirm')
+    {
+      unset($confirmationcode);
+    }
+
     // Save new user's data
     if (!self::saveUser($email, $password, $tag, $name, $id, $confirmationcode))
     {
@@ -420,7 +427,7 @@ class protectedTags
       $message->addAddress($email);
       $message->addBCC($d['from']);
       $message->Subject = $d['subject'];
-      $message->Body = str_replace(array('%email%', '%code%'), array($email, $confirmationcode), $d['text']);
+      $message->Body = str_replace(array('%name%', '%email%', '%code%'), array($name, $email, $confirmationcode), $d['text']);
       $message->send();
       return true;
     }
@@ -429,6 +436,12 @@ class protectedTags
       error_log($e->getTraceAsString());
       throw new Exception('error_sending_email');
     }
+
+    if ($d['mode'] == 'confirm')
+    {
+      self::logUser($email);
+    }
+
   }
 
 }

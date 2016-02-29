@@ -34,12 +34,13 @@ The sum of the **whitelists** of all users constitutes the main tags **blacklist
 
 ### How can I enable user registration?
 
-If needed some content (tags) can be protected from generic unlogged users, while still available for registered users. If the **User registration is enabled** for one or more protected tags, then users can register on the website using an email address as username. The system will send a verification code in the user's mailbox that can be used to complete the registration and access the protected pages. No need for admins is required.
+If needed some content (tags) can be protected from generic unlogged users, while still available for registered users. If the **User registration is enabled** for one or more protected tags, then users can register on the website using an email address as username.
+Here, two options are available: **Ask for email confirmation** and **Don't Ask for email confirmation**. If the first option (default option) is selected the system will send a verification code in the user's mailbox that can be used to complete the registration and access the protected pages. No need for admins is required. If the second options is selected users will automatically log in.
 
 You can easily enable this feature by adding few information for each **tag** in the **Enable user's registration** section of the plugin:
 - **Email address** will be used as the *FROM* address in the email message sent for the confirmation to the user. This recipient will receive a copy of the email message sent to the user.
 - **Subject** will be used as the subject of the email messagge.
-- **Text** will be used as the body of the messagge. **Do not forget** to use the placeholders `%email%` and `%code%`, that will be automatically replaced with the user's email address and the confirmation code.
+- **Text** will be used as the body of the messagge. **Do not forget** to use the placeholders `%name%`, `%email%` and `%code%`, that will be automatically replaced with the user's email address and the confirmation code.
 
 ---
 

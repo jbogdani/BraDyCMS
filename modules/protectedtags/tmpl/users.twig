@@ -81,6 +81,7 @@
     </tr>
     <tr>
       <th>{{ tr.get('tag') }}</th>
+      <th>{{ tr.get('registration_mode') }}</th>
       <th>{{ tr.get('email_address') }}</th>
       <th>{{ tr.get('subject') }}</th>
       <th>{{ tr.get('text') }}</th>
@@ -90,6 +91,16 @@
     {% for p in protected %}
     <tr>
       <th>{{ p }}</th>
+      <th>
+        <select class="mode">
+          <option value="confirm"{% if autoregister[p]['mode'] != 'confirm' %} selected="selected"{% endif %}>
+            {{ tr.get('confirm') }}
+          </option>
+          <option value="dont_confirm"{% if autoregister[p]['mode'] == 'dont_confirm' %} selected="selected"{% endif %}>
+            {{ tr.get('dont_confirm') }}
+          </option>
+        </select>
+      </td>
       <td>
         <input type="email"
         class="from"
@@ -125,10 +136,12 @@ $('#{{ uid }} .save_row').on('click', function(){
   var tag = $(this).data('tag'),
     from = $(this).parents('tr').find('input.from').val(),
     subject = $(this).parents('tr').find('input.subject').val(),
-    text = $(this).parents('tr').find('textarea.text').val();
+    text = $(this).parents('tr').find('textarea.text').val(),
+    mode = $(this).parents('tr').find('select.mode').val();
   $.post(
     'controller.php?obj=protectedtags_ctrl&method=saveAutoregister',
     {
+      "mode": mode,
       "tag": tag,
       "from": from,
       "subject": subject,

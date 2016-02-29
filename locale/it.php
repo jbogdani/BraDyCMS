@@ -434,3 +434,6 @@ $_lang['subject'] = "Oggetto";
 $_lang['users'] = "Utenti";
 $_lang['auto_register_tags'] = "Attiva l'autoregistrazione degli utenti";
 $_lang['name_surname'] = "Nome e cognome";
+$_lang['confirm'] = "Richiedi conferma via email";
+$_lang['dont_confirm'] = "Non richiedere conferma via email";
+$_lang['registration_mode'] = "Modo di registrazione";

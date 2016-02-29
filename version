@@ -1,3 +1,4 @@
+3.12.4[] = "Added the option to permit user registration without email verification"
 3.12.3[] = "Users in protected tags module can can have a name"
 3.12.2[] = "Rewrite and upgrade of the Protected Tags plugin, allowing user registration"
 3.12.1[] = "Pnotify updated to v3.0.0"

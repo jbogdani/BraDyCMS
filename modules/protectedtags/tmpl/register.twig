@@ -164,10 +164,18 @@ if (typeof recaptchaCallback !== 'function') {
     $.post('controller.php?obj=protectedtags_ctrl&method=login', $(this).serialize(), function(data){
       if (data.status === 'success'){
         {% if mode == 'dont_confirm' %}
-          location.reload();
+        if (!window.location.hash) {
+          window.location.href = window.location.href;
+        } else {
+          window.location.reload();
+        }
         {% else %}
         if (what == 'confirm'){
-          location.reload();
+          if (!window.location.hash) {
+            window.location.href = window.location.href;
+          } else {
+            window.location.reload();
+          }
         } else {
           $('#form_err').text('{{ tr.get('user_registered') }}');
         }

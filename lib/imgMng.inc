@@ -58,7 +58,7 @@ class imgMng
     if (self::isBinary())
     {
       $cmd = cfg::get('im_convert') .
-        ' -resize ' . $width . ($height ? 'x' . $height : '') . '/^ ' .
+        ' -resize ' . $width . ($height ? 'x' . $height : '') . //'^ ' .
         ' "' . $oFile . '" ' .
         '-background none ' .
         '-gravity center ' .

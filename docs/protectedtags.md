@@ -40,7 +40,7 @@ Here, two options are available: **Ask for email confirmation** and **Don't Ask 
 You can easily enable this feature by adding few information for each **tag** in the **Enable user's registration** section of the plugin:
 - **Email address** will be used as the *FROM* address in the email message sent for the confirmation to the user. This recipient will receive a copy of the email message sent to the user.
 - **Subject** will be used as the subject of the email messagge.
-- **Text** will be used as the body of the messagge. **Do not forget** to use the placeholders `%name%`, `%email%` and `%code%`, that will be automatically replaced with the user's email address and the confirmation code.
+- **Text** will be used as the body of the messagge. **Do not forget** to use the placeholders `%name%`, `%password%`, `%email%` and `%code%`, that will be automatically replaced with the user's email address and the confirmation code.
 
 ---
 

@@ -419,6 +419,11 @@ class protectedTags
       throw new Exception("error_saving_user");
     }
 
+    if ($d['mode'] == 'dont_confirm')
+    {
+      self::logUser($email);
+    }
+
     // Send email
     try
     {
@@ -427,7 +432,7 @@ class protectedTags
       $message->addAddress($email);
       $message->addBCC($d['from']);
       $message->Subject = $d['subject'];
-      $message->Body = str_replace(array('%name%', '%email%', '%code%'), array($name, $email, $confirmationcode), $d['text']);
+      $message->Body = str_replace(array('%name%', '%email%', '%password%', '%code%'), array($name, $email, $password, $confirmationcode), $d['text']);
       $message->send();
       return true;
     }
@@ -435,11 +440,6 @@ class protectedTags
     {
       error_log($e->getTraceAsString());
       throw new Exception('error_sending_email');
-    }
-
-    if ($d['mode'] == 'confirm')
-    {
-      self::logUser($email);
     }
 
   }

@@ -12,7 +12,7 @@
 
 class imgMng
 {
-  
+
   /**
    * Checks if Imagick is available and file exists and throws Exception on errors
    * @param  string $file Path to file to be processed
@@ -34,7 +34,7 @@ class imgMng
 
   /**
    * Checks if Convert binary is avaiilable
-   * @return boolean 
+   * @return boolean
    */
   private function isBinary()
   {
@@ -57,8 +57,8 @@ class imgMng
 
     if (self::isBinary())
     {
-      $cmd = cfg::get('im_convert') . 
-        ' -resize ' . $width . ($height ? 'x' . $height : '') . '^ ' .
+      $cmd = cfg::get('im_convert') .
+        ' -resize ' . $width . ($height ? 'x' . $height : '') . '/^ ' .
         ' "' . $oFile . '" ' .
         '-background none ' .
         '-gravity center ' .
@@ -107,7 +107,7 @@ class imgMng
 
     if (self::isBinary())
     {
-      $cmd = cfg::get('im_convert') . 
+      $cmd = cfg::get('im_convert') .
         ' "' . $oFile . '" ' .
         ' "' . $nFile . '"';
 
@@ -131,7 +131,7 @@ class imgMng
     {
       throw new Exception('Error: new image file does not exist');
     }
-    
+
     return true;
   }
 
@@ -162,7 +162,7 @@ class imgMng
 
     if (self::isBinary())
     {
-      $cmd = cfg::get('im_convert') . 
+      $cmd = cfg::get('im_convert') .
         ' -resize ' . $width . ($height ? 'x' . $height : '') . ($onlyDownscale ? '\>' : '') .
         ($resolution ? ' -density ' . $resolution : '') .
         ' "' . $file . '" ' .
@@ -204,7 +204,7 @@ class imgMng
   /**
    * Crops image file to given values and throws Exception on errors
    * @param  string     full path to image to crop
-   * @param  int|false  new image width 
+   * @param  int|false  new image width
    * @param  int|false  new image height
    * @param  int|false  The X coordinate of the cropped region's top left corner
    * @param  int|false  The Y coordinate of the cropped region's top left corner
@@ -223,7 +223,7 @@ class imgMng
 
     if (self::isBinary())
     {
-      $cmd = cfg::get('im_convert') . 
+      $cmd = cfg::get('im_convert') .
         ' -crop ' . $width . ($height ? 'x' . $height : '') .
         ' "' . $file . '" ' .
         ' "' . $tmp_file . '"';

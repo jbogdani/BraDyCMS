@@ -9,7 +9,7 @@
     name="tag"
     value="{{ tag }}">
 
-  <div id="form_err" class="{{ css.error }}"></div>
+  <div class="form_err {{ css.error }}"></div>
 
   <div class="name {{ css.name_cont }}">
     <input
@@ -129,33 +129,34 @@ if (typeof recaptchaCallback !== 'function') {
 
   $('#registerform').on('submit', function(){
     var form = $(this);
+    form.find('.form_err').text('');
 
     if (!form.find('input[name="name"]').val()){
-      $('#form_err').text('{{ tr.get('name_required') }}');
+      form.find('.form_err').text('{{ tr.get('name_required') }}');
       return false;
     }
     if (!form.find('input[name="email"]').val()){
-      $('#form_err').text('{{ tr.get('email_required') }}');
+      form.find('.form_err').text('{{ tr.get('email_required') }}');
       return false;
     }
     if (!form.find('input[name="password"]').val()){
-      $('#form_err').text('{{ tr.get('password_required') }}');
+      form.find('.form_err').text('{{ tr.get('password_required') }}');
       return false;
     }
     if (what == 'confirm')
     {
       if (!form.find('input[name="confirmationcode"]').val()){
-        $('#form_err').text('{{ tr.get('confirmationcode_required') }}');
+        form.find('.form_err').text('{{ tr.get('confirmationcode_required') }}');
         return false;
       }
     } else if (what == 'new') {
       if (!form.find('input[name="repeatpassword"]').val()){
-        $('#form_err').text('{{ tr.get('repeatpassword_required') }}');
+        form.find('.form_err').text('{{ tr.get('repeatpassword_required') }}');
         return false;
       }
 
       if (form.find('input[name="repeatpassword"]').val() !== form.find('input[name="password"]').val()){
-        $('#form_err').text('{{ tr.get('passwords_does_not_match') }}');
+        form.find('.form_err').text('{{ tr.get('passwords_does_not_match') }}');
         return false;
       }
     } else {
@@ -164,24 +165,18 @@ if (typeof recaptchaCallback !== 'function') {
     $.post('controller.php?obj=protectedtags_ctrl&method=login', $(this).serialize(), function(data){
       if (data.status === 'success'){
         {% if mode == 'dont_confirm' %}
-        if (!window.location.hash) {
-          window.location.href = window.location.href;
-        } else {
-          window.location.reload();
-        }
+        window.location.reload();
+        window.scrollTo(0,0);
         {% else %}
         if (what == 'confirm'){
-          if (!window.location.hash) {
-            window.location.href = window.location.href;
-          } else {
-            window.location.reload();
-          }
+          window.location.reload();
+          window.scrollTo(0,0);
         } else {
-          $('#form_err').text('{{ tr.get('user_registered') }}');
+          form.find('.form_err').text('{{ tr.get('user_registered') }}');
         }
         {% endif %}
       } else {
-        $('#form_err').text(data.text);
+        form.find('.form_err').text(data.text);
       }
     }, 'json');
   });

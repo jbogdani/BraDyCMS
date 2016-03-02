@@ -5,7 +5,7 @@
     value="{{ token }}">
 
 
-  <div id="form_err" class="{{ css.error }}"></div>
+  <div class="form_err {{ css.error }}"></div>
 
   <div class="email {{ css.email_cont }}">
     <input
@@ -63,20 +63,23 @@ if (!window.jQuery){
 }
 
 $('#loginform').on('submit', function(){
-  if (!$(this).find('input[name="email"]').val()){
-    $('#form_err').text('{{ tr.get('email_required') }}');
+  var form = $(this);
+  form.find('.form_err').text('');
+  if (!form.find('input[name="email"]').val()){
+    form.find('.form_err').text('{{ tr.get('email_required') }}');
     return false;
   }
-  if (!$(this).find('input[name="password"]').val()){
-    $('#form_err').text('{{ tr.get('password_required') }}');
+  if (!form.find('input[name="password"]').val()){
+    form.find('.form_err').text('{{ tr.get('password_required') }}');
     return false;
   }
-  $.post('controller.php?obj=protectedtags_ctrl&method=login', $(this).serialize(), function(data){
+  $.post('controller.php?obj=protectedtags_ctrl&method=login', form.serialize(), function(data){
     if (data.status === 'success'){
         location.reload();
+        window.scrollTo(0,0);
         return true;
       } else {
-        $('#form_err').text(data.text);
+        form.find('.form_err').text(data.text);
       }
     }, 'json');
 });

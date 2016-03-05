@@ -296,8 +296,6 @@ class downloads_ctrl extends Controller
     {
       @unlink($destFile);
     }
-    error_log(TMP_DIR . '/' . $this->get['param']['tmpFile']);
-    error_log($destFile);
 
     @rename(TMP_DIR . '/' . $this->get['param']['tmpFile'], $destFile);
 

@@ -160,6 +160,10 @@ class customTags
       {
         $cover = $cover_name;
       }
+      else
+      {
+        $cover = false;
+      }
 
       $files[] = array(
         'path' => $path2node . '/' . $file,

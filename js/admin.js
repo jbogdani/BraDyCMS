@@ -19,8 +19,10 @@ var admin = {
         plugins: [
          "advlist autolink link image lists charmap preview hr anchor",
          "searchreplace wordcount visualblocks visualchars code fullscreen media nonbreaking",
-         "save table contextmenu directionality paste textcolor template imagetools"
+         "save table contextmenu directionality paste textcolor template imagetools importcss"
         ],
+        importcss_append: true,
+        importcss_groups: [{title: 'Other styles'}],
         paste_as_text: true,
         toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image anchor | print preview media fullpage | forecolor backcolor | code",
         image_advtab: true,

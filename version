@@ -1,4 +1,5 @@
-3.12.6[] = "Fixed bug with cover repeating on each download note item"
+3.12.8[] = "Sites' css classes are now available in the Format menu of TinyMCE, in admin backend"
+3.12.7[] = "Fixed bug with cover repeating on each download note item"
 3.12.6[] = "Fixed problem with convert ^ operator"
 3.12.6[] = "Users' table in ProtectedTag module uses DataTable"
 3.12.5[] = "Added the possibility to download CSV file of users"

@@ -641,16 +641,6 @@ class OutHtml extends Out
   }
 
   /**
-   * Returns string for jQuery library inclusion, trying first to load from Google CDN then from local host
-   * @param string $version jQuery version
-   * @return boolean|string
-   */
-  public function jQuery($version)
-  {
-    return $this->asset('jquery', false, $version);
-  }
-
-  /**
    * Returns string for Twitter Bootstrap javascript inclusion, trying first to load from CDN then from local host
    * @param string $version   Twitter Bootstrap version
    * @return false|string

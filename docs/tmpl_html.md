@@ -560,12 +560,7 @@ E.g.: `{{ html.GUA }}`
 ---
 
 #### jQuery('version')
-Returns string for jQuery library inclusion, trying first to load from Google CDN then from local host
-- **version** string, required. jQuery version (x.x.x)
-
-E.g.: `{{ html.jQuery('1.10.2') }}`
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write(\'<script src="./js/jquery-1.10.2.min.js"><\/script>\')</script>
+Dropped support since v3.13 in favor of asset('jquery')
 
 ---
 

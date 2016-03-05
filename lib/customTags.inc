@@ -10,7 +10,7 @@ class customTags
 {
 
 
-  public static function parseContent($html)
+  public static function parseContent($html, Out $out)
   {
     if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html))
     {
@@ -49,7 +49,7 @@ class customTags
 
       if (method_exists('customTags', $tag))
       {
-        $replace = call_user_func(array('customTags', $tag), $formatedAttributes);
+        $replace = call_user_func(array('customTags', $tag), $formatedAttributes, $out);
 
         $html = preg_replace($originalTag, $replace, $html, 1);
       }
@@ -57,7 +57,7 @@ class customTags
       {
         if (method_exists($tag, 'init'))
         {
-          $replace = call_user_func(array($tag, 'init'), $formatedAttributes);
+          $replace = call_user_func(array($tag, 'init'), $formatedAttributes, $out);
 
           $html = preg_replace($originalTag, $replace, $html, 1);
 

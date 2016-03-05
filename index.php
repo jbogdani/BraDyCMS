@@ -37,7 +37,7 @@ try
 
   $filter = new Twig_SimpleFilter('parseTags', function ($string)
     {
-      return customTags::parseContent($string);
+      return customTags::parseContent($string, $outHtml);
     });
 
   $twig->addFilter($filter);

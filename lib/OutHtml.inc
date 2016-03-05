@@ -627,7 +627,7 @@ class OutHtml extends Out
 
     if (method_exists('customTags', $method))
     {
-      $html = call_user_func(array('customTags', $method), $param);
+      $html = call_user_func(array('customTags', $method), $param, $this);
     }
     else if (file_exists('sites/default/modules/' . $method . '/' . $method. '.inc'))
     {

@@ -15,7 +15,8 @@ class Out
     $data = array(),  //
     $metadata,
     $mobiledetect,
-    $totalArticles
+    $totalArticles,
+    $queue
     ;
   protected $get = array();
 
@@ -262,7 +263,7 @@ class Out
 
     if ($this->data['article'][$article]['text'])
     {
-      $this->data['article'][$article]['text'] = customTags::parseContent($this->data['article'][$article]['text']);
+      $this->data['article'][$article]['text'] = customTags::parseContent($this->data['article'][$article]['text'], $this);
     }
 
     return $this->data['article'][$article];
@@ -316,7 +317,7 @@ class Out
     {
       foreach($arts as &$art)
       {
-        $art['text'] = customTags::parseContent($art['text']);
+        $art['text'] = customTags::parseContent($art['text'], $this);
       }
     }
     return $arts;
@@ -662,7 +663,7 @@ class Out
     {
       foreach($arts as &$art)
       {
-        $art['text'] = customTags::parseContent($art['text']);
+        $art['text'] = customTags::parseContent($art['text'], $this);
       }
     }
     return $arts;
@@ -717,5 +718,36 @@ class Out
 
     return $return;
   }
+
+  /**
+   * Adds a new element to the main queue
+   * @param string $key   queue element id
+   * @param mixed $value Queue element value, a string or a callable
+   */
+  public function setQueue($key, $value)
+  {
+    $this->queue[$key] = $value;
+  }
+
+  /**
+   * Gets and returns a queue element. If the element is a callable, it will be called
+   * @param  string $key queue element id
+   * @return mixed      string or callable result
+   */
+  public function getQueue($key)
+  {
+    if (isset($this->queue[$key]))
+    {
+      if (is_string($this->queue[$key]))
+      {
+        return $this->queue[$key];
+      }
+      else if (is_callable($this->queue[$key]))
+      {
+        return call_user_func($this->queue[$key]);
+      }
+    }
+  }
+
 
 }

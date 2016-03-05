@@ -76,6 +76,7 @@
               $this.runLeaflet(el, data);
               break;
             case 'google':
+            case false:
               $this.runGoogleMaps(el, data);
               break;
             default:
@@ -100,6 +101,7 @@
                   $this.runLeaflet(el, data);
                   break;
                 case 'google':
+                case false:
                   $this.runGoogleMaps(el, data, window.google);
                   break;
                 default:
@@ -121,7 +123,9 @@
       }
       var mapOptions = {};
 
-      mapOptions.zoom = parseInt(cfg.zoom) || false;
+      if (parseInt(cfg.zoom)){
+        mapOptions.zoom = parseInt(cfg.zoom);
+      }
 
       mapOptions.center = cfg.center ? new google.maps.LatLng(parseFloat(cfg.center[0]), parseFloat(cfg.center[1])) : false;
 

@@ -640,15 +640,6 @@ class OutHtml extends Out
     return $html;
   }
 
-  /**
-   * Returns string for Twitter Bootstrap javascript inclusion, trying first to load from CDN then from local host
-   * @param string $version   Twitter Bootstrap version
-   * @return false|string
-   */
-  public function TBSjs($version)
-  {
-    return $this->asset('bootstrap', 'js', $version);
-  }
 
   /**
    * Returns well formatted html containing table

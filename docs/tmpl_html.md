@@ -862,11 +862,7 @@ E.g.: `{{ html.tagBlog('news', 'web') }}`
 ---
 
 #### TBSjs('version')
-Returns string for Twitter Bootstrap javascript library inclusion, trying first to load from CDN then from local host
-- **version** string, required. Twiter Bootstrap version (x.x.x)
-
-E.g.: `{{ html.TBSjs('3.0.1') }}`
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script><script>if(typeof($.fn.modal) === \'undefined\') { document.write('<script src="./js/bootstrap-3.0.1.min.js"><\/script>')}</script>';
+Dropped support in favor of html.asset('bootstrap', 'js')
 
 ---
 

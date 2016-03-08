@@ -1,0 +1,4 @@
+[07-Mar-2016 15:55:37 Europe/Rome] File ./sites/default/modules/protectedtags/users.json is not writable
+[07-Mar-2016 15:55:53 Europe/Rome] PHP Warning:  file_get_contents(./sites/default/modules/protectedtags/users.json): failed to open stream: No such file or directory in /Users/jbogdani/www/bdusCMS/lib/protectedTags.inc on line 111
+[07-Mar-2016 15:55:53 Europe/Rome] PHP Warning:  file_get_contents(./sites/default/modules/protectedtags/users.json): failed to open stream: No such file or directory in /Users/jbogdani/www/bdusCMS/lib/protectedTags.inc on line 111
+[07-Mar-2016 15:55:53 Europe/Rome] Can not write in ./sites/default/modules/protectedtags/users.json

@@ -1,3 +1,4 @@
+3.12.10[] = "Sizes and dimensions are double-quotes escaped in imagemagick command"
 3.12.9[] = "Fixed bug with usermaps javascript file and platform detection"
 3.12.8[] = "Sites' css classes are now available in the Format menu of TinyMCE, in admin backend"
 3.12.7[] = "Fixed bug with cover repeating on each download note item"

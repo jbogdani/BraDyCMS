@@ -236,11 +236,11 @@ class userform_ctrl extends Controller
 
         throw new Exception($this->data['error_text']);
       }
-}
-catch (Exception $e)
-{
-  echo json_encode(array('status'=>'error', 'text'=>$e->getMessage()));
-}
+    }
+    catch (Exception $e)
+    {
+      echo json_encode(array('status'=>'error', 'text'=>$e->getMessage()));
+    }
 }
 
 

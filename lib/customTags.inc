@@ -101,11 +101,11 @@ class customTags
    *      $data[nojs],    if true, no JS code will be printed
    * @return type
    */
-  public static function userform($data)
+  public static function userform($data, Out $out)
   {
     $f = new userform_ctrl();
 
-    return $f->showForm($data);
+    return $f->showForm($data, $out);
   }
 
   /**

@@ -723,9 +723,15 @@ class Out
    * Adds a new element to the main queue
    * @param string $key   queue element id
    * @param mixed $value Queue element value, a string or a callable
+   * @param boolean $concatenate if true the value will be concatenated to existent value
    */
-  public function setQueue($key, $value)
+  public function setQueue($key, $value, $concatenate = false)
   {
+    if ($concatenate)
+    {
+      $current = $this->getQueue($key);
+      $value = $current . $value;
+    }
     $this->queue[$key] = $value;
   }
 

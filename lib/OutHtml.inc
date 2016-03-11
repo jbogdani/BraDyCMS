@@ -398,6 +398,16 @@ class OutHtml extends Out
           . 'id="search"'
           . ( $this->getSearchString() ? ' value="' . $this->getSearchString(true) . '"' : '') . ' />'
       . '</form>';
+    $js = <<<EOD
+<script>
+$('#searchForm').submit(function(){
+  if($('#search').val() !== '' ){
+    window.location = $(this).data('path') + './search:' + encodeURIComponent($('#search').val());
+  }
+});
+</script>
+EOD;
+    $this->setQueue('modules', $js, true);
     return $html;
   }
 

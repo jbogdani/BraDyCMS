@@ -30,6 +30,9 @@ class userform_ctrl extends Controller
         'subject'=>'',
         'success_text'=>'',
         'error_text'=>'',
+        'to_user' => '',
+        'confirm_text' => '',
+        'inline' => 'true|false',
         'elements'=>array(
           array(
             'name' => '',
@@ -161,24 +164,29 @@ class userform_ctrl extends Controller
         }
         catch(Exception $e)
         {
-          array_push($error, '<p>' . tr::get('captcha_error') . '</p>');
+          array_push($error, tr::get('captcha_error'));
         }
       }
+
+      // Placeholders & values array
+      $replacables = array();
 
       /**
       * Check for error in POST data
       */
       foreach ($this->data['elements'] as $el)
       {
+        $replacables['%' . $el['name'] . '%'] = $data[$el['name']];
+
         // Check required element
         if ($el['is_required'] && !$data[$el['name']])
         {
-          array_push($error, '<p>' . tr::sget('missing_required', $el['name']) . '</p>');
+          array_push($error, tr::sget('missing_required', $el['name']));
         }
 
         if ($el['email'] && $el['email'] !== 'false' && !filter_var($data[$el['name']], FILTER_VALIDATE_EMAIL))
         {
-          array_push($error, '<p>' . tr::sget('invalid_email', $el['name']) . '</p>');
+          array_push($error, tr::sget('invalid_email', $el['name']));
           continue;
         }
 
@@ -199,7 +207,22 @@ class userform_ctrl extends Controller
 
       if (!empty($error))
       {
-        throw new Exception('<p>' . implode('</p><p>', $error) . '</p>');
+        throw new Exception(implode("<br>", $error));
+      }
+
+      // check if a copy to user should be send, identical or with a custom text
+      if ($this->data['to_user'] && $data[$this->data['to_user']] && filter_var($data[$this->data['to_user']], FILTER_VALIDATE_EMAIL) )
+      {
+        $to_user = $data[$this->data['to_user']];
+
+        if ($this->data['confirm_text'] && is_array($replacables))
+        {
+          $confirm_text = str_replace(
+            array_keys($replacables),
+            array_values($replacables),
+            $this->data['confirm_text']
+          );
+        }
       }
 
       try
@@ -208,6 +231,11 @@ class userform_ctrl extends Controller
         $message->setFrom($this->data['from_email'], $this->data['from_name']);
         $message->addReplyTo($this->data['from']);
         $message->addAddress($this->data['to']);
+        // Send a copy to the user (no custom text):
+        if ( $to_user && !$confirm_text)
+        {
+          $message->addAddress($to_user);
+        }
         $message->Subject = $this->data['subject'];
         $message->Body = $text;
 
@@ -220,6 +248,17 @@ class userform_ctrl extends Controller
         }
 
         $message->send();
+
+        if ($to_user && $confirm_text)
+        {
+          $um = new PHPMailer();
+          $um->setFrom($this->data['from_email'], $this->data['from_name']);
+          $um->addReplyTo($this->data['from']);
+          $um->addAddress($to_user);
+          $message->Subject = $this->data['subject'];
+          $message->Body = $confirm_text;
+          $message->send();
+        }
 
         echo json_encode(array('status' => 'success', 'text' => $this->data['success_text']));
       }

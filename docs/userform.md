@@ -104,6 +104,7 @@ be visible to end users.
 - `placeholder`, string. optional. Placehoder text to use for inputs, visible to users.
 - `type`, string, optional, default value: text. Type of input field to display to end users. One of the following can be used:
   - `text`: a simple, one line, input field will be shown. This is the default value
+  - `date`: a simple, one line, input field will be shown with the date widget (bootstrap-datepicker will be used)
   - `longtext`: a simple multi-line input field will be shown
 	- `select`: a drop down list will be shown. For select to work properly
 the `options` parameter must be provided.

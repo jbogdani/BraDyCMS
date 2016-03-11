@@ -290,8 +290,9 @@ class userform_ctrl extends Controller
   *  Optional value: subject, overrites the config subject
   * @return string
   */
-  public function showForm($param)
+  public function showForm($param, Out $out)
   {
+
     $this->loadForm($param['content']);
 
     if ($param['inline'])
@@ -326,50 +327,57 @@ class userform_ctrl extends Controller
 
       switch ($el['type'])
       {
-        case 'text':
-        default:
-        $html .= '<input type="text" ' .
-          ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-          ' name="' . $el['name'] . '" ' .
-          'data-label="' . $el['label'] . '" class="form-control' . $checkClass . '" />';
-        break;
-
         case 'longtext';
-        $html .= '<textarea ' .
-        ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-        'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
+          $html .= '<textarea ' .
+          ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+          'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
         break;
 
         case 'select':
-        $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
-        '<option></option>';
-        foreach ($el['options'] as $opt)
-        {
-          $html .= '<option>' . $opt . '</option>';
-        }
+          $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
+          '<option></option>';
+          foreach ($el['options'] as $opt)
+          {
+            $html .= '<option>' . $opt . '</option>';
+          }
 
-        $html .= '</select>';
+          $html .= '</select>';
         break;
 
         case 'upload':
-        $upload[$el['name']] = array();
+          $upload[$el['name']] = array();
 
-        if ($el['allowedExtensions'])
-        {
-          $upload[$el['name']]['allowedExtensions'] = $el['allowedExtensions'];
-        }
+          if ($el['allowedExtensions'])
+          {
+            $upload[$el['name']]['allowedExtensions'] = $el['allowedExtensions'];
+          }
 
-        if ($el['sizeLimit'])
-        {
-          $upload[$el['name']]['sizeLimit'] = $el['sizeLimit'];
-        }
+          if ($el['sizeLimit'])
+          {
+            $upload[$el['name']]['sizeLimit'] = $el['sizeLimit'];
+          }
 
-        $html .= '<div class="upload_content">' .
-        '<div class="upl_' . $el['name'] . '"></div>' .
-        '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
-        '<div class="preview"></div>' .
-        '</div>';
+          $html .= '<div class="upload_content">' .
+          '<div class="upl_' . $el['name'] . '"></div>' .
+          '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
+          '<div class="preview"></div>' .
+          '</div>';
         break;
+
+        case 'text':
+        case 'date':
+        default:
+          if ($el['type'] == 'date')
+          {
+            $datepicker = 'datepicker';
+          }
+          $html .= '<input type="text" ' .
+            ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+            ' name="' . $el['name'] . '" ' .
+            ' data-label="' . $el['label'] . '" ' .
+            ' class="form-control' . $checkClass . ' ' . $datepicker  . '" />';
+        break;
+
       }
 
       $html .= '</div>' .
@@ -413,19 +421,38 @@ EOD;
 
     if (!$data['nojs'])
     {
+
+      if ($datepicker)
+      {
+
+        $out->setQueue('modules', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css">', true);
+
+        $out->setQueue('modules', '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>', true);
+
+        $out->setQueue('modules', '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.' .
+          ($out->session_lang ? $out->session_lang : cfg::get('sys_lang')) .
+          '.min.js"></script>', true);
+
+        $out->setQueue('modules', "<script>$(document).ready(function(){ $('.datepicker').datepicker({" .
+          "format: 'mm/dd/yyyy'," .
+          'language : "' . ($out->session_lang ? $out->session_lang : cfg::get('sys_lang')) . '"'.
+          '});});</script>', true);
+      }
       $js = file_get_contents(MOD_DIR . 'userform/userform.js');
 
-      $html .= '<script>' .
+      $headlib .= '<script>' .
       str_replace('userformID', $param['content'], $js);
 
       if (is_array($upload))
       {
         foreach($upload as $el=>$opts)
         {
-          $html .= "\n upload_file('upl_" . $el . "', " . json_encode($opts). ");";
+          $headlib .= "\n upload_file('upl_" . $el . "', " . json_encode($opts). ");";
         }
       }
-      $html .=  '</script>';
+      $headlib .=  '</script>';
+
+      $out->setQueue('modules', $headlib, true);
     }
 
     return $html;

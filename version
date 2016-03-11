@@ -1,3 +1,5 @@
+3.13.1[] = "Userform uses out::setQueue('modules') to load Javascript and CSS"
+3.13.1[] = "Userform has a new field type: date (bootstrap-datepicker is used)"
 3.13.0[] = "Dropped support for html.TBSjs in favor of html.asset('bootstrap', 'js')"
 3.13.0[] = "Dropped support for html.jQuery in favor of html.asset('jquery')"
 3.13.0[] = "New queue support"

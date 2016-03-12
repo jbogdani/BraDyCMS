@@ -4,6 +4,7 @@
 3.13.0[] = "Dropped support for html.TBSjs in favor of html.asset('bootstrap', 'js')"
 3.13.0[] = "Dropped support for html.jQuery in favor of html.asset('jquery')"
 3.13.0[] = "New queue support"
+3.12.12[] = "Bug fixed with user form module"
 3.12.11[] = "Userform module accepts to_user and confirm_text parameter to use for user feedback emails"
 3.12.10[] = "Sizes and dimensions are double-quotes escaped in imagemagick command"
 3.12.9[] = "Fixed bug with usermaps javascript file and platform detection"

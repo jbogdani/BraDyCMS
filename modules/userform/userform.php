@@ -229,7 +229,7 @@ class userform_ctrl extends Controller
       {
         $message = new PHPMailer();
         $message->setFrom($this->data['from_email'], $this->data['from_name']);
-        $message->addReplyTo($this->data['from']);
+        $message->addReplyTo($this->data['from_email']);
         $message->addAddress($this->data['to']);
         // Send a copy to the user (no custom text):
         if ( $to_user && !$confirm_text)
@@ -247,7 +247,10 @@ class userform_ctrl extends Controller
           }
         }
 
-        $message->send();
+        if (!$message->send())
+        {
+          throw new Exception("Error sending email to . " . $this->data['to']);
+        }
 
         if ($to_user && $confirm_text)
         {
@@ -255,11 +258,14 @@ class userform_ctrl extends Controller
           $um->setFrom($this->data['from_email'], $this->data['from_name']);
           $um->addReplyTo($this->data['from']);
           $um->addAddress($to_user);
-          $message->Subject = $this->data['subject'];
-          $message->Body = $confirm_text;
-          $message->send();
+          $um->Subject = $this->data['subject'];
+          $um->Body = $confirm_text;
+          if (!$um->send())
+          {
+            throw new Exception("Error sending email to . " . $this->data['to']);
+          }
         }
-
+        
         echo json_encode(array('status' => 'success', 'text' => $this->data['success_text']));
       }
 

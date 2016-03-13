@@ -425,22 +425,16 @@ class protectedTags
     }
 
     // Send email
-    try
+    $text = str_replace(array('%name%', '%email%', '%password%', '%code%'), array($name, $email, $password, $confirmationcode), $d['text']);
+    $headers = array(
+      'From: ' . $d['from'],
+      'Bcc: ' . $d['from']
+    );
+    if (!utils::sendMail($email, $d['subject'], $text, $headers = 'From: ' . $d['from']))
     {
-      $message = new PHPMailer();
-      $message->setFrom($d['from']);
-      $message->addAddress($email);
-      $message->addBCC($d['from']);
-      $message->Subject = $d['subject'];
-      $message->Body = str_replace(array('%name%', '%email%', '%password%', '%code%'), array($name, $email, $password, $confirmationcode), $d['text']);
-      $message->send();
-      return true;
-    }
-    catch (phpmailerException $e)
-    {
-      error_log($e->getTraceAsString());
       throw new Exception('error_sending_email');
     }
+    return true;
 
   }
 

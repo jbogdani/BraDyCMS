@@ -225,62 +225,36 @@ class userform_ctrl extends Controller
         }
       }
 
-      try
+      // Prepare email
+      // Main TO
+      $to = array($this->data['to']);
+      if ( $to_user && !$confirm_text)
       {
-        $message = new PHPMailer();
-        $message->setFrom($this->data['from_email'], $this->data['from_name']);
-        $message->addReplyTo($this->data['from_email']);
-        $message->addAddress($this->data['to']);
-        // Send a copy to the user (no custom text):
-        if ( $to_user && !$confirm_text)
-        {
-          $message->addAddress($to_user);
-        }
-        $message->Subject = $this->data['subject'];
-        $message->Body = $text;
-
-        if (is_array($attach))
-        {
-          foreach ($attach as $file)
-          {
-            $message->addAttachment($file);
-          }
-        }
-
-        if (!$message->send())
-        {
-          throw new Exception("Error sending email to . " . $this->data['to']);
-        }
-
-        if ($to_user && $confirm_text)
-        {
-          $um = new PHPMailer();
-          $um->setFrom($this->data['from_email'], $this->data['from_name']);
-          $um->addReplyTo($this->data['from']);
-          $um->addAddress($to_user);
-          $um->Subject = $this->data['subject'];
-          $um->Body = $confirm_text;
-          if (!$um->send())
-          {
-            throw new Exception("Error sending email to . " . $this->data['to']);
-          }
-        }
-        
-        echo json_encode(array('status' => 'success', 'text' => $this->data['success_text']));
+        // Add secondary To
+        array_push($to, $to_user);
       }
 
-      catch (phpmailerException $e)
-      {
-        error_log($e->getTraceAsString());
+      // From headers
+      $headers = array('From: ' . $this->data['from_name'] . ' <' . $this->data['from_email'] . '>');
 
-        throw new Exception($this->data['error_text']);
-      }
-      catch (Exception $e)
+      // Send main email
+      if (!utils::sendMail($to, $this->data['subject'], $text, $headers, $attach))
       {
-        error_log($e->getTraceAsString());
-
-        throw new Exception($this->data['error_text']);
+        throw new Exception("Error sending email to . " . implode(', ', $to));
       }
+
+      // Send secondary email
+      if ($to_user && $confirm_text)
+      {
+        if (!utils::sendMail($to_user, $this->data['subject'], $confirm_text, $headers))
+        {
+          throw new Exception("Error sending email to . " . implode(', ', $to_user));
+        }
+      }
+
+      // No Exceptions thrown: write success message
+      echo json_encode(array('status' => 'success', 'text' => $this->data['success_text']));
+
     }
     catch (Exception $e)
     {

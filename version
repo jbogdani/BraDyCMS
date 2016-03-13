@@ -1,3 +1,4 @@
+3.13.2[] = "Added new function utils::sendMail (code from WP's wp_mail)"
 3.13.1[] = "out::searchForm uses setQueue('modules') to show form submission javascript"
 3.13.1[] = "Userform uses out::setQueue('modules') to load Javascript and CSS"
 3.13.1[] = "Userform has a new field type: date (bootstrap-datepicker is used)"

@@ -906,13 +906,15 @@ EOD;
       'hl=' . ($data['hl'] ? $data['hl'] : $_SESSION['lang'])
       );
 
-    $html = '<iframe src="https://calendar.google.com/calendar/embed?'
+    $html = '<div class="google-calendar-container">'
+      . '<iframe src="https://calendar.google.com/calendar/embed?'
       . implode('&amp;', $opts) . '"'
       . 'style="' . ($data['border'] ? $data['border'] : 'border-width:0') . '" '
       . 'width="' . ($data['width'] ? $data['width'] : 800) . '" '
       . 'height="' . ($data['height'] ? $data['height'] : 600) . '" '
       . 'frameborder="0" '
-      . 'scrolling="no"></iframe>';
+      . 'scrolling="no"></iframe>'
+      . '</div>';
 
     return $html;
   }

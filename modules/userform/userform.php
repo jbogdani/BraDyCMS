@@ -415,7 +415,8 @@ EOD;
 
         $out->setQueue('modules', "<script>$(document).ready(function(){ $('.datepicker').datepicker({" .
           "format: 'mm/dd/yyyy'," .
-          'language : "' . ($out->session_lang ? $out->session_lang : cfg::get('sys_lang')) . '"'.
+          "autoclose: true," .
+          'language : "' . ($out->session_lang ? $out->session_lang : cfg::get('sys_lang')) . '"' .
           '});});</script>', true);
       }
       $js = file_get_contents(MOD_DIR . 'userform/userform.js');

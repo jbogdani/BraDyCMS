@@ -258,7 +258,10 @@ class userform_ctrl extends Controller
     }
     catch (Exception $e)
     {
-      echo json_encode(array('status'=>'error', 'text'=>$e->getMessage()));
+      echo json_encode(array(
+        'status'=>'error',
+        'text' => $this->data['error_text'] ? $this->data['error_text'] : $e->getMessage()
+      ));
     }
   }
 

@@ -918,12 +918,12 @@ class utils
      }
      catch ( phpmailerException $e )
      {
-       error_log('Error in sending email.' . "\n\t" .
-        var_export($to, true) . "\n\t" .
-        var_export($subject, true) . "\n\t" .
-        var_export($message, true) . "\n\t" .
-        var_export($headers, true) . "\n\t" .
-        var_export($attachments, true)
+       error_log('Error sending email' .
+        " to: " . implode(', ', (array)$to) .
+        "\n subject: " . implode(', ', (array)$subject) .
+        "\n message: " . implode(', ', (array)$message) .
+        (!empty($header) ? "\n  headers: " . implode(', ', (array)$headers) . "\n\t"  : '') .
+        (!empty($attachments) ? "\n  attachments:" . implode(', ', (array)$attachments) : '')
       );
       return false;
      }

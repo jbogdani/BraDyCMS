@@ -1,3 +1,4 @@
+3.12.14[] = "Fixed bug with out::getPageData('image') not being set correctly"
 3.12.13[] = "Added semantic class .google-calendar-container to google calender contanier"
 3.12.12[] = "Bug fixed with user form module"
 3.12.11[] = "Userform module accepts to_user and confirm_text parameter to use for user feedback emails"

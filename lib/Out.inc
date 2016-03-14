@@ -462,11 +462,7 @@ class Out
     $this->data['page']['mission'] = cfg::get('mission');
 
     // IMAGE
-    $art_img_paths = cfg::get('art_img');
-    $path2img = 'sites/default/images/articles/'
-                . $art_img_paths[0] . '/'
-                . $this->data['article'][$this->get['art_title']]['id']
-                . '.jpg';
+    $path2img = str_replace(utils::getBaseUrl(), null, $this->data['article'][$this->get['art_title']]['art_img']['orig']);
 
     if (file_exists($path2img))
     {

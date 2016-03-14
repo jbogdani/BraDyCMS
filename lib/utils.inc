@@ -585,51 +585,16 @@ class utils
   }
 
   /**
-   * Reads log file with login attempt and checks the timestamp
-   * if any record is found for present IP address. Returns true is attempt is valid
-   * (no log available, or max time is greater than $time) or false if atempts is not valid
-   * @param  string|false  $logfile full path to log file, if false default (admin) log file wil be used
-   * @param  integer $time Minimum time in millisecond between two attemps; default 1000 (1sec)
-   * @return boolean       true if is a valid attempt, false if attemmpt is not allowed
-   */
-  public static function checkAttemptTime($logfile = false, $time = 1000)
-  {
-    if (!$logfile)
-    {
-      $logfile = MAIN_DIR . 'logs/logAttempts.log';
-    }
-
-    $logfile = MAIN_DIR . 'logs/logAttempts.log';
-
-    $ip = $_SERVER['REMOTE_ADDR'];
-
-    $now = microtime(true);
-
-    if (file_exists($logfile))
-    {
-      $lastAttempt = file($logfile);
-      $lastIP = trim(str_replace(array("\n", "\r\n"), null, $lastAttempt[0]));
-      $lastTime = floatval(trim(str_replace(array("\n", "\r\n"), null, $lastAttempt[1])));
-
-      if ($lastIP === $id)
-      {
-        return ($now >= ($lastTime + $time) );
-      }
-    }
-    return utils::write_in_file($logfile, $ip . "\n" . $now);
-  }
-
-  /**
    * Send mail, similar to PHP's mail
    * (https://developer.wordpress.org/reference/functions/wp_mail/)
-	 *
-	 * @param string|array $to          Array or comma-separated list of email addresses to send message.
-	 * @param string       $subject     Email subject
-	 * @param string       $message     Message contents
-	 * @param string|array $headers     Optional. Additional headers.
-	 * @param string|array $attachments Optional. Files to attach.
-	 * @return bool Whether the email contents were sent successfully.
-	 */
+   *
+   * @param string|array $to          Array or comma-separated list of email addresses to send message.
+   * @param string       $subject     Email subject
+   * @param string       $message     Message contents
+   * @param string|array $headers     Optional. Additional headers.
+   * @param string|array $attachments Optional. Files to attach.
+   * @return bool Whether the email contents were sent successfully.
+   */
    public static function sendMail( $to, $subject, $message, $headers = '', $attachments = array() )
    {
      if (!is_array($attachments) )
@@ -742,6 +707,7 @@ class utils
          }
        }
      }
+
 
      // Empty out the values that may be set
      $phpmailer->ClearAllRecipients();
@@ -918,16 +884,20 @@ class utils
      }
      catch ( phpmailerException $e )
      {
-       error_log('Error sending email' .
+       error_log(
+        'Error sending email' .
         " to: " . implode(', ', (array)$to) .
+        "\n from email: " . $from_email .
+        ($from_name ? "\n from name: " . $from_name : '') .
         "\n subject: " . implode(', ', (array)$subject) .
         "\n message: " . implode(', ', (array)$message) .
         (!empty($header) ? "\n  headers: " . implode(', ', (array)$headers) . "\n\t"  : '') .
         (!empty($attachments) ? "\n  attachments:" . implode(', ', (array)$attachments) : '')
-      );
+        );
       return false;
      }
    }
+
 
 
 }

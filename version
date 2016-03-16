@@ -1,3 +1,4 @@
+3.13.3[] = "New feature in admin UI: new widget for article expiration date"
 3.13.3[] = "Enhanced error reporting in userform module"
 3.13.2[] = "Added new function utils::sendMail (code from WP's wp_mail)"
 3.13.1[] = "out::searchForm uses setQueue('modules') to show form submission javascript"

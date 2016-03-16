@@ -68,12 +68,12 @@
           <div class="col-sm-5">
             <div class="form-group">
               <label>{{ tr.get('title') }}</label>
-              <input type="text" name="title" value="{{ art.title}}" class="col-md-12" />
+              <input type="text" name="title" value="{{ art.title}}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('textid') }}</label>
-              <input type="text" name="textid" value="{{ art.textid }}" class="col-md-12" />
+              <input type="text" name="textid" value="{{ art.textid }}" />
             </div>
 
             <div class="form-group">
@@ -83,22 +83,22 @@
                   art.sort }}{%
                 else
               %}0{%
-                endif %}" class="col-md-12" />
+                endif %}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('keywords') }}</label>
-              <input type="text" name="keywords" value="{{ art.keywords }}" class="col-md-12" />
+              <input type="text" name="keywords" value="{{ art.keywords }}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('author') }}</label>
-              <input type="text" name="author" value="{{ art.author }}" class="col-md-12" />
+              <input type="text" name="author" value="{{ art.author }}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('status') }}</label>
-              <select name="status" class="col-md-12">
+              <select name="status">
                 <option value="0" {% if art.status == false %} selected="true" {% endif %}>{{ tr.get('draft') }}</option>
                 <option value="1" {% if art.status %} selected="true" {% endif %}>{{ tr.get('published') }}</option>
               </select>
@@ -112,14 +112,25 @@
 
             <div class="form-group">
               <label>{{ tr.get('pubblication_date') }}</label>
-              <input class="datepicker col-md-12" type="text" name="publish"
+              <br>
+              <input class="datepicker" type="text" name="publish"
                   value="{% if art.publish %}{{ art.publish }}{% else %}{{ date }}{% endif %}" />
             </div>
 
             <div class="form-group">
-              <label>{{ tr.get('expiration_date') }}</label>
-              <input class="datepicker col-md-12" type="text" name="expires"
-                  value="{% if art.expires %}{{ art.expires }}{% else %}{{ date }}{% endif %}" />
+              <div class="expiration_date_block" {% if art.expires == '0000-00-00' or art.expires == art.publish %} style="display:none"{% endif %}>
+                <label>{{ tr.get('expiration_date') }}</label>
+                <input class="datepicker col-md-12" type="text" name="expires"
+                    value="{% if art.expires and art.expires != art.publish %}{{ art.expires }}{% else %}0000-00-00{% endif %}" />
+              </div>
+              <button type="button" class="btn btn-info btn-block expiration_date_toggle">
+                {% if art.expires == '0000-00-00' or art.expires == art.publish %}
+                  {{ tr.get('set_expiration_date') }}
+                {% else %}
+                  {{ tr.get('remove_expiration_date') }}
+                {% endif %}
+              </button>
+
             </div>
 
             <div class="form-group">
@@ -164,16 +175,16 @@
                   <div class="form-group">
                     <label>{{ fld.label|upper }}</label>
                     {% if fld.type == 'longtext' %}
-                    <textarea name="{{ fld.name }}"  class="col-md-12" style="height:100px">{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}</textarea>
+                    <textarea name="{{ fld.name }}" style="height:100px">{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}</textarea>
                     {% elseif fld.type == 'select' and fld.values %}
-                      <select class="col-md-12" name="{{ fld.name }}">
+                      <select name="{{ fld.name }}">
                         <option></option>
                         {% for opt in fld.values %}
                           <option{% if opt == art[fld.name] %} selected="selected" {% endif %}>{{ opt }}</option>
                         {% endfor %}
                       </select>
                     {% else %}
-                    <input name="{{ fld.name }}" type="text" value="{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}" class="col-md-12" />
+                    <input name="{{ fld.name }}" type="text" value="{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}" />
                     {% endif %}
                   </div>
                 </div>
@@ -444,12 +455,21 @@
   });
   {% endif %}
 
+  // Toogles the expiration date input and it's value
+  $('#{{ uid }} .expiration_date_toggle').on('click', function(){
+    var btn = $(this),
+      div = $('#{{ uid }} .expiration_date_block'),
+      input = div.find('input[name="expires"]');
 
+    if (div.is(':visible')){
+      input.val('0000-00-00');
+      btn.text('{{ tr.get('set_expiration_date') }}');
+    } else {
+      input.val('{{ date }}');
+      input.datepicker('update', '{{ date }}');
+      btn.text('{{ tr.get('remove_expiration_date') }}');
+    }
+
+    div.toggle();
+  });
 </script>
-<!--
-TRANSLATE:
-
-article_media
-no_art_media
-ok_file_uploaded
-error_file_not_uploaded

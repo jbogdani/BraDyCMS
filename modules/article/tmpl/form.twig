@@ -373,7 +373,6 @@
       $('#edit_form{{ uid }}').serialize(),
 
       function(data) {
-        $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
         admin.message(data.text, data.type);
         {% if art.id == false %}
         if (data.type === 'success'){
@@ -382,7 +381,13 @@
         {% endif %}
       },
       'json'
-    );
+    )
+    .fail(function() {
+      admin.message('{{ tr.get('save_article_error') }}', 'error');
+    })
+    .always(function() {
+      $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
+    });
   });
 
   {% if art.id %}

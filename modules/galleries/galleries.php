@@ -12,12 +12,8 @@ class galleries_ctrl extends Controller
 
   public function all()
   {
-    $all_galls = utils::dirContent($this->path);
-
-    asort($all_galls);
-
     $this->render('galleries', 'listAllGalleries', array(
-      'galleries' => $all_galls
+      'galleries' => Gallery::getAll()
       ));
   }
 
@@ -29,56 +25,14 @@ class galleries_ctrl extends Controller
    */
   public function edit()
   {
-    $gal_content = utils::dirContent($this->path . $this->get['param'][0]);
-
-    $lang = $this->get['param'][1];
-
-    arsort($gal_content);
-
-    if (is_dir($this->path . $this->get['param'][0] . '/thumbs'))
-    {
-      $thumbs = utils::dirContent($this->path . $this->get['param'][0] . '/thumbs');
-    }
-
-    if (file_exists($this->path . $this->get['param'][0] . '/data.json'))
-    {
-      $data = json_decode(file_get_contents($this->path . $this->get['param'][0] . '/data.json'), true);
-    }
-
-    if ($lang)
-    {
-      $orig = $data;
-
-      unset($data);
-
-      if (file_exists($this->path . $this->get['param'][0] . '/data_' . $lang . '.json'))
-      {
-        $data = json_decode(file_get_contents($this->path . $this->get['param'][0] . '/data_' . $lang . '.json'), true);
-      }
-    }
-
-    foreach ($gal_content as $file)
-    {
-      if ($file != 'thumbs' && $file != 'data.json' && !preg_match('/\.json/', $file))
-      {
-        $files[] = array(
-            'name' => $file,
-            'formattedName' => str_replace('.', '__x__', $file),
-            'fullpath' => $this->path . $this->get['param'][0] . '/' . $file,
-            'thumb' => (file_exists($this->path . $this->get['param'][0] . '/thumbs/' . $file) ? $this->path . $this->get['param'][0] . '/thumbs/' . $file : ''),
-            'description' => $data[str_replace('.', '__x__', $file)],
-            'finfo' => getimagesize($this->path . $this->get['param'][0] . '/' . $file),
-            'orig_descr' => ($orig ? $orig[str_replace('.', '__x__', $file)] : false)
-            );
-      }
-    }
 
     $this->render('galleries', 'editGal', array(
       'gallery'=> $this->get['param'][0],
-      'files'  => $files,
-      'thumbs'=> $thumbs,
+      'files'  => Gallery::getAllContent($this->get['param'][0], $this->get['param'][1]),
+      'current_lang' => Gallery::getLang($this->get['param'][1]),
       'upload_dir'=> $this->path . $this->get['param'][0],
       'langs' => cfg::get('languages'),
+      // TODO: ctrl if necessary
       'translation' => $lang,
       'thumb_dimensions' => '200x200',
       'max_img_size' => cfg::get('max_img_size')

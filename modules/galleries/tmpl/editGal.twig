@@ -1,6 +1,6 @@
 <div id="{{ uid }}">
   <h2>{{ tr.get('edit_gallery') }}: {{ gallery }}</h2>
-  
+
   <div class="btn-group" style="padding:20px 0;">
     {% if files|length == 0 %}
       <button class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
@@ -23,7 +23,7 @@
       {% endif %}
       <div class="uploader"></div>
     </div>
-    
+
     <div class="pull-right form-inline">
       <div class="form-group">
       <label>{{ tr.get('thumb_dimensions') }}: </label>
@@ -36,17 +36,17 @@
       </div>
     </div>
   </div>
-      
+
   <div class="well well-sm clearfix">
     <div class="text-info">
       <i class="icon ion-information-circled"></i>
       {{ tr.get('file_names_will_be_sanitized') }}
     </div>
   </div>
-      
-  
-  
-  
+
+
+
+
   <div class="row">
     {% if files|length > 0 %}
       <form action="javascript:void(0)">
@@ -63,10 +63,17 @@
             </div>
 
             <div class="col-xs-3">
-              {% if file.orig_descr %}
-                <pre>{{ file.orig_descr }}</pre>
+              {% if file.orig_caption %}
+                <pre>{{ file.orig_caption }}</pre>
               {% endif %}
-              <textarea data-file="{{ file.name }}" style="height:150px" name="{{ file.formattedName }}">{{ file.description }}</textarea>
+              <textarea style="height:150px"
+                  name="{{ file.name }}[caption][{{ current_lang }}]">{{ file.caption }}</textarea>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label>{{ tr.get('sorting') }}</label>
+                </div>
+                <div class="col-sm-6"><input type="text" name="{{ file }}[sort]" value="{{ file.sort }}" /></div>
+              </div>
               <div><button class="btn btn-success btn-block save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></div>
             </div>
 
@@ -87,7 +94,7 @@
 </div>
 
 <script>
-  
+
   $('#{{ uid }}-th-dim').on('change', function(){
     var val = $(this).val();
     if (!/^([0-9]{1,4})x([0-9]{1,4})$/.test(val)){
@@ -95,7 +102,7 @@
       $(this).val('{{ thumb_dimensions }}');
     }
   });
-  
+
   admin.upload(
       $('#{{ uid }} div.uploader')[0],
       'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize&param[]=resize',
@@ -105,7 +112,7 @@
         }
       }
       );
-  
+
   $('#{{ uid }} button.create_thumb').on('click', function(){
     var $this = $(this);
     $.post('controller.php?obj=galleries_ctrl&method=makeThumbs&param[]={{ upload_dir }}&param[]=' + $(this).data('file') + '&param[]=' + $('#{{ uid }}-th-dim').val(), function(data){
@@ -116,19 +123,19 @@
       }
     }, 'json');
   });
-  
+
   $('#{{ uid }} button.save').on('click', function(){
     $.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ upload_dir }}{% if translation %}&param[]={{ translation }}{% endif %}', $('#{{ uid }} form').serializeArray(), function(data){
       admin.message(data.text, data.status);
     }, 'json');
   });
-  
-  
+
+
   $('#{{ uid }} button.delete').on('click', function(){
     $this = $(this);
     $.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
       admin.message(data.text, data.status);
-      
+
       if (data.status !== 'error'){
         if ($this.parents('div.listitem').siblings().length > 0){
           $this.parents('div.listitem').remove();
@@ -138,19 +145,19 @@
       }
     }, 'json');
   });
-  
-  
+
+
   $('#{{ uid }} .delete-gal').on('click', function(){
     $.get('controller.php?obj=galleries_ctrl&method=deleteGallery&param[]={{ upload_dir }}', function(data){
       admin.message(data.text, data.status);
-      
+
       if (data.status == 'success'){
         admin.tabs.closeActive();
-      }  
+      }
     }, 'json');
   });
-  
-  
+
+
   $('#{{ uid }} .rename').on('click', function(){
     admin.dialog({
       html: '<input type="text" class="gal" placeholder="' + admin.tr('gallery_name') + '" />'
@@ -172,7 +179,7 @@
                    var gal = $('.modal input.gal').val();
                    $.get('controller.php?obj=galleries_ctrl&method=renameGallery&param[]={{ gallery }}&param[]=' + gal, function(data){
                      admin.message(data.text, data.status);
-                     
+
                      if (data.status === 'success'){
                        $('#modal').modal('hide');
                        admin.tabs.closeActive('galleries/edit/' + gal);
@@ -186,8 +193,8 @@
                }
                ]
     });
-    
+
     return;
   });
-  
+
 </script>

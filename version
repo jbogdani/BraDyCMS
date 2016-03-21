@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 3.13.3[] = "New feature in admin UI: new widget for article expiration date"
 3.13.3[] = "Enhanced error reporting in userform module"
 3.13.2[] = "Added new function utils::sendMail (code from WP's wp_mail)"
@@ -7,6 +8,9 @@
 3.13.0[] = "Dropped support for html.TBSjs in favor of html.asset('bootstrap', 'js')"
 3.13.0[] = "Dropped support for html.jQuery in favor of html.asset('jquery')"
 3.13.0[] = "New queue support"
+=======
+3.12.16[] = "Login button in admin login is disabled until recaptcha is verified and on login error recaptcha is reseted"
+>>>>>>> master
 3.12.15[] = "Bug fixed with admin errors on saving articles blocking the ui and not reporting the error"
 3.12.14[] = "Fixed bug with out::getPageData('image') not being set correctly"
 3.12.13[] = "Added semantic class .google-calendar-container to google calender contanier"

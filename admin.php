@@ -101,11 +101,31 @@ catch (Exception $e)
     if (!$_SESSION['user_confirmed']):
       if (cfg::get('grc_sitekey')):
         ?>
-  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit" async defer></script>
         <?php
       endif;
       ?>
   <script>
+  <?php if (cfg::get('grc_sitekey')): ?>
+  if (typeof recaptchaCallback !== 'function') {
+    var called = false;
+    function recaptchaCallback(){
+      if (called) return;
+      $('.g-recaptcha').each(function(i, el){
+        grecaptcha.render(el, {
+          'sitekey' : $(el).data('sitekey'),
+          'callback': function(response) {
+            if (response.length > 0){
+              $('#login-button').prop('disabled', false);
+            }
+          }
+        });
+      });
+      called = true;
+    }
+  }
+
+  <?php endif; ?>
     $('#signin').on('submit', function(){
       $('#logerror').hide();
       $.post('controller.php?obj=log_ctrl&method=in', $(this).serialize(), function(data){
@@ -114,6 +134,9 @@ catch (Exception $e)
           $(window).trigger('hashchange');
           return false;
         } else {
+          <?php if (cfg::get('grc_sitekey')): ?>
+          grecaptcha.reset();
+          <?php endif; ?>
           $('#logerror .text').html(data.text);
           $('#logerror').show();
           $('#login-button').button('reset');
@@ -121,10 +144,8 @@ catch (Exception $e)
       }, 'json');
     });
   </script>
-      <?php
-    endif;
-  endif;
-  ?>
+<?php endif; ?>
+<?php endif; ?>
 
   </body>
 </html>

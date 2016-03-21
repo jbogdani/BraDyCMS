@@ -21,10 +21,11 @@
 3.12.1[] = "DataTables updated to v1.10.11"
 3.12.1[] = "TinyMCE updated to v4.3.4"
 3.12.0[] = "New feature: added the possibility to add cover images to download nodes"
+
 3.11.25[] = "Fixed bug with gcalendar custom tag"
 3.11.24[] = "Cleaner result for admin.removeNotValid function"
 3.11.23[] = "Fixed bug with protected tags function"
-3.11.22[] = "Userform module supports multiple google reCAPTCHE in one page"
+3.11.22[] = "Userform module supports multiple google reCAPTCHA in one page"
 3.11.21[] = "Added more semantic markup to userform module"
 3.11.20[] = "Fixed bug with protected tags function not working correctly"
 3.11.19[] = "Added semantic css classes to the main table of the download module"
@@ -47,6 +48,7 @@
 3.11.2[] = "CAPTCHA check is now extended to authentication user form for password protected tags"
 3.11.1[] = "New security fix: added the possibility to implement, per domain, Google reCAPTCHA in admin login form"
 3.11.0[] = "New core function added: password protected pages (tags)"
+
 3.10.30[] = "Minor typo fixes and few translations updated"
 3.10.29[] = "Leaflet, used in usermap module, updated to v. 0.0.7"
 3.10.28[] = "Code optimization in usermap module"
@@ -78,6 +80,7 @@
 3.10.2[] = "Removed support for .html extention in url"
 3.10.1[] = "A better workflow management with gulp"
 3.10.0[] = "External javascript and css resources are handled with bower"
+
 3.9.2[] = "Solved bug with translations being multiplied"
 3.9.1[] = "Solved bug with rich text fields in translations forms not being saved"
 3.9.0[] = "RedbeanPHP updated to version 4.3.0"
@@ -123,6 +126,7 @@
 3.9.0[] = "The searched string is used as default value for the search input"
 3.9.0[] = "The content of search form will be automatically encoded in frontend.js"
 3.9.0[] = "Search module supports both strict mode (string must be wrapped in double-quotes) and loose mode"
+
 3.8.6[] = "Bug fixed with new map creation function of usermap module"
 3.8.5[] = ".htaccess returns not found for image files and redirects to not_found article for other resources"
 3.8.5[] = "Bug fixed with update module and .htaccess file being written before being updated with site customization"

@@ -1,3 +1,4 @@
+3.12.16[] = "Login button in admin login is disabled until recaptcha is verified and on login error recaptcha is reseted"
 3.12.15[] = "Bug fixed with admin errors on saving articles blocking the ui and not reporting the error"
 3.12.14[] = "Fixed bug with out::getPageData('image') not being set correctly"
 3.12.13[] = "Added semantic class .google-calendar-container to google calender contanier"

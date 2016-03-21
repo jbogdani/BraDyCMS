@@ -23,6 +23,9 @@
 
     <button class="btn btn-lg btn-primary btn-block"
         id="login-button"
+        {% if grc_sitekey %}
+        disabled
+        {% endif %}
         type="submit"
         data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading...."
         onclick="$(this).button('loading');">

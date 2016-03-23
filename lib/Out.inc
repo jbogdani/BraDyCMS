@@ -457,7 +457,7 @@ class Out
     $this->data['page']['lang'] = $this->lang ? $this->lang: cfg::get('sys_lang');
 
     // URL
-    $this->data['page']['url']  = utils::getBaseUrl() . $_SERVER['REQUEST_URI'];
+    $this->data['page']['url']  = utils::getBaseUrl() . str_replace(cfg::get('rewriteBase'), null, $_SERVER['REQUEST_URI']);
 
     // MISSION
     $this->data['page']['mission'] = cfg::get('mission');

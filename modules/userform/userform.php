@@ -136,7 +136,6 @@ class userform_ctrl extends Controller
   {
     try
     {
-
       $error = array();
 
       // Get form id
@@ -225,43 +224,66 @@ class userform_ctrl extends Controller
         }
       }
 
-      // Prepare email
-      // Main TO
-      $to = array($this->data['to']);
-      if ( $to_user && !$confirm_text)
+      try
       {
-        // Add secondary To
-        array_push($to, $to_user);
-      }
-
-      // From headers
-      $headers = array('From: ' . $this->data['from_name'] . ' <' . $this->data['from_email'] . '>');
-
-      // Send main email
-      if (!utils::sendMail($to, $this->data['subject'], $text, $headers, $attach))
-      {
-        throw new Exception("Error sending email to . " . implode(', ', $to));
-      }
-
-      // Send secondary email
-      if ($to_user && $confirm_text)
-      {
-        if (!utils::sendMail($to_user, $this->data['subject'], $confirm_text, $headers))
+        $message = new PHPMailer();
+        $message->setFrom($this->data['from_email'], $this->data['from_name']);
+        $message->addReplyTo($this->data['from_email']);
+        $message->addAddress($this->data['to']);
+        // Send a copy to the user (no custom text):
+        if ( $to_user && !$confirm_text)
         {
-          throw new Exception("Error sending email to . " . implode(', ', $to_user));
+          $message->addAddress($to_user);
         }
+        $message->Subject = $this->data['subject'];
+        $message->Body = $text;
+
+        if (is_array($attach))
+        {
+          foreach ($attach as $file)
+          {
+            $message->addAttachment($file);
+          }
+        }
+
+        if (!$message->send())
+        {
+          throw new Exception("Error sending email to . " . $this->data['to']);
+        }
+
+        if ($to_user && $confirm_text)
+        {
+          $um = new PHPMailer();
+          $um->setFrom($this->data['from_email'], $this->data['from_name']);
+          $um->addReplyTo($this->data['from']);
+          $um->addAddress($to_user);
+          $um->Subject = $this->data['subject'];
+          $um->Body = $confirm_text;
+          if (!$um->send())
+          {
+            throw new Exception("Error sending email to . " . $this->data['to']);
+          }
+        }
+
+        echo json_encode(array('status' => 'success', 'text' => $this->data['success_text']));
       }
 
-      // No Exceptions thrown: write success message
-      echo json_encode(array('status' => 'success', 'text' => $this->data['success_text']));
+      catch (phpmailerException $e)
+      {
+        error_log($e->getTraceAsString());
 
+        throw new Exception($this->data['error_text']);
+      }
+      catch (Exception $e)
+      {
+        error_log($e->getTraceAsString());
+
+        throw new Exception($this->data['error_text']);
+      }
     }
     catch (Exception $e)
     {
-      echo json_encode(array(
-        'status'=>'error',
-        'text' => $this->data['error_text'] ? $this->data['error_text'] : $e->getMessage()
-      ));
+      echo json_encode(array('status'=>'error', 'text'=>$e->getMessage()));
     }
   }
 
@@ -271,11 +293,11 @@ class userform_ctrl extends Controller
   * @param array $param general parameters.
   *  Mandatory value: $param['content']: the form to show
   *  Optional value: subject, overrites the config subject
+  * @param object Instance of the main Out object
   * @return string
   */
   public function showForm($param, Out $out)
   {
-
     $this->loadForm($param['content']);
 
     if ($param['inline'])
@@ -310,57 +332,50 @@ class userform_ctrl extends Controller
 
       switch ($el['type'])
       {
-        case 'longtext';
-          $html .= '<textarea ' .
+        case 'text':
+        default:
+        $html .= '<input type="text" ' .
           ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-          'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
+          ' name="' . $el['name'] . '" ' .
+          'data-label="' . $el['label'] . '" class="form-control' . $checkClass . '" />';
+        break;
+
+        case 'longtext';
+        $html .= '<textarea ' .
+        ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
+        'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
         break;
 
         case 'select':
-          $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
-          '<option></option>';
-          foreach ($el['options'] as $opt)
-          {
-            $html .= '<option>' . $opt . '</option>';
-          }
+        $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
+        '<option></option>';
+        foreach ($el['options'] as $opt)
+        {
+          $html .= '<option>' . $opt . '</option>';
+        }
 
-          $html .= '</select>';
+        $html .= '</select>';
         break;
 
         case 'upload':
-          $upload[$el['name']] = array();
+        $upload[$el['name']] = array();
 
-          if ($el['allowedExtensions'])
-          {
-            $upload[$el['name']]['allowedExtensions'] = $el['allowedExtensions'];
-          }
+        if ($el['allowedExtensions'])
+        {
+          $upload[$el['name']]['allowedExtensions'] = $el['allowedExtensions'];
+        }
 
-          if ($el['sizeLimit'])
-          {
-            $upload[$el['name']]['sizeLimit'] = $el['sizeLimit'];
-          }
+        if ($el['sizeLimit'])
+        {
+          $upload[$el['name']]['sizeLimit'] = $el['sizeLimit'];
+        }
 
-          $html .= '<div class="upload_content">' .
-          '<div class="upl_' . $el['name'] . '"></div>' .
-          '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
-          '<div class="preview"></div>' .
+        $html .= '<div class="upload_content">' .
+            '<div class="upl_' . $el['name'] . '"></div>' .
+            '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
+            '<div class="preview"></div>' .
           '</div>';
         break;
-
-        case 'text':
-        case 'date':
-        default:
-          if ($el['type'] == 'date')
-          {
-            $datepicker = 'datepicker';
-          }
-          $html .= '<input type="text" ' .
-            ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-            ' name="' . $el['name'] . '" ' .
-            ' data-label="' . $el['label'] . '" ' .
-            ' class="form-control' . $checkClass . ' ' . $datepicker  . '" />';
-        break;
-
       }
 
       $html .= '</div>' .
@@ -393,52 +408,33 @@ EOD;
 
     }
     $html .= '<div class="' . $input_class . ' ' . $buttons_class . '">' .
-    '<div class="message"></div>' .
-    '<input class="btn btn-success" type="submit" /> ' .
-    '<input class="btn btn-default" type="reset" />' .
-    '</div>';
+        '<div class="message"></div>' .
+        '<input class="btn btn-success" type="submit" /> ' .
+        '<input class="btn btn-default" type="reset" />' .
+      '</div>' .
+    '</div>' .
+  '</form>' .
+  '</div>';
 
-    $html .= '</div>' .
-      '</form>' .
-      '</div>';
+  if (!$data['nojs'])
+  {
+    $js = array();
 
-    if (!$data['nojs'])
+    $out->setQueue('modules', "\n" . '<script src="' . MOD_DIR . 'userform/userform.js'. '"></script>', true);
+    array_push($js, "userform.whatchForm('" . $param['content'] . "');");
+
+    if (is_array($upload))
     {
+      $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="./css/fileuploader.css" />', true);
+      $out->setQueue('modules', "\n" . '<script src="./js/fileuploader.js"></script>', true);
 
-      if ($datepicker)
+      foreach($upload as $el=>$opts)
       {
-
-        $out->setQueue('modules', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css">', true);
-
-        $out->setQueue('modules', '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>', true);
-
-        $out->setQueue('modules', '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.' .
-          ($out->session_lang ? $out->session_lang : cfg::get('sys_lang')) .
-          '.min.js"></script>', true);
-
-        $out->setQueue('modules', "<script>$(document).ready(function(){ $('.datepicker').datepicker({" .
-          "format: 'mm/dd/yyyy'," .
-          "autoclose: true," .
-          'language : "' . ($out->session_lang ? $out->session_lang : cfg::get('sys_lang')) . '"' .
-          '});});</script>', true);
+        array_push($js, "userform.upload_file('" . $param['content']. "', 'upl_" . $el . "', " . json_encode($opts). ");");
       }
-      $js = file_get_contents(MOD_DIR . 'userform/userform.js');
-
-      $headlib .= '<script>' .
-      str_replace('userformID', $param['content'], $js);
-
-      if (is_array($upload))
-      {
-        foreach($upload as $el=>$opts)
-        {
-          $headlib .= "\n upload_file('upl_" . $el . "', " . json_encode($opts). ");";
-        }
-      }
-      $headlib .=  '</script>';
-
-      $out->setQueue('modules', $headlib, true);
     }
-
+    $out->setQueue('modules', "\n" . '<script>$(document).ready(function(){' . implode("\n", $js) . '});</script>', true);
+  }
     return $html;
   }
 

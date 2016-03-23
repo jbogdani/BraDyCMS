@@ -94,8 +94,17 @@ class OutHtml extends Out
     return $html;
   }
 
-  public function metadata_twitter($twitter_id)
+  /**
+   * Retirns well formatted html with Twitter s=cart data
+   * @param  string $twitter_id Twitter ID, requied
+   * @return string 
+   */
+  public function metadata_twitter($twitter_id = false)
   {
+    if (!$twitter_id)
+    {
+      return false;
+    }
     $html = "\n\n  <!-- Twitter Card -->"
         . "\n  " . '<meta name="twitter:card" content="summary" />'
         . "\n  " . '<meta name="twitter:site" content="@' . $twitter_id . '" />'

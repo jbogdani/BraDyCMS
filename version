@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 3.13.4[] = "Userform module uses out::setQueue('modules') to load js and css dependencies"
 3.13.4[] = "Userform javascript file transformed in object"
 3.13.3[] = "New feature in admin UI: new widget for article expiration date"
@@ -10,6 +11,10 @@
 3.13.0[] = "Dropped support for html.jQuery in favor of html.asset('jquery')"
 3.13.0[] = "New queue support"
 
+=======
+3.12.16[] = "Twitter metadata returns false if no Twitter id is provided"
+3.12.16[] = "Bug fixed with getPageData('url') repeating the rewrite base string"
+>>>>>>> master
 3.12.16[] = "Login button in admin login is disabled until recaptcha is verified and on login error recaptcha is reseted"
 3.12.15[] = "Bug fixed with admin errors on saving articles blocking the ui and not reporting the error"
 3.12.14[] = "Fixed bug with out::getPageData('image') not being set correctly"

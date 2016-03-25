@@ -179,14 +179,44 @@ function openEditForm(id){
         text: admin.tr('save'),
         addclass: 'btn-success',
         click: function(){
-          $('#new_protectd_pages_user').submit();
+          $('#modal').find('form').submit();
         }
       },
       {
         text: admin.tr('reset'),
         action: 'close'
       }
-    ]
+    ],
+    loaded: function(body){
+      var form = body.find('form.new_protectd_pages_user');
+      form.on('submit', function(){
+        if (!form.find('input[name="name"]').val()){
+          admin.message('{{ tr.sget('missing_required', tr.get('name')) }}', 'error');
+          return;
+        }
+        if (!form.find('input[name="email"]').val()){
+          admin.message('{{ tr.sget('missing_required', tr.get('email_address')) }}', 'error');
+          return;
+        }
+        if (!form.find('input[name="password"]').val()){
+          admin.message('{{ tr.sget('missing_required', tr.get('password')) }}', 'error');
+          return;
+        }
+        if (!form.find('input[name="tags"]').val()){
+          admin.message('{{ tr.sget('missing_required', tr.get('tags')) }}', 'error');
+          return;
+        }
+        $.post(
+          'controller.php?obj=protectedtags_ctrl&method=save',
+          form.serialize(), function(data){
+            admin.message(data.text, data.status);
+            if(data.status === 'success'){
+              $('#modal').modal('hide');
+              admin.tabs.reloadThis('#{{ uid }}');
+            }
+        }, 'json');
+      });
+    }
   });
 }
 

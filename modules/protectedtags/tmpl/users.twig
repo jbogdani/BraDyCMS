@@ -136,7 +136,15 @@
 
 <script>
   $('#{{ uid }}users').DataTable({
-    "columnDefs": [ { "targets": 6, "orderable": false } ]
+    "columnDefs": [ { "targets": 6, "orderable": false } ],
+    "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+      $(nRow).find('.edit').on('click', function(){
+        openEditForm($(this).data('item'));
+      });
+
+
+    }
+
   });
 
 $('#{{ uid }} .save_row').on('click', function(){
@@ -187,10 +195,6 @@ $('#{{ uid }} .reload').on('click', function(){
   admin.tabs.reloadThis(this);
 });
 
-// edit user
-$('#{{ uid }} .edit').on('click', function(){
-  openEditForm($(this).data('item'));
-});
 
 // delete user
 $('#{{ uid }} .delete').on('click', function(){

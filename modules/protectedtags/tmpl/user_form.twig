@@ -1,5 +1,5 @@
 <div id="{{ uid }}">
-  <form action="javascript:void(0)" id="new_protectd_pages_user">
+  <form action="javascript:void(0)" class="new_protectd_pages_user">
     <div class="form-group">
       <input
         type="text"
@@ -55,36 +55,5 @@
 <script>
 $('#{{ uid }} input[name="tags"]').select2({
   tags: [{{ imploded_tags|raw }}]
-});
-
-$('#new_protectd_pages_user').on('submit', function(){
-  if (!$('#new_protectd_pages_user').find('input[name="name"]').val()){
-    admin.message('{{ tr.sget('missing_required', tr.get('name')) }}', 'error');
-    return;
-  }
-  if (!$('#new_protectd_pages_user').find('input[name="email"]').val()){
-    admin.message('{{ tr.sget('missing_required', tr.get('email_address')) }}', 'error');
-    return;
-  }
-
-  if (!$('#new_protectd_pages_user').find('input[name="password"]').val()){
-    admin.message('{{ tr.sget('missing_required', tr.get('password')) }}', 'error');
-    return;
-  }
-
-  if (!$('#new_protectd_pages_user').find('input[name="tags"]').val()){
-    admin.message('{{ tr.sget('missing_required', tr.get('tags')) }}', 'error');
-    return;
-  }
-
-  $.post(
-    'controller.php?obj=protectedtags_ctrl&method=save',
-    $('#new_protectd_pages_user').serialize(), function(data){
-      admin.message(data.text, data.status);
-      if(data.status === 'success'){
-        $('#modal').modal('hide');
-        admin.tabs.reloadThis('#{{ uid }}');
-      }
-  }, 'json');
 });
 </script>

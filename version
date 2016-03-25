@@ -1,4 +1,3 @@
-
 3.13.4[] = "Userform module uses out::setQueue('modules') to load js and css dependencies"
 3.13.4[] = "Userform javascript file transformed in object"
 3.13.3[] = "New feature in admin UI: new widget for article expiration date"
@@ -11,6 +10,7 @@
 3.13.0[] = "Dropped support for html.jQuery in favor of html.asset('jquery')"
 3.13.0[] = "New queue support"
 
+3.12.19[] = "Fixed bug with delete button in protected tags admin page not working for pages other than 1"
 3.12.18[] = "Fixed bug with user edit form submission of protected admins module"
 3.12.17[] = "Fixed bug with edit and delete button in protected tags admin page not working for pages other than 1"
 3.12.16[] = "Twitter metadata returns false if no Twitter id is provided"

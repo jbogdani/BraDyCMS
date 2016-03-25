@@ -142,6 +142,18 @@
         openEditForm($(this).data('item'));
       });
 
+      $(nRow).find('.delete').on('click', function(){
+        $.get(
+          'controller.php?obj=protectedtags_ctrl&method=deleteUser&param[]=' + $(this).data('item'),
+          function(data){
+            admin.message(data.text, data.status);
+            if(data.status === 'success'){
+              admin.tabs.reloadThis('#{{ uid }}');
+            }
+          }, 'json');
+        });
+
+
 
     }
 
@@ -226,21 +238,8 @@ $('#{{ uid }} .reload').on('click', function(){
 });
 
 
-// delete user
-$('#{{ uid }} .delete').on('click', function(){
-  $.get(
-    'controller.php?obj=protectedtags_ctrl&method=deleteUser&param[]=' + $(this).data('item'),
-    function(data){
-      admin.message(data.text, data.status);
-      if(data.status === 'success'){
-        admin.tabs.reloadThis('#{{ uid }}');
-      }
-    }, 'json');
-  });
-
-
-  // add new user
-  $('#{{ uid }} .add_new').on('click', function(){
-    openEditForm();
-  });
-  </script>
+// add new user
+$('#{{ uid }} .add_new').on('click', function(){
+  openEditForm();
+});
+</script>

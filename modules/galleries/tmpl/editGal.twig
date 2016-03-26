@@ -7,11 +7,6 @@
     {% endif %}
     <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
     <a class="btn btn-default rename" title="{{ tr.get('reload') }}"><i class="icon ion-edit"></i> {{ tr.get('rename_gallery') }}</a>
-    {% for lng in langs %}
-    <a class="btn btn-default" href="#galleries/edit/{{ gallery }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}">
-      <i class="icon ion-shuffle"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}
-    </a>
-    {% endfor %}
   </div>
 
   <div class="well well-sm clearfix">
@@ -63,16 +58,18 @@
             </div>
 
             <div class="col-xs-3">
-              {% if file.orig_caption %}
-                <pre>{{ file.orig_caption }}</pre>
-              {% endif %}
-              <textarea style="height:150px"
-                  name="{{ file.name }}[caption][{{ current_lang }}]">{{ file.caption }}</textarea>
+              <textarea style="height:70px"
+                  name="{{ file.safe_name }}[caption][{{ sys_lang[0] }}]">{{ file.caption[sys_lang[0]] }}</textarea>
+              {% for lng in langs %}
+              <label>{{ lng.string|capitalize }}</label>
+              <textarea style="height:70px"
+                  name="{{ file.safe_name }}[caption][{{ lng.id }}]">{{ file.caption[lng.id] }}</textarea>
+              {% endfor %}
               <div class="row">
                 <div class="col-sm-6">
                   <label>{{ tr.get('sorting') }}</label>
                 </div>
-                <div class="col-sm-6"><input type="text" name="{{ file.name }}[sort]" value="{{ file.sort }}" /></div>
+                <div class="col-sm-6"><input type="text" name="{{ file.safe_name }}[sort]" value="{{ file.sort }}" /></div>
               </div>
               <div><button class="btn btn-success btn-block save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></div>
             </div>
@@ -104,14 +101,14 @@
   });
 
   admin.upload(
-      $('#{{ uid }} div.uploader')[0],
-      'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize&param[]=resize',
-      {
-        loaded: function(){
-          admin.tabs.reloadThis('#{{ uid }}');
-        }
+    $('#{{ uid }} div.uploader')[0],
+    'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize&param[]=resize',
+    {
+      loaded: function(){
+        admin.tabs.reloadThis('#{{ uid }}');
       }
-      );
+    }
+  );
 
   $('#{{ uid }} button.create_thumb').on('click', function(){
     var $this = $(this);
@@ -125,7 +122,7 @@
   });
 
   $('#{{ uid }} button.save').on('click', function(){
-    $.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ upload_dir }}{% if translation %}&param[]={{ translation }}{% endif %}', $('#{{ uid }} form').serializeArray(), function(data){
+    $.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ gallery }}', $('#{{ uid }} form').serializeArray(), function(data){
       admin.message(data.text, data.status);
     }, 'json');
   });

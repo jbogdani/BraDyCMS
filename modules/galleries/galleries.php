@@ -29,16 +29,13 @@ class galleries_ctrl extends Controller
     $this->render('galleries', 'editGal', array(
       'gallery'=> $this->get['param'][0],
       'files'  => Gallery::getAllContent($this->get['param'][0], $this->get['param'][1]),
-      'current_lang' => Gallery::getLang($this->get['param'][1]),
       'upload_dir'=> $this->path . $this->get['param'][0],
+      'sys_lang' => array(cfg::get('sys_lang'), cfg::get('sys_lang_string')),
       'langs' => cfg::get('languages'),
-      // TODO: ctrl if necessary
-      'translation' => $lang,
       'thumb_dimensions' => '200x200',
       'max_img_size' => cfg::get('max_img_size')
       )
     );
-
   }
 
   /**
@@ -49,18 +46,15 @@ class galleries_ctrl extends Controller
    */
   public function saveData()
   {
-    $json_file = $this->get['param'][0] . '/data' . ($this->get['param'][1] ? '_' . $this->get['param'][1] : '') . '.json';
-
-    if (utils::write_in_file($json_file, $this->post, 'json'))
+    try
     {
-      $ret = array('status' => 'success', 'text' => tr::get('gallery_updated'));
+      Gallery::save($this->get['param'][0], $this->post);
+      echo $this->responseJson('success', tr::get('gallery_updated'));
     }
-    else
+    catch (Exception $e)
     {
-      $ret = array('status' => 'error', 'text' => tr::get('gallery_not_updated'));
+      echo $this->responseJson('error', tr::get('gallery_not_updated'));
     }
-
-    echo json_encode($ret);
   }
 
   /**
@@ -130,15 +124,12 @@ class galleries_ctrl extends Controller
         throw new Exception(tr::get('gallery_partially_created'));
       }
 
-      $msg['text'] = tr::get('gallery_created');
-      $msg['status'] = 'success';
+      echo $this->responseJson('success', tr::get('gallery_created'));
     }
     catch (Exception $e)
     {
-      $msg['text'] = $e->getMessage();
-      $msg['status'] = 'error';
+      echo $this->responseJson('error', $e->getMessage());
     }
-    echo json_encode($msg);
   }
 
   /**
@@ -265,7 +256,7 @@ class galleries_ctrl extends Controller
 
     try
     {
-      if(!file_exists($path. $old_name))
+      if(!file_exists($path . $old_name))
       {
         throw new Exception('error_gallery_does_not_exist');
       }

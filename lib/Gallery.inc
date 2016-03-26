@@ -16,6 +16,15 @@ class Gallery{
   // TODO: search & replace for Gallery::getGallery instances
   // public static function getGallery($gal)
 
+  public static function deleteItem($gal, $file)
+  {
+    // TODO
+  }
+
+  public static function deleteGallery($gal)
+  {
+    // TODO
+  }
   /**
    * Return array will all available galleries (folders)
    * @return array Array of galleries
@@ -29,48 +38,26 @@ class Gallery{
     return $all_galls;
   }
 
-
-  public static function edit($gal, $post, $lang = false)
+  /**
+   * Saves aray of data to metadata.json file. Keys are escaped
+   * @param  string $gal  gallery name
+   * @param  array $post array of data to save. Dots in array keys are replaced with double hyphren
+   * @return true       True on success, throws Exception on error
+   */
+  public static function save($gal, $post)
   {
-    // TODO
-    //
-    //
-    // Data Post
-    // [
-    // image1name=>[caption=>"", sorting => ""],
-    // image2name => [...],
-    // ...
-    // ]
-    //
-    // data.json:
-    // [
-    //  'filename1' => [sort => 'sort', caption => [ it=> 'it caption', en=> 'en caption', ...]],
-    //  [...],
-    //  ...
-    // ]
-    //
-    // }
-
-    $lang = self::getLang($lang);
-
-    // Get Gallery data
-    try
+    $newpost = array();
+    foreach ($post as $key => &$value)
     {
-      $metadata = self::getGallery2($gal, $lang, true);
+      $newpost[str_replace('~~', '.', $key)] = $post[$key];
     }
-    catch (Exception $e)
+    $file = self::$path . '' . $gal . '/metadata.json';
+
+    if (!utils::write_in_file($file, $newpost, 'json'))
     {
-      $metadata = array();
+      throw new Exception("Error writing in file " . $file);
     }
-
-    $final_data = array();
-
-    foreach ($post as $el)
-    {
-      $tmp = array();
-
-    }
-
+    return true;
   }
 
   /**
@@ -115,6 +102,7 @@ class Gallery{
   {
     $lang = self::getLang($lang);
 
+    // Get metadata, if available
     try
     {
       $metadata = self::get($gal, $lang, true);
@@ -124,6 +112,7 @@ class Gallery{
       $metadata = array();
     }
 
+    // Get all files
     $files = utils::dirContent(self::$path . $gal);
 
     if (!$files || !is_array($files))
@@ -132,20 +121,26 @@ class Gallery{
     }
     $ret = array();
 
+    // Add ampty arrays for files missin in metadata array
     foreach ($files as $file)
     {
-      if ($file != 'thumbs' && !preg_match('/\.json/', $file))
+      if (!in_array($file, array_keys($metadata)) && $file != 'thumbs' && !preg_match('/\.json/', $file))
       {
-        array_push($ret, array(
-          'name' => $file,
-          'caption' => $metadata[$file]['caption'][$lang],
-          'sort' => $metadata[$file]['sort'],
-          'orig_caption' =>($lang != cfg::get('sys_lang') ? $metadata[$file]['caption'][cfg::get('sys_lang')] : ''),
-          'fullpath' => self::$path . $gal . '/' . $file,
-          'thumb' => (file_exists(self::$path . $gal . '/thumbs/' . $file) ? self::$path . $gal . '/thumbs/' . $file : ''),
-          'finfo' => getimagesize(self::$path . $gal . '/' . $file)
-        ));
+        $metadata[$file] = array();
       }
+    }
+
+    foreach($metadata as $file=>$data)
+    {
+      array_push($ret, array(
+        'name' => $file,
+        'safe_name' => str_replace('.', '~~', $file),
+        'caption' => $data['caption'],
+        'sort' => $data['sort'],
+        'fullpath' => self::$path . $gal . '/' . $file,
+        'thumb' => (file_exists(self::$path . $gal . '/thumbs/' . $file) ? self::$path . $gal . '/thumbs/' . $file : ''),
+        'finfo' => getimagesize(self::$path . $gal . '/' . $file)
+      ));
     }
 
     uasort($ret, function($a, $b){
@@ -168,6 +163,16 @@ class Gallery{
     });
 
     return $ret;
+  }
+
+  /**
+   * Backwards compatibility alias for get
+   * @param  string $gal       Gallery id (folder name)
+   * @return array            Array of array for galley items:
+   */
+  public static function getGallery($gal)
+  {
+    return self::get($gal);
   }
 
   /**

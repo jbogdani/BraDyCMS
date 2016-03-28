@@ -1,3 +1,4 @@
+3.13.7[] = "JS and CSS admin files are referenced to current version"
 3.13.6[] = "Removed support for FileUploader"
 3.13.6[] = "Userform uses FineUploader"
 3.13.6[] = "Gallery edit form in admin view is reloaded after all files are uploaded, not after each upload"

@@ -1,3 +1,4 @@
+3.13.6[] = "Userform uses FineUploader"
 3.13.6[] = "Gallery edit form in admin view is reloaded after all files are uploaded, not after each upload"
 3.13.6[] = "Article edit form in admin view is reloaded after all files are uploaded, not after each upload"
 3.13.6[] = "FineUploader (5.4.1, bower component) replaces FileUploader"

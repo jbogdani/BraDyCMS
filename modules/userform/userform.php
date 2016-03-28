@@ -425,8 +425,8 @@ EOD;
 
     if (is_array($upload))
     {
-      $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="./css/fileuploader.css" />', true);
-      $out->setQueue('modules', "\n" . '<script src="./js/fileuploader.js"></script>', true);
+      $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="./bower_components/fineuploader-dist/dist/fine-uploader.min.css" />', true);
+      $out->setQueue('modules', "\n" . '<script src="./bower_components/fineuploader-dist/dist/fine-uploader.min.js"></script>', true);
 
       foreach($upload as $el=>$opts)
       {

@@ -1,3 +1,4 @@
+3.13.6[] = "Article edit form in admin view is reload after all files are uploaded, not after each upload"
 3.13.6[] = "FineUploader (5.4.1, bower component) replaces FileUploader"
 3.13.6[] = "TinyMCE updated to v4.3.8"
 3.13.6[] = "jQuery updated to v2.2.2"

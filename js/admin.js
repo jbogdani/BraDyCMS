@@ -173,11 +173,6 @@ var admin = {
       '        </div>' +
       '    </dialog>' +
       '</div>');
-      /*
-      <script type="text/template" id="qq-template">
-
-      </script>
-       */
     }
     opts = opts || {};
 

@@ -116,7 +116,7 @@
     $('#{{ uid }} div.uploader')[0],
     'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize&param[]=resize',
     {
-      loaded: function(){
+      allLoaded: function(){
         admin.tabs.reloadThis('#{{ uid }}');
       }
     }

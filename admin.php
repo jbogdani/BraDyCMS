@@ -35,7 +35,7 @@ catch (Exception $e)
     <link href="./bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="./bower_components/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
     <link href="./bower_components/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="./css/fileuploader.css" rel="stylesheet">
+    <link href="./bower_components/fineuploader-dist/dist/fine-uploader.min.css" rel="stylesheet">
     <link href="./css/admin.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->

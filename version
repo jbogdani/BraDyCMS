@@ -1,3 +1,4 @@
+3.13.6[] = "jQuery updated to v2.2.2"
 3.13.5[] = "New feature: added the possibility to sort gallery items (gallery module rewritten)"
 3.13.4[] = "Userform module uses out::setQueue('modules') to load js and css dependencies"
 3.13.4[] = "Userform javascript file transformed in object"

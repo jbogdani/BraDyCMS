@@ -106,7 +106,7 @@ class Out
   {
     try
     {
-      return Gallery::getGallery($gal);
+      return Gallery::get($gal);
     }
     catch (Exception $e)
     {

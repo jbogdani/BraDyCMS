@@ -106,29 +106,26 @@ class galleries_ctrl extends Controller
 
       $gal_name = $this->path . strtolower(str_replace(array(' ', "'", '"'), '_', $this->get['param'][0]));
 
-
-      if (is_dir($gal_name))
-      {
-        throw new Exception(tr::get('gallery_exists'));
-      }
-      @mkdir($gal_name, 0777, true);
-      @mkdir($gal_name . '/thumbs', 0777, true);
-
-      if (!is_dir($gal_name))
-      {
-        throw new Exception(tr::get('gallery_not_created'));
-      }
-
-      if (!is_dir($gal_name . '/thumbs'))
-      {
-        throw new Exception(tr::get('gallery_partially_created'));
-      }
-
+      Gallery::addNew($this->get['param'][0]);
       echo $this->responseJson('success', tr::get('gallery_created'));
     }
     catch (Exception $e)
     {
-      echo $this->responseJson('error', $e->getMessage());
+      error_log($e->getMessage());
+
+      switch($e->getCode())
+      {
+        case '1':
+          $msg = tr::get('gallery_exists');
+          break;
+        case '2':
+          $msg = tr::get('gallery_not_created');
+          break;
+        case '3':
+          $msg = tr::get('gallery_partially_created');
+          break;
+      }
+      echo $this->responseJson('error', $msg);
     }
   }
 
@@ -140,85 +137,32 @@ class galleries_ctrl extends Controller
   {
     try
     {
-      $file = $this->get['param'][0] . '/' . $this->get['param'][1];
-
-      // Delete main image file
-      if(file_exists($file))
-      {
-        @unlink($file);
-
-        if (file_exists($file))
-        {
-          throw new Exception(tr::get('img_not_deleted'));
-        }
-      }
-
-      // Delete thumbnail file
-      if (file_exists($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]))
-      {
-        @unlink($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]);
-
-        if (file_exists($this->get['param'][0] . '/thumbs/' . $this->get['param'][1]))
-        {
-          $warning_thumb = true;
-        }
-      }
-
-      // get all data files, main and translations
-      $data_file[] = $this->get['param'][0] . '/data.json';
-
-      if (is_array(cfg::get('languages')))
-      {
-        foreach (cfg::get('languages') as $lng)
-        {
-          $data_file[] = $this->get['param'][0] . '/data_' . $lng['id']. '.json';
-        }
-      }
-
-
-      foreach ($data_file as $d_file)
-      {
-        if (file_exists($d_file))
-        {
-          $json = json_decode(file_get_contents($d_file), true);
-
-          unset($json[str_replace('.', '__x__', $this->get['param'][1])]);
-
-          if (!utils::write_in_file($d_file, $json, 'json'))
-          {
-            $warning_json = true;
-          }
-        }
-      }
-
-      if (!$warning_thumb && !$warning_json)
-      {
-        $ret['status'] = 'success';
-        $ret['text'] = tr::get('img_thumb_data_deleted');
-      }
-      else if ($warning_thumb && $warning_json)
-      {
-        $ret['status'] = 'warning';
-        $ret['text'] = tr::get('img_deleted_thumb_json_not_deleted');
-      }
-      else if ($warning_thumb)
-      {
-        $ret['status'] = 'warning';
-        $ret['text'] = tr::get('img_deleted_thumb_not_deleted');
-      }
-      else if ($warning_json)
-      {
-        $ret['status'] = 'warning';
-        $ret['text'] = tr::get('img_deleted_json_not_deleted');
-      }
+      gallery::deleteItem($this->get['param'][0], $this->get['param'][1]);
+      echo $this->responseJson('success', tr::get('img_thumb_data_deleted'));
     }
     catch (Exception $e)
     {
-      $ret['status'] = 'error';
-      $ret['text'] = $e->getMessage();
+      error_log($e->getMessage());
+      switch ($e->getCode())
+      {
+        case '1':
+          echo $this->responseJson('error', tr::get('img_not_deleted'));
+          break;
+        case '2':
+          $msg = tr::get('img_deleted_thumb_json_not_deleted');
+          break;
+        case '3':
+          $msg = tr::get('img_deleted_thumb_not_deleted');
+          break;
+        case '4':
+          $msg = tr::get('img_deleted_json_not_deleted');
+          break;
+      }
+      if ($msg)
+      {
+        echo $this->responseJson('warning', $msg);
+      }
     }
-
-    echo json_encode($ret);
   }
 
   /**
@@ -230,21 +174,16 @@ class galleries_ctrl extends Controller
    */
   public function deleteGallery()
   {
-    $error = utils::recursive_delete($this->get['param'][0]);
-
-    if ($error)
+    try
     {
-      $msg['status'] = 'error';
-      $msg['text'] = tr::get('gallery_not_deleted');
-      error_log(implode("\n", $error));
+      Gallery::deleteGallery($this->get['param'][0]);
+      echo $this->responseJson('success', tr::get('gallery_deleted'));
     }
-    else
+    catch (Exception $e)
     {
-      $msg['status'] = 'success';
-      $msg['text'] = tr::get('gallery_deleted');
+      error_log($e->getMessage());
+      echo $this->responseJson('error', tr::get('gallery_not_deleted'));
     }
-
-    echo json_encode($msg);
   }
 
   public function renameGallery(){
@@ -252,34 +191,28 @@ class galleries_ctrl extends Controller
     $old_name = $this->get['param'][0];
     $new_name = $this->get['param'][1];
 
-    $path = './sites/default/images/galleries/';
-
     try
     {
-      if(!file_exists($path . $old_name))
-      {
-        throw new Exception('error_gallery_does_not_exist');
-      }
-
-      if(file_exists($path . $new_name))
-      {
-        throw new Exception('error_new_gallery_name_exist');
-      }
-
-      @rename($path . $old_name, $path . $new_name);
-
-      if(file_exists($path. $old_name) || !file_exists($path . $new_name))
-      {
-        throw new Exception('error_new_gallery_not_renamed');
-      }
-
-      echo json_encode(array('status' => 'success', 'text' => tr::get('ok_gallery_renamed')));
+      Gallery::rename($old_name, $new_name);
+      echo $this->responseJson('success', tr::get('ok_gallery_renamed'));
     }
     catch (Exception $e)
     {
-      echo json_encode(array('status' => 'error', 'text' => tr::get($e->getMessage())));
+      error_log($e->getMessage());
+      switch($e->getCode())
+      {
+        case '1':
+          $msg = tr::get('error_gallery_does_not_exist');
+          break;
+        case '2':
+          $msg = tr::get('error_new_gallery_name_exist');
+          break;
+        case '3':
+          $msg = tr::get('error_new_gallery_not_renamed');
+          break;
+      }
+      echo $this->responseJson('error', $msg);
     }
   }
-
 
 }

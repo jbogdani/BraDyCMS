@@ -5,8 +5,12 @@
     {% if files|length == 0 %}
       <button class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
     {% endif %}
-    <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
-    <a class="btn btn-default rename" title="{{ tr.get('reload') }}"><i class="icon ion-edit"></i> {{ tr.get('rename_gallery') }}</a>
+    <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}">
+      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+    </a>
+    <a class="btn btn-default rename" title="{{ tr.get('reload') }}">
+      <i class="icon ion-edit"></i> {{ tr.get('rename_gallery') }}
+    </a>
   </div>
 
   <div class="well well-sm clearfix">
@@ -24,9 +28,6 @@
       <label>{{ tr.get('thumb_dimensions') }}: </label>
       <div class="input-group">
         <input type="text" class="form-control"  value="{{ thumb_dimensions }}" id="{{ uid }}-th-dim" />
-        {# TODO implement galleries help
-        <div class="input-group-addon"><a href="#"><i class="icon ion-help"></i></a></div>
-        #}
       </div>
       </div>
     </div>
@@ -47,31 +48,42 @@
       <form action="javascript:void(0)">
         {% for file in files %}
           <div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
-            <div class="col-xs-2">
-              <h4>{{ file.name }}</h4>
-              <p><button class="btn btn-danger delete" data-file="{{ file.name }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button></p>
+            <div class="clearfix">
+              <h4 class="pull-left">{{ file.name }}</h4>
+              <p class="pull-right"><button class="btn btn-danger delete-item" data-file="{{ file.name }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button></p>
             </div>
-
             <div class="col-xs-4">
               <img src="{{ file.fullpath }}" class="img-responsive" />
               <pre>{{ tr.get('img_dimensions') }}: {{ file.finfo.0 }}x{{ file.finfo.1 }}px</pre>
             </div>
 
-            <div class="col-xs-3">
-              <textarea style="height:70px"
-                  name="{{ file.safe_name }}[caption][{{ sys_lang[0] }}]">{{ file.caption[sys_lang[0]] }}</textarea>
-              {% for lng in langs %}
-              <label>{{ lng.string|capitalize }}</label>
-              <textarea style="height:70px"
-                  name="{{ file.safe_name }}[caption][{{ lng.id }}]">{{ file.caption[lng.id] }}</textarea>
-              {% endfor %}
-              <div class="row">
-                <div class="col-sm-6">
-                  <label>{{ tr.get('sorting') }}</label>
-                </div>
-                <div class="col-sm-6"><input type="text" name="{{ file.safe_name }}[sort]" value="{{ file.sort }}" /></div>
+            <div class="col-xs-5">
+              <div class="form-group">
+                <textarea style="height:70px"
+                    name="{{ file.safe_name }}[caption][{{ sys_lang[0] }}]">{{ file.caption[sys_lang[0]] }}</textarea>
               </div>
-              <div><button class="btn btn-success btn-block save" data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button></div>
+              {% for lng in langs %}
+              <div class="form-group">
+                <label>{{ lng.string|capitalize }}</label>
+                <textarea style="height:70px"
+                    name="{{ file.safe_name }}[caption][{{ lng.id }}]">{{ file.caption[lng.id] }}</textarea>
+              </div>
+              {% endfor %}
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label>{{ tr.get('sorting') }}</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="{{ file.safe_name }}[sort]" value="{{ file.sort }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-success btn-block save" data-file="{{ file.name }}">
+                  <i class="icon ion-checkmark"></i> {{ tr.get('save') }}
+                </button>
+              </div>
             </div>
 
             <div class="col-xs-3">
@@ -128,9 +140,9 @@
   });
 
 
-  $('#{{ uid }} button.delete').on('click', function(){
+  $('#{{ uid }} button.delete-item').on('click', function(){
     $this = $(this);
-    $.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
+    $.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ gallery }}&param[]=' + $(this).data('file'), function(data){
       admin.message(data.text, data.status);
 
       if (data.status !== 'error'){

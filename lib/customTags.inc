@@ -229,7 +229,7 @@ class customTags
     try
     {
 
-      $gal_data = Gallery::getGallery($gal);
+      $gal_data = Gallery::get($gal);
 
       if ($responsive)
       {

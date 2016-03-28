@@ -12,19 +12,232 @@ class Gallery{
 
   private static $path = GALLERY_DIR;
 
-  // DELETED
-  // TODO: search & replace for Gallery::getGallery instances
-  // public static function getGallery($gal)
+  /**
+   * Backward compatibility function
+   * Gets old-style data.json file, for main langiage and translations
+   * and converts everything in new metadata.json file
+   * @param  string $gal gallery id
+   * @return boolean      true on success
+   */
+  private static function convertMetadata($gal)
+  {
+    if (file_exists(self::$path . $gal . '/metadata.json'))
+    {
+      return true;
+    }
 
+    $delete_files = array();
+
+    $data = self::$path . $gal . '/data.json';
+
+    if (!file_exists($data))
+    {
+      return true;
+    }
+
+    array_push($delete_files, $data);
+
+    $data_arr = json_decode(file_get_contents($data), true);
+    $tr = array();
+
+    foreach((array)cfg::get('languages') as $lng)
+    {
+      $lng_file = self::$path . $gal . '/data_' . $lng['id'] . '.json';
+      if (file_exists($lng_file))
+      {
+        array_push($tr, array($lng['id'], json_decode(file_get_contents($lng_file), true)));
+
+        array_push($delete_files, $lng_file);
+      }
+    }
+
+    $metadata = array();
+
+    foreach($data_arr as $f => $c)
+    {
+      $pf = str_replace('__x__', '.', $f);
+
+      $caption[cfg::get('sys_lang')] = $c;
+
+      foreach($tr as $l => $a)
+      {
+        $caption[$l] = $a[$f];
+      }
+      $metadata[$pf] = array( 'caption' => $caption);
+    }
+
+    try
+    {
+      self::save($gal, $metadata);
+      // var_dump($delete_files);
+      return true;
+    }
+    catch(Exception $e)
+    {
+      error_log($e->getMessage());
+      return false;
+    }
+
+  }
+
+
+  /**
+   * Completely removes a gallery item, deleting metadata record, thumbnail and original file
+   * 		Throws Exception on error. The following error codes will be thrown:
+   * 				1: Can not delete original file
+   * 				2: Can not delete thumb file and can not update metadata file
+   * 				3: Can not delete thumb file (origianal file deleted)
+   * 				4: Can not update metadata file (original anf thumbnail file deleted)
+   * @param  string $gal  gallery id
+   * @param  string $file file name to delete
+   * @return true       true on success
+   */
   public static function deleteItem($gal, $file)
   {
-    // TODO
+    // 1. Delete original file
+    $orig_file = self::$path . '' . $gal . '/' . $file;
+    if (file_exists($orig_file))
+    {
+      @unlink($orig_file);
+      if (file_exists($orig_file))
+      {
+        throw new Exception("Error deleting original file " . $file . ' in gallery ' . $gal, 1);
+      }
+    }
+
+    // 2. Delete thumbnail file
+    $thumb_file = self::$path . '' . $gal . '/thumbs/' . $file;
+    if (file_exists($thumb_file))
+    {
+      @unlink($thumb_file);
+      if (file_exists($thumb_file))
+      {
+        $error_thumb = true;
+      }
+    }
+
+    // 3. update metadata file
+    try
+    {
+      $metadata = self::get($gal, false, true);
+    }
+    catch(Exception $e)
+    {
+      $metadata = array();
+    }
+
+    try
+    {
+      foreach($metadata as $f => &$data)
+      {
+        if ($file === $f){
+          unset($metadata[$f]);
+        }
+      }
+      self::save($gal, $metadata);
+    }
+    catch(Exception $e)
+    {
+      $error_metadata = true;
+    }
+
+    if ($error_thumb && $error_metadata)
+    {
+      throw new Exception("Error deleting thumbnail file and updating metadata for " . $file . ' in gallery ' . $gal, 2);
+    }
+    else if ($error_thumb)
+    {
+      throw new Exception("Error deleting thumbnail file for " . $file . ' in gallery ' . $gal, 3);
+    }
+    else if ($error_metadata)
+    {
+      throw new Exception("Error updating metadata file for  " . $file . ' for gallery ' . $gal, 4);
+    }
+
+    return true;
   }
 
+  /**
+   * Creates a new gallery. Returns true on success, throws Exception on error, with the following codes
+   * 		1: Gallery directory already exists
+   * 		2: Can not create gallery directory
+   * 		3: Can not create gallery thumbnails directory
+   * @param string $gal gallery id
+   * @return boolean    true on success
+   */
+  public static function addNew($gal)
+  {
+    $gal = self::$path . $gal;
+
+    if (is_dir($gal))
+    {
+      throw new Exception("Gallery $gal already exists", 1);
+    }
+    @mkdir($gal, 0777, true);
+    @mkdir($gal . '/thumbs', 0777, true);
+
+    if (!is_dir($gal))
+    {
+      throw new Exception("Error creating gallery $gal", 2);
+    }
+
+    if (!is_dir($gal . '/thumbs'))
+    {
+      throw new Exception("Error creating thumbnail directory $gal/thumbs", 3);
+    }
+
+    return true;
+  }
+
+  /**
+   * Renames gallery from $old to $new. Return true on success, throws Exception on error with the following codes:
+   * 		1: Old gallery does not exists
+   * 		2: New gallery already exists
+   * 		3: Can nor rename
+   * @param  string $old old gallery id (must exist)
+   * @param  string $new new gallery id (must not exist)
+   * @return boolean      true on success
+   */
+  public static function rename($old, $new)
+  {
+    if(!file_exists(self::$path . $old))
+    {
+      throw new Exception('Gallery ' . $old . ' does not exist', 1);
+    }
+
+    if(file_exists(self::$path . $new))
+    {
+      throw new Exception('Gallery ' . $new . ' already exists. Can not overwrite', 2);
+    }
+
+    @rename(self::$path . $old, self::$path . $new);
+
+    if(file_exists(self::$path. $old) || !file_exists(self::$path . $new))
+    {
+      throw new Exception('Can not rename gallery ' . $old . ' to ' . $new, 3);
+    }
+    return true;
+  }
+
+  /**
+   * Completely removes a gallery directory
+   * 	Throws Exception on error
+   * @param  string $gal gallery id
+   * @return true      true on success
+   */
   public static function deleteGallery($gal)
   {
-    // TODO
+    $error = utils::recursive_delete($gal);
+
+    if ($error)
+    {
+      throw new Exception(implode("\n", $error));
+    }
+
+    return true;
   }
+
+
   /**
    * Return array will all available galleries (folders)
    * @return array Array of galleries
@@ -65,7 +278,7 @@ class Gallery{
    * @param  string $lang Two-digits language code
    * @return string       Two-digits language code
    */
-  public function getLang($lang = false)
+  private static function getLang($lang = false)
   {
     if (!$lang)
     {
@@ -89,7 +302,6 @@ class Gallery{
    * Returns all content of gallery folder, even if no metadata file is available
    * or metadata file is not well formatted. Used onlu in admin cp
    * @param  string $gal       Gallery id (folder name)
-   * @param  string $lang      Two-digits language code, if false, current or system language will be used
    * @return array       Array of detailed data for each image:
    *                           name: filename, with extension
    *                           caption: caption in $lang, if available
@@ -98,14 +310,14 @@ class Gallery{
    *                           thumb: full path to thumbnail, if available
    *                           finfo: array with main image data (getimagesize function)
    */
-  public static function getAllContent($gal, $lang = false)
+  public static function getAllContent($gal)
   {
-    $lang = self::getLang($lang);
+    self::convertMetadata($gal);
 
     // Get metadata, if available
     try
     {
-      $metadata = self::get($gal, $lang, true);
+      $metadata = self::get($gal, false, true);
     }
     catch (Exception $e)
     {
@@ -121,7 +333,7 @@ class Gallery{
     }
     $ret = array();
 
-    // Add ampty arrays for files missin in metadata array
+    // Add ampty arrays for files missing in metadata array
     foreach ($files as $file)
     {
       if (!in_array($file, array_keys($metadata)) && $file != 'thumbs' && !preg_match('/\.json/', $file))
@@ -132,6 +344,11 @@ class Gallery{
 
     foreach($metadata as $file=>$data)
     {
+      // Remove from metadata array missing files
+      if (!file_exists(self::$path . $gal . '/' . $file))
+      {
+        continue;
+      }
       array_push($ret, array(
         'name' => $file,
         'safe_name' => str_replace('.', '~~', $file),
@@ -143,36 +360,17 @@ class Gallery{
       ));
     }
 
+    ksort($ret);
+
     uasort($ret, function($a, $b){
-      if ($a['sort'] && $b['sort'])
+      if ($a['sort'] == $b['sort'])
       {
-        if ($a['sort'] == $b['sort'])
-        {
-          return 0;
-        }
-        return ($a['sort'] > $b['sort']) ? -1 : 1;
+        return 0;
       }
-      else
-      {
-        if ($a['name'] == $b['name'])
-        {
-          return 0;
-        }
-        return ($a['name'] > $b['name']) ? -1 : 1;
-      }
+      return ($a['sort'] < $b['sort']) ? -1 : 1;
     });
 
     return $ret;
-  }
-
-  /**
-   * Backwards compatibility alias for get
-   * @param  string $gal       Gallery id (folder name)
-   * @return array            Array of array for galley items:
-   */
-  public static function getGallery($gal)
-  {
-    return self::get($gal);
   }
 
   /**
@@ -191,6 +389,9 @@ class Gallery{
    */
   public static function get($gal, $lang = false, $dontparse = false)
   {
+
+    self::convertMetadata($gal);
+
     $lang = self::getLang($lang);
 
     // Check for metadata file
@@ -215,14 +416,11 @@ class Gallery{
 
     // Sort by 2. metadata
     uasort($metadata, function($a, $b){
-      if ($a['sort'] && $b['sort'])
+      if ($a['sort'] == $b['sort'])
       {
-        if ($a['sort'] == $b['sort'])
-        {
-          return 0;
-        }
-        return ($a['sort'] > $b['sort']) ? -1 : 1;
+        return 0;
       }
+      return ($a['sort'] < $b['sort']) ? -1 : 1;
     });
 
     if ($dontparse)
@@ -235,7 +433,7 @@ class Gallery{
     {
       if (!file_exists('./sites/default/images/galleries/' .$gal . '/' . $id))
       {
-        // Metadata entries without original images are consiered to be  orphans
+        // Metadata entries without original images are considered to be  orphans
         // and will be ignored
         continue;
       }

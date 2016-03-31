@@ -138,7 +138,7 @@
   $('#{{ uid }}users').DataTable({
     "columnDefs": [ { "targets": 6, "orderable": false } ],
     "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-      $(nRow).find('.edit').on('click', function(){
+      $(nRow).find('.edit').off('click').on('click', function(){
         openEditForm($(this).data('item'));
       });
 

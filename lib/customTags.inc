@@ -87,11 +87,11 @@ class customTags
    *      $data[height],  the height of the map container element (default value: 400px)
    * @return type
    */
-  public static function map($data)
+  public static function map($data, $out = false)
   {
     $f = new usermap_ctrl();
 
-    return $f->showMap($data);
+    return $f->showMap($data, $out);
   }
 
   /**

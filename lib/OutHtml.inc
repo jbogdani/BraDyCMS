@@ -97,7 +97,7 @@ class OutHtml extends Out
   /**
    * Retirns well formatted html with Twitter s=cart data
    * @param  string $twitter_id Twitter ID, requied
-   * @return string 
+   * @return string
    */
   public function metadata_twitter($twitter_id = false)
   {

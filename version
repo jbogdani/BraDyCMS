@@ -1,3 +1,4 @@
+3.13.9[] = "Addedd support for queue in usermap (javascript is loaded via Out::queue('modules'))"
 3.13.8[] = "Download Node Upload waits nor for upload queue to realod the page"
 3.13.7[] = "JS and CSS admin files are referenced to current version"
 3.13.6[] = "Removed support for FileUploader"

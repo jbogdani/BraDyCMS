@@ -1,4 +1,4 @@
-3.13.9[] = "Added support for custom css class in youtube custom tag"
+3.13.9[] = "Added support for custom css class in youtube custom tag; container has class youtube"
 3.13.9[] = "Added support for queue in usermap (javascript is loaded via Out::queue('modules'))"
 3.13.8[] = "Download Node Upload waits nor for upload queue to realod the page"
 3.13.7[] = "JS and CSS admin files are referenced to current version"

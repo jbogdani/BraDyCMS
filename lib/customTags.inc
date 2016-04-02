@@ -307,12 +307,12 @@ class customTags
     $align = $data['align'];
     $class = $data['class'];
 
-    return '<div' . ($ratio || $align || $class ? ' class="'
+    return '<div class="youtube'
         . ($class ? ' ' . $class : '')
         . ($align ? ' text-' . $align : '')
         . ($ratio ? ' embed-responsive embed-responsive-' . $ratio . '' : '')
         . '"'
-      : '') . '>'
+        . '>'
       . '<iframe '
         . ( $ratio ? ' class="embed-responsive-item" ' : ' width="' . $width . '" height="' . $height . '" ')
         .'src="http://www.youtube.com/embed/' . $code . '?rel=0" frameborder="0" allowfullscreen></iframe>'

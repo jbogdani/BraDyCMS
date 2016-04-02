@@ -290,6 +290,7 @@ class customTags
    *  width: if ratio is not defined the width will be used, default value is 560
    *  height: if ratio is not defined the height will be used, default value is 315
    *  align: left, right, center, default false
+   *  class: custom css class
    * @return string
    */
   public static function youTube($data)
@@ -304,8 +305,10 @@ class customTags
     $height = $data['height'] ? $data['height'] : 315;
     $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '' ? : '';
     $align = $data['align'];
+    $class = $data['class'];
 
-    return '<div' . ($ratio || $align ? ' class="'
+    return '<div' . ($ratio || $align || $class ? ' class="'
+        . ($class ? ' ' . $class : '')
         . ($align ? ' text-' . $align : '')
         . ($ratio ? ' embed-responsive embed-responsive-' . $ratio . '' : '')
         . '"'

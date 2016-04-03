@@ -587,12 +587,25 @@ E.g.: `{{ html.langMenu(true) }}`
 #### link2('resource', 'is_tag', 'page')
 Returns relative link string to resource or to site homepage (if resource is home), depending on current url
 - **resource** string|array, required. If string, it's textid of an article. If home, then a link to the homepage will be created. If an array and tags is true, a link to a list of tags will be created
-- **is_tag**, boolean, default false. If true, resources will be treated as tag or tag list
+- **is_tag**, boolean, default false. If true, resources will be treated as tag or tag list, is set to 'search' a search link will be returned
 - **page**, integer, optional, default false. If provided the link will have a fixed
+- **absl_link**, boolean, optional, default false. If true the absolute link will be returned, instead of the default relative path
 reference to a page
 
-E.g.: `{{ html.link2('news', true) }}`
+E.g.: `{{ html.link2('news') }}`
+    ./news
+
+E.g.: `{{ html.link2('news', 'true') }}`
     ./news.all
+
+E.g.: `{{ html.link2('news', 'true', 2) }}`
+    ./news.all/2
+
+E.g.: `{{ html.link2('news', 'search') }}`
+    ./search:news
+
+E.g.: `{{ html.link2('news', '', '', 'true') }}`
+    http://your.base.domain/news
 
 ---
 

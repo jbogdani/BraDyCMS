@@ -1,3 +1,4 @@
+3.13.22[] = "Added support for absolute links in out::link2"
 3.13.21[] = "Added support for less ambiguous out->user_lang public variable"
 3.13.21[] = "Fixed bug with date field of UserForm module"
 3.13.20[] = "Added article id (when available) as argument to customTags::parseContent"

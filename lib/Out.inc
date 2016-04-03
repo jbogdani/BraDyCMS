@@ -154,11 +154,12 @@ class Out
    * Returns full link to provided content (article or section)
    *
    * @param array|string $art  article or section name
-   * @param boolean $tags  arrbay of tags to use for filtering section articles
+   * @param boolean $tags  array of tags to use for filtering section articles
    * @param integer $page Page number, default false
+   * @param boolean $full_link  If true the absolute link will be returned.
    * @return string
    */
-  public function link2($art, $tags = false, $page = false)
+  public function link2($art, $tags = false, $page = false, $absl_link = false)
   {
     !$page ? $page = $this->get['page'] : '';
 
@@ -175,6 +176,11 @@ class Out
       default:
         $url = link::to_article($art == 'home' ? './' : $art, $this->session_lang, $page);
         break;
+    }
+
+    if ($absl_link)
+    {
+      $url = utils::getBaseUrl() . str_replace('./', null, $url);
     }
 
     return $url;

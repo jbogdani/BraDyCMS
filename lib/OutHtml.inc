@@ -338,7 +338,7 @@ class OutHtml extends Out
       else
       {
         $html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . ($menu['current'] ? 'active' : '') . '">'
-            . '<a href="' . link::format($menu['href'], $this->session_lang) . '" '
+            . '<a href="' . link::format($menu['href'], $this->lang) . '" '
                 . ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
                 . ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')
                 . ($menu['sub'] && !$strip ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')

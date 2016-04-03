@@ -425,7 +425,7 @@ EOD;
   {
     $js = array();
 
-    $out->setQueue('modules', "\n" . 'ciao<script src="' . MOD_DIR . 'userform/userform.js'. '"></script>', true);
+    $out->setQueue('modules', "\n" . '<script src="' . MOD_DIR . 'userform/userform.js'. '"></script>', true);
     array_push($js, "userform.whatchForm('" . $param['content'] . "');");
 
     if (is_array($upload))

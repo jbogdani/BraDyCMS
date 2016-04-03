@@ -130,7 +130,7 @@ class link
     // links to home page is not processed
     if ($href == '' || $href == './' || $href == 'home')
     {
-      return $path != '.' ? $path : '';
+      return $path;
     }
 
     // add language to href

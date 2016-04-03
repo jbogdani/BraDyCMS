@@ -42,7 +42,7 @@ class link
   /**
    * Returns well-formatted URL string
    * @param string $string Searched string or stringified list of tags
-   * @param string $lang  Two-difigts language code
+   * @param string $lang  Two-digits language code
    * @param int $page Page number
    * @param boolean $isTag If true I'm searching for tags
    * @return string
@@ -130,7 +130,7 @@ class link
     // links to home page is not processed
     if ($href == '' || $href == './' || $href == 'home')
     {
-      return $path;
+      return $path != '.' ? $path : '';
     }
 
     // add language to href

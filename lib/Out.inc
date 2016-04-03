@@ -21,9 +21,12 @@ class Out
   protected $get = array();
 
   public
-    $session_lang, // different from $lang which if is the same of sys_lang is not set!
-    $lang,    // current language ( = session['lang'] set in globals, same as get['lang'])
-    $user_lang; // User language, allways set
+    // $_SESSION['lang'], if set
+    $session_lang,
+    // $_SESSION['lang'] only if different from main configuration language
+    $lang,
+    // Current user language, allways set: it will be the $_SESSION['lang'] or main configuration language
+    $user_lang;
 
   /**
    * Starts object, sets context and language data
@@ -74,7 +77,7 @@ class Out
       $this->session_lang = $lang;
     }
 
-    $this->user_lang = $this->session_lang ? $this->session_lang : cfg::get('sys_lang');
+    $this->user_lang = $lang ? $lang : cfg::get('sys_lang');
 
     /**
      * Set context

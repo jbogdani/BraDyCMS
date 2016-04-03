@@ -10,7 +10,7 @@ class customTags
 {
 
 
-  public static function parseContent($html, Out $out)
+  public static function parseContent($html, Out $out, $id = false)
   {
     if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html))
     {
@@ -49,7 +49,7 @@ class customTags
 
       if (method_exists('customTags', $tag))
       {
-        $replace = call_user_func(array('customTags', $tag), $formatedAttributes, $out);
+        $replace = call_user_func(array('customTags', $tag), $formatedAttributes, $out, $id);
 
         $html = preg_replace($originalTag, $replace, $html, 1);
       }
@@ -57,7 +57,7 @@ class customTags
       {
         if (method_exists($tag, 'init'))
         {
-          $replace = call_user_func(array($tag, 'init'), $formatedAttributes, $out);
+          $replace = call_user_func(array($tag, 'init'), $formatedAttributes, $out, $id);
 
           $html = preg_replace($originalTag, $replace, $html, 1);
 
@@ -85,6 +85,7 @@ class customTags
    *      $data[content]  is the name of the map to display (i.e. the name of the json file with configuration)
    *      $data[width],   the width of the map container element (default value: 100%)
    *      $data[height],  the height of the map container element (default value: 400px)
+   * @param object $out    Instance of Out
    * @return type
    */
   public static function map($data, $out = false)
@@ -99,9 +100,10 @@ class customTags
    * @param array $data
    *      $data[content]  is the name of the form to display (i.e. the name of the json file with configuration)
    *      $data[nojs],    if true, no JS code will be printed
+   * @param object $out    Instance of Out
    * @return type
    */
-  public static function userform($data, Out $out)
+  public static function userform($data, $out = false)
   {
     $f = new userform_ctrl();
 
@@ -621,10 +623,11 @@ EOD;
    *     href: href of image link
    *     href_class: css class of href link
    *    gal: string or false. If true the string will be used as rel attribute to create fancybox galleries
-   *
+   * @param object $out    Instance of Out
+   * @param int $id        Article id
    * @return string
    */
-  public static function fig($data)
+  public static function fig($data, $out = false, $id = false)
   {
     $new_data = array();
     if (!$data['path'])
@@ -642,7 +645,7 @@ EOD;
     $new_data['href_class'] = $data['href_class'];
     $new_data['gal'] = $data['gal'];
 
-    return self::figure($new_data);
+    return self::figure($new_data, $out, $id);
   }
 
 
@@ -656,13 +659,18 @@ EOD;
    *     align: image alignent (left|right)
    *     href: href of image link
    *     href_class: css class of href link
-   *
+   * @param object $out    Instance of Out
+   * @param int $id        Article id
    * @return string
    */
-  public static function figure($data)
+  public static function figure($data, $out = false, $id = false)
   {
     // Look for file inside images/articles OR images/ folder
-    if (file_exists('./sites/default/images/articles/' . $data['content']))
+    if($id && file_exists('./sites/default/images/articles/media/' . $id . '/' . $data['content']))
+    {
+      $filename = './sites/default/images/articles/media/' . $id . '/' . $data['content'];
+    }
+    else if (file_exists('./sites/default/images/articles/' . $data['content']))
     {
       $filename = './sites/default/images/articles/' . $data['content'];
     }

@@ -263,7 +263,7 @@ class Out
 
     if ($this->data['article'][$article]['text'])
     {
-      $this->data['article'][$article]['text'] = customTags::parseContent($this->data['article'][$article]['text'], $this);
+      $this->data['article'][$article]['text'] = customTags::parseContent($this->data['article'][$article]['text'], $this, $this->data['article'][$article]['id']);
     }
 
     return $this->data['article'][$article];
@@ -317,7 +317,7 @@ class Out
     {
       foreach($arts as &$art)
       {
-        $art['text'] = customTags::parseContent($art['text'], $this);
+        $art['text'] = customTags::parseContent($art['text'], $this, $art['id']);
       }
     }
     return $arts;
@@ -659,7 +659,7 @@ class Out
     {
       foreach($arts as &$art)
       {
-        $art['text'] = customTags::parseContent($art['text'], $this);
+        $art['text'] = customTags::parseContent($art['text'], $this, $art['id']);
       }
     }
     return $arts;

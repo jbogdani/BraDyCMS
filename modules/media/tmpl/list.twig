@@ -7,8 +7,8 @@
 
 
   <div class="clearfix well well-sm">
-    
-    <button class="btn btn-success btn-sm" title="{{ tr.get('reload') }}" 
+
+    <button class="btn btn-success btn-sm" title="{{ tr.get('reload') }}"
             onclick="admin.tabs.reloadThis(this);">
       <i class="icon ion-refresh"></i>
     </button>
@@ -25,7 +25,7 @@
       {% endif %}
     <span>
       <a data-href="media/all{{ part_path }}"
-        class="navigation btn btn-{% if loop.last %}info disabled{% else %}default{% endif %}" 
+        class="navigation btn btn-{% if loop.last %}info disabled{% else %}default{% endif %}"
          >{{ part }}</a>
     </span>
     <span class="text-muted"> / </span>
@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-    
+
   <div class="row">
     <div class="col-sm-4">
       <!-- File uploader button -->
@@ -63,13 +63,13 @@
       {% endif %}
     </div>
   </div>
-    
+
   <hr />
-  
-    
 
 
-  
+
+
+
 
   {% if rel_path and files|length ==0 %}
   <!-- Delete directory button -->
@@ -99,7 +99,7 @@
     {% if file.type == 'file' %}
     <li class="openpop img"
       data-file="{{ file.href }}"
-      data-name="{{ file.name }}" 
+      data-name="{{ file.name }}"
       {% if file.image %}
       data-image="true"
       {% endif %}
@@ -118,16 +118,16 @@
 
 
 <script>
-  
+
   $('#{{ uid }} .navigation').on('click', function(){
     admin.tabs.closeActive($(this).data('href'));
   });
-  
+
   admin.upload(
     $('#file-uploader_{{ uid }}')[0],
     'controller.php?obj=utils&method=upload&param[]={{ path }}',
     {
-      loaded: function(){
+      allLoaded: function(){
         admin.tabs.reloadThis('#file-uploader_{{ uid }}');
       }
     }
@@ -139,7 +139,7 @@
       var file = $(this).data('file');
       var name = $(this).data('name');
       var is_image = $(this).data('image');
-      
+
       return $('<div />').append(
           'File URL:',
           '<input type="text" value="./sites/default/images/' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
@@ -158,7 +158,7 @@
       return  '<h5>' + $(this).data('name') + '</h5>';
     }
   });
-  
+
   $('#{{ uid }} .newFolder').click(function(){
     var val = $('#{{ uid }} .folderName').val();
     if (!val){
@@ -168,28 +168,28 @@
       admin.media.go2dir({% if rel_path %}'{{ rel_path }}/' + {% endif %}val);
     }
   });
-  
-  
+
+
   $('#{{ uid }} .deleteFolder').click(function(){
     admin.media.deleteDir('{{ rel_path }}');
   });
-  
+
   $('#input_{{ uid }}').on('keyup', function(){
     admin.media.filterDir($(this).val(), '{{ uid }}');
   });
-  
+
   $('#{{ uid }} .makeThumbs').on('click', function(){
     admin.dialog({
       title: '{{ tr.get('make_thumbs', true) }}',
-      html: 
-      '<div class="row">' + 
+      html:
+      '<div class="row">' +
         '<div class="col-md-6">' +
-          '<label>{{ tr.get('max_dimension', true) }}</label>' + 
-          '<input type="text" class="form-control maxDim" placeholder="eg. 400" />' + 
+          '<label>{{ tr.get('max_dimension', true) }}</label>' +
+          '<input type="text" class="form-control maxDim" placeholder="eg. 400" />' +
         '</div>' +
         '<div class="col-md-6">' +
-          '<label>{{ tr.get('fixed_dimension', true) }}</label>' + 
-            '<input type="text" class="form-control fixedDim" placeholder="eg. 400x400" />' + 
+          '<label>{{ tr.get('fixed_dimension', true) }}</label>' +
+            '<input type="text" class="form-control fixedDim" placeholder="eg. 400x400" />' +
           '</div>' +
         '</div>' +
         '<hr />' +
@@ -209,7 +209,7 @@
           }
         });
       },
-          
+
       buttons: [{
           text: '{{ tr.get('create', true) }}',
           glyphicon: 'ok',
@@ -218,36 +218,36 @@
             var fixed = $('#modal .fixedDim').val();
             var overwrite = $('#modal .overwrite').is(':checked');
             var recursive = $('#modal .recursive').is(':checked');
-            
+
             if (!max && !fixed){
               admin.message('{{ tr.get('max_or_fixed_dim_required', true)}}', 'error');
               return;
             }
-            
+
             if (max && isNaN(max)){
               console.log(typeof max);
               admin.message('{{ tr.get('max_only_integer_allowed', true) }}', 'error');
               $('#modal .maxDim').focus();
               return;
             }
-            
+
             if (fixed && !fixed.match(/([0-9]{1,4}x([0-9]{1,4}))/)){
               admin.message('{{ tr.get('fixed_not_well_formatted', true) }}', 'error');
               $('#modal .fixedDim').focus();
               return;
             }
-            
+
             $('#modal .modal-body').html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i> {{ tr.get('please_wait', true) }}');
-            
+
             var url = 'controller.php?' +
               'obj=media_ctrl&' +
               'method=makeThumbs&' +
               'dir={{ path }}' +
               (max ? '&max=' + max : '') +
               (fixed ? '&fixed=' + fixed : '') +
-              (overwrite ? '&overwrite=true' : '') + 
+              (overwrite ? '&overwrite=true' : '') +
               (recursive ? '&recursive=true' : '');
-            
+
             $.get(url, function(data){
               if (data){
                 admin.message('{{ tr.get('error_in_creating_some_thumbails', true) }}', 'error');

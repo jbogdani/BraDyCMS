@@ -1,3 +1,4 @@
+3.13.23[] = "Admin media uploader, when loading multiple files, waits for all uploads to be completed to reload the page"
 3.13.22[] = "Added support for absolute links in out::link2"
 3.13.21[] = "Added support for less ambiguous out->user_lang public variable"
 3.13.21[] = "Fixed bug with date field of UserForm module"

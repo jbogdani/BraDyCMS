@@ -36,7 +36,7 @@ catch (Exception $e)
     <link href="./bower_components/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
     <link href="./bower_components/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="./css/fileuploader.css" rel="stylesheet">
-    <link href="./css/admin.css" rel="stylesheet">
+    <link href="./css/admin.css?v=<?php echo version::current(); ?>" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -79,7 +79,7 @@ catch (Exception $e)
 
   <script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
   <script src="./bower_components/tinymce/tinymce.min.js"></script>
-  <script src="./js/admin.min.js"></script>
+  <script src="./js/admin.min.js?v=<?php echo version::current(); ?>"></script>
 
   <?php
   if (defined('CREATE_SITE')):

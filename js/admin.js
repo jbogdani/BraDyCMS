@@ -94,14 +94,24 @@ var admin = {
         var newVal = val
           .replace(new RegExp("([" + pattern + "])", "gi"), opts.replace ? opts.replace : '');
         newVal = opts.toLower ? newVal.toLowerCase() : newVal;
-        if (opts.replace){
-          newVal = newVal.replace(new RegExp(opts.replace + '+', "gi"), opts.replace)
-            .replace(new RegExp(opts.replace + '$'), '')
-            .replace(new RegExp('^' + opts.replace), '');
-        }
+        // if (opts.replace){
+        //   newVal = newVal.replace(new RegExp(opts.replace + '+', "gi"), opts.replace)
+        //     .replace(new RegExp(opts.replace + '$'), '')
+        //     .replace(new RegExp('^' + opts.replace), '');
+        // }
         $(this).val(newVal);
       }
     });
+
+    if (opts.replace){
+      input.on('change', function(){
+        var val = $(this).val();
+        val = val.replace(new RegExp(opts.replace + '+', "gi"), opts.replace)
+          .replace(new RegExp(opts.replace + '$'), '')
+          .replace(new RegExp('^' + opts.replace), '');
+        $(this).val(val);
+      });
+    }
 
   },
 

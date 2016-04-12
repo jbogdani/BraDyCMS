@@ -31,7 +31,8 @@ class protectedtags_ctrl extends Controller
 
     foreach ((array)protectedTags::getData('users') as $user)
     {
-      if(!empty(array_intersect($tags, utils::csv_explode($user['tags']))))
+      $intersect = array_intersect($tags, utils::csv_explode($user['tags']));
+      if(!empty($intersect))
       {
         $newtext = str_replace(
           array('%name%', '%email%'),

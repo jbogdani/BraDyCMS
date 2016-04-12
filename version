@@ -1,3 +1,4 @@
+3.12.21[] = "Added favicon to admin backend"
 3.12.21[] = "Starting and ending string to be replaced in admin::removeNotValid js function are removed on input change event, not on keyup"
 3.12.21[] = "Main css and js file in admin UI are now loaded with version query parameter"
 3.12.20[] = "Fixed bug with User protected tags module adding twice the click event to edit user button (after search)"

@@ -9,6 +9,58 @@
 class protectedtags_ctrl extends Controller
 {
 
+  /**
+   * Displays email compose form
+   */
+  public function sendemail_form()
+  {
+    $this->render('protectedtags', 'email_form', array(
+      'imploded_tags' => '"' . implode('","', protectedTags::getData('tags')) . '"'
+    ));
+  }
+
+  public function send_email()
+  {
+    set_time_limit(0);
+    $from = $this->post['from'];
+    $tags = utils::csv_explode($this->post['tags']);
+    $subject = $this->post['subject'];
+    $text = $this->post['text'];
+    $sent_to = array();
+    $not_sent_to = array();
+
+    foreach ((array)protectedTags::getData('users') as $user)
+    {
+      if(!empty(array_intersect($tags, utils::csv_explode($user['tags']))))
+      {
+        $newtext = str_replace(
+          array('%name%', '%email%'),
+          array((string)$user['name'], (string)$user['email']),
+          $text
+        );
+        $message = new PHPMailer();
+        $message->setFrom($from);
+        $message->addAddress($user['email']);
+        $message->Subject = $subject;
+        $message->Body = $newtext;
+
+        if ($message->send())
+        {
+          array_push($sent_to, $user['email']);
+        }
+        else
+        {
+          array_push($not_sent_to, $user['email']);
+        }
+      }
+    }
+
+    echo json_encode(array('success' => $sent_to, 'error' => $not_sent_to));
+  }
+
+  /**
+   * Downloads complete list of users
+   */
   public function downloadUsers()
   {
     $users = protectedTags::getData('users');

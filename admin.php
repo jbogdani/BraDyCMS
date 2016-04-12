@@ -26,6 +26,7 @@ catch (Exception $e)
     <meta charset="utf-8">
     <title>bdus.CMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="favicon" rel="shortcut icon" href="css/favicon.png" type="image/png" />
 
     <link href="./bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="./bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet">

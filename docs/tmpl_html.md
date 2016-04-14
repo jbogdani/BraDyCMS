@@ -701,6 +701,8 @@ E.g.: `{{ html.metadata() }}`
     <meta name="description" content="Web sites main description" />
     <meta name="keywords" content="home, page, keyword1, keyword2" />
     <meta lang="en" />
+    <link rel="alternate" href="http://bradypus.net" hreflang="it" />
+    <link rel="alternate" href="http:/bradypus.net/en" hreflang="en" />
     <!-- Open Graph metadata -->
     <meta property="og:title" content="Home Page" />
     <meta property="og:description" content="Web sites main description" />

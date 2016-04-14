@@ -25,7 +25,7 @@ class Out
     $session_lang,
     // $_SESSION['lang'] only if different from main configuration language
     $lang,
-    // Current user language, allways set: it will be the $_SESSION['lang'] or main configuration language
+    // Current user language, always set: it will be the $_SESSION['lang'] or main configuration language
     $user_lang;
 
   /**

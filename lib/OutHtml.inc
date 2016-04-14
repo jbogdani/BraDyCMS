@@ -72,8 +72,26 @@ class OutHtml extends Out
       . "\n  " . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />'
       . "\n  " . '<meta lang="' . $this->getPageData('lang', true) . '" />'
       . "\n  " . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
-      . "\n  " . '<meta name="generator" content="BraDyCMS ' . $this->getVersion() . '">'
-      ;
+      . "\n  " . '<meta name="generator" content="BraDyCMS ' . $this->getVersion() . '">';
+
+      // http://stackoverflow.com/a/23717829/586449
+      $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+      // Current page in current language
+      $html .= "\n  " . '<link rel="alternate" href="' . $url . '" hreflang="' . $this->user_lang . '" />';
+      // code, string, is_current, href
+      $lang_arr = $this->getLanguages();
+      foreach ($lang_arr as $l)
+      {
+        if($l['is_current'])
+        {
+          continue;
+        }
+
+        $html .= "\n  " . '<link rel="alternate" href="' .
+          str_replace('//', '/', str_replace($_SERVER[REQUEST_URI], '/' . $l['href'], $url)) .
+          '" hreflang="' . $l['code'] . '" />';
+      }
 
     if (!$no_og)
     {

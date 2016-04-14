@@ -410,6 +410,12 @@ $_lang['ok_user_deleted'] = "L'utente è stato cancellato";
 $_lang['error_user_deleted'] = "Errore nel cancellare l'utente";
 $_lang['edit_add_authorized_user'] = "Modifica/aggiungi utente autorizzato";
 $_lang['currently_protected_tags'] = "Tag attualmente protetti";
+$_lang['from'] = "Da email";
+$_lang['available_variables'] = "Variabili disponibili";
+$_lang['send_email'] = "Invia email";
+$_lang['send'] = "Invia";
+$_lang['sent_to'] = "Messagio email inviato a";
+$_lang['not_sent_to'] = "Messaggio email non inviato a";
 $_lang['authentication_failed'] = "Errore. Autenticazione fallita";
 $_lang['captcha_error'] = "Errore nella validazione del CAPTCHA";
 $_lang['name_required'] = "Il nome e cognome sono necessario per continuare";
@@ -439,4 +445,8 @@ $_lang['name_surname'] = "Nome e cognome";
 $_lang['confirm'] = "Richiedi conferma via email";
 $_lang['dont_confirm'] = "Non richiedere conferma via email";
 $_lang['registration_mode'] = "Modo di registrazione";
+<<<<<<< HEAD
 $_lang['download_list'] = "Scarica lista";
+=======
+$_lang['download_list'] = "Scarica la lista";
+>>>>>>> master

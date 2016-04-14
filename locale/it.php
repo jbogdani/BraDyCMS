@@ -445,8 +445,5 @@ $_lang['name_surname'] = "Nome e cognome";
 $_lang['confirm'] = "Richiedi conferma via email";
 $_lang['dont_confirm'] = "Non richiedere conferma via email";
 $_lang['registration_mode'] = "Modo di registrazione";
-<<<<<<< HEAD
 $_lang['download_list'] = "Scarica lista";
-=======
 $_lang['download_list'] = "Scarica la lista";
->>>>>>> master

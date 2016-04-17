@@ -1,4 +1,4 @@
-3.12.24[] = "Added support for link hreflang metadata item"
+3.14.24[] = "Added support for link hreflang metadata item"
 3.14.23[] = "Admin media uploader, when loading multiple files, waits for all uploads to be completed to reload the page"
 3.14.22[] = "Added support for absolute links in out::link2"
 3.14.21[] = "Added support for less ambiguous out->user_lang public variable"

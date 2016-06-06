@@ -429,7 +429,7 @@ class OutHtml extends Out
 <script>
 $('#searchForm').submit(function(){
   if($('#search').val() !== '' ){
-    window.location = $(this).data('path') + './search:' + encodeURIComponent($('#search').val());
+    window.location = $(this).data('path') + '/search:' + encodeURIComponent($('#search').val());
   }
 });
 </script>

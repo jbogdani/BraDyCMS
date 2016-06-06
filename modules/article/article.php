@@ -467,8 +467,15 @@ class article_ctrl extends Controller
    */
   public function attachImage()
   {
-    $id = $this->get['param'][0];
-    $file = $this->get['param'][1];
+    if (func_num_args() > 0)
+    {
+      list($id, $file) = func_get_args();
+    }
+    else
+    {
+      $id = $this->get['param'][0];
+      $file = $this->get['param'][1];
+    }
 
     try{
 
@@ -543,11 +550,21 @@ class article_ctrl extends Controller
     echo json_encode($msg);
   }
 
-
+  /**
+   * Attaches media file (in TMP directory) to article
+   * @return string json encoded response
+   */
   public function attachMedia()
   {
-    $id = $this->get['param'][0];
-    $file = $this->get['param'][1];
+    if (func_num_args() > 0)
+    {
+      list($id, $file) = func_get_args();
+    }
+    else
+    {
+      $id = $this->get['param'][0];
+      $file = $this->get['param'][1];
+    }
 
 
     // define image directory

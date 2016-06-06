@@ -552,6 +552,8 @@ class article_ctrl extends Controller
 
   /**
    * Attaches media file (in TMP directory) to article
+   * @param int $id article ID
+   * @param string $file full path to uploaded file in temporary dire
    * @return string json encoded response
    */
   public function attachMedia()

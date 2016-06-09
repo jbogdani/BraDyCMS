@@ -748,7 +748,7 @@ class Out
    * @param  string $key queue element id
    * @return mixed      string or callable result
    */
-  public function getQueue($key)
+  public function getQueue($key = 'modules')
   {
     if (isset($this->queue[$key]))
     {

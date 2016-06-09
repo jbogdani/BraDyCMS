@@ -854,7 +854,7 @@ EOD;
    *    title: title attribute, optional
    *    rel: rel attribute, optional
    *    class: class attribute, optional
-   *    id: id attribute, optiona
+   *    id: id attribute, optional
    *
    * @return string
    */

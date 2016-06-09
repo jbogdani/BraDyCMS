@@ -137,7 +137,7 @@ class galleries_ctrl extends Controller
   {
     try
     {
-      gallery::deleteItem($this->get['param'][0], $this->get['param'][1]);
+      Gallery::deleteItem($this->get['param'][0], $this->get['param'][1]);
       echo $this->responseJson('success', tr::get('img_thumb_data_deleted'));
     }
     catch (Exception $e)

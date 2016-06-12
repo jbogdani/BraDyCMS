@@ -1,6 +1,13 @@
 <?php
 /**
  * Performs CRUD operatins on Seo table. The field url will be considered main key field
+ * Structure of seo table:
+ * 	- id
+ * 	- url (unique)
+ * 	- title
+ * 	- description
+ * 	- keywords
+ * 	The class requires php >= 5.4 because of the use of the short array syntax
  * @author      Julian Bogdani <jbogdani@gmail.com>
  * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2016
  * @license      MIT, See LICENSE file
@@ -22,10 +29,13 @@ class Seo
   {
     try
     {
-      $seo = R::findOrCreate('seo', array(
-        'url' => $url
-      ));
-      $seo->import($data);
+      $seo = R::findOrCreate('seo', ['url' => $url] );
+      // Filter data
+      $seo->import([
+        $data['title'],
+        $data['description'],
+        $data['keywords']
+      ]);
       return R::store($seo);
     }
     catch(RedException\SQL $e)
@@ -44,7 +54,7 @@ class Seo
   {
     try
     {
-      $seo = R::findOne('seo', 'url = ?', array($url));
+      $seo = R::findOne('seo', 'url = ?', [$url]);
       if (!$seo)
       {
         return true;

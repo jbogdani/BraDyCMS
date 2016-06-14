@@ -10,11 +10,119 @@
 class seo_ctrl extends Controller
 {
 
-  // shows and edits json file or sqlite table with metadata foreach custom URL
-  public function home()
+  /**
+   * shows and edits json file or sqlite table with metadata foreach custom URL
+   * @return [type] [description]
+   */
+  public function all()
   {
-    echo 'ciao';
-    var_dump($this->get['param']);
+    $this->render('seo', 'list', ['cfg_langs' => cfg::get('languages')] );
+  }
+
+  /**
+   * Shows edit form
+   * @return [type] [description]
+   */
+  public function showForm()
+  {
+    $data = [];
+
+    if ($this->get['param'][0])
+    {
+      $data = Seo::getById($this->get['param'][0]);
+    }
+    $this->render('seo', 'form', ['data' => $data]);
+  }
+
+  public function sql2json()
+  {
+    $aColumns = array( 'id', 'url', 'title', 'description', 'keywords');
+
+    $sIndexColumn = 'id';
+
+
+    // Paging
+    $sLimit = '';
+    if ( isset( $this->request['iDisplayStart'] ) && $this->request['iDisplayLength'] != '-1' )
+    {
+      $sLimit = "LIMIT " . $this->request['iDisplayStart'] .", "
+        . $this->request['iDisplayLength'];
+    }
+
+    // Ordering
+    if ( isset( $this->request['iSortCol_0'] ) )
+    {
+      $sOrder = "ORDER BY  ";
+
+      for ( $i=0 ; $i<intval( $this->request['iSortingCols'] ) ; $i++ )
+      {
+        if ( $this->request[ 'bSortable_' . intval($this->request['iSortCol_' . $i]) ] == "true" )
+        {
+          $sOrder .= $aColumns[ intval( $this->request['iSortCol_'.$i] ) ] . "
+            " . $this->request['sSortDir_'.$i] . ", ";
+        }
+      }
+
+      $sOrder = substr_replace( $sOrder, "", -2 );
+
+      if ( $sOrder == "ORDER BY" )
+      {
+        $sOrder = "";
+      }
+    }
+
+    $sWhere = "";
+
+
+    // Filtering
+    if ( $this->request['sSearch'] != "" )
+    {
+      $sWhere .= ($sWhere == "" ? "WHERE (" : "AND (");
+      for ( $i=0 ; $i<count($aColumns) ; $i++ )
+      {
+        $sWhere .= $aColumns[$i]." LIKE '%". $this->request['sSearch'] ."%' OR ";
+      }
+      $sWhere = substr_replace( $sWhere, "", -3 );
+      $sWhere .= ')';
+    }
+
+    $totalRows = $this->request['iTotalRecords'] ? $this->request['iTotalRecords'] : R::getCell(" SELECT count(*) FROM `seo` " . $sWhere);
+
+    /* Individual column filtering */
+    for ( $i=0 ; $i<count($aColumns) ; $i++ )
+    {
+      if ( $this->request['bSearchable_'.$i] == "true" && $this->request['sSearch_'.$i] != '' )
+      {
+        if ( $sWhere === "" )
+        {
+          $sWhere = "WHERE ";
+        }
+        else
+        {
+          $sWhere .= " AND ";
+        }
+        $sWhere .= $aColumns[$i]." LIKE '%" . $this->request['sSearch_'.$i] ."%' ";
+      }
+    }
+
+    $sQuery = "
+      SELECT `" . implode('`, `', $aColumns ). "` FROM `seo`
+        $sWhere
+        $sOrder
+        $sLimit
+      ";
+
+    $result = R::getAll($sQuery);
+
+    $output = array(
+      "sEcho" => intval($this->request['sEcho']),
+      "iTotalRecords" => count($result),
+      "iTotalDisplayRecords" => $totalRows,
+      "aaData" => $result
+      );
+
+    header('Content-type: application/json');
+    echo json_encode($output);
   }
 
 
@@ -22,27 +130,29 @@ class seo_ctrl extends Controller
   public function action()
   {
     $action = $this->get['action'];
-    $url = $this->get['url'];
+    $id = $this->get['id'];
 
     switch($action)
     {
       case 'get':
-        $ret = Seo::get($url);
+        $ret = Seo::get($id);
         $error = tr::get('error_getting_seo');
         break;
 
       case 'delete':
-        $ret = Seo::delete($url);
+        $ret = Seo::delete($id);
         $success = tr::get('ok_deleting_seo');
         $error = tr::get('error_deleting_seo');
         break;
 
       case 'edit':
-        $ret = Seo::edit($url, $this->get['data']);
-        $success = tr::get('ok_editing_seo');
-        $error = tr::get('error_editing_seo');
+      case 'insert':
+        $ret = Seo::edit($this->post['id'], $this->post);
+        $success = tr::get('ok_saving_seo');
+        $error = tr::get('error_saving_seo');
         break;
     }
+
 
     if ($ret)
     {

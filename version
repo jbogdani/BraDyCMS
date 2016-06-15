@@ -31,7 +31,8 @@
 3.14.0[] = "Dropped support for html.jQuery in favor of html.asset('jquery')"
 3.14.0[] = "New queue support"
 
-3.13.0[] = "New function: send email messages to tag protected authorized users"
+3.13.1[] = "Bug fixed with main file uploader controller: last parameter is always an array with POST data, so the order of other parameters is not fixed"
+3.13.0[] = "New function: send email messages to tag-protected authorized users"
 
 3.12.22[] = "Added favicon to admin backend"
 3.12.21[] = "Starting and ending string to be replaced in admin::removeNotValid js function are removed on input change event, not on keyup"

@@ -267,6 +267,7 @@ class utils
    * @param string $upload_dir  Directrory where the file will be uploaded
    * @param boolean $sanitize if true filename will be cleaned
    * @param int|false $resize if true (file should be an image) the image will be resided to fit dimensions
+   * @param array last paramater is array with post data
    */
   public static function upload($upload_dir, $sanitize = false, $resize = false)
   {
@@ -278,7 +279,7 @@ class utils
 
     $result = $uploader->handleUpload($upload_dir . '/', false);
 
-    if ($result['success'] && $sanitize)
+    if ($result['success'] && $sanitize && !is_array($sanitize))
     {
       $oPath = $result['path'] . $result['filename'] . '.' . $result['ext'];
 
@@ -296,7 +297,7 @@ class utils
         unlink($oPath);
       }
 
-      if ($resize && cfg::get('max_img_size'))
+      if ($resize && !is_array($resize) && cfg::get('max_img_size'))
       {
         imgMng::resize(
           $result['path'] . $result['filename'] . '.' . $result['ext'],

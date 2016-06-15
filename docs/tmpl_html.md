@@ -849,6 +849,22 @@ E.g.: `{{ pagination('pagination') }}`
         </script>
 ---
 
+#### queue('key')
+Returns queued string or runs queued function defined by key. A typical key,
+used for all system core modules javascrit is 'modules'
+- **key** string, optional, default 'modules'. Name of queue to load
+
+E.g.: `{{ html.queue }} same as {{ html.queue{'modules'} }}`
+    <script>
+      $('#searchForm').submit(function(){
+        if($('#search').val() !== '' ){
+          window.location = $(this).data('path') + '/search:' + encodeURIComponent($('#search').val());
+        }
+      });
+    </script>
+
+---
+
 #### tagBlog('tag1', 'tag2', 'ecc')
 Returns well-formatted html with list of articles tagged with tags provided as arguments or present in URL
 - **tag1** string, optional, default false. First tag to use as filter

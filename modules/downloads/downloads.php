@@ -199,9 +199,13 @@ class downloads_ctrl extends Controller
       // Load file information from data file, for each language
       $data_file[] = $this->get['param'][0] . '/data.json';
 
-      foreach (cfg::get('languages') as $lng)
+
+      if(is_array(cfg::get('languages')))
       {
-        $data_file[] = $this->get['param'][0] . '/data_' . $lng['id']. '.json';
+        foreach (cfg::get('languages') as $lng)
+        {
+          $data_file[] = $this->get['param'][0] . '/data_' . $lng['id']. '.json';
+        }
       }
 
       // Removes from all data files (different languages) the entry

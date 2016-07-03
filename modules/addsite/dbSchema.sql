@@ -1,6 +1,6 @@
 
 -- Table: articles
-CREATE TABLE articles ( 
+CREATE TABLE articles (
     id       INTEGER         PRIMARY KEY,
     title    VARCHAR( 255 ),
     textid   VARCHAR( 100 ),
@@ -13,10 +13,10 @@ CREATE TABLE articles (
     created  DATE,
     publish  DATE,
     expires  DATE,
-    updated  TIMESTAMP       DEFAULT 'CURRENT_TIMESTAMP' 
+    updated  TIMESTAMP       DEFAULT 'CURRENT_TIMESTAMP'
 );--end
 -- Table: menu
-CREATE TABLE menu ( 
+CREATE TABLE menu (
     id     INTEGER         PRIMARY KEY,
     item   VARCHAR( 100 ),
     href   VARCHAR( 255 ),
@@ -24,25 +24,34 @@ CREATE TABLE menu (
     title  VARCHAR( 200 ),
     menu   VARCHAR( 100 ),
     sort   INT( 11 ),
-    subof  INT( 11 )       DEFAULT ( NULL ) 
+    subof  INT( 11 )       DEFAULT ( NULL )
 );--end
 -- Table: tag
-CREATE TABLE tag ( 
+CREATE TABLE tag (
     id    INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT 
+    title TEXT
 );--end
+-- Table: seo
+CREATE TABLE seo (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    url         VARCHAR( 255 ),
+    title       VARCHAR( 255 ),
+    description VARCHAR( 255 ),
+    keywords    VARCHAR( 255 )
+);--end
+
 -- Table: articles_tag
-CREATE TABLE articles_tag ( 
+CREATE TABLE articles_tag (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     articles_id INTEGER,
     tag_id      INTEGER,
     FOREIGN KEY ( articles_id ) REFERENCES articles ( id ) ON DELETE CASCADE
                                                                ON UPDATE SET NULL,
     FOREIGN KEY ( tag_id ) REFERENCES tag ( id ) ON DELETE CASCADE
-                                                     ON UPDATE SET NULL 
+                                                     ON UPDATE SET NULL
 );--end
 -- Table: menutrans
-CREATE TABLE menutrans ( 
+CREATE TABLE menutrans (
     id      INTEGER PRIMARY KEY AUTOINCREMENT,
     lang    TEXT,
     status  INTEGER,
@@ -50,10 +59,10 @@ CREATE TABLE menutrans (
     title   TEXT,
     menu_id INTEGER,
     FOREIGN KEY ( menu_id ) REFERENCES menu ( id ) ON DELETE SET NULL
-                                                       ON UPDATE SET NULL 
+                                                       ON UPDATE SET NULL
 );--end
 -- Table: arttrans
-CREATE TABLE arttrans ( 
+CREATE TABLE arttrans (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     lang        TEXT,
     status      INTEGER,
@@ -63,13 +72,13 @@ CREATE TABLE arttrans (
     keywords    TEXT,
     articles_id INTEGER,
     FOREIGN KEY ( articles_id ) REFERENCES articles ( id ) ON DELETE SET NULL
-                                                               ON UPDATE SET NULL 
+                                                               ON UPDATE SET NULL
 );--end
 -- Index: index_foreignkey_menutrans_menu
-CREATE INDEX index_foreignkey_menutrans_menu ON menutrans ( 
-    menu_id 
+CREATE INDEX index_foreignkey_menutrans_menu ON menutrans (
+    menu_id
 );--end
 -- Index: index_foreignkey_arttrans_articles
-CREATE INDEX index_foreignkey_arttrans_articles ON arttrans ( 
-    articles_id 
+CREATE INDEX index_foreignkey_arttrans_articles ON arttrans (
+    articles_id
 );

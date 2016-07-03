@@ -1,3 +1,5 @@
+3.13.2[] = "Bug fixed: articles with duplicate textid are not saved anymore"
+3.13.2[] = "Empty textid input in article edit form does not definitely disable the save button"
 3.13.1[] = "Bug fixed with main file uploader controller: last parameter is always an array with POST data, so the order of other parameters is not fixed"
 3.13.0[] = "New function: send email messages to tag-protected authorized users"
 

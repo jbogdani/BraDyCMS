@@ -67,7 +67,8 @@ class OutHtml extends Out
     $html = "\n  <!-- HTML metadata -->"
       . "\n  " . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
       . "\n  " . '<meta name="robots" content="' . $this->getPageData('robots') . '" />'
-      . "\n  " . '<title>' . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title') : $this->getPageData('title') ) . '</title>'
+      // Since v 3.7.10 cutstom_title is used for HTML metadata
+      . "\n  " . '<title>' . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) ) . '</title>'
       . "\n  " . '<meta name="description" content="' . $this->getPageData('description', true) . '" />'
       . "\n  " . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />'
       . "\n  " . '<meta lang="' . $this->getPageData('lang', true) . '" />'
@@ -97,6 +98,7 @@ class OutHtml extends Out
     {
       $html .= "\n\n  <!-- Open Graph metadata -->" .
           "\n  " . '<meta property="og:title" content="'
+            // Since v 3.7.10 cutstom_title is used for OpenGraph metadata
             . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) )
             . '" />' .
           "\n  " . '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />' .
@@ -127,6 +129,7 @@ class OutHtml extends Out
         . "\n  " . '<meta name="twitter:card" content="summary" />'
         . "\n  " . '<meta name="twitter:site" content="@' . $twitter_id . '" />'
         . "\n  " . '<meta name="twitter:title" content="'
+        // Since v 3.7.10 cutstom_title is used for Twitter metadata
             . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) ) .
             '" />'
         . "\n  " . '<meta name="twitter:description" content="' . $this->getPageData('description', true) . '" />'

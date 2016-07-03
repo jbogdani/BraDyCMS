@@ -305,6 +305,7 @@
 </div> {# Start of general container #}
 
 <script>
+  // Add WYSIWYG to textareas
   admin.wysiwyg.add("summary{{ uid }}");
   admin.wysiwyg.add("text{{ uid }}");
 
@@ -314,20 +315,38 @@
     {% endfor %}
   {% endif %}
 
+  // Datepicker
+  $('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
+
+  // Tags
+  $('#edit_form{{ uid }} input[name="tags"]').select2({
+    tags: [{{ imploded_tags|raw }}]
+  });
+
+  // Reload button
   $('a.reload').click(function(){
     admin.tabs.reloadThis(this);
     return false;
   });
 
+  {% if art.id %}
+    // Preview button
+    $('#{{ uid }} .preview').on('click', function(){
+      window.open('./' + $('#edit_form{{ uid }} input[name="textid"]').val() + '.draft');
+    });
+  {% endif %}
+
+
+  // Clean textid input on keyup
   admin.removeNotValid($('#edit_form{{ uid }} input[name="textid"]'), {
     'replace': '_',
     'toLower': true,
     'permit': ['\\-', '_']
     });
 
+  // Check for duplicate textid values on textid input change
   $('#edit_form{{ uid }} input[name="textid"]').on('change', function(){
     $this = $(this);
-
     if ($this.val() != '{{ art.textid }}'){
       $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val(), function(data){
         if (data){
@@ -338,56 +357,54 @@
     }
   });
 
-  $('#edit_form{{ uid }} input[name="tags"]').select2({
-    tags: [{{ imploded_tags|raw }}]
-
-  });
-
-
-  $('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
-
-  {% if art.id %}
-    $('#{{ uid }} .preview').on('click', function(){
-      window.open('./' + $('#edit_form{{ uid }} input[name="textid"]').val() + '.draft');
-    });
-  {% endif %}
-
+  // Finally submit form
   $('#edit_form{{ uid }}').on('submit', function(){
 
     $(this).find('button[type="submit"]').button('loading');
 
+    // Textid can not be empty
     var textid = $(this).find('input[name="textid"]').val();
     if (!textid || textid === ''){
       admin.message(admin.tr('textid_cannot_be_empty'), 'error');
       $(this).find('input[name="textid"]').focus();
+      $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
       return false;
     }
 
+    // Textid can not contain duplicate values
+    $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $('#edit_form{{ uid }} input[name="textid"]').val(), function(data){
+      if (data){
+        $this.focus();
+        admin.message(data, 'error');
+        $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
+      } else {
+        var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
 
-    var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
+        admin.wysiwyg.preSave();
 
-    admin.wysiwyg.preSave();
+        $.post(
+          url,
+          $('#edit_form{{ uid }}').serialize(),
 
-    $.post(
-      url,
-      $('#edit_form{{ uid }}').serialize(),
-
-      function(data) {
-        admin.message(data.text, data.type);
-        {% if art.id == false %}
-        if (data.type === 'success'){
-          admin.tabs.closeActive('article/edit/' + data.id);
-        }
-        {% endif %}
-      },
-      'json'
-    )
-    .fail(function() {
-      admin.message('{{ tr.get('save_article_error') }}', 'error');
-    })
-    .always(function() {
-      $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
+          function(data) {
+            admin.message(data.text, data.type);
+            {% if art.id == false %}
+            if (data.type === 'success'){
+              admin.tabs.closeActive('article/edit/' + data.id);
+            }
+            {% endif %}
+          },
+          'json'
+        )
+        .fail(function() {
+          admin.message('{{ tr.get('save_article_error') }}', 'error');
+        })
+        .always(function() {
+          $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
+        });
+      }
     });
+
   });
 
   {% if art.id %}

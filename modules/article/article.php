@@ -183,10 +183,11 @@ class article_ctrl extends Controller
   public function check_duplicates()
   {
     $val = $this->get['param'][0];
+    $id = $this->get['param'][1];
 
     $res = Article::getByTextid($val, false, true);
 
-    if ($res)
+    if ($res && $res['id'] !== $id)
     {
       echo tr::sget('duplicate_textid', $val);
     }

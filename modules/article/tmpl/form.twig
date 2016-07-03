@@ -337,7 +337,7 @@
   $('#edit_form{{ uid }} input[name="textid"]').on('change', function(){
     $this = $(this);
     if ($this.val() != '{{ art.textid }}'){
-      $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val(), function(data){
+      $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val() + '&param[]={{ art.id }}', function(data){
         if (data){
           $this.focus();
           admin.message(data, 'error');
@@ -361,9 +361,9 @@
     }
 
     // Textid can not contain duplicate values
-    $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $('#edit_form{{ uid }} input[name="textid"]').val(), function(data){
+    $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $('#edit_form{{ uid }} input[name="textid"]').val() + '&param[]={{ art.id }}', function(data){
       if (data){
-        $this.focus();
+        $('#edit_form{{ uid }} input[name="textid"]').focus();
         admin.message(data, 'error');
         $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
       } else {

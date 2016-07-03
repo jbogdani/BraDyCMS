@@ -382,6 +382,10 @@ class Out
    */
   private function setPageData()
   {
+    $path_arr = explode('/', $_SERVER['REQUEST_URI']);
+    $path = $path_arr[count($path_arr)-1];
+
+    $seo = Seo::get($path);
 
     // SITE NAME
     $this->data['page']['site_name'] = cfg::get('name');
@@ -410,41 +414,53 @@ class Out
       // 1. get value from the custom field named customtitle
       $this->data['page']['custom_title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customtitle']);
     }
-    if ($this->data['article'][$this->get['art_title']]['title'])
+    if ($seo && $seo['title'])
     {
-      // 2. use the value of the field named "title"
-      $this->data['page']['title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['title']);
+      // 2. SEO table value
+      $this->data['page']['title'] = $seo['title'];
+    }
+    else if ($this->data['article'][$this->get['art_title']]['title'])
+    {
+      // 3. use the value of the field named "title"
+      $this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'];
     }
     else if ($this->context === 'tags')
     {
-      // 3. if context is tags the main site configuration (title) will be used followed by comma-separated-list of filtering tgs
-      $this->data['page']['title'] = str_replace('"', '&quot;', cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags()));
+      // 4. if context is tags the main site configuration (title) will be used followed by comma-separated-list of filtering tgs
+      $this->data['page']['title'] = cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags());
     }
     else
     {
-      // 4. default value is main site configuration value (title)
-      $this->data['page']['title'] = str_replace('"', '&quot;', cfg::get('title'));
+      // 5. default value is main site configuration value (title)
+      $this->data['page']['title'] = cfg::get('title');
     }
+    // Replace double quotes with html character in Title
+    $this->data['page']['title'] = str_replace('"', '&quot;', $this->data['page']['title']);
 
     // DESCRIPTION
-    if ($this->data['article'][$this->get['art_title']]['customdescription'])
+    if ($seo && $seo['description'])
     {
-      // 1. get value from the custom field named customdescription
+      // 1. Use Seo table value
+      $this->data['page']['description'] = $seo['description'];
+    }
+    else if ($this->data['article'][$this->get['art_title']]['customdescription'])
+    {
+      // 2. get value from the custom field named customdescription
       $this->data['page']['description'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customdescription']);
     }
     else if ( $this->data['article'][$this->get['art_title']]['summary'] && trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])) != '' )
     {
-      // 2. use the value of the field named "summary"
+      // 3. use the value of the field named "summary"
       $this->data['page']['description'] = str_replace('"', '&quot;', trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])));
     }
     else if ($this->context === 'tags')
     {
-      // 3. if context is tags the main site configuration (description) will be used followed by comma-separated-list of filtering tgs
+      // 4. if context is tags the main site configuration (description) will be used followed by comma-separated-list of filtering tgs
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description') . ' / ' .  implode(', ', $this->getFilterTags()));
     }
     else
     {
-      // 4. default value is main site configuration value (description)
+      // 5. default value is main site configuration value (description)
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description'));
     }
     // truncate description up to 500 digits
@@ -453,8 +469,15 @@ class Out
       $this->data['page']['description'] = str_replace('"', '&quot;', substr($this->data['page']['description'], 0, 497) . '...');
     }
 
+    // Replace double quotes with html character in Description
+    $this->data['page']['description'] = str_replace('"', '&quot;', $this->data['page']['description']);
+
     // KEYWORDS
-    if ($this->data['article'][$this->get['art_title']]['keywords'])
+    if ($seo && $seo['keywords'])
+    {
+      $this->data['page']['keywords'] = $seo['keywords'];
+    }
+    else if ($this->data['article'][$this->get['art_title']]['keywords'])
     {
       // 1. use the value of the field named "keywords"
       $this->data['page']['keywords'] = $this->data['article'][$this->get['art_title']]['keywords'];
@@ -464,6 +487,8 @@ class Out
       // 2. default value is main site configuration value (keywords)
       $this->data['page']['keywords'] = cfg::get('keywords');
     }
+    // Replace double quotes with html character in Keywords
+    $this->data['page']['keywords'] = str_replace('"', '&quot;', $this->data['page']['keywords']);
 
     // LANG
     $this->data['page']['lang'] = $this->lang ? $this->lang: cfg::get('sys_lang');

@@ -10,7 +10,7 @@
 3.14.20[] = "Added article id (when available) as argument to customTags::parseContent"
 3.14.9[] = "Added support for custom css class in youtube custom tag; container has class youtube"
 3.14.9[] = "Added support for queue in usermap (javascript is loaded via Out::queue('modules'))"
-3.14.8[] = "Download Node Upload waits nor for upload queue to realod the page"
+3.14.8[] = "Download Node Upload waits now for upload queue to realod the page"
 3.14.7[] = "JS and CSS admin files are referenced to current version"
 3.14.6[] = "Removed support for FileUploader"
 3.14.6[] = "Userform uses FineUploader"

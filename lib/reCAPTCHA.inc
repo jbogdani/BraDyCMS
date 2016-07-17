@@ -31,25 +31,22 @@ class reCAPTCHA
 
     $url = 'https://www.google.com/recaptcha/api/siteverify';
 
-    $curl = new \Curl($url);
-
-    $curl->POST = true;
-
     $post = array(
       'secret' => $secret,
       'response'  => $response,
       'remoteip' => $_SERVER['HTTP_CLIENT_IP']
+    );
+    $curl = new \Curl\Curl();
 
-      );
-    $curl->POSTFIELDS = $post;
+    $curl->post($url, $post);
 
-    $data = json_decode($curl->fetch(), true);
+    $data = $curl->response;
 
-    if (!$data['success'])
+    if (!$data->success)
     {
       error_log(var_export($data, true));
 
-      error_log($data['success']);
+      error_log($data->success);
       /**
        * Documentation for error codes: https://developers.google.com/recaptcha/docs/verify
        * Available error codes:
@@ -58,7 +55,7 @@ class reCAPTCHA
        * missing-input-response  The response parameter is missing.
        * invalid-input-response  The response parameter is invalid or malformed.
        */
-      throw new Exception(implode(',', $data['error-codes']));
+      throw new Exception(implode(',', $data->error-codes));
     }
 
     return true;

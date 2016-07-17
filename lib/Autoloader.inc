@@ -33,8 +33,16 @@ class Autoloader
         return true;
         break;
 
-      case 'Curl':
-        require_once LIB_DIR . 'vendor/oocurl/OOCurl.php';
+      case 'Curl\Curl':
+        require_once LIB_DIR . 'vendor/Curl/Curl.php';
+        return true;
+        break;
+      case 'Curl\MultiCurl':
+        require_once LIB_DIR . 'vendor/Curl/MultiCurl.php';
+        return true;
+        break;
+      case 'Curl\CaseInsensitiveArray':
+        require_once LIB_DIR . 'vendor/Curl/CaseInsensitiveArray.php';
         return true;
         break;
 

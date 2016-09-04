@@ -78,4 +78,4 @@ A five-step guide to install and get running BraDyCMS
 * [Mobile_Detect v. 2.8.0](https://github.com/serbanghita/Mobile-Detect)
 * [Lessphp v. 1.7.0.2](https://github.com/oyejorge/less.php)
 * [oaiprovider-php](https://github.com/jbogdani/oaiprovider-php)
-* [OOCurl v. 0.3.0](https://github.com/jbogdani/oocurl)
+* [php-curl-class v. 6.0.0](https://github.com/php-curl-class/php-curl-class)

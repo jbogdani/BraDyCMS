@@ -10,15 +10,6 @@ try
   $root = './';
   require_once $root . 'lib/globals.inc';
 
-  // $curl = new \Curl\Curl();
-  //
-  // $url = 'http://localhost/';
-  // echo $url;
-  // $curl->post($url);
-  //
-  // var_dump($curl->response);
-  // exit();
-
   $admin = new admin_ctrl();
 }
 catch (Exception $e)

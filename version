@@ -32,7 +32,8 @@
 3.14.0[] = "Dropped support for html.jQuery in favor of html.asset('jquery')"
 3.14.0[] = "New queue support"
 
-3.13.3[] = "Bug fixed with check duplicates for textid fiels function"
+3.13.4[] = "php-curl-class/php-curl-class replaces OOCurl"
+3.13.3[] = "Bug fixed with check duplicates for textid fields function"
 3.13.2[] = "Bug fixed: articles with duplicate textid are not saved anymore"
 3.13.2[] = "Empty textid input in article edit form does not definitely disable the save button"
 3.13.1[] = "Bug fixed with main file uploader controller: last parameter is always an array with POST data, so the order of other parameters is not fixed"

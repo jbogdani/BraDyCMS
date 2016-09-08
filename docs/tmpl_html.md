@@ -373,7 +373,8 @@ E.g.: `{{ html.getGallery('our_works') }}`
       array (
        img => sites/default/images/galleries/our_works/picture01.jpg,
        thumb => sites/default/images/galleries/our_works/thumbs/picture01.jpg,
-       caption => Caption of picture01
+       caption => Caption of picture01,
+       href => http://some.url
       ),
      ...
     );

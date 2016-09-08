@@ -1,3 +1,4 @@
+3.14.28[] = "Gallery supports now link (href) attribute"
 3.14.28[] = "New function: Seo Table implemented for custom metadata creation"
 3.14.27[] = "'modules' is now the default queue. Enhanced queue docs"
 3.14.26[] = "Bug fixed with path in out::searchForm queued javascript"

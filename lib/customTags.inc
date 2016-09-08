@@ -262,11 +262,18 @@ class customTags
 
         foreach ($gal_data as $item)
         {
+          $title = str_replace('"', '\"', strip_tags($item['caption']));
           $html .= '<li data-id="' . basename($item['img']) . '">'
-            . '<a href="' . $item['img'] . '" class="fancybox" title="' . str_replace('"', '\"', $item['caption']). '"  rel="' . $rel . '" >'
-            . '<img src="' . $item['thumb'] . '" alt="' . str_replace('"', '\"', $item['caption']). '" />'
+            // Link will be set to external reference, if href is set or to image (fancybox) if not
+            . '<a href="' . ($item['href'] ? $item['href'] : $item['img']) . '" '
+                . ($item['href'] ? 'class="fancybox" ' : '')
+                . 'title="' . $title . '"  '
+                . 'rel="' . $rel . '" >'
+              . '<img src="' . $item['thumb'] . '" alt="' . $title . '" />'
             . '</a>'
-            . '<div class="caption">' . $item['caption'] . '</div>'
+            . '<div class="caption">'
+              . ( $item['href'] ? '<a href="' . $item['href'] . '" title="' . $title . '">' . $item['caption'] . '</a>' : $item['caption'])
+            . '</div>'
             . '</li>';
         }
 

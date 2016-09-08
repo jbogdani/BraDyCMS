@@ -305,6 +305,7 @@ class Gallery{
    * @return array       Array of detailed data for each image:
    *                           name: filename, with extension
    *                           caption: caption in $lang, if available
+   *                           href: destination url of the link
    *                           orig_caption: if $lang is not system language, the orig_caption will receive the system language caption
    *                           fullpath: full path to original image
    *                           thumb: full path to thumbnail, if available
@@ -336,7 +337,7 @@ class Gallery{
     // Add ampty arrays for files missing in metadata array
     foreach ($files as $file)
     {
-      if (!in_array($file, array_keys($metadata)) && $file != 'thumbs' && !preg_match('/\.json/', $file))
+      if (!in_array($file, array_keys($metadata)) && $file !== 'thumbs' && !preg_match('/\.json/', $file))
       {
         $metadata[$file] = array();
       }
@@ -354,6 +355,7 @@ class Gallery{
         'safe_name' => str_replace('.', '~~', $file),
         'caption' => $data['caption'],
         'sort' => $data['sort'],
+        'href' => $data['href'],
         'fullpath' => self::$path . $gal . '/' . $file,
         'thumb' => (file_exists(self::$path . $gal . '/thumbs/' . $file) ? self::$path . $gal . '/thumbs/' . $file : ''),
         'finfo' => getimagesize(self::$path . $gal . '/' . $file)
@@ -450,7 +452,8 @@ class Gallery{
       array_push($data, array(
         'img' => $img,
         'thumb' => $thumb,
-        'caption' => $caption
+        'caption' => $caption,
+        'href' => $el['href']
       ));
     }
     return $data;

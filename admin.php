@@ -27,18 +27,27 @@ catch (Exception $e)
     <title>bdus.CMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link id="favicon" rel="shortcut icon" href="css/favicon.png" type="image/png" />
-
-    <link href="./bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="./bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet">
-    <link href="./bower_components/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="./bower_components/select2/select2.css" rel="stylesheet">
-    <link href="./bower_components/select2/select2-bootstrap.css" rel="stylesheet">
-    <link href="./bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-    <link href="./bower_components/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
-    <link href="./bower_components/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="./bower_components/fineuploader-dist/dist/fine-uploader.min.css" rel="stylesheet">
-    <link href="./css/admin.css?v=<?php echo version::current(); ?>" rel="stylesheet">
-
+    <?php
+    foreach ([
+      './bower_components/font-awesome/css/font-awesome.min.css',
+      './bower_components/Ionicons/css/ionicons.min.css',
+      './bower_components/pnotify/dist/pnotify.css',
+      './bower_components/select2/select2.css',
+      './bower_components/select2/select2-bootstrap.css',
+      './bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+      './bower_components/google-code-prettify/bin/prettify.min.css',
+      './bower_components/datatables/media/css/dataTables.bootstrap.min.css',
+      './bower_components/fineuploader-dist/dist/fine-uploader.min.css',
+      './css/admin.css'
+      ] as $f)
+    {
+      echo '<link '
+      . 'rel="stylesheet" '
+      . 'href="' . $f . '?sha256=' . hash_file('sha256', $f) . '" '
+        .'>'. "\n    ";
+    }
+    ?>
+    
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -79,8 +88,8 @@ catch (Exception $e)
     ?>
 
   <script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
-  <script src="./bower_components/tinymce/tinymce.min.js"></script>
-  <script src="./js/admin.min.js?v=<?php echo version::current(); ?>"></script>
+  <script src="./bower_components/tinymce/tinymce.min.js?sha256=<?= hash('sha256', './bower_components/tinymce/tinymce.min.js'); ?>"></script>
+  <script src="./js/admin.min.js?sha256=<?= hash_file('sha256', './js/admin.min.js') ?>"></script>
 
   <?php
   if (defined('CREATE_SITE')):

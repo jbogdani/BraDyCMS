@@ -6,51 +6,41 @@
  * @since      05/mar/2011
  */
 
+// start session
 session_start();
 
+// set $root variable
 if (@!$root)
 {
   $root = './';
 }
 
+// Define MAIN_DIR constant, to be used in all system paths
 define('MAIN_DIR', $root);
 
-
+// if MAIN_DIR directory does not exist, then this is a new site installation process
 if (!is_dir(MAIN_DIR . 'sites/default'))
 {
   define('CREATE_SITE', true);
 }
 
-
-if (!is_dir(MAIN_DIR . 'tmp'))
+// Create main system directories, if they do not exist
+foreach (['tmp', 'cache', 'logs'] as $d)
 {
-  @mkdir(MAIN_DIR . 'tmp', 0777, true);
+  if (!is_dir(MAIN_DIR . $d))
+  {
+    @mkdir(MAIN_DIR . $d, 0777, true);
+  }
 }
 
-if (!is_dir(MAIN_DIR . 'cache'))
+// Create main system log files if they do not exist
+foreach (['logs/error.log', 'logs/users.log', 'logs/logAttempts.log'] as $f)
 {
-  @mkdir(MAIN_DIR . 'cache', 0777, true);
+  if (!file_exists(MAIN_DIR . $f))
+  {
+    @touch(MAIN_DIR . $f);
+  }
 }
-
-if (!is_dir(MAIN_DIR . 'logs'))
-{
-  @mkdir(MAIN_DIR . 'logs', 0777, true);
-}
-
-if (!file_exists(MAIN_DIR . 'logs/error.log'))
-{
-  @touch(MAIN_DIR . 'logs/error.log');
-}
-
-if (!file_exists(MAIN_DIR . 'logs/users.log'))
-{
-  @touch(MAIN_DIR . 'logs/users.log');
-}
-
-if (!file_exists(MAIN_DIR . 'logs/logAttempts.log')){
-  @touch(MAIN_DIR . 'logs/logAttempts.log');
-}
-
 
 
 // SETS ERROR REPORTING
@@ -62,7 +52,7 @@ ini_set('error_log', './logs/error.log');
 
 ini_set('display_errors', 'off');
 
-
+// Set Session language
 if (@$_GET['lang'])
 {
   $_SESSION['lang'] = $_GET['lang'];
@@ -93,9 +83,11 @@ if (get_magic_quotes_gpc())
   unset($process);
 }
 
+// Include and start main Autoloader
 require_once $root . 'lib/Autoloader.inc';
 Autoloader::start();
 
+// Include and start Twig
 require_once $root . 'lib/vendor/Twig/Autoloader.php';
 Twig_Autoloader::register();
 
@@ -110,7 +102,7 @@ else
 }
 
 !defined('CREATE_SITE') ? define ( 'PREFIX',  cfg::get('prefix') ) : '';
-!defined('CREATE_SITE') ? define ( 'SYS_LANG',cfg::get('default_lang') ) : '';
+!defined('CREATE_SITE') ? define ( 'SYS_LANG', cfg::get('default_lang') ) : '';
 define ( 'MOD_DIR', MAIN_DIR . 'modules/');
 define ( 'LIB_DIR', MAIN_DIR . 'lib/');
 define ( 'ERR_LOG',  MAIN_DIR . 'logs/error.log');

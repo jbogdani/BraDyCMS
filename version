@@ -36,7 +36,7 @@
 3.14.0[] = "Dropped support for html.jQuery in favor of html.asset('jquery')"
 3.14.0[] = "New queue support"
 
-3.13.15[] = "Admin css & js script resources are identified by their own sha256 hash"
+3.13.5[] = "Admin css & js script resources are identified by their own sha256 hash"
 3.13.4[] = "php-curl-class/php-curl-class replaces OOCurl"
 3.13.3[] = "Bug fixed with check duplicates for textid fields function"
 3.13.2[] = "Bug fixed: articles with duplicate textid are not saved anymore"

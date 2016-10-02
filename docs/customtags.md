@@ -83,6 +83,22 @@ Complete example:
 
 ---
 
+#### dwnl('file','title', 'rel', 'class')
+Returns valid html with link to download file, if file is available, with file download count
+- **content**, string, optional. Link's text. If not available the file parameter will be used. The variable {tot}, if used, will be replaced with the total number of downloads for the file
+- **file**, string, optional. Absolute or relative path (some default system paths will be tested) to file to be downloaded.
+- **title**, string, optional, default false. Title attribute for link
+- **rel**, string, optional, default false. Rel attribute for link
+- **class**, string, optional, default false. CSS class to apply to main a element
+
+Minimal example:
+    [[dwnl file="pdf_file.pdf"]]Download now PDF version (total downloads: {tot})[[/dwnl]]
+
+Complete example:
+    [[dwnl file="pdf_file.pdf" title="Download PDF version" rel="PDF" class="download_link"]]Download now PDF version (total downloads: {tot})[[/dwnl]]
+
+---
+
 #### fb_comments(content)
 Adds the necessary HTML and javascript code to display Facebook's comments widget. For a list of all the available options check this link: https://developers.facebook.com/docs/reference/plugins/comments
 - **content**, - URL of the page to comment. If not provided the current page will be commented

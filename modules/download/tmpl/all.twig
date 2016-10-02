@@ -1,0 +1,60 @@
+<div id="{{ uid }}">
+  <h1>{{ tr.get('download_count') }}</h1>
+
+  <div class="btn-group" style="padding:20px 0;">
+    <a class="btn btn-default reload" title="{{ tr.get('reload') }}">
+      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+    </a>
+  </div>
+
+
+  <table class="table table-striped table-bordered table-hover data_table table-responsive">
+    <thead>
+      <tr>
+        <th>{{ tr.get('id') }}</th>
+        <th>{{ tr.get('file') }}</th>
+        <th>{{ tr.get('total_dwnlds') }}</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    </tbody>
+
+  </table>
+</div>
+
+
+<script>
+$('#{{ uid }} a.reload').on('click', function(){
+  admin.tabs.reloadThis(this);
+  return false;
+});
+
+var dwn = {
+  delete: function(id){
+    $.get('controller.php?obj=download_ctrl&method=resetCount&id=' + id, function(data){
+      admin.message(data.text, data.status);
+      $('#{{ uid }} table.data_table').DataTable().ajax.reload();
+    }, 'json');
+  }
+};
+
+var tb = $('#{{ uid }} table.data_table').dataTable({
+  "iDisplayLength": 10,
+  "bDestroy": true,
+  "bProcessing": true,
+  "bServerSide": true,
+  "sAjaxSource": "./controller.php?obj=download_ctrl&method=sql2json",
+  "aoColumns": [
+    { "mData":"id"},
+    { "mData":"file" },
+    { "mData":"tot" },
+    {
+      "mData":  function(row){
+        return '<a class="btn btn-default btn-sm" onclick="dwn.delete('+ row.id +')" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
+      }, "orderable": false
+    }
+  ]
+});
+</script>

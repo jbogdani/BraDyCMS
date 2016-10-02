@@ -456,3 +456,7 @@ $_lang['add_new_seo'] = "Aggiungi un nuovo record";
 $_lang['url'] = "URL";
 $_lang['add_edit_seo'] = "Aggiungi / Modifica record SEO";
 $_lang['confirm_delete'] = "Sei sicuro di voler cancellare questo elemento?";
+$_lang['download_count'] = "Conteggio scaricamenti";
+$_lang['file'] = "File";
+$_lang['total_dwnlds'] = "Totale scaricamenti";
+$_lang['ok_count_reset'] = "Il conteggio è stato azzerato";

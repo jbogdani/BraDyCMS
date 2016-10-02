@@ -75,7 +75,8 @@ class Controller
       'seo_ctrl' => '*',
       'feeds_ctrl' => '*',
       'OAI_ctrl' => '*',
-      'protectedtags_ctrl' => ['login', 'logout']
+      'protectedtags_ctrl' => ['login', 'logout'],
+      'download' =>['go']
     ];
 
     return (
@@ -104,7 +105,7 @@ class Controller
       unset($this->post['obj']);
       unset($this->post['method']);
 
-      $param = array_merge((array)$this->get['param'], array('post'=>$this->post));
+      $param = array_merge((array)$this->get['param'], array('post'=>$this->post, 'get' => $this->get));
 
       $trace_params = $obj . '::' . $method . '(' . var_export($param, true) . ')';
 

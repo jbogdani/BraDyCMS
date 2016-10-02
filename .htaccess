@@ -24,6 +24,9 @@ RewriteRule ^(OAI|oai)$ controller.php?obj=OAI_ctrl&method=run [QSA,L]
 #api
 RewriteRule ^(api|API)/?(.+)$ controller.php?obj=api_ctrl&method=run&$1 [QSA,L]
 
+#download
+RewriteRule ^download/?(.+)$ controller.php?obj=download_ctrl&method=go&$1 [QSA,L]
+
 #admin
 RewriteRule ^admin/?$ admin.php
 

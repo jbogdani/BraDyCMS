@@ -934,6 +934,35 @@ class utils
      }
    }
 
+   /**
+   *
+   * @param string $str string to encode
+   * @return string A base64 endoded string safe to use in URLs (http://stackoverflow.com/a/5835352/586449)
+   */
+  public static function safe_encode($str)
+  {
+    return str_replace(
+      array('+', '/', '='),
+      array('-', '_', ','),
+      base64_encode($str));
+  }
+
+  /**
+   *
+   * @param string $str String to decode
+   * @return string A base64 and url decoded and escaped string (http://stackoverflow.com/a/5835352/586449)
+   */
+  public static function safe_decode($str)
+  {
+    return base64_decode(
+      str_replace(
+        array('-', '_', ','),
+        array('+', '/', '='),
+        urldecode($str)
+      )
+    );
+  }
+
 
 
 }

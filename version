@@ -1,3 +1,4 @@
+3.14.31[] = "New function: download count"
 3.14.30[] = "Fixed bug with gallery editing form and delete button"
 3.14.29[] = "Fixed bug with article form reload button"
 3.14.28[] = "Gallery supports now link (href) attribute"

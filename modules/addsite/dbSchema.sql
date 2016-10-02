@@ -40,6 +40,12 @@ CREATE TABLE seo (
     keywords    VARCHAR( 255 )
 );--end
 
+-- Table: downloads
+CREATE TABLE downloads (
+    id INTEGER PRIMARY KEY,
+    file VARCHAR( 255 ) UNIQUE,
+    tot INTEGER
+);--end
 -- Table: articles_tag
 CREATE TABLE articles_tag (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,

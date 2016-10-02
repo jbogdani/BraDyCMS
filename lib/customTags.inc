@@ -937,4 +937,35 @@ EOD;
     return $html;
   }
 
+  /**
+   * Returns valid html link string to download file
+   * @param  array $data array of input data
+   *                     content: (string) (optional, default: false): Link text. If not available the file parameter will be used. The variable {tot}, if used, will be replaced with the total number of downloads for the file
+   *                     file: (string) (required) absolute or relative path (some default system paths will be tested) to file to be downloaded.
+   *                     title: (string) (optional, default: false): title attribute for link
+   *                     rel: (string) (optional, default: false): rel attribute for link
+   *                     class: (string) (optional, default false): CSS class to apply to main a element
+   * @return string       valid HTML or false
+   */
+  public static function dwnl($data)
+  {
+    $file = $data['file'];
+    $text = $data['content'] ? $data['content'] : $file;
+    if (!$file)
+    {
+      return false;
+    }
+    $tot    = DownloadAndCount::getCount($file);
+    $text   = str_replace('{tot}', $tot, $text);
+    $title  = $data['title']  ? ' title="' . str_replace('"', '\"', $data['title']) . '"' : '';
+    $rel    = $data['rel']    ? ' rel="' . str_replace('"', '\"', $data['rel']) . '"' : '';
+    $class  = $data['class']  ? ' class="' . $data['class'] . '"' : '';
+
+
+    return '<a ' . $title . $rel . $class
+          . 'href="' . link::to_article('download'). '/?file=' . $file . '"">'
+        . $text
+      . '</a>';
+  }
+
 }

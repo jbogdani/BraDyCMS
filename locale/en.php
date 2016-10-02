@@ -462,10 +462,11 @@ $_lang['add_new_seo'] = "Add a new record";
 $_lang['url'] = "URL";
 $_lang['add_edit_seo'] = "Add / Edit SEO record";
 $_lang['confirm_delete'] = "Are you sure ypu want to delete this item?";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
+
+$_lang['download_count'] = "Download count";
+$_lang['file'] = "File";
+$_lang['total_dwnlds'] = "Total downloads";
+$_lang['ok_count_reset'] = "Count successfully reset";
 $_lang[''] = "";
 $_lang[''] = "";
 $_lang[''] = "";

@@ -34,7 +34,7 @@ CREATE TABLE tag (
 -- Table: seo
 CREATE TABLE seo (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    url         VARCHAR( 255 ),
+    url         VARCHAR( 255 ) UNIQUE,
     title       VARCHAR( 255 ),
     description VARCHAR( 255 ),
     keywords    VARCHAR( 255 )

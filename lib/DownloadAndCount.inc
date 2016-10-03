@@ -8,10 +8,7 @@ class DownloadAndCount
  */
   private static function createIfDoesNotExist()
   {
-    if(!in_array('downloads', R::inspect()))
-    {
-      R::exec('CREATE TABLE downloads (id INTEGER PRIMARY KEY, file TEXT UNIQUE, tot INTEGER);');
-    }
+    R::exec('CREATE IF NOT EXISTS TABLE downloads (id INTEGER PRIMARY KEY, file TEXT UNIQUE, tot INTEGER);');
   }
 
   /**

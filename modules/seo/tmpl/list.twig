@@ -75,13 +75,14 @@ var Seo = {
     // TODO
     console.log(id);
     console.log(lang);
+    this.edit(id, lang);
   },
-  edit: function(id){
+  edit: function(id, lang){
     admin.dialog({
       title: '{{ tr.get('add_edit_seo') }}' + (id ? ' [ID: ' + id + ']': ''),
       obj: 'seo_ctrl',
       method: 'showForm',
-      param: [id],
+      param: [id, lang],
       buttons: [
                 {
                   text: '<i class="icon ion-checkmark"></i> {{ tr.get('save') }}',

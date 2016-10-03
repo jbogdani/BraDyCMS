@@ -29,11 +29,16 @@ class seo_ctrl extends Controller
   {
     $data = [];
 
+    // id is set
     if ($this->get['param'][0])
     {
-      $data = Seo::getById($this->get['param'][0]);
+      $data = Seo::getById($this->get['param'][0], $this->get['param'][1]);
     }
-    $this->render('seo', 'form', ['data' => $data]);
+
+    $this->render('seo', 'form', [
+      'data' => $data,
+      'lang' => $this->get['param'][1]
+    ]);
   }
 
   public function sql2json()

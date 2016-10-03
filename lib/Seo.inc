@@ -30,6 +30,14 @@ class Seo
       . "title VARCHAR( 255 ), "
       . "description VARCHAR( 255 ), "
       . "keywords VARCHAR( 255 ))");
+
+    R::exec("CREATE TABLE seotrans ("
+      . "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+      . "lang VARCHAR (10), "
+      . "url VARCHAR (255), "
+      . "title VARCHAR (255), "
+      . "description VARCHAR (255), "
+      . "keywords VARCHAR (255));");
   }
 
   /**
@@ -44,13 +52,19 @@ class Seo
     {
       self::createIfNotExists();
 
-      if ($id)
+      if ($data['lang'])
       {
-        $seo = R::findOne('seo', 'id = ?', [$id]);
+        $seo = R::findOne('seotrans', 'url = ? AND lang = ?', [$data['url'], $data['lang']]);
+
+        if (!$seo)
+        {
+          $seo = R::dispense('seotrans');
+        }
+        $seo->lang = $data['lang'];
       }
       else
       {
-        $seo = R::dispense('seo');
+        $seo = $id ? $seo = R::findOne('seo', 'id = ?', [$id]) : $seo = R::dispense('seo');
       }
 
       $seo->url = $data['url'];
@@ -89,6 +103,12 @@ class Seo
       {
         return true;
       }
+      // Delete translations if any
+      $trans = R::find('seotrans', 'url = ?', [$seo->url]);
+      if ($trans && is_array($trans))
+      {
+        R::trashAll($trans);
+      }
       R::trash($seo);
       return true;
     }
@@ -103,15 +123,16 @@ class Seo
   /**
    * Returns array of data for existing record (url)
    * @param  string $url  url to edit
+   * @param string $lang  translated language
    * @return array|false       array of data, false on failure. Syntax errors will be logged
    */
-  public static function get($url)
+  public static function get($url, $lang = false)
   {
     try
     {
       self::createIfNotExists();
 
-      $seo = R::findOne('seo', 'url = ?', [$url]);
+      $seo = $lang ? R::findOne('seotrans', 'url = ? AND lang = ?', [$url, $lang]) : R::findOne('seo', 'url = ?', [$url]);
       if(!$seo)
       {
         return false;
@@ -128,20 +149,39 @@ class Seo
   /**
    * Returns array of data for existing record (url)
    * @param  int $id  id to edit
+   * @param string $lang  translated language
    * @return array|false       array of data, false on failure. Syntax errors will be logged
    */
-  public static function getById($id)
+  public static function getById($id, $lang = false)
   {
     try
     {
       self::createIfNotExists();
 
       $seo = R::findOne('seo', 'id = ?', [$id]);
+
       if(!$seo)
       {
         return false;
       }
-      return $seo->export();
+
+      if ($lang)
+      {
+        $tr_seo = R::findOne('seotrans', 'url = ? AND lang = ?', [$seo->url, $lang]);
+        if (!$tr_seo)
+        {
+          return ['url' => $seo->url, 'lang' => $lang];
+        }
+        else
+        {
+          return $tr_seo;
+        }
+      }
+      else
+      {
+        return $seo->export();
+      }
+
     }
     catch(RedException\SQL $e)
     {

@@ -385,7 +385,7 @@ class Out
     $path_arr = explode('/', $_SERVER['REQUEST_URI']);
     $path = $path_arr[count($path_arr)-1];
 
-    $seo = Seo::get($path);
+    $seo = Seo::get($path, $this->lang);
 
     // SITE NAME
     $this->data['page']['site_name'] = cfg::get('name');

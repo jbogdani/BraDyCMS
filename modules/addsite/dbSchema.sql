@@ -31,21 +31,6 @@ CREATE TABLE tag (
     id    INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT
 );--end
--- Table: seo
-CREATE TABLE seo (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    url         VARCHAR( 255 ) UNIQUE,
-    title       VARCHAR( 255 ),
-    description VARCHAR( 255 ),
-    keywords    VARCHAR( 255 )
-);--end
-
--- Table: downloads
-CREATE TABLE downloads (
-    id INTEGER PRIMARY KEY,
-    file VARCHAR( 255 ) UNIQUE,
-    tot INTEGER
-);--end
 -- Table: articles_tag
 CREATE TABLE articles_tag (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,

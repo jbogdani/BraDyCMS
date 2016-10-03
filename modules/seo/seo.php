@@ -17,7 +17,7 @@ class seo_ctrl extends Controller
   public function all()
   {
     // Add table seo if it does not exist (compatibility function)
-    R::exec("CREATE TABLE IF NOT EXISTS seo (id INTEGER PRIMARY KEY AUTOINCREMENT, url VARCHAR( 255 ), title VARCHAR( 255 ), description VARCHAR( 255 ), keywords VARCHAR( 255 ))");
+    Seo::createIfNotExists();
     $this->render('seo', 'list', ['cfg_langs' => cfg::get('languages')] );
   }
 

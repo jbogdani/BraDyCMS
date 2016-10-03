@@ -1,3 +1,4 @@
+3.14.32[] = "Bug fixed with application not having yet seo table: bacward compatibility function added"
 3.14.32[] = "DownloadAndCount uses IF NOT EXISTS statement to create downloads table"
 3.14.31[] = "New function: download count"
 3.14.30[] = "Fixed bug with gallery editing form and delete button"

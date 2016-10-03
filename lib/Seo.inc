@@ -20,6 +20,19 @@
 class Seo
 {
   /**
+   * Backward compatibility function: creates table seo if not present in the database
+   */
+  public static function createIfNotExists()
+  {
+    R::exec("CREATE TABLE IF NOT EXISTS seo ("
+      . "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+      . "url VARCHAR( 255 ) UNIQUE, "
+      . "title VARCHAR( 255 ), "
+      . "description VARCHAR( 255 ), "
+      . "keywords VARCHAR( 255 ))");
+  }
+
+  /**
    * Edits existing record (url) or adds new one
    * @param  int $id  id to edit
    * @param  array $data array of metadata
@@ -29,6 +42,8 @@ class Seo
   {
     try
     {
+      self::createIfNotExists();
+
       if ($id)
       {
         $seo = R::findOne('seo', 'id = ?', [$id]);
@@ -67,6 +82,8 @@ class Seo
   {
     try
     {
+      self::createIfNotExists();
+
       $seo = R::findOne('seo', 'id = ?', [$id]);
       if (!$seo)
       {
@@ -92,6 +109,8 @@ class Seo
   {
     try
     {
+      self::createIfNotExists();
+
       $seo = R::findOne('seo', 'url = ?', [$url]);
       if(!$seo)
       {
@@ -115,6 +134,8 @@ class Seo
   {
     try
     {
+      self::createIfNotExists();
+
       $seo = R::findOne('seo', 'id = ?', [$id]);
       if(!$seo)
       {

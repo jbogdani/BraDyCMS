@@ -87,9 +87,7 @@ Complete example:
 Returns valid html with link to download file, if file is available, with file download count
 - **content**, string, optional. Link's text. If not available the file parameter will be used. The variable {tot}, if used, will be replaced with the total number of downloads for the file
 - **file**, string, optional. Absolute or relative path (some default system paths will be tested) to file to be downloaded.
-- **title**, string, optional, default false. Title attribute for link
-- **rel**, string, optional, default false. Rel attribute for link
-- **class**, string, optional, default false. CSS class to apply to main a element
+- Any other element will be added as attribute to the main link element (<a>)
 
 Minimal example:
     [[dwnl file="pdf_file.pdf"]]Download now PDF version (total downloads: {tot})[[/dwnl]]

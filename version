@@ -1,3 +1,4 @@
+3.13.33[] = "Fixed bug with downloads table creation on first request"
 3.14.32[] = "Documentation enhancement"
 3.14.32[] = "Added support for Seo translation"
 3.14.32[] = "seo and downloads table are not created on system setup, but at first usage of these functions"

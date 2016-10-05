@@ -8,7 +8,7 @@ class DownloadAndCount
  */
   private static function createIfDoesNotExist()
   {
-    R::exec('CREATE IF NOT EXISTS TABLE downloads (id INTEGER PRIMARY KEY, file TEXT UNIQUE, tot INTEGER);');
+    R::exec('CREATE TABLE IF NOT EXISTS downloads (id INTEGER PRIMARY KEY, file TEXT UNIQUE, tot INTEGER);');
   }
 
   /**
@@ -85,8 +85,6 @@ class DownloadAndCount
       throw new Exception("File $file does not exist");
     }
     self::addOne($full_file);
-    echo $full_file;
-
 
     $mime = mime_content_type($full_file);
 

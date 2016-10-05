@@ -37,6 +37,11 @@ If you are not familiar with Github just email your contribution to [developer@b
   - [Create and embed forms](#docs/read/userform)
   - [Create and embed a map](#docs/read/usermap)
   - [Password protect sections of your site with passwords](#docs/read/protectedtags)
+  <!-- TODO -->
+  - [Download nodes](#docs/read/downloads)
+  - [Seo manager](#docs/read/seo)
+  <!-- TODO -->
+  - [Download count](#docs/read/downloadcount)
 
 - Tutorials
   - [How to setup an OAI-PMH interface](#docs/read/oai)

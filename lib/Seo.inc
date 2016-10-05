@@ -31,7 +31,7 @@ class Seo
       . "description VARCHAR( 255 ), "
       . "keywords VARCHAR( 255 ))");
 
-    R::exec("CREATE TABLE seotrans ("
+    R::exec("CREATE TABLE IF NOT EXISTS seotrans ("
       . "id INTEGER PRIMARY KEY AUTOINCREMENT, "
       . "lang VARCHAR (10), "
       . "url VARCHAR (255), "

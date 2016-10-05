@@ -1,3 +1,4 @@
+3.13.33[] = "Fixed bug with seotrans (SEO plugin  translation) table creation on first request"
 3.13.33[] = "Custom tag dwnl accepts any attribute"
 3.13.33[] = "Fixed bug with downloads table creation on first request"
 3.14.32[] = "Documentation enhancement"

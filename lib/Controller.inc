@@ -76,7 +76,7 @@ class Controller
       'feeds_ctrl' => '*',
       'OAI_ctrl' => '*',
       'protectedtags_ctrl' => ['login', 'logout'],
-      'download' =>['go']
+      'download_ctrl' =>['go']
     ];
 
     return (

@@ -1,3 +1,4 @@
+3.14.34[] = "Bug fixed with custom tag gallery not yet compatible with the new gallery system"
 3.14.34[] = "Bug fixed with gallery not setting fancybox css class"
 3.14.33[] = "Bug fixed with download count module and permission settings"
 3.14.33[] = "Fixed bug with seotrans (SEO plugin  translation) table creation on first request"

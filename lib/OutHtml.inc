@@ -644,10 +644,6 @@ EOD;
    */
   public function gallery($gal, $class = false)
   {
-    if (!file_exists(GALLERY_DIR . $gal . '/data.json'))
-    {
-      return;
-    }
     return customTags::gallery(array('content' => $gal, 'class' => $class));
   }
 

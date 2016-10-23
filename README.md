@@ -30,7 +30,7 @@
 * PHP PDO
 * PHP pdo_sqlite (for default SQLite database)
 * Apache mod_rewrite enabled
-* Imagemagick or Imagick for image manipulation (optional)
+* GD or Imagick php extensions for image manipulation
 
 
 # Installation guide
@@ -79,3 +79,4 @@ A five-step guide to install and get running BraDyCMS
 * [Lessphp v. 1.7.0.2](https://github.com/oyejorge/less.php)
 * [oaiprovider-php](https://github.com/jbogdani/oaiprovider-php)
 * [php-curl-class v. 6.0.0](https://github.com/php-curl-class/php-curl-class)
+* [Intervention Image v. 2.3.8](https://github.com/Intervention/image)

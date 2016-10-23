@@ -303,7 +303,6 @@ class utils
           $result['path'] . $result['filename'] . '.' . $result['ext'],
           cfg::get('max_img_size'),
           cfg::get('max_img_size'),
-          72,
           true
           );
       }

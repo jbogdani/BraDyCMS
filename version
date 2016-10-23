@@ -1,3 +1,4 @@
+3.15.0[] = "Removed support for image resolution in file upload auto resize function"
 3.15.0[] = "Add site functions check for imagick and gd extensions before adding a new site"
 3.14.34[] = "Bug fixed with custom tag gallery not yet compatible with the new gallery system"
 3.14.34[] = "Bug fixed with gallery not setting fancybox css class"

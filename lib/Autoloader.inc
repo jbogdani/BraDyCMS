@@ -74,6 +74,15 @@ class Autoloader
         require_once LIB_DIR . 'vendor/Parsedown/Parsedown.php';
         break;
     }
+    
+    if (strpos($className, "Intervention\\Image\\") !== false)
+    {
+      $f = LIB_DIR . 'vendor/' . str_replace("\\", "/", $className) . '.php';
+      if(file_exists($f))
+      {
+        require_once $f;
+      }
+    }
 
     if (preg_match('/_ctrl/', $className))
     {

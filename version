@@ -1,3 +1,4 @@
+3.15.0[] = "Added external library Intervention for image manipulation"
 3.15.0[] = "imgMng uses Intervention library for image manipulation"
 3.15.0[] = "Added support do gd/imagick options in main configuration"
 3.15.0[] = "Removed support for image resolution in file upload auto resize function"

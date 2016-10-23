@@ -27,6 +27,11 @@ class addsite_ctrl extends Controller
       $error[] = 'PDO SQLITE extension not loaded!';
     }
 
+    if (!extension_loaded('imagick') && !extension_loaded('gd'))
+    {
+      $error[] = 'Neither Imagick or GD extesions are loaded';
+    }
+
     if (!is_writable('./'))
     {
       $error[] = 'Main installation directory is not writeable';

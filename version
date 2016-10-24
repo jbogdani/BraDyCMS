@@ -1,3 +1,4 @@
+3.15.2[] = "Error log uses htmlentities to output the log content"
 3.15.1[] = "Reload button is showed in error log module even if error file is missing or empty"
 3.15.0[] = "Added external library Intervention for image manipulation"
 3.15.0[] = "imgMng uses Intervention library for image manipulation"

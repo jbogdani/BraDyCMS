@@ -25,7 +25,7 @@ class error_log_ctrl
           ($contents ? '<a class="btn btn-default log-delete"><i class="icon ion-trash-a"></i> Delete</a>' : '') .
         '</div>' .
         '<hr />' .
-        ($contents ? '<pre>' . nl2br($contents) . '</pre>' : '<div class="text-success"><i class="icon ion-checkmark"></i> Error log is empty</div>')
+        ($contents ? '<pre>' . htmlentities($contents) . '</pre>' : '<div class="text-success"><i class="icon ion-checkmark"></i> Error log is empty</div>')
         ;
 
     echo $html;

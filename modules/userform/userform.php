@@ -300,12 +300,9 @@ class userform_ctrl extends Controller
   {
     $this->loadForm($param['content']);
 
-    if ($param['inline'])
+    if ($param['inline'] || $this->data['inline'])
     {
       $form_class = 'form-inline';
-      $label_class = 'col-md-3';
-      $input_class = 'col-md-9';
-      $buttons_class = 'col-md-offset-3';
     }
 
     if (!$this->data)
@@ -326,20 +323,26 @@ class userform_ctrl extends Controller
 
       $checkClass = ($el['is_required'] ? ' required' : '') . ($el['is_email'] ? ' email' : '');
 
-      $html .= '<div class="form-group ' . $el['name'] . '">' .
-        ( $el['label'] ? '<div class="' . $label_class . ' control-label"><strong>' . $el['label'] . '' . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '') . '</strong></div>' : '' ) .
-      '<div class="' . $input_class . '">';
+      $html .= '<div class="form-group ' . $el['name'] . '">';
+      if ($el['label'])
+      {
+        $html .= '<label class="' . $label_class . ' control-label">'
+          . $el['label']
+          . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '')
+        . '</label>';
+      }
+      $html .= '<div class="' . $input_class . '">';
 
       switch ($el['type'])
       {
         case 'text':
         default:
-          $html .= '<input type="text" ' .
-            ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-            ' name="' . $el['name'] . '" ' .
-            'data-label="' . $el['label'] . '" class="form-control' . $checkClass .
-            ($el['type'] == 'date' ? ' datepicker' : '') . '" />';
-            if($el['type'] == 'date')
+          $html .= '<input type="text" '
+            . ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' )
+            . ' name="' . $el['name'] . '" '
+            . 'data-label="' . $el['label'] . '" class="form-control' . $checkClass
+            . ($el['type'] === 'date' ? ' datepicker' : '') . '" />';
+            if($el['type'] === 'date')
             {
               $load_date = true;
             }

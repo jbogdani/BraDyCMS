@@ -45,6 +45,10 @@ var userform = {
         }, 'json');
       }
     });
+
+    $('#' + formId).on('reset', function(){
+      $(this).find('.message').html('');
+    });
   },
 
   upload_file: function(formId, elclass, opts){
@@ -132,5 +136,4 @@ var userform = {
       }
     });
   }
-
 };

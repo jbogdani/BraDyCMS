@@ -429,7 +429,9 @@ class Article
         . "WHERE `tag`.`title` IN ('" . implode("', '", $tags). "') ";
     if (!$admin)
     {
-      $sql .= " AND `articles`.status = 1 AND ("
+      $sql .= " AND `articles`.status = 1 AND "
+        . "`publish` <= DATE('now') AND "
+        . "("
         . "`articles`.expires = '0000-00-00 00:00:00' OR "
         . "`articles`.expires = '0000-00-00' OR "
         . "`articles`.expires = '0000-00-00' OR "
@@ -440,6 +442,7 @@ class Article
     $sql .= "GROUP BY `articles`.`id` "
         . "HAVING count(`articles`.`id`) >= " . ($lax ? 1 : count($tags));
 
+error_log($sql);
     if ($returnCount)
     {
       return count(R::getAll($sql));

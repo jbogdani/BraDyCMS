@@ -438,5 +438,37 @@ class protectedTags
 
   }
 
+  /**
+   * Toggles disable_captcha value for each tag
+   * @param  string  $tag    tag
+   * @param  boolean $status if true, captcha will be disabled, if false enabled (default)
+   * @return [type]          [description]
+   */
+  public static function captchaStatus($status = false)
+  {
+    $data = self::getData();
+
+    if (!$status)
+    {
+      if ($data['disable_captcha'])
+      {
+        unset($data['disable_captcha']);
+      }
+    }
+    else
+    {
+      $data['disable_captcha'] = true;
+    }
+
+    self::$data = $data;
+    return self::saveData();
+  }
+
+  public static function isCaptchaEnabled()
+  {
+    $data = self::getData();
+    return !$data['disable_captcha'];
+  }
+
 }
 ?>

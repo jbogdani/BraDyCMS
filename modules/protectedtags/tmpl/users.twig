@@ -141,9 +141,26 @@
   </tbody>
 </table>
 
+<hr>
+
+{{ tr.get('captcha_protection') }}
+
+<select class="disable_captcha">
+  <option value="0">{{ tr.get('enabled') }}</option>
+  <option value="1" {% if disable_captcha %} selected="selected"{% endif %}>{{ tr.get('disabled') }}</option>
+</select>
+
 </div>
 
 <script>
+
+  $('#{{ uid }} select.disable_captcha').on('change', function(){
+    $.get(
+      'controller.php?obj=protectedtags_ctrl&method=toggleCaptcha&param[]=' + $(this).val(),
+      function(data){
+        admin.message(data.text, data.status);
+      }, 'json');
+  });
   $('#{{ uid }}users').DataTable({
     "columnDefs": [ { "targets": 6, "orderable": false } ],
     "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {

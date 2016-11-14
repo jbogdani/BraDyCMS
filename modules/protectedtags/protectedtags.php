@@ -112,7 +112,8 @@ class protectedtags_ctrl extends Controller
     $this->render('protectedtags', 'users', array(
         'users' => $data['users'],
         'protected' => $data['tags'],
-        'autoregister' => $data['autoregister']
+        'autoregister' => $data['autoregister'],
+        'disable_captcha' => $data['disable_captcha']
     ));
   }
 
@@ -237,7 +238,7 @@ class protectedtags_ctrl extends Controller
       }
 
       // Google reCAPTCHA check
-      if (reCAPTCHA::isProtected())
+      if (protectedTags::isCaptchaEnabled() && reCAPTCHA::isProtected())
       {
         try
         {
@@ -309,7 +310,7 @@ class protectedtags_ctrl extends Controller
 
     $this->render('protectedtags', 'login_form', array(
       'token' => $_SESSION['token'],
-      'grc_sitekey' => cfg::get('grc_sitekey'),
+      'grc_sitekey' => protectedTags::isCaptchaEnabled() ? cfg::get('grc_sitekey') : false,
       'css' => $css
     ));
   }
@@ -325,7 +326,7 @@ class protectedtags_ctrl extends Controller
 
     $this->render('protectedtags', 'register', array(
       'token' => $_SESSION['token'],
-      'grc_sitekey' => cfg::get('grc_sitekey'),
+      'grc_sitekey' => protectedTags::isCaptchaEnabled() ? cfg::get('grc_sitekey') : false,
       'tag' => $tag,
       'css' => $css,
       'mode' => is_array($ar) ? $ar[$tag]['mode'] : false
@@ -347,6 +348,20 @@ class protectedtags_ctrl extends Controller
       $this->render('protectedtags', 'logout_button', array(
         'css' => $css
       ));
+    }
+  }
+
+  public function toggleCaptcha()
+  {
+    $captcha = ($this->get['param'][0] === '1');
+
+    if (protectedTags::captchaStatus($captcha))
+    {
+      echo $this->responseJson('success', tr::get('ok_setting_updated'));
+    }
+    else
+    {
+      echo $this->responseJson('error', tr::get('error_setting_not_updated'));
     }
   }
 }

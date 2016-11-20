@@ -669,7 +669,7 @@ EOD;
     {
       require_once 'sites/default/modules/' . $method . '/' . $method . '.inc';
 
-      $html = call_user_func(array($method, 'init'), $param, $this);
+      $html = call_user_func_array([new $method, 'init'], [$param, $this]);
 
     }
 

@@ -1,5 +1,6 @@
-3.17.1[] = "OutHtml::ct supports both static and non static plugin methods"
-3.17.1[] = "Added support in Controller::render for user modules template folders"
+3.17.0[] = "plugins_ctrl::run supports both static and non static plugin methods"
+3.17.0[] = "OutHtml::ct supports both static and non static plugin methods"
+3.17.0[] = "Added support in Controller::render for user modules template folders"
 3.16.1[] = "Captcha protection can be now disabled in protected tags module"
 3.15.6[] = "Minor bug fixed with useless error log report"
 3.15.5[] = "Fixed bug with Articles::getByTag retrieving not yet published articles"

@@ -44,7 +44,21 @@ class Controller
    */
   public function render($module, $template, $data = false)
   {
-    $twig = new Twig_Environment(new Twig_Loader_Filesystem(MOD_DIR . $module . '/tmpl'), unserialize(CACHE));
+    // add support for user plugin template folders
+    if (file_exists(MOD_DIR . $module . '/tmpl'))
+    {
+      $dir = MOD_DIR . $module . '/tmpl';
+    }
+    else if (file_exists(SITE_DIR . 'modules/' . $module . '/tmpl'))
+    {
+      $dir = SITE_DIR . 'modules/' . $module . '/tmpl';
+    }
+    else
+    {
+      throw new Exception("Template folder for module {$modeule} not found");
+
+    }
+    $twig = new Twig_Environment(new Twig_Loader_Filesystem($dir), unserialize(CACHE));
     if ($_SESSION['debug'])
     {
       $twig->addExtension(new Twig_Extension_Debug());

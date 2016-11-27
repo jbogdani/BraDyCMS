@@ -57,7 +57,7 @@ class customTags
       {
         if (method_exists($tag, 'init'))
         {
-          $replace = call_user_func(array($tag, 'init'), $formatedAttributes, $out, $id);
+          $replace = call_user_func([new $tag, 'init'], $formatedAttributes, $out, $id);
 
           $html = preg_replace($originalTag, $replace, $html, 1);
 

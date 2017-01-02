@@ -1,3 +1,4 @@
+3.16.2[] = "Added support for DC.Rights Dublin core metatag"
 3.16.2[] = "Added support for DC.Source.Issue Dublin core metatag"
 3.16.2[] = "Added support for DC.Source.Volume Dublin core metatag"
 3.16.2[] = "Added support for citation_issue Highwire Press metatag"

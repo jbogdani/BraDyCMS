@@ -255,6 +255,15 @@ class OutHtml extends Out
 
   /**
    * Returns html with Highwire Press metadata, for Google Scholar usage
+   *    citation_journal_title: MD repository name
+   *    citation_issn:          MD issn
+   *    citation_author:        Page author (article author)
+   *    citation_title:         Page title (artile title)
+   *    citation_date:          Page date (article publish)
+   *    citation_doi:           Page DOI (article doi)
+   *    citation_abstract_html_url:Page url (article url)
+   *    citation_language:      Page language code (article language)
+   *    citation_pdf_url:       Pdf full url (both patterns are supported: images/pdf/{textid}.pdf and images/articles/media/{id}/{textid}.pdf)
    * @return string
    */
   public function metadata_hp()
@@ -305,14 +314,20 @@ class OutHtml extends Out
 
         // article language
         "\n  " . '<meta name="citation_language" ' .
-          'content="' . $this->getPageData('lang', true) . '" />' .
+          'content="' . $this->getPageData('lang', true) . '" />';
 
         // article pdf url
-        (file_exists('./sites/default/images/pdf/' . $art['textid'] . '.pdf') ?
-          "\n  " .  '<meta name="citation_pdf_url" ' .
-            'content="' . $this->getMD()->getURL() . '/sites/default/images/pdf/' . $art['textid'] . '.pdf"/>'
-          : '')
-
+        $pdf_url = [
+          'sites/default/images/pdf/' . $art['textid'] . '.pdf',
+          'sites/default/images/articles/media/' . $art['id'] . '/'. $art['textid'] . '.pdf'
+        ];
+        foreach ($pdf_url as $p)
+        {
+          if (file_exists($p))
+          {
+            $html .= "\n  " . '<meta name="citation_pdf_url" content="' . $this->getMD()->getURL() . '/' . $p . '"/>';
+          }
+        }
     ;
     return $html;
   }

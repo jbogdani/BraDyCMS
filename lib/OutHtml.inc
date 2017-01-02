@@ -142,6 +142,25 @@ class OutHtml extends Out
 
   /**
    * Returns html with Dublin Core metadata
+   *    DC.Type:            "Text"
+   *    DC.Format:          "text/html"
+   *    DC.Identifier:      article id
+   *    Identifier.URI      Page (article) URL
+   *    DC.Identifier.DOI:  Page (article) DOI
+   *    DC.Title:           Page (article) title
+   *    DC.Description:     Article summary or Page description (can be: seo.description, article.customdescription, article.summary, cfg.description)
+   *    DC.Language:        Article language
+   *    DC.Creator:         Page (article) author
+   *    DC.Creator.PersonalName: Same as DC.Creator
+   *    DC.Publisher:       MD Publisher
+   *    DC.subject:         Page (article) keywords
+   *    DC.Date:            Page (article) publish date
+   *    DC.Date.created:    Same as DC.Date
+   *    DC.Date.issued:     Same as DC.Date
+   *    DC.Date.modified:   Article updated
+   *    DC.Source:          MD repository name
+   *    DC.Source.ISSN:     MD issn
+   *    DC.Source.URI       Page (article) URI
    * @return string
    */
   public function metadata_dc()
@@ -150,12 +169,8 @@ class OutHtml extends Out
      * <meta name="DC.Contributor.Sponsor" xml:lang="en" content=""/>
      * <meta name="DC.Contributor.Sponsor" xml:lang="it" content=""/>
      * <meta name="DC.Date.dateSubmitted" scheme="ISO8601" content="2012-12-20"/>
-     * <meta name="DC.Date.issued" scheme="ISO8601" content="2012-12-21"/>
-     * <meta name="DC.Description" xml:lang="en" content="English Description"/>
      * <meta name="DC.Identifier.pageNumber" content="1-46"/>
      * <meta name="DC.Rights" content="I copyright degli articoli pubblicati su questa rivista appartengono agli autori, e i diritti di prima pubblicazione sono concessi alla rivista. Nel momento in cui presentano il proprio lavoro, gli autori accettano che possa essere copiato da chiunque per fini non commerciali, ma solamente nel caso in cui venga appropriatamente citato. In virtù della loro apparizione su questa rivista gratuita, gli articoli sono dichiarati usufruibili gratuitamente, con una corretta attribuzione, in contesti non commerciali. Ogni autore è responsabile per il contenuto del proprio lavoro, incluse citazioni, attribuzione e permessi d&#039;uso."/>
-     * <meta name="DC.Source.Issue" content="1"/>
-     * <meta name="DC.Source.Volume" content="5"/>
      * <meta name="DC.Title.Alternative" xml:lang="en" content="The Bronze Age settlement of S. Giovanni in Triario (Bologna)"/>
      * <meta name="DC.Type" content="Text.Serial.Journal"/>
      */
@@ -167,87 +182,94 @@ class OutHtml extends Out
       return;
     }
 
-    $html =  "\n <!-- Dublin Core metadata tags -->" .
+    $html =  "\n <!-- Dublin Core metadata tags -->"
 
         // Type
-        "\n  " . '<meta name="DC.Type" content="Text" />' .
+        . "\n  " . '<meta name="DC.Type" content="Text" />'
 
         // Format
-        "\n  " . '<meta name="DC.Format" content="text/html" />' .
+        . "\n  " . '<meta name="DC.Format" content="text/html" />'
 
         // Identifier
-        "\n  " . '<meta name="DC.Identifier" ' .
-          'content="' . $art['id'] . '"/>' .
+        . "\n  " . '<meta name="DC.Identifier" ' .
+          'content="' . $art['id'] . '"/>'
 
         // Identifier.URI
-        "\n  " . '<meta name="DC.Identifier.URI" scheme="URI" ' .
-          'content="' . $this->getPageData('url', true) . '" />' .
+        . "\n  " . '<meta name="DC.Identifier.URI" scheme="URI" ' .
+          'content="' . $this->getPageData('url', true) . '" />'
 
         // Identifier.DOI
-        "\n  " . '<meta name="DC.Identifier.DOI" ' .
+        . "\n  " . '<meta name="DC.Identifier.DOI" ' .
           'content="' . ($this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() : '') .
-          $art[$this->getMD()->getTable('id')] . '" />' .
+          $art[$this->getMD()->getTable('id')] . '" />'
 
         // Titile
-        "\n  " . '<meta name="DC.Title" ' .
-          'content="' . $this->getPageData('title', true) . '" />' .
+        . "\n  " . '<meta name="DC.Title" ' .
+          'content="' . $this->getPageData('title', true) . '" />'
 
         // Description
-        "\n  " . '<meta name="DC.Description" ' .
-          'content="' . $this->getPageData('description', true) . '" />' .
+        . "\n  " . '<meta name="DC.Description" ' .
+          'content="' . ($art['summary'] ? trim(strip_tags($art['summary'])) : $this->getPageData('description', true)) . '" />'
 
         // Language
-        "\n  " . '<meta name="DC.Language" scheme="ISO639-1" ' .
-          'content="' . $this->getPageData('lang', true) . '" />' .
+        . "\n  " . '<meta name="DC.Language" scheme="ISO639-1" ' .
+          'content="' . $this->getPageData('lang', true) . '" />'
 
-        // Creator
-        ( $this->getPageData('author') ?
+        // Creator && Creator.PersonalName
+        . ( $this->getPageData('author') ?
             "\n  " . '<meta name="DC.Creator" ' .
-              'content="' .  $this->getPageData('author', true) . '" />' : '') .
-
-        // Creator.PersonalName
-        ( $this->getPageData('author') ?
+              'content="' .  $this->getPageData('author', true) . '" />' .
             "\n  " . '<meta name="DC.Creator.PersonalName" ' .
-              'content="' .  $this->getPageData('author', true) . '" />' : '') .
+              'content="' .  $this->getPageData('author', true) . '" />' : '')
 
         // Publisher
-        ( $this->getMD()->getPublisher() ?
+        . ( $this->getMD()->getPublisher() ?
             "\n  " . '<meta name="DC.Publisher" ' .
-              'content="' . $this->getMD()->getPublisher() . '" />' : '') .
+              'content="' . $this->getMD()->getPublisher() . '" />' : '')
 
         // Subject
-        "\n  " . '<meta name="DC.subject" scheme="RFC3066" ' .
-          'content="' . $this->getPageData('keywords', true) . '" />' .
+        . "\n  " . '<meta name="DC.subject" scheme="RFC3066" ' .
+          'content="' . $this->getPageData('keywords', true) . '" />'
 
-        // Date
-        ( $this->getPageData('date') ?
+        // Date & Date.created & Date.issued
+        . ( $this->getPageData('date') ?
             "\n  " . '<meta name="DC.Date" scheme="W3CDTF" ' .
-              'content="' . $this->getPageData('date') . '" />' : '') .
-
-        // Date.created
-        ( $this->getPageData('date') ?
+              'content="' . $this->getPageData('date') . '" />' .
             "\n  " . '<meta name="DC.Date.created" scheme="ISO8601" ' .
-              'content="' . $this->getPageData('date') . '" />' : '') .
+              'content="' . $this->getPageData('date') . '" />' .
+            "\n  " . '<meta name="DC.Date.issued" scheme="ISO8601" ' .
+              'content="' . $this->getPageData('date') . '" />' : '')
 
         // Date.modified
-        ( $art['updated'] ?
+        . ( $art['updated'] ?
             "\n  " . '<meta name="DC.Date.modified" scheme="ISO8601" ' .
               'content="' . $art['updated'] . '" />' : '') .
 
-        // Source
+        // DC.Source
         ($this->getMD()->getRepositoryName() ?
             "\n  " . '<meta name="DC.Source" ' .
               'content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
 
-        // Source.ISSN
+        // DC.Source.ISSN
         ($this->getMD()->getISSN() ?
             "\n  " . '<meta name="DC.Source.ISSN" ' .
               'content="' . $this->getMD()->getISSN() . '"/>' : '') .
 
-        // Source.URI
+        // DC.Source.URI
         ($this->getMD()->getURL() ?
             "\n  " . '<meta name="DC.Source.URI" ' .
               'content="' . $this->getMD()->getURL() . '"/>' : '')
+
+        // DC.Source.Volume
+        . ($this->getMD()-> getTable()['volume'] && $art[$this->getMD()-> getTable()['volume']] ?
+            "\n  " . '<meta name="DC.Source.Volume" ' .
+            'content="' . $art[$this->getMD()-> getTable()['volume']] . '" />' : '')
+
+        // DC.Source.Issue
+        . ($this->getMD()-> getTable()['issue'] && $art[$this->getMD()-> getTable()['issue']] ?
+            "\n  " . '<meta name="DC.Source.Issue" ' .
+            'content="' . $art[$this->getMD()-> getTable()['issue']] . '" />' : '')
+
         ;
     return $html;
   }
@@ -255,6 +277,7 @@ class OutHtml extends Out
 
   /**
    * Returns html with Highwire Press metadata, for Google Scholar usage
+   * http://www.google.com/intl/en/scholar/inclusion.html#indexing
    *    citation_journal_title: MD repository name
    *    citation_issn:          MD issn
    *    citation_author:        Page author (article author)
@@ -269,54 +292,61 @@ class OutHtml extends Out
   public function metadata_hp()
   {
     /**
-     * http://www.google.com/intl/en/scholar/inclusion.html#indexing
-     * <meta name="citation_volume" content="5"/>
-     * <meta name="citation_issue" content="1"/>
      * <meta name="citation_firstpage" content="1-46"/>
      */
     $art = $this->getArticle();
 
-    $html =  "\n  <!-- Highwire Press metadata tags -->" .
+    $html =  "\n  <!-- Highwire Press metadata tags -->"
 
-        // journal title
-        ($this->getMD()->getRepositoryName() ?
+        // citation_journal_title
+        . ($this->getMD()->getRepositoryName() ?
           "\n  " . '<meta name="citation_journal_title" ' .
-            'content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
+            'content="' . $this->getMD()->getRepositoryName() . '"/>' : '')
 
-        // journal issn
-        ($this->getMD()->getISSN() ?
+        // citation_issn
+        . ($this->getMD()->getISSN() ?
           "\n  " . '<meta name="citation_issn" ' .
-            'content="' . $this->getMD()->getISSN() . '"/>' : '') .
+            'content="' . $this->getMD()->getISSN() . '"/>' : '')
 
-        // article author
-        ( $this->getPageData('author') ?
+        // citation_volume
+        . ($this->getMD()-> getTable()['volume'] && $art[$this->getMD()-> getTable()['volume']] ?
+            "\n  " . '<meta name="citation_volume" ' .
+            'content="' . $art[$this->getMD()-> getTable()['volume']] . '" />' : '')
+
+        // citation_issue
+        . ($this->getMD()-> getTable()['issue'] && $art[$this->getMD()-> getTable()['issue']] ?
+            "\n  " . '<meta name="citation_issue" ' .
+            'content="' . $art[$this->getMD()-> getTable()['issue']] . '" />' : '')
+
+        // citation_author
+        . ( $this->getPageData('author') ?
           "\n  " . '<meta name="citation_author" ' .
-            'content="' . $this->getPageData('author', true) . '" />' : '') .
+            'content="' . $this->getPageData('author', true) . '" />' : '')
 
-        // article title
-        "\n  " . '<meta name="citation_title" ' .
-          'content="' . $this->getPageData('title', true) . '" />' .
+        // citation_title
+        . "\n  " . '<meta name="citation_title" ' .
+          'content="' . $this->getPageData('title', true) . '" />'
 
-        // article date
-        ( $this->getPageData('date') ?
+        // citation_date
+        . ( $this->getPageData('date') ?
             "\n  " . '<meta name="citation_date" ' .
-              'content="' . $this->getPageData('date', true) . '" />' : '') .
+              'content="' . $this->getPageData('date', true) . '" />' : '')
 
-        // article doi
-        "\n  " . '<meta name="citation_doi" ' .
+        // citation_doi
+        . "\n  " . '<meta name="citation_doi" ' .
           'content="' . ( $this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() : '') .
             ( $art[$this->getMD()->getTable('id')] ?
-              $art[$this->getMD()->getTable('id')] : '' ). '"/>' .
+              $art[$this->getMD()->getTable('id')] : '' ). '"/>'
 
-        // article abstract url
-        "\n  " . '<meta name="citation_abstract_html_url" ' .
-          'content="' . $this->getPageData('url', true) . '"/>' .
+        // citation_abstract_html_url
+        . "\n  " . '<meta name="citation_abstract_html_url" ' .
+          'content="' . $this->getPageData('url', true) . '"/>'
 
-        // article language
-        "\n  " . '<meta name="citation_language" ' .
+        // citation_language
+        . "\n  " . '<meta name="citation_language" ' .
           'content="' . $this->getPageData('lang', true) . '" />';
 
-        // article pdf url
+        // citation_pdf_url
         $pdf_url = [
           'sites/default/images/pdf/' . $art['textid'] . '.pdf',
           'sites/default/images/articles/media/' . $art['id'] . '/'. $art['textid'] . '.pdf'

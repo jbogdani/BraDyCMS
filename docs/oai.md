@@ -29,6 +29,8 @@ All the configuration can be handled using a single [JSON](http://www.json.org) 
  - `table.translated_title`: (string) The name of the table field containing the article's second or translated title. This parameter is optional
  - `table.creator`: (string) The name of the table field containing the article's creator (DC.creator)
  - `table.description`: (string) The name of the table field containing the article's description or abstract (DC.description)
+ - `table.volume`: (string) The name of the table field containing the article's volume number (DC.Source.Volume)
+ - `table.issue`: (string) The name of the table field containing the article's issue number (DC.Source.Issue)
 - `publisher`: (string) Publisher's name
 - `doi_prefix`: (string) Publisher's DOI prefix
 - `journal_suffix`: (string) Journal's doi prefix
@@ -60,7 +62,7 @@ File: `./sites/default/modules/oai/config.json`
           "spec" : "usopubblico",
           "name" : "Sezione dedicata all'usopubblico"
         }
-      ], 
+      ],
 
       "table" :
       {
@@ -73,7 +75,7 @@ File: `./sites/default/modules/oai/config.json`
         "translated_title": "english_title",
         "creator" : "author",
         "description" : "summary"
-      }, 
+      },
       "publisher": "BraDypUS",
       "doi_prefix": "10.12977",
       "journal_suffix": "erev",

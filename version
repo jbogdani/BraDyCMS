@@ -1,14 +1,11 @@
-<<<<<<< HEAD
 3.17.0[] = "Enabled server side (apache) file compression for faster site loading"
 3.17.0[] = "customtags::parseContent supports both static and non static plugin methods"
 3.17.0[] = "plugins_ctrl::run supports both static and non static plugin methods"
 3.17.0[] = "OutHtml::ct supports both static and non static plugin methods"
 3.17.0[] = "Added support in Controller::render for user modules template folders"
-=======
 3.16.3[] = "Fixed bug with article sorting"
 3.16.3[] = "Article's textid (ur) default separator is dash (-) not underscore (_)"
 3.16.2[] = "Added support for DC.Rights Dublin core metatag"
->>>>>>> master
 3.16.2[] = "Added support for DC.Source.Issue Dublin core metatag"
 3.16.2[] = "Added support for DC.Source.Volume Dublin core metatag"
 3.16.2[] = "Added support for citation_issue Highwire Press metatag"

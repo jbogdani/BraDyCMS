@@ -160,4 +160,9 @@ class Metadata
   {
     return $this->metadata['earliestDate'];
   }
+
+  public function getCopyright($el = false)
+  {
+    return $el ? $this->metadata['copyright'][$el] : $this->metadata['copyright'];
+  }
 }

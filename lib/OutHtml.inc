@@ -261,16 +261,51 @@ class OutHtml extends Out
               'content="' . $this->getMD()->getURL() . '"/>' : '')
 
         // DC.Source.Volume
-        . ($this->getMD()-> getTable()['volume'] && $art[$this->getMD()-> getTable()['volume']] ?
+        . ($this->getMD()->getTable()['volume'] && $art[$this->getMD()->getTable()['volume']] ?
             "\n  " . '<meta name="DC.Source.Volume" ' .
-            'content="' . $art[$this->getMD()-> getTable()['volume']] . '" />' : '')
+            'content="' . $art[$this->getMD()->getTable()['volume']] . '" />' : '')
 
         // DC.Source.Issue
-        . ($this->getMD()-> getTable()['issue'] && $art[$this->getMD()-> getTable()['issue']] ?
+        . ($this->getMD()->getTable()['issue'] && $art[$this->getMD()->getTable()['issue']] ?
             "\n  " . '<meta name="DC.Source.Issue" ' .
-            'content="' . $art[$this->getMD()-> getTable()['issue']] . '" />' : '')
+            'content="' . $art[$this->getMD()->getTable()['issue']] . '" />' : '');
 
-        ;
+        // DC.Rights, copyright holder and year & license
+        if ($this->getMD()->getCopyright())
+        {
+          if ($art[$this->getMD()->getCopyright('year')] && preg_match("/[0-9]{4}/", $art[$this->getMD()->getCopyright('year')]))
+          {
+            $year = $art[$this->getMD()->getCopyright('year')];
+          }
+          else if (preg_match("/[0-9]{4}/", $this->getMD()->getCopyright('year')))
+          {
+            $year = $this->getMD()->getCopyright('year');
+          }
+          else
+          {
+            $year = date("Y");
+          }
+
+          $copyright_holder = ($this->getMD()->getCopyright('holder') === 'author' ? $art['author'] : $this->getMD()->getCopyright('holder'));
+
+          $html .="\n  " . '<meta name="DC.Rights" '
+                . 'content="Copyright (c) ' . $year . ' ' . $copyright_holder . '" />';
+
+          if ($this->getMD()->getCopyright('license'))
+          {
+            if ($art[$this->getMD()->getCopyright('license')])
+            {
+              $license = $art[$this->getMD()->getCopyright('license')];
+            }
+            else
+            {
+              $license = $this->getMD()->getCopyright('license');
+            }
+            $html .="\n  " . '<meta name="DC.Rights" '
+                  . 'content="' . $license . '" />';
+          }
+        }
+
     return $html;
   }
 
@@ -309,14 +344,14 @@ class OutHtml extends Out
             'content="' . $this->getMD()->getISSN() . '"/>' : '')
 
         // citation_volume
-        . ($this->getMD()-> getTable()['volume'] && $art[$this->getMD()-> getTable()['volume']] ?
+        . ($this->getMD()->getTable('volume') && $art[$this->getMD()->getTable('volume')] ?
             "\n  " . '<meta name="citation_volume" ' .
-            'content="' . $art[$this->getMD()-> getTable()['volume']] . '" />' : '')
+            'content="' . $art[$this->getMD()->getTable('volume')] . '" />' : '')
 
         // citation_issue
-        . ($this->getMD()-> getTable()['issue'] && $art[$this->getMD()-> getTable()['issue']] ?
+        . ($this->getMD()->getTable('issue') && $art[$this->getMD()->getTable('issue')] ?
             "\n  " . '<meta name="citation_issue" ' .
-            'content="' . $art[$this->getMD()-> getTable()['issue']] . '" />' : '')
+            'content="' . $art[$this->getMD()->getTable('issue')] . '" />' : '')
 
         // citation_author
         . ( $this->getPageData('author') ?

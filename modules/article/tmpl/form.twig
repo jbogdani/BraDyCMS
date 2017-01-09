@@ -339,7 +339,7 @@
 
   // Clean textid input on keyup
   admin.removeNotValid($('#edit_form{{ uid }} input[name="textid"]'), {
-    'replace': '_',
+    'replace': '-',
     'toLower': true,
     'permit': ['\\-', '_']
     });

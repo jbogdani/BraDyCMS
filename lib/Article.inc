@@ -481,7 +481,7 @@ class Article
     }
 
     usort($art_list, function($a, $b){
-      if ($a['sort'] && $b['sort'])
+      if (isset($a['sort']) && isset($b['sort']))
       {
         if ($a['sort'] == $b['sort'])
         {

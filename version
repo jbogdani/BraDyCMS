@@ -1,3 +1,4 @@
+3.16.4[] = "Fixed bug with protected tags admin UI, not deleting last user"
 3.16.3[] = "Fixed bug with article sorting"
 3.16.3[] = "Article's textid (ur) default separator is dash (-) not underscore (_)"
 3.16.2[] = "Added support for DC.Rights Dublin core metatag"

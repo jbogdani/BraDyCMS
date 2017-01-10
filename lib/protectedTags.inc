@@ -137,6 +137,13 @@ class protectedTags
    */
   private static function saveData($users = false)
   {
+    /**
+     * If $users array is empty, delete the whole protected tags directory
+     */
+    if ($users !== false && empty($users))
+    {
+      return utils::recursive_delete(dirname(self::$file)) === null;
+    }
     $data = self::getData();
 
     if ($users)

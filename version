@@ -1,4 +1,4 @@
-3.16.4[] = "Roll back fix: Fixed bug with article sorting"
+3.16.5[] = "Roll back fix: Fixed bug with article sorting"
 3.16.4[] = "Fixed bug with protected tags admin UI, not deleting last user"
 3.16.3[] = "Fixed bug with article sorting"
 3.16.3[] = "Article's textid (ur) default separator is dash (-) not underscore (_)"

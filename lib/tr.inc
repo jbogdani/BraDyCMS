@@ -36,7 +36,7 @@ class tr
     {
       $_SESSION['adm_lang'] = $get_lang;
     }
-    else if ($get_lang AND cfg::get('languages') )
+    else if ($get_lang && cfg::get('languages') )
     {
       foreach (cfg::get('languages') as $ll)
       {

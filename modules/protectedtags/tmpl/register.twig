@@ -86,6 +86,7 @@ if (typeof recaptchaCallback !== 'function') {
     if (called) return;
     $('.g-recaptcha').each(function(i, el){
       grecaptcha.render(el, {
+        {% if lang %} 'hl': '{{ lang }}',{% endif %}
         'sitekey' : $(el).data('sitekey')
       });
     });

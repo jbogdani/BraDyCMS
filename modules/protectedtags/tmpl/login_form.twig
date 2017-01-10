@@ -36,7 +36,6 @@
       class="submit {{ css.submit_input }}">
   </div>
 </form>
-
 {% if grc_sitekey %}
 <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit"></script>
 <script>
@@ -46,6 +45,7 @@ if (typeof recaptchaCallback !== 'function') {
     if (called) return;
     $('.g-recaptcha').each(function(i, el){
       grecaptcha.render(el, {
+        {% if lang %} 'hl': '{{ lang }}',{% endif %}
         'sitekey' : $(el).data('sitekey')
       });
     });

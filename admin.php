@@ -47,7 +47,7 @@ catch (Exception $e)
         .'>'. "\n    ";
     }
     ?>
-    
+
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -124,6 +124,7 @@ catch (Exception $e)
       $('.g-recaptcha').each(function(i, el){
         grecaptcha.render(el, {
           'sitekey' : $(el).data('sitekey'),
+          <?php echo $_SESSION['adm_lang'] ? "'hl':'" . $_SESSION['adm_lang'] . "'," : ''; ?>
           'callback': function(response) {
             if (response.length > 0){
               $('#login-button').prop('disabled', false);

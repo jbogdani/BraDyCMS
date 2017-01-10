@@ -66,6 +66,7 @@ class Controller
 
     $data['tr'] = new tr();
     $data['uid'] = uniqid();
+    $data['lang'] = $_SESSION['adm_lang'];
 
     echo $twig->render($template . '.twig', $data );
   }

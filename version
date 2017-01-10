@@ -1,3 +1,4 @@
+3.17.0[] = "Controller::render automatically sets lang variable using $_SESSION['adm_lang'], always set with current language"
 3.17.0[] = "Enabled server side (apache) file compression for faster site loading"
 3.17.0[] = "customtags::parseContent supports both static and non static plugin methods"
 3.17.0[] = "plugins_ctrl::run supports both static and non static plugin methods"

@@ -395,6 +395,10 @@ class userform_ctrl extends Controller
     $sitekey = cfg::get('grc_sitekey');
     if ($sitekey)
     {
+      if ($_SESSION['adm_lang'])
+      {
+        $captcha_lang = "'hl': '" . $_SESSION['adm_lang'] . "',";
+      }
       $html .= <<<EOD
 <div class="g-recaptcha" data-sitekey="{$sitekey}"></div>
 <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit"></script>
@@ -405,7 +409,7 @@ if (typeof recaptchaCallback !== 'function') {
     if (called) return;
     $('.g-recaptcha').each(function(i, el){
       grecaptcha.render(el, {
-        {% if lang %} 'hl': '{{ lang }}',{% endif %}
+        {$captcha_lang}
         'sitekey' : $(el).data('sitekey')
       });
     });

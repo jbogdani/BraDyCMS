@@ -736,19 +736,16 @@ class Out
    */
   public function getPagination()
   {
-    // TODO: get $max from cfg
     $return = false;
     $max = cfg::get('pagination') ? cfg::get('pagination') : 20;
     $page = $this->get['page'] ? $this->get['page'] : 1;
     $tot = $this->totalArticles;
-
+    $return['current'] = $page;
     if ($tot && $max && $tot > $max)
     {
       $return['start'] = '1';
       $return['end'] = ceil($tot/$max);
-      $return['current'] = $page;
     }
-
     return $return;
   }
 

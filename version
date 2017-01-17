@@ -1,3 +1,4 @@
+3.17.0[] = "Out::getPagination sets current segment even if pagination is not activated"
 3.17.0[] = "reCAPTCHA widget is translated in user language using $_SESSION['amdn_language'] (via Controller::render lang)"
 3.17.0[] = "Controller::render automatically sets lang variable using $_SESSION['adm_lang'], always set with current language"
 3.17.0[] = "Enabled server side (apache) file compression for faster site loading"
@@ -5,6 +6,7 @@
 3.17.0[] = "plugins_ctrl::run supports both static and non static plugin methods"
 3.17.0[] = "OutHtml::ct supports both static and non static plugin methods"
 3.17.0[] = "Added support in Controller::render for user modules template folders"
+
 3.16.5[] = "Roll back fix: Fixed bug with article sorting"
 3.16.4[] = "Fixed bug with protected tags admin UI, not deleting last user"
 3.16.3[] = "Fixed bug with article sorting"
@@ -17,6 +19,7 @@
 3.16.2[] = "Metadata citation_pdf_url supports both patterns: images/pdf/{textid}.pdf and images/articles/media/{id}/{textid}.pdf"
 3.16.2[] = "Inline docs enhancement"
 3.16.1[] = "Captcha protection can be now disabled in protected tags module"
+
 3.15.6[] = "Minor bug fixed with useless error log report"
 3.15.5[] = "Fixed bug with Articles::getByTag retrieving not yet published articles"
 3.15.4[] = "Fixed bug with form-inline class on usermodule"
@@ -29,6 +32,7 @@
 3.15.0[] = "Added support do gd/imagick options in main configuration"
 3.15.0[] = "Removed support for image resolution in file upload auto resize function"
 3.15.0[] = "Add site functions check for imagick and gd extensions before adding a new site"
+
 3.14.34[] = "Bug fixed with custom tag gallery not yet compatible with the new gallery system"
 3.14.34[] = "Bug fixed with gallery not setting fancybox css class"
 3.14.33[] = "Bug fixed with download count module and permission settings"

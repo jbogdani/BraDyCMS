@@ -782,7 +782,7 @@ EOD;
   {
     $pagination = $this->getPagination();
 
-    if (!$pagination)
+    if (!$pagination['start'] && !$pagination['end'])
     {
       return false;
     }

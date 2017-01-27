@@ -8,10 +8,10 @@
       <input type="text" name="url" {% if data.url %} readonly="readonly" {% endif %} value="{{ data.url }}" />
     </div>
 
-    {% if lang %}
+    {% if lng %}
     <div class="form-group">
       <label>{{ tr.get('language') }}</label>
-      <input type="text" name="lang" readonly="readonly" value="{{ lang }}" />
+      <input type="text" name="lang" readonly="readonly" value="{{ lng }}" />
     </div>
     {% endif %}
 

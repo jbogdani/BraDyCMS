@@ -37,7 +37,7 @@ class seo_ctrl extends Controller
 
     $this->render('seo', 'form', [
       'data' => $data,
-      'lang' => $this->get['param'][1]
+      'lng' => $this->get['param'][1]
     ]);
   }
 

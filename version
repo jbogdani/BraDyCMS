@@ -1,3 +1,4 @@
+3.17.0[] = "Frontend assets (js and css) contain reference to file's sha1 hash in order to force loading of most recent file"
 3.17.0[] = "Out::getPagination sets current segment even if pagination is not activated"
 3.17.0[] = "reCAPTCHA widget is translated in user language using $_SESSION['amdn_language'] (via Controller::render lang)"
 3.17.0[] = "Controller::render automatically sets lang variable using $_SESSION['adm_lang'], always set with current language"

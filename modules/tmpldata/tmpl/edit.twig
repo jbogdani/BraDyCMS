@@ -1,0 +1,50 @@
+<div id="{{ uid }}">
+
+  <div class="row">
+    <div class="col-md-4"><h1>{{ tr.get('tmpl_data') }}</h1></div>
+
+    <div class="col-md-4 text-center">Syntax validation: <span class="validate"></span></div>
+
+    <div class="col-md-4 text-right">
+      <button class="btn btn-success save-button"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
+      <button class="btn btn-danger delete-button"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
+    </div>
+  </div>
+
+  <pre ContentEditable="true" class="prettyprint code">{{ data }}</pre>
+
+</div>
+
+
+<script>
+
+  function validateSyntax(){
+    try {
+      var c = $.parseJSON($('#{{ uid }} .code').text());
+      if (c){
+        $('#{{ uid }} .validate').html('<i class="text-success icon ion-checkmark" style="font-size: 3em;"></i>');
+        $('#{{ uid }} .save-button').fadeIn();
+      }
+    }
+    catch (err) {
+      $('#{{ uid }} .validate').html('<i class="text-danger icon ion-fireball" style="font-size: 3em;"></i>');
+      $('#{{ uid }} .save-button').fadeOut();
+    }
+  }
+
+
+  validateSyntax();
+
+
+  $('#{{ uid }} .code').on('keyup', function(){
+    validateSyntax();
+  });
+
+  $('#{{ uid }} .save-button').on('click', function(){
+    $.post('controller.php?obj=tmpldata_ctrl&method=save', {data: $.parseJSON( $('#{{ uid }} .code').text())}, function(data){
+      admin.message(data.text, data.status);
+    }, 'json');
+  });
+
+  window.prettyPrint && prettyPrint();
+</script>

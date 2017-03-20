@@ -464,5 +464,6 @@ $_lang['download_count'] = "Conteggio scaricamenti";
 $_lang['file'] = "File";
 $_lang['total_dwnlds'] = "Totale scaricamenti";
 $_lang['ok_count_reset'] = "Il conteggio è stato azzerato";
+$_lang['tmpl_data'] = "Dati di template";
 $_lang['ok_setting_updated'] = "Configurazione salvata";
 $_lang['error_setting_not_updated'] = "Errore. Configurazione non salvata";

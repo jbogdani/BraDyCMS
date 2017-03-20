@@ -15,7 +15,6 @@ class tmpldata_ctrl extends Controller
   {
     try
     {
-
       if (empty($this->post['data']))
       {
         @unlink($this->data_file);
@@ -26,6 +25,10 @@ class tmpldata_ctrl extends Controller
       }
       else
       {
+        if (!is_dir(dirname($this->data_file)))
+        {
+          @mkdir(dirname($this->data_file));
+        }
         if (!utils::write_in_file($this->data_file, $this->post['data'], 'json'))
         {
           throw new Exception();

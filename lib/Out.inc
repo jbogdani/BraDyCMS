@@ -785,5 +785,53 @@ class Out
     }
   }
 
+  /**
+   * Gets and returns array (or array segment, using dot notation) of template static data
+   * Stored in sites/default/modules/tmpldata/tmpldata.json
+   * Returns false if no JSON object is available or if has any syntax error
+   * @param  string|false $key index or index series (dor notation) of array to return. If false the whole array will be returned
+   * @return mixed       false, current vale or complete array of data
+   */
+  public function getData($key = false)
+  {
+    $datafile = SITE_DIR . 'modules/tmpldata/tmpldata.json';
+    // Return false if data file is not available
+    if(!file_exists($datafile)){
+      return false;
+    }
+    // Convert JSON to indexes array
+    $data = json_decode(file_get_contents( $datafile ), true);
+
+    // If conversione fails (syntax error) return false and write log file
+    if (!$data || ! is_array($data)){
+      error_log("Syntax error in file: " . $datafile);
+      return false;
+    }
+
+    // Return the whole object if no $key is defined
+    if (!$key)
+    {
+      return $data;
+    }
+    // Loop into key to return requested index
+    // https://github.com/dflydev/dflydev-dot-access-data/blob/master/src/Dflydev/DotAccessData/Data.php
+    $currentValue = $data;
+    $keyPath = explode('.', $key);
+    for ( $i = 0; $i < count($keyPath); $i++ )
+    {
+      $currentKey = $keyPath[$i];
+      if (!isset($currentValue[$currentKey]) )
+      {
+          return false;
+      }
+      if (!is_array($currentValue))
+      {
+          return false;
+      }
+      $currentValue = $currentValue[$currentKey];
+    }
+    return (!$currentValue || $currentValue === null) ? false : $currentValue;
+  }
+
 
 }

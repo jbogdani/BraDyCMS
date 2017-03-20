@@ -28,11 +28,15 @@ try
   {
     $twig->addExtension(new Twig_Extension_Debug());
   }
+  // TODO: document intersect
+  $intersect = new Twig_SimpleFunction('intersect', function () {
+    return array_values(call_user_func_array('array_intersect',func_get_args()));
+  });
+  $twig->addFunction($intersect);
 
   $fn_file_exists = new Twig_SimpleFunction('file_exists', function ($file) {
     return file_exists($file);
   });
-
   $twig->addFunction($fn_file_exists);
 
   $filter = new Twig_SimpleFilter('parseTags', function ($string)

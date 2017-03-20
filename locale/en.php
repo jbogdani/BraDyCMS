@@ -472,6 +472,8 @@ $_lang['file'] = "File";
 $_lang['total_dwnlds'] = "Total downloads";
 $_lang['ok_count_reset'] = "Count successfully reset";
 
+$_lang['tmpl_data'] = "Template data";
+
 $_lang['ok_setting_updated'] = "Setting updated";
 $_lang['error_setting_not_updated'] = "Error. Setting not updated";
 $_lang[''] = "";

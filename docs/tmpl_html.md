@@ -327,6 +327,29 @@ E.g.: `{{ html.getContext }}`
 
 ---
 
+#### getData('index')
+Returns array of user defined static data. User data are set as JSON object using UserData plugin
+- **index** string, default false. Array index to return (use dot notation for tree-like structure)
+
+E.g.: `{{ html.getData }}`
+    array(
+      "test" => array(
+        "one" => "1",
+        "two" => "2",
+        "etc" => "et caetera"
+        ),
+      "test1" => array(
+        "one1" => "1.1",
+        "two1" => "2.1",
+        "etc1" => "et caetera 1"
+        )
+    )
+
+E.g. 2: `{{ html.getData('test.etc') }}`
+    "et caetera"
+
+---
+
 #### getDevice()
 Returns device type: computer, tablet, phone
 

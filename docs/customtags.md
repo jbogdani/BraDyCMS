@@ -74,7 +74,7 @@ Displays table with file download node data and links or array with files downlo
 - **content**, string, required. Name of download node
 - **class**, string, optional. One or more (space separated) CSS class to apply to main ul tag
 - **limit**, int, optional. Number of elements to return
-- **getObject**, boolean, optional, default false. If true only array of data will be returned, otherwize, default option, full html will be returned
+- **getObject**, boolean, optional, default false. If true only array of data will be returned, otherwise, default option, full html will be returned
 - **getList**, boolean, optional, default false. If true elements will be output as unordered list
 
 Minimal example:

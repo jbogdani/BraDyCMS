@@ -304,20 +304,6 @@ Complete example:
 
 ---
 
-#### skype('type','imageSize')
-Adds the necessary HTML anf javascript code to display a Skype call, chat call & chat widget
-- **content**, string, required. Skype username
-- **type**, string, optional, default: call, available values: call, chat, dropdown.Widget type: call, chat or both (dropdown)
-- **imageSize**, int, optinal, default: 32, available values: 10, 12, 14, 16, 24, 32.The size, in pixels, of the image to show.
-
-Minimal example:
-    [[skype]]skype_username[[/skype]]
-
-Complete example:
-    [[skype type="call" imageSize="32"]]skype_username[[/skype]]
-
----
-
 #### soundcloud('width','height','color','autoplay','artwork')
 Adds the necessary HTML anf javascript code to display a SoundCloud player
 - **content**, string, required. Track URL

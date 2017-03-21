@@ -599,31 +599,6 @@ EOD;
   /**
    *
    * @param array $data
-   *           content*: skype username
-   *           type: call, chat, dropdown. Default: call
-   *           imageSize: 10, 12, 14, 16, 24, 32. Default: 32
-   * @return string
-   */
-  public static function skype($data)
-  {
-    $uid = uniqid('skype');
-
-    return '<script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>' .
-      '<div id="' . $uid . '">' .
-        '<script type="text/javascript">' .
-          'Skype.ui({' .
-            '"name": "' . ( $data['type'] ? $data['type'] : 'call' ) . '",' .
-            '"element": "' . $uid . '",' .
-            '"participants": ["' . $data['content'] . '"],' .
-            '"imageSize": ' . ( $data['imageSize'] ? $data['imageSize'] : '32' ) . '' .
-          '});' .
-        '</script>' .
-      '</div>';
-  }
-
-  /**
-   *
-   * @param array $data
    *     content*: file url
    *     width: widget's width, default 100%
    *     height: widget's height, default 166

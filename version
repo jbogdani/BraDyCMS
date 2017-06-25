@@ -1,3 +1,4 @@
+3.18.1[] = "Parsedown updated to version 1.6.0"
 3.18.0[] = "New template function intersect"
 3.18.0[] = "New function: template data passes an array of data to Out object"
 3.18.0[] = "Frontend assets (js and css) contain reference to file's sha1 hash in order to force loading of most recent file"

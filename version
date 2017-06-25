@@ -1,3 +1,4 @@
+3.18.1[] = "Added support for .php extension in Autoloader, along .inc"
 3.18.1[] = "Parsedown updated to version 1.6.0"
 3.18.0[] = "New template function intersect"
 3.18.0[] = "New function: template data passes an array of data to Out object"
@@ -10,8 +11,10 @@
 3.18.0[] = "plugins_ctrl::run supports both static and non static plugin methods"
 3.18.0[] = "OutHtml::ct supports both static and non static plugin methods"
 3.18.0[] = "Added support in Controller::render for user modules template folders"
+
 3.17.1[] = "Removed custom tag skype, available as independent plugin at https://github.com/jbogdani/bradycms-plugins"
 3.17.0[] = "New function: download customtag accepts new parameters: getObject and getList"
+
 3.16.6[] = "Bug fixed with Seo manager admin plugin language setting"
 3.16.5[] = "Roll back fix: Fixed bug with article sorting"
 3.16.4[] = "Fixed bug with protected tags admin UI, not deleting last user"

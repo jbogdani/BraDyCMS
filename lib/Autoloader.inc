@@ -74,7 +74,7 @@ class Autoloader
         require_once LIB_DIR . 'vendor/Parsedown/Parsedown.php';
         break;
     }
-    
+
     if (strpos($className, "Intervention\\Image\\") !== false)
     {
       $f = LIB_DIR . 'vendor/' . str_replace("\\", "/", $className) . '.php';
@@ -98,9 +98,17 @@ class Autoloader
     }
     else
     {
-      if (file_exists('lib/' . $className . '.inc'))
+      if (file_exists('lib/' . $className . '.php'))
+      {
+        require_once 'lib/' . $className . '.php';
+      }
+      else if (file_exists('lib/' . $className . '.inc'))
       {
         require_once 'lib/' . $className . '.inc';
+      }
+      else if (file_exists('./sites/default/modules/' . $className . '/' . $className . '.php'))
+      {
+        require_once './sites/default/modules/' . $className . '/' . $className . '.php';
       }
       else if (file_exists('./sites/default/modules/' . $className . '/' . $className . '.inc'))
       {

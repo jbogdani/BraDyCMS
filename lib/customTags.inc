@@ -116,6 +116,7 @@ class customTags
    *  content: node name
    *  getObject: if false a well formatted html table will be returned, otherwize an array
    *  class: css class or space-separated classes to attache to main html table (getObject should be false)
+   *  limit: maximum number of records to show
    * @return string|boolean
    */
   public static function download($data)
@@ -187,27 +188,53 @@ class customTags
       return ($a['sort'] > $b['sort']) ? -1 : 1;
     });
 
+    if ($data['limit'])
+    {
+      $files = array_slice($files, 0, (int) $data['limit']);
+    }
+
 
     if ($data['getObject'])
     {
       return $files;
     }
 
-    $html = '<table ' . ($data['class'] ? 'class="' . $data['class'] . '"' : '' ) . '>'
-      . '<tbody>';
 
-    foreach($files as $d)
+    if($data['getList'])
     {
-      $html .= '<tr>'
-        . '<td class="cover"> ' . ($d['cover'] ? '<img src="' . $d['cover'] . '" class="img-responsive">' : '') . ' </td>'
-        . '<th class="title">' . $d['title'] . '</th>'
-        . '<td class="description">' . $d['description'] . '</td>'
-        . '<td class="link"><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('open_download') . '</a></td>'
-        . '</tr>';
-    }
+      $html = '<ul ' . ($data['class'] ? 'class="' . $data['class'] . '"' : '' ) . '>';
 
-    $html .= '</tbody>'
-      . '</table>';
+      foreach($files as $d)
+      {
+        $html .= '<li>'
+          . '<a href="' . $d['path'] . '" class="downloadFile" target="_blank">'
+            . ($d['cover'] ? '<div class="cover"><img src="' . $d['cover'] . '" class="img-responsive"></div>' : '')
+            . '<div class="title">' . $d['title'] . '</div>'
+            . '<div class="description">' . $d['description'] . '</div>'
+          . '</a>'
+        . '</li>';
+      }
+
+      $html .= '</ul>';
+    }
+    else
+    {
+      $html = '<table ' . ($data['class'] ? 'class="' . $data['class'] . '"' : '' ) . '>'
+        . '<tbody>';
+
+      foreach($files as $d)
+      {
+        $html .= '<tr>'
+          . '<td class="cover"> ' . ($d['cover'] ? '<img src="' . $d['cover'] . '" class="img-responsive">' : '') . ' </td>'
+          . '<th class="title">' . $d['title'] . '</th>'
+          . '<td class="description">' . $d['description'] . '</td>'
+          . '<td class="link"><a href="' . $d['path'] . '" class="downloadFile" target="_blank">' . tr::get('open_download') . '</a></td>'
+          . '</tr>';
+      }
+
+      $html .= '</tbody>'
+        . '</table>';
+    }
 
     return $html;
   }
@@ -567,31 +594,6 @@ EOD;
       )
       )
       . '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $pubid . '" async="async"></script>';
-  }
-
-  /**
-   *
-   * @param array $data
-   *           content*: skype username
-   *           type: call, chat, dropdown. Default: call
-   *           imageSize: 10, 12, 14, 16, 24, 32. Default: 32
-   * @return string
-   */
-  public static function skype($data)
-  {
-    $uid = uniqid('skype');
-
-    return '<script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>' .
-      '<div id="' . $uid . '">' .
-        '<script type="text/javascript">' .
-          'Skype.ui({' .
-            '"name": "' . ( $data['type'] ? $data['type'] : 'call' ) . '",' .
-            '"element": "' . $uid . '",' .
-            '"participants": ["' . $data['content'] . '"],' .
-            '"imageSize": ' . ( $data['imageSize'] ? $data['imageSize'] : '32' ) . '' .
-          '});' .
-        '</script>' .
-      '</div>';
   }
 
   /**

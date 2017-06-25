@@ -69,11 +69,13 @@ Minimal example:
 
 ---
 
-#### download('class','getObject')
+#### download('class','limit','getObject','getList')
 Displays table with file download node data and links or array with files download data
 - **content**, string, required. Name of download node
 - **class**, string, optional. One or more (space separated) CSS class to apply to main ul tag
-- **getObject**, boolean, optional, default false. If true only array of data will be returned, otherwize, default option, full html will be returned
+- **limit**, int, optional. Number of elements to return
+- **getObject**, boolean, optional, default false. If true only array of data will be returned, otherwise, default option, full html will be returned
+- **getList**, boolean, optional, default false. If true elements will be output as unordered list
 
 Minimal example:
     [[download]]node_name[[/download]]
@@ -299,20 +301,6 @@ Minimal example:
 
 Complete example:
     [[prezi width="500" height="550" color="#ff6600" autoplay="true" artwork="true"]]prezi_id[[/prezi]]
-
----
-
-#### skype('type','imageSize')
-Adds the necessary HTML anf javascript code to display a Skype call, chat call & chat widget
-- **content**, string, required. Skype username
-- **type**, string, optional, default: call, available values: call, chat, dropdown.Widget type: call, chat or both (dropdown)
-- **imageSize**, int, optinal, default: 32, available values: 10, 12, 14, 16, 24, 32.The size, in pixels, of the image to show.
-
-Minimal example:
-    [[skype]]skype_username[[/skype]]
-
-Complete example:
-    [[skype type="call" imageSize="32"]]skype_username[[/skype]]
 
 ---
 

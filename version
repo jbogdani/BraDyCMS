@@ -1,3 +1,4 @@
+3.18.3[] = "Fine-uploader updated to v. 5.13.0"
 3.18.2[] = "New function: content of custom fields of type longtext will be parsed for custom tags"
 3.18.1[] = "Added support for .php extension in Autoloader, along .inc"
 3.18.1[] = "Parsedown updated to version 1.6.0"

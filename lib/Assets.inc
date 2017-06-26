@@ -20,75 +20,87 @@ class Assets
 
     $assets = array(
 
-      'frontend' => array(
-        'js' => array(
+      'frontend' => [
+        'js' => [
           'local' => $path . 'sites/default/js/frontend.js?' . md5_file($path . 'sites/default/css/styles.css')
-        ),
-        'css' => array(
+        ],
+        'css' => [
           'local' => $path . 'sites/default/css/styles.css?' . md5_file($path . 'sites/default/css/styles.css')
-        )
-      ),
+        ]
+      ],
 
-      'jquery' => array(
+      'jquery' => [
         'version' => '1.11.3',
-        'js' => array(
+        'js' => [
           'local' => $path . 'bower_components/jquery/dist/jquery.min.js',
           'cdn' => '//ajax.googleapis.com/ajax/libs/jquery/--version--/jquery.min.js'
-        )
-      ),
+        ]
+      ],
 
-      'bootstrap' => array(
+      'bootstrap' => [
         'version' => '3.3.5',
-        'js' => array(
+        'js' => [
           'local' => $path . 'bower_components/bootstrap/dist/js/bootstrap.min.js',
           'cdn' => 'https://maxcdn.bootstrapcdn.com/bootstrap/--version--/js/bootstrap.min.js'
-        ),
-        'css' => array(
+        ],
+        'css' => [
           'local' => $path . 'bower_components/bootstrap/dist/css/bootstrap.min.css',
           'cdn' => 'https://maxcdn.bootstrapcdn.com/bootstrap/--version--/css/bootstrap.min.css'
-        )
-      ),
+        ]
+      ],
 
-      'fancybox' => array(
+      'fancybox' => [
         'version' => '2.1.5',
-        'js' => array(
+        'js' => [
           'local' => $path . 'bower_components/fancyBox/source/jquery.fancybox.pack.js',
           'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/--version--/jquery.fancybox.pack.js'
-        ),
-        'css' => array(
+        ],
+        'css' => [
           'local' => $path . 'bower_components/fancyBox/source/jquery.fancybox.css',
           'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/--version--/jquery.fancybox.min.css'
-        )
-      ),
+        ]
+      ],
 
-      'modernizr' => array(
+      'fancybox3' => [
+        'version' => '3.1.20',
+        'js' => [
+          'local' => $path . 'bower_components/fancyBox3/dist/jquery.fancybox.min.js',
+          'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js'
+        ],
+        'css' => [
+          'local' => $path . 'bower_components/fancyBox3/dist/jquery.fancybox.min.css',
+          'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css'
+        ]
+      ],
+
+      'modernizr' => [
         'version' => '2.8.3',
-        'js' => array(
+        'js' => [
           'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/modernizr/--version--/modernizr.min.js'
-        )
-      ),
+        ]
+      ],
 
-      'font-awesome' => array(
+      'font-awesome' => [
         'version' => '4.4.0',
-        'css' => array(
+        'css' => [
           'cdn' => 'https://maxcdn.bootstrapcdn.com/font-awesome/--version--/css/font-awesome.min.css',
           'local' => $path . 'bower_components/font-awesome/css/font-awesome.min.css'
-        )
-      )
+        ]
+      ]
 
     );
     /*
-    'name' => array(
+    'name' => [
       'version' => '',
-      'js' => array(
+      'js' => [
         'local' => '',
         'cdn' => ''
-      ),
-      'css' => array(
+      ],
+      'css' => [
         'local' => '',
         'cdn' => ''
-      )
-    )
+      ]
+    ]
      */
 
     return $assets;

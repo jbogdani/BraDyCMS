@@ -12,6 +12,7 @@
     "font-awesome": "~4.7.0",
     "Ionicons": "ionicons#~2.0.1",
     "fancyBox": "~2.1.5",
+    "fancyBox3": "fancyBox#3",
     "tinymce": "~4.3.4",
     "fine-uploader": "^5.4.1"
   },
@@ -71,6 +72,9 @@
       "source/jquery.fancybox.css",
       "source/*.gif",
       "source/*.png"
+    ],
+    "fancyBox3": [
+      "dist/*.min.*"
     ],
     "tinymce": [
       "plugins/*/plugin.min.js",

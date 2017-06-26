@@ -9,14 +9,14 @@
     "jquery-nestable": "*",
     "select2": "~3.5.4",
     "pnotify": "~3.0.0",
-    "font-awesome": "~4.5.0",
+    "font-awesome": "~4.7.0",
     "Ionicons": "ionicons#~2.0.1",
     "fancyBox": "~2.1.5",
     "tinymce": "~4.3.4",
-    "fineuploader-dist": "^5.4.1"
+    "fine-uploader": "^5.4.1"
   },
   "preen": {
-    "fineuploader-dist": [
+    "fine-uploader": [
       "dist/*.gif",
       "dist/fine-uploader.min.js",
       "dist/fine-uploader.min.css"
@@ -77,6 +77,9 @@
       "skins/**/*",
       "themes/**/*",
       "tinymce.min*"
+    ],
+    "jquery-mousewheel": [
+      "jquery.mousewheel.min.js"
     ]
   }
 }

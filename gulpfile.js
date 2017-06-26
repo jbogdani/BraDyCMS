@@ -17,7 +17,7 @@ var minifiedJs = [
   'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
   'bower_components/select2/select2.min.js',
   'bower_components/google-code-prettify/bin/prettify.min.js',
-  'bower_components/fineuploader-dist/dist/fine-uploader.min.js'
+  'bower_components/fine-uploader/dist/fine-uploader.min.js'
 ];
 
 var changingJS = [

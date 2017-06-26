@@ -37,7 +37,7 @@ catch (Exception $e)
       './bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
       './bower_components/google-code-prettify/bin/prettify.min.css',
       './bower_components/datatables/media/css/dataTables.bootstrap.min.css',
-      './bower_components/fineuploader-dist/dist/fine-uploader.min.css',
+      './bower_components/fine-uploader/dist/fine-uploader.min.css',
       './css/admin.css'
       ] as $f)
     {

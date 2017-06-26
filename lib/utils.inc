@@ -271,27 +271,37 @@ class utils
    */
   public static function upload($upload_dir, $sanitize = false, $resize = false)
   {
-    $allowedExtensions = array();
-
     $sizeLimit = 8 * 1024 * 1024;
 
-    $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+    $uploader = new UploadHandler();
+    $uploader->allowedExtensions = [];
+    $uploader->sizeLimit = $sizeLimit;
+    $uploader->inputName = "qqfile";
+    $uploader->chunksFolder = false;
 
-    $result = $uploader->handleUpload($upload_dir . '/', false);
+    $result = $uploader->handleUpload($upload_dir . '/');
+    $result["uploadName"] = $uploader->getUploadName();
+    $result['path'] = $upload_dir . '/';
+    $result['ext'] = pathinfo($result['uploadName'], PATHINFO_EXTENSION);
+    $result['filename'] = str_replace('.' . $result['ext'], null, pathinfo($result['uploadName'], PATHINFO_BASENAME));
 
-    if ($result['success'] && $sanitize && !is_array($sanitize))
-    {
-      $oPath = $result['path'] . $result['filename'] . '.' . $result['ext'];
+    $oPath = $result['path'] . $result['filename'] . '.' . $result['ext'];
+
+    @rename($result['path'] . $result['uuid'] . '/' . $result['filename'] . '.' . $result['ext'], $oPath);
+    rmdir($result['path'] . $result['uuid']);
+
+    if ($result['success'] && $sanitize && !is_array($sanitize)) {
 
       $result['filename'] = str_replace(
-          array(' ', '{', '}', ',','"', "'", '[', ']', '(', ')'),
-          array('_', null, null, null, null, null, null, null),
+          [' ', '{', '}', ',','"', "'", '[', ']', '(', ')'],
+          ['_', null, null, null, null, null, null, null],
           $result['filename']);
+
       $result['ext'] = strtolower($result['ext']);
 
       $nPath = $result['path'] . $result['filename'] . '.' . $result['ext'];
 
-      if ($oPath != $nPath)
+      if ($oPath !== $nPath)
       {
         @rename($oPath, $nPath);
         unlink($oPath);

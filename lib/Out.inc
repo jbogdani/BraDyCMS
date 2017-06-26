@@ -272,6 +272,14 @@ class Out
     {
       return false;
     }
+    $other_flds = cfg::get('custom_fields');
+    if ($other_flds) {
+      foreach ($other_flds as $f) {
+        if ($this->data['article'][$article][$f['name']] && $f['type'] == 'longtext'){
+          $this->data['article'][$article][$f['name']] = customTags::parseContent($this->data['article'][$article][$f['name']], $this, $this->data['article'][$article]['id']);
+        }
+      }
+    }
 
     if ($this->data['article'][$article]['text'])
     {

@@ -609,6 +609,7 @@ class article_ctrl extends Controller
     }
     catch (Exception $e)
     {
+      error_log($e->getMessage());
       $msg['status'] = 'error';
       $msg['text'] = tr::get('error_file_not_uploaded');
     }

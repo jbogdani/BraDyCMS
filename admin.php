@@ -88,7 +88,7 @@ catch (Exception $e)
     ?>
 
   <script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
-  <script src="./bower_components/tinymce/tinymce.min.js?sha256=<?= hash('sha256', './bower_components/tinymce/tinymce.min.js'); ?>"></script>
+  <script src="./bower_components/tinymce/tinymce.js?sha256=<?= hash('sha256', './bower_components/tinymce/tinymce.js'); ?>"></script>
   <script src="./js/admin.min.js?sha256=<?= hash_file('sha256', './js/admin.min.js') ?>"></script>
 
   <?php

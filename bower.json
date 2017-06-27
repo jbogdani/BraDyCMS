@@ -13,8 +13,8 @@
     "Ionicons": "ionicons#~2.0.1",
     "fancyBox": "~2.1.5",
     "fancyBox3": "fancyBox#3",
-    "tinymce": "~4.3.4",
-    "fine-uploader": "^5.4.1"
+    "tinymce": "~4.6.4",
+    "fine-uploader": "~5.4.1"
   },
   "preen": {
     "fine-uploader": [
@@ -80,7 +80,8 @@
       "plugins/*/plugin.min.js",
       "skins/**/*",
       "themes/**/*",
-      "tinymce.min*"
+      "tinymce.min*",
+      "tinymce.js"
     ],
     "jquery-mousewheel": [
       "jquery.mousewheel.min.js"

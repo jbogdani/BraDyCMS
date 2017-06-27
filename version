@@ -1,4 +1,5 @@
-3.18.3[] = "Bootstrap updated to v 3.3.7"
+3.18.4[] = "Datatables updated to v 1.10.15"
+3.18.4[] = "Bootstrap updated to v 3.3.7"
 3.18.3[] = "Added support for jQuery FancyBox v3"
 3.18.3[] = "Fine-uploader updated to v. 5.13.0"
 3.18.2[] = "New function: content of custom fields of type longtext will be parsed for custom tags"

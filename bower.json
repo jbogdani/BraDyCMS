@@ -78,6 +78,7 @@
     ],
     "tinymce": [
       "plugins/*/plugin.min.js",
+      "plugins/*/plugin.js",
       "skins/**/*",
       "themes/**/*",
       "tinymce.min*",

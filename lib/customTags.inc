@@ -742,11 +742,14 @@ EOD;
     if ($dest_file || $data['href'])
     {
       $html .= '<a '
-        . ($data['gal'] && $data['gal'] !== '' ? 'rel="' . $data['gal'] . '"' : '')
+        // Gallery is defined: this is a fancybox gallery.
+        // Both rel (v2) and data-fancybox are being set
+        . ($data['gal'] && $data['gal'] !== '' ? 'rel="' . $data['gal'] . '" data-fancybox="' . $data['gal'] . '" ' : '')
         . ' href="' . ($data['href'] ? $data['href'] : $dest_file ) . '" '
         . 'class="fancybox' . ($data['href_class'] ? ' ' . $data['href_class'] .' ' : '') . '"'
         . ($data['fancybox'] && $data['href'] ? ' data-fancybox-type="iframe" ' : '')
-        . ($data['caption'] ? ' title="' . $alt . '" ' : '')
+        // Both title and data-caption are set (supporting fancybox v2 & 3)
+        . ($data['caption'] ? ' title="' . $alt . '" data-caption="' . $alt . '" ' : '')
         . '>';
     }
 

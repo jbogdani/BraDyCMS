@@ -15,14 +15,12 @@ class Autoloader
 
   private static function loader($className)
   {
-    if (class_exists($className))
-    {
+    if (class_exists($className)) {
       return true;
     }
 
     // Manually installed external libraries
-    switch($className)
-    {
+    switch($className) {
       case 'Less_Parser':
         require_once LIB_DIR . 'vendor/lessphp/Less.php';
         return true;
@@ -75,50 +73,58 @@ class Autoloader
         break;
     }
 
-    if (strpos($className, "Intervention\\Image\\") !== false)
-    {
+    if (strpos($className, "Intervention\\Image\\") !== false) {
+
       $f = LIB_DIR . 'vendor/' . str_replace("\\", "/", $className) . '.php';
       if(file_exists($f))
       {
         require_once $f;
+        return true;
       }
     }
 
-    if (preg_match('/_ctrl/', $className))
-    {
+    if (preg_match('/_ctrl/', $className)) {
+
       $mod = str_replace('_ctrl', null, $className);
-      if(file_exists(MOD_DIR . $mod . '/' . $mod . '.php'))
-      {
+      if(file_exists(MOD_DIR . $mod . '/' . $mod . '.php')) {
+
         require_once MOD_DIR . $mod . '/' . $mod . '.php';
-      }
-      else
-      {
+        return true;
+
+      } else {
         return false;
       }
     }
-    else
-    {
-      if (file_exists('lib/' . $className . '.php'))
-      {
-        require_once 'lib/' . $className . '.php';
-      }
-      else if (file_exists('lib/' . $className . '.inc'))
-      {
-        require_once 'lib/' . $className . '.inc';
-      }
-      else if (file_exists('./sites/default/modules/' . $className . '/' . $className . '.php'))
-      {
-        require_once './sites/default/modules/' . $className . '/' . $className . '.php';
-      }
-      else if (file_exists('./sites/default/modules/' . $className . '/' . $className . '.inc'))
-      {
-        require_once './sites/default/modules/' . $className . '/' . $className . '.inc';
-      }
-      else
-      {
-        return false;
-      }
+
+    if (file_exists('lib/' . $className . '.php')) {
+
+      require_once 'lib/' . $className . '.php';
+      return true;
+
+    } else if (file_exists('lib/' . $className . '.inc')) {
+
+      require_once 'lib/' . $className . '.inc';
+      return true;
+
+    } else if (file_exists('lib/vendor/' . $className . '/' . $className . '.php')) {
+
+      require_once 'lib/vendor/' . $className . '/' . $className . '.php';
+      return true;
+
+    } else if (file_exists('./sites/default/modules/' . $className . '/' . $className . '.php')) {
+
+      require_once './sites/default/modules/' . $className . '/' . $className . '.php';
+      return true;
+
+    } else if (file_exists('./sites/default/modules/' . $className . '/' . $className . '.inc')) {
+
+      require_once './sites/default/modules/' . $className . '/' . $className . '.inc';
+      return true;
+
+    } else {
+      return false;
     }
+
 
   }
 }

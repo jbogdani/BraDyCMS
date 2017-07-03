@@ -1,5 +1,6 @@
 3.18.5[] = "Added support for fancybox v3 in custom tag fig"
 3.18.5[] = "Added support for fancybox v3 in custom tag gallery"
+3.18.5[] = "Added flag L to admin .htaccess redirect"
 3.18.4[] = "bootstrap-datepicker updated to v 1.7.0"
 3.18.4[] = "Tinymce updated to v 4.6.4"
 3.18.4[] = "pNotify updated to v 3.0.1"

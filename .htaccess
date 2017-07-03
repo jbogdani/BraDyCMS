@@ -28,7 +28,7 @@ RewriteRule ^(api|API)/?(.+)$ controller.php?obj=api_ctrl&method=run&$1 [QSA,L]
 RewriteRule ^download/?(.+)$ controller.php?obj=download_ctrl&method=go&$1 [QSA,L]
 
 #admin
-RewriteRule ^admin/?$ admin.php
+RewriteRule ^admin/?$ admin.php [L]
 
 #safe home page
 RewriteRule ^([a-z]{2})/?$ index.php?lang=$1  [L]

@@ -293,9 +293,11 @@ class customTags
           $html .= '<li data-id="' . basename($item['img']) . '">'
             // Link will be set to external reference, if href is set or to image (fancybox) if not
             . '<a href="' . ($item['href'] ? $item['href'] : $item['img']) . '" '
-                . (!$item['href'] ? 'class="fancybox" ' : '')
+                . (!$item['href'] ? 'class="fancybox" data-caption="' . $title . '"' : '')
                 . 'title="' . $title . '"  '
-                . 'rel="' . $rel . '" >'
+                . 'rel="' . $rel . '"'
+                . (!$item['href'] ? 'data-fancybox="' . $rel . '"' : '')
+                . '>'
               . '<img src="' . $item['thumb'] . '" alt="' . $title . '" />'
             . '</a>'
             . '<div class="caption">'

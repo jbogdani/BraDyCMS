@@ -114,17 +114,21 @@ class download_ctrl extends Controller
    *      name: name of the plain text file to be downloaded
    * Throws an Exception if no valid file is found.
    */
-  public function go()
+  public function go($file = false, $text = false, $name = false)
   {
     try
     {
-      if ($this->get['file'])
+      $file = $file ? $file : $this->get['file'];
+      $text = $text ? $text : $this->get['text'];
+      $name = $name ? $name : $this->get['name'];
+
+      if ($file)
       {
-        DownloadAndCount::file($this->get['file']);
+        DownloadAndCount::file($file);
       }
-      else if ($this->get['text'] && $this->get['name'])
+      else if ($text && $name)
       {
-        DownloadAndCount::text(utils::safe_decode($this->get['text']), $this->get['name']);
+        DownloadAndCount::text(utils::safe_decode($text), $name);
       }
     }
     catch (Exception $e)

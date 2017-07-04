@@ -106,12 +106,12 @@ class Controller
    * Also, foreach object, the admin blacklist will be checked
    * @throws Exception
    */
-  public function route()
+  public function route($obj = false, $method = false, $param = false)
   {
-    if ($this->request['obj'])
+    if ($obj || $this->request['obj'])
     {
-      $obj = $this->request['obj'];
-      $method = $this->request['method'];
+      $obj = $obj ? $obj : $this->request['obj'];
+      $method = $method ? $method : $this->request['method'];
 
       unset($this->request['obj']);
       unset($this->request['method']);
@@ -120,7 +120,7 @@ class Controller
       unset($this->post['obj']);
       unset($this->post['method']);
 
-      $param = array_merge((array)$this->get['param'], array('post'=>$this->post, 'get' => $this->get));
+      $param = $param ? $param : array_merge((array)$this->get['param'], array('post'=>$this->post, 'get' => $this->get));
 
       $trace_params = $obj . '::' . $method . '(' . var_export($param, true) . ')';
 
@@ -142,7 +142,7 @@ class Controller
           throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
         }
 
-        $_aa->$method();
+        call_user_func_array([$_aa, $method], $param);
       }
       else
       {

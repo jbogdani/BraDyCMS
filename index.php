@@ -14,6 +14,14 @@ try
     header('location: ./admin');
   }
 
+  $get = Router::run();
+
+  var_dump($get);
+
+exit;
+
+
+
   $outHtml = new OutHtml($_GET, $_SESSION['lang']);
 
   $settings = unserialize(CACHE);

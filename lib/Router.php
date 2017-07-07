@@ -60,22 +60,27 @@ class Router
 
     $router->addMatchTypes(array('lng' => '[a-z]{2}'));
     $router->addMatchTypes(array('art' => '[a-zA-Z0-9-_]*'));
+    $router->addMatchTypes(array('string' => '[a-zA-Z0-9-_]*'));
     $router->addMatchTypes(array('pg' => '[0-9]{1,3}'));
 
-    $router->map( 'GET', "/[lng:lng]/?", function($lng) {
+    $router->map( 'GET', "/[lng:lng]?/?", function($lng = false) {
+      var_dump('home');
+      var_dump($lng);
       return [
         'lang' => $lng
       ];
     });
 
-    $router->map( 'GET', "/[lng:lng]?/[art:art]", function($lng, $art) {
+    $router->map( 'GET', "/[lng:lng]?/[art:art]", function($lng = false, $art) {
+      var_dump('article', $lng, $art);
       return [
         'lang' => $lng,
         'art_title' => $art
       ];
     });
 
-    $router->map( 'GET', "/[lng:lng]?/[art:art].draft", function($lng, $art) {
+    $router->map( 'GET', "/[lng:lng]?/[art:art].draft", function($lng = false, $art) {
+      var_dump('draft', $lng, $art);
       return [
         'lang' => $lng,
         'art_title' => $art,
@@ -83,14 +88,17 @@ class Router
       ];
     });
 
-    $router->map( 'GET', "/[lng:lng]?/[art:tags].all", function($lng, $tags) {
+    $router->map( 'GET', "/[lng:lng]?/[art:tags].all", function($lng = false, $tags) {
+      var_dump('tags', $lng, $tags);
       return [
         'lang' => $lng,
         'tags' => $tags
       ];
     });
 
-    $router->map( 'GET', "/[lng:lng]?/search:[:string]/[pg:pg]?", function($lng, $string, $pg = false) {
+    $router->map( 'GET', "/[lng:lng]?/?search:[:string]/?[pg:pg]?", function($lng = false, $string, $pg = false) {
+      var_dump('search', $lng, $string, $pg);
+
       return [
         'lang' => $lng,
         'search' => $string,
@@ -116,11 +124,6 @@ class Router
   }
 }
 /*
-RewriteEngine on
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php [L]
-
 #sitemap
 # RewriteRule ^sitemap.xml$ controller.php?obj=seo_ctrl&method=sitemap
 
@@ -131,18 +134,6 @@ RewriteRule . index.php [L]
 #safe site, js and css, tiny_mce
 # RewriteCond %{REQUEST_FILENAME} !-f
 # RewriteRule (css|sites|js|img|xsl|fonts)/(.+) $1/$2
-
-# RewriteRule ^feed/rss$ controller.php?obj=feeds_ctrl&method=rss2 [QSA,L]
-# RewriteRule ^feed/atom$ controller.php?obj=feeds_ctrl&method=atom [QSA,L]
-
-#OAI
-# RewriteRule ^(OAI|oai)$ controller.php?obj=OAI_ctrl&method=run [QSA,L]
-
-#api
-# RewriteRule ^(api|API)/?(.+)$ controller.php?obj=api_ctrl&method=run&$1 [QSA,L]
-
-#download
-# RewriteRule ^download/?(.+)$ controller.php?obj=download_ctrl&method=go&$1 [QSA,L]
 
 #admin
 # RewriteRule ^admin/?$ admin.php [L]

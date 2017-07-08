@@ -64,15 +64,12 @@ class Router
     $router->addMatchTypes(array('pg' => '[0-9]{1,3}'));
 
     $router->map( 'GET', "/[lng:lng]?/?", function($lng = false) {
-      var_dump('home');
-      var_dump($lng);
       return [
         'lang' => $lng
       ];
     });
 
     $router->map( 'GET', "/[lng:lng]?/[art:art]", function($lng = false, $art) {
-      var_dump('article', $lng, $art);
       return [
         'lang' => $lng,
         'art_title' => $art
@@ -80,7 +77,6 @@ class Router
     });
 
     $router->map( 'GET', "/[lng:lng]?/[art:art].draft", function($lng = false, $art) {
-      var_dump('draft', $lng, $art);
       return [
         'lang' => $lng,
         'art_title' => $art,
@@ -89,7 +85,6 @@ class Router
     });
 
     $router->map( 'GET', "/[lng:lng]?/[art:tags].all", function($lng = false, $tags) {
-      var_dump('tags', $lng, $tags);
       return [
         'lang' => $lng,
         'tags' => $tags
@@ -97,8 +92,6 @@ class Router
     });
 
     $router->map( 'GET', "/[lng:lng]?/?search:[:string]/?[pg:pg]?", function($lng = false, $string, $pg = false) {
-      var_dump('search', $lng, $string, $pg);
-
       return [
         'lang' => $lng,
         'search' => $string,

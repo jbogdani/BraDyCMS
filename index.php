@@ -16,13 +16,16 @@ try
 
   $get = Router::run();
 
-  var_dump($get);
+  if (!$get){
+    exit;
+  }
 
-exit;
+  $outHtml = new OutHtml($get, $_SESSION['lang']);
 
 
 
-  $outHtml = new OutHtml($_GET, $_SESSION['lang']);
+
+
 
   $settings = unserialize(CACHE);
   $settings['autoescape'] = false;

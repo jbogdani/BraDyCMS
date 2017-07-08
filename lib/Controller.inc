@@ -28,12 +28,15 @@ class Controller
 
   /**
    * Initializes object and sets $get, $post and $request variables
+   * @param array $get $_GET data
+   * @param array $post $_POST data
+   * @param array $request $_REQUEST data
    */
-  public function __construct()
+  public function __construct($get= false, $post = false, $request = false)
   {
-    $this->get = $_GET;
-    $this->post = $_POST;
-    $this->request = $_REQUEST;
+    $this->get = $get;
+    $this->post = $post;
+    $this->request = $request;
   }
 
   /**

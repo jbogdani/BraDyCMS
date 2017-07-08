@@ -12,50 +12,56 @@ class Router
 
     $router = new AltoRouter();
 
-    $router->map( 'GET', "/robots.txt", function() {
-      $controller = new Controller();
+    $controller = new Controller($_GET, $_POST, $_REQUEST);
+
+
+    $router->map( 'GET', "/controller.php", function() use ($controller) {
+      $controller->route();
+      return false;
+    });
+
+    $router->map( 'GET', "/robots.txt", function() use ($controller) {
       $controller->route('seo_ctrl', 'robots');
       return false;
     });
 
-    $router->map( 'GET', "/sitemap.xml", function() {
-      $controller = new Controller();
+    $router->map( 'GET', "/robots.txt", function() use ($controller) {
+      $controller->route('seo_ctrl', 'robots');
+      return false;
+    });
+
+    $router->map( 'GET', "/sitemap.xml", function() use ($controller) {
       $controller->route('seo_ctrl', 'sitemap');
       return false;
     });
 
-    $router->map( 'GET', "/feed/rss", function() {
-      $controller = new Controller();
+    $router->map( 'GET', "/feed/rss", function() use ($controller) {
       $controller->route('feeds_ctrl', 'rss2');
       return false;
     });
 
-    $router->map( 'GET', "/feed/atom", function() {
-      $controller = new Controller();
+    $router->map( 'GET', "/feed/atom", function() use ($controller) {
       $controller->route('feeds_ctrl', 'atom');
       return false;
     });
 
-    $router->map( 'GET', "/oai", function() {
-      $controller = new Controller();
+    $router->map( 'GET', "/oai", function() use ($controller) {
       $controller->route('OAI_ctrl', 'run');
       return false;
     });
 
-    $router->map( 'GET', "/api", function() {
-      $controller = new Controller();
+    $router->map( 'GET', "/api", function() use ($controller) {
       $controller->route('api_ctrl', 'run');
       return false;
     });
 
-    $router->map( 'GET', "/download/[*:querystring]", function($querystring) {
-      $controller = new Controller();
+    $router->map( 'GET', "/download/[*:querystring]", function($querystring) use ($controller) {
       $controller->route('download_ctrl', 'go', ['file' => $querystring]);
       return false;
     });
 
     $router->map( 'GET', "/admin", function() {
-      echo "Do something";
+      require __DIR__ . '/../admin.php';
     });
 
     $router->addMatchTypes(array('lng' => '[a-z]{2}'));

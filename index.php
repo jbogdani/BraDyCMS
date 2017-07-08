@@ -24,9 +24,6 @@ try
 
 
 
-
-
-
   $settings = unserialize(CACHE);
   $settings['autoescape'] = false;
 

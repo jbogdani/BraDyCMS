@@ -165,6 +165,13 @@ class Controller
     }
   }
 
+  /**
+   * Utlity method that get array with status and text
+   * and returns json encoded response
+   * @param  string $status response status
+   * @param  string $text   response text
+   * @return string         json encoded response
+   */
   protected function responseJson($status, $text)
   {
     return json_encode(array(

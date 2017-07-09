@@ -11,14 +11,12 @@
 class Out
 {
   private
-    $context,  // context: article, tags, search, home
-    $data = array(),  //
+    $cfg,
+    $data = [],  // cached data
     $metadata,
     $mobiledetect,
     $totalArticles,
-    $queue
-    ;
-  protected $get = array();
+    $queue;
 
   public
     // $_SESSION['lang'], if set
@@ -31,77 +29,133 @@ class Out
   /**
    * Starts object, sets context and language data
    * @param array $get  array of $_GET data
-   * @param string $lang  language, set in index using $_SESSION['lang'] variable
    */
-  public function __construct($get, $lang = false)
+  public function __construct($get)
   {
-    /**
-     * Set get
-     */
-    $this->get = $get;
+    $this->loadSettings($get);
 
-    /**
-     * Explode tags using ~ or - (AND or OR)
-     */
-    if ($this->get['tags'])
+
+    // $this->lang              $this->cfg['lang']
+    // $this->session_lang      $this->cfg['session_lang']
+    // $this->user_lang         $this->cfg['user_lang']
+
+  }
+
+  /**
+   * Loads settings in $this->cfg variable from $get array
+   * @param  array $get  input data
+   *                 page       string  current page, for paginates content
+   *                 art_title  string  current article's textid
+   *                 draft      boolean if true draft view is required
+   *                 search     string  searched string
+   *                 tags       string  list of tags separated by - or ~
+   * @param  string|false $lang Input (url) language
+   * @return array       $this->cfg array with data to be used in this object and its extensions
+   *                            page    int  current page
+   *                            lang    string
+   *                            session_lang
+   *                            user_lang
+   *                            context
+   *                            textId  string  Article's textid passed in URL
+   *                            parts   array   URL parts
+   *                            isDraft boolean if true draft version of article is required
+   *                            searchString
+   *                            tags    array   List of filtering tags
+   *                            tagAll boolean if true article must be tagged witl all listed tags to be retrieved
+   *                            toBase  string  relative path to base path
+   */
+  private function loadSettings($get, $lang = false)
+  {
+
+    // Set page
+    if ($get['page']) {
+      $this->cfg['page'] = (int)str_replace('/', null, $get['page']);
+    }
+
+    // User input language if different from defualt language
+    // This language SHOULD appear in all URLs
+    if ($get['lang'] && ( $get['lang'] !== cfg::get('sys_lang') ) ) {
+      $this->cfg['lang'] = $get['lang'];
+    }
+
+    // session_lang is the url defined lang
+    // no matter if it is system language or not
+    if ($get['lang'])
     {
-      if(preg_match('/~/', $this->get['tags']))
-      {
-        $this->get['tag_all'] = true;
-        $this->get['tags'] = utils::csv_explode($this->get['tags'], '~');
+      $this->cfg['session_lang'] = $get['lang'];
+    }
+
+    // user_lang is the content language:
+    // it is URL language, if provided or system default language
+    $this->cfg['user_lang'] = $get['lang'] ? $get['lang'] : cfg::get('sys_lang');
+
+    // Set context and context related data
+    if ( $get['art_title'] ) {
+
+      // 1. article
+      $this->cfg['context'] = 'article';
+
+      $exploded = explode('/', $get['art_title']);
+      $this->cfg['textId'] = array_values(array_slice($exploded, -1))[0];
+      array_pop($exploded);
+      $this->cfg['parts'] = $exploded;
+      $this->cfg['isDraft'] = ($get['draft'] !== false);
+
+
+      $this->cfg['toBase'] = count($exploded > 1) ? str_repeat('../', count($exploded > 1)) : '/';
+
+      // load current article's data in $data['article'] array
+      $this->data['article'][$this->cfg['textId']] = Article::getByTextid($this->cfg['textId'], $this->cfg['user_lang'], $this->cfg['isDraft']);
+
+    } else if ( $get['search'] ) {
+
+      // 2. search
+      $this->cfg['context'] = 'search';
+      $this->cfg['searchString'] = $get['search'];
+
+    } else if ( $get['tags'] ) {
+
+      // 3. tags
+      $this->cfg['context'] = 'tags';
+
+      if(preg_match('/~/', $get['tags'])) {
+        // All tags
+        $this->cfg['tagAll'] = true;
+        $this->cfg['tags'] = utils::csv_explode($get['tags'], '~');
+
+      } else {
+        // Any tag
+        $this->cfg['tags'] = utils::csv_explode($get['tags'], '-');
       }
-      else
-      {
-        $this->get['tags'] = utils::csv_explode($this->get['tags'], '-');
-      }
-    }
-
-    /**
-     * Set page
-     */
-    if ($this->get['page'])
-    {
-      $this->get['page'] = str_replace('/', null, $this->get['page']);
-    }
-
-    /**
-     * Set language
-     */
-    if ($lang AND ( $lang != cfg::get('sys_lang') ) )
-    {
-      $this->lang = $lang;
-    }
-
-    if ($lang)
-    {
-      $this->session_lang = $lang;
-    }
-
-    $this->user_lang = $lang ? $lang : cfg::get('sys_lang');
-
-    /**
-     * Set context
-     */
-    if ( $get['art_title'] )
-    {
-      $this->context = 'article';
-
-      // load curent article's data in $data['article'] array
-      $this->data['article'][$get['art_title']] = Article::getByTextid($get['art_title'], $this->lang, $this->get['draft']);
-    }
-    else if ( $get['search'] || $get['is_search'])
-    {
-      $this->context = 'search';
-    }
-    else if ( $get['tags'] )
-    {
-      $this->context = 'tags';
     }
     else
     {
-      $this->context = 'home';
+      $this->cfg['context'] = 'home';
     }
+    return $this->cfg;
   }
+
+  /**
+   * Returns relative path to basepath, with o information about pagination or languages
+   * TODO: document this
+   * @return string relative full path to base path
+   */
+  public function getToBase()
+  {
+    return $this->cfg['toBase'];
+  }
+
+  /**
+   * Returns array with url parts (non language, non page, no article, slash separated)
+   * TODO: document this
+   * @return array url parts
+   */
+  public function getParts()
+  {
+    return $this->cfg['parts'];
+  }
+
+
 
   /**
    *
@@ -126,7 +180,7 @@ class Out
    */
   public function getTextId()
   {
-    return $this->get['art_title'];
+    return $this->cfg['textId'];
   }
 
   /**
@@ -157,11 +211,18 @@ class Out
    * @param boolean $tags  array of tags to use for filtering section articles
    * @param integer $page Page number, default false
    * @param boolean $full_link  If true the absolute link will be returned.
+   * @param mixed   $parts can be string (/ separated parts), true: out::getParts() will be used, array or false
    * @return string
    */
-  public function link2($art, $tags = false, $page = false, $absl_link = false)
+  public function link2($art, $tags = false, $page = false, $absl_link = false, $parts = false)
   {
-    !$page ? $page = $this->get['page'] : '';
+    $page = $page ? $page : $this->cfg['page'];
+
+    if ($parts && is_bool($parts)) {
+      $parts = $this->getParts();
+    } elseif ($parts && is_string($parts)) {
+      $parts = explode('/', $parts);
+    }
 
     $url = '';
 
@@ -174,7 +235,7 @@ class Out
         $url = link::to_tags($art, $this->session_lang, $page);
         break;
       default:
-        $url = link::to_article($art == 'home' ? './' : $art, $this->session_lang, $page);
+        $url = link::to_article($art == 'home' ? './' : $art, $this->session_lang, $page, $parts);
         break;
     }
 
@@ -193,7 +254,7 @@ class Out
    */
   public function getFilterTags()
   {
-    return $this->get['tags'];
+    return $this->cfg['tags'];
   }
 
   /**
@@ -202,15 +263,13 @@ class Out
    */
   public function getArticleTags($article = false)
   {
-    if (!$article)
-    {
-      $article = $this->get['art_title'];
-    }
-
-    if ($this->context !== 'article')
+    if ($this->getContext() !== 'article')
     {
       return false;
     }
+
+    $article = $article ? $article :  $this->getTextId();
+
 
     if (!$this->data['article'][$article]['tags'])
     {
@@ -232,7 +291,7 @@ class Out
    */
   public function getContext()
   {
-    return $this->context;
+    return $this->cfg['context'];
   }
 
 
@@ -244,9 +303,9 @@ class Out
    */
   public function getSimilar($textid = false, $max = false)
   {
-    $textid = $textid ? $textid : $this->get['art_title'];
+    $textid = $textid ? $textid : $this->getTextId();
 
-    return $textid ? Article::getSimilar(false, $textid, $this->lang, $max) : false;
+    return $textid ? Article::getSimilar(false, $textid, $this->session_lang, $max) : false;
   }
 
     /**
@@ -256,22 +315,22 @@ class Out
    */
   public function getArticle($article = false, $draft = false)
   {
-    $draft = $draft ? $draft : $this->get['draft'];
+    $article = $article ? $article : $this->getTextId();
 
-    if (!$article)
-    {
-      $article = $this->get['art_title'];
+    $draft = $draft ? $draft : $this->cfg['isDraft'];
+
+    // Check in cache first
+    if ( $this->data['article'][$article] ) {
+      return $this->data['article'][$article];
     }
 
-    if ($article && $article != $this->get['art_title'])
-    {
-      $this->data['article'][$article] = Article::getByTextid($article, $this->lang, $draft);
-    }
+    $this->data['article'][$article] = Article::getByTextid($article, $this->lang, $draft);
 
-    if (empty($this->data['article'][$article]))
-    {
+    // Article does not exist!
+    if (empty($this->data['article'][$article])) {
       return false;
     }
+
     $other_flds = cfg::get('custom_fields');
     if ($other_flds) {
       foreach ($other_flds as $f) {
@@ -299,15 +358,13 @@ class Out
   {
     $tags = func_get_args() ? func_get_args() : $this->getFilterTags();
 
-    if (!is_array($tags))
-    {
+    if (!is_array($tags)) {
       return false;
     }
 
-    foreach ($tags as $x=>&$t)
-    {
-      if(is_array($t))
-      {
+    foreach ($tags as $x=>&$t) {
+
+      if(is_array($t)) {
         list($page, $max) = $t;
         unset($tags[$x]);
       }
@@ -329,9 +386,9 @@ class Out
   {
     list($start, $max) = $this->page2limit($page, $max);
 
-    $this->totalArticles = Article::getByTag($tags, $this->lang, $this->get['tag_all'], false, false, false, true);
+    $this->totalArticles = Article::getByTag($tags, $this->lang, $this->cfg['tagAll'], false, false, false, true);
 
-    $arts = Article::getByTag($tags, $this->lang, $this->get['tag_all'], false, $start, $max);
+    $arts = Article::getByTag($tags, $this->lang, $this->cfg['tagAll'], false, $start, $max);
 
     if (is_array($arts) && !$dontparse)
     {
@@ -400,10 +457,10 @@ class Out
 
 
     // ROBOTS
-    if ($this->data['article'][$this->get['art_title']]['robots'])
+    if ($this->data['article'][$this->getTextId()]['robots'])
     {
       // 1. get value from the custom field named robots
-      $this->data['page']['robots'] = $this->data['article'][$this->get['art_title']]['robots'];
+      $this->data['page']['robots'] = $this->data['article'][$this->getTextId()]['robots'];
     }
     else if(cfg::get('robots'))
     {
@@ -417,22 +474,22 @@ class Out
     }
 
     // TITLE
-    if ($this->data['article'][$this->get['art_title']]['customtitle'])
+    if ($this->data['article'][$this->getTextId()]['customtitle'])
     {
       // 1. get value from the custom field named customtitle
-      $this->data['page']['custom_title'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customtitle']);
+      $this->data['page']['custom_title'] = str_replace('"', '&quot;', $this->data['article'][$this->getTextId()]['customtitle']);
     }
     if ($seo && $seo['title'])
     {
       // 2. SEO table value
       $this->data['page']['title'] = $seo['title'];
     }
-    else if ($this->data['article'][$this->get['art_title']]['title'])
+    else if ($this->data['article'][$this->getTextId()]['title'])
     {
       // 3. use the value of the field named "title"
-      $this->data['page']['title'] = $this->data['article'][$this->get['art_title']]['title'];
+      $this->data['page']['title'] = $this->data['article'][$this->getTextId()]['title'];
     }
-    else if ($this->context === 'tags')
+    else if ($this->cfg['context'] === 'tags')
     {
       // 4. if context is tags the main site configuration (title) will be used followed by comma-separated-list of filtering tgs
       $this->data['page']['title'] = cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags());
@@ -451,17 +508,17 @@ class Out
       // 1. Use Seo table value
       $this->data['page']['description'] = $seo['description'];
     }
-    else if ($this->data['article'][$this->get['art_title']]['customdescription'])
+    else if ($this->data['article'][$this->getTextId()]['customdescription'])
     {
       // 2. get value from the custom field named customdescription
-      $this->data['page']['description'] = str_replace('"', '&quot;', $this->data['article'][$this->get['art_title']]['customdescription']);
+      $this->data['page']['description'] = str_replace('"', '&quot;', $this->data['article'][$this->getTextId()]['customdescription']);
     }
-    else if ( $this->data['article'][$this->get['art_title']]['summary'] && trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])) != '' )
+    else if ( $this->data['article'][$this->getTextId()]['summary'] && trim(strip_tags($this->data['article'][$this->getTextId()]['summary'])) != '' )
     {
       // 3. use the value of the field named "summary"
-      $this->data['page']['description'] = str_replace('"', '&quot;', trim(strip_tags($this->data['article'][$this->get['art_title']]['summary'])));
+      $this->data['page']['description'] = str_replace('"', '&quot;', trim(strip_tags($this->data['article'][$this->getTextId()]['summary'])));
     }
-    else if ($this->context === 'tags')
+    else if ($this->cfg['context'] === 'tags')
     {
       // 4. if context is tags the main site configuration (description) will be used followed by comma-separated-list of filtering tgs
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description') . ' / ' .  implode(', ', $this->getFilterTags()));
@@ -485,10 +542,10 @@ class Out
     {
       $this->data['page']['keywords'] = $seo['keywords'];
     }
-    else if ($this->data['article'][$this->get['art_title']]['keywords'])
+    else if ($this->data['article'][$this->getTextId()]['keywords'])
     {
       // 1. use the value of the field named "keywords"
-      $this->data['page']['keywords'] = $this->data['article'][$this->get['art_title']]['keywords'];
+      $this->data['page']['keywords'] = $this->data['article'][$this->getTextId()]['keywords'];
     }
     else
     {
@@ -508,17 +565,17 @@ class Out
     $this->data['page']['mission'] = cfg::get('mission');
 
     // IMAGE
-    $path2img = str_replace(utils::getBaseUrl(), null, $this->data['article'][$this->get['art_title']]['art_img']['orig']);
+    $path2img = str_replace(utils::getBaseUrl(), null, $this->data['article'][$this->getTextId()]['art_img']['orig']);
 
     if (file_exists($path2img))
     {
       // 1. check first for article image
       $this->data['page']['image'] = utils::getBaseUrl() . $path2img;
     }
-    else if ($this->data['article'][$this->get['art_title']]['text'])
+    else if ($this->data['article'][$this->getTextId()]['text'])
     {
       // 2. get first image available in the article body
-      $xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->get['art_title']]['text']));
+      $xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->getTextId()]['text']));
       $src = $xpath->evaluate("string(//img/@src)");
 
       $this->data['page']['image'] = ( !preg_match('/http/', $src) ? utils::getBaseUrl() . '/' : '') . $src;
@@ -526,18 +583,18 @@ class Out
 
     // AUTHOR
     if (
-      $this->data['article'][$this->get['art_title']]['author']
+      $this->data['article'][$this->getTextId()]['author']
       &&
-      trim($this->data['article'][$this->get['art_title']]['author']) != ''
+      trim($this->data['article'][$this->getTextId()]['author']) != ''
     )
     {
-      $this->data['page']['author'] = $this->data['article'][$this->get['art_title']]['author'];
+      $this->data['page']['author'] = $this->data['article'][$this->getTextId()]['author'];
     }
 
     // DATE
-    if ($this->data['article'][$this->get['art_title']]['publish'] && $this->data['article'][$this->get['art_title']]['publish'] != '0000-00-00')
+    if ($this->data['article'][$this->getTextId()]['publish'] && $this->data['article'][$this->getTextId()]['publish'] != '0000-00-00')
     {
-      $this->data['page']['date'] = $this->data['article'][$this->get['art_title']]['publish'];
+      $this->data['page']['date'] = $this->data['article'][$this->getTextId()]['publish'];
     }
   }
 
@@ -572,15 +629,15 @@ class Out
 
     foreach ($menu as &$item)
     {
-      if ($this->get['art_title'] && $this->get['art_title'] == $item['href'])
+      if ($this->getTextId() && $this->getTextId() == $item['href'])
       {
         $item['current'] = true;
       }
-      else if ($this->context == 'home' && ( $item['href'] == './' || $item['href'] == ''))
+      else if ($this->cfg['context'] == 'home' && ( $item['href'] == './' || $item['href'] == ''))
       {
         $item['current'] = true;
       }
-      else if ($this->context === 'tags' && (
+      else if ($this->cfg['context'] === 'tags' && (
         $item['href'] === implode('-', $this->getFilterTags()) . '.all' ||
         $item['href'] === implode('~', $this->getFilterTags()) . '.all' ||
         $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' ||
@@ -620,7 +677,7 @@ class Out
    */
   public function getSearchResults($string = false, $page = false, $max = false)
   {
-    $string = $string ? $string : $this->get['search'];
+    $string = $string ? $string : $this->getSearchString();
     $string = preg_replace('/^"(.+)"$/', '$1', $string, -1, $tot);
 
     $this->totalArticles = Article::search($string, false, false, false, false, true);
@@ -637,7 +694,7 @@ class Out
    */
   public function getSearchString($escape = false)
   {
-    return $escape ? htmlentities($this->get['search']) : $this->get['search'];
+    return $escape ? htmlentities($this->cfg['searchString']) : $this->cfg['searchString'];
   }
 
 
@@ -720,22 +777,13 @@ class Out
   {
     $max_cfg = cfg::get('pagination');
 
-    if ($page || $this->get['page'] || $max_cfg)
-    {
-      if (!$page)
-      {
-        $page = $this->get['page'] ? $this->get['page'] : 1;
-      }
+    $page = $page ? $page : ($this->cfg['page'] ? $this->cfg['page'] : 1);
 
-      if (!$max)
-      {
-        $max = $max_cfg ? $max_cfg : 20;
-      }
+    $max = $max ? $max : ($max_cfg ? $max_cfg : 20);
 
-      $start = ( ($page -1 ) * $max);
-    }
+    $start = ( ($page -1 ) * $max);
 
-    return array($start, $max);
+    return [$start, $max];
   }
 
   /**
@@ -746,7 +794,7 @@ class Out
   {
     $return = false;
     $max = cfg::get('pagination') ? cfg::get('pagination') : 20;
-    $page = $this->get['page'] ? $this->get['page'] : 1;
+    $page = $this->cfg['page'] ? $this->cfg['page'] : 1;
     $tot = $this->totalArticles;
     $return['current'] = $page;
     if ($tot && $max && $tot > $max)

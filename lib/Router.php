@@ -101,6 +101,14 @@ class Router
       ];
     }, 'search');
 
+    $router->map( 'GET', "/[lng:lng]?/?[**:requestedUrl]", function($lng = false, $requestedUrl) {
+      return [
+        'lang' => $lng,
+        'art_title' => $requestedUrl,
+        'default' => true
+      ];
+    }, 'default');
+
 
     $match = $router->match();
 

@@ -101,13 +101,53 @@ class Router
     }, 'search');
 
 
-
-
-
     $match = $router->match();
 
     if( $match && is_callable( $match['target'] ) ) {
-      return call_user_func_array( $match['target'], $match['params'] );
+      $get = call_user_func_array( $match['target'], $match['params'] );
+
+      if(!$get) {
+        return;
+      }
+
+      $outHtml = new OutHtml($get, $_SESSION['lang']);
+
+
+
+      $settings = unserialize(CACHE);
+      $settings['autoescape'] = false;
+
+      $twig = new Twig_Environment(
+        new Twig_Loader_Filesystem('./sites/default' . ($_SESSION['sandbox'] ? '/' . $_SESSION['sandbox'] : '')),
+        $settings
+      );
+
+      if ($_SESSION['debug'])
+      {
+        $twig->addExtension(new Twig_Extension_Debug());
+      }
+      // TODO: document intersect
+      $intersect = new Twig_SimpleFunction('intersect', function () {
+        return array_values(call_user_func_array('array_intersect',func_get_args()));
+      });
+      $twig->addFunction($intersect);
+
+      $fn_file_exists = new Twig_SimpleFunction('file_exists', function ($file) {
+        return file_exists($file);
+      });
+      $twig->addFunction($fn_file_exists);
+
+      $filter = new Twig_SimpleFilter('parseTags', function ($string)
+        {
+          return customTags::parseContent($string, $outHtml);
+        });
+
+      $twig->addFilter($filter);
+
+      echo $twig->render('index.twig', array(
+          'html'=>$outHtml
+      ));
+
     } else {
       return [
         'art_title' => 'not_found'

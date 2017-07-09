@@ -44,19 +44,12 @@ class link
    * @param string $string Searched string or stringified list of tags
    * @param string $lang  Two-digits language code
    * @param int $page Page number
-   * @param boolean $isTag If true I'm searching for tags
    * @return string
    */
-  public static function to_search($string, $lang = false, $page = false, $isTag = false)
+  public static function to_search($string, $lang = false, $page = false)
   {
-    if (!$isTag)
-    {
-      $string = 'search:' . $string;
-    }
-    else
-    {
-      $string .= '.search';
-    }
+    $string = 'search:' . $string;
+
     return self::format($string, $lang, $page);
   }
 

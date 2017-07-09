@@ -801,10 +801,7 @@ EOD;
           break;
 
         case 'search':
-          $string = $this->get['is_search'] ?
-            implode( ($this->get['tagg_all'] ? '~' : '-') , $this->getFilterTags()) :
-            $this->getSearchString();
-          $href = link::to_search($string, $this->lang, $x, $this->get['is_search']);
+          $href = link::to_search($this->getSearchString(), $this->lang, $x);
           break;
 
         default:

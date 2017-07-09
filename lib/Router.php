@@ -85,14 +85,15 @@ class Router
       ];
     }, 'draft');
 
-    $router->map( 'GET', "/[lng:lng]?/[art:tags].all", function($lng = false, $tags) {
+    $router->map( 'GET', "/[lng:lng]?/[tag:tags].all/[i:pg]?", function($lng = false, $tags, $pg = false) {
       return [
         'lang' => $lng,
-        'tags' => $tags
+        'tags' => $tags,
+        'page' => $pg
       ];
     }, 'tags');
 
-    $router->map( 'GET', "/[lng:lng]?/?search:[:string]/?[i:pg]?", function($lng = false, $string, $pg = false) {
+    $router->map( 'GET', "/[lng:lng]?/search:[:string]/[i:pg]?", function($lng = false, $string, $pg = false) {
       return [
         'lang' => $lng,
         'search' => $string,

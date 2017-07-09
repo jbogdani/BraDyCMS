@@ -667,7 +667,7 @@ EOD;
     $restrict_domain = cfg::get('ga_domain');
 
 
-    if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$this->get['draft'])
+    if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$this->cfg['isDraft'])
     {
       $html = '<script type="text/javascript">'
           . 'var _gaq = _gaq || [];'
@@ -695,7 +695,7 @@ EOD;
     $restrict_domain = cfg::get('ga_domain');
 
 
-    if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$this->get['draft'])
+    if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$this->cfg['isDraft'])
     {
       $html = '<script>'
         . "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
@@ -794,7 +794,7 @@ EOD;
       {
         case 'tags':
           $href = link::to_tags(
-            implode( ($this->get['tagg_all'] ? '~' : '-'), $this->getFilterTags()),
+            implode( ($this->cfg['tagAll'] ? '~' : '-'), $this->getFilterTags()),
             $this->lang,
             $x
             );

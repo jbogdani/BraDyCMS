@@ -14,19 +14,11 @@ class link
    */
   private static function getPath()
   {
-    $parts = array('.');
-
-    if ($_REQUEST['lang'])
-    {
-      array_push($parts, '..');
+    $uri = $_SERVER['REQUEST_URI'];
+    if (cfg::get('rewriteBase') !== '/') {
+      $uri = str_replace(cfg::get('rewriteBase'), null, $uri);
     }
-
-    if ($_REQUEST['page'])
-    {
-      array_push($parts, '..');
-    }
-
-    return implode('/', $parts);
+    return str_repeat('../', substr_count($uri, '/'));
   }
 
   /**
@@ -58,11 +50,12 @@ class link
    * @param string $textid Article's textid to link to
    * @param string $lang two-digits languagae code, default false
    * @param int|false $page Page number, default false.
+   * @param array  $parts Array with url parts
    * @return string
    */
-  public static function to_article($textid, $lang = false, $page = false)
+  public static function to_article($textid, $lang = false, $page = false, $parts = false)
   {
-    return self::format($textid, $lang, $page);
+    return self::format($textid, $lang, $page, $parts);
   }
 
   /**
@@ -87,9 +80,10 @@ class link
    * @param string $href unformatted href
    * @param string $lang two-digits language code
    * @param int $page Page number
+   * @param array|false  $parts Array with url parts
    * @return string
    */
-  public static function format($href, $lang = false, $page = false)
+  public static function format($href, $lang = false, $page = false, $parts = false)
   {
     // absolute url is not processed
     if (preg_match('/^https?:\/\/(.+)/', $href))
@@ -109,21 +103,20 @@ class link
       return $href;
     }
 
-
     $href = self::formatHref($href);
 
     $path = self::getPath();
 
     // links to nothing is not processed
-    if ($href == '#')
+    if ($href === '#')
     {
-      return ($path != '.' ? $path : '') . $href;
+      return ($path !== '.' ? $path : '') . $href;
     }
 
     // links to home page is not processed
-    if ($href == '' || $href == './' || $href == 'home')
+    if ($href === '' || $href === './' || $href === 'home')
     {
-      return $path;
+      $href = '';
     }
 
     // add language to href
@@ -138,6 +131,10 @@ class link
       $href .= '/' . $page;
     }
 
-    return $path . '/' . $href;
+    if ($parts) {
+      $parts = implode('/', $parts) . '/';
+    }
+
+    return str_replace('//', '/', $path . '/' . $parts  . $href);
   }
 }

@@ -12,75 +12,70 @@ class Router
 
     $router = new AltoRouter();
 
-    $controller = new Controller($_GET, $_POST, $_REQUEST);
+    $router->setBasePath(cfg::get('rewriteBase') === '/' ? false : cfg::get('rewriteBase'));
 
+    $controller = new Controller($_GET, $_POST, $_REQUEST);
 
     $router->map( 'GET', "/controller.php", function() use ($controller) {
       $controller->route();
       return false;
-    });
+    }, 'controller');
 
     $router->map( 'GET', "/robots.txt", function() use ($controller) {
       $controller->route('seo_ctrl', 'robots');
       return false;
-    });
-
-    $router->map( 'GET', "/robots.txt", function() use ($controller) {
-      $controller->route('seo_ctrl', 'robots');
-      return false;
-    });
+    }, 'robots');
 
     $router->map( 'GET', "/sitemap.xml", function() use ($controller) {
       $controller->route('seo_ctrl', 'sitemap');
       return false;
-    });
+    }, 'sitemap');
 
     $router->map( 'GET', "/feed/rss", function() use ($controller) {
       $controller->route('feeds_ctrl', 'rss2');
       return false;
-    });
+    }, 'rss');
 
     $router->map( 'GET', "/feed/atom", function() use ($controller) {
       $controller->route('feeds_ctrl', 'atom');
       return false;
-    });
+    }, 'atom');
 
     $router->map( 'GET', "/oai", function() use ($controller) {
       $controller->route('OAI_ctrl', 'run');
       return false;
-    });
+    }, 'oai');
 
     $router->map( 'GET', "/api", function() use ($controller) {
       $controller->route('api_ctrl', 'run');
       return false;
-    });
+    }, 'api');
 
     $router->map( 'GET', "/download/[*:querystring]", function($querystring) use ($controller) {
       $controller->route('download_ctrl', 'go', ['file' => $querystring]);
       return false;
-    });
+    }, 'download');
 
     $router->map( 'GET', "/admin", function() {
       require __DIR__ . '/../admin.php';
-    });
+    }, 'admin');
 
     $router->addMatchTypes(array('lng' => '[a-z]{2}'));
-    $router->addMatchTypes(array('art' => '[a-zA-Z0-9-_]*'));
+    $router->addMatchTypes(array('art' => '[a-zA-Z0-9-_\/]*'));
     $router->addMatchTypes(array('string' => '[a-zA-Z0-9-_]*'));
-    $router->addMatchTypes(array('pg' => '[0-9]{1,3}'));
 
     $router->map( 'GET', "/[lng:lng]?/?", function($lng = false) {
       return [
         'lang' => $lng
       ];
-    });
+    }, 'home');
 
     $router->map( 'GET', "/[lng:lng]?/[art:art]", function($lng = false, $art) {
       return [
         'lang' => $lng,
         'art_title' => $art
       ];
-    });
+    }, 'article');
 
     $router->map( 'GET', "/[lng:lng]?/[art:art].draft", function($lng = false, $art) {
       return [
@@ -88,22 +83,22 @@ class Router
         'art_title' => $art,
         'draft' => true
       ];
-    });
+    }, 'draft');
 
     $router->map( 'GET', "/[lng:lng]?/[art:tags].all", function($lng = false, $tags) {
       return [
         'lang' => $lng,
         'tags' => $tags
       ];
-    });
+    }, 'tags');
 
-    $router->map( 'GET', "/[lng:lng]?/?search:[:string]/?[pg:pg]?", function($lng = false, $string, $pg = false) {
+    $router->map( 'GET', "/[lng:lng]?/?search:[:string]/?[i:pg]?", function($lng = false, $string, $pg = false) {
       return [
         'lang' => $lng,
         'search' => $string,
         'page' => $pg
       ];
-    });
+    }, 'search');
 
 
 

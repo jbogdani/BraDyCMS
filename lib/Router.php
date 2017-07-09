@@ -61,8 +61,9 @@ class Router
     }, 'admin');
 
     $router->addMatchTypes(array('lng' => '[a-z]{2}'));
+    $router->addMatchTypes(array('tag' => '[a-zA-Z0-9-_~]*'));
     $router->addMatchTypes(array('art' => '[a-zA-Z0-9-_\/]*'));
-    $router->addMatchTypes(array('string' => '[a-zA-Z0-9-_]*'));
+    $router->addMatchTypes(array('string' => '[a-zA-Z0-9-_+]*'));
 
     $router->map( 'GET', "/[lng:lng]?/?", function($lng = false) {
       return [
@@ -200,7 +201,7 @@ class Router
 # RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1 [L]
 # RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true [L]
 
-#search string: (ln/)search:some string !paginate
+#search string: (ln/)search:some string !paginate DROP SUPPORT
 # RewriteRule ^([a-z]{2})/search:([^\/]+)(/[0-9]{1,2})?$ index.php?lang=$1&search=$2&page=$3 [QSA,L]
 # RewriteRule ^search:([^\/]+)(/[0-9]{1,2})?$ index.php?search=$1&page=$2 [QSA,L]
 

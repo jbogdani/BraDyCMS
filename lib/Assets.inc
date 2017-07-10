@@ -22,10 +22,10 @@ class Assets
 
       'frontend' => [
         'js' => [
-          'local' => $path . 'sites/default/js/frontend.js?' . md5_file($path . 'sites/default/css/styles.css')
+          'local' => $path . 'sites/default/js/frontend.js?' . md5_file('sites/default/css/styles.css')
         ],
         'css' => [
-          'local' => $path . 'sites/default/css/styles.css?' . md5_file($path . 'sites/default/css/styles.css')
+          'local' => $path . 'sites/default/css/styles.css?' . md5_file('sites/default/css/styles.css')
         ]
       ],
 

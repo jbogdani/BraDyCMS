@@ -87,21 +87,7 @@ class Assets
           'local' => $path . 'bower_components/font-awesome/css/font-awesome.min.css'
         ]
       ]
-
     );
-    /*
-    'name' => [
-      'version' => '',
-      'js' => [
-        'local' => '',
-        'cdn' => ''
-      ],
-      'css' => [
-        'local' => '',
-        'cdn' => ''
-      ]
-    ]
-     */
 
     return $assets;
   }
@@ -126,22 +112,20 @@ class Assets
   public static function resolve($name, $type = false, $source = false, $version = false)
   {
     // Return false if type is defined but is not css or js
-    if ($type && $type !== 'css' && $type !== 'js')
-    {
+    if ($type && $type !== 'css' && $type !== 'js') {
       return false;
     }
 
     // Return false if dest is defined but is not cdn or local
-    if ($source && $source !== 'local' && $source !== 'cdn')
-    {
+    if ($source && $source !== 'local' && $source !== 'cdn') {
       return false;
     }
+
 
     $assets = self::allAssets();
 
     // Return false on no asset found
-    if (!isset($assets[$name]))
-    {
+    if (!isset($assets[$name])) {
       return false;
     }
 
@@ -149,75 +133,53 @@ class Assets
 
 
     // Set type if not setted
-    if (!$type && isset($asset['css']) && isset($asset['js']))
-    {
+    if (!$type && isset($asset['css']) && isset($asset['js'])) {
       $type = 'js';
-    }
-    elseif (!$type && isset($asset['css']) && !isset($asset['js']))
-    {
+    } elseif (!$type && isset($asset['css']) && !isset($asset['js'])) {
       $type = 'css';
-    }
-    elseif (!$type && !isset($asset['css']) && isset($asset['js']))
-    {
+    } elseif (!$type && !isset($asset['css']) && isset($asset['js'])) {
       $type = 'js';
-    }
-    elseif (!isset($asset[$type]))
-    {
+    } elseif (!isset($asset[$type])) {
       return false;
     }
 
     // Set $source
-    // 1. No custom source supplied: use default value: CDN, if available
-    if (!$source && isset($asset[$type]['cdn']))
-    {
+    if (!$source && isset($asset[$type]['cdn'])) {
+      // 1. No custom source supplied: use default value: CDN, if available
       $source = 'cdn';
-    }
-    // 2. No custom source supplied, no available CDN value: use LOCAL if available
-    elseif (!$source && isset($asset[$type]['local']))
-    {
+    } elseif (!$source && isset($asset[$type]['local'])) {
+      // 2. No custom source supplied, no available CDN value: use LOCAL if available
       $source = 'local';
-    }
-    // 3. Source supplied and is one of cdn|local.
-    // If custom value is not available check for alternative value or return false
-    elseif ($source && !isset($asset[$type][$source]))
-    {
-      if (isset($asset[$type]['cdn']))
-      {
+    } elseif ($source && !isset($asset[$type][$source])) {
+      // 3. Source supplied and is one of cdn|local.
+      // If custom value is not available check for alternative value or return false
+      if (isset($asset[$type]['cdn'])) {
         $source = 'cdn';
-      }
-      elseif (isset($asset[$type]['local']))
-      {
+      } elseif (isset($asset[$type]['local'])) {
         $source = 'local';
-      }
-      else
-      {
+      } else {
         return false;
       }
     }
 
-    if ($version)
-    {
-      return array(
+    if ($version) {
+      return [
         'type' =>$type,
         'source' => $ource,
         'path' => str_replace('--version--', $version, $asset[$type][$source])
-      );
-    }
-    elseif (isset($asset['version']))
-    {
-      return array(
+      ];
+    } elseif (isset($asset['version'])) {
+      return [
         'type' =>$type,
         'source' => $ource,
         'path' => str_replace('--version--', $asset['version'], $asset[$type][$source])
-      );
-    }
-    else
-    {
-      return array(
+      ];
+    } else {
+      return [
         'type' =>$type,
         'source' => $ource,
         'path' => $asset[$type][$source]
-      );
+      ];
     }
   }
 

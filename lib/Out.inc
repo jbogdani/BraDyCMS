@@ -104,9 +104,6 @@ class Out
 
       $this->cfg['toBase'] = count($exploded > 1) ? str_repeat('../', count($exploded > 1)) : '/';
 
-      // load current article's data in $data['article'] array
-      $this->data['article'][$this->cfg['textId']] = Article::getByTextid($this->cfg['textId'], $this->cfg['user_lang'], $this->cfg['isDraft']);
-
     } else if ( $get['search'] ) {
 
       // 2. search

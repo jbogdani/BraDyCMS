@@ -342,6 +342,7 @@ class customTags
     $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '' ? : '';
     $align = $data['align'];
     $class = $data['class'];
+    $time = $data['time'];
 
     return '<div class="youtube'
         . ($class ? ' ' . $class : '')
@@ -351,7 +352,7 @@ class customTags
         . '>'
       . '<iframe '
         . ( $ratio ? ' class="embed-responsive-item" ' : ' width="' . $width . '" height="' . $height . '" ')
-        .'src="http://www.youtube.com/embed/' . $code . '?rel=0" frameborder="0" allowfullscreen></iframe>'
+        .'src="http://www.youtube.com/embed/' . $code . '?rel=0' . ($time ? '&t=' . $time : '') . '" frameborder="0" allowfullscreen></iframe>'
     . '</div>';
   }
 

@@ -376,7 +376,7 @@ Complete example:
 
 ---
 
-#### youtube('width','height','ratio', 'align', 'class')
+#### youtube('width','height','ratio', 'align', 'class', 'time')
 Adds necessary HTML code to embed a Youtube video
 - **content**, string, required. Youtube video's id
 - **width**, int, optional. Video's width in pixels
@@ -385,6 +385,7 @@ Adds necessary HTML code to embed a Youtube video
 - **align**, string, optional, default false. Can be left, right or center. If the align value is defined the container div will
 have the text-{align value} CSS class
 - **class**, string, optional, default false. Custom CSS class.
+- **time**, string, optional, default false. Starting time, eg: 15m20s.
 
 Minimal example:
     [[youtube]]youtube_id[[/youtube]]
@@ -394,7 +395,7 @@ Complete example:
 or
     [[youtube ratio="4by3"]]you_tube_id[[/youtube]]
 or
-    [[youtube width="560" height="315" align="center" class="myTube"]]you_tube_id[[/youtube]]
+    [[youtube width="560" height="315" align="center" class="myTube" time="15m20s"]]you_tube_id[[/youtube]]
 
 ---
 

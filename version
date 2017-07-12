@@ -27,6 +27,7 @@
 3.18.0[] = "OutHtml::ct supports both static and non static plugin methods"
 3.18.0[] = "Added support in Controller::render for user modules template folders"
 
+3.17.2[] = "Customtag youtube accepts attribute time"
 3.17.1[] = "Removed custom tag skype, available as independent plugin at https://github.com/jbogdani/bradycms-plugins"
 3.17.0[] = "New function: download customtag accepts new parameters: getObject and getList"
 

@@ -50,7 +50,7 @@ Each article has the following **default** fields:
 
 If you need more fields for your articles, you can add them by your own. There is a simple and safe procedure adapt the database schema to match your needs.
 
-For a detailed guide check the [How to customize database schema](customfields) guide.
+For a detailed guide check the [How to customize database schema](customfields.md) guide.
 
 ---
 
@@ -67,23 +67,23 @@ For example, if you have defined three sizes for your article images, 600x300, 4
 - ./sites/default/images/articles/orig/5.jpg    
 
 ---
-    
+
 ## Media > images
 
 BraDyCMS has a built in system for loading, organizing and editing images. You can load images and files, create folders, delete, and edit them using a GUI interface.
 
 You can copy, move, convert in multiple formats, resize and crop images easily and safely.
-    
---- 
+
+---
 ## Media > galleries
 
-Photo galleries are awesome! That's why we have built an easy to use tool to upload files with a simple drag&drop, create thumbnails with a click, add and translate caption, ecc. You can then easily embed your galleries in articles body by using a simple fast tag `[[gallery]]here_galley_name[[/gallery]]` ([click to learn mode](faq)).
-    
+Photo galleries are awesome! That's why we have built an easy to use tool to upload files with a simple drag&drop, create thumbnails with a click, add and translate caption, ecc. You can then easily embed your galleries in articles body by using a simple fast tag `[[gallery]]here_galley_name[[/gallery]]` ([click to learn mode](faq.md)).
+
 ---
 
 ## Menu
 
-You can have all the menus you need, and translate them in several languages. You can also nest menu items in multiple levels. And you do not need difficult code to do this: just drag & drop menu items to reorder or nest them. You can find more on how to create menu in the [FAQ section](faq) of the documentation.
+You can have all the menus you need, and translate them in several languages. You can also nest menu items in multiple levels. And you do not need difficult code to do this: just drag & drop menu items to reorder or nest them. You can find more on how to create menu in the [FAQ section](faq.md) of the documentation.
 
 ---
 
@@ -97,14 +97,13 @@ Retriving articles from the database to use in the templates is simple! BraDyCMS
  - `http://mysite.ext/tag1.all`: will retrieve all articles tagged with tag **tag1**
  - `http://mysite.ext/tag1-tag2-tag3.all`: will retrieve all articles tagged with **all** listed (hyphen separated) tags **tag1**, **tag3**, **tag3**
  - `http://mysite.ext/tag1~tag2~tag3.all`: will retrieve all articles tagged with **any** of the listed (tilde separated) tags **tag1**, **tag3**, **tag3**
-    
+
 This way, if you want to show all web related news of year 2013, just tag the articles with all these tags (news, 2013, web) and use this URL: `http://mysite.ext/news-2013-web.all`
 
-Learn more on menu and URL in the [FAQ section](faq) of the documentation.
-    
+Learn more on menu and URL in the [FAQ section](faq.md) of the documentation.
+
 - - -
 
 ## Almost finished...
 
 Please read all docs to learn how to translate articles and menu items, translate BraDyCMS admin control panel in your language, Create and use beautiful user forms, author plugins and extend functionality and report all problems you may encounter on [Github](https://github.com/jbogdani/BraDyCMS/issues).
-

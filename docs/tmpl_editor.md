@@ -9,7 +9,7 @@ You can access this module from the `Main menu > Site configuration > Template m
 or following this link [#template/dashboard](#template/dashboard).
 
 Using this module you can:
-- Edit template (*.twig) files
+- Edit template (\*.twig) files
 - Edit CSS files
 - Edit LESS files
 - Edit javascript files
@@ -24,87 +24,87 @@ Using this module you can:
 ---
 
 ### Edit template files
-Template files have `.twig` extension and are written in the [Twig language](tmpl_twig).
+Template files have `.twig` extension and are written in the [Twig language](tmpl_twig.md).
 You can built all the template files you need, but at least, the `index.twig` file
 should exist for the application to work correctly.
 
-All available template files will be listed in the left side of the screen. To 
+All available template files will be listed in the left side of the screen. To
 edit them just click on the button and their content will be shown in the right
 part of the screen. You can edit and then click on the `Save` button in the upper right
 corner of the file content. A success message should appear to notify that all edits
 were correctly saved.
 
 In order to render these edits available to all user you must empty the
-application cache after saving your edits. Use the `Empty cache` button on the 
+application cache after saving your edits. Use the `Empty cache` button on the
 left to do it.
 
 If you don't know what the application cache is and how it works please read the
-paragraph about the **caching system** in the [section of the docs dedicated to the Twig syntax](tmpl_twig)
+paragraph about the **caching system** in the [section of the docs dedicated to the Twig syntax](tmpl_twig.md)
 
 ---
 
 ### Edit CSS files
-You probably do not want to directly edit the CSS files, and will prefer using 
-the LESS syntax, described in details in the [section of the docs dedicated to the CSS, LESS and Bootstrap](tmpl_less).
+You probably do not want to directly edit the CSS files, and will prefer using
+the LESS syntax, described in details in the [section of the docs dedicated to the CSS, LESS and Bootstrap](tmpl_less.md).
 
 Anyway, you can still edit the CSS files available in the `site/default/css` directory.
-These CSS files will be listed in the left side of the screen. To 
+These CSS files will be listed in the left side of the screen. To
 edit them just click on the button and their content will be shown in the right
 part of the screen. You can edit and then click on the `Save` button on the upper right
 corner of the file content. A success message should appear to notify that all edits
 were correctly saved.
 
-You don't have to compile anything to make all changes automatically available 
+You don't have to compile anything to make all changes automatically available
 after each save action.
 
 ---
 
 ### Edit LESS files
 If you don't know what LESS is and how Twitter Bootstrap framework can be integrated
-in your web site, probably you should read the [dedicated section of the docs](tmpl_less).
+in your web site, probably you should read the [dedicated section of the docs](tmpl_less.md).
 
-These LESS files available in the `site/default/css` directory of our site 
-will be listed in the left side of the screen. To  edit them just click on the 
-button and their content will be shown in the right part of the page. 
+These LESS files available in the `site/default/css` directory of our site
+will be listed in the left side of the screen. To  edit them just click on the
+button and their content will be shown in the right part of the page.
 You can edit and then click on the `Save` button on the upper right
 corner of the file content. A success message should appear to notify that all edits
 were correctly saved.
 
 Mind that you should compile LESS file to CSS in order to see your changes applied
-in the live web site. To do this, after all edits have been saved, click on the 
-`Compile styles.less` button on the left side of the screen. This will compile 
-LESS syntax to CSS, will minify the script for best performance and will save 
+in the live web site. To do this, after all edits have been saved, click on the
+`Compile styles.less` button on the left side of the screen. This will compile
+LESS syntax to CSS, will minify the script for best performance and will save
 CSS content in the `styles.css` file.
 
 ---
 
 ### Edit javascript files
 The javascript files available in the `site/default/js` directory of your web site
-will be listed in the left side of the screen. To edit them just click on the 
-button and their content will be shown in the right part of the page. 
+will be listed in the left side of the screen. To edit them just click on the
+button and their content will be shown in the right part of the page.
 You can edit and then click on the `Save` button on the upper right
 corner of the file content. A success message should appear to notify that all edits
 were correctly saved.
 
-You don't have to compile anything to make all changes automatically available 
+You don't have to compile anything to make all changes automatically available
 after each save action.
 
 ---
 
 ### Customize the Welcome page
-Clicking on th `welcome.md` button in the left side of the sceen, the 
-content of the customized welcome page will appear in the right part of the screen. You can edit and then 
-click on the `Save` button on the upper right corner of the file content. 
+Clicking on th `welcome.md` button in the left side of the sceen, the
+content of the customized welcome page will appear in the right part of the screen. You can edit and then
+click on the `Save` button on the upper right corner of the file content.
 A success message should appear to notify that all edits were correctly saved.
 
 ---
 
 ### Compile LESS files
-Once you have completed the edits to any of the LESS files, you should compile 
+Once you have completed the edits to any of the LESS files, you should compile
 the `styles.less` file to CSS in order to see your changes applied
-in the live web site. To do this, after all the edits have been saved, click on the 
-`Compile styles.less` button on the left side of the screen. This will compile 
-LESS syntax to CSS, will minify the script for best performance and will save 
+in the live web site. To do this, after all the edits have been saved, click on the
+`Compile styles.less` button on the left side of the screen. This will compile
+LESS syntax to CSS, will minify the script for best performance and will save
 CSS content in the `styles.css` file.
 
 Compiling `styles.less` all less files imported with the `@import` directive in the
@@ -115,10 +115,10 @@ Compiling `styles.less` all less files imported with the `@import` directive in 
 
 ### Empty the application cache
 If you don't know what the application cache is and how it works please read the
-paragraph about the **caching system** in the [section of the docs dedicated to the Twig syntax](tmpl_twig).
+paragraph about the **caching system** in the [section of the docs dedicated to the Twig syntax](tmpl_twig.md).
 
-In order to make all the edits that you have applied to the twig files available to all 
-users, you should empty the application cache. Use the `Empty cache` button on the 
+In order to make all the edits that you have applied to the twig files available to all
+users, you should empty the application cache. Use the `Empty cache` button on the
 left to empty the cache.
 
 ---
@@ -127,7 +127,7 @@ left to empty the cache.
 It is possible to create new template, stylesheet and javascript files using a very
 simple user interface directly in the Template manager module.
 
-Just click on `Create new file` button in the left side of the screen. Then you 
+Just click on `Create new file` button in the left side of the screen. Then you
 will be prompted for a filename and a file type. You should choose a non existing filename
 in order to successfully create the file.
 
@@ -137,7 +137,7 @@ keep it simple, stupid (KISS!).
 After the file is created you will find it listed in the left side of the screen.
 
 > **Note**: you will not be prompted to enter the directory where the file will be located.
-This will be handled automatically by the system using the [file tree conventions](tmpl_files).
+This will be handled automatically by the system using the [file tree conventions](tmpl_files.md).
 
 ---
 
@@ -145,13 +145,13 @@ This will be handled automatically by the system using the [file tree convention
 It is possible to deleted template, stylesheet and javascript files using a very
 simple user interface directly in the Template manager module.
 
-Just click on `delete file` button in the left side of the screen. Then you 
+Just click on `delete file` button in the left side of the screen. Then you
 can select the file to delete from a drop-down menu.
 
 Select the file and type `DELETE` in the text input on the right to confirm your action.
-You should use uppercase letters. The delete button will appear and you will be 
+You should use uppercase letters. The delete button will appear and you will be
 able to permanently delete the file.
 
 
-> **Note**: the delete action can not be undone! Once deleted a file CAN NOT be 
+> **Note**: the delete action can not be undone! Once deleted a file CAN NOT be
 restored back!

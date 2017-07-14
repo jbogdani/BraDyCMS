@@ -1,27 +1,27 @@
 # Few words about Twig
 
 BraDyCMS uses [Twig](http://twig.sensiolabs.org) as unique template engine 
-and you must refer to [the official documentation](http://twig.sensiolabs.org/doc/templates.html) 
+and you must refer to [the official documentation](http://twig.sensiolabs.org/doc/templates.html)
 for basic and advanced Twig usage.
 
 > HTML is a static markup language, but the content of your CMS is (hopefully) dynamic, and generated on the fly on each request.
 > Think of the TWIG syntax as a way to put dynamic content inside your static HTML, styled with CSS.
 
 
-The main thing you should know about Twig is that, 
-as [the official documentation](http://twig.sensiolabs.org/doc/templates.html) states, 
-there are two kinds of delimiters: `{% ... %}` and `{{ ... }}`. 
-The former one is used to execute statements such as for-loops, the latter prints the 
+The main thing you should know about Twig is that,
+as [the official documentation](http://twig.sensiolabs.org/doc/templates.html) states,
+there are two kinds of delimiters: `{% ... %}` and `{{ ... }}`.
+The former one is used to execute statements such as for-loops, the latter prints the
 result of an expression to the template.
 
 The simplicity of BraDyCMS is in the fact that there is only one object behind the complexity
-of all your content. It is called `html` and is fully documented [here](tmpl_html).
+of all your content. It is called `html` and is fully documented [here](tmpl_html.md).
 
 Essentially, you can think of the `html` object as a [namespace](http://en.wikipedia.org/wiki/Namespace).
 
 This object has many attributes or methods that you can call easily from your template files,
 and that are used to produce dynamic content. Some of these methods return simple strings,
-others well-formatted HTML and others [PHP arrays](http://www.w3schools.com/php/php_arrays.asp) 
+others well-formatted HTML and others [PHP arrays](http://www.w3schools.com/php/php_arrays.asp)
 or [PHP complex objects](http://php.net/manual/it/language.types.object.php)
 
 Calling a method of the `html` object is as simple as writing `html.methodName`, e.g.:
@@ -31,10 +31,10 @@ Calling a method of the `html` object is as simple as writing `html.methodName`,
       {{ html.metadata }}
       ...
 
----- 
+----
 
-Twig can also be used to show different content depending on different conditions, 
-e.g. (using [if](http://twig.sensiolabs.org/doc/tags/if.html)): 
+Twig can also be used to show different content depending on different conditions,
+e.g. (using [if](http://twig.sensiolabs.org/doc/tags/if.html)):
     <div class="{% if html.getContext == 'home'%}white-backgroung{% endif %}">
     ...
     </div>
@@ -59,7 +59,7 @@ Twig can also be used for looping in lists (array, or objects), e.g. (using [for
 
 ----
 
-Separate template files are included in the reference file by the Twig 
+Separate template files are included in the reference file by the Twig
 [`include` statement](http://twig.sensiolabs.org/doc/tags/include.html), e.g.:
     <div class="content">
       {% if html.getContext == 'home' %}
@@ -73,22 +73,22 @@ Separate template files are included in the reference file by the Twig
 
 ### Caching system
 
-In production environment (the site configuration debug mode is turned off), 
+In production environment (the site configuration debug mode is turned off),
 Twig will use a caching system to improve the speed of the entire system. The caching
-system is automatically turned off in development environment (the site configuration 
+system is automatically turned off in development environment (the site configuration
 debug mode is turned on).
 
-This means that you could find some problems in editing templates, applying and 
+This means that you could find some problems in editing templates, applying and
 viewing the changes. A typical example could be the following:
 1. (Site is in debug mode)
 2. The administrator edits one or more template files using, for example, the Template manager module
 3. All changes are saved and success message is correctly shown
-4. The administrator opens the web site to check the changes, but none of them 
+4. The administrator opens the web site to check the changes, but none of them
 has been applied.
 
-In fact all changes **have correctly been saved** but the live web site is still using 
+In fact all changes **have correctly been saved** but the live web site is still using
 the old cache to display the template. You should **delete** the cache in order to
-visualize your changes. The new cache will be automatically created on the first 
+visualize your changes. The new cache will be automatically created on the first
 visit of the live web site.
 
 To delete the cache use the `Empty cache` button in the [Template manager module](#template/dashboard)

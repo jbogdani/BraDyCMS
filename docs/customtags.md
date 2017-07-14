@@ -24,7 +24,7 @@ some content and two parameters are provided
 two parameters and no content is provided
 
 
-> You can build your own custom tags by [building a new plugin](customplugin)
+> You can build your own custom tags by [building a new plugin](customplugin.md)
 
 ---
 

@@ -25,29 +25,45 @@ class OutHtml extends Out
    */
   public function asset($asset, $type = false, $version = false)
   {
-    if (in_array($asset, Assets::getNames()))
-    {
+    if (in_array($asset, Assets::getNames())) {
+
       $data = Assets::resolve($asset, $type, cfg::get('cdn') ? 'cdn':'local', $version);
 
-      if (!$data)
-      {
+      if (!$data) {
+
         return '<!-- Asset: ' . $asset . ' not found! -->';
-      }
-      else
-      {
+
+      } else {
+
         $asset = $data['path'];
         $type = $data['type'];
       }
     }
 
-    if (strtolower($type) === 'js' || (!$type && strtolower(substr($asset, -2)) === 'js'))
-    {
-      return '<script src="' . $asset . '"></script>';
+    $l2h = $this->link2('home');
+    if (strtolower($type) === 'js' || (!$type && strtolower(substr($asset, -2)) === 'js')) {
+
+      if (file_exists('sites/default/js/' . $asset)) {
+
+        return '<script src="' . $l2h . 'sites/default/js/' . $asset . '"></script>';
+
+      } else {
+
+        return '<script src="' . $asset . '"></script>';
+      }
+
+    } elseif (strtolower($type) === 'css' || (!$type && strtolower(substr($asset, -3)) === 'css')) {
+
+      if (file_exists('sites/default/css/' . $asset)) {
+
+        return '<link rel="stylesheet" href="' . $l2h . 'sites/default/css/' . $asset . '">';
+
+      } else {
+
+        return '<link rel="stylesheet" href="' . $asset . '">';
+      }
     }
-    elseif (strtolower($type) === 'css' || (!$type && strtolower(substr($asset, -3)) === 'css'))
-    {
-      return '<link rel="stylesheet" href="' . $asset . '">';
-    }
+
     return false;
 
   }

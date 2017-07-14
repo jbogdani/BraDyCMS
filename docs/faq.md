@@ -139,7 +139,7 @@ BraDypUS CMS supports something similar to "Nested articles". It's a feature tha
 To edit the **HTML** of the main index file:
 
     Main menu > Other > Template manager > Edit HTML
-or follow [this link](#template/index). Plaese check the [template documentation](#docs/read/intro).
+or follow [this link](#template/index). Plaese check the [template documentation](intro).
 				
 To edit the **CSS**:
 

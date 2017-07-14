@@ -98,7 +98,7 @@ or
 <em>rich</em> <big>html</big>[[/myFirstPlugin]]
 ```
 
-To use (call) a plugin in **template files** use the `ct` method of the [html object](#docs/read/tmpl_html), e.g.:
+To use (call) a plugin in **template files** use the `ct` method of the [html object](tmpl_html), e.g.:
 
 ```html
 {{ html.ct('myFirstPlugin') }}

@@ -24,7 +24,7 @@ Using this module you can:
 ---
 
 ### Edit template files
-Template files have `.twig` extension and are written in the [Twig language](#docs/read/tmpl_twig).
+Template files have `.twig` extension and are written in the [Twig language](tmpl_twig).
 You can built all the template files you need, but at least, the `index.twig` file
 should exist for the application to work correctly.
 
@@ -39,13 +39,13 @@ application cache after saving your edits. Use the `Empty cache` button on the
 left to do it.
 
 If you don't know what the application cache is and how it works please read the
-paragraph about the **caching system** in the [section of the docs dedicated to the Twig syntax](#docs/read/tmpl_twig)
+paragraph about the **caching system** in the [section of the docs dedicated to the Twig syntax](tmpl_twig)
 
 ---
 
 ### Edit CSS files
 You probably do not want to directly edit the CSS files, and will prefer using 
-the LESS syntax, described in details in the [section of the docs dedicated to the CSS, LESS and Bootstrap](#docs/read/tmpl_less).
+the LESS syntax, described in details in the [section of the docs dedicated to the CSS, LESS and Bootstrap](tmpl_less).
 
 Anyway, you can still edit the CSS files available in the `site/default/css` directory.
 These CSS files will be listed in the left side of the screen. To 
@@ -61,7 +61,7 @@ after each save action.
 
 ### Edit LESS files
 If you don't know what LESS is and how Twitter Bootstrap framework can be integrated
-in your web site, probably you should read the [dedicated section of the docs](#docs/read/tmpl_less).
+in your web site, probably you should read the [dedicated section of the docs](tmpl_less).
 
 These LESS files available in the `site/default/css` directory of our site 
 will be listed in the left side of the screen. To  edit them just click on the 
@@ -115,7 +115,7 @@ Compiling `styles.less` all less files imported with the `@import` directive in 
 
 ### Empty the application cache
 If you don't know what the application cache is and how it works please read the
-paragraph about the **caching system** in the [section of the docs dedicated to the Twig syntax](#docs/read/tmpl_twig).
+paragraph about the **caching system** in the [section of the docs dedicated to the Twig syntax](tmpl_twig).
 
 In order to make all the edits that you have applied to the twig files available to all 
 users, you should empty the application cache. Use the `Empty cache` button on the 
@@ -137,7 +137,7 @@ keep it simple, stupid (KISS!).
 After the file is created you will find it listed in the left side of the screen.
 
 > **Note**: you will not be prompted to enter the directory where the file will be located.
-This will be handled automatically by the system using the [file tree conventions](#docs/read/tmpl_files).
+This will be handled automatically by the system using the [file tree conventions](tmpl_files).
 
 ---
 

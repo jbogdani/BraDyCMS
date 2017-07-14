@@ -16,7 +16,7 @@ class Assets
   private static function allAssets()
   {
 
-    $path = link::to_article('home') . '/';
+    $path = link::to_article('home');
 
     $assets = array(
 

@@ -135,6 +135,6 @@ class link
       $parts = implode('/', $parts) . '/';
     }
 
-    return str_replace('//', '/', $path . '/' . $parts  . $href);
+    return str_replace(['/./', '//'], '/', $path . '/' . $parts  . $href);
   }
 }

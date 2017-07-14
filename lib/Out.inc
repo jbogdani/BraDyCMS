@@ -97,7 +97,6 @@ class Out
 
       $exploded = explode('/', $get['art_title']);
       $this->cfg['textId'] = array_values(array_slice($exploded, -1))[0];
-      array_pop($exploded);
       $this->cfg['parts'] = $exploded;
       $this->cfg['isDraft'] = ($get['draft'] !== false);
 
@@ -211,12 +210,13 @@ class Out
    * @param mixed   $parts can be string (/ separated parts), true: out::getParts() will be used, array or false
    * @return string
    */
-  public function link2($art, $tags = false, $page = false, $absl_link = false, $parts = false)
+  public function link2($art = false, $tags = false, $page = false, $absl_link = false, $parts = false)
   {
     $page = $page ? $page : $this->cfg['page'];
 
     if ($parts && is_bool($parts)) {
       $parts = $this->getParts();
+      array_pop($parts);
     } elseif ($parts && is_string($parts)) {
       $parts = explode('/', $parts);
     }
@@ -232,7 +232,7 @@ class Out
         $url = link::to_tags($art, $this->session_lang, $page);
         break;
       default:
-        $url = link::to_article($art == 'home' ? './' : $art, $this->session_lang, $page, $parts);
+        $url = link::to_article( (!$art || $art === 'home') ? './' : $art, $this->session_lang, $page, $parts);
         break;
     }
 

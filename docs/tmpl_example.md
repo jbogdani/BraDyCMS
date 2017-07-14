@@ -5,19 +5,19 @@ File: `./sites/default/index.twig`
     <!DOCTYPE html >
     <html>
     <head>
-  
+
       <!-- Prints site metadata -->
       {{ html.metadata }}
-  
+
       <!-- Loads site favicon -->
       <link rel="shortcut icon" href="./sites/default/css/favicon.png">
-  
+
       <!-- Load site styles -->
       <link rel="stylesheet" href="./sites/default/css/styles.css" type="text/css" />
     </head>
 
     <body>
-  
+
       <!-- HEADER -->
       <div class="header">
         <div class="container">
@@ -25,7 +25,7 @@ File: `./sites/default/index.twig`
           <p class="lead">This is my new web site built with BraDyCMS!</p>
         </div>
       </div> <!-- end of header-->
-    
+
       <!-- MAIN MENU -->
       <div class="container">
         <div class="navbar navbar-default">
@@ -34,11 +34,11 @@ File: `./sites/default/index.twig`
           </div>
         </div>
       </div><!-- end of main menu -->
-    
-    
+
+
       <!-- MAIN BODY -->
       <div class="body container">
-    
+
         <!-- Start of conditional displaying of content, depending on context (html.getContext) -->
         <!-- 1. Context is HOME -->
         {% if html.getContext == 'home' %}
@@ -59,7 +59,7 @@ File: `./sites/default/index.twig`
 
           </div><!-- /. end of home section -->
 
-        
+
         <!-- 2. Context is ARTICLE -->
         {% elseif html.getContext == 'article' %}
           <div class="row">
@@ -67,18 +67,18 @@ File: `./sites/default/index.twig`
               <!-- Show formatted article in main column -->
               {{ html.articleBody }}
             </div>
-        
+
             <div class="col-md-3">
               <div class="well">
                 <!-- Show list of similar articles in left column -->
                 {{ html.similarBlog }}
               </div>
           </div><!--/. end of article section -->
-        
+
         <!-- 3. Context is TAGS -->
         {% elseif html.getContext == 'tags' %}
           {{ html.tagBlog }}
-      
+
         <!-- 4. Context is SEARCH -->
         {% elseif html.getContext == 'search' %}
           {{ html.searchResults }}
@@ -86,8 +86,8 @@ File: `./sites/default/index.twig`
         {% endif %} <!--/. end of conditional contents displaying -->
 
       </div> <!--/. end of main body container (.body .container) -->
-  
-  
+
+
       <!-- FOOTER -->
       <div class="footer">
         <div class="container">
@@ -98,8 +98,9 @@ File: `./sites/default/index.twig`
       </div><!-- Footer end -->
 
       <!-- Load jQuery -->
-      {{ html.jQuery('1.10.2') }}
-  
+      {{ html.jQuery }}
+      {{ html.queue }}
+
       <!-- Search form submission script -->
       <script>
         (function(){

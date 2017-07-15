@@ -110,17 +110,18 @@ E.g.: `{{ html.downloadNode('curricula', 'table-stripped') }}`
 Returns javascript code for Google Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
 
 E.g.: `{{ html.GA }}`
-    <script>
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'GA-ID']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
-
+```html
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'GA-ID']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  </script>
+```
 ---
 
 #### gallery('name', 'class')
@@ -129,21 +130,22 @@ Returns HTML code with gallery data.
 - **class** string, optional, default false. Css class (or space separated classes) to add to main unordered list (ul)
 
 E.g.: `{{ html.gallery('news', 'latest') }}`
-    <div class="gallery-container">
-      <ul class="gallery news latest">
-        <li>
-          <a href="./sites/default/images/galleries/news/01.jpg" class="fancybox" title="Figure 01 caption" rel="news" >
-            <img src="./sites/default/images/galleries/news/thumbs/01.jpg" alt="Figure 01 caption" />
-          </a>
-          <div class="caption">Figure 01 caption</div>
-        </li>
+```html
+<div class="gallery-container">
+  <ul class="gallery news latest">
+    <li>
+      <a href="./sites/default/images/galleries/news/01.jpg" class="fancybox" title="Figure 01 caption" rel="news" >
+        <img src="./sites/default/images/galleries/news/thumbs/01.jpg" alt="Figure 01 caption" />
+      </a>
+      <div class="caption">Figure 01 caption</div>
+    </li>
 
-        <li>... </li>
+    <li>... </li>
 
-        ...
-      </ul>
-    </div>
-
+    ...
+  </ul>
+</div>
+```
 ---
 
 #### getArticle('article')
@@ -151,25 +153,27 @@ Returns array with article data. If article is not provided, current article's d
 - **article** string, optional, default false. Article's textid
 
 E.g.: `{{ html.getArticle('contacts') }}`
-    array(
-      'id' => integer,
-      'title' => string,
-      'textid' => string,
-      'sort' => integer,
-      'summary' => string,
-      'text' => string,
-      'keywords' => string,
-      'author' => string,
-      'status' => string,
-      'section' => string,
-      'tags' => array('string', 'string', 'etc..'),
-      'created' => datestamp,
-      'publish' => datestamp,
-      'expires' => datestamp,
-      'updated' => boolean,
-      'url' => string,
-      'full_url' => string
-   )
+```php
+array (
+  'id' => integer,
+  'title' => string,
+  'textid' => string,
+  'sort' => integer,
+  'summary' => string,
+  'text' => string,
+  'keywords' => string,
+  'author' => string,
+  'status' => string,
+  'section' => string,
+  'tags' => array('string', 'string', 'etc..'),
+  'created' => datestamp,
+  'publish' => datestamp,
+  'expires' => datestamp,
+  'updated' => boolean,
+  'url' => string,
+  'full_url' => string
+)
+```
 
 ---
 
@@ -184,39 +188,39 @@ E.g.: `{{ html.getArticlesByFilter(['author', 'BraDypUS']) }}`
 or
 
 `{{ html.getArticlesByFilter([['author', '%BraDypUS%', 'LIKE'], ['title', '%hello%', 'LIKE']], 'OR', true) }}`
-
-    array(
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        'keywords' => string,
-        'author' => string,
-        'status' => string,
-        'section' => string,
-        'tags' => array('string', 'string', 'etc..'),
-        'created' => datestamp,
-        'publish' => datestamp,
-        'expires' => datestamp,
-        'updated' => boolean,
-        'url' => string,
-        'full_url' => string
-      ),
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        ...
-      ),
-      ...
-    )
-
+```php
+array(
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    'keywords' => string,
+    'author' => string,
+    'status' => string,
+    'section' => string,
+    'tags' => array('string', 'string', 'etc..'),
+    'created' => datestamp,
+    'publish' => datestamp,
+    'expires' => datestamp,
+    'updated' => boolean,
+    'url' => string,
+    'full_url' => string
+  ),
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    ...
+  ),
+  ...
+)
+```
 ---
 
 #### getArticlesByTag('tag1', 'tag2', 'ecc')
@@ -231,38 +235,39 @@ values will be used for pagination
 E.g.: `{{ html.getArticlesByTag('news', 'web') }}` or
 
 E.g.: `{{ html.getArticlesByTag([1, 10], 'news', 'web') }}`
-    array(
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        'keywords' => string,
-        'author' => string,
-        'status' => string,
-        'section' => string,
-        'tags' => array('string', 'string', 'etc..'),
-        'created' => datestamp,
-        'publish' => datestamp,
-        'expires' => datestamp,
-        'updated' => boolean,
-        'url' => string,
-        'full_url' => string
-      ),
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        ...
-      ),
-      ...
-    )
-
+```php
+array(
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    'keywords' => string,
+    'author' => string,
+    'status' => string,
+    'section' => string,
+    'tags' => array('string', 'string', 'etc..'),
+    'created' => datestamp,
+    'publish' => datestamp,
+    'expires' => datestamp,
+    'updated' => boolean,
+    'url' => string,
+    'full_url' => string
+  ),
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    ...
+  ),
+  ...
+)
+```
 ---
 
 #### getArticlesByTagArray(tags, dontparse, page, max)
@@ -274,57 +279,61 @@ If dontparse is not null, articles texts will not be parsed (customtags will not
 - **max** integer, default 20. Maximum of records to show in each page
 
 E.g.: `{{ html.getArticlesByTag(['news', 'web']) }}`
-    array(
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        'keywords' => string,
-        'author' => string,
-        'status' => string,
-        'section' => string,
-        'tags' => array('string', 'string', 'etc..'),
-        'created' => datestamp,
-        'publish' => datestamp,
-        'expires' => datestamp,
-        'updated' => boolean,
-        'url' => string,
-        'full_url' => string
-      ),
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        ...
-      ),
-      ...
-    )
+```php
+array(
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    'keywords' => string,
+    'author' => string,
+    'status' => string,
+    'section' => string,
+    'tags' => array('string', 'string', 'etc..'),
+    'created' => datestamp,
+    'publish' => datestamp,
+    'expires' => datestamp,
+    'updated' => boolean,
+    'url' => string,
+    'full_url' => string
+  ),
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    ...
+  ),
+  ...
+)
+```
 ---
 
 #### getArticleTags()
 Returns array of tags for current article
 
 E.g.: `{{ html.getArticleTags }}`
-    array(
-      'tag1',
-      'tag2',
-      'etc'
-    )
-
+```php
+array(
+  'tag1',
+  'tag2',
+  'etc'
+)
+```
 ---
 
 #### getContext()
 Returns context of usage: article, tags, search or home
 
 E.g.: `{{ html.getContext }}`
-    home
-
+```php
+home
+```
 ---
 
 #### getData('index')
@@ -332,30 +341,34 @@ Returns array of user defined static data. User data are set as JSON object usin
 - **index** string, default false. Array index to return (use dot notation for tree-like structure)
 
 E.g.: `{{ html.getData }}`
-    array(
-      "test" => array(
-        "one" => "1",
-        "two" => "2",
-        "etc" => "et caetera"
-        ),
-      "test1" => array(
-        "one1" => "1.1",
-        "two1" => "2.1",
-        "etc1" => "et caetera 1"
-        )
+```php
+array(
+  "test" => array(
+    "one" => "1",
+    "two" => "2",
+    "etc" => "et caetera"
+    ),
+  "test1" => array(
+    "one1" => "1.1",
+    "two1" => "2.1",
+    "etc1" => "et caetera 1"
     )
+)
+```
 
 E.g. 2: `{{ html.getData('test.etc') }}`
-    "et caetera"
-
+```php
+et caetera
+```
 ---
 
 #### getDevice()
 Returns device type: computer, tablet, phone
 
 E.g.: `{{ html.getDevice }}`
-    computer
-
+```php
+computer
+```
 ---
 
 #### getDownloadNode('node')
@@ -363,28 +376,30 @@ Returns array with data for available files in download node
 - **node** string, required. Name of download node to display
 
 E.g.: `{{ html.getDownloadNode('curricula') }}`
-    array (
-      array (
-       path => sites/default/images/downloads/curricola/jbogdani.pdf,
-       basename => jbogdani,
-       ext => pdf,
-       title => CV of Julian Bogdani,
-       description => Detailed CV of Julian Bogdani, PDF version. Last updated 2014,
-      ),
-     ...
-    );
-
+```php
+array (
+  array (
+   path => sites/default/images/downloads/curricola/jbogdani.pdf,
+   basename => jbogdani,
+   ext => pdf,
+   title => CV of Julian Bogdani,
+   description => Detailed CV of Julian Bogdani, PDF version. Last updated 2014,
+  ),
+ ...
+);
+```
 ---
 
 #### getFilterTags()
 Returns array of URL tags used as filters
 
 E.g.: `{{ html.getFilterTags }}`
-    array(
-      'news',
-      'web'
-    )
-
+```php
+array(
+  'news',
+  'web'
+)
+```
 ---
 
 #### getGallery('gallery')
@@ -392,36 +407,38 @@ Returns array with data for gallery name
 - **gallery** string, required. Name of gallery to get data for
 
 E.g.: `{{ html.getGallery('our_works') }}`
-    array (
-      array (
-       img => sites/default/images/galleries/our_works/picture01.jpg,
-       thumb => sites/default/images/galleries/our_works/thumbs/picture01.jpg,
-       caption => Caption of picture01,
-       href => http://some.url
-      ),
-     ...
-    );
-
+```php
+array (
+  array (
+   img => sites/default/images/galleries/our_works/picture01.jpg,
+   thumb => sites/default/images/galleries/our_works/thumbs/picture01.jpg,
+   caption => Caption of picture01,
+   href => http://some.url
+  ),
+ ...
+);
+```
 ---
 
 #### getLanguages()
 Returns array of available languages
 
 E.g.: `html.getLanguages`
-    array(
-      array(
-        'code'=>'it',
-        'string'=>'Italiano',
-        'is_current'=>true,
-        'href'=>'http://bradypus.net/it'
-      ),
-      array(...)
-    )
-
+```php
+array(
+  array(
+    'code'=>'it',
+    'string'=>'Italiano',
+    'is_current'=>true,
+    'href'=>'http://bradypus.net/it'
+  ),
+  array(...)
+)
+```
 ---
 
 #### getMD()
-Tries to include Metadata object file, initializes object and returnes it.
+Include Metadata object file, if exists, initializes object and returns it.
 
 E.g.: ` {{ html.getMD }}`
 
@@ -434,8 +451,9 @@ Returns document metadata array (all metadata). Available document metadata are:
 - **escape** boolean, optional, default: false. If true the sigle quotes of the string will be escaped
 
 E.g.: `{{ html.getPageData.title }}`
-    Home Page
-
+```php
+Home Page
+```
 ---
 
 #### getMenu('menuName')
@@ -448,24 +466,26 @@ Returns structured array of menu data for $menu_name.
 Array with pagination data for current page: start, end, current
 
 E.g.: `{{ html.getPagination }}`
-
-    array(
-      'start' => '1',
-      'end' => 10,
-      'current' => 7
-    )
+```php
+array(
+  'start' => '1',
+  'end' => 10,
+  'current' => 7
+)
+```
 ---
 
 #### getTextId()
 Returns article's text id required in URL
 
 E.g.: `{{ html.getTextId() }}`
-    contact_us
-
+```php
+contact_us
+```
 ---
 
 #### getTotal()
-Returns total number of articles available for current filter. Useful for paginaton
+Returns total number of articles available for current filter. Useful for pagination
 
 ---
 
@@ -476,39 +496,39 @@ Returns array of article arrays matching the searched string
 - **max**, integer, optional, default 20. Maximum of records to show in each page
 
 E.g.: `{{ html.getSearchResults }}` or `{{ html.getSearchResults('something') }}`
-
-    array(
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        'keywords' => string,
-        'author' => string,
-        'status' => string,
-        'section' => string,
-        'tags' => array('string', 'string', 'etc..'),
-        'created' => datestamp,
-        'publish' => datestamp,
-        'expires' => datestamp,
-        'updated' => boolean,
-        'url' => string,
-        'full_url' => string
-      ),
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        ...
-      ),
-      ...
-    )
-
+```php
+array(
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    'keywords' => string,
+    'author' => string,
+    'status' => string,
+    'section' => string,
+    'tags' => array('string', 'string', 'etc..'),
+    'created' => datestamp,
+    'publish' => datestamp,
+    'expires' => datestamp,
+    'updated' => boolean,
+    'url' => string,
+    'full_url' => string
+  ),
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    ...
+  ),
+  ...
+)
+```
 ---
 
 #### getSearchString('escape')
@@ -516,8 +536,9 @@ Returns string used as filter in URL. Available only if the context is found
 - **escape** boolean, optional, default false. If true all applicable characters of the string will be converted to HTML entities
 
 E.g.: ` {{html.getSearchString }}`
-    web
-
+```php
+web
+```
 ---
 
 #### getSimilar('textid', 'max')
@@ -526,66 +547,64 @@ Returns array of article arrays matching the most similar (having the same tags)
 - **max** integer, optional default false. Number of articles to return
 
 E.g.: `{{ html.getSimilar }}`
-    array(
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        'keywords' => string,
-        'author' => string,
-        'status' => string,
-        'section' => string,
-        'tags' => array('string', 'string', 'etc..'),
-        'created' => datestamp,
-        'publish' => datestamp,
-        'expires' => datestamp,
-        'updated' => boolean,
-        'url' => string,
-        'full_url' => string
-      ),
-      array(
-        'id' => integer,
-        'title' => string,
-        'textid' => string,
-        'sort' => integer,
-        'summary' => string,
-        'text' => string,
-        ...
-      ),
-      ...
-    )
-
+```php
+array(
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    'keywords' => string,
+    'author' => string,
+    'status' => string,
+    'section' => string,
+    'tags' => array('string', 'string', 'etc..'),
+    'created' => datestamp,
+    'publish' => datestamp,
+    'expires' => datestamp,
+    'updated' => boolean,
+    'url' => string,
+    'full_url' => string
+  ),
+  array(
+    'id' => integer,
+    'title' => string,
+    'textid' => string,
+    'sort' => integer,
+    'summary' => string,
+    'text' => string,
+    ...
+  ),
+  ...
+)
+```
 ---
 
 #### getVersion
 Returns installed and running version of BraDyCMS according to [semver syntax](http://semver.org/)
 
 E.g.: `{{ html.getVersion }}`
-      3.7.0
-
+```php
+3.7.0
+```
 ---
 
 #### GUA()
 Returns javascript code for Google Universal Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
 
 E.g.: `{{ html.GUA }}`
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'GA-ID', 'auto');
-      ga('send', 'pageview');
-    </script>
-
----
-
-#### jQuery('version')
-Dropped support since v3.13 in favor of asset('jquery')
-
+```html
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'GA-ID', 'auto');
+  ga('send', 'pageview');
+</script>
+```
 ---
 
 #### langMenu('flags', 'no_text')
@@ -594,18 +613,19 @@ Returns well-formatted html of language menu. Current language's list item (li) 
 - **no_text** boolean, optional, default false. If true no language text will be shown
 
 E.g.: `{{ html.langMenu(true) }}`
-    <ul class="menu lang">
-      <li class="current">
-        <a href="/it" data-ajax="false">$360;img src="./img/flags/it.png"  alt="italiano" /> Italiano</a>
-      </li>
-      <li>
-        <a href="/en" data-ajax="false">$360;img src="./img/flags/en.png"  alt="english" /> English</a>
-      </li>
-      <li>
-        <a href="/fr" data-ajax="false">$360;img src="./img/flags/fr.png"  alt="français" /> Français</a>
-      </li>
-    </ul>
-
+```html
+<ul class="menu lang">
+  <li class="current">
+    <a href="/it" data-ajax="false">$360;img src="./img/flags/it.png"  alt="italiano" /> Italiano</a>
+  </li>
+  <li>
+    <a href="/en" data-ajax="false">$360;img src="./img/flags/en.png"  alt="english" /> English</a>
+  </li>
+  <li>
+    <a href="/fr" data-ajax="false">$360;img src="./img/flags/fr.png"  alt="français" /> Français</a>
+  </li>
+</ul>
+```
 ---
 
 #### link2('resource', 'is_tag', 'page')
@@ -615,6 +635,9 @@ Returns relative link string to resource or to site homepage (if resource is hom
 - **page**, integer, optional, default false. If provided the link will have a fixed
 - **absl_link**, boolean, optional, default false. If true the absolute link will be returned, instead of the default relative path
 reference to a page
+
+E.g.: `{{ html.link2 }}`
+    ./
 
 E.g.: `{{ html.link2('news') }}`
     ./news

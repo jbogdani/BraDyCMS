@@ -232,13 +232,13 @@ class Out
         $url = link::to_tags($art, $this->session_lang, $page);
         break;
       default:
-        $url = link::to_article( (!$art || $art === 'home') ? './' : $art, $this->session_lang, $page, $parts);
+        $url = link::to_article( !$art ? 'home' : $art, $this->session_lang, $page, $parts);
         break;
     }
 
     if ($absl_link)
     {
-      $url = utils::getBaseUrl() . str_replace('./', null, $url);
+      $url = utils::getBaseUrl() . $url;
     }
 
     return $url;

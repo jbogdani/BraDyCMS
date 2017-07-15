@@ -14,11 +14,10 @@ class link
    */
   private static function getPath()
   {
-    $uri = $_SERVER['REQUEST_URI'];
-    if (cfg::get('rewriteBase') !== '/') {
-      $uri = str_replace(cfg::get('rewriteBase'), null, $uri);
-    }
-    return str_repeat('../', substr_count($uri, '/'));
+    $url_slashes = substr_count($_SERVER['REQUEST_URI'], '/');
+    $base_slashes = substr_count(cfg::get('rewriteBase'), '/');
+
+    return './' . str_repeat('../', $url_slashes-$base_slashes );
   }
 
   /**
@@ -69,7 +68,7 @@ class link
   {
     if (!is_array($tags))
     {
-      $tags = array($tags);
+      $tags = [ $tags ];
     }
 
     return self::format(implode('-', $tags) . '.all', $lang, $page);
@@ -85,56 +84,49 @@ class link
    */
   public static function format($href, $lang = false, $page = false, $parts = false)
   {
+    $href = self::formatHref($href);
+
     // absolute url is not processed
-    if (preg_match('/^https?:\/\/(.+)/', $href))
-    {
+    if (preg_match('/^https?:\/\/(.+)/', $href)) {
       return $href;
     }
 
     // incomplete absolute url is completed with http:// prefix and not processed further
-    if (preg_match('/^www\.(.+)/', $href))
-    {
+    if (preg_match('/^www\.(.+)/', $href)) {
       return 'http://' . $href;
     }
 
     // skype  & callto links
-    if (preg_match('/^skype(.+)/', $href) || preg_match('/^callto(.+)/', $href) )
-    {
+    if (preg_match('/^skype(.+)/', $href) || preg_match('/^callto(.+)/', $href) ) {
       return $href;
     }
 
-    $href = self::formatHref($href);
+    $ret_parts = [];
 
-    $path = self::getPath();
-
-    // links to nothing is not processed
-    if ($href === '#')
-    {
-      return ($path !== '.' ? $path : '') . $href;
-    }
-
-    // links to home page is not processed
-    if ($href === '' || $href === './' || $href === 'home')
-    {
-      $href = '';
-    }
+    // Add base
+    array_push($ret_parts, self::getPath());
 
     // add language to href
-    if ($lang)
-    {
+    if ($lang) {
+      array_push($ret_parts, $lang);
       $href = $lang . '/' . $href;
     }
 
-    // add page to href
-    if ($page)
-    {
-      $href .= '/' . $page;
-    }
-
     if ($parts) {
-      $parts = implode('/', $parts) . '/';
+      $ret_parts = array_merge($ret_parts, $parts);
     }
 
-    return str_replace(['/./', '//'], '/', $path . '/' . $parts  . $href);
+    // links to home page is not processed
+    if ($href === '' || $href === './' || $href === 'home') {
+      $href = false;
+    }
+    array_push($ret_parts, $href);
+
+    // add page to href
+    if ($page) {
+      array_push($ret_parts, $page);
+    }
+
+    return str_replace(['/./', '//'], '/', implode('/', $ret_parts ) );
   }
 }

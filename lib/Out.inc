@@ -128,8 +128,7 @@ class Out
   }
 
   /**
-   * Returns array with url parts (non language, non page, no article, slash separated)
-   * TODO: document this
+   * Returns array with url parts (non language, non page, slash separated)
    * @return array url parts
    */
   public function getParts()

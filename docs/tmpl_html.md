@@ -475,6 +475,15 @@ array(
 ```
 ---
 
+#### getParts()
+Returns array with url parts; last element id the same of getTextId()
+
+E.g.: `{{ html.parts() }}`
+```php
+['blog', 'php', 'bradycms']
+```
+---
+
 #### getTextId()
 Returns article's text id required in URL
 

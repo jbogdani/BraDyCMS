@@ -62,7 +62,6 @@ class Out
    *                            searchString
    *                            tags    array   List of filtering tags
    *                            tagAll boolean if true article must be tagged witl all listed tags to be retrieved
-   *                            toBase  string  relative path to base path
    */
   private function loadSettings($get, $lang = false)
   {
@@ -100,9 +99,6 @@ class Out
       $this->cfg['parts'] = $exploded;
       $this->cfg['isDraft'] = ($get['draft'] !== false);
 
-
-      $this->cfg['toBase'] = count($exploded > 1) ? str_repeat('../', count($exploded > 1)) : '/';
-
     } else if ( $get['search'] ) {
 
       // 2. search
@@ -129,16 +125,6 @@ class Out
       $this->cfg['context'] = 'home';
     }
     return $this->cfg;
-  }
-
-  /**
-   * Returns relative path to basepath, with o information about pagination or languages
-   * TODO: document this
-   * @return string relative full path to base path
-   */
-  public function getToBase()
-  {
-    return $this->cfg['toBase'];
   }
 
   /**

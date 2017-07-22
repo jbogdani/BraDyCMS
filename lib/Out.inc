@@ -33,12 +33,6 @@ class Out
   public function __construct($get)
   {
     $this->loadSettings($get);
-
-
-    // $this->lang              $this->cfg['lang']
-    // $this->session_lang      $this->cfg['session_lang']
-    // $this->user_lang         $this->cfg['user_lang']
-
   }
 
   /**
@@ -71,12 +65,20 @@ class Out
       $this->cfg['page'] = (int)str_replace('/', null, $get['page']);
     }
 
+    // Languages: there used to be 3 public language related variables:
+    //  lang:         $lang, if $lang != sys_lang
+    //  session_lang: $lang
+    //  user_lang:    $lang or sys_lang
+    //  There is only one now, index of cfg variable: input_lang
+    $this->cfg['input_lang'] = $lang;
+
     // User input language if different from defualt language
     // This language SHOULD appear in all URLs
     if ($get['lang'] && ( $get['lang'] !== cfg::get('sys_lang') ) ) {
       $this->cfg['lang'] = $get['lang'];
     }
 
+    //
     // session_lang is the url defined lang
     // no matter if it is system language or not
     if ($get['lang'])
@@ -125,6 +127,32 @@ class Out
       $this->cfg['context'] = 'home';
     }
     return $this->cfg;
+  }
+
+  /**
+   * Return language or false. Type of language depends on $what and $return_always
+   * @param  string|false $what     if 'input' or false, the input (in Out initialization) language will be returned, no matter if false
+   *                                  if 'current' and $return_always is false the input language will be returned if it is not the same of the system language, otherwise false is returned
+   *                                  if 'current' and $return_always is true: the input language OR the system language will be returned
+   * @param  boolean $return_always if true a language will be returned, the sys language if no other information is available
+   * @return string|false           Content language
+   */
+  public function getLang($what = false, $return_always = false)
+  {
+    switch ($what) {
+      case 'current':
+        if ($return_always) {
+          return $this->cfg['lang'] ? $this->cfg['lang'] : cfg::get('sys_lang');
+        } else {
+          return ( $this->cfg['lang'] && $this->cfg['lang'] !== cfg::get('sys_lang') ) ? $this->cfg['lang'] : false;
+        }
+        break;
+
+      case 'input':
+      default:
+        return $this->cfg['lang'];
+        break;
+    }
   }
 
   /**

@@ -193,14 +193,14 @@ class Out
    * @param boolean $tags  array of tags to use for filtering section articles
    * @param integer $page Page number, default false
    * @param boolean $full_link  If true the absolute link will be returned.
-   * @param mixed   $parts can be string (/ separated parts), true: out::getParts() will be used, array or false
+   * @param mixed   $parts can be string (/ separated parts), true (or "true"): out::getParts() will be used, array or false
    * @return string
    */
   public function link2($art = false, $tags = false, $page = false, $absl_link = false, $parts = false)
   {
     $page = $page ? $page : $this->cfg['page'];
 
-    if ($parts && is_bool($parts)) {
+    if ($parts && ($parts === "true" || is_bool($parts)) ) {
 
       $parts = $this->getParts();
       array_pop($parts);

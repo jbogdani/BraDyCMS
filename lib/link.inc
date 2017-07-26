@@ -106,10 +106,9 @@ class link
     // Add base
     array_push($ret_parts, self::getPath());
 
-    // add language to href
+    // add language at the begining of href
     if ($lang) {
-      array_push($ret_parts, $lang);
-      $href = $lang . '/' . $href;
+      array_unshift($ret_parts, $lang);
     }
 
     if ($parts) {

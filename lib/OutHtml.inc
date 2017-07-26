@@ -90,7 +90,7 @@ class OutHtml extends Out
       $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
       // Current page in current language
-      $html .= "\n  " . '<link rel="alternate" href="' . $url . '" hreflang="' . $this->user_lang . '" />';
+      $html .= "\n  " . '<link rel="alternate" href="' . $url . '" hreflang="' . $this->getLang('current', true) . '" />';
       // code, string, is_current, href
       $lang_arr = $this->getLanguages();
       foreach ($lang_arr as $l)
@@ -450,7 +450,7 @@ class OutHtml extends Out
       else
       {
         $html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . ($menu['current'] ? 'active' : '') . '">'
-            . '<a href="' . link::format($menu['href'], $this->lang) . '" '
+            . '<a href="' . link::format($menu['href'], $this->getLang('input')) . '" '
                 . ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
                 . ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')
                 . ($menu['sub'] && !$strip ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')
@@ -811,13 +811,13 @@ EOD;
         case 'tags':
           $href = link::to_tags(
             implode( ($this->cfg['tagAll'] ? '~' : '-'), $this->getFilterTags()),
-            $this->lang,
+            $this->getLang('input'),
             $x
             );
           break;
 
         case 'search':
-          $href = link::to_search($this->getSearchString(), $this->lang, $x);
+          $href = link::to_search($this->getSearchString(), $this->getLang('input'), $x);
           break;
 
         default:

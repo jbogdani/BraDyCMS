@@ -18,14 +18,6 @@ class Out
     $totalArticles,
     $queue;
 
-  public
-    // $_SESSION['lang'], if set
-    $session_lang,
-    // $_SESSION['lang'] only if different from main configuration language
-    $lang,
-    // Current user language, always set: it will be the $_SESSION['lang'] or main configuration language
-    $user_lang;
-
   /**
    * Starts object, sets context and language data
    * @param array $get  array of $_GET data
@@ -47,8 +39,6 @@ class Out
    * @return array       $this->cfg array with data to be used in this object and its extensions
    *                            page    int  current page
    *                            lang    string
-   *                            session_lang
-   *                            user_lang
    *                            context
    *                            textId  string  Article's textid passed in URL
    *                            parts   array   URL parts
@@ -67,28 +57,11 @@ class Out
 
     // Languages: there used to be 3 public language related variables:
     //  lang:         $lang, if $lang != sys_lang
-    //  session_lang: $lang
-    //  user_lang:    $lang or sys_lang
     //  There is only one now, index of cfg variable: input_lang
     $this->cfg['input_lang'] = $lang;
 
-    // User input language if different from defualt language
-    // This language SHOULD appear in all URLs
-    if ($get['lang'] && ( $get['lang'] !== cfg::get('sys_lang') ) ) {
-      $this->cfg['lang'] = $get['lang'];
-    }
-
-    //
-    // session_lang is the url defined lang
-    // no matter if it is system language or not
-    if ($get['lang'])
-    {
-      $this->cfg['session_lang'] = $get['lang'];
-    }
-
-    // user_lang is the content language:
-    // it is URL language, if provided or system default language
-    $this->cfg['user_lang'] = $get['lang'] ? $get['lang'] : cfg::get('sys_lang');
+    // User input language
+    $this->cfg['lang'] = $get['lang'];
 
     // Set context and context related data
     if ( $get['art_title'] ) {
@@ -228,9 +201,12 @@ class Out
     $page = $page ? $page : $this->cfg['page'];
 
     if ($parts && is_bool($parts)) {
+
       $parts = $this->getParts();
       array_pop($parts);
+
     } elseif ($parts && is_string($parts)) {
+
       $parts = explode('/', $parts);
     }
 
@@ -239,13 +215,13 @@ class Out
     switch($tags)
     {
       case 'search':
-        $url = link::to_search($art, $this->session_lang, $page);
+        $url = link::to_search($art, $this->getLang('input'), $page);
         break;
       case true:
-        $url = link::to_tags($art, $this->session_lang, $page);
+        $url = link::to_tags($art, $this->getLang('input'), $page);
         break;
       default:
-        $url = link::to_article( !$art ? 'home' : $art, $this->session_lang, $page, $parts);
+        $url = link::to_article( !$art ? 'home' : $art, $this->getLang('input'), $page, $parts);
         break;
     }
 
@@ -315,7 +291,7 @@ class Out
   {
     $textid = $textid ? $textid : $this->getTextId();
 
-    return $textid ? Article::getSimilar(false, $textid, $this->session_lang, $max) : false;
+    return $textid ? Article::getSimilar(false, $textid, $this->getLang('input'), $max) : false;
   }
 
     /**
@@ -334,7 +310,7 @@ class Out
       return $this->data['article'][$article];
     }
 
-    $this->data['article'][$article] = Article::getByTextid($article, $this->lang, $draft);
+    $this->data['article'][$article] = Article::getByTextid($article, $this->getLang('input'), $draft);
 
     // Article does not exist!
     if (empty($this->data['article'][$article])) {
@@ -396,9 +372,9 @@ class Out
   {
     list($start, $max) = $this->page2limit($page, $max);
 
-    $this->totalArticles = Article::getByTag($tags, $this->lang, $this->cfg['tagAll'], false, false, false, true);
+    $this->totalArticles = Article::getByTag($tags, $this->getLang('input'), $this->cfg['tagAll'], false, false, false, true);
 
-    $arts = Article::getByTag($tags, $this->lang, $this->cfg['tagAll'], false, $start, $max);
+    $arts = Article::getByTag($tags, $this->getLang('input'), $this->cfg['tagAll'], false, $start, $max);
 
     if (is_array($arts) && !$dontparse)
     {
@@ -460,7 +436,7 @@ class Out
     $path_arr = explode('/', $_SERVER['REQUEST_URI']);
     $path = $path_arr[count($path_arr)-1];
 
-    $seo = Seo::get($path, $this->lang);
+    $seo = Seo::get($path, $this->getLang('input'));
 
     // SITE NAME
     $this->data['page']['site_name'] = cfg::get('name');
@@ -566,7 +542,7 @@ class Out
     $this->data['page']['keywords'] = str_replace('"', '&quot;', $this->data['page']['keywords']);
 
     // LANG
-    $this->data['page']['lang'] = $this->lang ? $this->lang: cfg::get('sys_lang');
+    $this->data['page']['lang'] = $this->getLang('current', true);
 
     // URL
     $this->data['page']['url']  = utils::getBaseUrl() . str_replace(cfg::get('rewriteBase'), null, $_SERVER['REQUEST_URI']);
@@ -617,7 +593,7 @@ class Out
   {
     if (!$this->data['menu'][$menu_name])
     {
-      $tmp = Menu::get_structured_menu($menu_name, $this->lang);
+      $tmp = Menu::get_structured_menu($menu_name, $this->getLang('input'));
 
       $this->data['menu'][$menu_name] = $this->recursiveRichMenu($tmp);
 
@@ -673,7 +649,7 @@ class Out
   {
     if (!$this->data['languages'])
     {
-      $this->data['languages'] = utils::getLanguages($this->session_lang);
+      $this->data['languages'] = utils::getLanguages($this->getLang('current', true));
     }
     return $this->data['languages'];
   }
@@ -694,7 +670,7 @@ class Out
 
     list($start, $max) = $this->page2limit($page, $max);
 
-    return Article::search($string, ($tot > 0), $this->lang, $start, $max);
+    return Article::search($string, ($tot > 0), $this->getLang('input'), $start, $max);
   }
 
   /**
@@ -765,7 +741,7 @@ class Out
 
     $this->totalArticles = Article::getByFilter($filter, false, $connector, false, false, true);
 
-    $arts = Article::getByFilter($filter, $this->lang, $connector, $start, $max);
+    $arts = Article::getByFilter($filter, $this->getLang('input'), $connector, $start, $max);
 
     if (is_array($arts) && !$dontparse)
     {

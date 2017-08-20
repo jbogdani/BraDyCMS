@@ -58,7 +58,7 @@ class article_ctrl extends Controller
           "sEcho" => intval($this->request['sEcho']),
           "iTotalRecords" => 0,
           "iTotalDisplayRecords" => 0,
-          "aaData" => false
+          "aaData" => []
           );
 
         header('Content-type: application/json');

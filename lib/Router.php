@@ -46,7 +46,7 @@ class Router
       return false;
     }, 'oai');
 
-    $router->map( 'GET', "/api", function() use ($controller) {
+    $router->map( 'GET', "/api/", function() use ($controller) {
       $controller->route('api_ctrl', 'run');
       return false;
     }, 'api');

@@ -93,10 +93,10 @@ class OutHtml extends Out
       $html .= "\n  " . '<link rel="alternate" href="' . $url . '" hreflang="' . $this->getLang('current', true) . '" />';
       // code, string, is_current, href
       $lang_arr = $this->getLanguages();
-      foreach ($lang_arr as $l)
-      {
-        if($l['is_current'])
-        {
+
+      foreach ($lang_arr as $l) {
+
+        if($l['is_current']) {
           continue;
         }
 
@@ -105,8 +105,8 @@ class OutHtml extends Out
           '" hreflang="' . $l['code'] . '" />';
       }
 
-    if (!$no_og)
-    {
+    if (!$no_og) {
+
       $html .= "\n\n  <!-- Open Graph metadata -->" .
           "\n  " . '<meta property="og:title" content="'
             // Since v 3.7.10 cutstom_title is used for OpenGraph metadata
@@ -132,10 +132,10 @@ class OutHtml extends Out
    */
   public function metadata_twitter($twitter_id = false)
   {
-    if (!$twitter_id)
-    {
+    if (!$twitter_id) {
       return false;
     }
+
     $html = "\n\n  <!-- Twitter Card -->"
         . "\n  " . '<meta name="twitter:card" content="summary" />'
         . "\n  " . '<meta name="twitter:site" content="@' . $twitter_id . '" />'
@@ -188,8 +188,7 @@ class OutHtml extends Out
 
     $art = $this->getArticle();
 
-    if (!$art || !is_array($art) || empty($art))
-    {
+    if (!$art || !is_array($art) || empty($art)) {
       return;
     }
 
@@ -282,18 +281,18 @@ class OutHtml extends Out
             'content="' . $art[$this->getMD()->getTable()['issue']] . '" />' : '');
 
         // DC.Rights, copyright holder and year & license
-        if ($this->getMD()->getCopyright())
-        {
-          if ($art[$this->getMD()->getCopyright('year')] && preg_match("/[0-9]{4}/", $art[$this->getMD()->getCopyright('year')]))
-          {
+        if ($this->getMD()->getCopyright()) {
+
+          if ($art[$this->getMD()->getCopyright('year')] && preg_match("/[0-9]{4}/", $art[$this->getMD()->getCopyright('year')])) {
+
             $year = $art[$this->getMD()->getCopyright('year')];
-          }
-          else if (preg_match("/[0-9]{4}/", $this->getMD()->getCopyright('year')))
-          {
+
+          } else if (preg_match("/[0-9]{4}/", $this->getMD()->getCopyright('year'))) {
+
             $year = $this->getMD()->getCopyright('year');
-          }
-          else
-          {
+
+          } else {
+
             $year = date("Y");
           }
 
@@ -302,16 +301,18 @@ class OutHtml extends Out
           $html .="\n  " . '<meta name="DC.Rights" '
                 . 'content="Copyright (c) ' . $year . ' ' . $copyright_holder . '" />';
 
-          if ($this->getMD()->getCopyright('license'))
-          {
-            if ($art[$this->getMD()->getCopyright('license')])
-            {
+          if ($this->getMD()->getCopyright('license')) {
+
+            if ($art[$this->getMD()->getCopyright('license')]) {
+
               $license = $art[$this->getMD()->getCopyright('license')];
-            }
-            else
-            {
+
+            } else {
+
               $license = $this->getMD()->getCopyright('license');
+
             }
+
             $html .="\n  " . '<meta name="DC.Rights" '
                   . 'content="' . $license . '" />';
           }
@@ -393,18 +394,17 @@ class OutHtml extends Out
           'content="' . $this->getPageData('lang', true) . '" />';
 
         // citation_pdf_url
-        $pdf_url = [
-          'sites/default/images/pdf/' . $art['textid'] . '.pdf',
-          'sites/default/images/articles/media/' . $art['id'] . '/'. $art['textid'] . '.pdf'
-        ];
-        foreach ($pdf_url as $p)
-        {
-          if (file_exists($p))
-          {
-            $html .= "\n  " . '<meta name="citation_pdf_url" content="' . $this->getMD()->getURL() . '/' . $p . '"/>';
-          }
-        }
-    ;
+    $pdf_url = [
+      'sites/default/images/pdf/' . $art['textid'] . '.pdf',
+      'sites/default/images/articles/media/' . $art['id'] . '/'. $art['textid'] . '.pdf'
+    ];
+    foreach ($pdf_url as $p) {
+
+      if (file_exists($p)) {
+
+        $html .= "\n  " . '<meta name="citation_pdf_url" content="' . $this->getMD()->getURL() . '/' . $p . '"/>';
+      }
+    }
     return $html;
   }
 
@@ -418,22 +418,22 @@ class OutHtml extends Out
    */
   public function menu($menu = false, $class = false, $strip = false, $data = false)
   {
-    if ($menu)
-    {
+    if ($menu) {
+
       $menu_arr = $this->getMenu($menu);
-    }
-    else if ($data)
-    {
+
+    } else if ($data) {
+
       $menu_arr = $data;
-    }
-    else
-    {
+
+    } else {
+
       error_log('No menu or data to display');
       return false;
     }
 
-    if (!is_array($menu_arr) || empty($menu_arr))
-    {
+    if (!is_array($menu_arr) || empty($menu_arr)) {
+
       error_log('Menu <' . $menu . '> not found');
       return false;
     }
@@ -441,14 +441,13 @@ class OutHtml extends Out
 
     $html = '<ul class="' . ( $menu ? 'menu ' . $class . ' ' . $menu : 'submenu' . ( $strip ? '' : ' dropdown-menu') ) . '">';
 
-    foreach ($menu_arr as $menu)
-    {
-      if ($menu['item'] == '.' && $menu['href'] == '.')
-      {
+    foreach ($menu_arr as $menu) {
+
+      if ($menu['item'] == '.' && $menu['href'] == '.') {
+
         $html .= '<li class="divider"></li>';
-      }
-      else
-      {
+
+      } else {
         $html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . ($menu['current'] ? 'active' : '') . '">'
             . '<a href="' . link::format($menu['href'], $this->getLang('input')) . '" '
                 . ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
@@ -460,12 +459,14 @@ class OutHtml extends Out
             . '</a>';
       }
 
-      if ($menu['sub'])
-      {
+      if ($menu['sub']) {
+
         $html .= $this->menu(false, false, $strip, $menu['sub']);
       }
+
       $html .= '</li>';
     }
+
     $html .= '</ul>';
 
     return $html;
@@ -484,8 +485,8 @@ class OutHtml extends Out
 
     $html = '<ul class="menu lang">';
 
-    foreach ($lang_arr as $lang)
-    {
+    foreach ($lang_arr as $lang) {
+
       $flag_html = '<img src="./img/flags/' . $lang['code'] . '.png"  alt="' . $lang['string'] . '"  /> ';
 
       $html .= '<li ' . ($lang['is_current'] ? 'class="current" ' : '') . '>'
@@ -497,6 +498,7 @@ class OutHtml extends Out
           . ($no_text ? '' : $lang['string'] )
           . '</a></li>';
     }
+
     $html .= '</ul>';
 
     return $html;
@@ -543,25 +545,25 @@ EOD;
 
     $tot_found = $art_list ? count($art_list) : 0;
 
-    if ( $tot_found === 0 )
-    {
-      if ($this->getSearchString())
-      {
+    if ( $tot_found === 0 ) {
+
+      if ($this->getSearchString()) {
+
         $html = '<h4>' . sprintf(tr::get('no_result_for_query'), $this->getSearchString()). '</h4>';
-      }
-      else
-      {
+
+      } else {
+
         $html = '<h4>' . sprintf(tr::get('no_result_for_tags'), implode(', ', $this->getFilterTags())). '</h4>';
+
       }
-    }
-    else
-    {
-      if ($this->getSearchString())
-      {
+    } else {
+
+      if ($this->getSearchString()) {
+
         $html = '<h4>' . sprintf(tr::get('x_results_for_query'), $this->getSearchString(), $tot_found) . '</h4>';
-      }
-      else
-      {
+
+      } else {
+
         $html = '<h4>' . sprintf(tr::get('x_results_for_tags'), implode(', ', $this->getFilterTags()), $tot_found) . '</h4>';
       }
 
@@ -581,19 +583,20 @@ EOD;
   {
     $art = $this->getArticle($article);
 
-    if ($art)
-    {
+    if ($art) {
+
       $html = '<div class="section">' .
           '<div class="article">' .
             '<h1>' . $art['title'] . '</h1>' .
             '<div class="content">' . $art['text'] . '</div>' .
           '</div>' .
         '</div>';
-    }
-    else
-    {
+
+    } else {
+
       $html = '<div class="section error">' . tr::get('article_does_not_exist') . '</div>';
     }
+
     return $html;
   }
 
@@ -604,13 +607,13 @@ EOD;
    */
   public function tagBlog()
   {
-    if (func_get_args())
-    {
+    if (func_get_args()) {
+
       $art_list = $this->getArticlesByTagArray(func_get_args());
       $tags = implode(' ', func_get_args());
-    }
-    else
-    {
+
+    } else {
+
       $art_list = $this->getArticlesByTag();
       $tags = implode(' ', $this->getFilterTags());
     }
@@ -628,14 +631,14 @@ EOD;
    */
   private function array2html($art_list, $class = false)
   {
-    if (!is_array($art_list))
-    {
+    if (!is_array($art_list)) {
       return false;
     }
 
     $html = '<div class="blog ' . ($class ? $class : '') . '">';
-    foreach ($art_list as $art)
-    {
+
+    foreach ($art_list as $art) {
+
       $html .= '<div class="article">' .
             ($art['title'] ? ' <h3><a href="' . $art['url']  . '">' . $art['title'] . '</a></h3>' : '') .
             '<div class="content">' . $art['summary'] . '</div>' .
@@ -659,8 +662,7 @@ EOD;
   {
     $art_list = $this->getSimilar(false, $max);
 
-    if (!is_array($art_list))
-    {
+    if (!is_array($art_list)) {
       return false;
     }
 
@@ -683,8 +685,8 @@ EOD;
     $restrict_domain = cfg::get('ga_domain');
 
 
-    if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$this->cfg['isDraft'])
-    {
+    if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$this->cfg['isDraft']) {
+
       $html = '<script type="text/javascript">'
           . 'var _gaq = _gaq || [];'
           . "_gaq.push(['_setAccount', '" . $id . "']);"
@@ -711,8 +713,8 @@ EOD;
     $restrict_domain = cfg::get('ga_domain');
 
 
-    if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$this->cfg['isDraft'])
-    {
+    if ( $id && ( !$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']) ) ) && !$this->cfg['isDraft']) {
+
       $html = '<script>'
         . "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
         . "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
@@ -747,19 +749,17 @@ EOD;
   public function ct($method, $param = array())
   {
 
-    if ($param && is_string($param))
-    {
+    if ($param && is_string($param)) {
       $param = json_decode($param, true);
     }
 
-    if (method_exists('customTags', $method))
-    {
-      $html = call_user_func(array('customTags', $method), $param, $this);
-    }
-    else if (file_exists('sites/default/modules/' . $method . '/' . $method. '.inc'))
-    {
-      require_once 'sites/default/modules/' . $method . '/' . $method . '.inc';
+    if (method_exists('customTags', $method)) {
 
+      $html = call_user_func(array('customTags', $method), $param, $this);
+
+    } else if (file_exists('sites/default/modules/' . $method . '/' . $method. '.inc')) {
+
+      require_once 'sites/default/modules/' . $method . '/' . $method . '.inc';
       $html = call_user_func_array([new $method, 'init'], [$param, $this]);
 
     }
@@ -793,8 +793,7 @@ EOD;
   {
     $pagination = $this->getPagination();
 
-    if (!$pagination['start'] && !$pagination['end'])
-    {
+    if (!$pagination['start'] && !$pagination['end']) {
       return false;
     }
 
@@ -804,10 +803,9 @@ EOD;
 
     $showed_end = $showed_start = false;
 
-    for ($x = $pagination['start']; $x<=$pagination['end']; $x++)
-    {
-      switch($this->getContext())
-      {
+    for ($x = $pagination['start']; $x<=$pagination['end']; $x++) {
+
+      switch($this->getContext()) {
         case 'tags':
           $href = link::to_tags(
             implode( ($this->cfg['tagAll'] ? '~' : '-'), $this->getFilterTags()),
@@ -827,23 +825,25 @@ EOD;
 
 
 
-      if ($x != $pagination['start'] && $x != $pagination['end'] &&
+      if (
+        $x != $pagination['start'] && $x != $pagination['end']
+        &&
         ($x < $pagination['current'] - 2 || $x > $pagination['current'] + 2)
-        )
-      {
-        if ($x < $pagination['current'] && !$showed_start)
-        {
+        ) {
+
+        if ($x < $pagination['current'] && !$showed_start) {
+
           $html .= '<li class="disabled"><a class="disabled" href="#">...</a>';
           $showed_start = true;
         }
-        if ($x > $pagination['current'] && !$showed_end)
-        {
+
+        if ($x > $pagination['current'] && !$showed_end) {
           $html .= '<li class="disabled"><a class="disabled" href="#">...</a>';
           $showed_end = true;
         }
-      }
-      else
-      {
+
+      } else {
+
         $html .= "<li" . ($x == $pagination['current'] ? ' class="active" ' : '') . ">"
             . '<a href="' . $href . '">' . $x . '</a>'
           . "</li>";
@@ -861,8 +861,8 @@ EOD;
    */
   public function canView()
   {
-    switch($this->getContext())
-    {
+    switch($this->getContext()) {
+      
       case 'tags':
         $tags = $this->getFilterTags();
         break;

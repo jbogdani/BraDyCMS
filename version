@@ -1,3 +1,4 @@
+3.18.8[] = "Userform modules accepts SMTP configuration"
 3.18.8[] = "PHPMailer updated to v. 5.2.24"
 3.18.7[] = "No results in article list return empty array not false"
 3.18.6[] = "Documentation enhanced"

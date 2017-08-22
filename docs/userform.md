@@ -73,20 +73,30 @@ with user entered values.
 - `inline`, boolean, optional, default: false. If this value is present and is true input
 labels will be displayed inline, on the right of the text inputs, otherwise
 (default value) the label will be displayed above the field.
-
+- `smtp_host`, string, optional, default: false. The SMTP server (or servers separated by semicolon), eg.: 'smtp1.example.com;smtp2.example.com'
+- `smtp_auth`, boolean, optional, default false. If true SMTP authentication is enabled
+- `smtp_username`, string, optional, default false. SMTP username
+- `smtp_password`, string, optional, default false. SMTP password
+- `smtp_secure`, string, optional, default false. SMTP encryption, can be 'tls' or 'ssl'
+- `smtp_port`, string, optional, default false. TCP port to connect to
 
 Partial example
-    {
-      "to": "info@bradypus.com",
-      "from_email": "info@bradypus.com",
-      "from_name": "BraDypUS communicating cultural heritage",
-      "subject":"Contact form",
-      "success_text":"Your message was successfully sent",
-      "error_text": "Sorry, something went wrong and it was not possible to send your message"
-      "inline": true,
-      "to_user": "email",
-      "confirm_text": "Dear %name%\nThank you for your message.\n\nYou are receiving this message because you filled a form on our site. If you did not, please report this abuse at info@bradypus.net.\n\nRegards\nBraDypUS team",
-      ...
+```javascript
+{
+  "to": "info@bradypus.com",
+  "from_email": "info@bradypus.com",
+  "from_name": "BraDypUS communicating cultural heritage",
+  "subject": "Contact form",
+  "success_text": "Your message was successfully sent",
+  "error_text": "Sorry, something went wrong and it was not possible to send your message"
+  "inline": true,
+  "to_user": "email",
+  "confirm_text": "Dear %name%\nThank you for your message.\n\nYou are receiving this message because you filled a form on our site. If you did not, please report this abuse at info@bradypus.net.\n\nRegards\nBraDypUS team",
+  ...
+}
+```
+
+> If `smtp_host`, `smtp_username`, `smtp_password`, `smtp_port` are defined the SMTP protocol will be used, otherwise the PHP's `mail` function will be used.
 
 ---
 
@@ -128,72 +138,80 @@ a file with a different extension a warning message is shown and the file is not
 
 ## Full example of a simple contact form
 
+```javascript
+{
+  "to": "info@bradypus.com",
+  "from_email": "info@bradypus.com",
+  "smtp_host": "smtp1.example.com;smtp2.example.com",
+  "smtp_auth": true,
+  "smtp_username": "info@bradypus.com",
+  "smtp_password": "secret",
+  "smtp_secure": "tls",
+  "smtp_port": 587,
 
+  "from_name": "BraDypUS communicating cultural heritage",
+  "subject":"Contact form",
+  "success_text":"Your message was successfully sent",
+  "error_text": "Sorry, something went wrong and it was not possible to send your message"
+  "inline": true,
+  "to_user": "email",
+  "confirm_text": "Dear %name%\nThank you for your message.\n\nYou are receiving this message because you filled a form on our site. If you did not, please report this abuse at info@bradypus.net.\n\nRegards\nBraDypUS team",
+  "elements": [
     {
-      "to": "info@bradypus.com",
-      "from_email": "info@bradypus.com",
-      "from_name": "BraDypUS communicating cultural heritage",
-      "subject":"Contact form",
-      "success_text":"Your message was successfully sent",
-      "error_text": "Sorry, something went wrong and it was not possible to send your message"
-      "inline": true,
-      "to_user": "email",
-      "confirm_text": "Dear %name%\nThank you for your message.\n\nYou are receiving this message because you filled a form on our site. If you did not, please report this abuse at info@bradypus.net.\n\nRegards\nBraDypUS team",
-      "elements": [
-        {
-          "name": "name",
-          "label": "Name",
-          "placehoder": "Name",
-          "type": "text",
-          "is_required": "true"
-        },
-        {
-          "name": "email",
-          "label": "Email address",
-          "placeholder": "Email address",
-          "type": "text",
-          "is_required": "true",
-          "is_email": "true"
-        },
-        {
-          "name": "phone_no",
-          "label": "Phone number",
-          "placeholder": "Phone number",
-          "type": "text"
-        },
-        {
-          "name": "location",
-          "label": "Location",
-          "type": "text"
-        },
-        {
-          "name": "how_did_you_hear_about_us",
-          "label": "How did you hear about us?",
-          "placehoder": "How did you hear about us?",
-          "type": "select",
-          "options": [
-            "google",
-            "email message",
-            "friends"
-          ]
-        },
-        {
-          "name": "comments",
-          "label": "Comments",
-          "placeholder": "Comments",
-          "type": "longtext"
-        },
-        {
-          "name": "uploadcv",
-          "label": "Upload your CV",
-          "type": "upload",
-          "sizeLimit": "2097152",
-          "allowedExtensions": [
-            "pdf",
-            "doc",
-            "docx",
-            "odt"
-          ]
-        }
+      "name": "name",
+      "label": "Name",
+      "placehoder": "Name",
+      "type": "text",
+      "is_required": "true"
+    },
+    {
+      "name": "email",
+      "label": "Email address",
+      "placeholder": "Email address",
+      "type": "text",
+      "is_required": "true",
+      "is_email": "true"
+    },
+    {
+      "name": "phone_no",
+      "label": "Phone number",
+      "placeholder": "Phone number",
+      "type": "text"
+    },
+    {
+      "name": "location",
+      "label": "Location",
+      "type": "text"
+    },
+    {
+      "name": "how_did_you_hear_about_us",
+      "label": "How did you hear about us?",
+      "placehoder": "How did you hear about us?",
+      "type": "select",
+      "options": [
+        "google",
+        "email message",
+        "friends"
+      ]
+    },
+    {
+      "name": "comments",
+      "label": "Comments",
+      "placeholder": "Comments",
+      "type": "longtext"
+    },
+    {
+      "name": "uploadcv",
+      "label": "Upload your CV",
+      "type": "upload",
+      "sizeLimit": "2097152",
+      "allowedExtensions": [
+        "pdf",
+        "doc",
+        "docx",
+        "odt"
       ]
     }
+  ]
+}
+```

@@ -23,7 +23,7 @@ class userform_ctrl extends Controller
         throw new Exception(tr::get('error_formid_exixts') );
       }
 
-      $text = array(
+      $text = [
         'to'=>'',
         'from_email'=>'',
         'from_name'=>'',
@@ -40,8 +40,8 @@ class userform_ctrl extends Controller
         'smtp_secure' => 'tls|ssl',
         'smtp_port' =>'587 or other',
 
-        'elements'=>array(
-          array(
+        'elements'=> [
+          [
             'name' => '',
             'label' => '',
             'placeholder' => '',
@@ -49,9 +49,9 @@ class userform_ctrl extends Controller
             'options' => 'if type is select options array is required',
             'is_required' => 'true|false',
             'email' => 'true|false',
-          )
-        )
-      );
+          ]
+        ]
+      ];
 
 
       if (!is_dir('./sites/default/modules/userforms')) {
@@ -60,7 +60,7 @@ class userform_ctrl extends Controller
 
       if (utils::write_in_file('./sites/default/modules/userforms/' . $name, $text, 'json')) {
 
-        $resp = array('status' => 'success', 'text' => tr::get('ok_form_config_saved') );
+        $resp = ['status' => 'success', 'text' => tr::get('ok_form_config_saved') ];
 
       } else {
 
@@ -68,7 +68,7 @@ class userform_ctrl extends Controller
       }
     } catch (Exception $e) {
 
-      $resp = array('status' => 'error', 'text' => $e->getMessage() );
+      $resp = ['status' => 'error', 'text' => $e->getMessage() ];
     }
 
     echo json_encode($resp);
@@ -78,10 +78,12 @@ class userform_ctrl extends Controller
   {
     if (utils::write_in_file('./sites/default/modules/userforms/' . $this->get['param'][0], $this->post['data'], 'json')) {
 
-      echo json_encode(array('status' => 'success', 'text' => tr::get('ok_form_config_saved') ));
+      echo json_encode( ['status' => 'success', 'text' => tr::get('ok_form_config_saved') ] );
+
     } else {
 
-      echo json_encode(array('status' => 'error', 'text' => tr::get('error_form_config_not_saved') ));
+      echo json_encode( ['status' => 'error', 'text' => tr::get('error_form_config_not_saved') ] );
+
     }
   }
 
@@ -136,8 +138,10 @@ class userform_ctrl extends Controller
   */
   public function process()
   {
+
     try {
-      $error = array();
+
+      $error = [];
 
       // Get form id
       $form = $this->get['param'][0];
@@ -157,6 +161,7 @@ class userform_ctrl extends Controller
 
       // Validate reCAPTCHA
       if (reCAPTCHA::isProtected()) {
+
         try {
 
           reCAPTCHA::validate($this->post['g-recaptcha-response']);
@@ -384,7 +389,7 @@ class userform_ctrl extends Controller
         break;
 
         case 'upload':
-          $upload[$el['name']] = array();
+          $upload[$el['name']] = [];
 
           if ($el['allowedExtensions']) {
             $upload[$el['name']]['allowedExtensions'] = $el['allowedExtensions'];
@@ -447,7 +452,7 @@ EOD;
   '</div>';
 
     if (!$data['nojs']) {
-      $js = array();
+      $js = [];
 
       $out->setQueue('modules', "\n" . '<script src="' . MOD_DIR . 'userform/userform.js'. '"></script>', true);
       array_push($js, "userform.whatchForm('" . $param['content'] . "');");

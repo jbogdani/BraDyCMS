@@ -134,6 +134,8 @@ bigger file a warning message is shown and the file is not uploaded
 This option is available only if field type is `upload`. If user tries to upload
 a file with a different extension a warning message is shown and the file is not uploaded.
 
+> If a field named subject is available and it is not empty, this value will overwrite default subject
+
 ----
 
 ## Full example of a simple contact form

@@ -181,6 +181,11 @@ class userform_ctrl extends Controller
       */
       foreach ($this->data['elements'] as $el) {
 
+        // Overwrite default subject using field with name subject
+        if ($el['name'] === 'subject' && !empty($data[$el['name']]) ) {
+          $data['subject'] = $data[$el['name']];
+        }
+
         $replacables['%' . $el['name'] . '%'] = $data[$el['name']];
 
         // Check required element

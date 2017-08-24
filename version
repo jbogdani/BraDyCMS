@@ -5,6 +5,10 @@
 4.0.0[]  = "API change: added support for Out::getParts"
 4.0.0[]  = "API change: Removed support for search tags (eg.: tagi1-tag2.search)"
 
+3.18.10[] = "Bug fixed with article translation module (translation language information was getting overwritten in template file)"
+3.18.9[] = "Field named subject overwrites default subject in userform module"
+3.18.8[] = "Userform modules accepts SMTP configuration"
+3.18.8[] = "PHPMailer updated to v. 5.2.24"
 3.18.7[] = "No results in article list return empty array not false"
 3.18.6[] = "Documentation enhanced"
 3.18.5[] = "Added support for fancybox v3 in custom tag fig"

@@ -294,39 +294,38 @@ class article_ctrl extends Controller
     $article = Article::getById($id, false, true);
     $translations = $article->ownArttrans;
 
-    if (is_array($translations))
-    {
-      foreach ($translations as $trans)
-      {
-        if ($trans->lang == $lang)
-        {
+    if (is_array($translations)) {
+
+      foreach ($translations as $trans) {
+
+        if ($trans->lang == $lang) {
+
           $art_translation = $trans->export();
         }
 
       }
     }
 
-    if (!$art_translation)
-    {
-      $art_translation = array('lang' => 'en', 'status' => 0, 'art_id' => $id);
+    if (!$art_translation) {
+      $art_translation = [ 'lang' => 'en', 'status' => 0, 'art_id' => $id ];
     }
 
     $article_array = $article->export();
 
-    foreach (cfg::get('languages') as $langs)
-    {
-      if ($lang == $langs['id'])
-      {
+    foreach (cfg::get('languages') as $langs) {
+
+      if ($lang === $langs['id']) {
+
         $lang_arr = $langs;
       }
     }
 
-    $this->render('article', 'transl_form', array(
+    $this->render('article', 'transl_form', [
       'art'=>$article_array,
       'custom_fields' => cfg::get('custom_fields'),
       'transl' => $art_translation,
-      'lang' => $lang_arr
-      ));
+      'lang_arr' => $lang_arr
+    ]);
 
   }
 

@@ -1,8 +1,8 @@
-<h3>{{ tr.sget('translate_article_in', lang.string|upper) }}</h3>
+<h3>{{ tr.sget('translate_article_in', lang_arr.string|upper) }}</h3>
 <form action="javascript:void(0)" id ="form{{ uid }}">
 
   <input type="hidden" name="id" value="{{ transl.id }}" />
-  <input type="hidden" name="lang" value="{{ lang.id }}" />
+  <input type="hidden" name="lang" value="{{ lang_arr.id }}" />
   <!-- STATUS -->
   <div class="row form-group">
     <div class="col-sm-1"><label>Status</label></div>
@@ -112,7 +112,7 @@
           admin.message(data.text, data.status);
 
           if (data.status == 'success'){
-            admin.tabs.closeActive('article/translate/{{ lang.id }}/{{ art.id }}');
+            admin.tabs.closeActive('article/translate/{{ lang_arr.id }}/{{ art.id }}');
           }
         },
         'json'

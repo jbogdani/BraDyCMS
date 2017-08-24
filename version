@@ -1,3 +1,4 @@
+3.18.10[] = "Bug fixed with article translation module (translation language information was getting overwritten in template file)"
 3.18.9[] = "Field named subject overwrites default subject in userform module"
 3.18.8[] = "Userform modules accepts SMTP configuration"
 3.18.8[] = "PHPMailer updated to v. 5.2.24"

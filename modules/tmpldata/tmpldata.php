@@ -13,33 +13,31 @@ class tmpldata_ctrl extends Controller
 
   public function save()
   {
-    try
-    {
-      if (empty($this->post['data']))
-      {
+    try {
+
+      if (empty($this->post['data'])) {
+
         @unlink($this->data_file);
-        if (file_exists($this->data_file))
-        {
+
+        if (file_exists($this->data_file)) {
           throw new Exception();
         }
-      }
-      else
-      {
-        if (!is_dir(dirname($this->data_file)))
-        {
-          @mkdir(dirname($this->data_file));
+
+      } else {
+
+        if (!is_dir(dirname($this->data_file))) {
+          mkdir(dirname($this->data_file), 0755, true);
         }
-        if (!utils::write_in_file($this->data_file, $this->post['data'], 'json'))
-        {
+
+        if (!utils::write_in_file($this->data_file, $this->post['data'], 'json')) {
           throw new Exception();
         }
       }
 
-      echo json_encode(array('status' => 'success', 'text' => tr::get('ok_setting_updated') ));
-    }
-    catch (Exception $e)
-    {
-      echo json_encode(array('status' => 'error', 'text' => tr::get('error_setting_not_updated') ));
+      echo json_encode( ['status' => 'success', 'text' => tr::get('ok_setting_updated') ] );
+
+    } catch (Exception $e) {
+      echo json_encode( ['status' => 'error', 'text' => tr::get('error_setting_not_updated') ] );
     }
 
 

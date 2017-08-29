@@ -5,17 +5,16 @@
  * @license      MIT, See LICENSE file
  * @since      Dec 1, 2012
  */
-try
-{
+try {
   $root = './';
   require_once $root . 'lib/globals.inc';
 
   $admin = new admin_ctrl();
-}
-catch (Exception $e)
-{
-  error_log($e->getTraceAsString());
 
+
+} catch (Exception $e) {
+
+  error_log($e->getTraceAsString());
   $stop_error = $e->getMessage() ;
 }
 ?>
@@ -57,33 +56,33 @@ catch (Exception $e)
 
     <?php
 
-    if ($stop_error)
-    {
+    if ($stop_error) {
 
-      if ($admin)
-      {
+      if ($admin) {
+
         $admin->showError($stop_error);
-      }
-      else
-      {
+
+      } else {
+
         echo '<div class="container">'
           . '<div class="alert alert-danger text-center">Something went wrong! '
             . $stop_error
           . '</div>'
         . '</div>';
       }
-    }
-    else if (defined('CREATE_SITE'))
-    {
+
+    } else if (defined('CREATE_SITE')) {
+
       $admin->showCreateInstallForm();
-    }
-    else if (!$_SESSION['user_confirmed'])
-    {
+
+    } else if (!$_SESSION['user_confirmed']) {
+
       $admin->showLoginForm();
-    }
-    else
-    {
+
+    } else {
+
       $admin->showBody();
+      
     }
     ?>
 

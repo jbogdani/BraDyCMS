@@ -10,8 +10,7 @@
 session_start();
 
 // set $root variable
-if (@!$root)
-{
+if (@!$root) {
   $root = './';
 }
 
@@ -19,29 +18,25 @@ if (@!$root)
 define('MAIN_DIR', $root);
 
 // if MAIN_DIR directory does not exist, then this is a new site installation process
-if (!is_dir(MAIN_DIR . 'sites/default'))
-{
+if (!is_dir(MAIN_DIR . 'sites/default')) {
   define('CREATE_SITE', true);
 }
 
 // Create main system directories, if they do not exist
-foreach (['tmp', 'cache', 'logs'] as $d)
-{
-  if (!is_dir(MAIN_DIR . $d))
-  {
+foreach (['tmp', 'cache', 'logs'] as $d) {
+  if (!is_dir(MAIN_DIR . $d)) {
     @mkdir(MAIN_DIR . $d, 0777, true);
   }
 }
 
 // Create main system log files if they do not exist
-foreach (['logs/error.log', 'logs/users.log', 'logs/logAttempts.log'] as $f)
-{
-  if (!file_exists(MAIN_DIR . $f))
-  {
+foreach (['logs/error.log', 'logs/users.log', 'logs/logAttempts.log'] as $f) {
+
+  if (!file_exists(MAIN_DIR . $f)) {
     @touch(MAIN_DIR . $f);
   }
-}
 
+}
 
 // SETS ERROR REPORTING
 $err_code = 6135; // E_ALL & ~E_NOTICE, i.e.: 6143 (E_ALL) - 8 (E_NOTICE)
@@ -53,30 +48,28 @@ ini_set('error_log', './logs/error.log');
 ini_set('display_errors', 'off');
 
 // Set Session language
-if (@$_GET['lang'])
-{
+if (@$_GET['lang']) {
   $_SESSION['lang'] = $_GET['lang'];
 }
 
-if (get_magic_quotes_gpc())
-{
+if (get_magic_quotes_gpc()) {
   $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
 
-  while (list($key, $val) = each($process))
-  {
-    foreach ($val as $k => $v)
-    {
+  while (list($key, $val) = each($process)) {
+
+    foreach ($val as $k => $v) {
       unset($process[$key][$k]);
 
-      if (is_array($v))
-      {
+      if (is_array($v)) {
+
         $process[$key][stripslashes($k)] = $v;
 
         $process[] = &$process[$key][stripslashes($k)];
-      }
-      else
-      {
+
+      } else {
+
         $process[$key][stripslashes($k)] = stripslashes($v);
+
       }
     }
   }
@@ -92,12 +85,11 @@ require_once $root . 'lib/vendor/Twig/Autoloader.php';
 Twig_Autoloader::register();
 
 //set default date-zone
-if (defined('CREATE_SITE') || !cfg::get('timezone'))
-{
+if (defined('CREATE_SITE') || !cfg::get('timezone')) {
+
   date_default_timezone_set('Europe/Rome');
-}
-else
-{
+
+} else {
   date_default_timezone_set(cfg::get('timezone'));
 }
 
@@ -117,27 +109,21 @@ define ( 'CACHE_DIR', MAIN_DIR . 'cache/');
 
 !defined('CREATE_SITE') ? $_SESSION['debug'] = cfg::get('debug') : '';
 
-if (defined('CREATE_SITE') || $_SESSION['debug'])
-{
+if (defined('CREATE_SITE') || $_SESSION['debug']) {
   define('CACHE', serialize(array('debug' => true)));
-}
-else
-{
+} else {
   define('CACHE', serialize(array('cache' => CACHE_DIR)));
 }
+
 tr::load_file(@$_GET['lang'], defined('CREATE_SITE'));
 
-if (defined('CREATE_SITE') || !cfg::get('db_connection'))
-{
+if (defined('CREATE_SITE') || !cfg::get('db_connection')) {
   R::setup('sqlite:./sites/default/cfg/database.sqlite');
-}
-else if (cfg::get('db_connection'))
-{
+} else if (cfg::get('db_connection')) {
   R::setup(cfg::get('db_connection'), cfg::get('db_user'), cfg::get('db_pass'));
 }
 
-if(defined('CREATE_SITE') || (!defined('CREATE_SITE') && !cfg::get('debug')))
-{
+if(defined('CREATE_SITE') || (!defined('CREATE_SITE') && !cfg::get('debug'))) {
   R::freeze( true );
 }
 
@@ -153,12 +139,11 @@ $writeables = array(
   CACHE_DIR
 );
 
-if (!defined('MAIN_DIR'))
-{
-foreach ($writeables as $f)
-  {
-    if (!is_writable($f))
-    {
+if (!defined('MAIN_DIR')) {
+
+foreach ($writeables as $f) {
+
+    if (!is_writable($f)) {
       throw new Exception(tr::sget('permission_error', $f));
     }
   }
@@ -166,12 +151,10 @@ foreach ($writeables as $f)
 
 
 // Sandbox templates
-if ($_GET['sandbox'] && file_exists('./sites/default/' . $_GET['sandbox']))
-{
+if ($_GET['sandbox'] && file_exists('./sites/default/' . $_GET['sandbox'])) {
   $_SESSION['sandbox'] = $_GET['sandbox'];
 }
 
-if ($_GET['sandbox'] === 'stop')
-{
+if ($_GET['sandbox'] === 'stop') {
   unset($_SESSION['sandbox']);
 }

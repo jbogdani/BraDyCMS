@@ -433,6 +433,11 @@ class Out
    */
   private function setPageData()
   {
+    // Load $this->data['article']
+    if ($this->getTextId()) {
+      $this->getArticle($this->getTextId());
+    }
+
     $path_arr = explode('/', $_SERVER['REQUEST_URI']);
     $path = $path_arr[count($path_arr)-1];
 
@@ -443,80 +448,65 @@ class Out
 
 
     // ROBOTS
-    if ($this->data['article'][$this->getTextId()]['robots'])
-    {
+    if ($this->data['article'][$this->getTextId()]['robots']) {
       // 1. get value from the custom field named robots
       $this->data['page']['robots'] = $this->data['article'][$this->getTextId()]['robots'];
-    }
-    else if(cfg::get('robots'))
-    {
+
+    } else if(cfg::get('robots')) {
+
       // 2. get value from main site configuration (robots)
       $this->data['page']['robots'] = cfg::get('robots');
-    }
-    else
-    {
+
+    } else {
+
       // 3. default value: "index, follow"
       $this->data['page']['robots'] = 'index, follow';
     }
 
     // TITLE
-    if ($this->data['article'][$this->getTextId()]['customtitle'])
-    {
+    if ($this->data['article'][$this->getTextId()]['customtitle']) {
+
       // 1. get value from the custom field named customtitle
       $this->data['page']['custom_title'] = str_replace('"', '&quot;', $this->data['article'][$this->getTextId()]['customtitle']);
     }
-    if ($seo && $seo['title'])
-    {
+
+    if ($seo && $seo['title']) {
       // 2. SEO table value
       $this->data['page']['title'] = $seo['title'];
-    }
-    else if ($this->data['article'][$this->getTextId()]['title'])
-    {
+    } else if ($this->data['article'][$this->getTextId()]['title']) {
       // 3. use the value of the field named "title"
       $this->data['page']['title'] = $this->data['article'][$this->getTextId()]['title'];
-    }
-    else if ($this->cfg['context'] === 'tags')
-    {
+    } else if ($this->cfg['context'] === 'tags') {
       // 4. if context is tags the main site configuration (title) will be used followed by comma-separated-list of filtering tgs
       $this->data['page']['title'] = cfg::get('title') . ' / ' .  implode(', ', $this->getFilterTags());
-    }
-    else
-    {
+    } else {
       // 5. default value is main site configuration value (title)
       $this->data['page']['title'] = cfg::get('title');
     }
+
     // Replace double quotes with html character in Title
     $this->data['page']['title'] = str_replace('"', '&quot;', $this->data['page']['title']);
 
     // DESCRIPTION
-    if ($seo && $seo['description'])
-    {
+    if ($seo && $seo['description']) {
       // 1. Use Seo table value
       $this->data['page']['description'] = $seo['description'];
-    }
-    else if ($this->data['article'][$this->getTextId()]['customdescription'])
-    {
+    } else if ($this->data['article'][$this->getTextId()]['customdescription']) {
       // 2. get value from the custom field named customdescription
       $this->data['page']['description'] = str_replace('"', '&quot;', $this->data['article'][$this->getTextId()]['customdescription']);
-    }
-    else if ( $this->data['article'][$this->getTextId()]['summary'] && trim(strip_tags($this->data['article'][$this->getTextId()]['summary'])) != '' )
-    {
+    } else if ( $this->data['article'][$this->getTextId()]['summary'] && trim(strip_tags($this->data['article'][$this->getTextId()]['summary'])) != '' ) {
       // 3. use the value of the field named "summary"
       $this->data['page']['description'] = str_replace('"', '&quot;', trim(strip_tags($this->data['article'][$this->getTextId()]['summary'])));
-    }
-    else if ($this->cfg['context'] === 'tags')
-    {
+    } else if ($this->cfg['context'] === 'tags') {
       // 4. if context is tags the main site configuration (description) will be used followed by comma-separated-list of filtering tgs
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description') . ' / ' .  implode(', ', $this->getFilterTags()));
-    }
-    else
-    {
+    } else {
       // 5. default value is main site configuration value (description)
       $this->data['page']['description'] = str_replace('"', '&quot;', cfg::get('description'));
     }
+
     // truncate description up to 500 digits
-    if (strlen($this->data['page']['description']) > 500)
-    {
+    if (strlen($this->data['page']['description']) > 500) {
       $this->data['page']['description'] = str_replace('"', '&quot;', substr($this->data['page']['description'], 0, 497) . '...');
     }
 
@@ -524,17 +514,12 @@ class Out
     $this->data['page']['description'] = str_replace('"', '&quot;', $this->data['page']['description']);
 
     // KEYWORDS
-    if ($seo && $seo['keywords'])
-    {
+    if ($seo && $seo['keywords']) {
       $this->data['page']['keywords'] = $seo['keywords'];
-    }
-    else if ($this->data['article'][$this->getTextId()]['keywords'])
-    {
+    } else if ($this->data['article'][$this->getTextId()]['keywords']) {
       // 1. use the value of the field named "keywords"
       $this->data['page']['keywords'] = $this->data['article'][$this->getTextId()]['keywords'];
-    }
-    else
-    {
+    } else {
       // 2. default value is main site configuration value (keywords)
       $this->data['page']['keywords'] = cfg::get('keywords');
     }
@@ -553,13 +538,10 @@ class Out
     // IMAGE
     $path2img = str_replace(utils::getBaseUrl(), null, $this->data['article'][$this->getTextId()]['art_img']['orig']);
 
-    if (file_exists($path2img))
-    {
+    if (file_exists($path2img)) {
       // 1. check first for article image
       $this->data['page']['image'] = utils::getBaseUrl() . $path2img;
-    }
-    else if ($this->data['article'][$this->getTextId()]['text'])
-    {
+    } else if ($this->data['article'][$this->getTextId()]['text']) {
       // 2. get first image available in the article body
       $xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->getTextId()]['text']));
       $src = $xpath->evaluate("string(//img/@src)");
@@ -572,8 +554,7 @@ class Out
       $this->data['article'][$this->getTextId()]['author']
       &&
       trim($this->data['article'][$this->getTextId()]['author']) != ''
-    )
-    {
+    ) {
       $this->data['page']['author'] = $this->data['article'][$this->getTextId()]['author'];
     }
 

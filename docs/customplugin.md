@@ -89,24 +89,24 @@ class myFirstPlugin{
 To use (call) a plugin inside an **article content** is very easy. Just use a custom tag,
 having the same name of the plugin and add (optional) content and/or parameters, e.g.:
 
-```html
+```
 [[myFirstPlugin]][[/myFirstPlugin]]
 ```
 or
-```html
+```
 [[myFirstPlugin param1="hello" param2="world"]]some content here; it can be
 <em>rich</em> <big>html</big>[[/myFirstPlugin]]
 ```
 
 To use (call) a plugin in **template files** use the `ct` method of the [html object](#docs/read/tmpl_html), e.g.:
 
-```html
+```
 {{ html.ct('myFirstPlugin') }}
 ```
 or
 
-```html
-{{ html.ct( 'myFirstPlugin',  '' ) }}
+```
+{{ html.ct( 'myFirstPlugin',  '{"content": "some content; it can be <em>rich</em> <big>html</big>", "param1":"hello", "param2":"world"}' ) }}
 ```
 
 ---
@@ -165,27 +165,27 @@ class gravatar
 
 Include the custom tag `gravatar` inside the article's content:
 
-```html
+```
 [[gravatar]]info@bradypus.net[[/gravatar]]
 ```
 or (same)
-```html
+```
 [[gravatar email="info@bradypus.net"]][[/gravatar]]
 ```
 or (optional size and name parameters provided)
-```html
+```
 [[gravatar size="60" name="BraDypUS. Communicating Cultural Heritage"]]info@bradypus.net[[/gravatar]]
 ```
 
 ##### Step 3bis: use the plugin in templatefiles
 
-```html
+```
 {{ html.ct('gravatar', '{"content":"info@bradypus.net"}') }}
 ```
 or (same)
-```html
+```
 {{ html.ct('gravatar', '{"email": "info@bradypus.net"}') }}
 ```
 or (optional size and name parameters provided)
-```html
+```
 {{ html.ct('gravatar', '{"email": "info@bradypus.net", name="BraDypUS. Communicating Cultural Heritage" "size":"60"}') }}

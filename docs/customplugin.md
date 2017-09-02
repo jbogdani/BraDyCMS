@@ -29,7 +29,9 @@ The unique name of the plugin (e.g.`myFirstPlugin`) should be used also for:
 (e.g.: `./sites/default/modules/myFirstPlugin/myFirstPlugin.inc`)
 - the name of the php class contained in the `./sites/default/modules/myFirstPlugin/myFirstPlugin.inc`
 file, e.g.:
+
 ```php
+<?php
 class myFirstPlugin
 {
 	public static function something()
@@ -52,7 +54,9 @@ files or in article's content.
 This is the main public method and should be defined as a public static method, e.g.:
 
 File: `./sites/default/modules/myFirstPlugin/myFirstPlugin.inc`:
+
 ```php
+<?php
 class myFirstPlugin
 {
 
@@ -78,6 +82,7 @@ The `admin` method should be defined as a public static method, e.g.:
 File: `./sites/default/modules/myFirstPlugin/myFirstPlugin.inc`:
 
 ```php
+<?php
 class myFirstPlugin{
   public static function admin()
   {

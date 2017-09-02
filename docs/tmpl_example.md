@@ -1,6 +1,6 @@
 {% raw %}
 
-#Template example
+# Template example
 
 File: `./sites/default/index.twig`
 

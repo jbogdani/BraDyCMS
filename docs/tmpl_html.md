@@ -172,6 +172,7 @@ Returns array with article data. If article is not provided, current article's d
 E.g.: `{{ html.getArticle('contacts') }}`
 
 ```php
+<?php
 array(
   'id' => integer,
   'title' => string,
@@ -208,6 +209,7 @@ or
 `{{ html.getArticlesByFilter([['author', '%BraDypUS%', 'LIKE'], ['title', '%hello%', 'LIKE']], 'OR', true) }}`
 
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -257,6 +259,7 @@ E.g.: `{{ html.getArticlesByTag('news', 'web') }}` or
 E.g.: `{{ html.getArticlesByTag([1, 10], 'news', 'web') }}`
 
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -302,6 +305,7 @@ If dontparse is not null, articles texts will not be parsed (customtags will not
 E.g.: `{{ html.getArticlesByTag(['news', 'web']) }}`
 
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -343,6 +347,7 @@ Returns array of tags for current article
 E.g.: `{{ html.getArticleTags }}`
 
 ```php
+<?php
 array(
   'tag1',
   'tag2',
@@ -369,6 +374,7 @@ Returns array of user defined static data. User data are set as JSON object usin
 E.g.: `{{ html.getData }}`
 
 ```php
+<?php
 array(
   "test" => array(
     "one" => "1",
@@ -408,6 +414,7 @@ Returns array with data for available files in download node
 E.g.: `{{ html.getDownloadNode('curricula') }}`
 
 ```php
+<?php
 array (
   array (
    path => sites/default/images/downloads/curricola/jbogdani.pdf,
@@ -428,6 +435,7 @@ Returns array of URL tags used as filters
 E.g.: `{{ html.getFilterTags }}`
 
 ```php
+<?php
 array(
   'news',
   'web'
@@ -443,6 +451,7 @@ Returns array with data for gallery name
 E.g.: `{{ html.getGallery('our_works') }}`
 
 ```php
+<?php
 array (
   array (
    img => sites/default/images/galleries/our_works/picture01.jpg,
@@ -462,6 +471,7 @@ Returns array of available languages
 E.g.: `html.getLanguages`
 
 ```php
+<?php
 array(
   array(
     'code'=>'it',
@@ -507,6 +517,7 @@ Array with pagination data for current page: start, end, current
 E.g.: `{{ html.getPagination }}`
 
 ```php
+<?php
 array(
   'start' => '1',
   'end' => 10,
@@ -540,6 +551,7 @@ Returns array of article arrays matching the searched string
 E.g.: `{{ html.getSearchResults }}` or `{{ html.getSearchResults('something') }}`
 
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -594,6 +606,7 @@ Returns array of article arrays matching the most similar (having the same tags)
 E.g.: `{{ html.getSimilar }}`
 
 ```php
+<?php
 array(
   array(
     'id' => integer,

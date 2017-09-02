@@ -1,6 +1,6 @@
 # Styling the templates, CSS and LESS
 
-As stated [in the template file tree docs](tmpl_files.md), you can use plain 
+As stated [in the template file tree docs](tmpl_files), you can use plain
 CSS to style your templates, but mind that BraDyCMS has a built-in support for the LESS
 language, which is an extension of the CSS syntax, that compiles into CSS.
 
@@ -8,9 +8,9 @@ All the [LESS official docs](http://lesscss.org/) state:
     Less is a CSS pre-processor, meaning that it extends the CSS language, adding features that allow variables, mixins, functions and many other techniques that allow you to make CSS that is more maintainable, themable and extendable.
 
 You don't have to process the LESS files. If you follow the BraDyCMS conventions
-for [LESS file names](tmpl_files.md) compiling the LESS file into CSS is
+for [LESS file names](tmpl_files) compiling the LESS file into CSS is
 as simple as clicking a button. You can edit and compile LESS files directly in the
-[built-in editor](tmpl_editor.md).
+[built-in editor](tmpl_editor).
 
 Please refer [the official LESS doc](http://lesscss.org/features/) for a complete
 panorama over the LESS features including:

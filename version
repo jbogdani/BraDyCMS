@@ -1,3 +1,4 @@
+3.18.11[] = "New help system with full support for Github pages"
 4.0.0[] = "Dropped support for custom tag disqus, moved to bradycms-plugins repository"
 4.0.0[] = "Dropped support for custom tag soundcloud, moved to bradycms-plugins repository"
 4.0.0[] = "Dropped support for custom tag prezi, moved to bradycms-plugins repository"

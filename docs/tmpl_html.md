@@ -1,9 +1,11 @@
+{% raw %}
+
 # The `html` object
 
 The `html` object is the core of the BraDyCMS template system. The `html` object
 is organized in methods that can return everything relative to the CMS content:
 strings, html pieces of code, php arrays to use in iterations and also complex php objects.
-This object is used following the [Twig syntax](tmpl_twig.md).
+This object is used following the [Twig syntax](tmpl_twig).
 
 Calling a method of the `html` object is as simple as writing the method name after
 the `html` string separating them by a dot (.), e.g.: `html.methodName`.
@@ -47,10 +49,15 @@ versions will be loaded for the presets: jquery: 1.11.3; boostrap: 3.3.5; fancyb
 jquery, bootstrap, fancybox, frontend
 
 E.g.: `{{ html.asset('bootstrap') }}`
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+```html
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+```
 
 E.g.: `{{ html.asset('bootstrap', 'css', '3.3.4') }}`
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+```html
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+```
 
 ---
 
@@ -59,15 +66,17 @@ Returns well-formatted html with article content. If article_text_id is present 
 - **article_text_id** string, optional, required: false. Article's textual id
 
 E.g.: `{{ html.articleBody('lorem_ipsum') }}`
-    <div class="section">
-      <div class="article">
-        <h1>Web design</h1>
-        <div class="content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-        </div>
-      </div>
-    </div>
 
+```html
+<div class="section">
+  <div class="article">
+    <h1>Web design</h1>
+    <div class="content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+    </div>
+  </div>
+</div>
+```
 ---
 
 #### canView()
@@ -82,9 +91,11 @@ Returns html produced by custom tag or user module
 key-value pairs array (string) to use as parameters
 
 E.g.: `{{ html.ct('addThis', {"content": "share", "pubid": "ra-4d8b051f4951c18f"}) }}`
-    <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&pubid=ra-4d8b051f4951c18f">share</a>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d8b051f4951c18f"></script>
 
+```html
+<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&pubid=ra-4d8b051f4951c18f">share</a>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d8b051f4951c18f"></script>
+```
 ---
 
 #### downloadNode('node', 'class')
@@ -93,16 +104,19 @@ Returns well-formatted html showing table element with data for available files 
 - **class** string, optional, css class or space separated css classes to attache to main table element
 
 E.g.: `{{ html.downloadNode('curricula', 'table-stripped') }}`
-    <table class="table-stripped">
-      <tbody>
-        <tr>
-          <td><a href="full-path-to-file" class="downloadFile">file-title</a></td>
-          <td><a href="full-path-to-file" class="downloadFile">file-description }</a></td>
-          <td><a href="full-path-to-file" class="downloadFile">Download</a></td>
-        </tr>
-        <tr>...</tr>
-      <tbody>
-    </table>
+
+```html
+<table class="table-stripped">
+  <tbody>
+    <tr>
+      <td><a href="full-path-to-file" class="downloadFile">file-title</a></td>
+      <td><a href="full-path-to-file" class="downloadFile">file-description }</a></td>
+      <td><a href="full-path-to-file" class="downloadFile">Download</a></td>
+    </tr>
+    <tr>...</tr>
+  <tbody>
+</table>
+```
 
 ---
 
@@ -110,7 +124,8 @@ E.g.: `{{ html.downloadNode('curricula', 'table-stripped') }}`
 Returns javascript code for Google Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
 
 E.g.: `{{ html.GA }}`
-```html
+
+```javascript
 <script>
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'GA-ID']);
@@ -120,7 +135,7 @@ _gaq.push(['_setAccount', 'GA-ID']);
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-  </script>
+</script>
 ```
 ---
 
@@ -130,6 +145,7 @@ Returns HTML code with gallery data.
 - **class** string, optional, default false. Css class (or space separated classes) to add to main unordered list (ul)
 
 E.g.: `{{ html.gallery('news', 'latest') }}`
+
 ```html
 <div class="gallery-container">
   <ul class="gallery news latest">
@@ -146,6 +162,7 @@ E.g.: `{{ html.gallery('news', 'latest') }}`
   </ul>
 </div>
 ```
+
 ---
 
 #### getArticle('article')
@@ -153,8 +170,10 @@ Returns array with article data. If article is not provided, current article's d
 - **article** string, optional, default false. Article's textid
 
 E.g.: `{{ html.getArticle('contacts') }}`
+
 ```php
-array (
+<?php
+array(
   'id' => integer,
   'title' => string,
   'textid' => string,
@@ -188,7 +207,9 @@ E.g.: `{{ html.getArticlesByFilter(['author', 'BraDypUS']) }}`
 or
 
 `{{ html.getArticlesByFilter([['author', '%BraDypUS%', 'LIKE'], ['title', '%hello%', 'LIKE']], 'OR', true) }}`
+
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -221,6 +242,7 @@ array(
   ...
 )
 ```
+
 ---
 
 #### getArticlesByTag('tag1', 'tag2', 'ecc')
@@ -235,7 +257,9 @@ values will be used for pagination
 E.g.: `{{ html.getArticlesByTag('news', 'web') }}` or
 
 E.g.: `{{ html.getArticlesByTag([1, 10], 'news', 'web') }}`
+
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -279,7 +303,9 @@ If dontparse is not null, articles texts will not be parsed (customtags will not
 - **max** integer, default 20. Maximum of records to show in each page
 
 E.g.: `{{ html.getArticlesByTag(['news', 'web']) }}`
+
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -312,26 +338,31 @@ array(
   ...
 )
 ```
+
 ---
 
 #### getArticleTags()
 Returns array of tags for current article
 
 E.g.: `{{ html.getArticleTags }}`
+
 ```php
+<?php
 array(
   'tag1',
   'tag2',
   'etc'
 )
 ```
+
 ---
 
 #### getContext()
 Returns context of usage: article, tags, search or home
 
 E.g.: `{{ html.getContext }}`
-```php
+
+```html
 home
 ```
 ---
@@ -341,7 +372,9 @@ Returns array of user defined static data. User data are set as JSON object usin
 - **index** string, default false. Array index to return (use dot notation for tree-like structure)
 
 E.g.: `{{ html.getData }}`
+
 ```php
+<?php
 array(
   "test" => array(
     "one" => "1",
@@ -357,18 +390,21 @@ array(
 ```
 
 E.g. 2: `{{ html.getData('test.etc') }}`
-```php
+
+```
 et caetera
 ```
+
 ---
 
 #### getDevice()
 Returns device type: computer, tablet, phone
 
 E.g.: `{{ html.getDevice }}`
-```php
+```
 computer
 ```
+
 ---
 
 #### getDownloadNode('node')
@@ -376,7 +412,9 @@ Returns array with data for available files in download node
 - **node** string, required. Name of download node to display
 
 E.g.: `{{ html.getDownloadNode('curricula') }}`
+
 ```php
+<?php
 array (
   array (
    path => sites/default/images/downloads/curricola/jbogdani.pdf,
@@ -388,18 +426,22 @@ array (
  ...
 );
 ```
+
 ---
 
 #### getFilterTags()
 Returns array of URL tags used as filters
 
 E.g.: `{{ html.getFilterTags }}`
+
 ```php
+<?php
 array(
   'news',
   'web'
 )
 ```
+
 ---
 
 #### getGallery('gallery')
@@ -407,7 +449,9 @@ Returns array with data for gallery name
 - **gallery** string, required. Name of gallery to get data for
 
 E.g.: `{{ html.getGallery('our_works') }}`
+
 ```php
+<?php
 array (
   array (
    img => sites/default/images/galleries/our_works/picture01.jpg,
@@ -418,13 +462,16 @@ array (
  ...
 );
 ```
+
 ---
 
 #### getLanguages()
 Returns array of available languages
 
 E.g.: `html.getLanguages`
+
 ```php
+<?php
 array(
   array(
     'code'=>'it',
@@ -451,9 +498,11 @@ Returns document metadata array (all metadata). Available document metadata are:
 - **escape** boolean, optional, default: false. If true the sigle quotes of the string will be escaped
 
 E.g.: `{{ html.getPageData.title }}`
-```php
+
+```
 Home Page
 ```
+
 ---
 
 #### getMenu('menuName')
@@ -475,22 +524,25 @@ array(
 ```
 ---
 
-#### getParts()
-Returns array with url parts; last element id the same of getTextId()
-
-E.g.: `{{ html.parts() }}`
 ```php
-['blog', 'php', 'bradycms']
+<?php
+array(
+  'start' => '1',
+  'end' => 10,
+  'current' => 7
+)
 ```
+
 ---
 
 #### getTextId()
 Returns article's text id required in URL
 
 E.g.: `{{ html.getTextId() }}`
-```php
+```
 contact_us
 ```
+
 ---
 
 #### getTotal()
@@ -505,7 +557,9 @@ Returns array of article arrays matching the searched string
 - **max**, integer, optional, default 20. Maximum of records to show in each page
 
 E.g.: `{{ html.getSearchResults }}` or `{{ html.getSearchResults('something') }}`
+
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -545,9 +599,11 @@ Returns string used as filter in URL. Available only if the context is found
 - **escape** boolean, optional, default false. If true all applicable characters of the string will be converted to HTML entities
 
 E.g.: ` {{html.getSearchString }}`
-```php
+
+```
 web
 ```
+
 ---
 
 #### getSimilar('textid', 'max')
@@ -556,7 +612,9 @@ Returns array of article arrays matching the most similar (having the same tags)
 - **max** integer, optional default false. Number of articles to return
 
 E.g.: `{{ html.getSimilar }}`
+
 ```php
+<?php
 array(
   array(
     'id' => integer,
@@ -589,13 +647,15 @@ array(
   ...
 )
 ```
+
 ---
 
 #### getVersion
 Returns installed and running version of BraDyCMS according to [semver syntax](http://semver.org/)
 
 E.g.: `{{ html.getVersion }}`
-```php
+
+```
 3.7.0
 ```
 ---
@@ -604,7 +664,8 @@ E.g.: `{{ html.getVersion }}`
 Returns javascript code for Google Universal Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
 
 E.g.: `{{ html.GUA }}`
-```html
+
+```javascript
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -622,6 +683,7 @@ Returns well-formatted html of language menu. Current language's list item (li) 
 - **no_text** boolean, optional, default false. If true no language text will be shown
 
 E.g.: `{{ html.langMenu(true) }}`
+
 ```html
 <ul class="menu lang">
   <li class="current">
@@ -635,6 +697,7 @@ E.g.: `{{ html.langMenu(true) }}`
   </li>
 </ul>
 ```
+
 ---
 
 #### link2('resource', 'is_tag', 'page')
@@ -649,19 +712,29 @@ E.g.: `{{ html.link2 }}`
     ./
 
 E.g.: `{{ html.link2('news') }}`
-    ./news
+```
+./news
+```
 
 E.g.: `{{ html.link2('news', 'true') }}`
-    ./news.all
+```
+./news.all
+```
 
 E.g.: `{{ html.link2('news', 'true', 2) }}`
-    ./news.all/2
+```
+./news.all/2
+```
 
 E.g.: `{{ html.link2('news', 'search') }}`
-    ./search:news
+```
+./search:news
+```
 
 E.g.: `{{ html.link2('news', '', '', 'true') }}`
-    http://your.base.domain/news
+```
+http://your.base.domain/news
+```
 
 ---
 
@@ -678,33 +751,37 @@ Returns well formatted html and javascript (jquery is required and should be alr
   - css.submit_input: class to apply to submit input element
 
 E.g.: `{{ html.loginForm }}` (simple) or `{{ html.loginForm({'form':'form-inline', 'error':'text-error', 'email_cont': 'form-group', 'email_input': 'form-control', 'password_cont': 'form-group', 'password_input': 'form-control', 'submit_cont': 'form-group', 'submit_input': 'btn btn-success' }) }}` (full)
-    <form action="javascript:void(0);" id="loginform" class="form-inline">
 
-      <div id="error" class="text-error"></div>
+```html
+<form action="javascript:void(0);" id="loginform" class="form-inline">
 
-      <div class="email form-group">
-        <input type="email" name="email"
-          placeholder="Email address"
-          class="form-control">
-      </div>
+  <div id="error" class="text-error"></div>
 
-      <div class="password form-group">
-        <input type="password" name="password"
-          placeholder="Password"
-          class="form-control">
-      </div>
+  <div class="email form-group">
+    <input type="email" name="email"
+      placeholder="Email address"
+      class="form-control">
+  </div>
 
-      <input type="hidden" name="token" value="token-value">
+  <div class="password form-group">
+    <input type="password" name="password"
+      placeholder="Password"
+      class="form-control">
+  </div>
 
-      <div class="submit form-group">
-        <input type="submit" class="submit form-control">
-      </div>
-    </form>
+  <input type="hidden" name="token" value="token-value">
+
+  <div class="submit form-group">
+    <input type="submit" class="submit form-control">
+  </div>
+</form>
 
 
-    <script>
-      form submission script...
-    </script>
+<script>
+  form submission script...
+</script>
+```
+
 ---
 
 #### logoutButton(css)
@@ -715,15 +792,17 @@ Returns well formatted html and javascript (jquery is required and should be alr
 
 E.g.: `{{ html.logoutButton }}` (simple) or `{{ html.logoutButton({'logout_cont': 'form-group', 'logout_input': 'form-control' }) }}` (full)
 
-    <div class="logout_cont form-group">
-      <button id="logoutbutton" class="form-control">
-        Logout
-      </button>
-    </div>
+```html
+<div class="logout_cont form-group">
+  <button id="logoutbutton" class="form-control">
+    Logout
+  </button>
+</div>
 
-    <script>
-      Logout script here...
-    </script>
+<script>
+  Logout script here...
+</script>
+```
 ---
 
 #### menu('menu', 'class', 'strip')
@@ -733,18 +812,20 @@ Returns well-formatted html of menu items
 - **strip** boolean, optional, default false. If true bootstrap style markup will not be shown
 
 E.g.: `{{ html.menu('main', 'nav') }}`
-    <ul class="menu nav">
-      <li class="menu-item"><a href="#">Home</a></li>
-      <li class="menu-item"><a href="#">Who we are</a></li>
-      <li class="menu-item dropdown">
-         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio</a> <b class="caret"></b>
-       <ul class="submenu dropdown-menu">
-        <li class="menu-item"><a href="#">Web</a></li>
-        <li class="menu-item"><a href="#">Print</a></li>
-      </ul>
-      </li>
-      <li class="menu-item"><a href="#" target="_blank">@Twitter</a></li>
-     </ul>
+```html
+<ul class="menu nav">
+  <li class="menu-item"><a href="#">Home</a></li>
+  <li class="menu-item"><a href="#">Who we are</a></li>
+  <li class="menu-item dropdown">
+     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio</a> <b class="caret"></b>
+   <ul class="submenu dropdown-menu">
+    <li class="menu-item"><a href="#">Web</a></li>
+    <li class="menu-item"><a href="#">Print</a></li>
+  </ul>
+  </li>
+  <li class="menu-item"><a href="#" target="_blank">@Twitter</a></li>
+ </ul>
+ ```
 
 ---
 
@@ -753,21 +834,24 @@ Returns well-formatted html code of page html and open graph metadata and links 
 - **no_og** boolean, optional, default: false. If true the open graph metadata will not be shown
 
 E.g.: `{{ html.metadata() }}`
-    <title>Home Page</title>
-    <meta name="description" content="Web sites main description" />
-    <meta name="keywords" content="home, page, keyword1, keyword2" />
-    <meta lang="en" />
-    <link rel="alternate" href="http://bradypus.net" hreflang="it" />
-    <link rel="alternate" href="http:/bradypus.net/en" hreflang="en" />
-    <!-- Open Graph metadata -->
-    <meta property="og:title" content="Home Page" />
-    <meta property="og:description" content="Web sites main description" />
-    <meta property="og:url" content="http://thishost/thispage" />
-    <meta property="og:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
 
-    <!-- Feed links -->
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />
-    <link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />
+```html
+<title>Home Page</title>
+<meta name="description" content="Web sites main description" />
+<meta name="keywords" content="home, page, keyword1, keyword2" />
+<meta lang="en" />
+<link rel="alternate" href="http://bradypus.net" hreflang="it" />
+<link rel="alternate" href="http:/bradypus.net/en" hreflang="en" />
+<!-- Open Graph metadata -->
+<meta property="og:title" content="Home Page" />
+<meta property="og:description" content="Web sites main description" />
+<meta property="og:url" content="http://thishost/thispage" />
+<meta property="og:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
+
+<!-- Feed links -->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />
+<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />
+```
 
 ---
 
@@ -775,17 +859,20 @@ E.g.: `{{ html.metadata() }}`
 Returns well-formatted html code with Dublin Core html metadata. Title, description, language, identifier (url), subject (keywords) are the same as html & og metadata. Date is the date of publication of the article publisher is the publsher name as defined in OAI module configuration
 
 E.g.: `{{ html.metadata_dc }}`
-    <!-- Dublin Core metadata -->
-    <meta name="DC.type" content="Text" />
-    <meta name="DC.format" content="text/html" />
-    <meta name="DC.identifier" scheme="URI" content="http://thishost/thispage_url" />
-    <meta name="DC.title" content="Home Page" />
-    <meta name="DC.description" content="Web sites main description" /<
-    <meta name="DC.language" scheme="RFC3066" content="en" />
-    <meta name="DC.creator" content="John Doe" />
-    <meta name="DC.publisher" content="John Doe publishing" />
-    <meta name="DC.subject" scheme="RFC3066" content="home, page, keyword1, keyword2" />
-    <meta name="DC.date" scheme="W3CDTF" content="2013-04-17" />
+
+```html
+<!-- Dublin Core metadata -->
+<meta name="DC.type" content="Text" />
+<meta name="DC.format" content="text/html" />
+<meta name="DC.identifier" scheme="URI" content="http://thishost/thispage_url" />
+<meta name="DC.title" content="Home Page" />
+<meta name="DC.description" content="Web sites main description" /<
+<meta name="DC.language" scheme="RFC3066" content="en" />
+<meta name="DC.creator" content="John Doe" />
+<meta name="DC.publisher" content="John Doe publishing" />
+<meta name="DC.subject" scheme="RFC3066" content="home, page, keyword1, keyword2" />
+<meta name="DC.date" scheme="W3CDTF" content="2013-04-17" />
+```
 
 ---
 
@@ -793,15 +880,18 @@ E.g.: `{{ html.metadata_dc }}`
 Returns html with Highwire Press metadata, for Google Scholar usage
 
 E.g.: `{{ html.metadata_hp }}`
-    <meta name="citation_journal_title" content=""/>
-    <meta name="citation_issn" content="Lorem ipsum"/>
-    <meta name="citation_author" content="Lorem ipsum" />
-    <meta name="citation_title" content="Lorem ipsum" />
-    <meta name="citation_date" content="0000-00-00" />
-    <meta name="citation_doi" content="10/123456.23456"/>
-    <meta name="citation_abstract_html_url" content="http://lorem.ipsum"/>
-    <meta name="citation_language" content="en" />
-    <meta name="citation_pdf_url" content="http://lorem.ipsum.pdf"/>
+
+```html
+<meta name="citation_journal_title" content=""/>
+<meta name="citation_issn" content="Lorem ipsum"/>
+<meta name="citation_author" content="Lorem ipsum" />
+<meta name="citation_title" content="Lorem ipsum" />
+<meta name="citation_date" content="0000-00-00" />
+<meta name="citation_doi" content="10/123456.23456"/>
+<meta name="citation_abstract_html_url" content="http://lorem.ipsum"/>
+<meta name="citation_language" content="en" />
+<meta name="citation_pdf_url" content="http://lorem.ipsum.pdf"/>
+```
 
 ---
 
@@ -809,13 +899,16 @@ E.g.: `{{ html.metadata_hp }}`
 Returns well-formatted html code with Twitter card summary metadata (https://dev.twitter.com/cards/types/summary).
 
 E.g.: `{{ html.metadata_twitter('TheBraDypUS') }}`
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@TheBraDypUS" />
-    <meta name="twitter:title" content="Lorem ipsum" />
-    <meta name="twitter:description" content="Lorem ipsum" />
-    <meta name="twitter:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
-    <meta name="twitter:url" content="http://thishost/thispage_url" />
+
+```html
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@TheBraDypUS" />
+<meta name="twitter:title" content="Lorem ipsum" />
+<meta name="twitter:description" content="Lorem ipsum" />
+<meta name="twitter:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
+<meta name="twitter:url" content="http://thishost/thispage_url" />
+```
 
 ---
 
@@ -825,84 +918,91 @@ depending on context. Current page will have css class `active`
 - **cssClass** string, optional, default false. Css class to apply to main `ul`
 
 E.g.: `{{ pagination('pagination') }}`
-    <ul class="pagination">
-      <li class="disabled"><a href="page1">1</a>
-      <li class="disabled"><a href="page2">2</a>
-      <li class="disabled"><a class="disabled" href="#">...</a>
-      <li class="disabled"><a class="active" href="page7">7</a>
-      <li class="disabled"><a class="disabled" href="#">...</a>
-      <li class="disabled"><a href="page15">15</a>
-      <li class="disabled"><a href="page16">16</a>
-    </ul>
 
-    ---
+```html
+<ul class="pagination">
+  <li class="disabled"><a href="page1">1</a>
+  <li class="disabled"><a href="page2">2</a>
+  <li class="disabled"><a class="disabled" href="#">...</a>
+  <li class="disabled"><a class="active" href="page7">7</a>
+  <li class="disabled"><a class="disabled" href="#">...</a>
+  <li class="disabled"><a href="page15">15</a>
+  <li class="disabled"><a href="page16">16</a>
+</ul>
+```
 
-    #### registerForm(tag, css)
-    Returns well formatted html and javascript (jquery is required and should be already loaded) code to securely perform user registration and regisrtation confirmation
-    -**tag** string, required. Tag for which to enable user registration
-    - **css** object, optional. An object containing several css classes to use for the form output. The following options are supported
-      - css.form: class to apply to main form element
-      - css.error: class to apply to error text container
-      - css.email_cont: class to apply to email input container
-      - css.email_input: class to apply to email input element
-      - css.select_cont: class to apply to drop-down-menu select mode (registration/confirmation) container
-      - css.select_input:class to apply to drop-down-menu select mode (registration/confirmation) input
-      - css.confirmationcode_cont: class to apply to code confirmation  container
-      - css.confirmationcode_input:class to apply to code confirmation input
-      - css.password_cont: class to apply to password input container
-      - css.password_input: class to apply to password input element
-      - css.submit_cont: class to apply to submit input container
-      - css.submit_input: class to apply to submit input element
+---
 
-    E.g.: `{{ html.loginForm('protected') }}` (simple) or `{{ html.loginForm('protected', {'form':'form-inline', 'error':'text-error', 'email_cont': 'form-group', 'email_input': 'form-control', 'select_cont': 'form-group', 'select_input': 'form-control', 'password_cont': 'form-group', 'password_input': 'form-control', 'confirmationcode_cont': 'form-group', 'confirmationcode_input': 'form-control', 'submit_cont': 'form-group', 'submit_input': 'btn btn-success' }) }}` (full)
-        <form action="javascript:void(0);" id="registerform" class="form-inline">
+#### registerForm(tag, css)
+Returns well formatted html and javascript (jquery is required and should be already loaded) code to securely perform user registration and regisrtation confirmation
+-**tag** string, required. Tag for which to enable user registration
+- **css** object, optional. An object containing several css classes to use for the form output. The following options are supported
+  - css.form: class to apply to main form element
+  - css.error: class to apply to error text container
+  - css.email_cont: class to apply to email input container
+  - css.email_input: class to apply to email input element
+  - css.select_cont: class to apply to drop-down-menu select mode (registration/confirmation) container
+  - css.select_input:class to apply to drop-down-menu select mode (registration/confirmation) input
+  - css.confirmationcode_cont: class to apply to code confirmation  container
+  - css.confirmationcode_input:class to apply to code confirmation input
+  - css.password_cont: class to apply to password input container
+  - css.password_input: class to apply to password input element
+  - css.submit_cont: class to apply to submit input container
+  - css.submit_input: class to apply to submit input element
 
-          <input type="hidden" name="token" value="token-value">
-          <input type="hidden" name="tag"value="protected">
+E.g.: `{{ html.loginForm('protected') }}` (simple) or `{{ html.loginForm('protected', {'form':'form-inline', 'error':'text-error', 'email_cont': 'form-group', 'email_input': 'form-control', 'select_cont': 'form-group', 'select_input': 'form-control', 'password_cont': 'form-group', 'password_input': 'form-control', 'confirmationcode_cont': 'form-group', 'confirmationcode_input': 'form-control', 'submit_cont': 'form-group', 'submit_input': 'btn btn-success' }) }}` (full)
 
-          <div id="error" class="text-error"></div>
+```html
+<form action="javascript:void(0);" id="registerform" class="form-inline">
 
-          <div class="email form-group">
-            <input type="email" name="email"
-              placeholder="Email address"
-              class="form-control">
-          </div>
+  <input type="hidden" name="token" value="token-value">
+  <input type="hidden" name="tag"value="protected">
 
-          <div class="password form-group">
-            <input type="password" name="password"
-              placeholder="Password"
-              class="form-control">
-          </div>
+  <div id="error" class="text-error"></div>
 
-          <div class="select form-group">
-            <select
-              class="select form-control">
-              <option value="new">New user</option>
-              <option value="confirm">Confirm user</option>
-            </select>
-          </div>
+  <div class="email form-group">
+    <input type="email" name="email"
+      placeholder="Email address"
+      class="form-control">
+  </div>
 
-          <div class="confirmationcode form-group">
-            <input type="text" name="confirmationcode"
-              class="form-control"
-              placeholder="Confirmation code">
-          </div>
+  <div class="password form-group">
+    <input type="password" name="password"
+      placeholder="Password"
+      class="form-control">
+  </div>
 
-          <div class="repeatpassword form-group">
-            <input type="text" name="repeatpassword"
-              placeholder="Repeat password"
-              class="form-control">
-          </div>
+  <div class="select form-group">
+    <select
+      class="select form-control">
+      <option value="new">New user</option>
+      <option value="confirm">Confirm user</option>
+    </select>
+  </div>
 
-          <div class="submit form-group">
-            <input type="submit" class="submit form-control">
-          </div>
-        </form>
+  <div class="confirmationcode form-group">
+    <input type="text" name="confirmationcode"
+      class="form-control"
+      placeholder="Confirmation code">
+  </div>
+
+  <div class="repeatpassword form-group">
+    <input type="text" name="repeatpassword"
+      placeholder="Repeat password"
+      class="form-control">
+  </div>
+
+  <div class="submit form-group">
+    <input type="submit" class="submit form-control">
+  </div>
+</form>
 
 
-        <script>
-          form submission script...
-        </script>
+<script>
+  form submission script...
+</script>
+```
+
 ---
 
 #### queue('key')
@@ -911,13 +1011,16 @@ used for all system core modules javascrit is 'modules'
 - **key** string, optional, default 'modules'. Name of queue to load
 
 E.g.: `{{ html.queue }} same as {{ html.queue{'modules'} }}`
-    <script>
-      $('#searchForm').submit(function(){
-        if($('#search').val() !== '' ){
-          window.location = $(this).data('path') + '/search:' + encodeURIComponent($('#search').val());
-        }
-      });
-    </script>
+
+```javascrit
+<script>
+  $('#searchForm').submit(function(){
+    if($('#search').val() !== '' ){
+      window.location = $(this).data('path') + '/search:' + encodeURIComponent($('#search').val());
+    }
+  });
+</script>
+```
 
 ---
 
@@ -928,23 +1031,26 @@ Returns well-formatted html with list of articles tagged with tags provided as a
 - **ecc** ...
 
 E.g.: `{{ html.tagBlog('news', 'web') }}`
-    <div class="section blog tags">
-      <div class="article">
-        <h3><a href="/en/web-design">Web design</a></h3>
-        <div class="content">
-          Some of our latest work on web design...
-        </div>
-        <div class="read_more">
-          <a href="/en/web-design">Read more</a>
-        </div>
-      </div>
 
-      <div class="article">
-        ...
-      </div>
-
-      ...
+```html
+<div class="section blog tags">
+  <div class="article">
+    <h3><a href="/en/web-design">Web design</a></h3>
+    <div class="content">
+      Some of our latest work on web design...
     </div>
+    <div class="read_more">
+      <a href="/en/web-design">Read more</a>
+    </div>
+  </div>
+
+  <div class="article">
+    ...
+  </div>
+
+  ...
+</div>
+```
 
 ---
 
@@ -960,16 +1066,22 @@ Returns the translated value for the given string in the current language
 - **escape** boolean, optional, default false. If true the single quotes will be replaced in the resulting string
 
 E.g.: `tr('hello_world')`
-    Ciao mondo!
+```
+Ciao mondo!
+```
+
 ---
 
 #### searchForm()
 Returns well-formatted html of search form input. Form submission should be done with javascript. The data attribute contains the path to the site root!
 
 E.g.: `{{ html.searchForm }}`
-    <form action="javascript:void(0);" id="searchForm" data-path="./">
-      <input class="search" type="search" placeholder="Search in web site" name="search" id="search" />
-    </form>
+
+```html
+<form action="javascript:void(0);" id="searchForm" data-path="./">
+  <input class="search" type="search" placeholder="Search in web site" name="search" id="search" />
+</form>
+```
 
 ---
 
@@ -977,24 +1089,27 @@ E.g.: `{{ html.searchForm }}`
 Returns well-formatted html with list of articles found by search. This function will return false if context is not found!
 
 E.g.: `{{ html.searchResults }}`
-    <h1>10 articles found searching <code>web</code></h1>
-    <div class="section blog search">
-      <div class="article">
-        <h3><a href="/en/web-design">Web design</a></h3>
-        <div class="content">
-          Some of our latest work on web design...
-        </div>
-        <div class="read_more">
-          <a href="/en/web-design">Read more</a>
-        </div>
-      </div>
 
-      <div class="article">
-        ...
-      </div>
-
-      ...
+```html
+<h1>10 articles found searching <code>web</code></h1>
+<div class="section blog search">
+  <div class="article">
+    <h3><a href="/en/web-design">Web design</a></h3>
+    <div class="content">
+      Some of our latest work on web design...
     </div>
+    <div class="read_more">
+      <a href="/en/web-design">Read more</a>
+    </div>
+  </div>
+
+  <div class="article">
+    ...
+  </div>
+
+  ...
+</div>
+```
 
 ---
 
@@ -1003,23 +1118,25 @@ Returns well-formatted html with list of similar articles (having the same tags)
 - **max** integer, optional default false. Number of articles to return
 
 E.g.: `{{ html.similarBlog}}`
-    <div class="section blog tags">
-      <div class="article">
-        <h3><a href="/en/web-design">Web design</a></h3>
-        <div class="content">
-          Some of our latest work on web design...
-        </div>
-        <div class="read_more">
-          <a href="/en/web-design">Read more</a>
-        </div>
-      </div>
 
-      <div class="article">
-        ...
-      </div>
-
-      ...
+```html
+<div class="section blog tags">
+  <div class="article">
+    <h3><a href="/en/web-design">Web design</a></h3>
+    <div class="content">
+      Some of our latest work on web design...
     </div>
+    <div class="read_more">
+      <a href="/en/web-design">Read more</a>
+    </div>
+  </div>
+
+  <div class="article">
+    ...
+  </div>
+
+  ...
+</div>
 
 
 <script>
@@ -1036,3 +1153,6 @@ $('.active h2').after($('<input>').attr('placeholder', 'Search method').on('keyu
   });
 }));
 </script>
+```
+
+{% endraw %}

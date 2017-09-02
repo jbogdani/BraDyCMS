@@ -20,31 +20,31 @@ If you are not familiar with Github just email your contribution to [developer@b
 ---
 
 #### Index
-- [General concepts](general.md)
-- [System requirements and installation](install.md)
-- [FAQ](faq.md)
-- [Custom tags](customtags.md)
-- [Template docs](tmpl_index.md)
-  - [The file tree](tmpl_files.md)
-  - [The built-in editor](tmpl_editor.md)
-  - [About Twig](tmpl_twig.md)
-  - [About CSS, Less and the Twitter Bootstrap Framework](tmpl_less.md)
-  - [The `html` object](tmpl_html.md)
-  - [A commented template example](tmpl_example.md)
-- [Site configuration](cfg.md)
+- [General concepts](general)
+- [System requirements and installation](install)
+- [FAQ](faq)
+- [Custom tags](customtags)
+- [Template docs](tmpl_index)
+  - [The file tree](tmpl_files)
+  - [The built-in editor](tmpl_editor)
+  - [About Twig](tmpl_twig)
+  - [About CSS, Less and the Twitter Bootstrap Framework](tmpl_less)
+  - [The `html` object](tmpl_html)
+  - [A commented template example](tmpl_example)
+- [Site configuration](cfg)
 
 - Core plugins
-  - [Create and embed forms](userform.md)
-  - [Create and embed a map](usermap.md)
-  - [Password protect sections of your site with passwords](protectedtags.md)
+  - [Create and embed forms](userform)
+  - [Create and embed a map](usermap)
+  - [Password protect sections of your site with passwords](protectedtags)
   <!-- TODO -->
-  - [Download nodes](downloads.md)
-  - [Seo manager](seo.md)
+  - [Download nodes](downloads)
+  - [Seo manager](seo)
   <!-- TODO -->
-  - [Download count](downloadcount.md)
+  - [Download count](downloadcount)
 
 - Tutorials
-  - [How to setup an OAI-PMH interface](oai.md)
-  - [How to build a new plugin](customplugin.md)
-  - [How to customize database schema](customfields.md)
-  - [How to use the RESTful API](api.md)
+  - [How to setup an OAI-PMH interface](oai)
+  - [How to build a new plugin](customplugin)
+  - [How to customize database schema](customfields)
+  - [How to use the RESTful API](api)

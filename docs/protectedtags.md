@@ -1,3 +1,5 @@
+{% raw %}
+
 # Password protect sections of your site with passwords
 
 BraDyCMS has a built-in (core) plugin to help you easily setup and manage one
@@ -101,7 +103,7 @@ the following placeholders:
 ## Designers
 ### How to setup templates to support password protected content
 
-Designers can use three special methods of the [html object](tmpl_html.md)
+Designers can use three special methods of the [html object](tmpl_html)
 to easily setup one or more password protection for part or parts of the site
 content. These methods are:
 * `html.canView`: returns `true` or `false` and tells you if the current
@@ -112,7 +114,7 @@ is **notauthenticared**)
 user registration and registration confirmation.
 * `html.logoutButton`: if user is authenticated shows a button to use for logout
 
-For a detailed description of these methods please refer to [their specific documentation](tmpl_html.md).
+For a detailed description of these methods please refer to [their specific documentation](tmpl_html).
 
 #### Example
     {# check if current content (tag blog or single article) is protected #}
@@ -140,3 +142,5 @@ For a detailed description of these methods please refer to [their specific docu
         {% include 'not_found.twig' %}
       {% endif %}
     {% endif %}
+
+{% endraw %}

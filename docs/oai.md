@@ -40,44 +40,46 @@ All the configuration can be handled using a single [JSON](http://www.json.org) 
 
 File: `./sites/default/modules/oai/config.json`
 
+```json
+{
+  "repositoryName"  : "E-Review. Rivista degli Istituti Storici dell'Emilia-Romagna in Rete",
+  "baseURL"      : "http://e-review.it/OAI",
+  "protocolVersion"  : "2.0",
+  "adminEmail"    : "oai@e-review.it",
+  "sets"        : [
     {
-      "repositoryName"  : "E-Review. Rivista degli Istituti Storici dell'Emilia-Romagna in Rete",
-      "baseURL"      : "http://e-review.it/OAI",
-      "protocolVersion"  : "2.0",
-      "adminEmail"    : "oai@e-review.it",
-      "sets"        : [
-        {
-          "spec" : "dossier_2013",
-          "name" : "Sezione principale, anno 2013"
-        },
-        {
-          "spec" : "formazione",
-          "name" : "Sezione dedicata alla formazione"
-        },
-        {
-          "spec" : "patrimonio",
-          "name" : "Sezione dedicata al patrimonio"
-        },
-        {
-          "spec" : "usopubblico",
-          "name" : "Sezione dedicata all'usopubblico"
-        }
-      ],
-
-      "table" :
-      {
-        "name" : "erevarticles",
-        "id" : "doi",
-        "lastchanged" : "updated",
-        "deleted" : "status",
-        "category" : "section",
-        "title" : "title",
-        "translated_title": "english_title",
-        "creator" : "author",
-        "description" : "summary"
-      },
-      "publisher": "BraDypUS",
-      "doi_prefix": "10.12977",
-      "journal_suffix": "erev",
-      "issn": "ISSN:2282-4979"
+      "spec" : "dossier_2013",
+      "name" : "Sezione principale, anno 2013"
+    },
+    {
+      "spec" : "formazione",
+      "name" : "Sezione dedicata alla formazione"
+    },
+    {
+      "spec" : "patrimonio",
+      "name" : "Sezione dedicata al patrimonio"
+    },
+    {
+      "spec" : "usopubblico",
+      "name" : "Sezione dedicata all'usopubblico"
     }
+  ],
+
+  "table" :
+  {
+    "name" : "erevarticles",
+    "id" : "doi",
+    "lastchanged" : "updated",
+    "deleted" : "status",
+    "category" : "section",
+    "title" : "title",
+    "translated_title": "english_title",
+    "creator" : "author",
+    "description" : "summary"
+  },
+  "publisher": "BraDypUS",
+  "doi_prefix": "10.12977",
+  "journal_suffix": "erev",
+  "issn": "ISSN:2282-4979"
+}
+```

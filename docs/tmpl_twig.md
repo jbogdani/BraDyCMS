@@ -1,6 +1,7 @@
+{% raw %}
 # Few words about Twig
 
-BraDyCMS uses [Twig](http://twig.sensiolabs.org) as unique template engine 
+BraDyCMS uses [Twig](http://twig.sensiolabs.org) as unique template engine
 and you must refer to [the official documentation](http://twig.sensiolabs.org/doc/templates.html)
 for basic and advanced Twig usage.
 
@@ -15,7 +16,7 @@ The former one is used to execute statements such as for-loops, the latter print
 result of an expression to the template.
 
 The simplicity of BraDyCMS is in the fact that there is only one object behind the complexity
-of all your content. It is called `html` and is fully documented [here](tmpl_html.md).
+of all your content. It is called `html` and is fully documented [here](tmpl_html).
 
 Essentially, you can think of the `html` object as a [namespace](http://en.wikipedia.org/wiki/Namespace).
 
@@ -93,3 +94,5 @@ visit of the live web site.
 
 To delete the cache use the `Empty cache` button in the [Template manager module](#template/dashboard)
 or use the `Empty cache` button at the bottom of the [Site configuration module](#cfg/edit).
+
+{% endraw %}

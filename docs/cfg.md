@@ -106,7 +106,7 @@ If turned on CDN (where available) will be used to load third parties libraries 
 #### Article's Images dimensions
 You can simply associate an image to each article, this is the article image,
 and various versions of it, in different sizes, automatically created and ready to
-use in your templates. Check [General concepts](general.md) to learn more
+use in your templates. Check [General concepts](general) to learn more
 about article images.
 
 You can set here the different sizes that BraDyCMS will use to automatically create
@@ -122,7 +122,7 @@ You can set here the default number of articles to show in each page.
 Leave blank to disable pagination.
 
     You need to add `html.pagination` or `html.getPagination` to your template files to get full advantage of this feature.
-Read the [template docs](tmpl_html.md) to learn more about their usage and syntax.
+Read the [template docs](tmpl_html) to learn more about their usage and syntax.
 
 ---
 
@@ -144,7 +144,8 @@ Use the fields above to add new languages to your site.
 You can have many languages. Just save the form to have a new blank row added.
 
     You need to add `html.langMenu` or `html.getLanguages` to your template files to show and format the language menu.
-Read the [template docs](tmpl_html.md) to learn more about their usage and syntax.
+
+Read the [template docs](tmpl_html) to learn more about their usage and syntax.
 
 #### Language ID
 Two-digits code of the language (eg: `fr`)

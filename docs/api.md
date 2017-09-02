@@ -1,6 +1,6 @@
 # BraDyCMS API documentantion
 
-<p class="bg-danger text-danger">This functionality is still under development and may change in the future. Please read carefully the following doc, that will be carefully updated to reflect in real time all changes.</p> 
+<p class="bg-danger text-danger">This functionality is still under development and may change in the future. Please read carefully the following doc, that will be carefully updated to reflect in real time all changes.</p>
 
 BraDyCMS integrates, from v. 3.4, an [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) API which allows users to easily retrieve data from articles, menus, etc. in [JSON format](http://json.org), to be reused in many different ways (eg., to build an mobile app).
 
@@ -64,7 +64,6 @@ The API can be reached by adding `/api/` to your base URL, eg. the API for the d
   <option value="http://bradypus.net/api/?action=read&tag[]=gallerie&tag[]=mostre">Tags: gallerie & mostre</option>
   <option value="http://bradypus.net/api/?action=read&metadata=true">Metadata</option>
   <option value="http://bradypus.net/api/?action=read&artid=contatti">Artid: contatti</option>
-  
   <option value="http://bradypus.net/api/?action=read&menu=main&tag[]=gallerie&tag[]=mostre&metadata=true&artid=contatti">Menu & Artid & Metadata & Artid</option>
 </select>
 <button class="btn btn-default go">Get data</button>
@@ -73,25 +72,20 @@ The API can be reached by adding `/api/` to your base URL, eg. the API for the d
 
 <script>
   $('.tab-pane.active button.go').on('click', function(){
-    
+
     var url = $('.tab-pane.active select.url').val();
-    
+
     $('.tab-pane.active code.proccessedURL').text(url);
-    
+
     $('.tab-pane.active pre.pre').text('Please wait.... getting data from ' + url);
-    
+
     $.get(url, function(data){
-      
+
       $('.tab-pane.active pre.pre').text(data);
-      
+
       window.prettyPrint && prettyPrint();
-      
+
     }, 'html');
-    
+
   });
 </script>
-
-
-
-
-

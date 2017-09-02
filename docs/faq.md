@@ -7,7 +7,7 @@
 
     Main menu > Articles > Add new Article
 
-Fill the form and save it. Please note that article's `Text ID` is required. No spaces ore special carachtares are allowed. This string will be the URL of the article.
+Fill the form and save it. Please note that article's `Text ID` is required. No spaces ore special characters are allowed. This string will be the URL of the article.
 
 ---
 
@@ -139,7 +139,7 @@ BraDypUS CMS supports something similar to "Nested articles". It's a feature tha
 To edit the **HTML** of the main index file:
 
     Main menu > Other > Template manager > Edit HTML
-or follow [this link](#template/index). Plaese check the [template documentation](intro.md).
+or follow [this link](#template/index). Plaese check the [template documentation](intro).
 
 To edit the **CSS**:
 

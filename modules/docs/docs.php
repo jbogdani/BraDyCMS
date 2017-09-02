@@ -18,13 +18,14 @@ class docs_ctrl extends Controller
   {
     $file = $this->get['param'][0];
 
-    if (file_exists('docs/' . $file . '.md'))
-    {
-      $text = Parsedown::instance()->text(file_get_contents('docs/' . $file . '.md'));
-      echo preg_replace(
-        '/href="([a-zA-Z_]+)\.md"/',
-         'href="#docs/read/$1"',
-         $text);
+    if (file_exists('docs/' . $file . '.md')) {
+
+      $contents = file_get_contents('docs/' . $file . '.md');
+      $contents = str_replace(['{% raw %}', '{% endraw %}'], null, $contents);
+
+      $html = Parsedown::instance()->text($contents);
+
+      echo preg_replace('/href="(?!http)/', 'href="#docs/read/', $html);
 
       echo '<hr>'
         . '<p class="text-muted"><big><i class="icon big ion-edit"></i></big> Enhance this documentation file: '

@@ -127,19 +127,13 @@ class customTags
       . ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ? '_' . $_SESSION['lang'] : '')
       . '.json';
 
-    if (
-      !file_exists($path2node)
-      ||
-      !file_exists($json_file)
-    )
-    {
+    if ( !file_exists($path2node) || !file_exists($json_file) ) {
       return false;
     }
 
     $fileData = json_decode(file_get_contents($json_file), true);
 
-    if (!$fileData || !is_array($fileData))
-    {
+    if (!$fileData || !is_array($fileData)) {
       return false;
     }
 
@@ -148,23 +142,21 @@ class customTags
     $files = array();
 
 
-    foreach ($node_content as $file)
-    {
-      if (preg_match('/data_?([a-z]{2})?\.json/', $file) || $file == 'covers' )
-      {
+    foreach ($node_content as $file) {
+
+      if (preg_match('/data_?([a-z]{2})?\.json/', $file) || $file == 'covers' ) {
         continue;
       }
+
       $formattedName = str_replace('.', '__x__', $file);
 
       $cover_name = $path2node . DIRECTORY_SEPARATOR
         . 'covers' . DIRECTORY_SEPARATOR
         . pathinfo($file, PATHINFO_FILENAME) . '.jpg';
-      if (file_exists($cover_name))
-      {
+
+      if (file_exists($cover_name)) {
         $cover = $cover_name;
-      }
-      else
-      {
+      } else {
         $cover = false;
       }
 
@@ -180,32 +172,28 @@ class customTags
     }
 
     usort($files, function($a, $b){
-      if ($a['sort'] === $b['sort'])
-      {
+      if ($a['sort'] === $b['sort']) {
         return 0;
       }
-
       return ($a['sort'] > $b['sort']) ? -1 : 1;
     });
 
-    if ($data['limit'])
-    {
+    if ($data['limit']) {
       $files = array_slice($files, 0, (int) $data['limit']);
     }
 
 
-    if ($data['getObject'])
-    {
+    if ($data['getObject']) {
       return $files;
     }
 
 
-    if($data['getList'])
-    {
+    if($data['getList']) {
+
       $html = '<ul ' . ($data['class'] ? 'class="' . $data['class'] . '"' : '' ) . '>';
 
-      foreach($files as $d)
-      {
+      foreach($files as $d) {
+
         $html .= '<li>'
           . '<a href="' . $d['path'] . '" class="downloadFile" target="_blank">'
             . ($d['cover'] ? '<div class="cover"><img src="' . $d['cover'] . '" class="img-responsive"></div>' : '')
@@ -216,14 +204,13 @@ class customTags
       }
 
       $html .= '</ul>';
-    }
-    else
-    {
+
+    } else {
+
       $html = '<table ' . ($data['class'] ? 'class="' . $data['class'] . '"' : '' ) . '>'
         . '<tbody>';
 
-      foreach($files as $d)
-      {
+      foreach($files as $d) {
         $html .= '<tr>'
           . '<td class="cover"> ' . ($d['cover'] ? '<img src="' . $d['cover'] . '" class="img-responsive">' : '') . ' </td>'
           . '<th class="title">' . $d['title'] . '</th>'
@@ -255,13 +242,12 @@ class customTags
     $class = $data['class'];
     $rel = $data['rel'] ? $data['rel'] : $gal;
 
-    try
-    {
+    try {
 
       $gal_data = Gallery::get($gal);
 
-      if ($responsive)
-      {
+      if ($responsive) {
+
         /**
          * <ul data-rel="sth" class="a b c cl_gallery">
          *   <li data-img="img_src" data-thumb="thumb_img_src">caption text</li>
@@ -271,8 +257,8 @@ class customTags
         $html .= '<div class="gallery-container">'
           . '<ul class="cl_gallery ' . $gal . ($class ? ' ' . $class : '') . '" ' . 'data-rel="' . $rel . '"' . '>';
 
-        foreach ($gal_data as $item)
-        {
+        foreach ($gal_data as $item) {
+
           $html .= '<li data-id="' . basename($item['img']) . '" data-img="' . $item['img'] . '" data-thumb="' . $item['thumb'] . '">'
             . $item['caption']
             . '</li>';
@@ -280,15 +266,15 @@ class customTags
 
         $html .='</ul>'
           . '</div>';
-      }
-      else
-      {
+
+      } else {
+
         $html .= '<div class="gallery-container">'
           . '<ul class="gallery ' . $gal
           . ($class ? ' ' . $class : '') . '" data-rel="' . $rel . '">';
 
-        foreach ($gal_data as $item)
-        {
+        foreach ($gal_data as $item) {
+
           $title = str_replace('"', '\"', strip_tags($item['caption']));
           $html .= '<li data-id="' . basename($item['img']) . '">'
             // Link will be set to external reference, if href is set or to image (fancybox) if not
@@ -311,9 +297,8 @@ class customTags
       }
 
       return $html;
-    }
-    catch (Exception $e)
-    {
+
+    } catch (Exception $e) {
       error_log($e->getMessage());
       return false;
     }
@@ -335,10 +320,10 @@ class customTags
   {
     $code = $data['content'];
 
-    if (!$code)
-    {
+    if (!$code) {
       return;
     }
+
     $width = $data['width'] ? $data['width'] : 560;
     $height = $data['height'] ? $data['height'] : 315;
     $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '' ? : '';
@@ -385,8 +370,7 @@ class customTags
    */
   private static function fb_sdk($lang = false)
   {
-    if (!isset($lang) || !preg_match('/([a-z]{2})_([A-Z]{2})/', $lang))
-    {
+    if (!isset($lang) || !preg_match('/([a-z]{2})_([A-Z]{2})/', $lang)) {
       $lang = $_SESSION['lang'] ? $_SESSION['lang'] : cfg::get('sys_lang');
       $lang = strtolower($lang) . '_' . strtoupper($lang);
     }
@@ -416,12 +400,13 @@ EOD;
 
     $html = self::fb_sdk($data['lang']) . '<div class="fb-comments" data-href="' . $url . '" ';
 
-    foreach (array('colorscheme', 'mobile', 'num_posts', 'order_by', 'width') as $el)
-    {
-      if ($data[$el]){
+    foreach (array('colorscheme', 'mobile', 'num_posts', 'order_by', 'width') as $el) {
+
+      if ($data[$el]) {
         $html .= ' data-' . str_replace('_', '-', $el) . '="' . $data[$el] . '"';
       }
     }
+
     $html .= '></div>';
 
     return $html;
@@ -435,17 +420,16 @@ EOD;
    */
   public static function fb_follow($data)
   {
-    if (!$data['href'] && !$data['content'])
-    {
+    if (!$data['href'] && !$data['content']) {
       return false;
     }
 
     $html = self::fb_sdk($data['lang'])
       . '<div class="fb-follow" data-href="' . ($data['href'] ? $data['href'] : $data['content']) . '" ';
 
-    foreach (array('colorscheme', 'kid_directed_site', 'layout', 'show_faces', 'width') as $el)
-    {
-      if ($data[$el]){
+    foreach (array('colorscheme', 'kid_directed_site', 'layout', 'show_faces', 'width') as $el) {
+
+      if ($data[$el]) {
         $html .= ' data-' . str_replace('_', '-', $el) . '="' . $data[$el] . '"';
       }
     }
@@ -461,19 +445,20 @@ EOD;
    */
   public static function fb_like_box($data)
   {
-    if (!$data['href'] && !$data['content'])
-    {
+    if (!$data['href'] && !$data['content']) {
       return;
     }
+
     $html = self::fb_sdk($data['lang'])
       . '<div class="fb-like-box" ' .
         ' data-href="' . ($data['content'] ? $data['content'] : $data['href']) . '" ';
-    foreach (array('colorscheme', 'force_wall', 'header', 'height', 'show_border', 'show_faces', 'stream', 'width') as $el)
-    {
-      if ($data[$el]){
+    foreach (array('colorscheme', 'force_wall', 'header', 'height', 'show_border', 'show_faces', 'stream', 'width') as $el) {
+
+      if ($data[$el]) {
         $html .= ' data-' . str_replace('_', '-', $el) . '="' . $data[$el] . '"';
       }
     }
+
     $html .= '></div>';
     return $html;
   }
@@ -490,12 +475,13 @@ EOD;
     $html = self::fb_sdk($data['lang'])
       . '<div class="fb-like" data-href="' . $url . '" ';
 
-    foreach (array('action', 'colorscheme', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces', 'width') as $el)
-    {
-      if ($data[$el]){
+    foreach (array('action', 'colorscheme', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces', 'width') as $el) {
+
+      if ($data[$el]) {
         $html .= ' data-' . str_replace('_', '-', $el) . '="' . $data[$el] . '"';
       }
     }
+
     $html .= '></div>';
 
     return $html;
@@ -531,16 +517,15 @@ EOD;
    */
   public static function twitt_share($data)
   {
-    if ($data['content'])
-    {
+    if ($data['content']) {
       $data['url'] = $data['content'];
     }
+
     $html = '<a href="https://twitter.com/share" class="twitter-share-button"';
 
-    foreach (array('via', 'text', 'hashtags', 'count', 'url', 'lang') as $el)
-    {
-      if ($data[$el])
-      {
+    foreach (array('via', 'text', 'hashtags', 'count', 'url', 'lang') as $el) {
+
+      if ($data[$el]) {
         $html .= ' data-' . $el . '="' . $data[$el] . '"';
       }
     }
@@ -559,16 +544,16 @@ EOD;
 
   public static function gplus_plusone($data)
   {
-    if ($data['content'])
-    {
+    if ($data['content']) {
+
       $data['href'] = $data['content'];
     }
+
     $html = '<div class="g-plusone"';
 
-    foreach (array('href', 'size', 'annotation', 'width', 'align', 'expandTo', 'callback', 'onstartinteraction', 'onendinteraction', 'recommendations', 'count') as $el)
-    {
-      if ($data[$el])
-      {
+    foreach (array('href', 'size', 'annotation', 'width', 'align', 'expandTo', 'callback', 'onstartinteraction', 'onendinteraction', 'recommendations', 'count') as $el) {
+
+      if ($data[$el]) {
         $html .= ' data-' . $el . '="' . $data[$el] . '"';
       }
     }
@@ -738,7 +723,7 @@ EOD;
     return $html;
   }
 
-  
+
   /**
    * Enables Disqus comments in page. Disqus shortname should be provided as tag content
    * @param array $data
@@ -775,8 +760,7 @@ EOD;
    */
   public static function flash($data)
   {
-    if (!$data['content'])
-    {
+    if (!$data['content']) {
       return false;
     }
 
@@ -788,10 +772,10 @@ EOD;
         ($data['height'] ? ' height="' . $data['height'] . '"' : '') .
         '> ' .
       '<param name="movie" value="' . $data['content'] . '" />';
-    foreach ($data as $k => $v)
-    {
-      if ($k !== 'content' && $k !== 'width' && $k !== 'height')
-      {
+
+    foreach ($data as $k => $v) {
+
+      if ($k !== 'content' && $k !== 'width' && $k !== 'height') {
         $html .= '<param name="' . $k . '" value="' . $v . '" />';
       }
     }
@@ -851,8 +835,8 @@ EOD;
    */
   public static function gcalendar($data)
   {
-    if (!$data['content'])
-    {
+    if (!$data['content']) {
+
       return false;
     }
 
@@ -897,18 +881,18 @@ EOD;
   {
     $file = $data['file'];
     $text = $data['content'] ? $data['content'] : $file;
-    if (!$file)
-    {
+
+    if (!$file) {
       return false;
     }
+
     $tot    = DownloadAndCount::getCount($file);
     $text   = str_replace('{tot}', $tot, $text);
 
     $html = '<a ' . $title . $rel . $class;
-    foreach ($data as $k => $v)
-    {
-      if (!in_array(strtolower($k),  ['content', 'file']))
-      {
+
+    foreach ($data as $k => $v) {
+      if (!in_array(strtolower($k),  ['content', 'file'])) {
         $html .= " "  . $k . '="' . str_replace('"', '\"', $v) . '"';
       }
     }

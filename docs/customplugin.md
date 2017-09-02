@@ -106,7 +106,7 @@ To use (call) a plugin in **template files** use the `ct` method of the [html ob
 or
 
 ```html
-{{ html.ct('myFirstPlugin', '{"content": "some content; it can be <em>rich</em> <big>html</big>","param1": "hello","param2":"world"}') }}
+{{ html.ct( 'myFirstPlugin',  '{"content": "some content; it can be <em>rich<\/em> <big>html<\/big>", "param1":"hello", "param2":"world"}' ) }}
 ```
 
 ---

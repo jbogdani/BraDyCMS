@@ -7,17 +7,17 @@
 
     Main menu > Articles > Add new Article
 
-Fill the form and save it. Please note that article's `Text ID` is required. No spaces ore special carachtares are allowed. This string will be the URL of the article.
+Fill the form and save it. Please note that article's `Text ID` is required. No spaces ore special characters are allowed. This string will be the URL of the article.
 
 ---
-		
+
 #### How to edit existing article?
 
     Main menu > Articles > Show all articles
 
 Find in the list the article you want to edit. Also the search filter can be used. Click on article's title or on edit button to open the edif foem.
 
---- 
+---
 
 #### How to create a new menu?
 
@@ -44,9 +44,9 @@ Links to articles, tags lists and more can also be entered by using the widget o
   * `_blank` will open the link in a new window or tab
 * Title: an explicative text that the user will see on hovering the menu text with the cursor
 * Menu: menu name. If choosen from the available list, the menu item will be added to that menu. If a new string is entered a new menu is created.
-  
+
   `Hold on`: no white spaces, upper case or special characters ar allowed!
-  
+
 *  Sub menu of: if an existing menu is select a list of the available menu items (siblings) will be shown. If one of them is selected this menu item will be nested to the selected item. `Attention:` Please see the "How to manage menus?" section for easily nesting menu items
 * Sorting: Only integers are allowed in this field. Use this field to control the order of appearance of the menu items.
 
@@ -75,7 +75,7 @@ To add menu divider just add a new menu item having as **Text** and as **Link** 
 
     Main menu > Media > Media
 
-Click on "Upload a file" button, or drag&drop files from your folders to the "Upload a file" button. Multiple files can be loaded simultanously. 
+Click on "Upload a file" button, or drag&drop files from your folders to the "Upload a file" button. Multiple files can be loaded simultanously.
 
 ---
 
@@ -117,7 +117,7 @@ You can not delete folders that contains files. Thus, to delete a folder you mus
     Main menu > Articles > Translations
 
 
-Click in the language you want to translate in, a table showinf the translation status for each article will appear. To translate an article click on the edit button. It will open the article translation form for the article. The automatic copy & paste buttons (`>>`) can help in copying the original text in the translation box, in order to import images and other tags in the translation. 
+Click in the language you want to translate in, a table showinf the translation status for each article will appear. To translate an article click on the edit button. It will open the article translation form for the article. The automatic copy & paste buttons (`>>`) can help in copying the original text in the translation box, in order to import images and other tags in the translation.
 
 ---
 
@@ -140,7 +140,7 @@ To edit the **HTML** of the main index file:
 
     Main menu > Other > Template manager > Edit HTML
 or follow [this link](#template/index). Plaese check the [template documentation](#docs/read/intro).
-				
+
 To edit the **CSS**:
 
     Main menu > Other > Template manager > Edit CSS

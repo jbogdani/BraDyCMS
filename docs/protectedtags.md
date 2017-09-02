@@ -1,3 +1,5 @@
+{% raw %}
+
 # Password protect sections of your site with passwords
 
 BraDyCMS has a built-in (core) plugin to help you easily setup and manage one
@@ -140,3 +142,5 @@ For a detailed description of these methods please refer to [their specific docu
         {% include 'not_found.twig' %}
       {% endif %}
     {% endif %}
+
+{% endraw %}

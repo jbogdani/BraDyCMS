@@ -1,3 +1,4 @@
+{% raw %}
 # Authoring plugins
 
 ## What are custom plugins and how to use?
@@ -189,3 +190,5 @@ or (same)
 or (optional size and name parameters provided)
 ```
 {{ html.ct('gravatar', '{"email": "info@bradypus.net", name="BraDypUS. Communicating Cultural Heritage" "size":"60"}') }}
+
+{% endraw %}

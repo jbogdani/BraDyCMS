@@ -19,9 +19,9 @@ Read the docs and [report any issue](https://github.com/jbogdani/BraDyCMS/issues
 
 #### Index
 
-- [The file tree](#docs/read/tmpl_files)
-- [The built-in editor](#docs/read/tmpl_editor)
-- [About Twig](#docs/read/tmpl_twig)
-- [About CSS, Less and the Twitter Bootstrap Framework](#docs/read/tmpl_less)
-- [The `html` object](#docs/read/tmpl_html)
-- [A commented template example](#docs/read/tmpl_example)
+- [The file tree](tmpl_files)
+- [The built-in editor](tmpl_editor)
+- [About Twig](tmpl_twig)
+- [About CSS, Less and the Twitter Bootstrap Framework](tmpl_less)
+- [The `html` object](tmpl_html)
+- [A commented template example](tmpl_example)

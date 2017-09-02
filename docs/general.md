@@ -50,7 +50,7 @@ Each article has the following **default** fields:
 
 If you need more fields for your articles, you can add them by your own. There is a simple and safe procedure adapt the database schema to match your needs.
 
-For a detailed guide check the [How to customize database schema](#docs/read/customfields) guide.
+For a detailed guide check the [How to customize database schema](customfields) guide.
 
 ---
 
@@ -77,13 +77,13 @@ You can copy, move, convert in multiple formats, resize and crop images easily a
 --- 
 ## Media > galleries
 
-Photo galleries are awesome! That's why we have built an easy to use tool to upload files with a simple drag&drop, create thumbnails with a click, add and translate caption, ecc. You can then easily embed your galleries in articles body by using a simple fast tag `[[gallery]]here_galley_name[[/gallery]]` ([click to learn mode](#docs/read/faq)).
+Photo galleries are awesome! That's why we have built an easy to use tool to upload files with a simple drag&drop, create thumbnails with a click, add and translate caption, ecc. You can then easily embed your galleries in articles body by using a simple fast tag `[[gallery]]here_galley_name[[/gallery]]` ([click to learn mode](faq)).
     
 ---
 
 ## Menu
 
-You can have all the menus you need, and translate them in several languages. You can also nest menu items in multiple levels. And you do not need difficult code to do this: just drag & drop menu items to reorder or nest them. You can find more on how to create menu in the [FAQ section](#docs/read/faq) of the documentation.
+You can have all the menus you need, and translate them in several languages. You can also nest menu items in multiple levels. And you do not need difficult code to do this: just drag & drop menu items to reorder or nest them. You can find more on how to create menu in the [FAQ section](faq) of the documentation.
 
 ---
 
@@ -100,7 +100,7 @@ Retriving articles from the database to use in the templates is simple! BraDyCMS
     
 This way, if you want to show all web related news of year 2013, just tag the articles with all these tags (news, 2013, web) and use this URL: `http://mysite.ext/news-2013-web.all`
 
-Learn more on menu and URL in the [FAQ section](#docs/read/faq) of the documentation.
+Learn more on menu and URL in the [FAQ section](faq) of the documentation.
     
 - - -
 

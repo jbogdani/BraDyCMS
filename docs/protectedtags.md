@@ -103,7 +103,7 @@ the following placeholders:
 ## Designers
 ### How to setup templates to support password protected content
 
-Designers can use three special methods of the [html object](#docs/read/tmpl_html)
+Designers can use three special methods of the [html object](tmpl_html)
 to easily setup one or more password protection for part or parts of the site
 content. These methods are:
 * `html.canView`: returns `true` or `false` and tells you if the current
@@ -114,7 +114,7 @@ is **notauthenticared**)
 user registration and registration confirmation.
 * `html.logoutButton`: if user is authenticated shows a button to use for logout
 
-For a detailed description of these methods please refer to [their specific documentation](#docs/read/tmpl_html).
+For a detailed description of these methods please refer to [their specific documentation](tmpl_html).
 
 #### Example
     {# check if current content (tag blog or single article) is protected #}

@@ -15,7 +15,7 @@ different ways:
 - if you a differentiation is needed between the article's title (or
 description) and it's title (or description) meta tag two custom fields should
 be added to the `article` table of the main database schema
-([how to customize the database schema](#docs/read/customfields)):
+([how to customize the database schema](customfields)):
 `customtitle` and `customdescription`. These values will be used by BraDyCMS
 to display `title` and `description` meta tags, instead of `Title` and `Summary`
 default fields.
@@ -46,7 +46,7 @@ Adding a new SEO records for an URL is plain.
 SEO plugin supports different locale versions of each URL, be it an article, a
 list of articles (tag) or a special function.
 If a site is configured to serve content in different languages
-([See System language paragraph of main configuration docs](#docs/read/customfields))
+([See System language paragraph of main configuration docs](customfields))
 these languages will be listed in the main [list of SEO records](#seo/all).
 
 By clicking on the specific language button will show up the SEO for for that language.

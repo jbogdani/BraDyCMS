@@ -5,7 +5,7 @@
 The `html` object is the core of the BraDyCMS template system. The `html` object
 is organized in methods that can return everything relative to the CMS content:
 strings, html pieces of code, php arrays to use in iterations and also complex php objects.
-This object is used following the [Twig syntax](#docs/read/tmpl_twig).
+This object is used following the [Twig syntax](tmpl_twig).
 
 Calling a method of the `html` object is as simple as writing the method name after
 the `html` string separating them by a dot (.), e.g.: `html.methodName`.

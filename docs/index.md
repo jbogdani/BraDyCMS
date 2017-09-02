@@ -20,31 +20,31 @@ If you are not familiar with Github just email your contribution to [developer@b
 ---
 
 #### Index
-- [General concepts](#docs/read/general)
-- [System requirements and installation](#docs/read/install)
-- [FAQ](#docs/read/faq)
-- [Custom tags](#docs/read/customtags)
-- [Template docs](#docs/read/tmpl_index)
-  - [The file tree](#docs/read/tmpl_files)
-  - [The built-in editor](#docs/read/tmpl_editor)
-  - [About Twig](#docs/read/tmpl_twig)
-  - [About CSS, Less and the Twitter Bootstrap Framework](#docs/read/tmpl_less)
-  - [The `html` object](#docs/read/tmpl_html)
-  - [A commented template example](#docs/read/tmpl_example)
-- [Site configuration](#docs/read/cfg)
+- [General concepts](general)
+- [System requirements and installation](install)
+- [FAQ](faq)
+- [Custom tags](customtags)
+- [Template docs](tmpl_index)
+  - [The file tree](tmpl_files)
+  - [The built-in editor](tmpl_editor)
+  - [About Twig](tmpl_twig)
+  - [About CSS, Less and the Twitter Bootstrap Framework](tmpl_less)
+  - [The `html` object](tmpl_html)
+  - [A commented template example](tmpl_example)
+- [Site configuration](cfg)
 
 - Core plugins
-  - [Create and embed forms](#docs/read/userform)
-  - [Create and embed a map](#docs/read/usermap)
-  - [Password protect sections of your site with passwords](#docs/read/protectedtags)
+  - [Create and embed forms](userform)
+  - [Create and embed a map](usermap)
+  - [Password protect sections of your site with passwords](protectedtags)
   <!-- TODO -->
-  - [Download nodes](#docs/read/downloads)
-  - [Seo manager](#docs/read/seo)
+  - [Download nodes](downloads)
+  - [Seo manager](seo)
   <!-- TODO -->
-  - [Download count](#docs/read/downloadcount)
+  - [Download count](downloadcount)
 
 - Tutorials
-  - [How to setup an OAI-PMH interface](#docs/read/oai)
-  - [How to build a new plugin](#docs/read/customplugin)
-  - [How to customize database schema](#docs/read/customfields)
-  - [How to use the RESTful API](#docs/read/api)
+  - [How to setup an OAI-PMH interface](oai)
+  - [How to build a new plugin](customplugin)
+  - [How to customize database schema](customfields)
+  - [How to use the RESTful API](api)

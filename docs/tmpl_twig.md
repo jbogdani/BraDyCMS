@@ -16,7 +16,7 @@ The former one is used to execute statements such as for-loops, the latter print
 result of an expression to the template.
 
 The simplicity of BraDyCMS is in the fact that there is only one object behind the complexity
-of all your content. It is called `html` and is fully documented [here](#docs/read/tmpl_html).
+of all your content. It is called `html` and is fully documented [here](tmpl_html).
 
 Essentially, you can think of the `html` object as a [namespace](http://en.wikipedia.org/wiki/Namespace).
 

@@ -587,31 +587,6 @@ EOD;
   /**
    *
    * @param array $data
-   *     content*: file url
-   *     width: widget's width, default 100%
-   *     height: widget's height, default 166
-   *     color: widget's color, default #ff6600
-   *     autoplay: if true autoplay will be enabled, default false
-   *     artwork: if true artwork will be shown, default false
-   * @return string
-   */
-  public static function soundcloud($data)
-  {
-    return '<iframe ' .
-      ' width="' . ($data['width'] ? $data['width'] : '100%') . '" ' .
-      ' height="' . ($data['height'] ? $data['height'] : '166') . '" scrolling="no" ' .
-      ' frameborder="no" ' .
-      ' src="https://w.soundcloud.com/player/?' .
-        'url=' . $data['content'] . '&amp;' .
-        'color=' . ( $data['color'] ? $data['color'] : '#ff6600') . '&amp;' .
-        'auto_play=' . ( ($data['autoplay'] && $data['autoplay'] != 'false' ) ?  'true' : 'false') . '&amp;' .
-        'show_artwork=' . ( ($data['artwork'] && $data['artwork'] != 'false' ) ?  'true' : 'false') . '">' .
-    '</iframe>';
-  }
-
-  /**
-   *
-   * @param array $data
    *     path*: image file relative url
    *     width:  main div (container) width
    *     content: image caption

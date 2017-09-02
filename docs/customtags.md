@@ -296,23 +296,6 @@ Complete example:
 
 ---
 
-#### soundcloud('width','height','color','autoplay','artwork')
-Adds the necessary HTML anf javascript code to display a SoundCloud player
-- **content**, string, required. Track URL
-- **width**, int, optional, default: 100%. The widget's width in pixels
-- **height**, int, optional, default: 100%. The widget's height in pixels
-- **color**, string, optinal, default: #ff6600". The widget's color.
-- **autoplay**, boolean, optional, default: false. If true the track will start playing after page is loaded
-- **artwork**, boolean, optional, default: false. If true the track's artwork will be displayed
-
-Minimal example:
-    [[soundcloud]]track_url[[/soundcloud]]
-
-Complete example:
-    [[soundcloud width="100%" height="166" color="#ff6600" autoplay="true" artwork="true"]]track_url[[/soundcloud]]
-
----
-
 #### twitt_share('data')
 Adds the necessary HTML and javascript code to show a Twitter share button
 - **content**, string, optional, default: current page. URL to share

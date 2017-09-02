@@ -1,3 +1,4 @@
+4.0.0[] = "Dropped support for custom tag soundcloud, moved to bradycms-plugins repository"
 4.0.0[] = "Dropped support for custom tag prezi, moved to bradycms-plugins repository"
 4.0.0[] = "Dropped support for custom tag figure, replaced by (rewritten) fig"
 4.0.0[] = "API change: added support for Out::getLang(input|false, return_always)"

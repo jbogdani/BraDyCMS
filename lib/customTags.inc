@@ -12,16 +12,16 @@ class customTags
 
   public static function parseContent($html, Out $out, $id = false)
   {
-    if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html))
-    {
+
+    if (!preg_match('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html)) {
       return $html;
     }
 
     //return customTagParser::do_shortcode($html);
     preg_match_all('/\[\[(\w+)\s*([^\]]*)\]\](.*?)\[\[\/\1\]\]/s', $html, $customTags, PREG_SET_ORDER);
 
-    foreach ($customTags as $customTag)
-    {
+    foreach ($customTags as $customTag) {
+
       $attributes = array();
       $rawAttributes = array();
       $formatedAttributes = array();
@@ -38,8 +38,7 @@ class customTags
 
       $formatedAttributes['content'] = $content;
 
-      foreach ($attributes as $attribute)
-      {
+      foreach ($attributes as $attribute) {
         $formatedAttributes[$attribute[1]] = $attribute[2];
       }
 
@@ -47,16 +46,16 @@ class customTags
         ( ($_SESSION['lang'] && $_SESSION['lang'] !== cfg::get('sys_lang') ) ?
           $_SESSION['lang'] : false);
 
-      if (method_exists('customTags', $tag))
-      {
+      if (method_exists('customTags', $tag)) {
+
         $replace = call_user_func(array('customTags', $tag), $formatedAttributes, $out, $id);
 
         $html = preg_replace($originalTag, $replace, $html, 1);
-      }
-      else
-      {
-        if (method_exists($tag, 'init'))
-        {
+
+      } else {
+
+        if (method_exists($tag, 'init')) {
+
           $replace = call_user_func([new $tag, 'init'], $formatedAttributes, $out, $id);
 
           $html = preg_replace($originalTag, $replace, $html, 1);
@@ -66,12 +65,11 @@ class customTags
       }
     }
 
-    if (is_array($pending) && !empty($pending))
-    {
-      foreach ($pending as $obj => $true)
-      {
-        if (method_exists($obj, 'end'))
-        {
+    if (is_array($pending) && !empty($pending)) {
+
+      foreach ($pending as $obj => $true) {
+
+        if (method_exists($obj, 'end')) {
           $html .= call_user_func(array($obj, 'end'));
         }
       }
@@ -696,32 +694,6 @@ EOD;
       . '</figure>';
 
     return $html;
-  }
-
-
-  /**
-   * Enables Disqus comments in page. Disqus shortname should be provided as tag content
-   * @param array $data
-   *    content: (required) site shortname in disqus
-   * @example [[disqus]]cliffyoungltd[[/disqus]]
-   */
-  public static function disqus($data)
-  {
-    if (!$data['content'])
-    {
-      return false;
-    }
-
-    $html = '<div id="disqus_thread"></div>' .
-            '<script type="text/javascript">' .
-              "var disqus_shortname = '{$data['content']}';" .
-              "(function() {" .
-                "var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;" .
-                "dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';" .
-                "(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);" .
-            "})();" .
-          "</script>";
-  return $html;
   }
 
 

@@ -60,15 +60,6 @@ Complete example:
 
 ---
 
-#### disqus('class')
-Adds the necessary HTML and javascript code to display Disqus comments widget.
-- **content**, string, required. Site's shortname in disqus
-
-Minimal example:
-    [[disqus]]disqus_website_id[[/disqus]]
-
----
-
 #### download('class','limit','getObject','getList')
 Displays table with file download node data and links or array with files download data
 - **content**, string, required. Name of download node

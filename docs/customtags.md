@@ -151,40 +151,50 @@ Minimal example:
 ---
 
 #### fig('path','width','align','fancybox','href','href_class','gal')
-Adds complete HTML code to display figures and captions easily. This custom tag, differntly from the [[figure]] custom tag permits the use of rich html text in captions
+Adds complete HTML code to display figures and captions easily. This custom tag, differently from the [[figure]] custom tag permits the use of rich html text in captions
 - **content**, string, optional. The image's caption
 - **path**, string, required. Images's path, without the "/sites/default/images/" part.
-- **width**, int, optional. Image's max-width. If absent the file width will be used
+- **width**, string, optional. Image's max-width, with measure unit. If absent the file width will be used
 - **align**, string, optional, available values: left, right, center. Widget's alignment in the page
 - **fancybox**, boolean, optional, default false. If present the system will try to create a valid html fancybox popup, using thumbnail, if present
 - **href**, string, optional. If present the image will hold a link to this URL
-- **href_class**, string, optional. If present the imag's link will have this CSS class
+- **href_class**, string, optional. If present the image's link will have this CSS class
 - **gal**, string, optional. If present the string will be used to collect images in the same page in galleries
 
 Minimal example:
-    [[fig path="image_url"]][[/fig]]
+```html
+[[fig path="image_url"]][[/fig]]
+```
+
+Outputs
+
+```html
+<figure>
+  <div class="image">
+    <img src="image_url">
+  </div>
+</figure>
+```
+
 
 Complete example:
-    [[fig path="image_url" width="300px" align="left" href="http://bradypus.net" href_class="bordered" gal="first_gallery"]]image_caption[[/figure]]
+```html
+[[fig path="image_url" width="300px" align="left" href="http://bradypus.net" href_class="bordered" gal="first_gallery"]]image_caption[[/figure]]
+```
+Outputs
 
----
-
-#### figure('width','caption','align','fancybox','href','href_class','gal')
-Adds complete HTML code to display figures and captions easily
-- **content**, string, required. Images'u path, without the "/sites/default/images/" part.
-- **width**, int, optional. Image's max-width. If absent the file width will be used
-- **caption**, string, optional. The image's caption
-- **align**, string, optional, available values: left, right, center. Widget's alignment in the page
-- **fancybox**, boolean, optional, default false. If present the system will try to create a valid html fancybox popup, using thumbnail, if present
-- **href**, string, optional. If present the image will hold a link to this URL
-- **href_class**, string, optional. If present the imag's link will have this CSS class
-- **gal**, string, optional. If present the string will be used to collect images in the same page in galleries
-
-Minimal example:
-    [[figure]]image_url[[/figure]]
-
-Complete example:
-    [[figure width="300px" caption="image_caption" align="left" href="http://bradypus.net" href_class="bordered" gal="first_gallery"]]image_url[[/figure]]
+```html
+<figure class="figure">
+  <div class="image">
+    <a href="http://bradypus.net" rel="first_gallery" data-fancybox="first_gallery"
+        class="fancybox bordered" data-fancybox-type="iframe"
+        title="image_caption" data-caption="image_caption">
+      <img src="image_url">
+    </a>
+  </div>
+  <figcaption class="caption">image_caption</figcaption>
+</figure>
+```
 
 ---
 
@@ -283,24 +293,6 @@ Minimal example:
 
 Complete example:
     [[map width="300px" height="200px"]]where_we_are[[/map]]
-
----
-
-#### prezi('bgcolor','lock_to_path','autoplay','autohide_ctrls','width','height')
-Adds the necessary HTML anf javascript code to display a Prezi presentation
-- **content**, string, required. Prezi presentation's ID
-- **bgcolor**, string, optional, default: ffffff. Background color.
-- **lock_to_path**, boolean, optional, default: 0. If 1 the user will be locked to the given path
-- **autoplay**, boolean, optional, default: 0. If 1 the presentation will start after page is loaded
-- **autohide_ctrls**, boolean, optinal, default:0.If 1 the conftols will be hidden automatically
-- **width**, int, optional, deafult: 500. Widget's width in pixels
-- **height**, int, optional, deafult: 550. Widget's height in pixels
-
-Minimal example:
-    [[prezi]]prezi_id[[/prezi]]
-
-Complete example:
-    [[prezi width="500" height="550" color="#ff6600" autoplay="true" artwork="true"]]prezi_id[[/prezi]]
 
 ---
 

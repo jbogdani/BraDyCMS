@@ -630,175 +630,115 @@ EOD;
    *     path*: image file relative url
    *     width:  main div (container) width
    *     content: image caption
-   *    fancybox: boolean, if true the thumbnail will be displayed and the original file will be shown on click
+   *     fancybox: boolean, if true the thumbnail will be displayed and the original file will be shown on click
    *     align: image alignent (left|right)
    *     href: href of image link
    *     href_class: css class of href link
-   *    gal: string or false. If true the string will be used as rel attribute to create fancybox galleries
+   *     gal: string or false. If true the string will be used as rel attribute to create fancybox galleries
    * @param object $out    Instance of Out
    * @param int $id        Article id
    * @return string
    */
-  public static function fig($data, $out = false, $id = false)
+  public static function fig ($data, $out = false, $id = false)
   {
-    $new_data = array();
-    if (!$data['path'])
-    {
+    $new_data = [];
+    if (!$data['path']) {
+      return false;
+    }
+    // Set attributes
+    foreach ([
+      'path',
+      'width',
+      'caption' => 'content',
+      'fancybox',
+      'align',
+      'href',
+      'href_class',
+      'gal'
+      ] as $new => $where) {
+        $tmp = $data[$where] && $data[$where] !== '' ? $data[$where] : null;
+      if (is_string($new)) {
+        $$new = $tmp;
+      } else {
+        $$where = $tmp;
+      }
+    }
+
+    // Set $filename
+    foreach ([
+      './sites/default/images/articles/media/' . $id . '/',
+      './sites/default/images/articles/',
+      './sites/default/images/',
+      ''
+      ] as $path_to_file) {
+      if (file_exists($path_to_file . $path)) {
+        $filename = $path_to_file . $path;
+        break;
+      }
+    }
+
+    if (!$filename) {
       return false;
     }
 
-    $new_data['content'] = $data['path'];
-    $new_data['width'] = $data['width'];
-    $new_data['height'] = $data['height'];
-    $new_data['caption'] = $data['content'];
-    $new_data['fancybox'] = $data['fancybox'];
-    $new_data['align'] = $data['align'];
-    $new_data['href'] = $data['href'];
-    $new_data['href_class'] = $data['href_class'];
-    $new_data['gal'] = $data['gal'];
+    // Set $alt, ie. cleaned caption
+    $alt_text = str_replace('"', '', strip_tags( $caption ));
 
-    return self::figure($new_data, $out, $id);
-  }
-
-
-  /**
-   *
-   * @param array $data
-   *     content*: image file relative url
-   *     width:  main div (container) width
-   *     caption: image caption
-   *    fancybox: boolean, if true the thumbnail will be displayed and the original file will be shown on click
-   *     align: image alignent (left|right)
-   *     href: href of image link
-   *     href_class: css class of href link
-   * @param object $out    Instance of Out
-   * @param int $id        Article id
-   * @return string
-   */
-  public static function figure($data, $out = false, $id = false)
-  {
-    // Look for file inside images/articles OR images/ folder
-    if($id && file_exists('./sites/default/images/articles/media/' . $id . '/' . $data['content']))
-    {
-      $filename = './sites/default/images/articles/media/' . $id . '/' . $data['content'];
-    }
-    else if (file_exists('./sites/default/images/articles/' . $data['content']))
-    {
-      $filename = './sites/default/images/articles/' . $data['content'];
-    }
-    else if (file_exists('./sites/default/images/' . $data['content']))
-    {
-      $filename = './sites/default/images/' . $data['content'];
-    }
-    else if (file_exists($data['content']))
-    {
-      $filename = $data['content'];
-    }
-    else
-    {
-      return false;
+    // Set $href for galleries
+    if (!$href && $fancybox) {
+      $href = $filename;
     }
 
-    // Format ALT text
-    $alt = str_replace('"', '', strip_tags(
-      $data['caption'] ? $data['caption'] : $data['content']
-      ));
-
-    // filename will the thumbanail filename if fancybox parameter is true and thumb exists
-    if( $data['fancybox'])
-    {
-      $dest_file = $filename;
-
-      // Get the file name (clean path data)
+    // $filename is set to thumbnail, if thumbnail exists
+    if ($fancybox) {
       $name = basename($filename);
-
-      // Format the thumbnail path: same as file path + thumbs/
       $thumb = str_replace($name, 'thumbs/' . $name, $filename);
 
-      if (file_exists($thumb))
-      {
+      if (file_exists($thumb)) {
         $filename = $thumb;
       }
     }
 
-    // Set figure_width if width or align attributes are provided
-    if ($data['align'] || $data['width'])
-    {
-      if ($data['width'])
-      {
-        $figure_width = $data['width'];
-      }
-      else
-      {
-        $file_dim = getimagesize($filename);
-        $figure_width = $file_dim[0] . 'px';
-      }
+    // Set width if align is set and no width is provided
+    if ($align && in_array($align, ['left', 'right', 'center']) && !$width) {
+      $file_dim = getimagesize($filename);
+      $width = $file_dim[0] . 'px';
     }
 
+    // Write html
+    $html = '<figure class="figure"';
+    if ($align || $width) {
+      $html .= ' style="'
+        . ( $align ? 'float: ' . $align . ';' : '')
+        . ( $width ? 'max-width: ' . $width . ';' : '')
+        . '" ';
+    }
+    $html .= '>'
+      . '<div class="image">';
 
-    $html = '<div class="figure' . ($data['align'] ? ' ' . $data['align'] : '') . '" '
-      . ($figure_width ? ' style="max-width: ' . $figure_width . '"' : '') . '>' .
-      '<div class="image">';
-
-    if ($dest_file || $data['href'])
-    {
+    if ($href) {
       $html .= '<a '
-        // Gallery is defined: this is a fancybox gallery.
-        // Both rel (v2) and data-fancybox are being set
-        . ($data['gal'] && $data['gal'] !== '' ? 'rel="' . $data['gal'] . '" data-fancybox="' . $data['gal'] . '" ' : '')
-        . ' href="' . ($data['href'] ? $data['href'] : $dest_file ) . '" '
-        . 'class="fancybox' . ($data['href_class'] ? ' ' . $data['href_class'] .' ' : '') . '"'
-        . ($data['fancybox'] && $data['href'] ? ' data-fancybox-type="iframe" ' : '')
-        // Both title and data-caption are set (supporting fancybox v2 & 3)
-        . ($data['caption'] ? ' title="' . $alt . '" data-caption="' . $alt . '" ' : '')
+        . ($gal ? ' rel="' . $gal . '" data-fancybox="' . $gal . '" ' : '')
+        . 'href="' . $href . '" '
+        . 'class="fancybox' . ($href_class ? ' ' . $href_class : '') . '" '
+        . ($alt_text ? ' title="' . $alt_text . '" data-caption="' . $alt_text . '" ' : '')
         . '>';
     }
 
-    $html .= '<img src="' . $filename . '" alt="' . $alt . '" />';
+    $html .= '<img src="' . $filename . '" alt="' . $alt_text . '">';
 
-    if ($dest_file || $data['href'])
-    {
+    if ($href) {
       $html .= '</a>';
     }
-    $html .= '</div>' .
-      ($data['caption'] ?
-          '<div class="caption">' . $data['caption'] . '</div>'
-          :
-          '') .
-    '</div>';
+
+    $html .='</div>'
+      . ($caption ? '<figcaption class="caption">' . $caption . '</figcaption>' : '')
+      . '</figure>';
 
     return $html;
   }
 
-  /**
-   *
-   * @param array $data
-   *       content*: prezi id
-   *       width
-   *       height
-   *       bgcolor
-   *       lock_to_path
-   *       autoplay
-   *       autohide_ctrls
-   * @return string
-   */
-  public static function prezi($data)
-  {
-    $html = '<iframe ' .
-      'src="http://prezi.com/embed/' . $data['content'] . '/?' .
-      'bgcolor=' . ($data['bgcolor'] ? $data['bgcolor'] : 'ffffff') . '&amp;' .
-      'lock_to_path=' . ( $data['lock_to_path'] ? $data['lock_to_path'] : '0') . '&amp;' .
-      'autoplay=' . ($data['autoplay'] ? $data['autoplay'] : '0') . '&amp;' .
-      'autohide_ctrls=' . ($data['autohide_ctrls'] ? $data['autohide_ctrls'] : '0') . '&amp;' .
-      'features=undefined&amp;disabled_features=undefined" ' .
-      'width="' . ( $data['width'] ? $data['width'] : '550') . '" ' .
-      'height="' . ( $data['height'] ? $data['height'] : '550') . '" ' .
-      'frameBorder="0"></iframe>';
-
-    return $html;
-  }
-
-
+  
   /**
    * Enables Disqus comments in page. Disqus shortname should be provided as tag content
    * @param array $data

@@ -72,7 +72,7 @@ class Out
       $exploded = explode('/', $get['art_title']);
       $this->cfg['textId'] = array_values(array_slice($exploded, -1))[0];
       $this->cfg['parts'] = $exploded;
-      $this->cfg['isDraft'] = ($get['draft'] !== false);
+      $this->cfg['isDraft'] = (!is_null($get['draft']) && $get['draft'] !== false);
 
     } else if ( $get['search'] ) {
 
@@ -135,6 +135,16 @@ class Out
   public function getParts()
   {
     return $this->cfg['parts'];
+  }
+
+
+  /**
+   * Returns true if current article is draft and false if not
+   * @return boolean
+   */
+  public function isDraft()
+  {
+    return $this->cfg['isDraft'];
   }
 
 

@@ -1,4 +1,4 @@
-3.18.11[] = "New help system with full support for Github pages"
+4.0.0[] = "New Out::isDraft function"
 4.0.0[] = "Dropped support for custom tag disqus, moved to bradycms-plugins repository"
 4.0.0[] = "Dropped support for custom tag soundcloud, moved to bradycms-plugins repository"
 4.0.0[] = "Dropped support for custom tag prezi, moved to bradycms-plugins repository"
@@ -10,6 +10,7 @@
 4.0.0[] = "API change: added support for Out::getParts"
 4.0.0[]  = "API change: Removed support for search tags (eg.: tagi1-tag2.search)"
 
+3.18.11[] = "New help system with full support for Github pages"
 3.18.10[] = "Bug fixed with article translation module (translation language information was getting overwritten in template file)"
 3.18.9[] = "Field named subject overwrites default subject in userform module"
 3.18.8[] = "Userform modules accepts SMTP configuration"

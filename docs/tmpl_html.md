@@ -677,6 +677,12 @@ E.g.: `{{ html.GUA }}`
 ```
 ---
 
+#### isDraft
+Returns true if currently viewed article is a draft and false if not
+E.g.: `{{ html.isDraft }}`
+
+---
+
 #### langMenu('flags', 'no_text')
 Returns well-formatted html of language menu. Current language's list item (li) has class current
 - **flags** boolean, optional, default false. If true image flags will be shown

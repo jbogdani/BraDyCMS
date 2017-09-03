@@ -1,3 +1,7 @@
+{% extends "admin.twig" %}
+
+{% block content %}
+
 <div class="container">
   <div style="text-align:center; display:none;" class="alert alert-danger alert-dismissable" id="logerror">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -32,5 +36,52 @@
       <i class="icon ion-unlocked"></i> {{ tr.get('sign_in') }}
     </button>
   </form>
-
 </div>
+{% endblock %}
+
+
+{% block scripts %}
+
+{% if grc_sitekey %}
+<script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit" async defer></script>
+<script type="text/javascript">
+if (typeof recaptchaCallback !== 'function') {
+  var called = false;
+  function recaptchaCallback(){
+    if (called) return;
+    $('.g-recaptcha').each(function(i, el){
+      grecaptcha.render(el, {
+        'sitekey' : $(el).data('sitekey'),
+        {% if lang %} 'hl':'{{ lang }}',{% endif %}
+        'callback': function(response) {
+          if (response.length > 0){
+            $('#login-button').prop('disabled', false);
+          }
+        }
+      });
+    });
+    called = true;
+  }
+}
+</script>
+{% endif %}
+<script>
+  $('#signin').on('submit', function(){
+    $('#logerror').hide();
+    $.post('controller.php?obj=log_ctrl&method=in', $(this).serialize(), function(data){
+    if (data.status === 'success'){
+        location.reload();
+        $(window).trigger('hashchange');
+        return false;
+      } else {
+{% if grc_sitekey %}
+        grecaptcha.reset();
+{% endif %}
+        $('#logerror .text').html(data.text);
+        $('#logerror').show();
+        $('#login-button').button('reset');
+      }
+    }, 'json');
+  });
+</script>
+{% endblock %}

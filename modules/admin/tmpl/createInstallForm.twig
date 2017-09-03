@@ -1,3 +1,7 @@
+{% extends "admin.twig" %}
+
+{% block content %}
+
 <div class="container">
   <div class="row">
     <div class="col-sm-4 col-sm-offset-4">
@@ -6,12 +10,12 @@
           <p class="lead"><i class="icon ion-alert-circled"></i> Hands up!</p>
           <p>It seems you there is no site configured, yet!</p>
         </div>
-          
+
         {% if preInstallErrors == false %}
           <div class="alert alert-success">
             <i class="icon ion-checkmark"></i> Congrats! Your system is fully compatible with BraDyCMS
           </div>
-          
+
           <p class="lead">Please, register with a username (valid email address) and password.</p>
 
           <p>Your site will be created and you will be the first admin. After this you can login and finish the site layout and configuration!</p>
@@ -39,20 +43,20 @@
 
           </form>
         {% else %}
-          
+
           <div class="alert alert-danger">
             <p><i class="icon ion-close"></i> Error! It seems that your system is not fully compatible with BraDyCMS:</p>
             <ol class="lead">
               {% for error in preInstallErrors %}
                 <li>{{ error }}</li>
-                
+
               {% endfor %}
             </ol>
             <p>Please fix all errors and reload this page</p>
           </div>
         {% endif %}
 
-          
+
       </div>
       <div id="message" style="display:none;">
         <div class="alert alert-success">
@@ -75,3 +79,20 @@
     </div>
   </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $('#newsite').on('submit', function(){
+    $.post('./controller.php?obj=addsite_ctrl&method=build', $(this).serialize(), function(data){
+      if (data.status === 'success'){
+        $('#register').fadeOut();
+        $('#message').fadeIn();
+      } else {
+        admin.message(data.text, data.status, false, true);
+      }
+    }, 'json');
+  });
+  </script>
+{% endblock %}

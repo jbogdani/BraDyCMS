@@ -8,29 +8,8 @@
 
 class admin_ctrl extends Controller
 {
-  public function showLoginForm()
-  {
-    if (!$_SESSION['token'])
-    {
-      $_SESSION['token'] = md5(uniqid(rand(), true));
-    }
 
-    return $this->render('admin', 'loginForm', [
-      'version'=> version::current(),
-      'token' => $_SESSION['token'],
-      'grc_sitekey' => cfg::get('grc_sitekey')
-    ], true
-    );
-  }
-
-  public function showCreateInstallForm()
-  {
-    $addsite = new addsite_ctrl();
-
-    return $this->render('admin', 'createInstallForm', ['preInstallErrors' => $addsite->preInstallErrors()], true);
-  }
-
-  public function showBody()
+  private function showBody()
   {
     $usr_mods = utils::dirContent('./sites/default/modules');
 
@@ -55,15 +34,14 @@ class admin_ctrl extends Controller
       $welcome_text = file_get_contents('./sites/default/welcome.html');
     }
 
-    return $this->render('admin', 'body', [
+    return [
       'version' => version::current(),
       'custom_mods' => $custom_mods,
       'welcome' => $welcome_text,
       'user' => $_SESSION['user_confirmed'],
       'is_admin' => $_SESSION['user_admin'],
       'gravatar' => md5( strtolower( trim( $_SESSION['user_confirmed'] ) ) )
-    ], true
-    );
+    ];
   }
 
   public function showMainAdmin()
@@ -92,21 +70,33 @@ class admin_ctrl extends Controller
 
 
     if (defined('CREATE_SITE')) {
-      $content = $this->showCreateInstallForm();
+
+      $tmpl = 'createInstallForm';
+      $addsite = new addsite_ctrl();
+      $add_param = ['preInstallErrors' => $addsite->preInstallErrors()];
+
     } else if (!$_SESSION['user_confirmed']) {
-      $content = $this->showLoginForm();
+
+      $tmpl = 'loginForm';
+      $add_param = [
+        'version'=> version::current(),
+        'token' => $_SESSION['token'] ?: md5(uniqid(rand(), true)),
+        'grc_sitekey' => cfg::get('grc_sitekey')
+      ];
+
     } else {
-      $content = $this->showBody();
+
+      $tmpl = 'body';
+      $add_param = $this->showBody();
     }
 
-    $this->render('admin', 'admin', [
+    $this->render('admin', $tmpl, array_merge([
       'css' => $css,
       'js' => $js,
       'user_confirmed' => $_SESSION['user_confirmed'],
       'content' => $content,
-      'create_site' => defined('CREATE_SITE'),
       'recaptcha' => defined('CREATE_SITE') ? false : cfg::get('grc_sitekey')
-    ]);
+    ], $add_param));
   }
 }
 ?>

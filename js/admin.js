@@ -28,14 +28,16 @@ var admin = {
         image_advtab: true,
         removed_menuitems: 'newdocument',
         templates: [
-          {title: 'download', content: '[[download]]editme[[/download]]'},
+          {title: 'download file', content: '[[dwnl file=""]]text[[/dwnl]]'},
           {title: 'fig', content: '[[fig path="./sites/default/images/"]]caption[[/fig]]'},
-          {title: 'gallery', content: '[[gallery]]editme[[/gallery]]'},
           {title: 'link', content: '[[link]]editme[[/link]]'},
+          {title: 'download-node', content: '[[download]]editme[[/download]]'},
+          {title: 'gallery', content: '[[gallery]]editme[[/gallery]]'},
           {title: 'map', content: '[[map]]editme[[/map]]'},
           {title: 'userform', content: '[[userform]]editme[[/userform]]'},
           {title: 'vimeo', content: '[[vimeo]]editme[[/vimeo]]'},
-          {title: 'youtube', content: '[[youtube]]editme[[/youtube]]'}
+          {title: 'youtube', content: '[[youtube]]editme[[/youtube]]'},
+          {title: 'gcalendar', content: '[[gcalendar]]editme[[/gcalendar]]'}
         ]
       };
       $.extend(default_opts, opts);

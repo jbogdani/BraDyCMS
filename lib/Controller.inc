@@ -117,7 +117,7 @@ class Controller
       unset($this->post['obj']);
       unset($this->post['method']);
 
-      $param = $param ? $param : array_merge((array)$this->get['param'], array('post'=>$this->post, 'get' => $this->get));
+      $param = $param ? $param : array_merge((array)$this->get['param'], $this->post, $this->get);
 
       $trace_params = $obj . '::' . $method . '(' . var_export($param, true) . ')';
 

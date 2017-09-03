@@ -134,7 +134,7 @@ class download_ctrl extends Controller
     catch (Exception $e)
     {
       error_log($e->getMessage());
-      echo 'Something went wrong.....';
+      echo 'Something went wrong... ' . $e->getMessage();
     }
   }
 

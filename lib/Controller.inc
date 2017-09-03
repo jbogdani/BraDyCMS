@@ -117,7 +117,7 @@ class Controller
       unset($this->post['obj']);
       unset($this->post['method']);
 
-      $param = $param ? $param : array_merge((array)$this->get['param'], $this->post, $this->get);
+      $param = $param ? $param : array_merge((array)$this->get['param'], ['post' => $this->post, 'get' => $this->get]);
 
       $trace_params = $obj . '::' . $method . '(' . var_export($param, true) . ')';
 
@@ -138,7 +138,9 @@ class Controller
           throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
         }
 
-        call_user_func_array([$_aa, $method], $param);
+        // Extensions of class Controller do not need GET & POST parameters as
+        // function arguments. These variables are available via $this->post, $this->get, $this->request
+        call_user_func_array([$_aa, $method], []);
 
       } else {
 

@@ -78,9 +78,12 @@ class admin_ctrl extends Controller
     } else if (!$_SESSION['user_confirmed']) {
 
       $tmpl = 'loginForm';
+      if (!$_SESSION['token']) {
+        $_SESSION['token'] = md5(uniqid(rand(), true));
+      }
       $add_param = [
         'version'=> version::current(),
-        'token' => $_SESSION['token'] ?: md5(uniqid(rand(), true)),
+        'token' => $_SESSION['token'],
         'grc_sitekey' => cfg::get('grc_sitekey')
       ];
 

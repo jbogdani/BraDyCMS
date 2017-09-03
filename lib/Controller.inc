@@ -44,8 +44,9 @@ class Controller
    * @param string $module module name
    * @param string $template template (no extension) file name
    * @param array $data array of data to inject in template (uid and tr object are available by default)
+   * @param boolean $return if true data will be returned, else will be echoed
    */
-  public function render($module, $template, $data = false)
+  public function render($module, $template, $data = false, $return = false)
   {
     // add support for user plugin template folders
     if (file_exists(MOD_DIR . $module . '/tmpl')) {
@@ -65,7 +66,13 @@ class Controller
     $data['uid'] = uniqid();
     $data['lang'] = $_SESSION['adm_lang'];
 
-    echo $twig->render($template . '.twig', $data );
+    $html = $twig->render($template . '.twig', $data );
+
+    if ($return) {
+      return $html;
+    } else {
+      echo $html;
+    }
   }
 
   /**

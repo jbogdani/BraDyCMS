@@ -110,7 +110,7 @@ class Controller
    * Also, foreach object, the admin blacklist will be checked
    * @throws Exception
    */
-  public function route($obj = false, $method = false, $param = false)
+  public function route($obj = false, $method = false, $params = [])
   {
     if ($obj || $this->request['obj']) {
 
@@ -124,7 +124,7 @@ class Controller
       unset($this->post['obj']);
       unset($this->post['method']);
 
-      $param = $param ? $param : array_merge((array)$this->get['param'], ['post' => $this->post, 'get' => $this->get]);
+      $param = !empty($params) ? $params : array_merge((array)$this->get['param'], ['post' => $this->post, 'get' => $this->get]);
 
       $trace_params = $obj . '::' . $method . '(' . var_export($param, true) . ')';
 
@@ -147,7 +147,7 @@ class Controller
 
         // Extensions of class Controller do not need GET & POST parameters as
         // function arguments. These variables are available via $this->post, $this->get, $this->request
-        call_user_func_array([$_aa, $method], []);
+        call_user_func_array([$_aa, $method], $params);
 
       } else {
 

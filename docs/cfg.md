@@ -160,15 +160,17 @@ not be available to your end users.
 
 ### Custom fields
 Use the fields above to add new custom fields to your articles. For each field please please provide a lower-case name, using no spaces, dashes, underscores or other special characters; a field type, a label, and eventually a default value. If you chose "select" as field type you should enter a comma separated list of values as default fields to use as select options.
+
 Please remember that you should update the database manually to include the new fields.
 Special fields The field name `customtitle` is a special field. If provided it's value will be used to throughout the website for the HTML `title` metatag output.
+
 You can add many custom fields. Just save the form to have a new blank row added.
-#### Field name
-#### Field type
-#### Field label
-#### Default field values
-#### Translatable
-#### Rich text
+- **Field name** this is the database name of the field. No spaces, dashes, underscores or other special characters must be used
+- **Field type** One of: input, longtext or select
+- **Field label** this is the label that will be showed to admin users in the article edit form
+- **Default field values** if set this will be the pre-filled value of the field. In case of field type select, please enter here e comma separated list of options for the select drop down menu
+- **Translatable** wether this field should show or not in the article translate form
+- **Rich text** if true (1) the field on tha article edit form will be set to use a wysiwyg editor
 
 > ### Special custom fields
 > customtitle

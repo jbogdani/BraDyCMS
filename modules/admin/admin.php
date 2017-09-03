@@ -15,11 +15,11 @@ class admin_ctrl extends Controller
       $_SESSION['token'] = md5(uniqid(rand(), true));
     }
 
-    $this->render('admin', 'loginForm', array(
+    return $this->render('admin', 'loginForm', [
       'version'=> version::current(),
       'token' => $_SESSION['token'],
       'grc_sitekey' => cfg::get('grc_sitekey')
-      )
+    ], true
     );
   }
 
@@ -27,52 +27,86 @@ class admin_ctrl extends Controller
   {
     $addsite = new addsite_ctrl();
 
-    $this->render('admin', 'createInstallForm', array('preInstallErrors' => $addsite->preInstallErrors()));
-  }
-
-  public function showError($error)
-  {
-    echo '<div class="container">' .
-    '<div class="alert alert-danger text-center">Something went wrong! '. $stop_error . '</div>' .
-    '</div>';
+    return $this->render('admin', 'createInstallForm', ['preInstallErrors' => $addsite->preInstallErrors()], true);
   }
 
   public function showBody()
   {
     $usr_mods = utils::dirContent('./sites/default/modules');
-    if (is_array($usr_mods) && !empty($usr_mods))
-    {
-      foreach ($usr_mods as $mod)
-      {
-        if (file_exists('./sites/default/modules/' . $mod . '/' . $mod . '.inc'))
-        {
+
+    if (is_array($usr_mods) && !empty($usr_mods)) {
+
+      foreach ($usr_mods as $mod) {
+
+        if (file_exists('./sites/default/modules/' . $mod . '/' . $mod . '.inc')) {
+
           require_once './sites/default/modules/' . $mod . '/' . $mod . '.inc';
 
-          if (method_exists($mod, 'admin'))
-          {
+          if (method_exists($mod, 'admin')) {
             $custom_mods[] = $mod;
           }
         }
       }
     }
 
-    if (file_exists('./sites/default/welcome.md')){
+    if (file_exists('./sites/default/welcome.md')) {
       $welcome_text = Parsedown::instance()->text(file_get_contents('./sites/default/welcome.md'));
-    }
-    else if(file_exists('./sites/default/welcome.html'))
-    {
+    } else if(file_exists('./sites/default/welcome.html')) {
       $welcome_text = file_get_contents('./sites/default/welcome.html');
     }
 
-    $this->render('admin', 'body', array(
+    return $this->render('admin', 'body', [
       'version' => version::current(),
       'custom_mods' => $custom_mods,
       'welcome' => $welcome_text,
       'user' => $_SESSION['user_confirmed'],
       'is_admin' => $_SESSION['user_admin'],
       'gravatar' => md5( strtolower( trim( $_SESSION['user_confirmed'] ) ) )
-      )
+    ], true
     );
+  }
+
+  public function showMainAdmin()
+  {
+    foreach ([
+      './bower_components/font-awesome/css/font-awesome.min.css',
+      './bower_components/Ionicons/css/ionicons.min.css',
+      './bower_components/pnotify/dist/pnotify.css',
+      './bower_components/select2/select2.css',
+      './bower_components/select2/select2-bootstrap.css',
+      './bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+      './bower_components/google-code-prettify/bin/prettify.min.css',
+      './bower_components/datatables/media/css/dataTables.bootstrap.min.css',
+      './bower_components/fine-uploader/dist/fine-uploader.min.css',
+      './css/admin.css'
+    ] as $f) {
+      $css[$f] = sha1_file($f);
+    }
+
+    foreach ([
+      './bower_components/tinymce/tinymce.js',
+      './js/admin.min.js'
+      ] as $f) {
+      $js[$f] = sha1_file($f);
+    }
+
+
+    if (defined('CREATE_SITE')) {
+      $content = $this->showCreateInstallForm();
+    } else if (!$_SESSION['user_confirmed']) {
+      $content = $this->showLoginForm();
+    } else {
+      $content = $this->showBody();
+    }
+
+    $this->render('admin', 'admin', [
+      'css' => $css,
+      'js' => $js,
+      'user_confirmed' => $_SESSION['user_confirmed'],
+      'content' => $content,
+      'create_site' => defined('CREATE_SITE'),
+      'recaptcha' => defined('CREATE_SITE') ? false : cfg::get('grc_sitekey')
+    ]);
   }
 }
 ?>

@@ -59,8 +59,8 @@ class Router
         return false;
       }, 'download');
 
-      $router->map( 'GET', "/admin", function() {
-        require __DIR__ . '/../admin.php';
+      $router->map( 'GET', "/admin", function() use ($controller){
+        $controller->route('admin_ctrl', 'showMainAdmin');
       }, 'admin');
 
       $router->addMatchTypes(array('lng' => '[a-z]{2}'));
@@ -68,10 +68,15 @@ class Router
       $router->addMatchTypes(array('art' => '[a-zA-Z0-9-_\/]*'));
       $router->addMatchTypes(array('string' => '[a-zA-Z0-9-_+]*'));
 
-      $router->map( 'GET', "/[lng:lng]?/?", function($lng = false) {
-        return [
-          'lang' => $lng
-        ];
+      $router->map( 'GET', "/[lng:lng]?/?", function($lng = false) use ($controller) {
+        if (defined('CREATE_SITE')) {
+          $controller->route('admin_ctrl', 'showMainAdmin');
+          return false;
+        } else {
+          return [
+            'lang' => $lng
+          ];
+        }
       }, 'home');
 
       $router->map( 'GET', "/[lng:lng]?/[art:art]", function($lng = false, $art) {
@@ -138,12 +143,7 @@ class Router
       throw $e;
     }
 
-
   }
-
-
-
-
 
 
   private static function frontend($get)
@@ -158,8 +158,7 @@ class Router
       $settings
     );
 
-    if ($_SESSION['debug'])
-    {
+    if ($_SESSION['debug']) {
       $twig->addExtension(new Twig_Extension_Debug());
     }
     // TODO: document intersect
@@ -174,8 +173,8 @@ class Router
     $twig->addFunction($fn_file_exists);
 
     $filter = new Twig_SimpleFilter('parseTags', function ($string) {
-        return customTags::parseContent($string, $outHtml);
-      });
+      return customTags::parseContent($string, $outHtml);
+    });
 
     $twig->addFilter($filter);
 

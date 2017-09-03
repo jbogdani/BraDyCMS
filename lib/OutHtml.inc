@@ -762,6 +762,11 @@ EOD;
       require_once 'sites/default/modules/' . $method . '/' . $method . '.inc';
       $html = call_user_func_array([new $method, 'init'], [$param, $this]);
 
+    } else if (file_exists('sites/default/modules/' . $method . '/' . $method. '.php')) {
+
+      require_once 'sites/default/modules/' . $method . '/' . $method . '.php';
+      $html = call_user_func_array([new $method, 'init'], [$param, $this]);
+
     }
 
     return $html;
@@ -862,7 +867,7 @@ EOD;
   public function canView()
   {
     switch($this->getContext()) {
-      
+
       case 'tags':
         $tags = $this->getFilterTags();
         break;

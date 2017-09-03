@@ -14,14 +14,12 @@ class log_ctrl extends Controller
     $users_log = MAIN_DIR . 'logs/users.log';
 
     // Create users log if it does not exist
-    if (!file_exists($users_log))
-    {
+    if (!file_exists($users_log)) {
       $fh = @fopen($users_log, 'w');
       @fclose($fh);
     }
 
-    if (!file_exists($users_log))
-    {
+    if (!file_exists($users_log)) {
       return false;
     }
 
@@ -57,22 +55,18 @@ class log_ctrl extends Controller
 
     $password = sha1($password);
 
-    if($echo)
-    {
+    if($echo) {
       echo $password;
-    }
-    else
-    {
+    } else {
       return $password;
     }
   }
 
   public function in()
   {
-    try
-    {
-      if (!filter_var($this->post['username'], FILTER_VALIDATE_EMAIL))
-      {
+    try {
+
+      if (!filter_var($this->post['username'], FILTER_VALIDATE_EMAIL)) {
         throw new Exception(tr::sget('invalid_email', tr::get('email_address')));
       }
 
@@ -82,30 +76,24 @@ class log_ctrl extends Controller
 
       $token = $this->post['token'];
 
-      if (!$token || !$username || !$password)
-      {
+      if (!$token || !$username || !$password) {
         throw new Exception(tr::get('access_denied'));
       }
 
-      if (!$_SESSION['token'] || $token !== $_SESSION['token'])
-      {
+      if (!$_SESSION['token'] || $token !== $_SESSION['token']) {
         throw new Exception(tr::get('invalid_token'));
       }
 
-      if (!utils::checkAttemptTime())
-      {
+      if (!utils::checkAttemptTime()) {
         throw new Exception(tr::get('too_much_attempts'));
       }
 
       // Google reCAPTCHA check
-      if (reCAPTCHA::isProtected())
-      {
-        try
-        {
+      if (reCAPTCHA::isProtected()) {
+
+        try {
           reCAPTCHA::validate($this->post['g-recaptcha-response']);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           error_log($e);
           throw new Exception(tr::get('captcha_error'));
         }
@@ -113,14 +101,13 @@ class log_ctrl extends Controller
 
       $cfg_users = cfg::get('users');
 
-      foreach ($cfg_users as $user)
-      {
-        if($username === $user['name'] && $this->encodePwd($password) === $user['pwd'])
-        {
+      foreach ($cfg_users as $user) {
+
+        if($username === $user['name'] && $this->encodePwd($password) === $user['pwd']) {
+
           session_regenerate_id(true);
           $_SESSION['user_confirmed'] = $username;
-          if ($user['admin'] === 'admin')
-          {
+          if ($user['admin'] === 'admin') {
             $_SESSION['user_admin'] = true;
           }
 
@@ -128,21 +115,17 @@ class log_ctrl extends Controller
 
           echo json_encode(array('status' => 'success'));
           return;
-        }
-        else
-        {
+
+        } else {
           continue;
         }
       }
 
       throw new Exception(tr::get('access_denied'));
 
-    }
-    catch(Exception $e)
-    {
+    } catch(Exception $e) {
       echo json_encode(array('status' => 'error', 'text' => $e->getMessage()));
       return;
     }
-
   }
 }

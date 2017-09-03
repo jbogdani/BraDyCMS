@@ -48,22 +48,16 @@ class Controller
   public function render($module, $template, $data = false)
   {
     // add support for user plugin template folders
-    if (file_exists(MOD_DIR . $module . '/tmpl'))
-    {
+    if (file_exists(MOD_DIR . $module . '/tmpl')) {
       $dir = MOD_DIR . $module . '/tmpl';
-    }
-    else if (file_exists(SITE_DIR . 'modules/' . $module . '/tmpl'))
-    {
+    } else if (file_exists(SITE_DIR . 'modules/' . $module . '/tmpl')) {
       $dir = SITE_DIR . 'modules/' . $module . '/tmpl';
-    }
-    else
-    {
+    } else {
       throw new Exception("Template folder for module {$modeule} not found");
-
     }
+
     $twig = new Twig_Environment(new Twig_Loader_Filesystem($dir), unserialize(CACHE));
-    if ($_SESSION['debug'])
-    {
+    if ($_SESSION['debug']) {
       $twig->addExtension(new Twig_Extension_Debug());
     }
 
@@ -111,8 +105,8 @@ class Controller
    */
   public function route($obj = false, $method = false, $param = false)
   {
-    if ($obj || $this->request['obj'])
-    {
+    if ($obj || $this->request['obj']) {
+
       $obj = $obj ? $obj : $this->request['obj'];
       $method = $method ? $method : $this->request['method'];
 
@@ -128,42 +122,40 @@ class Controller
       $trace_params = $obj . '::' . $method . '(' . var_export($param, true) . ')';
 
 
-      if (!$_SESSION['user_confirmed'] && !$this->nonNeed2Auth($obj, $method))
-      {
+      if (!$_SESSION['user_confirmed'] && !$this->nonNeed2Auth($obj, $method)) {
+
         throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
       }
 
-      if (get_parent_class($obj) === 'Controller')
-      {
+      if (get_parent_class($obj) === 'Controller') {
+
         $_aa = new $obj($this->get, $this->post, $this->request);
 
         if($_aa->adminRequired
           && is_array($_aa->adminRequired)
           && in_array($method, $_aa->adminRequired)
-          && !$_SESSION['user_admin'])
-        {
+          && !$_SESSION['user_admin']) {
           throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
         }
 
         call_user_func_array([$_aa, $method], $param);
-      }
-      else
-      {
-        if (property_exists($obj, 'adminRequired'))
-        {
+
+      } else {
+
+        if (property_exists($obj, 'adminRequired')) {
+
           $ref = new ReflectionClass($obj);
           $def_prop = $ref->getDefaultProperties();
           $admin_methods = $def_prop['adminRequired'];
-          if (is_array($admin_methods) && in_array($method, $admin_methods) && !$_SESSION['user_admin'])
-          {
+
+          if (is_array($admin_methods) && in_array($method, $admin_methods) && !$_SESSION['user_admin']) {
             throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
           }
         }
         call_user_func_array(array($obj, $method), $param);
       }
-    }
-    else
-    {
+
+    } else {
       throw new Exception('No data to load');
     }
   }

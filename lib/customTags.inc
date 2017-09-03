@@ -644,7 +644,7 @@ EOD;
 
     // Set $href for galleries
     if (!$href && $fancybox) {
-      $href = $filename;
+      $href = $out->link2() . $filename;
     }
 
     // $filename is set to thumbnail, if thumbnail exists
@@ -683,7 +683,7 @@ EOD;
         . '>';
     }
 
-    $html .= '<img src="' . $filename . '" alt="' . $alt_text . '">';
+    $html .= '<img src="' . $out->link2() . $filename . '" alt="' . $alt_text . '">a';
 
     if ($href) {
       $html .= '</a>';
@@ -829,7 +829,7 @@ EOD;
     $file = $data['file'];
     $text = $data['content'] ? $data['content'] : $file;
 
-    if (!$file) {
+    if (!$file || !file_exists($file)) {
       return false;
     }
 
@@ -843,7 +843,7 @@ EOD;
         $html .= " "  . $k . '="' . str_replace('"', '\"', $v) . '"';
       }
     }
-    $html .= 'href="' . link::to_article('download'). '/?file=' . $file . '"">'
+    $html .= 'href="' . link::to_article('download'). '/' . $file . '" target="_blank">'
         . $text;
     $html .=  '</a>';
 

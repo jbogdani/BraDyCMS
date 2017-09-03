@@ -68,6 +68,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
   "bProcessing": true,
   "bServerSide": true,
   "sAjaxSource": "./controller.php?obj=article_ctrl&method=sql2json{{ imploded_active_tags|raw }}",
+  "order": [[ 0, "desc" ]],
   "aoColumns": [
     { "mData":"id"},
     {

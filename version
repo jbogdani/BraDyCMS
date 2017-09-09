@@ -1,4 +1,5 @@
-3.18.12[] = "html.queue is an array"
+3.18.12[] = "userform uses unique form id"
+3.18.12[] = "html.queue is an array and duplicates are removed"
 3.18.11[] = "New help system with full support for Github pages"
 3.18.10[] = "Bug fixed with article translation module (translation language information was getting overwritten in template file)"
 3.18.9[] = "Field named subject overwrites default subject in userform module"

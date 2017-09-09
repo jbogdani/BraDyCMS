@@ -330,6 +330,7 @@ class userform_ctrl extends Controller
   */
   public function showForm($param, Out $out)
   {
+    $uid = uniqid( 'form' );
     $this->loadForm($param['content']);
 
     if ($param['inline'] || $this->data['inline']) {
@@ -341,7 +342,10 @@ class userform_ctrl extends Controller
     }
 
     $html = '<div class="userform ' . $param['content'] . '">' .
-      '<form action="javascript:void(0)" class="' . $form_class . '" id="' . $param['content'] . '">';
+      '<form action="javascript:void(0)" '
+        . 'data-name="' . $param['content'] . '"'
+        . ($form_class ? 'class="' . $form_class . '"' : '')
+        . ' id="' . $uid . '">';
 
     if ($param['subject']) {
       $html .= '<input type="hidden" name="customsubject" value="' . $param['subject'] . '" />';
@@ -460,7 +464,7 @@ EOD;
       $js = [];
 
       $out->setQueue('modules', "\n" . '<script src="' . MOD_DIR . 'userform/userform.js'. '"></script>', true);
-      array_push($js, "userform.whatchForm('" . $param['content'] . "');");
+      array_push($js, "userform.whatchForm('" . $uid . "');");
 
       if (is_array($upload)) {
         $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="./bower_components/fine-uploader/dist/fine-uploader.min.css" />', true);

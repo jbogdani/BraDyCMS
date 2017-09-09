@@ -792,10 +792,18 @@ class Out
   {
     if ($concatenate)
     {
-      $current = $this->getQueue($key);
-      $value = $current . $value;
+      if (!is_array($this->queue[$key])) {
+        $this->queue[$key] = (array)$this->queue[$key];
+      }
+
+      if (!in_array($value, $this->queue[$key])) {
+        array_push($this->queue[$key], $value);
+      }
+      
+    } else {
+      $this->queue[$key] = (array)$value;
     }
-    $this->queue[$key] = $value;
+
   }
 
   /**
@@ -805,15 +813,20 @@ class Out
    */
   public function getQueue($key = 'modules')
   {
-    if (isset($this->queue[$key]))
-    {
-      if (is_string($this->queue[$key]))
-      {
+    if (isset($this->queue[$key])) {
+
+      if (is_array($this->queue[$key])) {
+
+        return implode(' ', $this->queue[$key]);
+
+      } else if (is_string($this->queue[$key])) {
+
         return $this->queue[$key];
-      }
-      else if (is_callable($this->queue[$key]))
-      {
+
+      } else if (is_callable($this->queue[$key])) {
+
         return call_user_func($this->queue[$key]);
+
       }
     }
   }

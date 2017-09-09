@@ -6,7 +6,8 @@ var userform = {
 
     $('#' + formId).on('submit', function(){
 
-      var messageContainer = $(this).find('.message');
+      var messageContainer = $(this).find('.message'),
+        name = $(this).data('name');
 
       messageContainer.removeClass('text-danger, text-success').html('Loading...');
       var stop = false;
@@ -33,7 +34,7 @@ var userform = {
       });
 
       if (!stop){
-        $.post('controller.php?obj=userform_ctrl&method=process&param[]=' + formId, $(this).serialize(), function(data){
+        $.post('controller.php?obj=userform_ctrl&method=process&param[]=' + name, $(this).serialize(), function(data){
           if (data.status == 'success'){
             messageContainer.removeClass('text-danger').addClass('text-success').html('<i class="icon ion-checkmark"></i>');
             $('#' + formId + ' :input:not(.btn)').val('');

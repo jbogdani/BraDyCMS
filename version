@@ -1,3 +1,4 @@
+3.18.13[] = "Bug fixed with open tag in .htaccess"
 3.18.12[] = "userform uses unique form id"
 3.18.12[] = "html.queue is an array and duplicates are removed"
 3.18.11[] = "New help system with full support for Github pages"

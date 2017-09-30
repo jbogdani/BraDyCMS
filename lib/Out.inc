@@ -94,9 +94,8 @@ class Out
         // Any tag
         $this->cfg['tags'] = utils::csv_explode($get['tags'], '-');
       }
-    }
-    else
-    {
+
+    } else {
       $this->cfg['context'] = 'home';
     }
     return $this->cfg;
@@ -156,12 +155,9 @@ class Out
    */
   public function getGallery($gal)
   {
-    try
-    {
+    try {
       return Gallery::get($gal);
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       return false;
     }
   }
@@ -222,8 +218,7 @@ class Out
 
     $url = '';
 
-    switch($tags)
-    {
+    switch($tags) {
       case 'search':
         $url = link::to_search($art, $this->getLang('input'), $page);
         break;
@@ -235,8 +230,7 @@ class Out
         break;
     }
 
-    if ($absl_link)
-    {
+    if ($absl_link) {
       $url = utils::getBaseUrl() . $url;
     }
 
@@ -259,22 +253,20 @@ class Out
    */
   public function getArticleTags($article = false)
   {
-    if ($this->getContext() !== 'article')
-    {
+    if ($this->getContext() !== 'article') {
       return false;
     }
 
     $article = $article ? $article :  $this->getTextId();
 
 
-    if (!$this->data['article'][$article]['tags'])
-    {
+    if (!$this->data['article'][$article]['tags']) {
       $art = $this->getArticle();
 
-      if (!$art->id)
-      {
+      if (!$art->id) {
         return false;
       }
+
       $this->data['article'][$article]['tags'] =  R::tag($art);
     }
 
@@ -336,8 +328,7 @@ class Out
       }
     }
 
-    if ($this->data['article'][$article]['text'])
-    {
+    if ($this->data['article'][$article]['text']) {
       $this->data['article'][$article]['text'] = customTags::parseContent($this->data['article'][$article]['text'], $this, $this->data['article'][$article]['id']);
     }
 
@@ -359,7 +350,6 @@ class Out
     }
 
     foreach ($tags as $x=>&$t) {
-
       if(is_array($t)) {
         list($page, $max) = $t;
         unset($tags[$x]);
@@ -386,10 +376,8 @@ class Out
 
     $arts = Article::getByTag($tags, $this->getLang('input'), $this->cfg['tagAll'], false, $start, $max);
 
-    if (is_array($arts) && !$dontparse)
-    {
-      foreach($arts as &$art)
-      {
+    if (is_array($arts) && !$dontparse) {
+      foreach($arts as &$art) {
         $art['text'] = customTags::parseContent($art['text'], $this, $art['id']);
       }
     }
@@ -404,8 +392,7 @@ class Out
    */
   public function getPageData($el = false, $escape = false)
   {
-    if (!$this->data['page'])
-    {
+    if (!$this->data['page']) {
       $this->setPageData();
     }
 
@@ -419,8 +406,7 @@ class Out
    */
   public function getDevice()
   {
-    if (!$this->mobiledetect)
-    {
+    if (!$this->mobiledetect) {
       $this->mobiledetect = new Mobile_Detect();
     }
 
@@ -569,8 +555,9 @@ class Out
     }
 
     // DATE
-    if ($this->data['article'][$this->getTextId()]['publish'] && $this->data['article'][$this->getTextId()]['publish'] != '0000-00-00')
-    {
+    if (
+      $this->data['article'][$this->getTextId()]['publish'] &&
+      $this->data['article'][$this->getTextId()]['publish'] !== '0000-00-00') {
       $this->data['page']['date'] = $this->data['article'][$this->getTextId()]['publish'];
     }
   }
@@ -582,12 +569,9 @@ class Out
    */
   public function getMenu($menu_name)
   {
-    if (!$this->data['menu'][$menu_name])
-    {
+    if (!$this->data['menu'][$menu_name]) {
       $tmp = Menu::get_structured_menu($menu_name, $this->getLang('input'));
-
       $this->data['menu'][$menu_name] = $this->recursiveRichMenu($tmp);
-
     }
     return $this->data['menu'][$menu_name];
   }
@@ -599,33 +583,29 @@ class Out
    */
   private function recursiveRichMenu($menu)
   {
-    if (!is_array($menu))
-    {
+    if (!is_array($menu)) {
       return false;
     }
 
-    foreach ($menu as &$item)
-    {
-      if ($this->getTextId() && $this->getTextId() == $item['href'])
-      {
+    foreach ($menu as &$item) {
+
+      if (
+        ( $this->getTextId() && $this->getTextId() == $item['href'] ) ||
+        $item['href'] === implode('/', $this->getParts())
+      ) {
         $item['current'] = true;
-      }
-      else if ($this->cfg['context'] == 'home' && ( $item['href'] == './' || $item['href'] == ''))
-      {
+      } else if ($this->cfg['context'] == 'home' && ( $item['href'] == './' || $item['href'] === '')) {
         $item['current'] = true;
-      }
-      else if ($this->cfg['context'] === 'tags' && (
+      } else if ($this->cfg['context'] === 'tags' && (
         $item['href'] === implode('-', $this->getFilterTags()) . '.all' ||
         $item['href'] === implode('~', $this->getFilterTags()) . '.all' ||
         $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' ||
         $item['href'] === './' . implode('~', $this->getFilterTags()) . '.all'
-        ))
-      {
+        )) {
         $item['current'] = true;
       }
 
-      if (is_array($item['sub']))
-      {
+      if (is_array($item['sub'])) {
         $item['sub'] = $this->recursiveRichMenu($item['sub']);
       }
     }
@@ -638,8 +618,7 @@ class Out
    */
   public function getLanguages()
   {
-    if (!$this->data['languages'])
-    {
+    if (!$this->data['languages']) {
       $this->data['languages'] = utils::getLanguages($this->getLang('current', true));
     }
     return $this->data['languages'];
@@ -681,8 +660,7 @@ class Out
    */
   public function getMD()
   {
-    if (!$this->metadata)
-    {
+    if (!$this->metadata) {
       $this->metadata = new Metadata('./sites/default/modules/metadataRepo/metadata.json');
     }
 
@@ -700,12 +678,10 @@ class Out
    */
   public function getDownloadNode($node)
   {
-    return customTags::download(
-      array(
-        'content' => $node,
-        'getObject' => true
-        )
-      );
+    return customTags::download( [
+      'content' => $node,
+      'getObject' => true
+    ]);
 
   }
 
@@ -734,10 +710,8 @@ class Out
 
     $arts = Article::getByFilter($filter, $this->getLang('input'), $connector, $start, $max);
 
-    if (is_array($arts) && !$dontparse)
-    {
-      foreach($arts as &$art)
-      {
+    if (is_array($arts) && !$dontparse) {
+      foreach($arts as &$art) {
         $art['text'] = customTags::parseContent($art['text'], $this, $art['id']);
       }
     }
@@ -774,11 +748,12 @@ class Out
     $page = $this->cfg['page'] ? $this->cfg['page'] : 1;
     $tot = $this->totalArticles;
     $return['current'] = $page;
-    if ($tot && $max && $tot > $max)
-    {
+
+    if ($tot && $max && $tot > $max) {
       $return['start'] = '1';
       $return['end'] = ceil($tot/$max);
     }
+
     return $return;
   }
 
@@ -790,8 +765,8 @@ class Out
    */
   public function setQueue($key, $value, $concatenate = false)
   {
-    if ($concatenate)
-    {
+    if ($concatenate) {
+
       if (!is_array($this->queue[$key])) {
         $this->queue[$key] = (array)$this->queue[$key];
       }
@@ -799,7 +774,7 @@ class Out
       if (!in_array($value, $this->queue[$key])) {
         array_push($this->queue[$key], $value);
       }
-      
+
     } else {
       $this->queue[$key] = (array)$value;
     }
@@ -855,27 +830,30 @@ class Out
     }
 
     // Return the whole object if no $key is defined
-    if (!$key)
-    {
+    if (!$key) {
       return $data;
     }
     // Loop into key to return requested index
     // https://github.com/dflydev/dflydev-dot-access-data/blob/master/src/Dflydev/DotAccessData/Data.php
     $currentValue = $data;
     $keyPath = explode('.', $key);
-    for ( $i = 0; $i < count($keyPath); $i++ )
-    {
+
+    for ( $i = 0; $i < count($keyPath); $i++ ) {
+
       $currentKey = $keyPath[$i];
-      if (!isset($currentValue[$currentKey]) )
-      {
+
+      if (!isset($currentValue[$currentKey]) ) {
           return false;
       }
-      if (!is_array($currentValue))
-      {
+
+      if (!is_array($currentValue)) {
           return false;
       }
+
       $currentValue = $currentValue[$currentKey];
+
     }
+    
     return (!$currentValue || $currentValue === null) ? false : $currentValue;
   }
 

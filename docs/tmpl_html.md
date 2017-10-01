@@ -901,23 +901,6 @@ E.g.: `{{ html.metadata_hp }}`
 
 ---
 
-#### metadata_twitter('twitter_id')
-Returns well-formatted html code with Twitter card summary metadata (https://dev.twitter.com/cards/types/summary).
-
-E.g.: `{{ html.metadata_twitter('TheBraDypUS') }}`
-
-```html
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@TheBraDypUS" />
-<meta name="twitter:title" content="Lorem ipsum" />
-<meta name="twitter:description" content="Lorem ipsum" />
-<meta name="twitter:image" content="http://thishost/path_to_the_first_image_of_article_body_if_exist.extension" />
-<meta name="twitter:url" content="http://thishost/thispage_url" />
-```
-
----
-
 #### pagination('cssClass')
 Returns well-formatted html with unordered list (ul) of pagination data when available
 depending on context. Current page will have css class `active`

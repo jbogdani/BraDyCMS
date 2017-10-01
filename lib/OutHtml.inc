@@ -30,42 +30,32 @@ class OutHtml extends Out
       $data = Assets::resolve($asset, $type, cfg::get('cdn') ? 'cdn':'local', $version);
 
       if (!$data) {
-
         return '<!-- Asset: ' . $asset . ' not found! -->';
-
       } else {
-
         $asset = $data['path'];
         $type = $data['type'];
       }
     }
 
     $l2h = $this->link2('home');
+
     if (strtolower($type) === 'js' || (!$type && strtolower(substr($asset, -2)) === 'js')) {
 
       if (file_exists('sites/default/js/' . $asset)) {
-
         return '<script src="' . $l2h . 'sites/default/js/' . $asset . '"></script>';
-
       } else {
-
         return '<script src="' . $asset . '"></script>';
       }
 
     } elseif (strtolower($type) === 'css' || (!$type && strtolower(substr($asset, -3)) === 'css')) {
 
       if (file_exists('sites/default/css/' . $asset)) {
-
         return '<link rel="stylesheet" href="' . $l2h . 'sites/default/css/' . $asset . '">';
-
       } else {
-
         return '<link rel="stylesheet" href="' . $asset . '">';
       }
     }
-
     return false;
-
   }
 
   /**
@@ -75,80 +65,62 @@ class OutHtml extends Out
    */
   public function metadata($no_og = false)
   {
-    $html = "\n  <!-- HTML metadata -->"
-      . "\n  " . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
-      . "\n  " . '<meta name="robots" content="' . $this->getPageData('robots') . '" />'
-      // Since v 3.7.10 cutstom_title is used for HTML metadata
-      . "\n  " . '<title>' . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) ) . '</title>'
-      . "\n  " . '<meta name="description" content="' . $this->getPageData('description', true) . '" />'
-      . "\n  " . '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />'
-      . "\n  " . '<meta lang="' . $this->getPageData('lang', true) . '" />'
-      . "\n  " . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
-      . "\n  " . '<meta name="generator" content="BraDyCMS ' . $this->getVersion() . '">';
+    $part = [];
 
-      // http://stackoverflow.com/a/23717829/586449
-      $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    array_push($part, '<!-- HTML metadata -->');
 
-      // Current page in current language
-      $html .= "\n  " . '<link rel="alternate" href="' . $url . '" hreflang="' . $this->getLang('current', true) . '" />';
-      // code, string, is_current, href
-      $lang_arr = $this->getLanguages();
+    array_push($part, '<meta http-equiv="content-type" content="text/html; charset=utf-8" />');
+    array_push($part, '<meta name="robots" content="' . $this->getPageData('robots') . '" />');
+    // Since v 3.7.10 custom_title is used for HTML metadata
+    array_push($part, '<title>' .
+      ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) ) .
+      '</title>');
+    array_push($part, '<meta name="description" content="' . $this->getPageData('description', true) . '" />');
+    array_push($part, '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />');
+    array_push($part, '<meta lang="' . $this->getPageData('lang', true) . '" />');
+    array_push($part, '<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+    array_push($part, '<meta name="generator" content="BraDyCMS ' . $this->getVersion() . '">');
 
-      foreach ($lang_arr as $l) {
+    // http://stackoverflow.com/a/23717829/586449
+    $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-        if($l['is_current']) {
-          continue;
-        }
+    // Current page in current language
+    array_push($part, '<link rel="alternate" href="' . $url . '" hreflang="' . $this->getLang('current', true) . '" />');
 
-        $html .= "\n  " . '<link rel="alternate" href="' .
-          str_replace('//', '/', str_replace($_SERVER[REQUEST_URI], '/' . $l['href'], $url)) .
-          '" hreflang="' . $l['code'] . '" />';
+    // code, string, is_current, href
+    $lang_arr = $this->getLanguages();
+
+    foreach ($lang_arr as $l) {
+
+      if($l['is_current']) {
+        continue;
       }
 
+      array_push($part, '<link rel="alternate" href="' .
+        str_replace('//', '/', str_replace($_SERVER[REQUEST_URI], '/' . $l['href'], $url)) .
+        '" hreflang="' . $l['code'] . '" />');
+    }
+
     if (!$no_og) {
-
-      $html .= "\n\n  <!-- Open Graph metadata -->" .
-          "\n  " . '<meta property="og:title" content="'
-            // Since v 3.7.10 cutstom_title is used for OpenGraph metadata
-            . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) )
-            . '" />' .
-          "\n  " . '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />' .
-          "\n  " . '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />' .
-          ( $this->getPageData('image') ? "\n  " . '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />' : '' )
-      ;
+      array_push($part, '');
+      array_push($part, '<!-- Open Graph metadata -->');
+      // Since v 3.7.10 cutstom_title is used for OpenGraph metadata
+      array_push($part, '<meta property="og:title" content="'
+        . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) )
+        . '" />');
+      array_push($part, '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />');
+      array_push($part, '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />');
+      if ($this->getPageData('image')) {
+        array_push($part, '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />');
+      }
     }
 
-    $html .= "\n\n  <!-- Feed links -->" .
-        "\n  " . '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />' .
-        "\n  " . '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />';
+    array_push($part, '');
+    array_push($part, '<!-- Feed links -->');
+    array_push($part, '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />');
+    array_push($part, '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />');
 
-    return $html;
-  }
-
-  /**
-   * Retirns well formatted html with Twitter s=cart data
-   * @param  string $twitter_id Twitter ID, requied
-   * @return string
-   */
-  public function metadata_twitter($twitter_id = false)
-  {
-    if (!$twitter_id) {
-      return false;
-    }
-
-    $html = "\n\n  <!-- Twitter Card -->"
-        . "\n  " . '<meta name="twitter:card" content="summary" />'
-        . "\n  " . '<meta name="twitter:site" content="@' . $twitter_id . '" />'
-        . "\n  " . '<meta name="twitter:title" content="'
-        // Since v 3.7.10 cutstom_title is used for Twitter metadata
-            . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) ) .
-            '" />'
-        . "\n  " . '<meta name="twitter:description" content="' . $this->getPageData('description', true) . '" />'
-        . ($this->getPageData('image') ?
-            "\n  " . '<meta name="twitter:image" content="' . $this->getPageData('image', true) . '" />'
-            :  '')
-        . "\n  " . '<meta name="twitter:url" content="' . $this->getPageData('url', true) . '" />';
-    return $html;
+    return implode("\n  ", $part);
   }
 
   /**
@@ -192,133 +164,100 @@ class OutHtml extends Out
       return;
     }
 
-    $html =  "\n <!-- Dublin Core metadata tags -->"
+    $part = [];
 
-        // Type
-        . "\n  " . '<meta name="DC.Type" content="Text" />'
+    // Starting comment
+    array_push($part, '<!-- Dublin Core metadata tags -->');
+    // Type
+    array_push($part, '<meta name="DC.Type" content="Text" />');
+    // Format
+    array_push($part, '<meta name="DC.Format" content="text/html" />');
+    // Identifier
+    array_push($part, '<meta name="DC.Identifier" content="' . $art['id'] . '"/>');
+    // Identifier.URI
+    array_push($part, '<meta name="DC.Identifier.URI" scheme="URI" content="' . $this->getPageData('url', true) . '" />');
+    // Identifier.DOI
+    if ($art[$this->getMD()->getTable('id')]) {
+      array_push($part, '<meta name="DC.Identifier.DOI" ' .
+        'content="' . ($this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() : '') .
+        $art[$this->getMD()->getTable('id')] . '" />');
+    }
+    // Titile
+    array_push($part, '<meta name="DC.Title" content="' . $this->getPageData('title', true) . '" />');
+    // Description
+    array_push($part, '<meta name="DC.Description" ' .
+      'content="' . ($art['summary'] ? trim(strip_tags($art['summary'])) : $this->getPageData('description', true)) . '" />');
+    // Language
+    array_push($part, '<meta name="DC.Language" scheme="ISO639-1" content="' . $this->getPageData('lang', true) . '" />');
+    // Creator && Creator.PersonalName
+    if ($this->getPageData('author')) {
+      array_push($part, '<meta name="DC.Creator" content="' .  $this->getPageData('author', true) . '" />');
+      array_push($part, '<meta name="DC.Creator.PersonalName" content="' .  $this->getPageData('author', true) . '" />');
+    }
+    // Publisher
+    if ($this->getMD()->getPublisher()) {
+      array_push($part, '<meta name="DC.Publisher" content="' . $this->getMD()->getPublisher() . '" />');
+    }
+    // Subject
+    if ($this->getPageData('keywords', true)) {
+      array_push($part, '<meta name="DC.subject" scheme="RFC3066" content="' . $this->getPageData('keywords', true) . '" />');
+    }
+    // Date & Date.created & Date.issued
+    if ($this->getPageData('date')) {
+      array_push($part, '<meta name="DC.Date" scheme="W3CDTF" content="' . $this->getPageData('date') . '" />');
+      array_push($part, '<meta name="DC.Date.created" scheme="ISO8601" content="' . $this->getPageData('date') . '" />');
+      array_push($part, '<meta name="DC.Date.issued" scheme="ISO8601" content="' . $this->getPageData('date') . '" />');
+    }
+    // Date.modified
+    if ($art['updated']) {
+      array_push($part, '<meta name="DC.Date.modified" scheme="ISO8601" content="' . $art['updated'] . '" />');
+    }
+    // Source
+    if ($this->getMD()->getRepositoryName()) {
+      array_push($part, '<meta name="DC.Source" content="' . $this->getMD()->getRepositoryName() . '"/>');
+    }
+    // Source.ISSN
+    if ($this->getMD()->getISSN()) {
+      array_push($part, '<meta name="DC.Source.ISSN" content="' . $this->getMD()->getISSN() . '"/>');
+    }
+    // Source.URI
+    if ($this->getMD()->getURL()) {
+      array_push($part, '<meta name="DC.Source.URI" content="' . $this->getMD()->getURL() . '"/>');
+    }
+    // Source.Volume
+    if ($this->getMD()->getTable()['volume'] && $art[$this->getMD()->getTable()['volume']]) {
+      array_push($part, '<meta name="DC.Source.Volume" content="' . $art[$this->getMD()->getTable()['volume']] . '" />');
+    }
+    // Source.Issue
+    if ($this->getMD()->getTable()['issue'] && $art[$this->getMD()->getTable()['issue']]) {
+      array_push($part, '<meta name="DC.Source.Issue" content="' . $art[$this->getMD()->getTable()['issue']] . '" />');
+    }
+    // DC.Rights, copyright holder and year & license
+    if ($this->getMD()->getCopyright()) {
 
-        // Format
-        . "\n  " . '<meta name="DC.Format" content="text/html" />'
+      if ($art[$this->getMD()->getCopyright('year')] && preg_match("/[0-9]{4}/", $art[$this->getMD()->getCopyright('year')])) {
+        $year = $art[$this->getMD()->getCopyright('year')];
+      } else if (preg_match("/[0-9]{4}/", $this->getMD()->getCopyright('year'))) {
+        $year = $this->getMD()->getCopyright('year');
+      } else {
+        $year = date("Y");
+      }
 
-        // Identifier
-        . "\n  " . '<meta name="DC.Identifier" ' .
-          'content="' . $art['id'] . '"/>'
+      $copyright_holder = ($this->getMD()->getCopyright('holder') === 'author' ? $art['author'] : $this->getMD()->getCopyright('holder'));
 
-        // Identifier.URI
-        . "\n  " . '<meta name="DC.Identifier.URI" scheme="URI" ' .
-          'content="' . $this->getPageData('url', true) . '" />'
+      array_push($part, '<meta name="DC.Rights" content="Copyright (c) ' . $year . ' ' . $copyright_holder . '" />');
 
-        // Identifier.DOI
-        . "\n  " . '<meta name="DC.Identifier.DOI" ' .
-          'content="' . ($this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() : '') .
-          $art[$this->getMD()->getTable('id')] . '" />'
+      if ($this->getMD()->getCopyright('license')) {
 
-        // Titile
-        . "\n  " . '<meta name="DC.Title" ' .
-          'content="' . $this->getPageData('title', true) . '" />'
-
-        // Description
-        . "\n  " . '<meta name="DC.Description" ' .
-          'content="' . ($art['summary'] ? trim(strip_tags($art['summary'])) : $this->getPageData('description', true)) . '" />'
-
-        // Language
-        . "\n  " . '<meta name="DC.Language" scheme="ISO639-1" ' .
-          'content="' . $this->getPageData('lang', true) . '" />'
-
-        // Creator && Creator.PersonalName
-        . ( $this->getPageData('author') ?
-            "\n  " . '<meta name="DC.Creator" ' .
-              'content="' .  $this->getPageData('author', true) . '" />' .
-            "\n  " . '<meta name="DC.Creator.PersonalName" ' .
-              'content="' .  $this->getPageData('author', true) . '" />' : '')
-
-        // Publisher
-        . ( $this->getMD()->getPublisher() ?
-            "\n  " . '<meta name="DC.Publisher" ' .
-              'content="' . $this->getMD()->getPublisher() . '" />' : '')
-
-        // Subject
-        . "\n  " . '<meta name="DC.subject" scheme="RFC3066" ' .
-          'content="' . $this->getPageData('keywords', true) . '" />'
-
-        // Date & Date.created & Date.issued
-        . ( $this->getPageData('date') ?
-            "\n  " . '<meta name="DC.Date" scheme="W3CDTF" ' .
-              'content="' . $this->getPageData('date') . '" />' .
-            "\n  " . '<meta name="DC.Date.created" scheme="ISO8601" ' .
-              'content="' . $this->getPageData('date') . '" />' .
-            "\n  " . '<meta name="DC.Date.issued" scheme="ISO8601" ' .
-              'content="' . $this->getPageData('date') . '" />' : '')
-
-        // Date.modified
-        . ( $art['updated'] ?
-            "\n  " . '<meta name="DC.Date.modified" scheme="ISO8601" ' .
-              'content="' . $art['updated'] . '" />' : '') .
-
-        // DC.Source
-        ($this->getMD()->getRepositoryName() ?
-            "\n  " . '<meta name="DC.Source" ' .
-              'content="' . $this->getMD()->getRepositoryName() . '"/>' : '') .
-
-        // DC.Source.ISSN
-        ($this->getMD()->getISSN() ?
-            "\n  " . '<meta name="DC.Source.ISSN" ' .
-              'content="' . $this->getMD()->getISSN() . '"/>' : '') .
-
-        // DC.Source.URI
-        ($this->getMD()->getURL() ?
-            "\n  " . '<meta name="DC.Source.URI" ' .
-              'content="' . $this->getMD()->getURL() . '"/>' : '')
-
-        // DC.Source.Volume
-        . ($this->getMD()->getTable()['volume'] && $art[$this->getMD()->getTable()['volume']] ?
-            "\n  " . '<meta name="DC.Source.Volume" ' .
-            'content="' . $art[$this->getMD()->getTable()['volume']] . '" />' : '')
-
-        // DC.Source.Issue
-        . ($this->getMD()->getTable()['issue'] && $art[$this->getMD()->getTable()['issue']] ?
-            "\n  " . '<meta name="DC.Source.Issue" ' .
-            'content="' . $art[$this->getMD()->getTable()['issue']] . '" />' : '');
-
-        // DC.Rights, copyright holder and year & license
-        if ($this->getMD()->getCopyright()) {
-
-          if ($art[$this->getMD()->getCopyright('year')] && preg_match("/[0-9]{4}/", $art[$this->getMD()->getCopyright('year')])) {
-
-            $year = $art[$this->getMD()->getCopyright('year')];
-
-          } else if (preg_match("/[0-9]{4}/", $this->getMD()->getCopyright('year'))) {
-
-            $year = $this->getMD()->getCopyright('year');
-
-          } else {
-
-            $year = date("Y");
-          }
-
-          $copyright_holder = ($this->getMD()->getCopyright('holder') === 'author' ? $art['author'] : $this->getMD()->getCopyright('holder'));
-
-          $html .="\n  " . '<meta name="DC.Rights" '
-                . 'content="Copyright (c) ' . $year . ' ' . $copyright_holder . '" />';
-
-          if ($this->getMD()->getCopyright('license')) {
-
-            if ($art[$this->getMD()->getCopyright('license')]) {
-
-              $license = $art[$this->getMD()->getCopyright('license')];
-
-            } else {
-
-              $license = $this->getMD()->getCopyright('license');
-
-            }
-
-            $html .="\n  " . '<meta name="DC.Rights" '
-                  . 'content="' . $license . '" />';
-          }
+        if ($art[$this->getMD()->getCopyright('license')]) {
+          $license = $art[$this->getMD()->getCopyright('license')];
+        } else {
+          $license = $this->getMD()->getCopyright('license');
         }
-
-    return $html;
+        array_push($part, '<meta name="DC.Rights" content="' . $license . '" />');
+      }
+    }
+    return implode("\n  ", $part);
   }
 
 

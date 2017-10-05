@@ -683,7 +683,7 @@ EOD;
         . '>';
     }
 
-    $html .= '<img src="' . $out->link2() . $filename . '" alt="' . $alt_text . '">a';
+    $html .= '<img src="' . $out->link2() . $filename . '" alt="' . $alt_text . '">';
 
     if ($href) {
       $html .= '</a>';

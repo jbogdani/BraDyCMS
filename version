@@ -1,3 +1,4 @@
+4.0.0[] = "admin.removeNotValid removes now brackets, accented characters, multiple, starting and ending dashes"
 4.0.0[] = "Reversed sorting in article list"
 4.0.0[] = "New Out::isDraft function"
 4.0.0[] = "Dropped support for custom tag disqus, moved to bradycms-plugins repository"

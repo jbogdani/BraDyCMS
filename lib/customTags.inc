@@ -616,9 +616,9 @@ EOD;
       ] as $new => $where) {
         $tmp = $data[$where] && $data[$where] !== '' ? $data[$where] : null;
       if (is_string($new)) {
-        $$new = $tmp;
+        $new = $tmp;
       } else {
-        $$where = $tmp;
+        $where = $tmp;
       }
     }
 
@@ -824,10 +824,22 @@ EOD;
    *                     * any other element will be automatically added as attribute to main <a> element
    * @return string       valid HTML or false
    */
-  public static function dwnl($data)
+  public static function dwnl($data, Out $out)
   {
     $file = $data['file'];
     $text = $data['content'] ? $data['content'] : $file;
+
+    foreach ([
+      './sites/default/images/articles/media/' . $out->getArticle()['id'] . '/',
+      './sites/default/images/articles/',
+      './sites/default/images/',
+      ''
+      ] as $path_to_file) {
+      if (file_exists($path_to_file . $file)) {
+        $file = $path_to_file . $file;
+        break;
+      }
+    }
 
     if (!$file || !file_exists($file)) {
       return false;

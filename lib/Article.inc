@@ -9,7 +9,12 @@
 
 class Article
 {
+  private static $parts;
 
+  public static function setParts( $parts )
+  {
+    self::$parts = $parts;
+  }
   /**
    * Valid article SQL statement
    * @var string
@@ -116,10 +121,11 @@ class Article
       }
 
       // add URL
-      $article->url = link::to_article($article->textid, $lang);
+      $article->url = link::to_article($article->textid, $lang, false, self::$parts);
 
       // add FULL URL
-      $article->full_url = utils::getBaseUrl() . str_replace('./', null, $article->url);
+      $article->full_url = utils::getBaseUrl() .
+      (is_array(self::$parts) ? implode('/', self::$parts) : '' );
 
       // add article image link
       $image_steps = cfg::get('art_img');

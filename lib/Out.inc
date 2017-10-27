@@ -25,6 +25,7 @@ class Out
   public function __construct($get)
   {
     $this->loadSettings($get);
+    Article::setParts($this->cfg['parts']);
   }
 
   /**
@@ -853,7 +854,7 @@ class Out
       $currentValue = $currentValue[$currentKey];
 
     }
-    
+
     return (!$currentValue || $currentValue === null) ? false : $currentValue;
   }
 

@@ -1,3 +1,4 @@
+4.0.0[] = "Article class supports url parts"
 4.0.0[] = "Custom tag dwnl autoresolves path to file for common directory patterns"
 4.0.0[] = "admin.removeNotValid removes now brackets, accented characters, multiple, starting and ending dashes"
 4.0.0[] = "Reversed sorting in article list"

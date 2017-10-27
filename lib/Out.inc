@@ -527,7 +527,8 @@ class Out
     $this->data['page']['lang'] = $this->getLang('current', true);
 
     // URL
-    $this->data['page']['url']  = utils::getBaseUrl() . str_replace(cfg::get('rewriteBase'), null, $_SERVER['REQUEST_URI']);
+    // http://stackoverflow.com/a/23717829/586449
+    $this->data['page']['url']  = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
     // MISSION
     $this->data['page']['mission'] = cfg::get('mission');

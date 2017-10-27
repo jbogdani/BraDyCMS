@@ -616,9 +616,9 @@ EOD;
       ] as $new => $where) {
         $tmp = $data[$where] && $data[$where] !== '' ? $data[$where] : null;
       if (is_string($new)) {
-        $new = $tmp;
+        $$new = $tmp;
       } else {
-        $where = $tmp;
+        $$where = $tmp;
       }
     }
 

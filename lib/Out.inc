@@ -592,8 +592,9 @@ class Out
     foreach ($menu as &$item) {
 
       if (
-        ( $this->getTextId() && $this->getTextId() == $item['href'] ) ||
-        $item['href'] === implode('/', $this->getParts())
+        ( $this->getTextId() && $this->getTextId() == $item['href'] )
+        ||
+        (is_array($this->getParts()) && $item['href'] === implode( '/', $this->getParts() ) )
       ) {
         $item['current'] = true;
       } else if ($this->cfg['context'] == 'home' && ( $item['href'] == './' || $item['href'] === '')) {

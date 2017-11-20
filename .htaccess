@@ -23,11 +23,11 @@ RewriteRule . index.php [L]
 	</IfModule>
 
 
-# Enable compression as copied from Html5Boilerplate
-# https://github.com/h5bp/html5-boilerplate
-# ----------------------------------------------------------------------
-# | Compression                                                        |
-# ----------------------------------------------------------------------
+	# Enable compression as copied from Html5Boilerplate
+	# https://github.com/h5bp/html5-boilerplate
+	# ----------------------------------------------------------------------
+	# | Compression                                                        |
+	# ----------------------------------------------------------------------
 
 
   # Force compression for mangled `Accept-Encoding` request headers

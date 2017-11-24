@@ -819,12 +819,22 @@ class Out
   public function getData($key = false)
   {
     $datafile = SITE_DIR . 'modules/tmpldata/tmpldata.json';
+    $ppfile =  SITE_DIR . 'modules/tmpldata/postProcess.php';
     // Return false if data file is not available
-    if(!file_exists($datafile)){
+    if(!file_exists($datafile) || !file_exists($ppfile)) {
       return false;
     }
-    // Convert JSON to indexes array
-    $data = json_decode(file_get_contents( $datafile ), true);
+
+    if (!$this->data['tmpl_data']) {
+      // Convert JSON to indexes array
+      $this->data['tmpla_data'] = json_decode(file_get_contents( $datafile ), true);
+    }
+
+    if (!$this->data['tmpl_data']) {
+      return false;
+    }
+
+    $data = $this->data['tmpla_data'];
 
     // If conversione fails (syntax error) return false and write log file
     if (!$data || ! is_array($data)){

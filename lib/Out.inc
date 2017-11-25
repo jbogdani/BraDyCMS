@@ -821,23 +821,22 @@ class Out
     $datafile = SITE_DIR . 'modules/tmpldata/tmpldata.json';
     $ppfile =  SITE_DIR . 'modules/tmpldata/postProcess.php';
     // Return false if data file is not available
-    if(!file_exists($datafile) || !file_exists($ppfile)) {
+    if(!file_exists($datafile)) {
       return false;
     }
-
     if (!$this->data['tmpl_data']) {
       // Convert JSON to indexes array
-      $this->data['tmpla_data'] = json_decode(file_get_contents( $datafile ), true);
+      $this->data['tmpl_data'] = json_decode(file_get_contents( $datafile ), true);
     }
 
     if (!$this->data['tmpl_data']) {
       return false;
     }
 
-    $data = $this->data['tmpla_data'];
+    $data = $this->data['tmpl_data'];
 
     // If conversione fails (syntax error) return false and write log file
-    if (!$data || ! is_array($data)){
+    if (!$data || !is_array($data)){
       error_log("Syntax error in file: " . $datafile);
       return false;
     }

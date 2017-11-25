@@ -1,3 +1,4 @@
+4.0.0[] = "Menu links starting with # (anchors) are not processed"
 4.0.0[] = "Article class supports url parts"
 4.0.0[] = "Custom tag dwnl autoresolves path to file for common directory patterns"
 4.0.0[] = "admin.removeNotValid removes now brackets, accented characters, multiple, starting and ending dashes"

@@ -91,6 +91,11 @@ class link
       return $href;
     }
 
+    // Anchors are not processed
+    if (preg_match('/#(.+)/', $href)) {
+      return $href;
+    }
+
     // incomplete absolute url is completed with http:// prefix and not processed further
     if (preg_match('/^www\.(.+)/', $href)) {
       return 'http://' . $href;

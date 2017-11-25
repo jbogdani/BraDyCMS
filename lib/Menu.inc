@@ -37,25 +37,22 @@ class Menu
    */
   public static function parseMenu($menu, $lang = false, $return_bean = false)
   {
-    if (is_array($menu))
-    {
-      foreach ($menu as &$m)
-      {
+    if (is_array($menu)) {
+
+      foreach ($menu as &$m) {
         $m = self::parseMenu($m, $lang);
       }
       return $menu;
-    }
-    else if (is_object($menu))
-    {
-      if ($lang)
-      {
+
+    } else if (is_object($menu)) {
+
+      if ($lang) {
         $raw_translation = $menu->withCondition(' lang = ?', array($lang))->ownMenutrans;
 
         $trans_values = array_values($raw_translation);
         $translation = array_shift($trans_values);
 
-        if ($translation)
-        {
+        if ($translation) {
           $translation->title  ? $menu->title  = $translation->title  : '';
           $translation->item  ? $menu->item  = $translation->item    : '';
         }
@@ -92,10 +89,10 @@ class Menu
 
     $structured = $not_structured_menu;
 
-    foreach($not_structured_menu as $key => $item)
-    {
-      if (!empty($item['subof']))
-      {
+    foreach($not_structured_menu as $key => $item) {
+
+      if (!empty($item['subof'])) {
+
         unset($structured[$key]);
 
         $structured = self::recursiveNest($structured, $item);
@@ -114,15 +111,15 @@ class Menu
    */
   private static function recursiveNest($array, $item)
   {
-    foreach($array as $k=>&$v)
-    {
-      if ($v['id'] == $item['subof'])
-      {
+    foreach($array as $k=>&$v) {
+
+      if ($v['id'] == $item['subof']) {
         $v['sub'][] = $item;
         break;
       }
-      if (is_array($v['sub']))
-      {
+
+      if (is_array($v['sub'])) {
+
         $v['sub'] = self::recursiveNest($v['sub'], $item);
       }
     }
@@ -139,16 +136,17 @@ class Menu
    */
   private static function recursiveFlat($data, $sort = 0, $subof = false)
   {
-    foreach ($data as $row)
-    {
+    foreach ($data as $row) {
+
       $new_arr[] =  array(
           'id' => $row['id'],
           'sort' => $sort,
           'subof' => $subof
       );
+
       $sort++;
-      if ($row['children'])
-      {
+
+      if ($row['children']) {
         $new_arr = array_merge($new_arr, self::recursiveFlat($row['children'], $sort, $row['id']));
       }
     }
@@ -164,8 +162,8 @@ class Menu
   {
     $new_data = self::recursiveFlat($data);
 
-    foreach ($new_data as $d)
-    {
+    foreach ($new_data as $d) {
+
       $menu = R::load(self::menu_tb(), $d['id']);
       $menu->sort = $d['sort'];
       $menu->subof = $d['subof'];
@@ -184,11 +182,9 @@ class Menu
   {
     $menu = R::load(self::menu_tb(), $id);
 
-    if ($menu->id){
+    if ($menu->id) {
       return $dontexport ? $menu : $menu->export();
-    }
-    else
-    {
+    } else {
       return false;
     }
 
@@ -203,8 +199,7 @@ class Menu
   {
     $menu = R::load(self::menu_tb(), $id);
 
-    if ($menu->id)
-    {
+    if ($menu->id) {
       unset($menu->ownMenutrans);
       R::store($menu);
       R::trash($menu);
@@ -219,8 +214,7 @@ class Menu
    */
   public static function save($data)
   {
-    if ( !$data['item'] || !$data['href'] || !$data['menu'] )
-    {
+    if ( !$data['item'] || !$data['href'] || !$data['menu'] ) {
       return false;
     }
 
@@ -238,11 +232,11 @@ class Menu
    */
   public static function translate($menu_id, $data)
   {
-    if ($data['id'])
-    {
+    if ($data['id']) {
       $id = $data['id'];
       unset($data['id']);
     }
+
     $menuItem = R::load(self::menu_tb(), $menu_id);
 
     $transl = R::dispense(PREFIX . 'menutrans');

@@ -15,7 +15,7 @@ class Router
 
       $router = new AltoRouter();
 
-      $router->setBasePath(defined('CREATE_SITE') || cfg::get('rewriteBase') === '/' ? false : cfg::get('rewriteBase'));
+      $router->setBasePath(defined('CREATE_SITE') || cfg::get('rewriteBase') === '/' ? false : rtrim(cfg::get('rewriteBase'), '/'));
 
       $controller = new Controller($_GET, $_POST, $_REQUEST);
 

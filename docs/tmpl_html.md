@@ -535,6 +535,28 @@ array(
 
 ---
 
+#### getParts('index')
+Returns array of URL parts
+- **index** int, optional, default: false. Index of the array to return
+
+E.g.: `{{ html.getParts }}` for URL: http://bradypus.net/start/contact_us
+```php
+array(
+  0 => 'start',
+  1 => 'contact_us'
+)
+```
+
+---
+
+E.g.: `{{ html.getParts(0) }}`
+```
+start
+```
+
+
+---
+
 #### getTextId()
 Returns article's text id required in URL
 

@@ -130,11 +130,16 @@ class Out
 
   /**
    * Returns array with url parts (non language, non page, slash separated)
+   * @param int $index  Array index to return
    * @return array url parts
    */
-  public function getParts()
+  public function getParts($index = false)
   {
-    return $this->cfg['parts'];
+    if ($index !== false && is_int($index)) {
+      return $this->cfg['parts'][$index];
+    } else {
+      return $this->cfg['parts'];
+    }
   }
 
 
@@ -819,7 +824,7 @@ class Out
   public function getData($key = false)
   {
     $datafile = SITE_DIR . 'modules/tmpldata/tmpldata.json';
-    $ppfile =  SITE_DIR . 'modules/tmpldata/postProcess.php';
+
     // Return false if data file is not available
     if(!file_exists($datafile)) {
       return false;
@@ -827,10 +832,20 @@ class Out
     if (!$this->data['tmpl_data']) {
       // Convert JSON to indexes array
       $this->data['tmpl_data'] = json_decode(file_get_contents( $datafile ), true);
-    }
 
-    if (!$this->data['tmpl_data']) {
-      return false;
+      if (!$this->data['tmpl_data']) {
+        return false;
+      }
+
+      if (file_exists(SITE_DIR . 'modules/tmpldata/preProcess.php')) {
+        require_once(SITE_DIR . 'modules/tmpldata/preProcess.php');
+
+        if (class_exists('preProcess')) {
+          $pp = new preProcess;
+          $this->data['tmpl_data'] = $pp($this->data['tmpl_data'], $this);
+        }
+      }
+
     }
 
     $data = $this->data['tmpl_data'];

@@ -2,12 +2,17 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L]
 
-<FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite|json)$">
+<FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite)$">
 	order allow,deny
 	deny from all
 </FilesMatch>
 
-<FilesMatch "\.(png|jpg|jpeg|gif)$">
+<FilesMatch "config\.json">
+	order allow,deny
+	deny from all
+</FilesMatch>
+
+<FilesMatch "\.(png|jpg|jpeg|gif|json)$">
 	Header set Access-Control-Allow-Origin "*"
 </FilesMatch>
 

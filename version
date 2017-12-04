@@ -1,3 +1,4 @@
+4.0.0[] = "Permit access to all json files, except config.json"
 4.0.0[] = "Fixed bug regarding Router's base path"
 4.0.0[] = "Template data are cached for better performance"
 4.0.0[] = "Menu links starting with # (anchors) are not processed"

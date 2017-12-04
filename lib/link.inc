@@ -86,20 +86,23 @@ class link
   {
     $href = self::formatHref($href);
 
-    // absolute url is not processed
+    // Absolute URL is not processed
     if (preg_match('/^https?:\/\/(.+)/', $href)) {
       return $href;
     }
 
-    // Anchors are not processed
-    if (preg_match('/#(.+)/', $href)) {
+    // Anchor is not processed
+    if (preg_match('/^#(.+)/', $href)) {
       return $href;
     }
 
-    // incomplete absolute url is completed with http:// prefix and not processed further
+    // Incomplete absolute URL is completed with http:// prefix and not processed further
     if (preg_match('/^www\.(.+)/', $href)) {
       return 'http://' . $href;
     }
+
+    // Ancor inside relatve URL is being added after URL processing
+    list($href, $pending) = explode('#', $href);
 
     // skype  & callto links
     if (preg_match('/^skype(.+)/', $href) || preg_match('/^callto(.+)/', $href) ) {
@@ -131,6 +134,6 @@ class link
       array_push($ret_parts, $page);
     }
 
-    return str_replace(['/./', '//'], '/', implode('/', $ret_parts ) );
+    return str_replace(['/./', '//'], '/', implode('/', $ret_parts ) ). ($pending ? '#' . $pending : '');
   }
 }

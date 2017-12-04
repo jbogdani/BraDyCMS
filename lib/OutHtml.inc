@@ -387,7 +387,7 @@ class OutHtml extends Out
         $html .= '<li class="divider"></li>';
 
       } else {
-        $html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown ' : '') . ($menu['current'] ? 'active' : '') . '">'
+        $html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown-submenu ' : '') . ($menu['current'] ? 'active' : '') . '">'
             . '<a href="' . link::format($menu['href'], $this->getLang('input')) . '" '
                 . ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
                 . ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')

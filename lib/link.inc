@@ -17,7 +17,7 @@ class link
     $url_slashes = substr_count($_SERVER['REQUEST_URI'], '/');
     $base_slashes = substr_count(cfg::get('rewriteBase'), '/');
 
-    return './' . str_repeat('../', $url_slashes-$base_slashes );
+    return './' . @str_repeat('../', $url_slashes-$base_slashes );
   }
 
   /**

@@ -108,10 +108,16 @@ class OutHtml extends Out
       array_push($part, '<meta property="og:title" content="'
         . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) )
         . '" />');
-      array_push($part, '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />');
+      array_push($part, '<meta property="og:description" content="' . html_entity_decode($this->getPageData('description', true)) . '" />');
       array_push($part, '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />');
       if ($this->getPageData('image')) {
+        $rel_path = str_replace(utils::getBaseUrl(), null, $this->getPageData('image', true));
+        $image_size = getimagesize($rel_path);
         array_push($part, '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />');
+
+        array_push($part, '<meta property="og:image:width" content="' . $image_size[0] . '" />');
+        array_push($part, '<meta property="og:image:height" content="' . $image_size[1] . '" />');
+
       }
     }
 
@@ -119,6 +125,8 @@ class OutHtml extends Out
     array_push($part, '<!-- Feed links -->');
     array_push($part, '<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed/rss" />');
     array_push($part, '<link rel="alternate" type="application/atom" title="RSS" href="/feed/atom" />');
+
+
 
     return implode("\n  ", $part);
   }

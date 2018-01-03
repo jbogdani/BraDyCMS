@@ -8,28 +8,24 @@
 
 class version
 {
-  private static function parse()
-  {
-    $va = parse_ini_file('version', 1);
-    if (!$va)
+    private static function parse()
     {
-      throw new Exception('File `version` can not be parsed ' . __FILE__ . ', ' . __LINE__);
+        $va = parse_ini_file('version', 1);
+        if (!$va) {
+            throw new Exception('File `version` can not be parsed ' . __FILE__ . ', ' . __LINE__);
+        } else {
+            return $va;
+        }
     }
-    else
+
+    public static function changelog()
     {
-      return $va;
+        return self::parse();
     }
-  }
 
-  public static function changelog()
-  {
-    return self::parse();
-  }
-
-  public static function current()
-  {
-    $keys = array_keys(self::parse());
-    return $keys[0];
-  }
-
+    public static function current()
+    {
+        $keys = array_keys(self::parse());
+        return $keys[0];
+    }
 }

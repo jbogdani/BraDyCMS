@@ -40,16 +40,16 @@
 */
 class Citation
 {
-  /**
-   *
-   * @var array data container
-   */
-  private $data = array();
-  /**
-   *
-   * @var array required keys
-   */
-  private $required_keys = array(
+    /**
+     *
+     * @var array data container
+     */
+    private $data = array();
+    /**
+     *
+     * @var array required keys
+     */
+    private $required_keys = array(
     'type',
     'author',
     'author_address',
@@ -68,105 +68,90 @@ class Citation
     );
 
 
-  /**
-   * Sets all data and throws Exception in case on invalid keys
-   * @param string $key Key to set
-   * @param string $value Value to set
-   * @throws Exception
-   */
-  public function __set($key, $value)
-  {
-    $all_keys = $this->required_keys;
-    $all_keys[] = 'abstract';
-
-    if (!in_array($key, $all_keys))
+    /**
+     * Sets all data and throws Exception in case on invalid keys
+     * @param string $key Key to set
+     * @param string $value Value to set
+     * @throws Exception
+     */
+    public function __set($key, $value)
     {
-      throw new Exception($key . ' is not a valid key.');
+        $all_keys = $this->required_keys;
+        $all_keys[] = 'abstract';
+
+        if (!in_array($key, $all_keys)) {
+            throw new Exception($key . ' is not a valid key.');
+        }
+
+        if ($key === 'keywords' && is_string($value)) {
+            $this->data[$key][] = $value;
+        } else {
+            $this->data[$key] = $value;
+        }
     }
 
-    if ($key === 'keywords' && is_string($value) )
+    /**
+     * Main getter
+     * @param type $key
+     * @return boolean
+     */
+    public function __get($key)
     {
-      $this->data[$key][] = $value;
-    }
-    else
-    {
-      $this->data[$key] = $value;
-    }
-  }
-
-  /**
-   * Main getter
-   * @param type $key
-   * @return boolean
-   */
-  public function __get($key)
-  {
-    if (array_key_exists($key, $this->data))
-    {
-      return $this->data[$key];
-    }
-    return false;
-  }
-
-  /**
-   * Checks data structure and throws Exception on erros
-   * @return boolean
-   * @throws Exception
-   */
-  private function checkStructure()
-  {
-    foreach ($this->required_keys as $key)
-    {
-      if (!array_key_exists($key, $this->data))
-      {
-        throw new Exception('Error! Required value ' . $key . ' is not set!');
-      }
+        if (array_key_exists($key, $this->data)) {
+            return $this->data[$key];
+        }
+        return false;
     }
 
-    $types = array('ejournal');
-
-    if (!in_array($this->data['type'], $types ))
+    /**
+     * Checks data structure and throws Exception on erros
+     * @return boolean
+     * @throws Exception
+     */
+    private function checkStructure()
     {
-      throw new Exception('Type is not valid. One of the following mus be used: ' .
+        foreach ($this->required_keys as $key) {
+            if (!array_key_exists($key, $this->data)) {
+                throw new Exception('Error! Required value ' . $key . ' is not set!');
+            }
+        }
+
+        $types = array('ejournal');
+
+        if (!in_array($this->data['type'], $types)) {
+            throw new Exception('Type is not valid. One of the following mus be used: ' .
         implode(', ', $types));
+        }
+        return true;
     }
-    return true;
-  }
 
-  /**
-   * Exports citation dat in specified format
-   * @param string $format one of plaintext|endnote|bibtext|refman|html
-   * @param boolean $echo if true the citation will be retuned otherwize it will be returned
-   * @return string Well formatted citetion
-   * @throws Exception
-   */
-  public function export($format, $echo = false)
-  {
-    $this->checkStructure();
-
-    switch($format)
+    /**
+     * Exports citation dat in specified format
+     * @param string $format one of plaintext|endnote|bibtext|refman|html
+     * @param boolean $echo if true the citation will be retuned otherwize it will be returned
+     * @return string Well formatted citetion
+     * @throws Exception
+     */
+    public function export($format, $echo = false)
     {
+        $this->checkStructure();
+
+        switch ($format) {
       case 'plaintext':
       case 'endnote':
       case 'bibtext':
       case 'refman':
       case 'html':
-        if (method_exists($this, $format))
-        {
-          $text = call_user_func(array($this, $format));
+        if (method_exists($this, $format)) {
+            $text = call_user_func(array($this, $format));
 
-          if ($echo)
-          {
-            echo $text;
-          }
-          else
-          {
-            return $text;
-          }
-        }
-        else
-        {
-          throw new Exception($format . ' export has not been implemented yet!');
+            if ($echo) {
+                echo $text;
+            } else {
+                return $text;
+            }
+        } else {
+            throw new Exception($format . ' export has not been implemented yet!');
         }
         break;
 
@@ -174,35 +159,33 @@ class Citation
         throw new Exception($format . ' is not a valid export format!');
         break;
     }
-  }
+    }
 
-  /**
-   * Returns citation in RefMan format
-   * @return string
-   */
-  private function refman()
-  {
-    $text = '';
-
-    switch ($this->data['type'])
+    /**
+     * Returns citation in RefMan format
+     * @return string
+     */
+    private function refman()
     {
+        $text = '';
+
+        switch ($this->data['type']) {
       case 'ejournal':
         $text .= "TY  -  EJOUR\n";
         break;
     }
 
-    $text .= 'AU  -  ' . $this->author . "\n" .
+        $text .= 'AU  -  ' . $this->author . "\n" .
       'T1  -  ' . $this->title . "\n" .
       'AD  -  ' . $this->author_address . "\n" .
       'DO  -  ' . $this->doi . "\n" .
       'CY  -  ' . $this->city . "\n";
 
-    foreach ($this->data['keywords'] as $kw)
-    {
-      $text .= 'KW  -  ' . $kw . "\n";
-    }
+        foreach ($this->data['keywords'] as $kw) {
+            $text .= 'KW  -  ' . $kw . "\n";
+        }
 
-    $text .= 'LA  -  ' . $this->data['language'] . "\n" .
+        $text .= 'LA  -  ' . $this->data['language'] . "\n" .
       'M3  -  Editorial Material' . "\n" .
       'VL  -  ' . $this->data['volume'] . "\n" .
       'NV  -  ' . $this->data['art_no'] . "\n" .
@@ -215,44 +198,42 @@ class Citation
       'UR  -  ' . $this->data['url'] . "\n"
       ;
 
-    return $text;
-  }
+        return $text;
+    }
 
-  /**
-   * Alias for refman
-   * @return string
-   */
-  private function plaintext()
-  {
-    return $this->refman();
-  }
-
-  /**
-   * Returns citation in EndNote format
-   * @return string
-   */
-  private function endnote()
-  {
-    switch ($this->data['type'])
+    /**
+     * Alias for refman
+     * @return string
+     */
+    private function plaintext()
     {
+        return $this->refman();
+    }
+
+    /**
+     * Returns citation in EndNote format
+     * @return string
+     */
+    private function endnote()
+    {
+        switch ($this->data['type']) {
       case 'ejournal':
         $text = "%0\tElectronic Article\n";
         break;
     }
 
-    $text .= "%A\t" . $this->author . "\n" .
+        $text .= "%A\t" . $this->author . "\n" .
       "%T\t" . $this->title . "\n" .
       "%+\t" . $this->author_address . "\n" .
       "%C\t" . $this->city . "\n" .
       "%R\t" . $this->doi . "\n" .
       "%K\t" . implode("\n", $this->data['keywords']) . "\n";
 
-    foreach ($this->data['keywords'] as $kw)
-    {
-      $text .= 'KW  -  ' . $kw . "\n";
-    }
+        foreach ($this->data['keywords'] as $kw) {
+            $text .= 'KW  -  ' . $kw . "\n";
+        }
 
-    $text .= 'LA  -  ' . $this->data['language'] . "\n" .
+        $text .= 'LA  -  ' . $this->data['language'] . "\n" .
       "%9\tEditorial Material" . "\n" .
       "%V\t" . $this->data['volume'] . "\n" .
       "%6\t" . $this->data['art_no'] . "\n" .
@@ -265,16 +246,16 @@ class Citation
       "%U\t" . $this->data['url'] . "\n"
       ;
 
-    return $text;
-  }
+        return $text;
+    }
 
-  /**
-   * Returns citation in BiBTeX format
-   * @return string
-   */
-  private function bibtext()
-  {
-    $text = "@misc{\n" .
+    /**
+     * Returns citation in BiBTeX format
+     * @return string
+     */
+    private function bibtext()
+    {
+        $text = "@misc{\n" .
       "\tauthor = {{$this->author}},\n" .
       "\ttitle = {{$this->title}},\n" .
       "\tpublisher = {{$this->data['publisher']}},\n" .
@@ -285,21 +266,20 @@ class Citation
       "\tyear = {" . date('Y', strtotime($this->data['date'])) . "}\n" .
       "}";
 
-    return $text;
-  }
+        return $text;
+    }
 
-  /**
-   * Returns citation in HTML format
-   * @return string
-   */
-  private function html()
-  {
-    $text = $this->author . ', ' .
+    /**
+     * Returns citation in HTML format
+     * @return string
+     */
+    private function html()
+    {
+        $text = $this->author . ', ' .
       '<em>' . $this->title . '</em>,' .
       '"' . $this->journal . '", ' .
       $this->data['volume'] . '(' . date('Y', strtotime($this->data['date'])) . ')' .
       '# ' . $this->data['art_no'] .
       'DOI: <a href="http://dx.doi.org/' . $this->doi . '">' . $this->doi . '</a>';
-  }
+    }
 }
-?>

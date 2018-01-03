@@ -13,12 +13,11 @@ class Assets
    * Returns array with assets data
    * @return array Array with assets data
    */
-  private static function allAssets()
-  {
+    private static function allAssets()
+    {
+        $path = link::to_article('home');
 
-    $path = link::to_article('home');
-
-    $assets = array(
+        $assets = array(
 
       'frontend' => [
         'js' => [
@@ -89,98 +88,97 @@ class Assets
       ]
     );
 
-    return $assets;
-  }
-
-  /**
-   * Returns array with names of available assets
-   * @return array arry with available assets
-   */
-  public static function getNames()
-  {
-    return array_keys(self::allAssets($path));
-  }
-
-  /**
-   * returns array with asset data
-   * @param  string $name    Asset's name
-   * @param  string|false $type    Asset's type, one of: js|css. If missing and asset has both types js will be used, otherwise available type will be returned
-   * @param  string|false $source    One of: cdn|local. If missing and asset has both sources cdn will be used, otherwise available source will be returned
-   * @param  string|false $version Asset's version. If missing defaultversion will be used
-   * @return array|false        Asset's data array
-   */
-  public static function resolve($name, $type = false, $source = false, $version = false)
-  {
-    // Return false if type is defined but is not css or js
-    if ($type && $type !== 'css' && $type !== 'js') {
-      return false;
+        return $assets;
     }
 
-    // Return false if dest is defined but is not cdn or local
-    if ($source && $source !== 'local' && $source !== 'cdn') {
-      return false;
+    /**
+     * Returns array with names of available assets
+     * @return array arry with available assets
+     */
+    public static function getNames()
+    {
+        return array_keys(self::allAssets($path));
     }
 
+    /**
+     * returns array with asset data
+     * @param  string $name    Asset's name
+     * @param  string|false $type    Asset's type, one of: js|css. If missing and asset has both types js will be used, otherwise available type will be returned
+     * @param  string|false $source    One of: cdn|local. If missing and asset has both sources cdn will be used, otherwise available source will be returned
+     * @param  string|false $version Asset's version. If missing defaultversion will be used
+     * @return array|false        Asset's data array
+     */
+    public static function resolve($name, $type = false, $source = false, $version = false)
+    {
+        // Return false if type is defined but is not css or js
+        if ($type && $type !== 'css' && $type !== 'js') {
+            return false;
+        }
 
-    $assets = self::allAssets();
-
-    // Return false on no asset found
-    if (!isset($assets[$name])) {
-      return false;
-    }
-
-    $asset = $assets[$name];
+        // Return false if dest is defined but is not cdn or local
+        if ($source && $source !== 'local' && $source !== 'cdn') {
+            return false;
+        }
 
 
-    // Set type if not setted
-    if (!$type && isset($asset['css']) && isset($asset['js'])) {
-      $type = 'js';
-    } elseif (!$type && isset($asset['css']) && !isset($asset['js'])) {
-      $type = 'css';
-    } elseif (!$type && !isset($asset['css']) && isset($asset['js'])) {
-      $type = 'js';
-    } elseif (!isset($asset[$type])) {
-      return false;
-    }
+        $assets = self::allAssets();
 
-    // Set $source
-    if (!$source && isset($asset[$type]['cdn'])) {
-      // 1. No custom source supplied: use default value: CDN, if available
-      $source = 'cdn';
-    } elseif (!$source && isset($asset[$type]['local'])) {
-      // 2. No custom source supplied, no available CDN value: use LOCAL if available
-      $source = 'local';
-    } elseif ($source && !isset($asset[$type][$source])) {
-      // 3. Source supplied and is one of cdn|local.
-      // If custom value is not available check for alternative value or return false
-      if (isset($asset[$type]['cdn'])) {
-        $source = 'cdn';
-      } elseif (isset($asset[$type]['local'])) {
-        $source = 'local';
-      } else {
-        return false;
-      }
-    }
+        // Return false on no asset found
+        if (!isset($assets[$name])) {
+            return false;
+        }
 
-    if ($version) {
-      return [
+        $asset = $assets[$name];
+
+
+        // Set type if not setted
+        if (!$type && isset($asset['css']) && isset($asset['js'])) {
+            $type = 'js';
+        } elseif (!$type && isset($asset['css']) && !isset($asset['js'])) {
+            $type = 'css';
+        } elseif (!$type && !isset($asset['css']) && isset($asset['js'])) {
+            $type = 'js';
+        } elseif (!isset($asset[$type])) {
+            return false;
+        }
+
+        // Set $source
+        if (!$source && isset($asset[$type]['cdn'])) {
+            // 1. No custom source supplied: use default value: CDN, if available
+            $source = 'cdn';
+        } elseif (!$source && isset($asset[$type]['local'])) {
+            // 2. No custom source supplied, no available CDN value: use LOCAL if available
+            $source = 'local';
+        } elseif ($source && !isset($asset[$type][$source])) {
+            // 3. Source supplied and is one of cdn|local.
+            // If custom value is not available check for alternative value or return false
+            if (isset($asset[$type]['cdn'])) {
+                $source = 'cdn';
+            } elseif (isset($asset[$type]['local'])) {
+                $source = 'local';
+            } else {
+                return false;
+            }
+        }
+
+        if ($version) {
+            return [
         'type' =>$type,
         'source' => $ource,
         'path' => str_replace('--version--', $version, $asset[$type][$source])
       ];
-    } elseif (isset($asset['version'])) {
-      return [
+        } elseif (isset($asset['version'])) {
+            return [
         'type' =>$type,
         'source' => $ource,
         'path' => str_replace('--version--', $asset['version'], $asset[$type][$source])
       ];
-    } else {
-      return [
+        } else {
+            return [
         'type' =>$type,
         'source' => $ource,
         'path' => $asset[$type][$source]
       ];
+        }
     }
-  }
-
 }

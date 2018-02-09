@@ -97,9 +97,15 @@ class OutHtml extends Out
             . ( $this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true) )
             . '" />' .
           "\n  " . '<meta property="og:description" content="' . $this->getPageData('description', true) . '" />' .
-          "\n  " . '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />' .
-          ( $this->getPageData('image') ? "\n  " . '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />' : '' )
-      ;
+          "\n  " . '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />';
+      if ($this->getPageData('image')) {
+        $rel_path = str_replace(utils::getBaseUrl(), null, $this->getPageData('image', true));
+        $image_size = getimagesize($rel_path);
+
+        $html .= "\n  " . '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />' .
+          "\n  " . '<meta property="og:image:width" content="' . $image_size[0] . '" />' .
+          "\n  " . '<meta property="og:image:height" content="' . $image_size[1] . '" />';
+      }
     }
 
     $html .= "\n\n  <!-- Feed links -->" .

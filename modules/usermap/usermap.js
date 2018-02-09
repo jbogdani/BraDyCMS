@@ -18,20 +18,22 @@
       checkVar = 'google';
       return;
     } else if (platform == 'leaflet'){
-      jsPath = 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js';
-      cssPath = 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css';
+      jsPath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js';
+      cssPath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css';
       checkVar = 'L';
     } else {
       return false;
     }
 
     if(typeof window[checkVar] == 'undefined'){
-      if(typeof cssPath != 'undefined'){
+      if(typeof cssPath !== 'undefined'){
         $('head').append('<link rel="stylesheet" href="' + cssPath + '" />');
       }
       $.getScript(jsPath, function(){
         callback();
       });
+    } else {
+      callback();
     }
   };
 
@@ -50,8 +52,13 @@
 
     buildMap: function(el,platform){
       var cfgFile = $(el).data('cfg');
-      if (!platform) platform = $(el).data('platform') || 'leaflet';
-
+      if (!platform) {
+        platform = $(el).data('platform') ? $(el).data('platform') : 'leaflet';
+      }
+      if (platform !== 'google' && platform !== 'leaflet') {
+        console.log('Unknown platform: ' + platform);
+        return false;
+      }
       $this = this;
 
       // simple map from markup
@@ -70,13 +77,11 @@
               }
             ]
           };
-
           switch(platform){
             case 'leaflet':
               $this.runLeaflet(el, data);
               break;
             case 'google':
-            case false:
               $this.runGoogleMaps(el, data);
               break;
             default:
@@ -93,7 +98,7 @@
           url: 'sites/default/modules/usermaps/' + cfgFile + '.map',
           dataType: 'json',
           success: function( data ) {
-            platform = data.platform || false;
+            platform = data.platform || platform;
 
             loadLib(platform, function(){
               switch(platform){
@@ -101,7 +106,6 @@
                   $this.runLeaflet(el, data);
                   break;
                 case 'google':
-                case false:
                   $this.runGoogleMaps(el, data, window.google);
                   break;
                 default:

@@ -594,9 +594,7 @@ class Article
         }
 
 
-        $list = R::tagged(self::art_tb(), $tags);
-
-        $list = self::parseArt($list);
+        $list = self::getByTag($tags);
 
         if (!$list) {
             return false;

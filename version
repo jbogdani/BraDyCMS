@@ -21,6 +21,9 @@
 4.0.0[] = "API change: added support for Out::getParts"
 4.0.0[]  = "API change: Removed support for search tags (eg.: tagi1-tag2.search)"
 
+3.18.15[] = "Article::getSimilar returns most recent articles first"
+3.18.14[] = "OpenGraph Image metadata sets width & height"
+3.18.13[] = "Bug fixed with open tag in .htaccess"
 3.18.12[] = "userform uses unique form id"
 3.18.12[] = "html.queue is an array and duplicates are removed"
 3.18.11[] = "New help system with full support for Github pages"

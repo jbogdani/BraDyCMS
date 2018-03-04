@@ -74,7 +74,7 @@ class OutHtml extends Out
         array_push($part, '<meta name="description" content="' . $this->getPageData('description', true) . '" />');
         array_push($part, '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />');
         array_push($part, '<meta lang="' . $this->getPageData('lang', true) . '" />');
-        array_push($part, '<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+        array_push($part, '<meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">');
         array_push($part, '<meta name="generator" content="BraDyCMS ' . $this->getVersion() . '">');
 
         // http://stackoverflow.com/a/23717829/586449
@@ -373,11 +373,11 @@ class OutHtml extends Out
         $html = '<ul class="' . ($menu ? 'menu ' . $class . ' ' . $menu : 'submenu' . ($strip ? '' : ' dropdown-menu')) . '">';
 
         foreach ($menu_arr as $menu) {
-            if ($menu['item'] == '.' && $menu['href'] == '.') {
+            if ($menu['item'] == '.' && $menu['href'] == link::format('.')) {
                 $html .= '<li class="divider"></li>';
             } else {
                 $html .= '<li class="menu-item ' . ($menu['sub'] ? ' dropdown-submenu ' : '') . ($menu['current'] ? 'active' : '') . '">'
-            . '<a href="' . link::format($menu['href'], $this->getLang('input')) . '" '
+            . '<a href="' . $menu['href'] . '" '
                 . ($menu['title'] ? ' title="' . $menu['title'] . '" ' : '')
                 . ($menu['target'] ? ' target="' . $menu['target'] . '" ' : '')
                 . ($menu['sub'] && !$strip ? ' class="dropdown-toggle" data-toggle="dropdown"' : '')

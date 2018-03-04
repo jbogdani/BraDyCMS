@@ -602,6 +602,8 @@ class Out
                 $item['current'] = true;
             }
 
+            $item['href'] = link::format($item['href'], $this->getLang('input'));
+
             if (is_array($item['sub'])) {
                 $item['sub'] = $this->recursiveRichMenu($item['sub']);
             }

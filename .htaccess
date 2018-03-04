@@ -1,71 +1,18 @@
 RewriteEngine on
-RewriteBase /
-
-# robots
-RewriteRule ^robots.txt$ controller.php?obj=seo_ctrl&method=robots
-
-#sitemap
-RewriteRule ^sitemap.xml$ controller.php?obj=seo_ctrl&method=sitemap
-
-# www to non-www url syntax
-RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
-
-#safe site, js and css, tiny_mce
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule (css|sites|js|img|xsl|fonts)/(.+) $1/$2
+RewriteRule . index.php [L]
 
-RewriteRule ^feed/rss$ controller.php?obj=feeds_ctrl&method=rss2 [QSA,L]
-RewriteRule ^feed/atom$ controller.php?obj=feeds_ctrl&method=atom [QSA,L]
-
-#OAI
-RewriteRule ^(OAI|oai)$ controller.php?obj=OAI_ctrl&method=run [QSA,L]
-
-#api
-RewriteRule ^(api|API)/?(.+)$ controller.php?obj=api_ctrl&method=run&$1 [QSA,L]
-
-#download
-RewriteRule ^download/?(.+)$ controller.php?obj=download_ctrl&method=go&$1 [QSA,L]
-
-#admin
-RewriteRule ^admin/?$ admin.php [L]
-
-#safe home page
-RewriteRule ^([a-z]{2})/?$ index.php?lang=$1  [L]
-
-#tags: (ln/)some-tag.all !paginate
-RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+)\.all(/[0-9]{1,2})?$ index.php?lang=$1&tags=$2&page=$3 [QSA,L]
-RewriteRule ^([a-zA-Z0-9-_+~]+)\.all(/[0-9]{1,2})?$ index.php?tags=$1&page=$2 [QSA,L]
-
-#article title: (ln/)sometitle
-RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+)/?$ index.php?lang=$1&art_title=$2 [QSA,L]
-RewriteRule ^([a-zA-Z0-9-_]+)/?$ index.php?art_title=$1 [QSA,L]
-
-#Drafts: article title: (ln/)sometitle.draft
-RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_]+).draft$ index.php?lang=$1&art_title=$2&draft=1 [L]
-RewriteRule ^([a-zA-Z0-9-_]+).draft$ index.php?art_title=$1&draft=true [L]
-
-#search string: (ln/)search:some string !paginate
-RewriteRule ^([a-z]{2})/search:([^\/]+)(/[0-9]{1,2})?$ index.php?lang=$1&search=$2&page=$3 [QSA,L]
-RewriteRule ^search:([^\/]+)(/[0-9]{1,2})?$ index.php?search=$1&page=$2 [QSA,L]
-
-#search tags: (ln/)some-tags.search !paginate
-RewriteRule ^([a-z]{2})/([a-zA-Z0-9-_+~]+).search(/[0-9]{1,2})?$ index.php?lang=$1&tags=$2&is_search=1&page=$3 [QSA,L]
-RewriteRule ^([a-zA-Z0-9-_+~]+).search(/[0-9]{1,2})?$ index.php?tags=$1&is_search=1&page=$2 [QSA,L]
-
-#all non existing, non image content to index.php http://jrgns.net/redirect_request_to_index/
-RewriteCond %{REQUEST_URI} !\.(gif|jpg|png)$
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php?art_title=not_found [L]
-#ErrorDocument 404 /index.php?art_title=not_found
-
-<FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite|json)$">
+<FilesMatch "\.(htaccess|htpasswd|ini|log|inc|bak|sqlite)$">
 	order allow,deny
 	deny from all
 </FilesMatch>
 
-<FilesMatch "\.(png|jpg|jpeg|gif)$">
+<FilesMatch "config\.json">
+	order allow,deny
+	deny from all
+</FilesMatch>
+
+<FilesMatch "\.(png|jpg|jpeg|gif|json)$">
 	Header set Access-Control-Allow-Origin "*"
 </FilesMatch>
 
@@ -78,88 +25,87 @@ RewriteRule . index.php?art_title=not_found [L]
 			SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
 			RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
 		</IfModule>
-
-		# Enable compression as copied from Html5Boilerplate
-		# https://github.com/h5bp/html5-boilerplate
-		# ----------------------------------------------------------------------
-		# | Compression                                                        |
-		# ----------------------------------------------------------------------
-
-    # Force compression for mangled `Accept-Encoding` request headers
-    # https://developer.yahoo.com/blogs/ydn/pushing-beyond-gzipping-25601.html
-
-    <IfModule mod_setenvif.c>
-      <IfModule mod_headers.c>
-        SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
-        RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
-      </IfModule>
-    </IfModule>
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Compress all output labeled with one of the following media types.
-    #
-    # (!) For Apache versions below version 2.3.7 you don't need to
-    # enable `mod_filter` and can remove the `<IfModule mod_filter.c>`
-    # and `</IfModule>` lines as `AddOutputFilterByType` is still in
-    # the core directives.
-    #
-    # https://httpd.apache.org/docs/current/mod/mod_filter.html#addoutputfilterbytype
-
-    <IfModule mod_filter.c>
-      AddOutputFilterByType DEFLATE "application/atom+xml" \
-                                    "application/javascript" \
-                                    "application/json" \
-                                    "application/ld+json" \
-                                    "application/manifest+json" \
-                                    "application/rdf+xml" \
-                                    "application/rss+xml" \
-                                    "application/schema+json" \
-                                    "application/vnd.geo+json" \
-                                    "application/vnd.ms-fontobject" \
-                                    "application/x-font-ttf" \
-                                    "application/x-javascript" \
-                                    "application/x-web-app-manifest+json" \
-                                    "application/xhtml+xml" \
-                                    "application/xml" \
-                                    "font/eot" \
-                                    "font/opentype" \
-                                    "image/bmp" \
-                                    "image/svg+xml" \
-                                    "image/vnd.microsoft.icon" \
-                                    "image/x-icon" \
-                                    "text/cache-manifest" \
-                                    "text/css" \
-                                    "text/html" \
-                                    "text/javascript" \
-                                    "text/plain" \
-                                    "text/vcard" \
-                                    "text/vnd.rim.location.xloc" \
-                                    "text/vtt" \
-                                    "text/x-component" \
-                                    "text/x-cross-domain-policy" \
-                                    "text/xml"
-
-    </IfModule>
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Map the following filename extensions to the specified
-    # encoding type in order to make Apache serve the file types
-    # with the appropriate `Content-Encoding` response header
-    # (do note that this will NOT make Apache compress them!).
-    #
-    # If these files types would be served without an appropriate
-    # `Content-Enable` response header, client applications (e.g.:
-    # browsers) wouldn't know that they first need to uncompress
-    # the response, and thus, wouldn't be able to understand the
-    # content.
-    #
-    # https://httpd.apache.org/docs/current/mod/mod_mime.html#addencoding
-
-    <IfModule mod_mime.c>
-        AddEncoding gzip              svgz
-    </IfModule>
-
 	</IfModule>
+
+	# Enable compression as copied from Html5Boilerplate
+	# https://github.com/h5bp/html5-boilerplate
+	# ----------------------------------------------------------------------
+	# | Compression                                                        |
+	# ----------------------------------------------------------------------
+
+  # Force compression for mangled `Accept-Encoding` request headers
+  # https://developer.yahoo.com/blogs/ydn/pushing-beyond-gzipping-25601.html
+  <IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+      SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+      RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+    </IfModule>
+  </IfModule>
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # Compress all output labeled with one of the following media types.
+  #
+  # (!) For Apache versions below version 2.3.7 you don't need to
+  # enable `mod_filter` and can remove the `<IfModule mod_filter.c>`
+  # and `</IfModule>` lines as `AddOutputFilterByType` is still in
+  # the core directives.
+  #
+  # https://httpd.apache.org/docs/current/mod/mod_filter.html#addoutputfilterbytype
+
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE "application/atom+xml" \
+                                  "application/javascript" \
+                                  "application/json" \
+                                  "application/ld+json" \
+                                  "application/manifest+json" \
+                                  "application/rdf+xml" \
+                                  "application/rss+xml" \
+                                  "application/schema+json" \
+                                  "application/vnd.geo+json" \
+                                  "application/vnd.ms-fontobject" \
+                                  "application/x-font-ttf" \
+                                  "application/x-javascript" \
+                                  "application/x-web-app-manifest+json" \
+                                  "application/xhtml+xml" \
+                                  "application/xml" \
+                                  "font/eot" \
+                                  "font/opentype" \
+                                  "image/bmp" \
+                                  "image/svg+xml" \
+                                  "image/vnd.microsoft.icon" \
+                                  "image/x-icon" \
+                                  "text/cache-manifest" \
+                                  "text/css" \
+                                  "text/html" \
+                                  "text/javascript" \
+                                  "text/plain" \
+                                  "text/vcard" \
+                                  "text/vnd.rim.location.xloc" \
+                                  "text/vtt" \
+                                  "text/x-component" \
+                                  "text/x-cross-domain-policy" \
+                                  "text/xml"
+
+  </IfModule>
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # Map the following filename extensions to the specified
+  # encoding type in order to make Apache serve the file types
+  # with the appropriate `Content-Encoding` response header
+  # (do note that this will NOT make Apache compress them!).
+  #
+  # If these files types would be served without an appropriate
+  # `Content-Enable` response header, client applications (e.g.:
+  # browsers) wouldn't know that they first need to uncompress
+  # the response, and thus, wouldn't be able to understand the
+  # content.
+  #
+  # https://httpd.apache.org/docs/current/mod/mod_mime.html#addencoding
+
+  <IfModule mod_mime.c>
+      AddEncoding gzip              svgz
+  </IfModule>
+
 </IfModule>

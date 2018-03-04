@@ -1,3 +1,4 @@
+3.18.15[] = "Article::getSimilar returns most recent articles first"
 3.18.14[] = "OpenGraph Image metadata sets width & height"
 3.18.13[] = "Bug fixed with open tag in .htaccess"
 3.18.12[] = "userform uses unique form id"

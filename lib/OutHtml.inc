@@ -709,22 +709,23 @@ EOD;
 
         for ($x = $pagination['start']; $x<=$pagination['end']; $x++) {
             switch ($this->getContext()) {
-        case 'tags':
-          $href = link::to_tags(
-            implode(($this->cfg['tagAll'] ? '~' : '-'), $this->getFilterTags()),
-            $this->getLang('input'),
-            $x
-            );
-          break;
+              case 'tags':
+                $href = link::to_tags(
+                  implode(($this->cfg['tagAll'] ? '~' : '-'), $this->getFilterTags()),
+                  $this->getLang('input'),
+                  $x
+                  );
+                break;
 
-        case 'search':
-          $href = link::to_search($this->getSearchString(), $this->getLang('input'), $x);
-          break;
+              case 'search':
+                $href = link::to_search($this->getSearchString(), $this->getLang('input'), $x);
+                break;
 
-        default:
-          return false;
-          break;
-      }
+              default:
+
+                return false;
+                break;
+            }
 
 
 

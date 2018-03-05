@@ -55,6 +55,14 @@ class Out
             $this->cfg['page'] = (int)str_replace('/', null, $get['page']);
         }
 
+        if ($get['art_title']) {
+          $exploded = explode('/', $get['art_title']);
+          $last = end($exploded);
+          if ($last === '') {
+            $get['tags'] = $exploded[count($exploded)-2];
+          }
+        }
+
         // Languages: there used to be 3 public language related variables:
         //  lang:         $lang, if $lang != sys_lang
         //  There is only one now, index of cfg variable: input_lang
@@ -64,7 +72,7 @@ class Out
         $this->cfg['lang'] = $get['lang'];
 
         // Set context and context related data
-        if ($get['art_title']) {
+        if ($get['art_title'] && $last !== '') {
 
       // 1. article
             $this->cfg['context'] = 'article';
@@ -78,10 +86,11 @@ class Out
       // 2. search
             $this->cfg['context'] = 'search';
             $this->cfg['searchString'] = $get['search'];
-        } elseif ($get['tags']) {
+        } elseif ($get['tags'] || $last === '') {
 
       // 3. tags
             $this->cfg['context'] = 'tags';
+
 
             if (preg_match('/~/', $get['tags'])) {
                 // All tags
@@ -205,6 +214,7 @@ class Out
      */
     public function link2($art = false, $tags = false, $page = false, $absl_link = false, $parts = false)
     {
+
         $page = $page ? $page : $this->cfg['page'];
 
         if ($parts && ($parts === "true" || is_bool($parts))) {
@@ -217,16 +227,16 @@ class Out
         $url = '';
 
         switch ($tags) {
-      case 'search':
-        $url = link::to_search($art, $this->getLang('input'), $page);
-        break;
-      case true:
-        $url = link::to_tags($art, $this->getLang('input'), $page);
-        break;
-      default:
-        $url = link::to_article(!$art ? 'home' : $art, $this->getLang('input'), $page, $parts);
-        break;
-    }
+          case 'search':
+            $url = link::to_search($art, $this->getLang('input'), $page);
+            break;
+          case true:
+            $url = link::to_tags($art, $this->getLang('input'), $page);
+            break;
+          default:
+            $url = link::to_article(!$art ? 'home' : $art, $this->getLang('input'), $page, $parts);
+            break;
+        }
 
         if ($absl_link) {
             $url = utils::getBaseUrl() . $url;
@@ -596,6 +606,8 @@ class Out
             } elseif ($this->cfg['context'] === 'tags' && (
         $item['href'] === implode('-', $this->getFilterTags()) . '.all' ||
         $item['href'] === implode('~', $this->getFilterTags()) . '.all' ||
+        $item['href'] === implode('-', $this->getFilterTags()) . '/' ||
+        $item['href'] === implode('~', $this->getFilterTags()) . '/' ||
         $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' ||
         $item['href'] === './' . implode('~', $this->getFilterTags()) . '.all'
         )) {

@@ -1,3 +1,4 @@
+4.0.0[] = "Page is ignored to home directed links"
 4.0.0[] = "Bug fixed with usermap plugin and leaflet already loaded"
 4.0.0[] = "Added og:image:width and og:image:height to force Facebook load article image in real time"
 4.0.0[] = "Added support for anchor links inside relative URLs"

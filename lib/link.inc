@@ -129,7 +129,7 @@ class link
         array_push($ret_parts, $href);
 
         // add page to href
-        if ($page) {
+        if ($page && $href) {
             array_push($ret_parts, $page);
         }
 

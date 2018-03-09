@@ -1,7 +1,7 @@
 {
   "name": "BraDyCMS",
   "dependencies": {
-    "jquery": "~2.2.1",
+    "jquery": "~3.3.1",
     "bootstrap": "~3.3.6",
     "bootstrap-datepicker": "~1.7.0",
     "datatables": "~1.10.11",

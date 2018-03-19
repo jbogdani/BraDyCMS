@@ -119,19 +119,6 @@
     </div>
   </div>
 
-  <!-- REWRITEBASE -->
-  <div class="form-group">
-    <label class="control-label col-sm-2">{{ tr.get('cfg-rewriteBase') }}</label>
-    <div class="col-sm-5">
-      <input type="text" value="{% if data.rewriteBase %}{{ data.rewriteBase }}{% else %}/{% endif %}" name="rewriteBase">
-    </div>
-    <div class="col-sm-5">
-      <span class="text-muted">If your site is not located in the root directory
-      of the domain, please enter here the relative path to the installation
-      folder, preceded by single slash (/), eg. /new_site</span>
-    </div>
-  </div>
-
   <!-- enable www -->
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-enableWWW') }}</label>

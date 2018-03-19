@@ -9,15 +9,21 @@
 class utils
 {
 
+  // Returns relative website path to base web directory (where main index.php file is located)
+  public static function getBase()
+  {
+    return str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
+  }
+
   /**
-   * Returns base URL of current site wit correct protocol (http|https), host and rewrite base
+   * Returns base URL of current site with correct protocol (http|https), host and rewrite base
    * @return string
    */
     public static function getBaseUrl()
     {
         // http://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $url = $protocol . $_SERVER['HTTP_HOST'] . cfg::get('rewriteBase');
+        $url = $protocol . $_SERVER['HTTP_HOST'] . self::getBase();
         return (substr($url, -1) ===  '/' ? $url : $url . '/');
     }
 
@@ -353,7 +359,7 @@ class utils
             }
         }
 
-        $rewriteBase = (!cfg::get('rewriteBase') || cfg::get('rewriteBase') === '/' ? '' : cfg::get('rewriteBase') . '/');
+        $rewriteBase = self::getBase();
 
 
         $cleaned_request_uri = str_replace($rewriteBase, null, $_SERVER['REQUEST_URI']);
@@ -444,13 +450,9 @@ class utils
     {
         $file = file_exists('.htaccess-new') ? '.htaccess-new' : '.htaccess';
 
-        $rewriteBase = cfg::get('rewriteBase');
+        $rewriteBase = self::getBase();
 
         $otherDirectives = cfg::get('moreHtaccessDirectives');
-
-        if (!$rewriteBase || $rewriteBase === '/') {
-            $rewriteBase = '/';
-        }
 
         $htaccess_arr = file($file);
 
@@ -478,10 +480,6 @@ class utils
         )
         ) {
                 $row = str_replace('#', null, $row);
-            }
-
-            if (strpos($row, 'RewriteBase') === 0) {
-                $row = 'RewriteBase ' . $rewriteBase . "\n";
             }
 
             if (strpos($row, '# Additional directives') === 0) {

@@ -38,8 +38,7 @@ A five-step guide to install and get running BraDyCMS
 
 1. [Fork](https://github.com/jbogdani/BraDyCMS/) or [Download](https://github.com/jbogdani/BraDyCMS/archive/master.zip) from Github
 2. Unzip everything in a web accesible directory (eg. `/var/www/bduscms` accessible at `http://localhost/bduscms`)
-3. (Eventually edit the second line of `.htaccess` file to match your installation path, if not installing in root directory, eg: `RewriteBase /bduscms`)
-4. Point your browser to the web path (eg. `http://localhost/bduscms`) and follow the instructions:
+3. Point your browser to the web path (eg. `http://localhost/bduscms`) and follow the instructions:
 
 > 4.1 Enter a valid email address and  password  
 > 4.2 Click on "Create my site"  

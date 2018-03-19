@@ -253,7 +253,6 @@ $_lang['cfg-db_user'] = "Database user";
 $_lang['cfg-db_pass'] = "Database password";
 $_lang['cfg-prefix'] = "Database prefix";
 $_lang['cfg-timezone'] = "Site timezone";
-$_lang['cfg-rewriteBase'] = "Site path relative to the main domain";
 $_lang['cfg-moreHtaccessDirectives'] = "Additional .htaccess directives";
 $_lang['cfg-languages'] = "Site languages";
 $_lang['cfg-lang_id'] = "Language ID";

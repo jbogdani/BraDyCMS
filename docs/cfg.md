@@ -57,12 +57,6 @@ If you re interested in manually setting the description of each page, check the
 #### Site timezone
 Please enter a valid timezone for the web site. A full list of valid timezones
 can be found at [http://php.net/manual/en/timezones.php](http://php.net/manual/en/timezones.php)
-#### Site path relative to the main domain
-If your site is not located in the root directory of the domain enter here the
-relative path to the installation folder, preceded by single slash (`/`),
-eg. `/new_site`.
-
-    This will change the RewriteBase directive of the main .htaccess
 
 #### Enable www third level
 By default BraDyCMS will redirect all third level domains (www.\*) to the main

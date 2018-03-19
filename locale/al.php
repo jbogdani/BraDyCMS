@@ -239,7 +239,6 @@ $_lang['cfg-db_user'] = "";
 $_lang['cfg-db_pass'] = "";
 $_lang['cfg-prefix'] = "Prefiksi i databazës";
 $_lang['cfg-timezone'] = "Ora e sistemit";
-$_lang['cfg-rewriteBase'] = "";
 $_lang['cfg-moreHtaccessDirectives'] = "";
 $_lang['cfg-languages'] = "Gjuhët e website";
 $_lang['cfg-lang_id'] = "Sigla e gjuhës";

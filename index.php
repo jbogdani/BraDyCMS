@@ -7,7 +7,7 @@
  */
 try
 {
-  require_once 'lib/globals.inc';
+  require_once 'lib/globals.php';
 
   Router::run();
 

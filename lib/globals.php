@@ -70,7 +70,7 @@ if (get_magic_quotes_gpc()) {
 }
 
 // Include and start main Autoloader
-require_once $root . 'lib/Autoloader.inc';
+require_once $root . 'lib/Autoloader.php';
 Autoloader::start();
 
 // Include and start Twig

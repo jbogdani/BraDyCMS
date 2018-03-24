@@ -59,7 +59,8 @@ class Out
           $exploded = explode('/', $get['art_title']);
           $last = end($exploded);
           if ($last === '') {
-            $get['tags'] = $exploded[count($exploded)-2];
+            array_pop($exploded);
+            $get['tags'] = implode('-', $exploded);
           }
         }
 
@@ -90,6 +91,8 @@ class Out
 
       // 3. tags
             $this->cfg['context'] = 'tags';
+            $this->cfg['parts'] = $exploded;
+
 
 
             if (preg_match('/~/', $get['tags'])) {

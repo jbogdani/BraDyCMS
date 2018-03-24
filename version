@@ -1,3 +1,4 @@
+4.0.0[] = "User plugins MUST have .php extension"
 4.0.0[] = "URLs ending with slash are conseidered tag pages,like .all"
 4.0.0[] = "Page is ignored to home directed links"
 4.0.0[] = "Bug fixed with usermap plugin and leaflet already loaded"

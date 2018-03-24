@@ -17,9 +17,9 @@ class admin_ctrl extends Controller
 
       foreach ($usr_mods as $mod) {
 
-        if (file_exists('./sites/default/modules/' . $mod . '/' . $mod . '.inc')) {
+        if (file_exists('./sites/default/modules/' . $mod . '/' . $mod . '.php')) {
 
-          require_once './sites/default/modules/' . $mod . '/' . $mod . '.inc';
+          require_once './sites/default/modules/' . $mod . '/' . $mod . '.php';
 
           if (method_exists($mod, 'admin')) {
             $custom_mods[] = $mod;

@@ -58,8 +58,6 @@ class downloads_ctrl extends Controller
             $biggerSort = 1;
         }
 
-        error_log($biggerSort);
-
         $files = [];
         foreach ($node_content as $file) {
             if ($file !== 'data.json' && !preg_match('/\.json/', $file) && $file !== 'covers') {

@@ -307,6 +307,7 @@ class customTags
         $align = $data['align'];
         $class = $data['class'];
         $start = $data['start'];
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
 
         return '<div class="youtube'
         . ($class ? ' ' . $class : '')
@@ -316,7 +317,7 @@ class customTags
         . '>'
       . '<iframe '
         . ($ratio ? ' class="embed-responsive-item" ' : ' width="' . $width . '" height="' . $height . '" ')
-        .'src="http://www.youtube.com/embed/' . $code . '?rel=0' . ($start ? '&start=' . $start : '') . '" frameborder="0" allowfullscreen></iframe>'
+        .'src="' . $protocol . '://www.youtube.com/embed/' . $code . '?rel=0' . ($start ? '&start=' . $start : '') . '" frameborder="0" allowfullscreen></iframe>'
     . '</div>';
     }
 

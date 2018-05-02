@@ -24,6 +24,7 @@
 4.0.0[] = "API change: added support for Out::getParts"
 4.0.0[]  = "API change: Removed support for search tags (eg.: tagi1-tag2.search)"
 
+3.18.17[] = "Fixed bug with Youtube custom tag over https"
 3.18.16[] = "New items in download nodes will get as sort value the highest sort value used +1"
 3.18.15[] = "Article::getSimilar returns most recent articles first"
 3.18.14[] = "OpenGraph Image metadata sets width & height"

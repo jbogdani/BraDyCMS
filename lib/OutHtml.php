@@ -711,7 +711,7 @@ EOD;
             switch ($this->getContext()) {
               case 'tags':
                 $href = link::to_tags(
-                  implode(($this->cfg['tagAll'] ? '~' : '-'), $this->getFilterTags()),
+                  $this->getFilterTags(),
                   $this->getLang('input'),
                   $x
                   );
@@ -735,17 +735,17 @@ EOD;
         ($x < $pagination['current'] - 2 || $x > $pagination['current'] + 2)
         ) {
                 if ($x < $pagination['current'] && !$showed_start) {
-                    $html .= '<li class="disabled"><a class="disabled" href="#">...</a>';
+                    $html .= '<li class="page-item disabled"><a class="page-link disabled" href="#">...</a>';
                     $showed_start = true;
                 }
 
                 if ($x > $pagination['current'] && !$showed_end) {
-                    $html .= '<li class="disabled"><a class="disabled" href="#">...</a>';
+                    $html .= '<li class="page-item disabled"><a class="dpage-link isabled" href="#">...</a>';
                     $showed_end = true;
                 }
             } else {
-                $html .= "<li" . ($x == $pagination['current'] ? ' class="active" ' : '') . ">"
-            . '<a href="' . $href . '">' . $x . '</a>'
+                $html .= '<li class="page-item' . ($x == $pagination['current'] ? ' active' : '') . '">'
+            . '<a href="' . $href . '" class="page-link">' . $x . '</a>'
           . "</li>";
             }
         }

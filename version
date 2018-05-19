@@ -1,3 +1,6 @@
+4.0.0[] = "Added Bootstrap 4 support for pagination"
+4.0.0[] = "New syntax for pages: p+nr"
+4.0.0[] = "Page variable is not inherited in links"
 4.0.0[] = "User plugins MUST have .php extension"
 4.0.0[] = "URLs ending with slash are conseidered tag pages,like .all"
 4.0.0[] = "Page is ignored to home directed links"

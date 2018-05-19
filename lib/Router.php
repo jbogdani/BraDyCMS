@@ -71,48 +71,57 @@ class Router
                     return false;
                 } else {
                     return [
-            'lang' => $lng
-          ];
+                      'lang' => $lng
+                    ];
                 }
             }, 'home');
 
             $router->map('GET', "/[lng:lng]?/[art:art]", function ($lng = false, $art) {
-                return [
-          'lang' => $lng,
-          'art_title' => $art
-        ];
+              $exploded = explode('/', $art);
+              $p = end($exploded);
+              if (preg_match('/p[0-9]*/', $p)){
+                $page = str_replace('p', null, $p);
+                array_pop($exploded);
+                $art = implode('/', $exploded) . '/';
+              }
+                $arr = [
+                  'lang' => $lng,
+                  'art_title' => $art,
+                  'page' => $page
+                ];
+        return $arr;
             }, 'article');
 
             $router->map('GET', "/[lng:lng]?/[art:art].draft", function ($lng = false, $art) {
                 return [
-          'lang' => $lng,
-          'art_title' => $art,
-          'draft' => true
-        ];
+                  'lang' => $lng,
+                  'art_title' => $art,
+                  'draft' => true
+                ];
             }, 'draft');
 
             $router->map('GET', "/[lng:lng]?/[tag:tags].all/[i:pg]?", function ($lng = false, $tags, $pg = false) {
                 return [
-          'lang' => $lng,
-          'tags' => $tags,
-          'page' => $pg
-        ];
-            }, 'tags');
+                  'lang' => $lng,
+                  'tags' => $tags,
+                  'page' => $pg
+                ];
+              }, 'tags');
 
             $router->map('GET', "/[lng:lng]?/search:[:string]/[i:pg]?", function ($lng = false, $string, $pg = false) {
                 return [
-          'lang' => $lng,
-          'search' => $string,
-          'page' => $pg
-        ];
+                  'lang' => $lng,
+                  'search' => $string,
+                  'page' => $pg
+                ];
             }, 'search');
 
             $router->map('GET', "/[lng:lng]?/?[**:requestedUrl]", function ($lng = false, $requestedUrl) {
                 return [
-          'lang' => $lng,
-          'art_title' => $requestedUrl,
-          'default' => true
-        ];
+                  'lang' => $lng,
+                  'art_title' => $requestedUrl,
+                  'default' => true
+                ];
             }, 'default');
 
 
@@ -146,9 +155,9 @@ class Router
         $settings['autoescape'] = false;
 
         $twig = new Twig_Environment(
-      new Twig_Loader_Filesystem('./sites/default' . ($_SESSION['sandbox'] ? '/' . $_SESSION['sandbox'] : '')),
-      $settings
-    );
+          new Twig_Loader_Filesystem('./sites/default' . ($_SESSION['sandbox'] ? '/' . $_SESSION['sandbox'] : '')),
+          $settings
+        );
 
         if ($_SESSION['debug']) {
             $twig->addExtension(new Twig_Extension_Debug());

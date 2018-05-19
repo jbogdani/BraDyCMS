@@ -70,7 +70,7 @@ class link
             $tags = [ $tags ];
         }
 
-        return self::format(implode('-', $tags) . '.all', $lang, $page);
+        return self::format(implode('/', $tags) . '/', $lang, $page);
     }
 
     /**
@@ -130,9 +130,10 @@ class link
 
         // add page to href
         if ($page && $href) {
-            array_push($ret_parts, $page);
+            array_push($ret_parts, 'p' . $page);
         }
 
-        return str_replace(['/./', '//'], '/', implode('/', $ret_parts)). ($pending ? '#' . $pending : '');
+        return str_replace(['/./', '//'], '/', implode('/', $ret_parts)) .
+          ($pending ? '#' . $pending : '');
     }
 }

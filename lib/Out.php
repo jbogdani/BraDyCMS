@@ -217,8 +217,7 @@ class Out
      */
     public function link2($art = false, $tags = false, $page = false, $absl_link = false, $parts = false)
     {
-
-        $page = $page ? $page : $this->cfg['page'];
+        $page = $page ?: false;
 
         if ($parts && ($parts === "true" || is_bool($parts))) {
             $parts = $this->getParts();

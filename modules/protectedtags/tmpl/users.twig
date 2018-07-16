@@ -3,21 +3,21 @@
 
   <div class="btn-group" style="padding:20px 0;">
     <a class="btn btn-info add_new" title="{{ tr.get('add_new_user') }}">
-      <i class="icon ion-plus"></i> {{ tr.get('add_new_user') }}
+      <i class="fa fa-plus-circle"></i> {{ tr.get('add_new_user') }}
     </a>
     <a class="btn btn-default" title="{{ tr.get('docs') }}"
         href="#docs/read/protectedtags">
-      <i class="icon ion-ios-information-outline"></i> {{ tr.get('docs') }}
+      <i class="fa fa-book"></i> {{ tr.get('docs') }}
     </a>
     <a class="btn btn-default reload" title="{{ tr.get('reload') }}">
-      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+      <i class="fa fa-refresh"></i> {{ tr.get('reload') }}
     </a>
   </div>
 
   {% if (users == false) %}
 
   <div class="alert alert-warning">
-    <i class="icon ion-alert-circled"></i>
+    <i class="fa fa-exclamation-triangle"></i>
     {{ tr.get('no_protected_tags_users') }}
   </div>
 
@@ -37,12 +37,12 @@
   href="controller.php?obj=protectedtags_ctrl&method=downloadUsers"
   target="_blank"
   class="btn btn-default download-csv">
-  <i class="icon ion-ios-cloud-download-outline"></i>
+  <i class="fa fa-cloud-download"></i>
   {{ tr.get('download_list') }} (CVS)
 </a>
 <button type="button"
   class="btn btn-default send_email">
-  <i class="icon ion-ios-email-outline"></i>
+  <i class="fa fa-envelope-o"></i>
   {{ tr.get('send_email') }}</button>
 <hr>
 <table class="table table-striped table-hover" id="{{ uid }}users">
@@ -68,11 +68,11 @@
       <td>{{ user.confirmationcode }}</td>
       <td>
         <button class="btn btn-default btn-sm edit" data-item="{{ user.id }}">
-          <i class="icon ion-edit"></i>
+          <i class="fa fa-pencil"></i>
         </button>
 
         <button class="btn btn-default btn-sm delete" data-item="{{ user.id }}">
-          <i class="icon ion-trash-a"></i>
+          <i class="fa fa-trash"></i>
         </button>
       </td>
     </tr>
@@ -132,7 +132,7 @@
         <button class="btn btn-success btn-block save_row"
           type="button"
           data-tag="{{ p }}">
-          <i class="icon ion-checkmark"></i> {{ tr.get('save') }}
+          <i class="fa fa-check"></i> {{ tr.get('save') }}
         </button>
       </td>
     </tr>

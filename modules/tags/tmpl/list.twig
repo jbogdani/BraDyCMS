@@ -1,13 +1,13 @@
 <div id="{{ uid }}">
-  <h2><i class="icon ion-pricetags"></i> {{ tr.get('tag_manager') }}</h2>
+  <h2><i class="fa fa-tagss"></i> {{ tr.get('tag_manager') }}</h2>
   
   <div class="btn-group" style="padding:20px 0;">
     <a class="btn btn-info add_new" title="{{ tr.get('add_new_tag') }}">
-      <i class="icon ion-plus"></i> {{ tr.get('add_new_tag') }}
+      <i class="fa fa-plus-circle"></i> {{ tr.get('add_new_tag') }}
     </a>
     
     <a class="btn btn-default reload" title="{{ tr.get('reload') }}">
-      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+      <i class="fa fa-refresh"></i> {{ tr.get('reload') }}
     </a>
   </div>
     
@@ -15,17 +15,17 @@
     {% for id, tag in tags %}
       <tr>
         <td>
-          <i class="icon ion-pricetag"></i> {{ tag.title }}
+          <i class="fa fa-tags"></i> {{ tag.title }}
         </td>
         <td>
           <button data-id="{{ tag.id }}" data-title="{{ tag.title}}" 
                   class="rename btn btn-info">
-            <i class="icon ion-edit"></i> {{ tr.get('rename') }}
+            <i class="fa fa-pencil"></i> {{ tr.get('rename') }}
           </button>
         </td>
         <td>
           <button data-id="{{ tag.id }}" class="delete btn btn-danger">
-            <i class="icon ion-trash-a"></i> {{ tr.get('delete') }}
+            <i class="fa fa-trash"></i> {{ tr.get('delete') }}
           </button>
         </td>
       </tr>

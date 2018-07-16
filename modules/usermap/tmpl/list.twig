@@ -2,11 +2,11 @@
   <h2>{{ tr.get('user_maps') }}</h2>
 
   <div class="btn-group" style="padding:20px 0;">
-      <a class="btn btn-info add_new" title="{{ tr.get('add_new_map') }}"><i class="icon ion-plus"></i> {{ tr.get('add_new_map') }}</a>
-      <a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
+      <a class="btn btn-info add_new" title="{{ tr.get('add_new_map') }}"><i class="fa fa-plus-circle"></i> {{ tr.get('add_new_map') }}</a>
+      <a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="fa fa-refresh"></i> {{ tr.get('reload') }}</a>
     </div>
   {% if (maps == false) %}
-    <div class="alert alert-warning"><i class="icon ion-alert-circled"></i> {{ tr.get('no_user_map_available') }}</div>
+    <div class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> {{ tr.get('no_user_map_available') }}</div>
   {% else %}
 
     <div class="row">
@@ -17,9 +17,9 @@
             <p><button class="btn btn-default btn-block openedit">{{ map|replace({'.map': ''}) }}</button></p>
           </div>
         {% endfor %}
-        
+
         <div>
-          <a href="#docs/read/usermap" class="btn btn-info btn-block"><i class="icon ion-information-circled"></i> More about maps</a>
+          <a href="#docs/read/usermap" class="btn btn-info btn-block"><i class="fa fa-info-circle"></i> More about maps</a>
         </div>
       </div>
 
@@ -28,20 +28,20 @@
     </div>
 
   {% endif %}
-</div>  
-  
+</div>
+
 <script>
-  
+
   // Reload
   $('#{{ uid }} .reload').on('click', function(){
     admin.tabs.reloadThis(this);
   });
-  
+
   // Open edit map
   $('#{{ uid }} .openedit').on('click', function(){
     $('#{{ uid }} .edit_area').load('controller.php?obj=usermap_ctrl&method=edit_map&param[]=' + $(this).text() + '.map');
   });
-  
+
   // Add new
   $('#{{ uid }} .add_new').on('click', function(){
     admin.dialog({
@@ -63,7 +63,7 @@
                 admin.tabs.reloadThis('#{{ uid }}');
               }
             }, 'json');
-            
+
           }
         },
         {
@@ -73,17 +73,17 @@
       ],
       loaded: function(){
         $('.modal-footer .btn-success').fadeOut();
-        
+
         $('#new_map_name').on('keyup', function(){
           var val = $(this).val();
-          
+
           if (!val || val === ''){
             $('.modal-footer .btn-success').fadeOut();
           } else{
-            
-            
+
+
             $(this).val(val.replace(new RegExp("([-=_\.\\s])"), ''));
-            
+
             $('.modal-footer .btn-success').fadeIn();
           }
         });

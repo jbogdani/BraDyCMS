@@ -5,9 +5,9 @@
     {% if files|length == 0 %}
       <button class="btn btn-danger delete-node" type="button">{{ tr.get('delete_download_node') }}</button>
     {% endif %}
-    <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
+    <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="fa fa-refresh"></i> {{ tr.get('reload') }}</a>
     {% for lng in langs %}
-    <a class="btn btn-default" href="#downloads/edit/{{ node }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}"><i class="icon ion-shuffle"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}</a>
+    <a class="btn btn-default" href="#downloads/edit/{{ node }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}"><i class="fa fa-random"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}</a>
     {% endfor %}
   </div>
 
@@ -31,7 +31,7 @@
                   href="{{ file.fullpath }}"
                   class="btn btn-info"
                   target="_blank">
-                  <i class="icon ion-archive"></i> {{ tr.get('open_download') }}
+                  <i class="fa fa-archive"></i> {{ tr.get('open_download') }}
                 </a>
               </p>
               <p>
@@ -39,7 +39,7 @@
                   type="button"
                   class="btn btn-danger delete"
                   data-file="{{ file.name }}">
-                  <i class="icon ion-trash-a"></i> {{ tr.get('delete') }}
+                  <i class="fa fa-trash"></i> {{ tr.get('delete') }}
                 </button>
               </p>
             </div>
@@ -85,7 +85,7 @@
                 <button
                   type="sumbit"
                   class="btn btn-success save"
-                  data-file="{{ file.name }}"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
+                  data-file="{{ file.name }}"><i class="fa fa-check"></i> {{ tr.get('save') }}</button>
               </p>
             </div>
 

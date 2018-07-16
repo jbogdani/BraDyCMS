@@ -3,23 +3,23 @@
 
 <hr />
 <div class="row">
-  
+
   <div class="col-sm-5">
     <p class="lead">{{ tr.sget('you_are_running_v', curr_v) }}</p>
     <p>
-      <button class="btn btn-info btn-lg check_update"><i class="icon ion-play"></i> {{ tr.get('check_for_updates') }}</button>
+      <button class="btn btn-info btn-lg check_update"><i class="fa fa-play-circle"></i> {{ tr.get('check_for_updates') }}</button>
     </p>
   </div>
-  
+
   <div class="col-sm-7 check_result">
   </div>
-  
+
 </div>
 
 </div>
 
 <script>
   $('#{{ uid }} .check_update').on('click', function(){
-    $('#{{ uid }} .check_result').html('<i class="icon ion-load-c ion-loading-c"></i>').load('controller.php?obj=update_ctrl&method=check');
+    $('#{{ uid }} .check_result').html('<i class="fa fa-circle-o-notch fa-spin"></i>').load('controller.php?obj=update_ctrl&method=check');
   });
 </script>

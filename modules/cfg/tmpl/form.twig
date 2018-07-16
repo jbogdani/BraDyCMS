@@ -596,15 +596,15 @@
           <a title="Strong password example"
           target="_blank"
           href="http://passwordsgenerator.net/?length=8&symbols=1&numbers=1&lowercase=1&uppercase=1&similar=1&ambiguous=0&client=0&autoselect=1">
-            <i class="icon ion-help-buoy"></i>
+            <i class="fa fa-life-ring"></i>
           </a>
       </div>
     </div>
     <div class="col-sm-2">
       <button class="btn btn-info encrypt"
               type="button"
-              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-        <i class="icon ion-ios-locked-outline"></i> {{ tr.get('one_way_encrypt_passw') }}
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading....">
+        <i class="fa fa-locked"></i> {{ tr.get('one_way_encrypt_passw') }}
       </button>
     </div>
   </div>
@@ -622,8 +622,8 @@
       <button class="btn btn-success btn-lg btn-block submit"
               type="submit"
               id="submit-{{ uid }}"
-              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-        <i class="icon ion-ios-checkmark-outline"></i> {{ tr.get('save') }}
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading....">
+        <i class="fa fa-check-outline"></i> {{ tr.get('save') }}
       </button>
     </div>
 
@@ -631,8 +631,8 @@
       <button class="btn btn-warning btn-lg btn-block"
               type="button"
               id="trash-{{ uid }}"
-              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-        <i class="icon ion-ios-trash-outline"></i> {{ tr.get('empty_trash')}}
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading....">
+        <i class="fa fa-trash-o"></i> {{ tr.get('empty_trash')}}
       </button>
     </div>
 
@@ -640,8 +640,8 @@
       <button class="btn btn-warning btn-lg btn-block"
               type="button"
               id="cache-{{ uid }}"
-              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-        <i class="icon ion-ios-trash-outline"></i> {{ tr.get('empty_cache')}}
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading....">
+        <i class="fa fa-trash-o"></i> {{ tr.get('empty_cache')}}
       </button>
       <p class="text-muted">{{ tr.get('cache_help_text') }}</p>
     </div>
@@ -650,8 +650,8 @@
       <button class="btn btn-warning btn-lg btn-block"
               type="button"
               id="htaccess-{{ uid }}"
-              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-        <i class="icon ion-ios-checkmark-outline"></i> {{ tr.get('update_htaccess')}}
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading....">
+        <i class="fa fa-check-outline"></i> {{ tr.get('update_htaccess')}}
       </button>
       <p class="text-muted">If you have changed the relative path of the website
         you should update the .htaaccess file in order, otherwise you will experience

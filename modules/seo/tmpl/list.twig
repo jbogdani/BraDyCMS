@@ -3,10 +3,10 @@
 
   <div class="btn-group" style="padding:20px 0;">
     <a class="btn btn-info add_new" title="{{ tr.get('add_new_seo') }}">
-      <i class="icon ion-plus"></i> {{ tr.get('add_new_seo') }}
+      <i class="fa fa-plus-circle"></i> {{ tr.get('add_new_seo') }}
     </a>
     <a class="btn btn-default reload" title="{{ tr.get('reload') }}">
-      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+      <i class="fa fa-refresh"></i> {{ tr.get('reload') }}
     </a>
   </div>
 
@@ -51,7 +51,7 @@ var Seo = {
       html: '{{ tr.get('confirm_delete') }}',
       buttons: [
                 {
-                  text: '<i class="icon ion-trash-a"></i> {{ tr.get('delete') }}',
+                  text: '<i class="fa fa-trash"></i> {{ tr.get('delete') }}',
                   addclass: 'btn-danger',
                   action: 'close',
                   click: function(){
@@ -85,7 +85,7 @@ var Seo = {
       param: [id, lang],
       buttons: [
                 {
-                  text: '<i class="icon ion-checkmark"></i> {{ tr.get('save') }}',
+                  text: '<i class="fa fa-check"></i> {{ tr.get('save') }}',
                   addclass: 'btn-success',
                   action: 'close',
                   click: function(){
@@ -131,13 +131,13 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
       "mData":  function(row){
         return '<div class="btn-group">'
           // edit button
-          + '<a class="btn btn-default btn-sm" onclick="Seo.edit(' + row.id + ')" title="{{ tr.get('edit') }}"><i class="icon ion-edit"></i></a>'
+          + '<a class="btn btn-default btn-sm" onclick="Seo.edit(' + row.id + ')" title="{{ tr.get('edit') }}"><i class="fa fa-pencil"></i></a>'
           // translate buttons
           {% for lang in cfg_langs %}
-            + ' <a class="btn btn-default btn-sm" onclick="Seo.translate('+ row.id +', \'{{ lang.id }}\')" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="icon ion-shuffle"></i> {{ lang.id|upper }}</a>'
+            + ' <a class="btn btn-default btn-sm" onclick="Seo.translate('+ row.id +', \'{{ lang.id }}\')" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="fa fa-random"></i> {{ lang.id|upper }}</a>'
           {% endfor %}
           //  delete button
-          + '<a class="btn btn-default btn-sm" onclick="Seo.delete('+ row.id +')" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
+          + '<a class="btn btn-default btn-sm" onclick="Seo.delete('+ row.id +')" title="{{ tr.get('delete') }}"><i class="fa fa-trash"></i></a>'
           + '</div>'
       }, "orderable": false
     }

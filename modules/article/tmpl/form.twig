@@ -4,7 +4,7 @@
   <div class="btn-group" style="padding:20px 0;">
     <a class="btn btn-info" href="#article/addNew"
        title="{{ tr.get('add_new_article') }}">
-      <i class="icon ion-plus"></i>
+      <i class="fa fa-plus-circle"></i>
       {{ tr.get('add_new_article') }}
     </a>
 
@@ -13,14 +13,14 @@
         <a href="#article/translate/{{ lang.id }}/{{ art.id }}"
            class="btn btn-default"
            title="{{ tr.sget('translate_article_in', lang.string) }}">
-          <i class="icon ion-shuffle"></i>
+          <i class="fa fa-random"></i>
           {{ lang.id|upper }}
         </a>
       {% endfor %}
     {% endif %}
     <a class="btn btn-default reload"
        title="{{ tr.get('reload') }}">
-      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+      <i class="fa fa-refresh"></i> {{ tr.get('reload') }}
     </a>
   </div>{# End of main button menu #}
 
@@ -28,18 +28,18 @@
 
     <div class="btn-group">
       <button class="btn btn-success" type="submit"
-              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-        <i class="icon ion-checkmark"></i> {{ tr.get('save') }}
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading....">
+        <i class="fa fa-check"></i> {{ tr.get('save') }}
       </button>
 
       {% if art.id %}
       <button type="button" class="btn btn-default preview" >
-        <i class="icon ion-monitor"></i> {{ tr.get('preview_draft') }}
+        <i class="fa fa-desktop"></i> {{ tr.get('preview_draft') }}
       </button>
       {% endif %}
 
       <button class="btn btn-default" type="reset">
-        <i class="icon ion-close"></i> {{ tr.get('reset') }}
+        <i class="fa fa-times"></i> {{ tr.get('reset') }}
       </button>
     </div>
 
@@ -47,7 +47,7 @@
     <hr />
     <div class="form-group">
       <div class="input-group">
-       <div class="input-group-addon"><i class="icon ion-pricetag"></i> {{ tr.get('tags') }}</div>
+       <div class="input-group-addon"><i class="fa fa-tags"></i> {{ tr.get('tags') }}</div>
        <input class="form-control" type="text" name="tags" value="{{ art.tags|join(',') }}" />
       </div>
     </div>
@@ -214,7 +214,7 @@
                     <img src ="{{ file }}?{{ uid }}" class="img-responsive"/>
                     <br />
                     <p><a class="delete_attach_img btn btn-danger btn-block">
-                        <i class="icon ion-trash-a"></i>
+                        <i class="fa fa-trash"></i>
                         {{ tr.get('delete') }}</a>
                     </p>
                   {% endif %}
@@ -244,7 +244,7 @@
                   <p>{{file}}<br /><input type="text" value="sites/default/images/articles/media/{{ art.id }}/{{ file }}" /></p>
                 {% endfor %}
                 <hr />
-                <a class="btn btn-info btn-block" href="#media/all/articles/media/{{ art.id }}"><i class="icon ion-share"></i> {{ tr.get('open') }}</a>
+                <a class="btn btn-info btn-block" href="#media/all/articles/media/{{ art.id }}"><i class="fa fa-share-alt"></i> {{ tr.get('open') }}</a>
               {% endif %}
             </div>
 
@@ -262,14 +262,14 @@
             <div class="panel-body media_content">
               {% if art_gallery %}
                 <a href="#galleries/edit/{{ art.textid }}" class="btn btn-info btn-block">
-                  <i class="icon ion-forward"></i> {{ tr.get('open')}}
+                  <i class="fa fa-forward"></i> {{ tr.get('open')}}
                 </a>
               {% else %}
                 <p class="text-danger">{{ tr.get('no_article_gallery') }}</p>
               </div>
               <div class="panel-footer">
                 <a class="btn btn-success btn-block create_gallery" data-name="{{ art.textid }}">
-                  <i class="icon ion-wand"></i> {{ tr.get('create') }}
+                  <i class="fa fa-magic"></i> {{ tr.get('create') }}
                 </a>
               {% endif %}
             </div>
@@ -284,18 +284,18 @@
 
     <div class="btn-group">
       <button class="btn btn-success" type="submit"
-              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading....">
-        <i class="icon ion-checkmark"></i> {{ tr.get('save') }}
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading....">
+        <i class="fa fa-check"></i> {{ tr.get('save') }}
       </button>
 
       {% if art.id %}
       <button type="button" class="btn btn-default preview">
-        <i class="icon ion-monitor"></i> {{ tr.get('preview_draft') }}
+        <i class="fa fa-desktop"></i> {{ tr.get('preview_draft') }}
       </button>
       {% endif %}
 
       <button class="btn btn-default" type="reset">
-        <i class="icon ion-close"></i> {{ tr.get('reset') }}
+        <i class="fa fa-times"></i> {{ tr.get('reset') }}
       </button>
     </div>
 

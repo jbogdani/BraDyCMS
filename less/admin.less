@@ -6,16 +6,18 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,700,700italic);
 
-@import '../bower_components/bootstrap/less/bootstrap.less';
+@import '../frontLibs/bootstrap3/less/variables.less';
+@import '../frontLibs/bootstrap3/less/mixins/vendor-prefixes.less';
+@import '../frontLibs/bootstrap3/less/mixins/clearfix.less';
+@import '../frontLibs/bootstrap3/less/forms.less';
 
 @font-family-sans-serif: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
-@icon-font-path: "../bower_components/bootstrap/dist/fonts/";
 
-.icon{
+.icon, .fa{
   display: inline-block;
 
   &.big{
-    font-size: 1.5em;
+    font-size: 1.3em;
     line-height: 1 !important;
   }
 }
@@ -75,21 +77,18 @@ html{
 }
 
 #navigation{
-  width: 150px;
-  height: @navbar-height;
-  display: block;
-  vertical-align: middle;
-
+  color: #fff !important;
+  padding: 10px;
+  margin: 10px;
 
   &:hover{
     text-decoration: none;
-    background: lighten(@navbar-inverse-bg, 3%);
+    background: lighten(@navbar-inverse-bg, 10%);
   }
 
   i{
-    font-size: 2.5em;
-    vertical-align: middle;
-    margin: 0 10px;
+    margin-top: 15px;
+
   }
 
 }

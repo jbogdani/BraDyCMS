@@ -64,13 +64,13 @@
             <input type="text" name="sort" value="{{ menu.sort }}" />
           </div>
         </div>
-        
-        <div class="btn-group">
-          <button class="btn btn-success" type="submit"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
 
-          <button class="btn btn-default" type="button" onclick="admin.tabs.reloadThis(this)"><i class="icon ion-refresh"></i> Reload</button>
+        <div class="btn-group">
+          <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ tr.get('save') }}</button>
+
+          <button class="btn btn-default" type="button" onclick="admin.tabs.reloadThis(this)"><i class="fa fa-refresh"></i> Reload</button>
           {% if menu.id %}
-          <button class="btn btn-danger delete" type="button" data-id="{{ menu.id }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
+          <button class="btn btn-danger delete" type="button" data-id="{{ menu.id }}"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button>
           {% endif %}
 
         </div>
@@ -90,11 +90,11 @@
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse1{{ uid }}">
-                <i class="icon ion-document-text"></i> {{ tr.get('articles') }}
+                <i class="fa fa-file-text-o"></i> {{ tr.get('articles') }}
               </a>
             </h4>
           </div>
-          
+
           <div id="collapse1{{ uid }}" class="panel-collapse collapse">
             <div class="panel-body" style="max-height:300px; overflow: auto;">
               <div class="has-success">
@@ -102,7 +102,7 @@
               </div>
               <div class="tagscontainer">
                 {% for art in articles %}
-                  <button type="button" class="btn btn-default art search-text"><i class="icon ion-document-text text-muted"></i> {{ art }}</button>
+                  <button type="button" class="btn btn-default art search-text"><i class="fa fa-file-text-o text-muted"></i> {{ art }}</button>
                 {% endfor %}
               </div>
             </div>
@@ -115,20 +115,20 @@
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse2{{ uid }}">
-              <i class="icon ion-pricetag"></i> {{ tr.get('tags') }}
+              <i class="fa fa-tags"></i> {{ tr.get('tags') }}
               </a>
             </h4>
           </div>
 
           <div id="collapse2{{ uid }}" class="panel-collapse collapse">
             <div class="panel-body">
-              
+
               <div class="has-success">
                 <input type="text" placeholder="{{ tr.get('search') }}" class="search form-control" style="margin-bottom: 10px;" />
               </div>
               <div class="tagscontainer">
                 {% for tag in tags %}
-                  <button type="button" class="btn btn-default tags search-text"><i class="icon ion-pricetag text-muted"></i> {{ tag }}</button>
+                  <button type="button" class="btn btn-default tags search-text"><i class="fa fa-tags text-muted"></i> {{ tag }}</button>
                 {% endfor %}
               </div>
             </div>
@@ -136,35 +136,35 @@
         </div>
         {% endif %}
 
-        
-        
-        
+
+
+
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{ uid }}" href="#collapse3{{ uid }}">
-                <i class="icon ion-more"></i> {{ tr.get('other') }}
+                <i class="fa  fa-chevron-circle-down"></i> {{ tr.get('other') }}
               </a>
             </h4>
           </div>
 
           <div id="collapse3{{ uid }}" class="panel-collapse collapse">
             <div class="panel-body">
-              <button class="btn btn-default home"><i class="icon ion-home text-muted"></i> {{ tr.get('link2home') }}</button>
-              <button class="btn btn-default none"><i class="icon ion-close text-muted"></i> {{ tr.get('link2none') }}</button>
+              <button class="btn btn-default home"><i class="fa fa-home text-muted"></i> {{ tr.get('link2home') }}</button>
+              <button class="btn btn-default none"><i class="fa fa-times text-muted"></i> {{ tr.get('link2none') }}</button>
             </div>
           </div>
         </div>
 
       </div>
-      
-      
-      
+
+
+
       {% if menu.id %}
 
       <div class="panel-group" id="menu-acc{{ uid }}">
         <h3>{{ tr.get('translations') }}</h3>
-        
+
         {% for lang in cfg_langs %}
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -178,11 +178,11 @@
           <div id="menu-collapse{{ loop.index }}{{ uid }}" class="panel-collapse collapse">
             <div class="panel-body" style="max-height:300px; overflow: auto;">
               <form class="menuTranslation form-horizontal" action="javascript: void(0);">
-                
+
                 <input type="hidden" name="id" value="{{ translated[lang.id]['id'] }}" />
-                
+
                 <input type="hidden" name="lang" value="{{ lang.id }}" />
-                
+
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ tr.get('text') }}</label>
                   <div class="col-sm-10">
@@ -195,7 +195,7 @@
                     <input type="text" name="title" value="{{ translated[lang.id]['title'] }}" />
                   </div>
                 </div>
-                
+
                 <!-- STATUS -->
                 <div class="row form-group">
                   <div class="col-sm-2"><label>Status</label></div>
@@ -206,9 +206,9 @@
                     </select>
                   </div>
                 </div>
-                
+
                 <div class="btn-group">
-                  <button type="submit" class="btn btn-success"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
+                  <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> {{ tr.get('save') }}</button>
                 </div>
               </form>
             </div>
@@ -216,7 +216,7 @@
         </div>
         {% endfor %}
       </div>
-      
+
       {% endif %}
     </div>
   </div>
@@ -224,27 +224,27 @@
 </div>
 
 <script>
-  
+
   // Filter tags and articles buttons
   $('#{{ uid }} .search').on('keyup', function(){
     admin.filterList($(this).val(), $('#{{ uid }} .tagscontainer'));
   });
-  
-  // Articles button click  
+
+  // Articles button click
   $('#{{ uid }} button.art').click(function(){
     $('#menu_edit{{ uid }} input[name="href"]').val('' + $.trim($(this).text()));
   });
-  
+
   // Tags button click
   $('#{{ uid }} button.home').click(function(){
     $('#menu_edit{{ uid }} input[name="href"]').val('./');
   });
-  
+
   // None button click
   $('#{{ uid }} button.none').click(function(){
     $('#menu_edit{{ uid }} input[name="href"]').val('#');
   });
-    
+
   $('#{{ uid }} button.tags').click(function(){
     var addTag = $(this).text().trim().replace(' ', '+'),
     existTag = $('#menu_edit{{ uid }} input[name="href"]').val(),
@@ -266,7 +266,7 @@
     }
     $('#menu_edit{{ uid }} input[name="href"]').val(href.replace(' ', '+'));
   });
-    
+
   $('#{{ uid }} table.list').dataTable({
     "bPaginate": false,
     "bInfo": false,
@@ -278,7 +278,7 @@
 
 
   function setValue(){
-    var menu =$('#menu_edit{{ uid }}').find('input[name="menu"]').val(); 
+    var menu =$('#menu_edit{{ uid }}').find('input[name="menu"]').val();
 
     var subof = $('#menu_edit{{ uid }}').find('select[name="subof"]');
     if (menu){
@@ -290,9 +290,9 @@
       }, 'json');
     }
   }
-    
+
   setValue();
-    
+
   {% if menu_list %}
   $('#menu_edit{{ uid }} input[name="menu"]').select2({
       placeholder: "{{ tr.get('select_menu') }}",
@@ -310,25 +310,25 @@
       }
     });
   {% endif %}
-    
+
   $('#menu_edit{{ uid }} input[name="menu"]').change(function(){
     setValue();
   });
-    
-    
+
+
   {% if menu.id %}
-      
+
   $('#{{ uid }} form.menuTranslation').on('submit', function(){
-    
+
     $.post('controller.php?obj=menu_ctrl&method=saveTransl&param[]={{ menu.id }}', $(this).serialize(), function(data){
       admin.message(data.text, data.status);
-      
+
       if (data.status == 'success'){
         admin.tabs.reloadThis('#{{ uid }}');
       }
     }, 'json');
   });
-    
+
   $('#{{ uid }} button.delete').click(function(){
     var $this = $(this);
     admin.dialog({
@@ -371,10 +371,10 @@
         if (data.type == 'success'){
           admin.tabs.closeActive('menu/addNew');
         }
-        {% endif %} 
+        {% endif %}
       },
       'json'
-    );      
+    );
   });
-  
+
 </script>

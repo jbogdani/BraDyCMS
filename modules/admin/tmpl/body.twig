@@ -4,7 +4,8 @@
 <div id="wrapper">
   <div class="navbar navbar-inverse  navbar-fixed-top">
     <div class="pull-left">
-      <a id="navigation" class="toggleMenu" href="#"><i class="icon ion-navicon"></i> bdus.CMS</a>
+      <a id="navigation" class="toggleMenu" href="#" title="bdus.CMS">
+        <i class="fa fa-bars big" aria-hidden="true"></i></a>
     </div>
 
     <div class="pull-right hidden-xs">
@@ -12,31 +13,33 @@
       <ul class="shorthands">
         <li><a href="#article/all" title="{{ tr.get('show_all_articles') }}"
              data-toggle="tooltip" data-placement="bottom">
-            <i class="icon big ion-ios-eye-outline"></i>
+             <i class="fa fa-eye big" aria-hidden="true"></i>
           </a></li>
         <li><a href="#article/addNew" title="{{ tr.get('add_new_article') }}"
                data-toggle="tooltip" data-placement="bottom">
-            <i class="icon big ion-ios-plus-outline"></i>
+             <i class="fa fa-plus-circle big" aria-hidden="true"></i>
           </a></li>
         <li><a href="#menu/all" title="{{ tr.get('show_all_menus') }}"
-               data-toggle="tooltip" data-placement="bottom">
-            <i class="icon big ion-navicon"></i>
+             data-toggle="tooltip" data-placement="bottom">
+             <i class="fa fa-th-list big" aria-hidden="true"></i>
           </a></li>
         <li><a href="#media/all" title="{{ tr.get('media') }}"
                data-toggle="tooltip" data-placement="bottom">
-            <i class="icon big ion-ios-photos-outline"></i>
+             <i class="fa fa-picture-o big" aria-hidden="true"></i>
           </a></li>
         <li><a href="./" target="_blank" title="{{ tr.get('view_site') }}"
                data-toggle="tooltip" data-placement="bottom">
-            <i class="icon big ion-ios-monitor-outline"></i>
+            <i class="fa fa-desktop big"></i>
           </a></li>
         <li><a href="#docs/read/readme" title="{{ tr.get('docs') }}"
                data-toggle="tooltip" data-placement="bottom">
-            <i class="icon big ion-ios-information-outline"></i></a>
+             <i class="fa fa-info-circle big"></i>
+          </a>
+        </li>
 
         <li><a href="#log/out" title="{{ tr.get('logout') }}"
                data-toggle="tooltip" data-placement="bottom">
-            <i class="icon big ion-log-out"></i>
+            <i class="fa fa-sign-out big"></i>
           </a></li>
       </ul>
     </div>
@@ -49,31 +52,31 @@
         <!-- Articles -->
         <li>
           <a href="#" class="sub-toggle">
-            <i class="icon big ion-ios-compose-outline"></i>
+            <i class="fa fa-file-text" aria-hidden="true"></i>
             {{ tr.get('articles') }} <b class="caret"></b>
           </a>
           <ul class="sub">
             <li>
               <a href="#article/addNew">
-                <i class="icon big ion-ios-plus-outline"></i>
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 {{ tr.get('add_new_article') }}
               </a>
             </li>
             <li>
               <a href="#article/all">
-                <i class="icon big ion-ios-eye-outline"></i>
+                <i class="fa fa-eye" aria-hidden="true"></i>
                 {{ tr.get('show_all_articles') }}
               </a>
             </li>
             <li>
               <a href="#tags/manage">
-                <i class="icon ion-pricetags"></i>
+                <i class="fa fa-tags" aria-hidden="true"></i>
                 {{ tr.get('tag_manager') }}
               </a>
             </li>
             <li>
               <a href="#protectedtags/users">
-                <i class="icon big ion-ios-locked-outline"></i>
+                <i class="fa fa-lock" aria-hidden="true"></i>
                 {{ tr.get('protected_tags') }}
               </a>
             </li>
@@ -83,19 +86,19 @@
         <!-- Menus -->
         <li>
           <a href="#" class="sub-toggle">
-            <i class="icon big ion-navicon"></i>
+            <i class="fa fa-th-list" aria-hidden="true"></i>
             {{ tr.get('menu') }} <b class="caret"></b>
           </a>
           <ul class="sub">
             <li>
               <a href="#menu/addNew">
-                <i class="icon big ion-ios-plus-outline"></i>
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 {{ tr.get('add_new_menu_item') }}
               </a>
             </li>
             <li>
               <a href="#menu/all">
-                <i class="icon big ion-ios-eye-outline"></i>
+                <i class="fa fa-th-list" aria-hidden="true"></i>
                 {{ tr.get('show_all_menus') }}
               </a>
             </li>
@@ -105,19 +108,19 @@
         <!-- Media -->
         <li>
           <a href="#" class="sub-toggle">
-            <i class="icon big ion-ios-camera-outline"></i>
+            <i class="fa fa-picture-o" aria-hidden="true"></i>
             {{ tr.get('media') }} <b class="caret"></b>
           </a>
           <ul class="sub">
             <li>
               <a href="#media/all">
-                <i class="icon big ion-image"></i>
+                <i class="fa fa-picture-o" aria-hidden="true"></i>
                 {{ tr.get('media') }}
               </a>
             </li>
             <li>
               <a href="#galleries/all">
-                <i class="icon big ion-images"></i>
+                <i class="fa fa-picture-o" aria-hidden="true"></i>
                 {{ tr.get('galleries') }}
               </a>
             </li>
@@ -127,46 +130,46 @@
         <!-- Plugins -->
         <li>
           <a href="#" class="sub-toggle">
-            <i class="icon big ion-pull-request"></i>
+            <i class="fa fa-code-fork"></i>
             {{ tr.get('plugins') }} <b class="caret"></b>
           </a>
           <ul class="sub">
               <li>
                 <a href="#userform/view">
-                  <i class="icon big ion-clipboard"></i>
+                  <i class="fa fa-check-square"></i>
                   {{ tr.get('user_forms') }}
                 </a>
               </li>
               <li>
                 <a href="#usermap/view">
-                  <i class="icon big ion-map"></i>
+                  <i class="fa fa-map-o"></i>
                   {{ tr.get('user_maps') }}
                 </a>
               </li>
               <li>
                 <a href="#downloads/all">
-                  <i class="icon big ion-ios-cloud-download-outline"></i>
+                  <i class="fa fa-cloud-download"></i>
                   {{ tr.get('downloads') }}
                 </a>
               </li>
 
               <li>
                 <a href="#seo/all">
-                  <i class="icon big ion-arrow-graph-up-right"></i>
+                  <i class="fa fa-line-chart"></i>
                   {{ tr.get('seo_manager') }}
                 </a>
               </li>
 
               <li>
                 <a href="#download/all">
-                  <i class="icon big ion-ios-pulse"></i>
+                  <i class="fa fa-area-chart"></i>
                   {{ tr.get('download_count') }}
                 </a>
               </li>
 
               <li>
                 <a href="#tmpldata/view">
-                  <i class="icon big ion-ios-albums-outline"></i>
+                  <i class="fa fa-asterisk"></i>
                   {{ tr.get('tmpl_data') }}
                 </a>
               </li>
@@ -175,7 +178,7 @@
             {% for mod in custom_mods %}
               <li>
                 <a href="./admin#plugins/run/{{ mod }}">
-                  <i class="icon big ion-wand"></i>
+                  <i class="fa fa-magic"></i>
                   {{ tr.get(mod) }}
                 </a>
               </li>
@@ -186,23 +189,18 @@
         <!-- Language -->
         <li>
           <a href="#" class="sub-toggle">
-            <i class="icon big ion-earth"></i>
+            <i class="fa fa-globe"></i>
             {{ tr.get('language') }} <b class="caret"></b>
           </a>
           <ul class="sub">
             <li>
               <a href="#lang/change/it">
-                <i class="icon big ion-ios-arrow-thin-right"></i> Italiano
+                <i class="fa fa-arrow-circle-o-right"></i> Italiano
               </a>
             </li>
             <li>
               <a href="#lang/change/en">
-                <i class="icon big ion-ios-arrow-thin-right"></i> English
-              </a>
-            </li>
-            <li>
-              <a href="#lang/change/el">
-                <i class="icon big ion-ios-arrow-thin-right"></i> Ελληνικά
+                <i class="fa fa-arrow-circle-o-right"></i> English
               </a>
             </li>
           </ul>
@@ -211,45 +209,45 @@
         <!-- Config -->
         <li>
           <a href="#" class="sub-toggle">
-            <i class="icon big ion-settings"></i>
+            <i class="fa fa-sliders"></i>
             {{ tr.get('cfg_editor') }} <b class="caret"></b>
           </a>
           <ul class="sub">
             <li>
               <a href="#sys_translate/showList/front">
-                <i class="icon big ion-shuffle"></i>
+                <i class="fa fa-random"></i>
                 {{ tr.get('front_translate') }}
               </a>
             </li>
             <li>
               <a href="#cfg/edit">
-                <i class="icon big ion-wrench"></i>
+                <i class="fa fa-sliders"></i>
                 {{ tr.get('cfg_editor') }}
               </a>
             </li>
             {% if is_admin %}
             <li>
               <a href="#template/dashboard">
-                <i class="icon big ion-compose"></i>
+                <i class="fa fa-pencil-square-o"></i>
                 {{ tr.get('template_mng') }}
               </a>
             </li>
             <li>
               <a href="#sys_translate/showList/admin">
-                <i class="icon big ion-shuffle"></i>
+                <i class="fa fa-random"></i>
                 {{ tr.get('sys_translate') }}
               </a>
             </li>
             {% endif %}
             <li>
               <a href="#update/main">
-                <i class="icon big ion-ios-cloud-download-outline"></i>
+                <i class="fa fa-cloud-downoad"></i>
                 {{ tr.get('auto_updates') }}
               </a>
             </li>
             <li>
               <a href="#backup/listAll">
-                <i class="icon big ion-ios-download-outline"></i>
+                <i class="fa fa-download"></i>
                 {{ tr.get('backup_restore_db') }}
               </a>
             </li>
@@ -259,31 +257,31 @@
         <!-- Other -->
         <li>
           <a href="#" class="sub-toggle">
-            <i class="icon big ion-ios-gear-outline"></i>
+            <i class="fa fa-cog"></i>
             {{ tr.get('other') }} <b class="caret"></b>
           </a>
           <ul class="sub">
             <li>
               <a href="#changelog/show">
-                <i class="icon big ion-document-text"></i>
+                <i class="fa fa-file-text-o"></i>
                 {{ tr.get('changelog') }}
               </a>
             </li>
             <li>
               <a href="#error_log/show">
-                <i class="icon big ion-bug"></i>
+                <i class="fa fa-bug"></i>
                 {{ tr.get('error_log') }}
               </a>
             </li>
             <li>
               <a href="./" target="_blank">
-                <i class="icon big ion-ios-monitor-outline"></i>
+                <i class="fa fa-desktop big"></i>
                 {{ tr.get('view_site') }}
               </a>
             </li>
             <li>
               <a href="./admin">
-                <i class="icon big ion-ios-reload"></i>
+                <i class="fa fa-refresh"></i>
                 {{ tr.get('reload') }}
               </a>
             </li>
@@ -293,7 +291,7 @@
         <!-- Docs -->
         <li>
           <a href="#docs/read/readme">
-            <i class="icon big ion-help-buoy"></i>
+            <i class="fa fa-book"></i>
             {{ tr.get('docs') }}
           </a>
         </li>
@@ -301,7 +299,7 @@
         <!-- Exit -->
         <li>
           <a href="#log/out">
-            <i class="icon big ion-log-out"></i>
+            <i class="fa fa-sign-out big"></i>
             {{ tr.get('logout') }}
           </a>
         </li>

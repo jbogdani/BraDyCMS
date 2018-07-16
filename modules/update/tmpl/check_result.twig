@@ -10,27 +10,27 @@
       
   
     {% if status == 'updateable_warning' %}
-     <div class="alert alert-info"><i class="icon ion-information-circled"></i> {{ tr.get('updateable_warning') }}</div>
+     <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ tr.get('updateable_warning') }}</div>
     {% endif %}
     
   {% elseif status == 'already_updated' %}
     <div class="alert alert-success">
-      <i class="icon ion-checkmark"></i> {{ tr.get('already_updated') }}
+      <i class="fa fa-check"></i> {{ tr.get('already_updated') }}
     </div>
     
   {% elseif status == 'not_updateable' %}
     <div class="alert alert-danger">
-      <i class="icon ion-alert-circled"></i> {{ tr.sget('not_updateable', [remote_vers, local_vers]) }}
+      <i class="fa fa-exclamation-triangle"></i> {{ tr.sget('not_updateable', [remote_vers, local_vers]) }}
     </div>
     
   {% elseif status == 'local_dev' %}
     <div class="alert alert-danger">
-      <i class="icon ion-alert-circled"></i> {{ tr.sget('local_dev', [local_vers, remote_vers]) }}
+      <i class="fa fa-exclamation-triangle"></i> {{ tr.sget('local_dev', [local_vers, remote_vers]) }}
     </div>
   {% endif %}
   
   {% if status in ['updateable_warning', 'updateable', 'local_dev'] or branch == 'BraDyCMS-dev' %}
-    <p><button class="btn btn-success install"><i class="icon ion-archive"></i> {{ tr.get('download_install') }}</button></p>
+    <p><button class="btn btn-success install"><i class="fa fa-archive"></i> {{ tr.get('download_install') }}</button></p>
   {% endif %}
     
     <div class="update_result"></div>
@@ -68,7 +68,7 @@
         break;
       
     }
-    $('#{{ uid }} .loading').html('<i class="icon ion-load-c ion-loading-c"></i> ' + waitingMsg);
+    $('#{{ uid }} .loading').html('<i class="fa fa-circle-o-notch fa-spin"></i> ' + waitingMsg);
     
     $.get('controller.php?obj=update_ctrl&method=stepByStepInstall&step=' + step + 
       '&remoteVersion=' + remoteVersion,
@@ -77,7 +77,7 @@
         
       if (data.status === 'success'){
         $('#{{ uid }} .update_result').append('<p class="lead text-success">' +
-          '<i class="icon ion-checkmark"></i> ' + data.text +
+          '<i class="fa fa-check"></i> ' + data.text +
           '</p>');
         if (data.step === 'finished'){
           $('#{{ uid }} .loading').remove();

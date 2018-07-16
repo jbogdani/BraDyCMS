@@ -21,11 +21,11 @@ class error_log_ctrl
 
     $html = '<h2>Error log</h2>' .
         '<div class="btn-group">' .
-          '<a class="btn btn-default log-reload"><i class="icon ion-refresh"></i> Reload</a>' .
-          ($contents ? '<a class="btn btn-default log-delete"><i class="icon ion-trash-a"></i> Delete</a>' : '') .
+          '<a class="btn btn-default log-reload"><i class="fa fa-refresh"></i> Reload</a>' .
+          ($contents ? '<a class="btn btn-default log-delete"><i class="fa fa-trash"></i> Delete</a>' : '') .
         '</div>' .
         '<hr />' .
-        ($contents ? '<pre>' . htmlentities($contents) . '</pre>' : '<div class="text-success"><i class="icon ion-checkmark"></i> Error log is empty</div>')
+        ($contents ? '<pre>' . htmlentities($contents) . '</pre>' : '<div class="text-success"><i class="fa fa-check"></i> Error log is empty</div>')
         ;
 
     echo $html;

@@ -7,13 +7,13 @@
     <div class="col-sm-4 col-sm-offset-4">
       <div id="register">
         <div class="alert alert-info text-center">
-          <p class="lead"><i class="icon ion-alert-circled"></i> Hands up!</p>
+          <p class="lead"><i class="fa fa-exclamation-triangle"></i> Hands up!</p>
           <p>It seems you there is no site configured, yet!</p>
         </div>
 
         {% if preInstallErrors == false %}
           <div class="alert alert-success">
-            <i class="icon ion-checkmark"></i> Congrats! Your system is fully compatible with BraDyCMS
+            <i class="fa fa-check"></i> Congrats! Your system is fully compatible with BraDyCMS
           </div>
 
           <p class="lead">Please, register with a username (valid email address) and password.</p>
@@ -45,7 +45,7 @@
         {% else %}
 
           <div class="alert alert-danger">
-            <p><i class="icon ion-close"></i> Error! It seems that your system is not fully compatible with BraDyCMS:</p>
+            <p><i class="fa fa-times"></i> Error! It seems that your system is not fully compatible with BraDyCMS:</p>
             <ol class="lead">
               {% for error in preInstallErrors %}
                 <li>{{ error }}</li>
@@ -60,7 +60,7 @@
       </div>
       <div id="message" style="display:none;">
         <div class="alert alert-success">
-          <p class="lead"><i class="icon ion-checkmark-circled"></i> Wonderful! Everything went fine!</p>
+          <p class="lead"><i class="fa fa-check-circled"></i> Wonderful! Everything went fine!</p>
         </div>
 
         <p>Now you can login to your new web site control panel, but <strong>remember</strong> there is still some work to do:</p>
@@ -74,7 +74,7 @@
           <li class="list-group-item">6. Report any bug you might find on <a href="http://github.com/jbogdani/BraDyCMS/issues" target="_blank">Github</a></li>
         </ul>
 
-        <a targe="_blank" class="btn btn-success btn-block" href="./admin"><i class="icon ion-log-in"></i> Go to login page</a>
+        <a targe="_blank" class="btn btn-success btn-block" href="./admin"><i class="fa fa-sign-in"></i> Go to login page</a>
       </div>
     </div>
   </div>

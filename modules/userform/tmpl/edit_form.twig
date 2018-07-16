@@ -1,55 +1,55 @@
 <div id="{{ uid }}">
-  
+
   <div class="row">
     <div class="col-md-4 text-muted"><h1>{{ form|replace({'.json': ''}) }}</h1></div>
-    
+
     <div class="col-md-4 text-center">Syntax validation: <span class="validate"></span></div>
-    
+
     <div class="col-md-4 text-right">
-      <button class="btn btn-success save-button"><i class="icon ion-checkmark"></i> {{ tr.get('save') }}</button>
-      <button class="btn btn-danger delete-button"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
+      <button class="btn btn-success save-button"><i class="fa fa-check"></i> {{ tr.get('save') }}</button>
+      <button class="btn btn-danger delete-button"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button>
     </div>
   </div>
-  
+
   <pre ContentEditable="true" class="prettyprint code">{{ content }}</pre>
-  
-  
+
+
 
 </div>
 
 
 <script>
-  
+
   function validateSyntax(){
     try {
       var c = $.parseJSON($('#{{ uid }} .code').text());
-      
+
       if (c){
-        $('#{{ uid }} .validate').html('<i class="text-success icon ion-checkmark" style="font-size: 3em;"></i>');
+        $('#{{ uid }} .validate').html('<i class="text-success fa fa-check" style="font-size: 3em;"></i>');
         $('#{{ uid }} .save-button').fadeIn();
       }
     }
     catch (err) {
-      $('#{{ uid }} .validate').html('<i class="text-danger icon ion-fireball" style="font-size: 3em;"></i>');
+      $('#{{ uid }} .validate').html('<i class="text-danger fa fa-fire" style="font-size: 3em;"></i>');
       $('#{{ uid }} .save-button').fadeOut();
     }
   }
-  
-  
+
+
   validateSyntax();
-  
-  
+
+
   $('#{{ uid }} .code').on('keyup', function(){
     validateSyntax();
   });
-  
+
   $('#{{ uid }} .save-button').on('click', function(){
     var html = $('#{{ uid }} .code').html().replace(/<div>/, "\n").replace('/<\/div>', '').replace(/<br>/, "\n");
     $.post('controller.php?obj=userform_ctrl&method=save&param[]={{ form }}', {data: $.parseJSON($(html).text())}, function(data){
       admin.message(data.text, data.status);
     }, 'json');
   });
-  
+
   $('#{{ uid }} .delete-button').on('click', function(){
     admin.dialog({
       html:'<h3>' + admin.tr('confirm_delete_form') + '<h3>',
@@ -74,7 +74,6 @@
       ]
     });
   });
-  
+
   window.prettyPrint && prettyPrint();
 </script>
-  

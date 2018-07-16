@@ -36,7 +36,7 @@ var userform = {
       if (!stop){
         $.post('controller.php?obj=userform_ctrl&method=process&param[]=' + name, $(this).serialize(), function(data){
           if (data.status == 'success'){
-            messageContainer.removeClass('text-danger').addClass('text-success').html('<i class="icon ion-checkmark"></i>');
+            messageContainer.removeClass('text-danger').addClass('text-success').html('<i class="fa fa-check"></i>');
             $('#' + formId + ' :input:not(.btn)').val('');
           } else{
             messageContainer.removeClass('text-success').addClass('text-danger');

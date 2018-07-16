@@ -17,7 +17,7 @@ class backup_ctrl extends Controller
     if (!file_exists(SITE_DIR . 'cfg/database.sqlite'))
     {
       $html = '<div class="bg-danger" style="padding: 20px;">'
-        . '<p class="lead"><i class="icon ion-alert-circled"></i> ' . tr::get('function_available_only_for_sqlite_database'). '</p>'
+        . '<p class="lead"><i class="fa fa-exclamation-triangle"></i> ' . tr::get('function_available_only_for_sqlite_database'). '</p>'
         . '</div>';
       
       echo $html;

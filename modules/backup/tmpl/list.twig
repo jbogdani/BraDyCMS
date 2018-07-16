@@ -27,16 +27,16 @@
       <td>{{ file.size}} MB</td>
       <td>
         {% if is_admin %}
-          <button class="btn btn-danger delete" data-id="{{ file.name }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
-          <button class="btn btn-danger restore" data-id="{{ file.name }}"><i class="icon ion-reply"></i> {{ tr.get('restore') }}</button>
+          <button class="btn btn-danger delete" data-id="{{ file.name }}"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button>
+          <button class="btn btn-danger restore" data-id="{{ file.name }}"><i class="fa fa-retweet"></i> {{ tr.get('restore') }}</button>
         {% endif %}
       </td>
     </tr>
-    
+
   {% else %}
 
     <div class="bg-warning" style="padding: 20px;">
-      <p class="lead"><i class="icon ion-alert-circled"></i> {{ tr.get('no_available_backup') }}</p>
+      <p class="lead"><i class="fa fa-exclamation-triangle"></i> {{ tr.get('no_available_backup') }}</p>
     </div>
   {% endfor %}
   </table>
@@ -45,14 +45,14 @@
 
     <p>
       <button class="btn btn-success create_backup"
-              data-loading-text="<i class='icon ion-load-c ion-loading-c'></i> Loading...."
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading...."
               onclick="$(this).button('loading');"
-              ><i class="icon ion-hammer"></i> {{ tr.get('create_backup') }}</button>
+              ><i class="fa fa-floppy-o"></i> {{ tr.get('create_backup') }}</button>
     </p>
   </div>
 </div>
-    
-    
+
+
 <script>
   $('#{{ uid }} .create_backup').on('click', function(){
     var $this = this;
@@ -60,17 +60,17 @@
       if (data.status === 'success'){
         admin.tabs.reloadThis('#{{ uid }}');
       }
-      
+
       admin.message(data.text, data.status);
     });
-    
+
   });
-  
+
 {% if is_admin %}
   $('#{{ uid }} .delete').on('click', function(){
-    
+
     var file = $(this).data('id');
-    
+
     admin.dialog({
       'html': '<h3>' + admin.tr('confirm_delete_backup') + '</h3>',
       'buttons': [
@@ -83,9 +83,9 @@
               if (data.status === 'success'){
                 admin.tabs.reloadThis('#{{ uid }}');
               }
-              
+
               admin.message(data.text, data.status);
-              
+
               $('#modal').modal('hide');
             });
           }
@@ -96,13 +96,13 @@
         }
       ]
     });
-    
+
   });
-  
+
   $('#{{ uid }} .restore').on('click', function(){
-    
+
     var file = $(this).data('id');
-    
+
     admin.dialog({
       'html': '<h3>' + admin.tr('confirm_restore_backup') + '</h3>',
       'buttons': [
@@ -111,14 +111,14 @@
           'addclass': 'btn-danger',
           'glyphicon': 'share-alt',
           'click': function(){
-            
+
             $.getJSON('controller.php?obj=backup_ctrl&method=restoreBackup&param[]=' + file, function(data){
               if (data.status === 'success'){
                 admin.tabs.reloadThis('#{{ uid }}');
               }
-              
+
               admin.message(data.text, data.status);
-              
+
               $('#modal').modal('hide');
             });
           }

@@ -46,25 +46,39 @@ class admin_ctrl extends Controller
 
   public function showMainAdmin()
   {
+    $b = './frontLibs/';
     foreach ([
-      './bower_components/font-awesome/css/font-awesome.min.css',
-      './bower_components/Ionicons/css/ionicons.min.css',
-      './bower_components/pnotify/dist/pnotify.css',
-      './bower_components/select2/select2.css',
-      './bower_components/select2/select2-bootstrap.css',
-      './bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
-      './bower_components/google-code-prettify/bin/prettify.min.css',
-      './bower_components/datatables/media/css/dataTables.bootstrap.min.css',
-      './bower_components/fine-uploader/dist/fine-uploader.min.css',
-      './css/admin.css'
+      "{$b}font-awesome/css/font-awesome.min.css",
+      "{$b}select2/dist/css/select2.min.css",
+      "{$b}select2-bootstrap-theme/dist/select2-bootstrap.min.css",
+      "{$b}bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css",
+      "{$b}google-code-prettify/bin/prettify.min.css",
+      "{$b}fine-uploader/fine-uploader/fine-uploader.min.css",
+      "./css/admin.css"
     ] as $f) {
+      if (!file_exists($f)) {
+        throw new Exception("File not found:" . $f);
+      }
       $css[$f] = sha1_file($f);
     }
 
     foreach ([
-      './bower_components/tinymce/tinymce.js',
-      './js/admin.min.js'
+      "{$b}jquery/dist/jquery.min.js",
+      "{$b}bootstrap3/dist/js/bootstrap.min.js",
+      "{$b}datatables.net/js/jquery.dataTables.min.js",
+      "{$b}pnotify/dist/iife/PNotify.js",
+      "{$b}bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+      "{$b}select2/dist/js/select2.min.js",
+      "{$b}google-code-prettify/bin/prettify.min.js",
+      "{$b}datatables.net/js/jquery.dataTables.min.js",
+      "{$b}fine-uploader/fine-uploader/fine-uploader.min.js",
+      "{$b}tinymce/tinymce.min.js",
+      "{$b}jquery-nestable/jquery.nestable.js",
+      "./js/admin.min.js"
       ] as $f) {
+        if (!file_exists($f)) {
+          throw new Exception("File not found:" . $f);
+        }
       $js[$f] = sha1_file($f);
     }
 

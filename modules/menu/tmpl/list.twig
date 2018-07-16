@@ -1,8 +1,8 @@
 <h1>{{ tr.get('manage_menus') }}</h1>
 
 <div class="btn-group clearfix" style="padding:20px 0;">
-  <a class="btn btn-info" href="#menu/addNew" title="Aggiungi nuovo"><i class="icon ion-plus"></i> {{ tr.get('add_new_menu_item') }}</a>
-  <a class="btn btn-default reload" title="Ricarica"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
+  <a class="btn btn-info" href="#menu/addNew" title="Aggiungi nuovo"><i class="fa fa-plus-circle"></i> {{ tr.get('add_new_menu_item') }}</a>
+  <a class="btn btn-default reload" title="Ricarica"><i class="fa fa-refresh"></i> {{ tr.get('reload') }}</a>
 </div>
 
 
@@ -12,9 +12,9 @@
     <div class="panel panel-default">
       <div class="panel-heading show-menu-body" style="cursor: pointer">
         <strong>{{ menu_name }}</strong>
-        <i class="icon ion-arrow-down-b pull-right"></i>
+        <i class="fa fa-arrow-down pull-right"></i>
       </div>
-      
+
       <div class="panel-body dd" style="display:none;">
         {{ menu_data|raw }}
       </div>
@@ -23,17 +23,17 @@
 
 
 {% endfor %}
-</div>      
-      
+</div>
+
 <script>
   $('.show-menu-body').on('click', function(event){
     $(this).parents('.panel').find('.panel-body').fadeToggle();
     event.preventDefault();
   });
-  
-   
+
+
   $.each($('div.dd'), function(i, el){
-    
+
     $(el).nestable().on('change', function(){
       var obj = $(this).nestable('serialize');
       $.post('controller.php?obj=menu_ctrl&method=updateNestSort', {'data':obj}, function(data){
@@ -42,9 +42,9 @@
         }
       });
     });
-    
+
   });
-  
+
   $('a.reload').click(function(){
     admin.tabs.reloadThis(this);
     return false;

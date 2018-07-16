@@ -5,23 +5,23 @@
  * @license      MIT, See LICENSE file
  * @since      Dec 4, 2012
  */
- 
+
 class menu_ctrl extends Controller
 {
-  
+
   public function all()
   {
     $all_menus = Menu::getList();
     if (is_array($all_menus))
     {
       $str_menus = array();
-        
+
       foreach ($all_menus as $m)
       {
         $html_menus[$m] = $this->strMenu2ul(Menu::get_structured_menu($m));
       }
     }
-    
+
     if (is_array($str_menus))
     {
       $this->render('menu', 'list', array(
@@ -29,14 +29,14 @@ class menu_ctrl extends Controller
       ));
     }
   }
-  
+
   private function strMenu2ul($menu)
   {
     $html = '<ol class="dd-list">';
     foreach($menu as $item)
     {
       $html .= '<li class="dd-item" data-id="' . $item['id'] . '">' .
-            '<i class="icon ion-arrow-move dd-handle"></i> ' .
+            '<i class="fa fa-arrows dd-handle"></i> ' .
             '<a href="#menu/edit/'. $item['id'] . '">' . $item['item'] . '</a>' .
             '';
       if ($item['sub'])
@@ -48,8 +48,8 @@ class menu_ctrl extends Controller
     $html .= '</ol>';
     return $html;
   }
-  
-  
+
+
   public function updateNestSort()
   {
     try
@@ -62,16 +62,16 @@ class menu_ctrl extends Controller
       echo tr::get('error_update_sort');
     }
   }
-  
-  
+
+
   public function edit()
   {
     $id = $this->request['param'][0];
-    
+
     $menu_item = Menu::getItem($id, true);
-    
+
     $transls = $menu_item->ownMenutrans;
-    
+
     if (is_array($transls))
     {
       foreach ($transls as $trans)
@@ -79,7 +79,7 @@ class menu_ctrl extends Controller
         $translation[$trans->lang] = $trans->export();
       }
     }
-    
+
     $this->render('menu', 'form', array(
       'menu' => $id ? $menu_item->export() : false,
       'tags' => Article::getTags(),
@@ -87,18 +87,18 @@ class menu_ctrl extends Controller
       'menu_list' => Menu::getList(),
       'cfg_langs' => cfg::get('languages'),
       'translated' => $translation
-       
+
     ));
   }
-  
-  
+
+
   public function getMenuItems()
   {
     $menu = $this->get['param'][0];
     echo json_encode(Menu::get_all_items_of_menu($menu));
-  
+
   }
-  
+
     /**
    * Alias for edit
    */
@@ -106,22 +106,22 @@ class menu_ctrl extends Controller
   {
     $this->edit();
   }
-  
-  
+
+
   public function save()
   {
     $post = $this->post;
     try
     {
       $id = Menu::save($post);
-      
+
       if (!$id)
       {
         throw new Exception($post['id'] ? tr::sget('update_menu_error', $post['id']) : tr::get('save_menu_error'));
       }
-      
+
       $out['id'] = $id;
-      
+
       $out['type'] = 'success';
       $out['text'] = tr::get('save_menu_ok');
     }
@@ -132,13 +132,13 @@ class menu_ctrl extends Controller
     }
     echo json_encode($out);
   }
-  
-  
-  
+
+
+
   public function delete()
   {
     $id = $this->get['param'][0];
-    
+
     try
     {
       Menu::delete($id);
@@ -153,17 +153,17 @@ class menu_ctrl extends Controller
     }
     echo json_encode($out);
   }
-  
-  
+
+
   public function saveTransl()
   {
     $data = $this->post;
     $menu_id = $this->get['param'][0];
-    
+
     try
     {
       Menu::translate($menu_id, $data);
-      
+
       $out['text'] = tr::get('ok_translation_saved');
       $out['status'] = 'success';
     }
@@ -173,8 +173,8 @@ class menu_ctrl extends Controller
       $out['text'] = tr::get('error_translation_not_saved');
       $out['status'] = 'error';
     }
-    
+
     echo json_encode($out);
   }
-  
+
 }

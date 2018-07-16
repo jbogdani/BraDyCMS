@@ -3,11 +3,11 @@
 
   <div class="navbar">
     <button class="btn btn-info toggleVisible">
-      <i class="icon ion-eye-disabled"></i> 
+      <i class="fa fa-eye-slash"></i>
       {{ tr.get('show_incomplete_translations') }}
     </button>
     {% if can_add %}
-    <button class="btn btn-info addstring"><i class="icon ion-plus"></i> {{ tr.get('add_new_tr_string') }}</button>
+    <button class="btn btn-info addstring"><i class="fa fa-plus-circle"></i> {{ tr.get('add_new_tr_string') }}</button>
     {% endif %}
   </div>
 
@@ -31,9 +31,9 @@
         <td>{{ k }}</td>
         <td>{{ v|nl2br }}</td>
         <td><br />
-          <textarea 
-            style="width:90%; 
-            {% if edit_lang[k] == false %} border:1px solid #ff0000; {% endif %}" 
+          <textarea
+            style="width:90%;
+            {% if edit_lang[k] == false %} border:1px solid #ff0000; {% endif %}"
             name="{{ k }}" >{{ edit_lang[k] }}</textarea>
         </td>
         <td>
@@ -52,8 +52,8 @@
 
 <script>
   $('#form-{{ uid }}').submit(function(){
-    $.post('controller.php?obj=sys_translate_ctrl&method=save&param[]={{ context }}', 
-      $(this).serialize(), 
+    $.post('controller.php?obj=sys_translate_ctrl&method=save&param[]={{ context }}',
+      $(this).serialize(),
       function(data){
       admin.message(data.text, data.status);
       if (data.status === 'success'){
@@ -63,19 +63,19 @@
       }
     }, 'json');
   });
-  
+
   $('#{{ uid }} button.toggleVisible').on('click', function(){
     $(this).toggleClass('btn-danger');
     if ($(this).hasClass('btn-danger')){
       $('#tbl-{{ uid }} tbody tr.error').fadeIn();
       $('#tbl-{{ uid }} tbody tr:not(.error)').fadeOut();
-      $(this).html("<i class='icon ion-eye'></i> {{ tr.get('show_all_translations') }}")
+      $(this).html("<i class='fa fa-eye'></i> {{ tr.get('show_all_translations') }}")
     } else {
       $('#tbl-{{ uid }} tbody tr').fadeIn();
-      $(this).html("<i class='icon ion-eye-disabled'></i> {{ tr.get('show_incomplete_translations') }}")
+      $(this).html("<i class='fa fa-eye-slash'></i> {{ tr.get('show_incomplete_translations') }}")
     }
   });
-  
+
   {% if can_add %}
   $('#{{ uid }} button.addstring').on('click', function(){
     admin.dialog({
@@ -83,11 +83,11 @@
       html: '<div class="row">' +
         '<div class="col-sm-4">' +
           '<input type="text" class="key" placeholder="{{ tr.get('tr_key') }}" />' +
-        '</div>' + 
+        '</div>' +
         '<div class="col-sm-8">' +
           '<textarea class="value" style="height: 100px;" placeholder="{{ tr.get('tr_value') }}"></textarea>' +
         '</div>',
-        
+
       buttons:[
         {
           text: '{{ tr.get('close', true) }}',
@@ -95,18 +95,18 @@
         },{
           text: '{{ tr.get('save', true) }}',
           click: function(){
-            
+
             var key = $('#modal .key').val();
             var val = $('#modal .value').val();
-            
+
             if (!key)
             {
               admin.message('{{ tr.get('tr_key_required', true) }}', 'error');
               return;
             }
-            
+
             $.get('controller.php?obj=sys_translate_ctrl&method=addLine' +
-              '&param[]={{ context }}&param[]={{ lng }}&param[]=' + key + '&param[]=' + val, 
+              '&param[]={{ context }}&param[]={{ lng }}&param[]=' + key + '&param[]=' + val,
             function(data){
               if (data.status == 'success'){
                 $('#{{ uid }}')

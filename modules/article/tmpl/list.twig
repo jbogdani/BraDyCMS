@@ -3,23 +3,23 @@
 
   <div class="btn-group" style="padding:20px 0;">
     <a class="btn btn-info" href="#article/addNew" title="{{ tr.get('add_new_article') }}">
-      <i class="icon ion-plus"></i> {{ tr.get('add_new_article') }}
+      <i class="fa fa-plus-circle"></i> {{ tr.get('add_new_article') }}
     </a>
     <a class="btn btn-default reload" title="{{ tr.get('reload') }}">
-      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+      <i class="fa fa-refresh"></i> {{ tr.get('reload') }}
     </a>
   </div>
 
   <div class="row well">
     <div class="col-xs-1">
-      <i class="icon ion-pricetag" style="font-size:2em;"></i>
+      <i class="fa fa-tags" style="font-size:2em;"></i>
     </div>
     <div class="col-xs-11 col-sm-9">
       <input type="text" name="tags" value="{{ active_tags|join(',') }}" class="tags" style="width:100%" />
     </div>
     <div class="col-sm-2 col-xs-12">
       <button class="btn btn-success btn-block btn-sm filter">
-        <i class="icon ion-funnel"></i> {{ tr.get('apply_filter') }}
+        <i class="fa fa-filter"></i> {{ tr.get('apply_filter') }}
       </button>
     </div>
   </div>
@@ -27,10 +27,10 @@
 
   <div class="well well-sm clearfix delete-tag-container" style="margin: 10px 0 20px 0; display: none;">
     <span class="text-danger">
-      <i style="font-size:1.5em;" class="icon ion-alert-circled"></i>
+      <i style="font-size:1.5em;" class="fa fa-exclamation-triangle"></i>
       {{ tr.sget('confirm_delete_tag_not_used', active_tags[0]) }}</span>
-      <button class="btn btn-danger deleteTag"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button>
-      <button class="btn btn-danger deleteAllTags"><i class="icon ion-flame"></i> {{ tr.get('delete_unused_tags') }}</button>
+      <button class="btn btn-danger deleteTag"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button>
+      <button class="btn btn-danger deleteAllTags"><i class="fa fa-trash"></i> {{ tr.get('delete_unused_tags') }}</button>
   </div>
 
 
@@ -84,12 +84,12 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
     {
       "mData":  function(row){
         return '<div class="btn-group">'
-          + '<a href="#article/edit/' + row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="icon ion-edit"></i></a>'
+          + '<a href="#article/edit/' + row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('edit') }}"><i class="fa fa-pencil"></i></a>'
 
             {% for lang in cfg_langs %}
-              + ' <a href="#article/translate/{{ lang.id }}/'+ row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="icon ion-shuffle"></i> {{ lang.id|upper }}</a>'
+              + ' <a href="#article/translate/{{ lang.id }}/'+ row.id +'" class="btn btn-default btn-sm" title="{{ tr.get('translate_article_in', lang.string) }}"><i class="fa fa-random"></i> {{ lang.id|upper }}</a>'
             {% endfor %}
-          + '<a href="#" class="btn btn-default btn-sm delete_article" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
+          + '<a href="#" class="btn btn-default btn-sm delete_article" data-id="'+ row.id +'" title="{{ tr.get('delete') }}"><i class="fa fa-trash"></i></a>'
           + '</div>'
       }, "orderable": false
     }
@@ -119,7 +119,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
         html: '{{ tr.get('confirm_delete_article') }}',
         buttons: [
                   {
-                    text: '<i class="icon ion-trash-a"></i> {{ tr.get('delete') }}',
+                    text: '<i class="fa fa-trash"></i> {{ tr.get('delete') }}',
                     addclass: 'btn-danger',
                     action: 'close',
                     click: function(){

@@ -2,11 +2,11 @@
   <h2>{{ tr.get('user_forms') }}</h2>
 
   <div class="btn-group" style="padding:20px 0;">
-      <a class="btn btn-info add_new" title="{{ tr.get('add_new_form') }}"><i class="icon ion-plus"></i> {{ tr.get('add_new_form') }}</a>
-      <a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="icon ion-refresh"></i> {{ tr.get('reload') }}</a>
+      <a class="btn btn-info add_new" title="{{ tr.get('add_new_form') }}"><i class="fa fa-plus-circle"></i> {{ tr.get('add_new_form') }}</a>
+      <a class="btn btn-default reload" title="{{ tr.get('reload') }}"><i class="fa fa-refresh"></i> {{ tr.get('reload') }}</a>
     </div>
   {% if (forms == false) %}
-    <div class="alert alert-warning"><i class="icon ion-alert-circled"></i> {{ tr.get('no_user_form_available') }}</div>
+    <div class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> {{ tr.get('no_user_form_available') }}</div>
   {% else %}
 
     <div class="row">
@@ -17,9 +17,9 @@
             <p><button class="btn btn-default btn-block openedit">{{ form|replace({'.json': ''}) }}</button></p>
           </div>
         {% endfor %}
-        
+
         <div>
-          <a href="#docs/read/userform" class="btn btn-info btn-block"><i class="icon ion-information-circled"></i> More about forms</a>
+          <a href="#docs/read/userform" class="btn btn-info btn-block"><i class="fa fa-info-circle"></i> More about forms</a>
         </div>
       </div>
 
@@ -28,20 +28,20 @@
     </div>
 
   {% endif %}
-</div>  
-  
+</div>
+
 <script>
-  
+
   // Reload
   $('#{{ uid }} .reload').on('click', function(){
     admin.tabs.reloadThis(this);
   });
-  
+
   // Open edit form
   $('#{{ uid }} .openedit').on('click', function(){
     $('#{{ uid }} .edit_area').load('controller.php?obj=userform_ctrl&method=edit_form&param[]=' + $(this).text() + '.json');
   });
-  
+
   // Add new
   $('#{{ uid }} .add_new').on('click', function(){
     admin.dialog({
@@ -63,7 +63,7 @@
                 admin.tabs.reloadThis('#{{ uid }}');
               }
             }, 'json');
-            
+
           }
         },
         {
@@ -73,7 +73,7 @@
       ],
       loaded: function(){
         admin.removeNotValid($('#new_form_name'));
-        
+
       }
     });
   });

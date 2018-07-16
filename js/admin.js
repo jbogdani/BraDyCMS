@@ -415,7 +415,7 @@ var admin = {
 				}
 
 			} else if (opts.obj && opts.method){
-				dialog.find('.modal-body').html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i>');
+				dialog.find('.modal-body').html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom" style="font-size: 3em;"></i>');
 				$.ajax({
 	        		'type': opts.post ? 'POST' : 'GET',
 	        		'url': 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
@@ -498,7 +498,7 @@ var admin = {
 
 	        } else if (opts.obj && opts.method){
 	        	admin.tabs.tab.next('div.tab-content')
-              .append('<div class="tab-pane" id="added' + id + '"><i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i></div>');
+              .append('<div class="tab-pane" id="added' + id + '"><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom" style="font-size: 3em;"></i></div>');
 
 	        	admin.tabs.start(tab);
 
@@ -553,7 +553,7 @@ var admin = {
 
 	    	var url = 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' );
 
-	    	pane.html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i>');
+	    	pane.html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom" style="font-size: 3em;"></i>');
 
         $.ajax({
 	        		'url': url,

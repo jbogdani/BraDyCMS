@@ -1,93 +1,109 @@
+/*jshint esversion: 6 */
+
 var gulp  = require('gulp'),
   uglify  = require('gulp-uglify'),
-  concat  = require('gulp-concat'),
   less = require('gulp-less'),
-  minifyCSS = require('gulp-minify-css'),
-  preen = require('preen'),
-  del = require('del'),
-  bower = require('gulp-bower');
+  minifyCSS = require('gulp-clean-css'),
+  rename = require("gulp-rename");
 
-// Minify js
-var minifiedJs = [
-  'bower_components/jquery/dist/jquery.min.js',
-  'bower_components/bootstrap/dist/js/bootstrap.min.js',
-  'bower_components/datatables/media/js/jquery.dataTables.min.js',
-  'bower_components/datatables/media/js/dataTables.bootstrap.min.js',
-  'bower_components/pnotify/dist/pnotify.js',
-  'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
-  'bower_components/select2/select2.min.js',
-  'bower_components/google-code-prettify/bin/prettify.min.js',
-  'bower_components/fine-uploader/dist/fine-uploader.min.js'
-];
+var libs = {
+  'jquery':     [
+    'dist/jquery.min.js',
+    'dist/jquery.min.map'
+  ],
+  'bootstrap':  [
+    'dist/css/bootstrap.min.css',
+    'dist/css/bootstrap.css.map',
+    'dist/js/bootstrap.min.js'
+  ],
+  'bootstrap3':  [
+    'dist/css/bootstrap.min.css',
+    'dist/css/bootstrap.css.map',
+    'dist/fonts/*',
+    'dist/js/bootstrap.min.js',
+    'less/**/*'
+  ],
+  'bootstrap-datepicker':  [
+    'dist/css/bootstrap-datepicker3.min.css',
+    'dist/js/bootstrap-datepicker.min.js',
+    'dist/locales/*'
+  ],
+  'datatables.net':  [
+    'js/jquery.dataTables.min.js'
+  ],
+  'google-code-prettify':  [
+    'bin/*'
+  ],
+  'jquery-nestable':  ['jquery.nestable.js'],
+  '@fancyapps': ['fancybox/dist/*'],
+  'tinymce': [
+    "plugins/*/plugin.min.js",
+    "plugins/*/plugin.js",
+    "skins/**/*",
+    "themes/**/*",
+    "tinymce.min*",
+    "tinymce.js"
+  ],
+  'fine-uploader': [
+    "fine-uploader/*.gif",
+    "fine-uploader/fine-uploader.min.js",
+    "fine-uploader/fine-uploader.min.css"
+  ],
+  "font-awesome": [
+    "fonts/*",
+    "css/font-awesome.min*"
+  ],
+  "jquery-mousewheel": [
+    "jquery.mousewheel.js"
+  ],
+  "pnotify": [
+    'dist/iife/PNotify.js'
+  ],
+  "select2": [
+    "dist/css/select2.min.css",
+    "dist/js/*min.js",
+    "dist/js/i18n/*"
+  ],
+  "select2-bootstrap-theme": [
+    "dist/*.min.css"
+  ]
+};
 
-var changingJS = [
-  'bower_components/jquery-nestable/jquery.nestable.js',
-  'js/admin.js'
-];
-
-gulp.task('packJS', function(){
-
-  // concat already minified files
-  gulp.src(minifiedJs)
-  .pipe(concat('minified1.js'))
-  .pipe(gulp.dest('./js/'))
-  .on('end', function(){
-
-    // uglify & concat  plain files
-    gulp.src(changingJS)
-    .pipe(concat('minified2.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('./js/'))
-    .on('end', function(){
-
-      // Concat temporary files
-      gulp.src(['./js/minified1.js', './js/minified2.js'])
-      .pipe(concat('admin.min.js'))
-      .pipe(gulp.dest('./js/'))
-      .on('end', function(){
-
-        // Delete temporary files
-        del(['./js/minified1.js', './js/minified2.js'])
-        .then(function(){
-          console.log('Javascript packed!');
-        });
-      });
+gulp.task('moveLibs', function(done){
+  Object.entries(libs).forEach(([key, vals]) => {
+    vals.forEach( (v) => {
+      gulp.src(`node_modules/${key}/${v}`, {base: `./node_modules/`})
+        .pipe(gulp.dest(`./frontLibs/`));
     });
   });
+  done();
 });
-
 
 
 gulp.task('frontCSS', function () {
-  gulp.src('sites/default/css/styles.less')
+  return gulp.src('sites/default/css/styles.less')
   .pipe(less().on('error', function(err){ console.log(err.message); }))
   .pipe(minifyCSS())
   .pipe(gulp.dest('sites/default/css/'));
-  //.pipe(reload({stream: true}));
 });
 
 gulp.task('adminCSS', function () {
-  gulp.src('less/admin.less')
+  return gulp.src('less/admin.less')
   .pipe(less().on('error', function(err){ console.log(err.message); }))
   .pipe(minifyCSS())
   .pipe(gulp.dest('css/'));
-  //.pipe(reload({stream: true}));
 });
 
-gulp.task('bower', function(){
-  bower().pipe(gulp.dest('bower_components/'))
-  .on('end', function(){
-    preen.preen({});
-    gulp.start('packJS');
-    gulp.start('adminCSS');
-  });
+gulp.task('adminJS', function(){
+  return gulp.src('./js/admin.js')
+    .pipe(uglify())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('./js/'));
 });
 
 
-gulp.task('default', [], function(){
-  gulp.watch(changingJS, ['packJS']);
-  //  gulp.watch(['index.php', 'sites/default/**/*.twig'], [reload]);
-  gulp.watch(['less/**/*.less', '!less/admin.less'], ['frontCSS', 'adminCSS']);
-  gulp.watch(['sites/default/css/*.less'], ['frontCSS']);
-  gulp.watch(['less/admin.less'], ['adminCSS']);
+gulp.task('default', function(){
+  gulp.watch(['./js/admin.js'], gulp.series('adminJS'));
+  gulp.watch(['less/admin.less'], gulp.series('adminCSS'));
+  gulp.watch('sites/default/css/*.less', gulp.series('frontCSS'));
 });

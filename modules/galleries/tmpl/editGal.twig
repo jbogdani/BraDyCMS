@@ -6,10 +6,10 @@
       <button type="button" class="btn btn-danger delete-gal">{{ tr.get('delete_gal') }}</button>
     {% endif %}
     <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}">
-      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+      <i class="fa fa-refresh"></i> {{ tr.get('reload') }}
     </a>
     <a class="btn btn-default rename" title="{{ tr.get('reload') }}">
-      <i class="icon ion-edit"></i> {{ tr.get('rename_gallery') }}
+      <i class="fa fa-pencil"></i> {{ tr.get('rename_gallery') }}
     </a>
   </div>
 
@@ -35,7 +35,7 @@
 
   <div class="well well-sm clearfix">
     <div class="text-info">
-      <i class="icon ion-information-circled"></i>
+      <i class="fa fa-info-circle"></i>
       {{ tr.get('file_names_will_be_sanitized') }}
     </div>
   </div>
@@ -50,7 +50,7 @@
           <div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
             <div class="clearfix">
               <h4 class="pull-left">{{ file.name }}</h4>
-              <p class="pull-right"><button class="btn btn-danger delete-item" data-file="{{ file.name }}"><i class="icon ion-trash-a"></i> {{ tr.get('delete') }}</button></p>
+              <p class="pull-right"><button class="btn btn-danger delete-item" data-file="{{ file.name }}"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button></p>
             </div>
             <div class="col-xs-4">
               <img src="{{ file.fullpath }}" class="img-responsive" />
@@ -91,7 +91,7 @@
               </div>
               <div class="form-group">
                 <button class="btn btn-success btn-block save" data-file="{{ file.name }}">
-                  <i class="icon ion-checkmark"></i> {{ tr.get('save') }}
+                  <i class="fa fa-check"></i> {{ tr.get('save') }}
                 </button>
               </div>
             </div>
@@ -102,7 +102,7 @@
                 <img src="{{ file.thumb }}" class="img-responsive" />
               {% endif %}
               </div>
-              <button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="icon ion-qr-scanner"></i> {{ tr.get('re_create_thumb') }}</button>
+              <button class="btn btn-info create_thumb" data-file="{{ file.name }}" data-width="{{ file.finfo.0 }}" data-height="{{ file.finfo.1 }}"><i class="fa fa-magic"></i> {{ tr.get('re_create_thumb') }}</button>
             </div>
 
           </div>

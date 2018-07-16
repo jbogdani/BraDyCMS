@@ -3,7 +3,7 @@
 
   <div class="btn-group" style="padding:20px 0;">
     <a class="btn btn-default reload" title="{{ tr.get('reload') }}">
-      <i class="icon ion-refresh"></i> {{ tr.get('reload') }}
+      <i class="fa fa-refresh"></i> {{ tr.get('reload') }}
     </a>
   </div>
 
@@ -52,7 +52,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
     { "mData":"tot" },
     {
       "mData":  function(row){
-        return '<a class="btn btn-default btn-sm" onclick="dwn.delete('+ row.id +')" title="{{ tr.get('delete') }}"><i class="icon ion-trash-a"></i></a>'
+        return '<a class="btn btn-default btn-sm" onclick="dwn.delete('+ row.id +')" title="{{ tr.get('delete') }}"><i class="fa fa-trash"></i></a>'
       }, "orderable": false
     }
   ]

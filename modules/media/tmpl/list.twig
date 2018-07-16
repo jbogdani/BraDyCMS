@@ -10,7 +10,7 @@
 
     <button class="btn btn-success btn-sm" title="{{ tr.get('reload') }}"
             onclick="admin.tabs.reloadThis(this);">
-      <i class="icon ion-refresh"></i>
+      <i class="fa fa-refresh"></i>
     </button>
 
     <span class="text-muted">|||</span>
@@ -36,7 +36,7 @@
         <input type="text" class="form-control folderName" placeholder="{{ tr.get('new_dir_name') }}" />
         <span class="input-group-btn">
           <button class="btn btn-info newFolder" type="button">
-            <i class="icon ion-arrow-right-b"></i> {{ tr.get('create_go') }}</button>
+            <i class="fa fa-arrow-right"></i> {{ tr.get('create_go') }}</button>
         </span>
       </div>
     </div>
@@ -51,7 +51,7 @@
     <div class="col-sm-4">
       {% if rel_path != 'thumbs' %}
         <button class="btn btn-info makeThumbs">
-          <i class="icon ion-image"></i>
+          <i class="fa fa-picture-o"></i>
           {{ tr.get('make_thumbs') }}
         </button>
       {% endif %}
@@ -75,7 +75,7 @@
   <!-- Delete directory button -->
   <p style="text-align: center">
     <button class="btn btn-danger btn-lg deleteFolder">
-      <i class="icon ion-trash-a"></i> {{ tr.get('delete_directory') }}
+      <i class="fa fa-trash"></i> {{ tr.get('delete_directory') }}
     </button>
   </p>
 
@@ -88,7 +88,7 @@
     {% if file.type == 'folder' %}
     <li class="img">
       <a data-href="media/all/{{ file.href }}" href="javascript:void(0)" class="navigation">
-        <i class="icon ion-folder{% if file.name == 'thumbs' %} thumbs{% endif %}"></i>
+        <i class="fa fa-folder-o{% if file.name == 'thumbs' %} thumbs{% endif %}"></i>
         <div class="caption searcheable">{{ file.name }}</div>
       </a>
     </li>
@@ -237,7 +237,7 @@
               return;
             }
 
-            $('#modal .modal-body').html('<i class="icon ion-load-c ion-loading-c" style="font-size: 3em;"></i> {{ tr.get('please_wait', true) }}');
+            $('#modal .modal-body').html('<i class="fa fa-circle-o-notch fa-spin" style="font-size: 3em;"></i> {{ tr.get('please_wait', true) }}');
 
             var url = 'controller.php?' +
               'obj=media_ctrl&' +

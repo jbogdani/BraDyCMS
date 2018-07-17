@@ -37,8 +37,12 @@ var libs = {
   'google-code-prettify':  [
     'bin/*'
   ],
-  'jquery-nestable':  ['jquery.nestable.js'],
-  '@fancyapps': ['fancybox/dist/*'],
+  'jquery-nestable':  [
+    'jquery.nestable.js'
+  ],
+  '@fancyapps': [
+    'fancybox/dist/*.min.*'
+  ],
   'tinymce': [
     "plugins/*/plugin.min.js",
     "plugins/*/plugin.js",

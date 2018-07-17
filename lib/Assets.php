@@ -151,22 +151,22 @@ class Assets
 
         if ($version) {
             return [
-        'type' =>$type,
-        'source' => $ource,
-        'path' => str_replace('--version--', $version, $asset[$type][$source])
-      ];
+              'type' =>$type,
+              'source' => $ource,
+              'path' => str_replace('--version--', $version, $asset[$type][$source])
+            ];
         } elseif (isset($asset['version'])) {
             return [
-        'type' =>$type,
-        'source' => $ource,
-        'path' => str_replace('--version--', $asset['version'], $asset[$type][$source])
-      ];
+              'type' =>$type,
+              'source' => $ource,
+              'path' => str_replace('--version--', $asset['version'], $asset[$type][$source])
+            ];
         } else {
             return [
-        'type' =>$type,
-        'source' => $ource,
-        'path' => $asset[$type][$source]
-      ];
+              'type' =>$type,
+              'source' => $ource,
+              'path' => $asset[$type][$source]
+            ];
         }
     }
 }

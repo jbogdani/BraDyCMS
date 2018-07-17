@@ -48,7 +48,11 @@
     <div class="form-group">
       <div class="input-group">
        <div class="input-group-addon"><i class="fa fa-tags"></i> {{ tr.get('tags') }}</div>
-       <input class="form-control" type="text" name="tags" value="{{ art.tags|join(',') }}" />
+       <select class="form-control" type="text" name="tags[]" multiple="multiple">
+         {% for t in all_tags %}
+         <option {% if t in art.tags %} selected="selected"{% endif %}>{{ t }}</option>
+         {% endfor %}
+       </select>
       </div>
     </div>
     <hr />{# End of tag choise #}
@@ -319,9 +323,7 @@
   $('#edit_form{{ uid }} input.datepicker').datepicker({format: 'yyyy-mm-dd'});
 
   // Tags
-  $('#edit_form{{ uid }} input[name="tags"]').select2({
-    tags: [{{ imploded_tags|raw }}]
-  });
+  $('#edit_form{{ uid }} :input[name="tags[]"]').select2({ tags: true });
 
   // Reload button
   $('#{{ uid }} a.reload').click(function(){

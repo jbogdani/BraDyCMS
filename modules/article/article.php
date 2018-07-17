@@ -19,21 +19,19 @@ class article_ctrl extends Controller
 
     // Paging
     $sLimit = '';
-    if ( isset( $this->request['iDisplayStart'] ) && $this->request['iDisplayLength'] != '-1' )
-    {
-      $sLimit = "LIMIT " . $this->request['iDisplayStart'] .", "
-        . $this->request['iDisplayLength'];
+    if ( isset( $this->request['iDisplayStart'] ) && $this->request['iDisplayLength'] != '-1' ) {
+      $sLimit = "LIMIT " . $this->request['iDisplayStart'] .", " .
+        $this->request['iDisplayLength'];
     }
 
     // Ordering
-    if ( isset( $this->request['iSortCol_0'] ) )
-    {
+    if ( isset( $this->request['iSortCol_0'] ) ) {
       $sOrder = "ORDER BY  ";
 
-      for ( $i=0 ; $i<intval( $this->request['iSortingCols'] ) ; $i++ )
-      {
-        if ( $this->request[ 'bSortable_' . intval($this->request['iSortCol_' . $i]) ] == "true" )
-        {
+      for ( $i=0 ; $i<intval( $this->request['iSortingCols'] ) ; $i++ ) {
+
+        if ( $this->request[ 'bSortable_' . intval($this->request['iSortCol_' . $i]) ] == "true" ) {
+
           $sOrder .= $aColumns[ intval( $this->request['iSortCol_'.$i] ) ] . "
             " . $this->request['sSortDir_'.$i] . ", ";
         }
@@ -41,15 +39,14 @@ class article_ctrl extends Controller
 
       $sOrder = substr_replace( $sOrder, "", -2 );
 
-      if ( $sOrder == "ORDER BY" )
-      {
+      if ( $sOrder == "ORDER BY" ) {
         $sOrder = "";
       }
     }
 
 
-    if (is_array($this->request['param']) && !empty($this->request['param'][0]))
-    {
+    if (is_array($this->request['param']) && !empty($this->request['param'][0])) {
+
       $tag_ids = R::getCol("SELECT `id` FROM `tag` WHERE `title` IN ('" . implode("','", $this->request['param']) . "')");
 
       // If tag does not exist > return 0 records!!!
@@ -66,47 +63,41 @@ class article_ctrl extends Controller
         return;
       }
 
-      $tmp = array();
-      foreach($tag_ids as $tagid)
-      {
-        $tmp[] = "`tag_id` = " . $tagid;
+      $tmp = [];
+      foreach($tag_ids as $tagid) {
+        array_push($tmp, "`tag_id` = " . $tagid);
       }
 
       $sWhere = "WHERE  `id` IN ( "
           . "SELECT `articles_id` FROM `articles_tag` WHERE " . implode(' OR ', $tmp) . " GROUP BY `articles_id` HAVING count(*) = ". count($tmp)
         . " ) ";
-    }
-    else
-    {
+    } else {
       $sWhere = "";
     }
 
 
     // Filtering
-    if ( $this->request['sSearch'] != "" )
-    {
-      $sWhere .= ($sWhere == "" ? "WHERE (" : "AND (");
-      for ( $i=0 ; $i<count($aColumns) ; $i++ )
-      {
-        $sWhere .= $aColumns[$i]." LIKE '%". $this->request['sSearch'] ."%' OR ";
+    if ( $this->request['sSearch'] !== '' ) {
+
+      $sWhere .= ($sWhere === '' ? 'WHERE (' : ' AND (');
+
+      for ( $i=0 ; $i<count($aColumns) ; $i++ ) {
+        $sWhere .= $aColumns[$i] . " LIKE '%" . $this->request['sSearch'] . "%' OR ";
       }
-      $sWhere = substr_replace( $sWhere, "", -3 );
+      $sWhere = substr_replace( $sWhere, '', -3 );
       $sWhere .= ')';
     }
 
     $totalRows = $this->request['iTotalRecords'] ? $this->request['iTotalRecords'] : R::getCell(" SELECT count(*) FROM `articles` " . $sWhere);
 
     /* Individual column filtering */
-    for ( $i=0 ; $i<count($aColumns) ; $i++ )
-    {
-      if ( $this->request['bSearchable_'.$i] == "true" && $this->request['sSearch_'.$i] != '' )
-      {
-        if ( $sWhere === "" )
-        {
+    for ( $i=0 ; $i<count($aColumns) ; $i++ ) {
+
+      if ( $this->request['bSearchable_'.$i] == "true" && $this->request['sSearch_'.$i] != '' ) {
+
+        if ( $sWhere === "" ) {
           $sWhere = "WHERE ";
-        }
-        else
-        {
+        } else {
           $sWhere .= " AND ";
         }
         $sWhere .= $aColumns[$i]." LIKE '%" . $this->request['sSearch_'.$i] ."%' ";
@@ -145,7 +136,7 @@ class article_ctrl extends Controller
 
     $this->render('article', 'list', array(
       'tags' => $tags,
-      'imploded_tags' => '"' . implode('","', $tags) . '"',
+      'all_tags' => $tags,
       'active_tags' => $this->request['param'],
       'imploded_active_tags' => (!empty($this->request['param'][0]) ? '&param[]=' . implode('&param[]=', $this->request['param']) : ''),
       'cfg_langs' => cfg::get('languages')
@@ -250,7 +241,7 @@ class article_ctrl extends Controller
       'art'=>$art,
       'custom_fields' => $customflds,
       'date' => date('Y-m-d'),
-      'imploded_tags' => '"' . implode('","', $available_tags) . '"',
+      'all_tags' => $available_tags,
       'art_imgs' => $article_images,
       'tmp_path' => TMP_DIR,
       'cfg_langs' => cfg::get('languages'),

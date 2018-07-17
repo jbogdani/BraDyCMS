@@ -6,10 +6,9 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,700,700italic);
 
-@import '../frontLibs/bootstrap3/less/variables.less';
-@import '../frontLibs/bootstrap3/less/mixins/vendor-prefixes.less';
-@import '../frontLibs/bootstrap3/less/mixins/clearfix.less';
-@import '../frontLibs/bootstrap3/less/forms.less';
+@import '../frontLibs/bootstrap3/less/bootstrap.less';
+
+@icon-font-path: "../frontLibs/bootstrap3/dist/fonts/";
 
 @font-family-sans-serif: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -201,8 +200,10 @@ body.login{
 }
 
 // All inputs excepts checkboxes, tinymce inputs and select2 inputs
-input:not([type="checkbox"]):not(.mce-textbox):not(.select2-input), textarea:not(.mce-textbox), select:not(.mce-textbox){
-	.form-control;
+input:not([type="checkbox"]):not(.mce-textbox):not(.select2-input):not(.select2-search__field),
+textarea:not(.mce-textbox),
+select:not(.mce-textbox){
+	.form-control();
 }
 
 body{

@@ -15,7 +15,7 @@ class protectedtags_ctrl extends Controller
   public function sendemail_form()
   {
     $this->render('protectedtags', 'email_form', array(
-      'imploded_tags' => '"' . implode('","', protectedTags::getData('tags')) . '"'
+      'all_tags' => protectedTags::getData('tags')
     ));
   }
 
@@ -23,17 +23,17 @@ class protectedtags_ctrl extends Controller
   {
     set_time_limit(0);
     $from = $this->post['from'];
-    $tags = utils::csv_explode($this->post['tags']);
+    $tags = $this->post['tags'];
     $subject = $this->post['subject'];
     $text = $this->post['text'];
     $sent_to = array();
     $not_sent_to = array();
 
-    foreach ((array)protectedTags::getData('users') as $user)
-    {
+    foreach ((array)protectedTags::getData('users') as $user) {
+
       $intersect = array_intersect($tags, utils::csv_explode($user['tags']));
-      if(!empty($intersect))
-      {
+
+      if(!empty($intersect)) {
         $newtext = str_replace(
           array('%name%', '%email%'),
           array((string)$user['name'], (string)$user['email']),
@@ -45,12 +45,9 @@ class protectedtags_ctrl extends Controller
         $message->Subject = $subject;
         $message->Body = $newtext;
 
-        if ($message->send())
-        {
+        if ($message->send()) {
           array_push($sent_to, $user['email']);
-        }
-        else
-        {
+        } else {
           array_push($not_sent_to, $user['email']);
         }
       }
@@ -70,8 +67,7 @@ class protectedtags_ctrl extends Controller
 
     $fp = fopen($tmp_file, 'w');
 
-    foreach ($users as $u)
-    {
+    foreach ($users as $u) {
       fputcsv($fp, $u);
     }
     fclose($fp);
@@ -104,8 +100,7 @@ class protectedtags_ctrl extends Controller
   {
     $data = protectedTags::getData();
 
-    if (!is_array($data['autoregister']))
-    {
+    if (!is_array($data['autoregister'])) {
       $data['autoregister'] = array();
     }
 
@@ -126,12 +121,9 @@ class protectedtags_ctrl extends Controller
           $this->post['subject'],
           $this->post['text']
         )
-    )
-    {
+    ) {
       echo $this->responseJson('success', tr::get('ok_data_saved'));
-    }
-    else
-    {
+    } else {
       echo $this->responseJson('error', tr::get('error_data_not_saved'));
     }
   }
@@ -143,13 +135,12 @@ class protectedtags_ctrl extends Controller
   {
     $id = $this->get['param'][0];
 
-    if ($id)
-    {
+    if ($id) {
       $user_data = protectedTags::getData('users', $id);
     }
     $this->render('protectedtags', 'user_form', array(
       'user' => $user_data,
-      'imploded_tags' => '"' . implode('","', Tag::getAllTitles()) . '"'
+      'all_tags' => Tag::getAllTitles()
     ));
   }
 
@@ -161,11 +152,9 @@ class protectedtags_ctrl extends Controller
   {
     $id = $this->get['param'][0];
 
-    if (protectedTags::deleteUser($id))
-    {
+    if (protectedTags::deleteUser($id)) {
       echo $this->responseJson('success', tr::get('ok_user_deleted'));
-    }
-    else {
+    } else {
       echo $this->responseJson('error', tr::get('error_user_deleted'));
     }
   }
@@ -180,15 +169,13 @@ class protectedtags_ctrl extends Controller
     if (protectedTags::saveUser(
         $this->post['email'],
         $this->post['password'],
-        $this->post['tags'],
+        (is_array($this->post['tags']) ? implode(',', $this->post['tags']) : $this->post['tags']),
         $this->post['name'],
         $this->post['id'],
         $this->post['confirmationcode'])
-    )
-    {
+    ) {
       echo $this->responseJson('success', tr::get('ok_user_saved'));
-    }
-    else {
+    } else {
       echo $this->responseJson('error', tr::get('error_user_saved'));
     }
   }
@@ -217,64 +204,49 @@ class protectedtags_ctrl extends Controller
     $repeatpassword = $this->post['repeatpassword'];
     $tag = $this->post['tag'];
 
-    try
-    {
+    try {
       // Check for required  POST values: token, password, email
-      if (!$token || !$email || !$password)
-      {
+      if (!$token || !$email || !$password) {
         throw new Exception('access_denied');
       }
 
       // Post token must be the same of SESSION token (same sassion login attempt)
-      if (!$_SESSION['token'] || $token !== $_SESSION['token'])
-      {
+      if (!$_SESSION['token'] || $token !== $_SESSION['token']) {
         throw new Exception('invalid_token');
       }
 
       // Prevent serial attempts
-      if (!utils::checkAttemptTime(MAIN_DIR . 'logs/protectedTagsAttempts.log', 2000))
-      {
+      if (!utils::checkAttemptTime(MAIN_DIR . 'logs/protectedTagsAttempts.log', 2000)) {
         throw new Exception('too_much_attempts');
       }
 
       // Google reCAPTCHA check
-      if (protectedTags::isCaptchaEnabled() && reCAPTCHA::isProtected())
-      {
-        try
-        {
+      if (protectedTags::isCaptchaEnabled() && reCAPTCHA::isProtected()) {
+
+        try {
           reCAPTCHA::validate($this->post['g-recaptcha-response']);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           error_log($e);
           throw new Exception('captcha_error');
         }
       }
 
-      if (!empty($confirmationcode))
-      {
-        if (!protectedTags::userConfirm($email, $password, $confirmationcode))
-        {
+      if (!empty($confirmationcode)) {
+
+        if (!protectedTags::userConfirm($email, $password, $confirmationcode)) {
           throw new Exception('authentication_failed');
         }
         protectedTags::logUser($email);
-      }
-      elseif(!empty($repeatpassword))
-      {
-        try
-        {
+      } elseif(!empty($repeatpassword)) {
+
+        try {
           protectedTags::registerUser($email, $password, $tag, $name);
-        }
-        catch(Exception $e)
-        {
+        } catch(Exception $e) {
           error_log($e->getMessage());
           throw new Exception('registration_failed');
         }
-      }
-      else
-      {
-        if (!protectedTags::isValidUser($email, $password))
-        {
+      } else {
+        if (!protectedTags::isValidUser($email, $password)) {
           throw new Exception('authentication_failed');
         }
         protectedTags::logUser($email);
@@ -284,9 +256,7 @@ class protectedtags_ctrl extends Controller
         'status' => 'success'
       );
 
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $resp = array(
         'status' => 'error',
         'text' => tr::get($e->getMessage())
@@ -303,8 +273,7 @@ class protectedtags_ctrl extends Controller
    */
   public function loginForm($css)
   {
-    if (!$_SESSION['token'])
-    {
+    if (!$_SESSION['token']) {
       $_SESSION['token'] = md5(uniqid(rand(), true));
     }
 
@@ -317,8 +286,7 @@ class protectedtags_ctrl extends Controller
 
   public function registerForm($tag, $css)
   {
-    if (!$_SESSION['token'])
-    {
+    if (!$_SESSION['token']) {
       $_SESSION['token'] = md5(uniqid(rand(), true));
     }
 
@@ -343,8 +311,7 @@ class protectedtags_ctrl extends Controller
    */
   public function logoutButton($css)
   {
-    if ($_SESSION['user_email'])
-    {
+    if ($_SESSION['user_email']) {
       $this->render('protectedtags', 'logout_button', array(
         'css' => $css
       ));
@@ -355,12 +322,9 @@ class protectedtags_ctrl extends Controller
   {
     $captcha = ($this->get['param'][0] === '1');
 
-    if (protectedTags::captchaStatus($captcha))
-    {
+    if (protectedTags::captchaStatus($captcha)) {
       echo $this->responseJson('success', tr::get('ok_setting_updated'));
-    }
-    else
-    {
+    } else {
       echo $this->responseJson('error', tr::get('error_setting_not_updated'));
     }
   }

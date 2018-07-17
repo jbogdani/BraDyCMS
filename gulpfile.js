@@ -31,6 +31,9 @@ var libs = {
   'datatables.net':  [
     'js/jquery.dataTables.min.js'
   ],
+  'datatables.net-bs':  [
+    '**/*.min.*'
+  ],
   'google-code-prettify':  [
     'bin/*'
   ],

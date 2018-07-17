@@ -257,7 +257,7 @@ function openEditForm(id){
           admin.message('{{ tr.sget('missing_required', tr.get('password')) }}', 'error');
           return;
         }
-        if (!form.find('input[name="tags"]').val()){
+        if (form.find('select[name="tags[]"]').val() === []){
           admin.message('{{ tr.sget('missing_required', tr.get('tags')) }}', 'error');
           return;
         }

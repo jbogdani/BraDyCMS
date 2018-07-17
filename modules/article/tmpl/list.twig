@@ -15,7 +15,11 @@
       <i class="fa fa-tags" style="font-size:2em;"></i>
     </div>
     <div class="col-xs-11 col-sm-9">
-      <input type="text" name="tags" value="{{ active_tags|join(',') }}" class="tags" style="width:100%" />
+      <select name="tags[]" class="tags" style="width:100%" multiple="true">
+        {% for t in all_tags %}
+        <option {% if t in active_tags %} selected="selected"{% endif %}>{{ t }}</option>
+        {% endfor %}
+      </select>
     </div>
     <div class="col-sm-2 col-xs-12">
       <button class="btn btn-success btn-block btn-sm filter">
@@ -166,14 +170,12 @@ $('#{{ uid }} .deleteAllTags').on('click', function(){
 });
 
 
-$('#{{ uid }} input.tags').select2({
-  tags: [{{ imploded_tags|raw }}]
-
+$('#{{ uid }} select.tags').select2({
+  tags: true
 });
 
 $('#{{ uid }} .filter').on('click', function(){
-  var used = $('#{{ uid }} input.tags').val();
-
-  admin.tabs.closeActive('article/all' + (used.length ? '/' + used.replace(/,/g, '/') : ''));
+  var used = $('#{{ uid }} select.tags').val();
+  admin.tabs.closeActive('article/all' + (used.length ? '/' + used.join('/') : ''));
 });
 </script>

@@ -46,7 +46,11 @@
         <div class="form-group">
           <label class="col-md-3">{{ tr.get('menu') }}</label>
           <div class="col-md-7">
-            <input type="text" name="menu" value="{{ menu.menu }}" style="width:100%" />
+            <select type="text" name="menu" style="width:100%">
+              {% for m in menu_list %}
+              <option {% if m == menu.menu %} selected="true"{% endif %}>{{ m }}</option>
+              {% endfor %}
+            </select>
           </div>
         </div>
 
@@ -278,7 +282,7 @@
 
 
   function setValue(){
-    var menu =$('#menu_edit{{ uid }}').find('input[name="menu"]').val();
+    var menu =$('#menu_edit{{ uid }}').find(':input[name="menu"]').val();
 
     var subof = $('#menu_edit{{ uid }}').find('select[name="subof"]');
     if (menu){
@@ -294,20 +298,10 @@
   setValue();
 
   {% if menu_list %}
-  $('#menu_edit{{ uid }} input[name="menu"]').select2({
+  $('#menu_edit{{ uid }} :input[name="menu"]').select2({
       placeholder: "{{ tr.get('select_menu') }}",
-      data: [
-           {% for i, m in menu_list %}
-           {id:'{{ m }}', text: '{{ m }}'},
-           {% endfor %}
-           ],
-      createSearchChoice: function(term){
-        return {id: term, text: term};
-      },
-      initSelection:function(el, callback){
-        var value = $(el).val();
-        callback({id: value, text:value});
-      }
+      delay: 250,
+      tags: true
     });
   {% endif %}
 

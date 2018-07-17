@@ -32,7 +32,7 @@
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
     "jquery-nestable": "^0.8.0",
-    "pnotify": "^4.0.0-alpha.4",
+    "pnotify": "^3.2.1",
     "select2": "^4.0.6-rc.1",
     "select2-bootstrap-theme": "0.1.0-beta.10",
     "tinymce": "^4.8.0"

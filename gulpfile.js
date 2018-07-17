@@ -60,7 +60,8 @@ var libs = {
     "jquery.mousewheel.js"
   ],
   "pnotify": [
-    'dist/iife/PNotify.js'
+    'dist/pnotify.js',
+    'dist/pnotify.css'
   ],
   "select2": [
     "dist/css/select2.min.css",

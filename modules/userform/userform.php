@@ -463,7 +463,7 @@ EOD;
     if (!$data['nojs']) {
       $js = [];
 
-      $out->setQueue('modules', "\n" . '<script src="' . MOD_DIR . 'userform/userform.js'. '"></script>', true);
+      $out->setQueue('modules', "\n" . '<script src="' . $out->link2() .  MOD_DIR . 'userform/userform.js'. '"></script>', true);
       array_push($js, "userform.whatchForm('" . $uid . "');");
 
       if (is_array($upload)) {

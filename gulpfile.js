@@ -1,12 +1,12 @@
 /*jshint esversion: 6 */
 
-var gulp  = require('gulp'),
+const gulp  = require('gulp'),
   uglify  = require('gulp-uglify'),
   less = require('gulp-less'),
   minifyCSS = require('gulp-clean-css'),
   rename = require("gulp-rename");
 
-var libs = {
+const libs = {
   'jquery':     [
     'dist/jquery.min.js',
     'dist/jquery.min.map'
@@ -90,14 +90,14 @@ gulp.task('moveLibs', function(done){
 
 gulp.task('frontCSS', function () {
   return gulp.src('sites/default/css/styles.less')
-  .pipe(less().on('error', function(err){ console.log(err.message); }))
+  .pipe(less().on('error', function(err){ console.log(err.message); this.emit('end'); }))
   .pipe(minifyCSS())
   .pipe(gulp.dest('sites/default/css/'));
 });
 
 gulp.task('adminCSS', function () {
   return gulp.src('less/admin.less')
-  .pipe(less().on('error', function(err){ console.log(err.message); }))
+  .pipe(less().on('error', function(err){ console.log(err.message); this.emit('end'); }))
   .pipe(minifyCSS())
   .pipe(gulp.dest('css/'));
 });

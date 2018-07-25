@@ -45,8 +45,8 @@
 
   });
 
-  $('a.reload').click(function(){
-    admin.tabs.reloadThis(this);
+  $('#{{ uid }} a.reload').click(function(){
+    admin.tabs.reloadActive();
     return false;
   });
 

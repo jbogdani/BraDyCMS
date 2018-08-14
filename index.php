@@ -7,7 +7,7 @@
  */
 try
 {
-  require_once 'lib/globals.php';
+  require_once 'lib/Bootstrap.php';
 
   Router::run();
 

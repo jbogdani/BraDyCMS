@@ -3,7 +3,6 @@ var gulp  = require('gulp'),
   concat  = require('gulp-concat'),
   less = require('gulp-less'),
   minifyCSS = require('gulp-clean-css'),
-  preen = require('preen'),
   del = require('del'),
   bower = require('gulp-bower');
 
@@ -77,7 +76,7 @@ gulp.task('adminCSS', function () {
 gulp.task('bower', function(){
   bower().pipe(gulp.dest('bower_components/'))
   .on('end', function(){
-    preen.preen({});
+    // preen.preen({});
     gulp.start('packJS');
     gulp.start('adminCSS');
   });

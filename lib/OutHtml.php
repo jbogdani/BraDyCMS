@@ -92,7 +92,7 @@ class OutHtml extends Out
             }
 
             array_push($part, '<link rel="alternate" href="' .
-        str_replace('//', '/', str_replace($_SERVER[REQUEST_URI], '/' . $l['href'], $url)) .
+        str_replace('//', '/', str_replace($_SERVER['REQUEST_URI'], '/' . $l['href'], $url)) .
         '" hreflang="' . $l['code'] . '" />');
         }
 

@@ -9,6 +9,15 @@
 // start session
 session_start();
 
+// SETS ERROR REPORTING
+$err_code = 6135; // E_ALL & ~E_NOTICE, i.e.: 6143 (E_ALL) - 8 (E_NOTICE)
+
+( ini_get('error_reporting') <> $err_code )  ?  ini_set('error_reporting', $err_code) : '';
+
+ini_set('error_log', './logs/error.log');
+
+ini_set('display_errors', 'off');
+
 // set $root variable
 if (@!$root)
 {
@@ -42,15 +51,6 @@ foreach (['logs/error.log', 'logs/users.log', 'logs/logAttempts.log'] as $f)
   }
 }
 
-
-// SETS ERROR REPORTING
-$err_code = 6135; // E_ALL & ~E_NOTICE, i.e.: 6143 (E_ALL) - 8 (E_NOTICE)
-
-( ini_get('error_reporting') <> $err_code )  ?  ini_set('error_reporting', $err_code) : '';
-
-ini_set('error_log', './logs/error.log');
-
-ini_set('display_errors', 'off');
 
 // Set Session language
 if (@$_GET['lang'])

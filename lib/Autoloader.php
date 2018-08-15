@@ -10,7 +10,7 @@ class Autoloader
 {
     public static function start()
     {
-        spl_autoload_register(array(self, 'loader'));
+        spl_autoload_register([__CLASS__, 'loader']);
     }
 
     private static function loader($className)

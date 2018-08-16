@@ -1,3 +1,4 @@
+3.19.0[] = "Dropped support for preen and node dependencies updates"
 3.18.18[] = "Minor php warning fixes"
 3.18.17[] = "Fixed bug with Youtube custom tag over https"
 3.18.16[] = "New items in download nodes will get as sort value the highest sort value used +1"

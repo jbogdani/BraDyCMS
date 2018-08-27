@@ -28,7 +28,7 @@ class docs_ctrl extends Controller
       echo preg_replace('/href="(?!http)/', 'href="#docs/read/', $html);
 
       echo '<hr>'
-        . '<p class="text-muted"><big><i class="icon big ion-edit"></i></big> Enhance this documentation file: '
+        . '<p class="text-muted"><big><i class="big fa fa-edit"></i></big> Enhance this documentation file: '
         . '<a href="' . $remote . '/edit/dev/docs/' . $file . '.md" target="_blank">edit this page on Github (you must sign in to make or propose changes)</a>'
         . ' or <a href="' . $remote . '/raw/dev/docs/' . $file . '.md" target="_blank">download the raw file</a>, edit it and send it by email to '
         . '<a href="mailto:developer@bradypus.net">developer@bradypus.net</a>'

@@ -1,3 +1,4 @@
+4.0.1[] = "Missing icons fix"
 4.0.0[] = "Dropped support for fancybox v2"
 4.0.0[] = "Updated versions of all frontend libs"
 4.0.0[] = "New gulp file for frontend dependency management"

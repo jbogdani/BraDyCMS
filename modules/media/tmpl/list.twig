@@ -145,9 +145,9 @@
           '<input type="text" value="./sites/default/images/' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
           $('<div />').addClass('input-append'),
           $('<div class="btn-group"></div>').append(
-            '<a class="btn btn-default" target="_blank" href="{{ path }}/' + name + '" title="{{ tr.get('open_download') }}"><i class="icon big ion-arrow-down-c"></i></a>',
-            ( is_image ? $('<a href="#media/edit/{{ rel_path }}/' + name + '" class="btn btn-default" title="{{ tr.get('edit_file') }}"><i class="icon big ion-settings"></i>') : ''),
-            $('<a class="btn btn-danger" href="javascript:void(0);" title="{{ tr.get('delete') }}"><i class="icon big ion-trash-a"></i>')
+            '<a class="btn btn-default" target="_blank" href="{{ path }}/' + name + '" title="{{ tr.get('open_download') }}"><i class="big fa fa-download"></i></a>',
+            ( is_image ? $('<a href="#media/edit/{{ rel_path }}/' + name + '" class="btn btn-default" title="{{ tr.get('edit_file') }}"><i class="big fa fa-wrench"></i>') : ''),
+            $('<a class="btn btn-danger" href="javascript:void(0);" title="{{ tr.get('delete') }}"><i class="big fa fa-trash"></i>')
               .click(function(){
                 admin.media.deleteFile('{{ rel_path }}/' + name);
               })

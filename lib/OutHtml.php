@@ -740,7 +740,7 @@ EOD;
                 }
 
                 if ($x > $pagination['current'] && !$showed_end) {
-                    $html .= '<li class="page-item disabled"><a class="dpage-link isabled" href="#">...</a>';
+                    $html .= '<li class="page-item disabled"><a class="page-link disabled" href="#">...</a>';
                     $showed_end = true;
                 }
             } else {

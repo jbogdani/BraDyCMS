@@ -597,23 +597,28 @@ class Out
         }
 
         foreach ($menu as &$item) {
-            if (
-        ($this->getTextId() && $this->getTextId() == $item['href'])
-        ||
-        (is_array($this->getParts()) && $item['href'] === implode('/', $this->getParts()))
-      ) {
-                $item['current'] = true;
-            } elseif ($this->cfg['context'] == 'home' && ($item['href'] == './' || $item['href'] === '')) {
-                $item['current'] = true;
-            } elseif ($this->cfg['context'] === 'tags' && (
-        $item['href'] === implode('-', $this->getFilterTags()) . '.all' ||
-        $item['href'] === implode('~', $this->getFilterTags()) . '.all' ||
-        $item['href'] === implode('-', $this->getFilterTags()) . '/' ||
-        $item['href'] === implode('~', $this->getFilterTags()) . '/' ||
-        $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' ||
-        $item['href'] === './' . implode('~', $this->getFilterTags()) . '.all'
-        )) {
-                $item['current'] = true;
+          $clean_href = trim(str_replace(['../'], ['', ''], $item['href']), '/');
+          // Article
+          if ($this->cfg['contect'] === 'home' && $clean_href === ''){
+            $item['current'] = true;
+          // Article, level 0
+          } elseif($this->getTextId() === $item['href']){
+            $item['current'] = true;
+          // Article, more levels
+          } elseif (is_array($this->getParts()) && $item['href'] === implode('/', $this->getParts())) {
+            $item['current'] = true;
+          // href is part of url
+          } elseif (is_array($this->getParts()) && in_array($clean_href, $this->getParts()) ) {
+            $item['current'] = true;
+          } elseif ($this->cfg['context'] === 'tags' && (
+                $item['href'] === implode('-', $this->getFilterTags()) . '.all' ||
+                $item['href'] === implode('~', $this->getFilterTags()) . '.all' ||
+                $item['href'] === implode('-', $this->getFilterTags()) . '/' ||
+                $item['href'] === implode('~', $this->getFilterTags()) . '/' ||
+                $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' ||
+                $item['href'] === './' . implode('~', $this->getFilterTags()) . '.all'
+                )) {
+              $item['current'] = true;
             }
 
             $item['href'] = link::format($item['href'], $this->getLang('input'));

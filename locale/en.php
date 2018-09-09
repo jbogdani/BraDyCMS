@@ -475,8 +475,9 @@ $_lang['tmpl_data'] = "Template data";
 
 $_lang['ok_setting_updated'] = "Setting updated";
 $_lang['error_setting_not_updated'] = "Error. Setting not updated";
-$_lang[''] = "";
-$_lang[''] = "";
+
+$_lang['make_art_images'] = "(Re)Create article images";
+$_lang['make_art_images_descr'] = "This procedure (re)creates article images starting from original files. Already available files will be overwritten.";
 $_lang[''] = "";
 $_lang[''] = "";
 $_lang[''] = "";

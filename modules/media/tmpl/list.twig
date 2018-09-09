@@ -43,12 +43,12 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-xs-6 col-sm-3">
       <!-- File uploader button -->
       <div id="file-uploader_{{ uid }}"></div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-xs-6 col-sm-3">
       {% if rel_path != 'thumbs' %}
         <button class="btn btn-info makeThumbs">
           <i class="fa fa-picture-o"></i>
@@ -57,7 +57,16 @@
       {% endif %}
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-xs-6 col-sm-3">
+      {% if rel_path == 'articles' %}
+          <button class="btn btn-info makeArtImages">
+          <i class="fa fa-picture-o"></i>
+          {{ tr.get('make_art_images') }}
+        </button>
+      {% endif %}
+    </div>
+
+    <div class="col-xs-6 col-sm-3">
       {% if files|length > 0 %}
         <input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
       {% endif %}
@@ -65,9 +74,6 @@
   </div>
 
   <hr />
-
-
-
 
 
 
@@ -176,6 +182,44 @@
 
   $('#input_{{ uid }}').on('keyup', function(){
     admin.media.filterDir($(this).val(), '{{ uid }}');
+  });
+
+  $('#{{ uid }} .makeArtImages').on('click', function(){
+    admin.dialog({
+      title: '{{ tr.get('make_art_images')}}',
+      html: '{{ tr.get('make_art_images_descr')}}',
+      buttons: [{
+          text: '{{ tr.get('create', true) }}',
+          glyphicon: 'ok',
+          click: function(){
+
+            $('#modal .modal-body').html('<i class="fa fa-circle-o-notch fa-spin" style="font-size: 3em;"></i> {{ tr.get('please_wait', true) }}');
+
+            var url = 'controller.php?' +
+              'obj=media_ctrl&' +
+              'method=makeArtImages&' +
+              'force=force';
+
+            $.get(url, function(data){
+              if (data.status === 'success'){
+                admin.message('{{ tr.get('ok_all_thumbails_created', true) }}', 'success');
+              } else {
+                admin.message('{{ tr.get('error_in_creating_some_thumbails', true) }}', 'error');
+              }
+              $('#modal').modal('hide');
+              admin.tabs.reloadThis('#{{ uid }}');
+            }, 'json');
+
+          }
+      },
+      {
+        text: '{{ tr.get('close', true) }}',
+        glyphicon: 'remove',
+        addclass: 'btn-danger',
+        click: 'close'
+      }
+      ]
+    });
   });
 
   $('#{{ uid }} .makeThumbs').on('click', function(){

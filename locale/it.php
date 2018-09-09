@@ -466,3 +466,5 @@ $_lang['ok_count_reset'] = "Il conteggio è stato azzerato";
 $_lang['tmpl_data'] = "Dati di template";
 $_lang['ok_setting_updated'] = "Configurazione salvata";
 $_lang['error_setting_not_updated'] = "Errore. Configurazione non salvata";
+$_lang['make_art_images'] = "(Ri)Crea immagini degli articoli";
+$_lang['make_art_images_descr'] = "Questa procedura (re)crea le immagini di articolo a partire dai file originali. I file giàpresenti saranno sovrascritti.";

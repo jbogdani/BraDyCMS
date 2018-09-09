@@ -43,9 +43,7 @@ class imgMng
     public static function thumb($file, $nFile = false, $width, $height = false)
     {
         self::checkFile($file);
-        $img = self::$mng->make($file)
-      ->fit($width, $height)
-      ->save($nFile);
+        $img = self::$mng->make($file)->fit($width, $height)->save($nFile);
     }
 
     /**
@@ -75,14 +73,12 @@ class imgMng
         }
 
         self::checkFile($file);
-        $img = self::$mng->make($file)
-      ->resize($width, $height, function ($constraint) {
+        $img = self::$mng->make($file)->resize($width, $height, function ($constraint) {
           $constraint->aspectRatio();
           if ($onlyDownscale) {
               $constraint->upsize();
           }
-      })
-      ->save();
+        })->save();
     }
 
     /**
@@ -97,8 +93,6 @@ class imgMng
     public static function crop($file, $width, $height, $x = false, $y = false)
     {
         self::checkFile($file);
-        $img = self::$mng->make($file)
-      ->crop($width, $height, $x, $y)
-      ->save();
+        $img = self::$mng->make($file)->crop($width, $height, $x, $y)->save();
     }
 }

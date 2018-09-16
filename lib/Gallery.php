@@ -389,6 +389,8 @@ class Gallery
 
             if (file_exists('./sites/default/images/galleries/' .$gal . '/thumbs/' . $id)) {
                 $thumb = utils::getBaseUrl() . 'sites/default/images/galleries/' .$gal . '/thumbs/' . $id;
+            } else {
+              $thumb = false;
             }
 
             $caption = $el['caption'][$lang];

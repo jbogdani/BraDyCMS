@@ -1,4 +1,5 @@
-4.1.2[] = "Gallery thumbnail are created on the fly, and cached"
+4.2.0[] = "Solved bug with new menu creation"
+4.2.0[] = "Gallery thumbnail are created on the fly, and cached"
 4.1.1[] = "Gallery thumbnail is reseted, if missing"
 4.1.0[] = "New function: automatically create article images"
 4.0.3[] = "Menu item sets current also for “sub-folder” articles"

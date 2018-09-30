@@ -297,13 +297,11 @@
 
   setValue();
 
-  {% if menu_list %}
   $('#menu_edit{{ uid }} :input[name="menu"]').select2({
       placeholder: "{{ tr.get('select_menu') }}",
       delay: 250,
       tags: true
     });
-  {% endif %}
 
   $('#menu_edit{{ uid }} input[name="menu"]').change(function(){
     setValue();

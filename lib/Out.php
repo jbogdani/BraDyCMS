@@ -163,13 +163,14 @@ class Out
 
     /**
      *
-     * @param string $gal
+     * @param string $gal         Gallery name
+     * @param string $thumb_dim   Thumbnail dimensions (eg: 300x200)
      * @return boolean|false Array with gallery data or fale if gallery does not exist or is not well-formatted
      */
-    public function getGallery($gal)
+    public function getGallery($gal, $thumb_dim = false)
     {
         try {
-            return Gallery::get($gal);
+            return Gallery::get($gal, $thumb_dim);
         } catch (Exception $e) {
             return false;
         }

@@ -223,10 +223,12 @@ class customTags
     {
         $gal = $data['content'];
         $class = $data['class'];
+        $thumb_dim = $data['thumb_dim'] ? $data['thumb_dim'] : false;
+
         $rel = $data['rel'] ? $data['rel'] : $gal;
 
         try {
-            $gal_data = Gallery::get($gal);
+            $gal_data = Gallery::get($gal, $thumb_dim);
 
             if ($responsive) {
 

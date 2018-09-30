@@ -14,7 +14,7 @@ class Gallery
 
     /**
      * Backward compatibility function
-     * Gets old-style data.json file, for main langiage and translations
+     * Gets old-style data.json file, for main language and translations
      * and converts everything in new metadata.json file
      * @param  string $gal gallery id
      * @return boolean      true on success
@@ -72,12 +72,10 @@ class Gallery
 
 
     /**
-     * Completely removes a gallery item, deleting metadata record, thumbnail and original file
+     * Completely removes a gallery item, deleting metadata record and original file
      * 		Throws Exception on error. The following error codes will be thrown:
      * 				1: Can not delete original file
-     * 				2: Can not delete thumb file and can not update metadata file
-     * 				3: Can not delete thumb file (origianal file deleted)
-     * 				4: Can not update metadata file (original anf thumbnail file deleted)
+     * 				2: Can not update metadata file (original anf thumbnail file deleted)
      * @param  string $gal  gallery id
      * @param  string $file file name to delete
      * @return true       true on success
@@ -93,16 +91,7 @@ class Gallery
             }
         }
 
-        // 2. Delete thumbnail file
-        $thumb_file = self::$path . '' . $gal . '/thumbs/' . $file;
-        if (file_exists($thumb_file)) {
-            @unlink($thumb_file);
-            if (file_exists($thumb_file)) {
-                $error_thumb = true;
-            }
-        }
-
-        // 3. update metadata file
+        // 2. update metadata file
         try {
             $metadata = self::get($gal, false, true);
         } catch (Exception $e) {
@@ -120,12 +109,8 @@ class Gallery
             $error_metadata = true;
         }
 
-        if ($error_thumb && $error_metadata) {
-            throw new Exception("Error deleting thumbnail file and updating metadata for " . $file . ' in gallery ' . $gal, 2);
-        } elseif ($error_thumb) {
-            throw new Exception("Error deleting thumbnail file for " . $file . ' in gallery ' . $gal, 3);
-        } elseif ($error_metadata) {
-            throw new Exception("Error updating metadata file for  " . $file . ' for gallery ' . $gal, 4);
+        if ($error_metadata) {
+            throw new Exception("Error updating metadata file for  " . $file . ' for gallery ' . $gal, 2);
         }
 
         return true;
@@ -135,7 +120,6 @@ class Gallery
      * Creates a new gallery. Returns true on success, throws Exception on error, with the following codes
      * 		1: Gallery directory already exists
      * 		2: Can not create gallery directory
-     * 		3: Can not create gallery thumbnails directory
      * @param string $gal gallery id
      * @return boolean    true on success
      */
@@ -147,16 +131,10 @@ class Gallery
             throw new Exception("Gallery $gal already exists", 1);
         }
         @mkdir($gal, 0777, true);
-        @mkdir($gal . '/thumbs', 0777, true);
 
         if (!is_dir($gal)) {
             throw new Exception("Error creating gallery $gal", 2);
         }
-
-        if (!is_dir($gal . '/thumbs')) {
-            throw new Exception("Error creating thumbnail directory $gal/thumbs", 3);
-        }
-
         return true;
     }
 
@@ -279,7 +257,7 @@ class Gallery
 
         // Get metadata, if available
         try {
-            $metadata = self::get($gal, false, true);
+            $metadata = self::get($gal, false, false, true);
         } catch (Exception $e) {
             $metadata = array();
         }
@@ -288,9 +266,9 @@ class Gallery
         $files = utils::dirContent(self::$path . $gal);
 
         if (!$files || !is_array($files)) {
-            return array();
+            return [];
         }
-        $ret = array();
+        $ret =[];
 
         // Add ampty arrays for files missing in metadata array
         foreach ($files as $file) {
@@ -304,16 +282,15 @@ class Gallery
             if (!file_exists(self::$path . $gal . '/' . $file)) {
                 continue;
             }
-            array_push($ret, array(
-        'name' => $file,
-        'safe_name' => str_replace('.', '~~', $file),
-        'caption' => $data['caption'],
-        'sort' => $data['sort'],
-        'href' => $data['href'],
-        'fullpath' => self::$path . $gal . '/' . $file,
-        'thumb' => (file_exists(self::$path . $gal . '/thumbs/' . $file) ? self::$path . $gal . '/thumbs/' . $file : ''),
-        'finfo' => getimagesize(self::$path . $gal . '/' . $file)
-      ));
+            array_push($ret, [
+              'name' => $file,
+              'safe_name' => str_replace('.', '~~', $file),
+              'caption' => $data['caption'],
+              'sort' => $data['sort'],
+              'href' => $data['href'],
+              'fullpath' => self::$path . $gal . '/' . $file,
+              'finfo' => getimagesize(self::$path . $gal . '/' . $file)
+            ]);
         }
 
         ksort($ret);
@@ -331,6 +308,7 @@ class Gallery
     /**
      * Returns parsed array of gallery data or throws Exceptionon error
      * @param  string $gal       Gallery id (folder name)
+     * @param  string $thumb_dim Thumbnail dimensions, string: ^([0-9]{1,4})x([0-9]{1,4})$
      * @param  string $lang      Two-digits language code, if false, current or system language will be used
      * @param  boolean $dontparse If true raw gallery array data will be returned, if false (default) parsed result will be returned
      * @return array            Array of array for galley items. For each element will be returned, if $dontparse is false:
@@ -342,7 +320,7 @@ class Gallery
      *                          			caption: array of different captions in different languages
      *                          				{lang_id}: caption translated in lang_id
      */
-    public static function get($gal, $lang = false, $dontparse = false)
+    public static function get($gal, $thumb_dim = false, $lang = false, $dontparse = false)
     {
         self::convertMetadata($gal);
 
@@ -356,11 +334,15 @@ class Gallery
             throw new Exception('No metadata file found for gallery ' . $gal);
         }
 
+        if (!$thumb_dim || !preg_match('/^([0-9]{1,4})x([0-9]{1,4})$/', $thumb_dim)){
+          $thumb_dim = '200x200';
+        }
+
         // Parse metadata file
         $metadata = json_decode(file_get_contents($file), 1);
 
         if (!$metadata || !is_array($metadata)) {
-            throw new Exception("Gallery metadata file for gallery " . $gal . "is nor well formatted");
+            throw new Exception("Gallery metadata file for gallery " . $gal . "is not well formatted");
         }
 
         // Sort by 1. filename
@@ -380,28 +362,41 @@ class Gallery
 
         $data = array();
         foreach ($metadata as $id => $el) {
-            if (!file_exists('./sites/default/images/galleries/' .$gal . '/' . $id)) {
+            $image_file = 'sites/default/images/galleries/' .$gal . '/' . $id;
+            if (!file_exists($image_file)) {
                 // Metadata entries without original images are considered to be  orphans
                 // and will be ignored
                 continue;
             }
-            $img = utils::getBaseUrl() . 'sites/default/images/galleries/' .$gal . '/' . $id;
 
-            if (file_exists('./sites/default/images/galleries/' .$gal . '/thumbs/' . $id)) {
-                $thumb = utils::getBaseUrl() . 'sites/default/images/galleries/' .$gal . '/thumbs/' . $id;
-            } else {
-              $thumb = false;
+            $md5 = md5_file($image_file);
+            $cached_path = SITE_DIR . "cache/galleries/$thumb_dim/" . substr($md5, 0, 2) . '/' . substr($md5, 2, 2);
+            // try to create $cahced_path if it does not exist!
+            if (!is_dir($cached_path)){
+              @mkdir($cached_path, 0777, true);
+              if (!is_dir($cached_path)){
+                throw new Exception("Can not create thumbnail cache directory: $cached_path");
+              }
+            }
+            $cached_file = $cached_path . '/' . $md5 . '.jpg';
+            if (!file_exists($cached_file)){
+              $dims_arr = explode('x', $thumb_dim);
+              imgMng::thumb($image_file, $cached_file, $dims_arr[0], $dims_arr[1]);
+            }
+
+            if (file_exists($cached_file)){
+              $thumb = $cached_file;
             }
 
             $caption = $el['caption'][$lang];
 
 
-            array_push($data, array(
-        'img' => $img,
-        'thumb' => $thumb,
-        'caption' => $caption,
-        'href' => $el['href']
-      ));
+            array_push($data, [
+              'img' => utils::getBaseUrl() . $image_file,
+              'thumb' =>utils::getBaseUrl() . $thumb,
+              'caption' => $caption,
+              'href' => $el['href']
+            ]);
         }
         return $data;
     }

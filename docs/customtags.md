@@ -204,10 +204,11 @@ Complete example:
 
 ---
 
-#### gallery('class')
+#### gallery('class', 'thumb_dim', 'rel')
 Displays an existing image gallery
 - **content**, string, required. Name of gallery
 - **class**, string, optional. One or more (space separated) CSS class to apply to main ul tag
+- **thumb_dim** string, optional, default 200x200. Dimensions of the thumbnails, following the {integer}x{integer} format
 - **rel**, string, optional, default: gallery name (content). rel attribute to use to cluster
 images in slideshows. If not provided the gallery name will be used
 
@@ -215,7 +216,7 @@ Minimal example:
     [[gallery]]gallery_name[[/gallery]]
 
 Complete example:
-    [[gallery class="horizontal small" rel="gallery_one"]]gallery_name[[/gallery]]
+    [[gallery class="horizontal small" rel="gallery_one" thumb_dim="200x200"]]gallery_name[[/gallery]]
 
 ---
 

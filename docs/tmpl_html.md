@@ -139,19 +139,20 @@ _gaq.push(['_setAccount', 'GA-ID']);
 ```
 ---
 
-#### gallery('name', 'class')
+#### gallery('name', 'thumb_dim', 'class')
 Returns HTML code with gallery data.
 - **name** string, required. Textual id of the gallery to show
+- **thumb_dim** string, optional, default 200x200. Dimensions of the thumbnails, following the {integer}x{integer} format
 - **class** string, optional, default false. Css class (or space separated classes) to add to main unordered list (ul)
 
-E.g.: `{{ html.gallery('news', 'latest') }}`
+E.g.: `{{ html.gallery('news', '200x200', 'latest') }}`
 
 ```html
 <div class="gallery-container">
   <ul class="gallery news latest">
     <li>
       <a href="./sites/default/images/galleries/news/01.jpg" class="fancybox" title="Figure 01 caption" rel="news" >
-        <img src="./sites/default/images/galleries/news/thumbs/01.jpg" alt="Figure 01 caption" />
+        <img src="./cache/galleries/200x200/fc/cf/fccf1c1db130ca6f420445c75c84f4d9.jpg" alt="Figure 01 caption" />
       </a>
       <div class="caption">Figure 01 caption</div>
     </li>
@@ -444,20 +445,21 @@ array(
 
 ---
 
-#### getGallery('gallery')
+#### getGallery('gallery', 'thumb_dim')
 Returns array with data for gallery name
 - **gallery** string, required. Name of gallery to get data for
+- **thumb_dim** string, optional, default 200x200. Dimensions of the thumbnails, following the {integer}x{integer} format
 
-E.g.: `{{ html.getGallery('our_works') }}`
+E.g.: `{{ html.getGallery('our_works', '200x200') }}`
 
 ```php
 <?php
 array (
   array (
-   img => sites/default/images/galleries/our_works/picture01.jpg,
-   thumb => sites/default/images/galleries/our_works/thumbs/picture01.jpg,
-   caption => Caption of picture01,
-   href => http://some.url
+   img => "sites/default/images/galleries/our_works/picture01.jpg",
+   thumb => "./cache/galleries/200x200/fc/cf/fccf1c1db130ca6f420445c75c84f4d9.jpg",
+   caption => "Caption of picture01",
+   href => "http://some.url"
   ),
  ...
 );

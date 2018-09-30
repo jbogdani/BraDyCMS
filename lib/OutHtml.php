@@ -639,11 +639,12 @@ EOD;
      * Returns html with image gallery. Alias for customTags:gallery()
      * @param string $gal  Gallery name
      * @param string $class CSS class or space-separated CSS classes to apply to main UL
+     * @param string $thumb_dim   Thumbnail dimensions (eg: 300x200)
      * @return type
      */
-    public function gallery($gal, $class = false)
+    public function gallery($gal, $thumb_dim = false, $class = false)
     {
-        return customTags::gallery(array('content' => $gal, 'class' => $class));
+        return customTags::gallery(array('content' => $gal, 'class' => $class, 'thumb_dim' => $thumb_dim));
     }
 
 

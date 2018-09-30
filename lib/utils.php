@@ -287,12 +287,12 @@ class utils
             }
 
             if ($resize && !is_array($resize) && cfg::get('max_img_size')) {
-                imgMng::resize(
-          $result['path'] . $result['filename'] . '.' . $result['ext'],
-          cfg::get('max_img_size'),
-          cfg::get('max_img_size'),
-          true
-          );
+              imgMng::resize(
+                $result['path'] . $result['filename'] . '.' . $result['ext'],
+                cfg::get('max_img_size'),
+                cfg::get('max_img_size'),
+                true
+              );
             }
         }
 

@@ -33,7 +33,7 @@ class imgMng
 
 
     /**
-     * Creates thumbnails fro original image
+     * Creates thumbnails from original image
      * @param  string  $oFile  Path to original image
      * @param  string|false $nFile  Path to destination image, $oFile will be used if not provided
      * @param  int  $width  Thumbnail's width
@@ -73,8 +73,9 @@ class imgMng
         }
 
         self::checkFile($file);
-        $img = self::$mng->make($file)->resize($width, $height, function ($constraint) {
+        $img = self::$mng->make($file)->resize($width, $height, function ($constraint) use ($onlyDownscale) {
           $constraint->aspectRatio();
+
           if ($onlyDownscale) {
               $constraint->upsize();
           }

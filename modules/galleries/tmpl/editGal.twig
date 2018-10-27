@@ -41,7 +41,7 @@
           <div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
             <div class="clearfix">
               <h4 class="pull-left">{{ file.name }}</h4>
-              <p class="pull-right"><button class="btn btn-danger delete-item" data-file="{{ file.name }}"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button></p>
+              <p class="pull-right"><button type="button" class="btn btn-danger delete-item" data-file="{{ file.name }}"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button></p>
             </div>
             <div class="col-xs-5">
               <img src="{{ file.fullpath }}" class="img-responsive" />

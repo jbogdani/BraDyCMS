@@ -32,7 +32,26 @@ class Assets
         'version' => '3.3.1',
         'js' => [
           'local' => $path . 'frontLibs/jquery/dist/jquery.min.js',
-          'cdn' => '//ajax.googleapis.com/ajax/libs/jquery/--version--/jquery.min.js'
+          'cdn' => 'https://code.jquery.com/jquery---version--.min.js'
+        ]
+      ],
+
+      'jquery.slim' => [
+        'version' => '3.3.1',
+        'js' => [
+          'cdn' => 'https://code.jquery.com/jquery---version--.slim.min.js'
+        ]
+      ],
+
+      'bootstrap4' => [
+        'version' => '4.1.3',
+        'js' => [
+          'local' => $path . 'frontLibs/bootstrap/dist/js/bootstrap.min.js',
+          'cdn' => 'https://stackpath.bootstrapcdn.com/bootstrap/--version--/js/bootstrap.min.js'
+        ],
+        'css' => [
+          'local' => $path . 'frontLibs/bootstrap/dist/css/bootstrap.min.css',
+          'cdn' => 'https://stackpath.bootstrapcdn.com/bootstrap/--version--/css/bootstrap.min.css'
         ]
       ],
 
@@ -40,11 +59,11 @@ class Assets
         'version' => '3.3.5',
         'js' => [
           'local' => $path . 'frontLibs/bootstrap3/dist/js/bootstrap.min.js',
-          'cdn' => 'https://maxcdn.bootstrapcdn.com/bootstrap/--version--/js/bootstrap.min.js'
+          'cdn' => 'https://stackpath.bootstrapcdn.com/bootstrap/--version--/js/bootstrap.min.js'
         ],
         'css' => [
           'local' => $path . 'frontLibs/bootstrap3/dist/css/bootstrap.min.css',
-          'cdn' => 'https://maxcdn.bootstrapcdn.com/bootstrap/--version--/css/bootstrap.min.css'
+          'cdn' => 'https://stackpath.bootstrapcdn.com/bootstrap/--version--/css/bootstrap.min.css'
         ]
       ],
 

@@ -412,19 +412,6 @@ class Out
 
 
     /**
-     * Return device type; one of: computer | tablet | phone
-     * @return string one of: computer|tablet|phone
-     */
-    public function getDevice()
-    {
-        if (!$this->mobiledetect) {
-            $this->mobiledetect = new Mobile_Detect();
-        }
-
-        return ($this->mobiledetect->isMobile() ? ($this->mobiledetect->isTablet() ? 'tablet' : 'phone') : 'computer');
-    }
-
-    /**
      * Sets $data['page'] info
      *   site_name: site name as set in main config option
      *   robots:    as set in artcle's optional robots field, or as set in main config option, or "index, follow"

@@ -398,15 +398,6 @@ et caetera
 
 ---
 
-#### getDevice()
-Returns device type: computer, tablet, phone
-
-E.g.: `{{ html.getDevice }}`
-```
-computer
-```
-
----
 
 #### getDownloadNode('node')
 Returns array with data for available files in download node

@@ -44,11 +44,6 @@ class Autoloader
         return true;
         break;
 
-      case 'Mobile_Detect':
-        require_once LIB_DIR . 'vendor/Mobile_Detect/Mobile_Detect.php';
-        return true;
-        break;
-
       case 'PHPMailer':
         require_once LIB_DIR . 'vendor/phpmailer/class.phpmailer.php';
         require_once LIB_DIR . 'vendor/phpmailer/class.smtp.php';

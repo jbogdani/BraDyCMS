@@ -1,3 +1,4 @@
+4.3.0[] = "Added support for phpfastcache"
 4.2.1[] = "Bug fixed with gallery item form submission deleting the item"
 4.2.0[] = "Solved bug image max size constraint"
 4.2.0[] = "Solved bug with new menu creation"

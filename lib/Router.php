@@ -179,8 +179,8 @@ class Router
 
         $twig->addFilter($filter);
 
-        return $twig->render('index.twig', array(
-        'html'=>$outHtml
-    ));
+        return $twig->render('index.twig', [
+          'html' => $outHtml
+        ]);
     }
 }

@@ -25,10 +25,12 @@ try {
   $CachedString = $InstanceCache->getItem($key);
 
   require_once 'lib/Bootstrap.php';
-
-  if ($_SESSION['debug'] || $_SERVER['REQUEST_URI'] === '/admin' || is_null($CachedString->get())) {
-
-
+  if ( //$_SESSION['debug']
+    $_SERVER['REQUEST_URI'] === '/admin'
+    || preg_match('/\.draft$/', $_SERVER['REQUEST_URI'])
+    || is_null($CachedString->get())
+  ) {
+    
     Router::run();
 
     $html = ob_get_contents();

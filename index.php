@@ -26,7 +26,7 @@ try {
 
   require_once 'lib/Bootstrap.php';
 
-  if ($_SESSION['debug'] || is_null($CachedString->get())) {
+  if ($_SESSION['debug'] || $_SERVER['REQUEST_URI'] === '/admin' || is_null($CachedString->get())) {
 
 
     Router::run();

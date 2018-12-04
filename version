@@ -1,3 +1,4 @@
+4.3.2[] = "Solved bud with admin URLS being cached"
 4.3.1[] = "Added asset bootstrap4"
 4.3.1[] = "FancyBox updated to from 3.3.5 to 3.5.2"
 4.3.1[] = "TinyMCE updated to from 4.8.0 to 4.8.5"

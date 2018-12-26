@@ -23,10 +23,11 @@ try {
   $InstanceCache = CacheManager::getInstance('files');
   $key = md5($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
   $CachedString = $InstanceCache->getItem($key);
-
   require_once 'lib/Bootstrap.php';
   if ( $_SESSION['debug']
-    || preg_match('/controller\.php$/', $_SERVER['REQUEST_URI'])
+    || preg_match('/\.map/', $_SERVER['REQUEST_URI'])
+    || preg_match('/\.json/', $_SERVER['REQUEST_URI'])
+    || preg_match('/controller\.php/', $_SERVER['REQUEST_URI'])
     || $_SERVER['REQUEST_URI'] === '/admin'
     || preg_match('/\.draft$/', $_SERVER['REQUEST_URI'])
     || is_null($CachedString->get())
@@ -39,8 +40,9 @@ try {
 
     $CachedString->set($html)->expiresAfter(60);
     $InstanceCache->save($CachedString);
-
+    
   } else {
+
     $html = $CachedString->get();
   }
 

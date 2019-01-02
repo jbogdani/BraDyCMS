@@ -36,7 +36,7 @@ class OutHtml extends Out
             }
         }
 
-        $l2h = $this->link2('home');
+        $l2h = $this->link2();
 
         if (strtolower($type) === 'js' || (!$type && strtolower(substr($asset, -2)) === 'js')) {
             if (file_exists('sites/default/js/' . $asset)) {

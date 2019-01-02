@@ -237,7 +237,7 @@ class Out
             $url = link::to_tags($art, $this->getLang('input'), $page);
             break;
           default:
-            $url = link::to_article(!$art ? 'home' : $art, $this->getLang('input'), $page, $parts);
+            $url = link::to_article($art, $this->getLang('input'), $page, $parts);
             break;
         }
 

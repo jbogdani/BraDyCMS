@@ -113,8 +113,8 @@ class link
         // Add base
         array_push($ret_parts, self::getPath());
 
-        // add language at the begining of href
-        if ($lang) {
+        // add language at the begining of href: if href is not provided then a link to the base will be printed, with no language information
+        if ($lang && $href && $href !== '') {
             array_unshift($ret_parts, $lang);
         }
 

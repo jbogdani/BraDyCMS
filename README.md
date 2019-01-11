@@ -26,7 +26,7 @@
 
 # System requirements
 
-* PHP >= 5.3
+* PHP >= 7.0
 * PHP PDO
 * PHP pdo_sqlite (for default SQLite database)
 * Apache mod_rewrite enabled

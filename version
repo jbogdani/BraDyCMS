@@ -1,3 +1,4 @@
+4.3.6[] = "Back compatibility with php 5.6"
 4.3.5[] = "html.link2 produces a link without language reference, to be used for the calculation of assets paths"
 4.3.4[] = "Calls to controller are not cached"
 4.3.3[] = "Drafts are not cached"

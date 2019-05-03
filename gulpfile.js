@@ -3,7 +3,7 @@
 const gulp  = require('gulp'),
   uglify  = require('gulp-uglify'),
   less = require('gulp-less'),
-  minifyCSS = require('gulp-clean-css'),
+  cleanCSS = require('gulp-clean-css'),
   rename = require("gulp-rename");
 
 const libs = {
@@ -95,14 +95,14 @@ gulp.task('moveLibs', function(done){
 gulp.task('frontCSS', function () {
   return gulp.src('sites/default/css/styles.less')
   .pipe(less().on('error', function(err){ console.log(err.message); this.emit('end'); }))
-  .pipe(minifyCSS())
+  .pipe(cleanCSS())
   .pipe(gulp.dest('sites/default/css/'));
 });
 
 gulp.task('adminCSS', function () {
   return gulp.src('less/admin.less')
   .pipe(less().on('error', function(err){ console.log(err.message); this.emit('end'); }))
-  .pipe(minifyCSS())
+  .pipe(cleanCSS())
   .pipe(gulp.dest('css/'));
 });
 

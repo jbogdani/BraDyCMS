@@ -9,33 +9,27 @@ var help = (function () {
         return value;
       };
     };
-    var curry = function (f) {
-      var x = [];
+    function curry(fn) {
+      var initialArgs = [];
       for (var _i = 1; _i < arguments.length; _i++) {
-        x[_i - 1] = arguments[_i];
+        initialArgs[_i - 1] = arguments[_i];
       }
-      var args = new Array(arguments.length - 1);
-      for (var i = 1; i < arguments.length; i++)
-        args[i - 1] = arguments[i];
       return function () {
-        var x = [];
+        var restArgs = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-          x[_i] = arguments[_i];
+          restArgs[_i] = arguments[_i];
         }
-        var newArgs = new Array(arguments.length);
-        for (var j = 0; j < newArgs.length; j++)
-          newArgs[j] = arguments[j];
-        var all = args.concat(newArgs);
-        return f.apply(null, all);
+        var all = initialArgs.concat(restArgs);
+        return fn.apply(null, all);
       };
-    };
+    }
     var not = function (f) {
       return function () {
-        var x = [];
+        var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-          x[_i] = arguments[_i];
+          args[_i] = arguments[_i];
         }
-        return !f.apply(null, arguments);
+        return !f.apply(null, args);
       };
     };
     var never = constant(false);
@@ -50,13 +44,13 @@ var help = (function () {
       var eq = function (o) {
         return o.isNone();
       };
-      var call$$1 = function (thunk) {
+      var call = function (thunk) {
         return thunk();
       };
       var id = function (n) {
         return n;
       };
-      var noop$$1 = function () {
+      var noop = function () {
       };
       var nul = function () {
         return null;
@@ -72,17 +66,17 @@ var help = (function () {
         isSome: never$1,
         isNone: always$1,
         getOr: id,
-        getOrThunk: call$$1,
+        getOrThunk: call,
         getOrDie: function (msg) {
           throw new Error(msg || 'error: getOrDie called on none.');
         },
         getOrNull: nul,
         getOrUndefined: undef,
         or: id,
-        orThunk: call$$1,
+        orThunk: call,
         map: none,
         ap: none,
-        each: noop$$1,
+        each: noop,
         bind: none,
         flatten: none,
         exists: never$1,
@@ -566,8 +560,8 @@ var help = (function () {
       });
     };
     var getPluginKeys = function (editor) {
-      var keys$$1 = keys(editor.plugins);
-      return editor.settings.forced_plugins === undefined ? keys$$1 : filter(keys$$1, not(curry(contains, editor.settings.forced_plugins)));
+      var keys$1 = keys(editor.plugins);
+      return editor.settings.forced_plugins === undefined ? keys$1 : filter(keys$1, not(curry(contains, editor.settings.forced_plugins)));
     };
     var pluginLister = function (editor) {
       var pluginKeys = getPluginKeys(editor);

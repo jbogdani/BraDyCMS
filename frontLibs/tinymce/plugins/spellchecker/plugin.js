@@ -1,5 +1,5 @@
 (function () {
-var spellchecker = (function () {
+var spellchecker = (function (domGlobals) {
     'use strict';
 
     var Cell = function (initial) {
@@ -24,8 +24,8 @@ var spellchecker = (function () {
 
     var hasProPlugin = function (editor) {
       if (/(^|[ ,])tinymcespellchecker([, ]|$)/.test(editor.settings.plugins) && global.get('tinymcespellchecker')) {
-        if (typeof window.console !== 'undefined' && window.console.log) {
-          window.console.log('Spell Checker Pro is incompatible with Spell Checker plugin! ' + 'Remove \'spellchecker\' from the \'plugins\' option.');
+        if (typeof domGlobals.window.console !== 'undefined' && domGlobals.window.console.log) {
+          domGlobals.window.console.log('Spell Checker Pro is incompatible with Spell Checker plugin! ' + 'Remove \'spellchecker\' from the \'plugins\' option.');
         }
         return true;
       } else {
@@ -474,7 +474,9 @@ var spellchecker = (function () {
       checkIfFinished(editor, startedState, textMatcherState);
     };
     var finish = function (editor, startedState, textMatcherState) {
+      var bookmark = editor.selection.getBookmark();
       getTextMatcher(editor, textMatcherState).reset();
+      editor.selection.moveToBookmark(bookmark);
       textMatcherState.set(null);
       if (startedState.get()) {
         startedState.set(false);
@@ -528,6 +530,7 @@ var spellchecker = (function () {
         suggestions: suggestions,
         hasDictionarySupport: hasDictionarySupport
       });
+      var bookmark = editor.selection.getBookmark();
       getTextMatcher(editor, textMatcherState).find(Settings.getSpellcheckerWordcharPattern(editor)).filter(function (match) {
         return !!suggestions[match.text];
       }).wrap(function (match) {
@@ -537,6 +540,7 @@ var spellchecker = (function () {
           'data-mce-word': match.text
         });
       });
+      editor.selection.moveToBookmark(bookmark);
       startedState.set(true);
       Events.fireSpellcheckStart(editor);
     };
@@ -701,7 +705,7 @@ var spellchecker = (function () {
           suggestionsMenu = null;
         }
       });
-      suggestionsMenu.renderTo(document.body);
+      suggestionsMenu.renderTo(domGlobals.document.body);
       var pos = global$4.DOM.getPos(editor.getContentAreaContainer());
       var targetPos = editor.dom.getPos(spans[0]);
       var root = editor.dom.getRoot();
@@ -751,5 +755,5 @@ var spellchecker = (function () {
 
     return Plugin;
 
-}());
+}(window));
 })();

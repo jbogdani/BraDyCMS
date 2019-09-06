@@ -1,3 +1,4 @@
+4.5.2[] = "Updated boostrap version in assets"
 4.5.1[] = "Fixed bug with article[full_url]"
 4.5.0[] = "Updated: tinymce"
 4.5.0[] = "Updated: select2 (4.0.8 > 4.0.9)"

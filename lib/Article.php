@@ -112,8 +112,8 @@ class Article
             $article->url = link::to_article($article->textid, $lang, false, self::$parts);
 
             // add FULL URL
-            $article->full_url = utils::getBaseUrl() .
-      (is_array(self::$parts) ? implode('/', self::$parts) : '');
+            $article->full_url = str_replace('/./', '/', utils::getBaseUrl() .
+              (is_array(self::$parts) ? implode('/', self::$parts) : $article->url));
 
             // add article image link
             $image_steps = cfg::get('art_img');

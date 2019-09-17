@@ -639,7 +639,7 @@ EOD;
         }
 
         // Write html
-        $html = '<figure class="figure"';
+        $html = '<figure class="figure ' . $align . '"';
         if ($align || $width) {
             $html .= ' style="'
         . ($align ? 'float: ' . $align . ';' : '')

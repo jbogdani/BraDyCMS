@@ -477,10 +477,10 @@ EOD;
 
       if ($load_date) {
 
-        $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css" />', true);
-        $out->setQueue('modules', "\n" . '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>', true);
-        $out->setQueue('modules', "\n" . '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.' . $out->user_lang . '.min.js"></script>', true);
-        $out->setQueue('modules', "\n" . '<script>$(document).ready(function(){$(\'.datepicker\').datepicker({language:\'' . $out->user_lang . '\'});});</script>', true);
+        $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" />', true);
+        $out->setQueue('modules', "\n" . '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>', true);
+        $out->setQueue('modules', "\n" . '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.' . $out->getLang('current', true) . '.min.js"></script>', true);
+        $out->setQueue('modules', "\n" . '<script>$(document).ready(function(){$(\'.datepicker\').datepicker({language:\'' . $out->getLang('current', true) . '\'});});</script>', true);
       }
       $out->setQueue('modules', "\n" . '<script>$(document).ready(function(){' . implode("\n", $js) . '});</script>', true);
     }

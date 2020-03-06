@@ -91,11 +91,12 @@ class Gallery
             }
         }
 
-        // 2. update metadata file
-        try {
-            $metadata = self::get($gal, false, true);
-        } catch (Exception $e) {
-            $metadata = array();
+        $metadata_file = self::$path . '' . $gal . '/metadata.json';
+        if(file_exists($metadata_file)){
+            $metadata = json_decode(file_get_contents($metadata_file), true);
+        }
+        if (!is_array($metadata)){
+            $metadata = [];
         }
 
         try {
@@ -104,7 +105,7 @@ class Gallery
                     unset($metadata[$f]);
                 }
             }
-            self::save($gal, $metadata);
+            file_put_contents($metadata_file, json_encode($metadata));
         } catch (Exception $e) {
             $error_metadata = true;
         }

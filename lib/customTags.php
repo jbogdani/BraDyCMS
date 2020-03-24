@@ -328,8 +328,9 @@ class customTags
         $code = $data['content'];
         $width = $data['width'] ? $data['width'] : 560;
         $height = $data['height'] ? $data['height'] : 315;
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
 
-        return '<iframe src="http://player.vimeo.com/video/' . $code . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+        return '<iframe src="' . $protocol . '://player.vimeo.com/video/' . $code . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
     }
 
 
@@ -376,7 +377,9 @@ EOD;
      */
     public static function fb_comments($data)
     {
-        $url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+
+        $url = $data['content'] ? $data['content'] : $protocol . '://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 
         $html = self::fb_sdk($data['lang']) . '<div class="fb-comments" data-href="' . $url . '" ';
 
@@ -446,7 +449,9 @@ EOD;
      */
     public static function fb_like($data)
     {
-        $url = $data['content'] ? $data['content'] : 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+
+        $url = $data['content'] ? $data['content'] : $protocol . '://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 
         $html = self::fb_sdk($data['lang'])
       . '<div class="fb-like" data-href="' . $url . '" ';
@@ -464,8 +469,10 @@ EOD;
 
     public static function fb_send($data)
     {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+
         return self::fb_sdk($data['lang']) . '<div class="fb-like" ' .
-        ' data-href="http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
+        ' data-href="' . $protocol . '://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
         ($data['font'] ? ' data-font="' . $data['font'] . '" ' : '') .
         ($data['colorscheme'] ? ' data-colorscheme="' . $data['colorscheme'] . '" ' : '') .
         ($data['ref'] ? ' data-ref="' . $data['ref'] . '" ' : '') .
@@ -545,11 +552,12 @@ EOD;
     public static function addThis($data)
     {
         $pubid = $data['pubid'] ? $data['pubid'] : 'pubid=ra-4d8b051f4951c18f';
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
 
         return ($data['only_js'] ? '' :
       (
           $data['content'] ?
-        '<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=' . $pubid . '">' . $data['content'] . '</a>'
+        '<a class="addthis_button" href="' . $protocol . '://www.addthis.com/bookmark.php?v=300&amp;pubid=' . $pubid . '">' . $data['content'] . '</a>'
         :
         '<div class="addthis_sharing_toolbox"></div>'
       )

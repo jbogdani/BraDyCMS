@@ -9,6 +9,8 @@
 
 try {
 
+  require_once 'lib/Bootstrap.php';
+
   // with PHP higher or equal 7 run Phpfastcache
   if (version_compare(phpversion(), '7.0.0') > -1){
     require_once 'lib/vendor/phpfastcache/lib/Phpfastcache/Autoload/Autoload.php';
@@ -21,7 +23,7 @@ try {
     $InstanceCache = \Phpfastcache\CacheManager::getInstance('files');
     $key = md5($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
     $CachedString = $InstanceCache->getItem($key);
-    require_once 'lib/Bootstrap.php';
+    
     if ( $_SESSION['debug']
       || preg_match('/\.map/', $_SERVER['REQUEST_URI'])
       || preg_match('/\.json/', $_SERVER['REQUEST_URI'])

@@ -1,3 +1,5 @@
+4.5.6[] = "Fixed bug with Bootstrap loading"
+4.5.6[] = "Protocol is sdynamically computed in customTags"
 4.5.5[] = "Bug fixed with gallery items deletion"
 4.5.4[] = "Datepicker of userform module updated to v1.9.0"
 4.5.3[] = "Align paramer in custom tag fig is provided as class"

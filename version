@@ -1,3 +1,4 @@
+4.5.7[] = "Fixed bug with nt-, ie. no tabs parameter"
 4.5.6[] = "Fixed bug with Bootstrap loading"
 4.5.6[] = "Protocol is sdynamically computed in customTags"
 4.5.5[] = "Bug fixed with gallery items deletion"

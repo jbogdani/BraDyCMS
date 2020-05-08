@@ -710,7 +710,7 @@ $(function () {
 
     	var url = location.hash.substring(1);
 
-    	if (!url || url.match(/nt-/)){
+    	if (!url || url.match(/\bnt-/)){
 
 				return;
     	} else {

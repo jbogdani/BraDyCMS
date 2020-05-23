@@ -587,7 +587,7 @@ class Out
         foreach ($menu as &$item) {
           $clean_href = trim(str_replace(['../'], ['', ''], $item['href']), '/');
           // Article
-          if ($this->cfg['contect'] === 'home' && $clean_href === ''){
+          if ($this->cfg['context'] === 'home' && ($clean_href === '' || $clean_href === '.' || $clean_href === 'home')){
             $item['current'] = true;
           // Article, level 0
           } elseif($this->getTextId() === $item['href']){

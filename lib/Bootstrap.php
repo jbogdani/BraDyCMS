@@ -68,10 +68,6 @@ if (get_magic_quotes_gpc()) {
 require_once $root . 'lib/Autoloader.php';
 Autoloader::start();
 
-// Include and start Twig
-// require_once $root . 'lib/vendor/Twig/Autoloader.php';
-// Twig_Autoloader::register();
-
 //set default date-zone
 if (defined('CREATE_SITE') || !cfg::get('timezone')) {
     date_default_timezone_set('Europe/Rome');

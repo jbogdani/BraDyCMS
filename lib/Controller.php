@@ -57,9 +57,9 @@ class Controller
             throw new Exception("Template folder for module {$modeule} not found");
         }
 
-        $twig = new Twig_Environment(new Twig_Loader_Filesystem($dir), unserialize(CACHE));
+        $twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader($dir), unserialize(CACHE));
         if ($_SESSION['debug']) {
-            $twig->addExtension(new Twig_Extension_Debug());
+            $twig->addExtension(new \Twig\Extension\DebugExtension());
         }
 
         $data['tr'] = new tr();

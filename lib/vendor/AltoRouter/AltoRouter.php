@@ -41,7 +41,7 @@ class AltoRouter {
 		$this->setBasePath($basePath);
 		$this->addMatchTypes($matchTypes);
 	}
-
+	
 	/**
 	 * Retrieves all routes.
 	 * Useful if you want to process or display routes.
@@ -133,13 +133,13 @@ class AltoRouter {
 
 		// Replace named parameters
 		$route = $this->namedRoutes[$routeName];
-
+		
 		// prepend base path to route url again
 		$url = $this->basePath . $route;
 
 		if (preg_match_all('`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`', $route, $matches, PREG_SET_ORDER)) {
 
-			foreach($matches as $index => $match) {
+			foreach($matches as $match) {
 				list($block, $pre, $type, $param, $optional) = $match;
 
 				if ($pre) {
@@ -147,16 +147,12 @@ class AltoRouter {
 				}
 
 				if(isset($params[$param])) {
-					// Part is found, replace for param value
 					$url = str_replace($block, $params[$param], $url);
-				} elseif ($optional && $index !== 0) {
-					// Only strip preceeding slash if it's not at the base
+				} elseif ($optional) {
 					$url = str_replace($pre . $block, '', $url);
-				} else {
-					// Strip match block
-					$url = str_replace($block, '', $url);
 				}
 			}
+
 
 		}
 
@@ -193,35 +189,61 @@ class AltoRouter {
 		}
 
 		foreach($this->routes as $handler) {
-			list($methods, $route, $target, $name) = $handler;
+			list($method, $_route, $target, $name) = $handler;
 
-			$method_match = (stripos($methods, $requestMethod) !== false);
+			$methods = explode('|', $method);
+			$method_match = false;
 
-			// Method did not match, continue to next route.
-			if (!$method_match) continue;
-
-			if ($route === '*') {
-				// * wildcard (matches all)
-				$match = true;
-			} elseif (isset($route[0]) && $route[0] === '@') {
-				// @ regex delimiter
-				$pattern = '`' . substr($route, 1) . '`u';
-				$match = preg_match($pattern, $requestUrl, $params) === 1;
-			} elseif (($position = strpos($route, '[')) === false) {
-				// No params in url, do string comparison
-				$match = strcmp($requestUrl, $route) === 0;
-			} else {
-				// Compare longest non-param string with url
-				if (strncmp($requestUrl, $route, $position) !== 0) {
-					continue;
+			// Check if request method matches. If not, abandon early. (CHEAP)
+			foreach($methods as $method) {
+				if (strcasecmp($requestMethod, $method) === 0) {
+					$method_match = true;
+					break;
 				}
-				$regex = $this->compileRoute($route);
-				$match = preg_match($regex, $requestUrl, $params) === 1;
 			}
 
-			if ($match) {
+			// Method did not match, continue to next route.
+			if(!$method_match) continue;
 
-				if ($params) {
+			// Check for a wildcard (matches all)
+			if ($_route === '*') {
+				$match = true;
+			} elseif (isset($_route[0]) && $_route[0] === '@') {
+				$pattern = '`' . substr($_route, 1) . '`u';
+				$match = preg_match($pattern, $requestUrl, $params);
+			} else {
+				$route = null;
+				$regex = false;
+				$j = 0;
+				$n = isset($_route[0]) ? $_route[0] : null;
+				$i = 0;
+
+				// Find the longest non-regex substring and match it against the URI
+				while (true) {
+					if (!isset($_route[$i])) {
+						break;
+					} elseif (false === $regex) {
+						$c = $n;
+						$regex = $c === '[' || $c === '(' || $c === '.';
+						if (false === $regex && false !== isset($_route[$i+1])) {
+							$n = $_route[$i + 1];
+							$regex = $n === '?' || $n === '+' || $n === '*' || $n === '{';
+						}
+						if (false === $regex && $c !== '/' && (!isset($requestUrl[$j]) || $c !== $requestUrl[$j])) {
+							continue 2;
+						}
+						$j++;
+					}
+					$route .= $_route[$i++];
+				}
+
+				$regex = $this->compileRoute($route);
+				$match = preg_match($regex, $requestUrl, $params);
+			}
+
+			if(($match == true || $match > 0)) {
+
+				if($params) {
 					foreach($params as $key => $value) {
 						if(is_numeric($key)) unset($params[$key]);
 					}
@@ -254,18 +276,14 @@ class AltoRouter {
 					$pre = '\.';
 				}
 
-				$optional = $optional !== '' ? '?' : null;
-
 				//Older versions of PCRE require the 'P' in (?P<named>)
 				$pattern = '(?:'
 						. ($pre !== '' ? $pre : null)
 						. '('
 						. ($param !== '' ? "?P<$param>" : null)
 						. $type
-						. ')'
-						. $optional
-						. ')'
-						. $optional;
+						. '))'
+						. ($optional !== '' ? '?' : null);
 
 				$route = str_replace($block, $pattern, $route);
 			}

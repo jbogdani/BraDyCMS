@@ -8,51 +8,58 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-abstract class Twig_Test_NodeTestCase extends PHPUnit_Framework_TestCase
+
+namespace Twig\Test;
+
+use PHPUnit\Framework\TestCase;
+use Twig\Compiler;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Twig\Node\Node;
+
+abstract class NodeTestCase extends TestCase
 {
     abstract public function getTests();
 
     /**
      * @dataProvider getTests
      */
-    public function testCompile($node, $source, $environment = null)
+    public function testCompile($node, $source, $environment = null, $isPattern = false)
     {
-        $this->assertNodeCompilation($source, $node, $environment);
+        $this->assertNodeCompilation($source, $node, $environment, $isPattern);
     }
 
-    public function assertNodeCompilation($source, Twig_Node $node, Twig_Environment $environment = null)
+    public function assertNodeCompilation($source, Node $node, Environment $environment = null, $isPattern = false)
     {
         $compiler = $this->getCompiler($environment);
         $compiler->compile($node);
 
-        $this->assertEquals($source, trim($compiler->getSource()));
+        if ($isPattern) {
+            $this->assertStringMatchesFormat($source, trim($compiler->getSource()));
+        } else {
+            $this->assertEquals($source, trim($compiler->getSource()));
+        }
     }
 
-    protected function getCompiler(Twig_Environment $environment = null)
+    protected function getCompiler(Environment $environment = null)
     {
-        return new Twig_Compiler(null === $environment ? $this->getEnvironment() : $environment);
+        return new Compiler(null === $environment ? $this->getEnvironment() : $environment);
     }
 
     protected function getEnvironment()
     {
-        return new Twig_Environment();
+        return new Environment(new ArrayLoader([]));
     }
 
-    protected function getVariableGetter($name)
+    protected function getVariableGetter($name, $line = false)
     {
-        if (version_compare(phpversion(), '5.4.0RC1', '>=')) {
-            return sprintf('(isset($context["%s"]) ? $context["%s"] : null)', $name, $name);
-        }
+        $line = $line > 0 ? "// line {$line}\n" : '';
 
-        return sprintf('$this->getContext($context, "%s")', $name);
+        return sprintf('%s($context["%s"] ?? null)', $line, $name);
     }
 
     protected function getAttributeGetter()
     {
-        if (function_exists('twig_template_get_attributes')) {
-            return 'twig_template_get_attributes($this, ';
-        }
-
-        return '$this->getAttribute(';
+        return 'twig_get_attribute($this->env, $this->source, ';
     }
 }

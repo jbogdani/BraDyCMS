@@ -76,6 +76,13 @@ class Autoloader
                 return true;
             }
         }
+        if (strpos($className, "Twig") !== false) {
+            $f = LIB_DIR . 'vendor/' . str_replace("\\", "/", $className) . '.php';
+            if (file_exists($f)) {
+                require_once $f;
+                return true;
+            }
+        }
 
         if (preg_match('/_ctrl/', $className)) {
             $mod = str_replace('_ctrl', null, $className);

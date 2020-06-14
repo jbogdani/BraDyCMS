@@ -69,8 +69,8 @@ require_once $root . 'lib/Autoloader.php';
 Autoloader::start();
 
 // Include and start Twig
-require_once $root . 'lib/vendor/Twig/Autoloader.php';
-Twig_Autoloader::register();
+// require_once $root . 'lib/vendor/Twig/Autoloader.php';
+// Twig_Autoloader::register();
 
 //set default date-zone
 if (defined('CREATE_SITE') || !cfg::get('timezone')) {

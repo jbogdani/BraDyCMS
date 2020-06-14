@@ -154,26 +154,26 @@ class Router
         $settings = unserialize(CACHE);
         $settings['autoescape'] = false;
 
-        $twig = new Twig_Environment(
-          new Twig_Loader_Filesystem('./sites/default' . ($_SESSION['sandbox'] ? '/' . $_SESSION['sandbox'] : '')),
+        $twig = new \Twig\Environment(
+          new \Twig\Loader\FilesystemLoader('./sites/default' . ($_SESSION['sandbox'] ? '/' . $_SESSION['sandbox'] : '')),
           $settings
         );
 
         if ($_SESSION['debug']) {
-            $twig->addExtension(new Twig_Extension_Debug());
+            $twig->addExtension(new \Twig\Extension\DebugExtension());
         }
         // TODO: document intersect
-        $intersect = new Twig_SimpleFunction('intersect', function () {
+        $intersect = new \Twig\TwigFunction('intersect', function () {
             return array_values(call_user_func_array('array_intersect', func_get_args()));
         });
         $twig->addFunction($intersect);
 
-        $fn_file_exists = new Twig_SimpleFunction('file_exists', function ($file) {
+        $fn_file_exists = new \Twig\TwigFunction('file_exists', function ($file) {
             return file_exists($file);
         });
         $twig->addFunction($fn_file_exists);
 
-        $filter = new Twig_SimpleFilter('parseTags', function ($string) {
+        $filter = new \Twig\TwigFilter('parseTags', function ($string) {
             return customTags::parseContent($string, $outHtml);
         });
 

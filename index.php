@@ -55,7 +55,7 @@ try {
 
 
 
-} catch (Exception $e) {
+} catch (Throwable $e) {
 
   header('Content-Type: text/html; charset=utf-8');
 

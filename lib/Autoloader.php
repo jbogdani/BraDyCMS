@@ -21,62 +21,48 @@ class Autoloader
 
         // Manually installed external libraries
         switch ($className) {
-      case 'Less_Parser':
-        require_once LIB_DIR . 'vendor/lessphp/Less.php';
-        return true;
-        break;
+          case 'Less_Parser':
+            require_once LIB_DIR . 'vendor/lessphp/Less.php';
+            return true;
+            break;
 
-      case 'R':
-        require_once LIB_DIR . 'vendor/redbean/rb.php';
-        return true;
-        break;
+          case 'R':
+            require_once LIB_DIR . 'vendor/redbean/rb.php';
+            return true;
+            break;
 
-      case 'Curl\Curl':
-        require_once LIB_DIR . 'vendor/Curl/Curl.php';
-        return true;
-        break;
-      case 'Curl\MultiCurl':
-        require_once LIB_DIR . 'vendor/Curl/MultiCurl.php';
-        return true;
-        break;
-      case 'Curl\CaseInsensitiveArray':
-        require_once LIB_DIR . 'vendor/Curl/CaseInsensitiveArray.php';
-        return true;
-        break;
+          case 'PHPMailer':
+            require_once LIB_DIR . 'vendor/phpmailer/class.phpmailer.php';
+            require_once LIB_DIR . 'vendor/phpmailer/class.smtp.php';
+            return true;
+            break;
 
-      case 'PHPMailer':
-        require_once LIB_DIR . 'vendor/phpmailer/class.phpmailer.php';
-        require_once LIB_DIR . 'vendor/phpmailer/class.smtp.php';
-        return true;
-        break;
+          case 'FeedWriter\Atom':
+            require_once LIB_DIR . 'vendor/FeedWriter/Feed.php';
+            require_once LIB_DIR . 'vendor/FeedWriter/Item.php';
+            require_once LIB_DIR . 'vendor/FeedWriter/ATOM.php';
+            return true;
+            break;
 
-      case 'FeedWriter\Atom':
-        require_once LIB_DIR . 'vendor/FeedWriter/Feed.php';
-        require_once LIB_DIR . 'vendor/FeedWriter/Item.php';
-        require_once LIB_DIR . 'vendor/FeedWriter/ATOM.php';
-        return true;
-        break;
+          case 'FeedWriter\RSS2':
+            require_once LIB_DIR . 'vendor/FeedWriter/Feed.php';
+            require_once LIB_DIR . 'vendor/FeedWriter/Item.php';
+            require_once LIB_DIR . 'vendor/FeedWriter/RSS2.php';
+            return true;
+            break;
 
-      case 'FeedWriter\RSS2':
-        require_once LIB_DIR . 'vendor/FeedWriter/Feed.php';
-        require_once LIB_DIR . 'vendor/FeedWriter/Item.php';
-        require_once LIB_DIR . 'vendor/FeedWriter/RSS2.php';
-        return true;
-        break;
-
-      case 'Parsedown':
-        require_once LIB_DIR . 'vendor/Parsedown/Parsedown.php';
-        break;
-    }
-
-        if (strpos($className, "Intervention\\Image\\") !== false) {
-            $f = LIB_DIR . 'vendor/' . str_replace("\\", "/", $className) . '.php';
-            if (file_exists($f)) {
-                require_once $f;
-                return true;
-            }
+          case 'Parsedown':
+            require_once LIB_DIR . 'vendor/Parsedown/Parsedown.php';
+            break;
         }
-        if (strpos($className, "Twig") !== false) {
+
+        if (
+          strpos($className, "Curl") !== false
+          ||
+          strpos($className, "Intervention\\Image\\") !== false
+          ||
+          strpos($className, "Twig") !== false
+          ) {
             $f = LIB_DIR . 'vendor/' . str_replace("\\", "/", $className) . '.php';
             if (file_exists($f)) {
                 require_once $f;

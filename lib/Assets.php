@@ -108,6 +108,7 @@ class Assets
      */
     public static function resolve($name, $type = false, $source = false, $version = false)
     {
+
         // Return false if type is defined but is not css or js
         if ($type && $type !== 'css' && $type !== 'js') {
             return false;
@@ -120,7 +121,7 @@ class Assets
 
         $basePath = link::to_article('home');
 
-        $ret = self::resolveFromInternalIndex($name, $type, $version);
+        $ret = self::resolveFromInternalIndex($name, $type, $source, $version);
         
         if ($ret){
 
@@ -159,7 +160,16 @@ class Assets
 
     }
 
-    private static function resolveFromInternalIndex( $name, $type, $version )
+    /**
+     * Tries to resolve Assets internally, by using the system registry
+     *
+     * @param string $name    Asset name
+     * @param string|boolean $type   js, css of false
+     * @param string|boolean $source local, cdn or false
+     * @param string|boolean $version specifiv version
+     * @return array|false if asset is resolved array with path and type will be returned, otherwize false.
+     */
+    private static function resolveFromInternalIndex( $name, $type = false, $source = false, $version = false )
     {
       $assets = self::allAssets();
 

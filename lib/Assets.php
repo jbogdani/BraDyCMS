@@ -68,14 +68,14 @@ class Assets
           ],
 
           'fancybox' => [
-            'version' => '3.3.5',
+            'version' => '3.5.7',
             'js' => [
               'local' => $path . 'frontLibs/@fancyapps/fancybox/dist/jquery.fancybox.min.js',
-              'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js'
+              'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/--version--/jquery.fancybox.min.js'
             ],
             'css' => [
               'local' => $path . 'frontLibs/@fancyapps/fancybox/dist/jquery.fancybox.min.css',
-              'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css'
+              'cdn' => 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/--version--/jquery.fancybox.min.css'
             ]
           ],
 

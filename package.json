@@ -13,7 +13,7 @@
   "homepage": "https://github.com/jbogdani/BraDyCMS",
   "devDependencies": {
     "gulp": "^4.0.0",
-    "gulp-clean-css": "^4.2.0",
+    "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.0",
     "gulp-less": "^4.0.0",
     "gulp-rename": "^1.4.0",
@@ -21,21 +21,21 @@
   },
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.7",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.5.0",
     "bootstrap-datepicker": "^1.8.0",
     "bootstrap3": "^3.3.5",
     "datatables": "^1.10.18",
-    "datatables.net-bs": "^1.10.19",
+    "datatables.net-bs": "^1.10.21",
     "fine-uploader": "^5.16.2",
     "font-awesome": "^4.7.0",
     "google-code-prettify": "^1.0.5",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "jquery-mousewheel": "^3.1.13",
     "jquery-nestable": "^0.8.0",
     "pnotify": "^3.2.1",
-    "popper.js": "^1.15.0",
-    "select2": "^4.0.6-rc.1",
+    "popper.js": "^1.16.1",
+    "select2": "^4.0.13",
     "select2-bootstrap-theme": "0.1.0-beta.10",
-    "tinymce": "^4.8.5"
+    "tinymce": "^4.9.10"
   }
 }

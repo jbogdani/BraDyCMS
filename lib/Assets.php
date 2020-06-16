@@ -44,7 +44,7 @@ class Assets
           ],
 
           'bootstrap4' => [
-            'version' => '4.3.1',
+            'version' => '4.5.0',
             'js' => [
               'local' => $path . 'frontLibs/bootstrap/dist/js/bootstrap.min.js',
               'cdn' => 'https://stackpath.bootstrapcdn.com/bootstrap/--version--/js/bootstrap.min.js'

@@ -38,7 +38,7 @@
     {% if files|length > 0 %}
       <form action="javascript:void(0)">
         {% for file in files %}
-          <div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
+          <div class="row {% if loop.index is divisible by (2) %} well well-small {% endif %} listitem">
             <div class="clearfix">
               <h4 class="pull-left">{{ file.name }}</h4>
               <p class="pull-right"><button type="button" class="btn btn-danger delete-item" data-file="{{ file.name }}"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button></p>

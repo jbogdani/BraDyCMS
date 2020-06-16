@@ -163,18 +163,21 @@
             <h4>{{ tr.get('custom_fields') }}</h4>
 
             {# Rich text custom fields #}
-            {% for fld in custom_fields if fld.richtext %}
+            {% for fld in custom_fields %}
+            {% if fld.richtext %}
               <div class="form-group">
                 <label>{{ fld.label|upper }}</label>
                 <textarea name="{{ fld.name }}"
                           style="width:100%; height: 150px;"
                           id="richtext{{ uid ~ fld.name }}">{{ art[fld.name] }}</textarea>
               </div>
+            {% endif %}
             {% endfor %}
 
             {# Plain text custom fields #}
             <div class="row">
-              {% for fld in custom_fields if fld.richtext == false %}
+              {% for fld in custom_fields %}
+              {% if fld.richtext == false  %}
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>{{ fld.label|upper }}</label>
@@ -192,9 +195,10 @@
                     {% endif %}
                   </div>
                 </div>
-                {% if loop.index is divisibleby(3) %}
+                {% if loop.index is divisible by(3) %}
                   </div><div class="row">
                 {% endif %}
+              {% endif %}
               {% endfor %}
 
             </div>
@@ -314,8 +318,10 @@
   admin.wysiwyg.add("text{{ uid }}");
 
   {% if custom_fields %}
-    {% for fld in custom_fields if fld.richtext %}
+    {% for fld in custom_fields %}
+    {% if fld.richtext %}
       admin.wysiwyg.add("richtext{{ uid ~ fld.name }}");
+    {% endif %}
     {% endfor %}
   {% endif %}
 

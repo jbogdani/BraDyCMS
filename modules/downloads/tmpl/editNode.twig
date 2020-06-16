@@ -22,7 +22,7 @@
 
         {% for file in files %}
 
-          <div class="row {% if loop.index is divisibleby (2) %} well well-small {% endif %} listitem">
+          <div class="row {% if loop.index is divisible by (2) %} well well-small {% endif %} listitem">
 
             <div class="col-xs-4">
               <h4>{{ file.name }}</h4>

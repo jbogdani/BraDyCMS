@@ -37,13 +37,13 @@ class Assets
           ],
 
           'jquery.slim' => [
-            'version' => '3.3.1',
+            'version' => '3.5.1',
             'js' => [
               'cdn' => 'https://code.jquery.com/jquery---version--.slim.min.js'
             ]
           ],
 
-          'bootstrap4' => [
+          'bootstrap' => [
             'version' => '4.5.0',
             'js' => [
               'local' => $path . 'frontLibs/bootstrap/dist/js/bootstrap.min.js',
@@ -55,7 +55,7 @@ class Assets
             ]
           ],
 
-          'bootstrap' => [
+          'bootstrap3' => [
             'version' => '3.3.5',
             'js' => [
               'local' => $path . 'frontLibs/bootstrap3/dist/js/bootstrap.min.js',

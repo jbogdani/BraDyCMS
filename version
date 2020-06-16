@@ -1,3 +1,4 @@
+5.0.0[] = "asset.bootstrap points to v4"
 5.0.0[] = "Updated php-curl-class to v.8.8.0"
 5.0.0[] = "Updated Altorouter to v.1.2.0"
 5.0.0[] = "Updated Twig to v.3.x: for ... if statement is now deprecated, divisibleby => divisible by!"

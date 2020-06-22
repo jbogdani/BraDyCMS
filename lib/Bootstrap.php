@@ -133,6 +133,13 @@ if (!defined('MAIN_DIR')) {
     }
 }
 
+foreach([ERR_LOG, MAIN_DIR . 'logs/users.log',MAIN_DIR . 'logs/logAttempts.log'] as $log_file){
+    if (filesize($log_file) > 3145728 ){
+        utils::write_in_file($log_file . '.' . str_replace('.', '', microtime(true)), file_get_contents($log_file), 'gz');
+        utils::write_in_file($log_file, '');
+    }
+}
+
 
 // Sandbox templates
 if ($_GET['sandbox'] && file_exists('./sites/default/' . $_GET['sandbox'])) {

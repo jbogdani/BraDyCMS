@@ -523,7 +523,7 @@ class Out
 
         // URL
         // http://stackoverflow.com/a/23717829/586449
-        $this->data['page']['url']  = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $this->data['page']['url']  = ( utils::is_ssl() ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         // MISSION
         $this->data['page']['mission'] = cfg::get('mission');

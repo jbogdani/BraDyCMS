@@ -9,6 +9,27 @@
 class utils
 {
 
+  /**
+   * Returns true if SSL is enables or false if not
+   * Ref.: https://stackoverflow.com/a/7304239/586449
+   *
+   * @return boolean
+   */
+  public function is_ssl()
+  {
+    if ( isset($_SERVER['HTTPS']) ) {
+      if ('on' == strtolower($_SERVER['HTTPS'])) {
+        return true;
+      }
+      if ('1' == $_SERVER['HTTPS']) {
+          return true;
+      }
+    } elseif ( isset($_SERVER['SERVER_PORT']) && ( '443' == $_SERVER['SERVER_PORT'] ) ) {
+      return true;
+    }
+    return false;
+  }
+
   // Returns relative website path to base web directory (where main index.php file is located)
   public static function getBase()
   {
@@ -22,7 +43,7 @@ class utils
     public static function getBaseUrl()
     {
         // http://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $protocol = utils::is_ssl() ? "https://" : "http://";
         $url = $protocol . $_SERVER['HTTP_HOST'] . self::getBase();
         return (substr($url, -1) ===  '/' ? $url : $url . '/');
     }

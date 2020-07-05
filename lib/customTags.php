@@ -309,7 +309,7 @@ class customTags
         $align = $data['align'];
         $class = $data['class'];
         $start = $data['start'];
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+        $protocol = utils::is_ssl() ? "https" : "http";
 
         return '<div class="youtube'
         . ($class ? ' ' . $class : '')
@@ -328,7 +328,7 @@ class customTags
         $code = $data['content'];
         $width = $data['width'] ? $data['width'] : 560;
         $height = $data['height'] ? $data['height'] : 315;
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+        $protocol = utils::is_ssl() ? "https" : "http";
 
         return '<iframe src="' . $protocol . '://player.vimeo.com/video/' . $code . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
     }
@@ -377,7 +377,7 @@ EOD;
      */
     public static function fb_comments($data)
     {
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+        $protocol = utils::is_ssl() ? "https" : "http";
 
         $url = $data['content'] ? $data['content'] : $protocol . '://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 
@@ -449,7 +449,7 @@ EOD;
      */
     public static function fb_like($data)
     {
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+        $protocol = utils::is_ssl() ? "https" : "http";
 
         $url = $data['content'] ? $data['content'] : $protocol . '://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 
@@ -469,7 +469,7 @@ EOD;
 
     public static function fb_send($data)
     {
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+        $protocol = utils::is_ssl() ? "https" : "http";
 
         return self::fb_sdk($data['lang']) . '<div class="fb-like" ' .
         ' data-href="' . $protocol . '://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"] . '" ' .
@@ -551,8 +551,11 @@ EOD;
      */
     public static function addThis($data)
     {
-        $pubid = $data['pubid'] ? $data['pubid'] : 'pubid=ra-4d8b051f4951c18f';
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+        $pubid = $data['pubid'];
+        if (!$pubid){
+            return false;
+        }
+        $protocol = utils::is_ssl() ? "https" : "http";
 
         return ($data['only_js'] ? '' :
       (

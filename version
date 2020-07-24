@@ -3,6 +3,7 @@
 5.0.0[] = "Updated Altorouter to v.1.2.0"
 5.0.0[] = "Updated Twig to v.3.x: for ... if statement is now deprecated, divisibleby => divisible by!"
 
+4.7.3[] = "Bug fixed with page in url regex matching"
 4.7.2[] = "Bug fixed with protocol detection"
 4.7.1[] = "Gravatar is loaded over https"
 4.7.0[] = "Log files bigger than 5MB are gzipped and emptied"

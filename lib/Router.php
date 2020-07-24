@@ -79,7 +79,7 @@ class Router
             $router->map('GET', "/[lng:lng]?/[art:art]", function ($lng = false, $art) {
               $exploded = explode('/', $art);
               $p = end($exploded);
-              if (preg_match('/p[0-9]{1,3}/', $p)){
+              if (preg_match('/^p[0-9]{1,3}$/', $p)){
                 $page = str_replace('p', null, $p);
                 array_pop($exploded);
                 $art = implode('/', $exploded) . '/';

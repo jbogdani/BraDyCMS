@@ -36,6 +36,6 @@
     "popper.js": "^1.15.0",
     "select2": "^4.0.6-rc.1",
     "select2-bootstrap-theme": "0.1.0-beta.10",
-    "tinymce": "^4.9.10"
+    "tinymce": "^4.9.11"
   }
 }

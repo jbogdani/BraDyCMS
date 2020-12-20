@@ -1,3 +1,4 @@
+5.0.1[] = "PHP v8 compatibility fixes"
 5.0.1[] = "RedbeanPHP updated to v 5.6.2"
 5.0.1[] = "Removed support for get_magic_quotes_gpc"
 5.0.0[] = "asset.bootstrap points to v4"

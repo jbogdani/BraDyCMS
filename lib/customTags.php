@@ -305,7 +305,7 @@ class customTags
 
         $width = $data['width'] ? $data['width'] : 560;
         $height = $data['height'] ? $data['height'] : 315;
-        $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '' ? : '';
+        $ratio = ($data['ratio'] && ($data['ratio'] === '4by3' || $data['ratio'] === '16by9')) ? $data['ratio'] : '';
         $align = $data['align'];
         $class = $data['class'];
         $start = $data['start'];

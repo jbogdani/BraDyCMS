@@ -15,7 +15,7 @@ class utils
    *
    * @return boolean
    */
-  public function is_ssl()
+  public static function is_ssl()
   {
     if ( isset($_SERVER['HTTPS']) ) {
       if ('on' == strtolower($_SERVER['HTTPS'])) {

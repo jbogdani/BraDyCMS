@@ -536,7 +536,9 @@ class Out
             $this->data['page']['image'] = utils::getBaseUrl() . $path2img;
         } elseif ($this->data['article'][$this->getTextId()]['text']) {
             // 2. get first image available in the article body
-            $xpath = new DOMXPath(@DOMDocument::loadHTML($this->data['article'][$this->getTextId()]['text']));
+            $doc = new DOMDocument();
+            $doc->loadHTML($this->data['article'][$this->getTextId()]['text']);
+            $xpath = new DOMXPath($doc);
             $src = $xpath->evaluate("string(//img/@src)");
 
             $this->data['page']['image'] = (!preg_match('/http/', $src) ? utils::getBaseUrl() . '/' : '') . $src;

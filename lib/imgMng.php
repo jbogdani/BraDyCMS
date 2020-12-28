@@ -19,7 +19,7 @@ class imgMng
      * @return true on success
      * @throws Exception on errors
      */
-    private function checkFile($file)
+    private static function checkFile($file)
     {
         $driver =  (cfg::get('img_manager') === 'imagick') ?  ['driver' => 'imagick'] : ['driver' => 'gd'];
         if (is_null(self::$mng)) {

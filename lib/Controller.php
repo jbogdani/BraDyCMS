@@ -85,23 +85,23 @@ class Controller
     private function nonNeed2Auth($object, $method)
     {
         $permitted = [
-      'tr'=> '*',
-      'log_ctrl' => ['in'],
-      'addsite_ctrl' => '*',
-      'admin_ctrl' => '*',
-      'api_ctrl' => ['run'],
-      'userform_ctrl' => ['process'],
-      'seo_ctrl' => '*',
-      'feeds_ctrl' => '*',
-      'OAI_ctrl' => '*',
-      'protectedtags_ctrl' => ['login', 'logout'],
-      'download_ctrl' =>['go']
-    ];
+            'tr'=> '*',
+            'log_ctrl' => ['in'],
+            'addsite_ctrl' => '*',
+            'admin_ctrl' => '*',
+            'api_ctrl' => ['run'],
+            'userform_ctrl' => ['process'],
+            'seo_ctrl' => '*',
+            'feeds_ctrl' => '*',
+            'OAI_ctrl' => '*',
+            'protectedtags_ctrl' => ['login', 'logout'],
+            'download_ctrl' =>['go']
+        ];
 
         return (
-      $permitted[$object] === '*' ||
-      (is_array($permitted[$object]) && in_array($method, $permitted[$object]))
-      );
+            $permitted[$object] === '*' ||
+            (is_array($permitted[$object]) && in_array($method, $permitted[$object]))
+        );
     }
 
     /**
@@ -135,10 +135,12 @@ class Controller
             if (get_parent_class($obj) === 'Controller') {
                 $_aa = new $obj($this->get, $this->post, $this->request);
 
-                if ($_aa->adminRequired
-          && is_array($_aa->adminRequired)
-          && in_array($method, $_aa->adminRequired)
-          && !$_SESSION['user_admin']) {
+                if (
+                    $_aa->adminRequired
+                    && is_array($_aa->adminRequired)
+                    && in_array($method, $_aa->adminRequired)
+                    && !$_SESSION['user_admin']
+                ) {
                     throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
                 }
 

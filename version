@@ -1,3 +1,4 @@
+5.0.3[] = "PHP 8 compatibility issues fixed"
 5.0.3[] = "Detailed error message on debug"
 5.0.3[] = "tr::lang2json renamed to lang2js"
 5.0.3[] = "img::checkFile is static"

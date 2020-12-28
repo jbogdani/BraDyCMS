@@ -270,7 +270,7 @@ class utils
      * @param int|false $resize if true (file should be an image) the image will be resided to fit dimensions
      * @param array last paramater is array with post data
      */
-    public static function upload($upload_dir, $sanitize = false, $resize = false)
+    public static function upload($upload_dir, $sanitize = false, $resize = false, $post = false, $get = false)
     {
         $sizeLimit = 8 * 1024 * 1024;
 

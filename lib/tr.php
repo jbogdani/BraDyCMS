@@ -97,20 +97,16 @@ class tr
 
     /**
      *
-     * Returns current language as json (is_string is false) or as javascript variable (is_string = true)
-     * @param boolean $is_string
+     * Returns current language as js 
+     * @param boolean|array $post post data
+     * @param boolean|array $get get data
      */
-    public static function lang2json($is_string = false)
+    public static function lang2js($post = false, $get = false)
     {
         $lang = $_SESSION['language_strings'];
 
-        if ($is_string) {
-            header('Content-Type: application/javascript');
-            echo 'var lang = ' . json_encode($lang) . ';';
-        } else {
-            header('Content-type: application/json');
-            return json_encode($lang);
-        }
+        header('Content-Type: application/javascript');
+        echo 'var lang = ' . json_encode($lang) . ';';
     }
 
     /**

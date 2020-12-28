@@ -1,3 +1,4 @@
+5.0.3[] = "tr::lang2json renamed to lang2js"
 5.0.3[] = "img::checkFile is static"
 5.0.2[] = "DOMDocument::loadHTML static is not supported"
 5.0.1[] = "PHP v8 compatibility fixes"

@@ -32,7 +32,7 @@ class Controller
      * @param array $post $_POST data
      * @param array $request $_REQUEST data
      */
-    public function __construct($get= false, $post = false, $request = false)
+    public function __construct($get = false, $post = false, $request = false)
     {
         $this->get = $get;
         $this->post = $post;
@@ -112,9 +112,9 @@ class Controller
      */
     public function route($obj = false, $method = false, $params = [])
     {
-        if ($obj || $this->request['obj']) {
-            $obj = $obj ? $obj : $this->request['obj'];
-            $method = $method ? $method : $this->request['method'];
+        if ($obj || isset($this->request['obj'])) {
+            $obj = $obj ?: $this->request['obj'];
+            $method = $method ?: $this->request['method'];
 
             unset($this->request['obj']);
             unset($this->request['method']);
@@ -123,7 +123,7 @@ class Controller
             unset($this->post['obj']);
             unset($this->post['method']);
 
-            $param = !empty($params) ? $params : array_merge((array)$this->get['param'], ['post' => $this->post, 'get' => $this->get]);
+            $param = $params ?? array_merge((array)$this->get['param'], ['post' => $this->post, 'get' => $this->get]);
 
             $trace_params = $obj . '::' . $method . '(' . var_export($param, true) . ')';
 
@@ -157,7 +157,7 @@ class Controller
                         throw new Exception('Permission denied. Line: ' . __LINE__ . '; details: ' . $trace_params);
                     }
                 }
-                call_user_func_array(array($obj, $method), $param);
+                call_user_func_array([$obj, $method], $param);
             }
         } else {
             throw new Exception('No data to load');

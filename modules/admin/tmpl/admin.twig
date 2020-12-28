@@ -20,7 +20,7 @@
 
     {% block content %}{% endblock %}
 
-  <script src="controller.php?obj=tr&method=lang2json&param[]=true"></script>
+  <script src="controller.php?obj=tr&method=lang2js"></script>
 {% for f, sha in js %}
   <script src="{{ f }}?sha256={{ sha }}"></script>
 {% endfor %}

@@ -57,14 +57,22 @@ try {
 
 } catch (Throwable $e) {
 
+  error_log($e);
+
   header('Content-Type: text/html; charset=utf-8');
 
   if ($_SESSION['debug'] || defined('CREATE_SITE')) {
-    echo '<pre>';
-    var_dump($e);
-    echo '</pre>';
+    // var_dump($e->getTraceAsString());
+    echo '<h2>' . $e->getMessage() . '</h2>'
+    . "<p>File: " . $e->getFile()
+    . "<br>Line: " . $e->getLine()
+    . "<br>Code: " . $e->getCode()
+    . "</p><hr>"
+    .'<pre>' 
+    . $e->getTraceAsString()
+    . '</pre>';
+  } else {
+    echo tr::get('error_check_log');
   }
 
-  echo tr::get('error_check_log');
-  error_log($e->getMessage());
 }

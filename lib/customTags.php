@@ -255,7 +255,7 @@ class customTags
           . ($class ? ' ' . $class : '') . '" data-rel="' . $rel . '">';
 
                 foreach ($gal_data as $item) {
-                    $title = str_replace('"', '\"', strip_tags($item['caption']));
+                    $title = str_replace('"', '&quot;', strip_tags($item['caption']));
                     $html .= '<li data-id="' . basename($item['img']) . '">'
             // Link will be set to external reference, if href is set or to image (fancybox) if not
             . '<a href="' . ($item['href'] ? $item['href'] : $item['img']) . '" '

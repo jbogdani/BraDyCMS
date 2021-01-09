@@ -1,3 +1,4 @@
+5.1.1[] = "Updated npm dependencies"
 5.1.0[] = "Relicensed as AGPL-3.0"
 5.1.0[] = "Removed support for *.inc custom tags"
 5.0.4[] = "Fixed issue with double quotes in image gallery caption"

@@ -635,7 +635,7 @@ EOD;
      * @param string $method method of customTags object to call
      * @param string|array $param array or json encoded array with method parameters
      */
-    public function ct($method, $param = array())
+    public function ct($method, $param = [])
     {
         if ($param && is_string($param)) {
             $param = json_decode($param, true);
@@ -643,12 +643,12 @@ EOD;
 
         if (method_exists('customTags', $method)) {
             $html = call_user_func(array('customTags', $method), $param, $this);
-        } elseif (file_exists('sites/default/modules/' . $method . '/' . $method. '.inc')) {
-            require_once 'sites/default/modules/' . $method . '/' . $method . '.inc';
-            $html = call_user_func_array([new $method, 'init'], [$param, $this]);
         } elseif (file_exists('sites/default/modules/' . $method . '/' . $method. '.php')) {
             require_once 'sites/default/modules/' . $method . '/' . $method . '.php';
             $html = call_user_func_array([new $method, 'init'], [$param, $this]);
+        } else {
+            $html= '';
+            error_log("Unknown custom tag {$method}");
         }
 
         return $html;

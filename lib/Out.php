@@ -120,19 +120,19 @@ class Out
     public function getLang($what = false, $return_always = false)
     {
         switch ($what) {
-      case 'current':
-        if ($return_always) {
-            return $this->cfg['lang'] ? $this->cfg['lang'] : cfg::get('sys_lang');
-        } else {
-            return ($this->cfg['lang'] && $this->cfg['lang'] !== cfg::get('sys_lang')) ? $this->cfg['lang'] : false;
-        }
-        break;
+            case 'current':
+                if ($return_always) {
+                    return $this->cfg['lang'] ? $this->cfg['lang'] : cfg::get('sys_lang');
+                } else {
+                    return ($this->cfg['lang'] && $this->cfg['lang'] !== cfg::get('sys_lang')) ? $this->cfg['lang'] : false;
+                }
+                break;
 
-      case 'input':
-      default:
-        return $this->cfg['lang'];
-        break;
-    }
+            case 'input':
+            default:
+                return $this->cfg['lang'];
+                break;
+        }
     }
 
     /**

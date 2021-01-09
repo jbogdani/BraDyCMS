@@ -1,12 +1,13 @@
 <?php
 /**
- * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDypUS 2007-2013
- * @license      MIT, See LICENSE file
- * @since      Jun 6, 2013
- *
  * Abstract class for metadata structured information
  * This class should be implemented and populated with data from single by ./sites/default/modules/metadata/MD_repositories.inc classes
+ * 
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
+ * @since      Jun 6, 2013
+ *
  */
 
 

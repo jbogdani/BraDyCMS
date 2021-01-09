@@ -1,11 +1,9 @@
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDypUS 2007-2013
- * @license			MIT, See LICENSE file
- * @since			Apr 20, 2013
- * @example			$('ul.bgRotator').bgRotator();
- *
- *
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
+ * @since      Apr 20, 2013
+ * @example    $('ul.bgRotator').bgRotator();
  */
 (function( $ ){
 	$.fn.bgRotator = function(random) {

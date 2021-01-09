@@ -1,8 +1,8 @@
 <?php
 /**
- * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license      MIT, See LICENSE file
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
  * @since      Dec 18, 2012
  */
 
@@ -50,9 +50,9 @@ class OutHtml extends Out
         array_push($part, '<meta http-equiv="content-type" content="text/html; charset=utf-8" />');
         array_push($part, '<meta name="robots" content="' . $this->getPageData('robots') . '" />');
         // Since v 3.7.10 custom_title is used for HTML metadata
-        array_push($part, '<title>' .
-      ($this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true)) .
-      '</title>');
+        array_push($part, '<title>'
+            . ($this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true))
+            . '</title>');
         array_push($part, '<meta name="description" content="' . $this->getPageData('description', true) . '" />');
         array_push($part, '<meta name="keywords" content="' . $this->getPageData('keywords', true) . '" />');
         array_push($part, '<meta lang="' . $this->getPageData('lang', true) . '" />');
@@ -73,9 +73,9 @@ class OutHtml extends Out
                 continue;
             }
 
-            array_push($part, '<link rel="alternate" href="' .
-        str_replace('//', '/', str_replace($_SERVER['REQUEST_URI'], '/' . $l['href'], $url)) .
-        '" hreflang="' . $l['code'] . '" />');
+            array_push($part, '<link rel="alternate" href="'
+                    . str_replace('//', '/', str_replace($_SERVER['REQUEST_URI'], '/' . $l['href'], $url))
+                    . '" hreflang="' . $l['code'] . '" />');
         }
 
         if (!$no_og) {
@@ -83,8 +83,8 @@ class OutHtml extends Out
             array_push($part, '<!-- Open Graph metadata -->');
             // Since v 3.7.10 cutstom_title is used for OpenGraph metadata
             array_push($part, '<meta property="og:title" content="'
-        . ($this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true))
-        . '" />');
+                . ($this->getPageData('custom_title') ? $this->getPageData('custom_title', true) : $this->getPageData('title', true))
+                . '" />');
             array_push($part, '<meta property="og:description" content="' . html_entity_decode($this->getPageData('description', true)) . '" />');
             array_push($part, '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />');
             if ($this->getPageData('image')) {
@@ -163,14 +163,14 @@ class OutHtml extends Out
         // Identifier.DOI
         if ($art[$this->getMD()->getTable('id')]) {
             array_push($part, '<meta name="DC.Identifier.DOI" ' .
-        'content="' . ($this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() : '') .
-        $art[$this->getMD()->getTable('id')] . '" />');
+                'content="' . ($this->getMD()->getDoiPrefix() ? $this->getMD()->getDoiPrefix() : '') .
+                $art[$this->getMD()->getTable('id')] . '" />');
         }
         // Titile
         array_push($part, '<meta name="DC.Title" content="' . $this->getPageData('title', true) . '" />');
         // Description
         array_push($part, '<meta name="DC.Description" ' .
-      'content="' . ($art['summary'] ? trim(strip_tags($art['summary'])) : $this->getPageData('description', true)) . '" />');
+              'content="' . ($art['summary'] ? trim(strip_tags($art['summary'])) : $this->getPageData('description', true)) . '" />');
         // Language
         array_push($part, '<meta name="DC.Language" scheme="ISO639-1" content="' . $this->getPageData('lang', true) . '" />');
         // Creator && Creator.PersonalName
@@ -663,12 +663,10 @@ EOD;
      */
     public function downloadNode($node, $class = false)
     {
-        return customTags::download(
-      array(
-        'content' => $node,
-        'class' => $class
-        )
-      );
+        return customTags::download([
+            'content' => $node,
+            'class' => $class
+        ]);
     }
 
     /**
@@ -713,10 +711,10 @@ EOD;
 
 
             if (
-        $x != $pagination['start'] && $x != $pagination['end']
-        &&
-        ($x < $pagination['current'] - 2 || $x > $pagination['current'] + 2)
-        ) {
+                $x !== $pagination['start'] && $x !== $pagination['end']
+                &&
+                ($x < $pagination['current'] - 2 || $x > $pagination['current'] + 2)
+            ) {
                 if ($x < $pagination['current'] && !$showed_start) {
                     $html .= '<li class="page-item disabled"><a class="page-link disabled" href="#">...</a>';
                     $showed_start = true;
@@ -727,9 +725,9 @@ EOD;
                     $showed_end = true;
                 }
             } else {
-                $html .= '<li class="page-item' . ($x == $pagination['current'] ? ' active' : '') . '">'
-            . '<a href="' . $href . '" class="page-link">' . $x . '</a>'
-          . "</li>";
+                $html .= '<li class="page-item' . ($x === $pagination['current'] ? ' active' : '') . '">'
+                    . '<a href="' . $href . '" class="page-link">' . $x . '</a>'
+                    . "</li>";
             }
         }
 
@@ -745,21 +743,19 @@ EOD;
     public function canView()
     {
         switch ($this->getContext()) {
-
-      case 'tags':
-        $tags = $this->getFilterTags();
-        break;
-      case 'article':
-        $art = $this->getArticle();
-        $tags = $art['tags'];
-        break;
-      case 'home':
-      case 'search':
-      default:
-        return true;
-        break;
-    }
-
+            case 'tags':
+                $tags = $this->getFilterTags();
+                break;
+            case 'article':
+                $art = $this->getArticle();
+                $tags = $art['tags'];
+                break;
+            case 'home':
+            case 'search':
+            default:
+                return true;
+                break;
+        }
 
         $protectedtags = new protectedtags_ctrl();
         return $protectedtags->canUserRead($tags);

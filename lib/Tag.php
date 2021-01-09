@@ -1,10 +1,11 @@
 <?php
-
 /**
+ * 
  * Manages tags
- * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net, Julian Bogdani <jbogdani@gmail.com>
- * @license      See file LICENSE distributed with this code
+ * 
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
  * @since        Jan 2, 2015
  */
 

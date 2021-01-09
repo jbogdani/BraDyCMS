@@ -1,12 +1,12 @@
 {
-  "name": "bdusCMS",
+  "name": "bduscms",
   "description": "BraDyCMS",
   "repository": {
     "type": "git",
     "url": "git://github.com/jbogdani/BraDyCMS.git"
   },
-  "author": "Julian Bogdani (BraDypUS)",
-  "license": "MIT",
+  "author": "Julian Bogdani <jbogdani@gmail.com>",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/jbogdani/BraDyCMS/issues"
   },

@@ -1,11 +1,16 @@
 <?php
+/**
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
+ */
 
 class DownloadAndCount
 {
 
-/**
- * Creates table downloads in the database if it does not exist
- */
+    /**
+     * Creates table downloads in the database if it does not exist
+     */
     private static function createIfDoesNotExist()
     {
         R::exec('CREATE TABLE IF NOT EXISTS downloads (id INTEGER PRIMARY KEY, file TEXT UNIQUE, tot INTEGER);');

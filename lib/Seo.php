@@ -7,10 +7,9 @@
  * 	- title
  * 	- description
  * 	- keywords
- * 	The class requires php >= 5.4 because of the use of the short array syntax
- * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2016
- * @license      MIT, See LICENSE file
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
  * @since      April 10, 2016
  * @uses      Redbean
  */

@@ -1,8 +1,8 @@
 <?php
 /**
- * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDypUS 2007-2012
- * @license      MIT, See LICENSE file
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
  * @since      Jan 10, 2012
  */
 

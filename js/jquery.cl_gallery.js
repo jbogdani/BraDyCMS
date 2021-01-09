@@ -1,7 +1,7 @@
 /**
- * @author			Julian Bogdani <jbogdani@gmail.com>
- * @copyright		BraDypUS 2007-2013
- * @license			MIT, See LICENSE file
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
  * @since			Apr 9, 2013
  * @example			$('ul.cl_gallery').cl_gallery();
  *

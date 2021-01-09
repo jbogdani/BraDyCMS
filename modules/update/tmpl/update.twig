@@ -1,20 +1,24 @@
+{#
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
+#}
+
 <div id="{{ uid }}">
-<h2>{{ tr.get('update_sys') }}</h2>
+  <h2>{{ tr.get('update_sys') }}</h2>
 
-<hr />
-<div class="row">
+  <hr />
 
-  <div class="col-sm-5">
-    <p class="lead">{{ tr.sget('you_are_running_v', curr_v) }}</p>
-    <p>
-      <button class="btn btn-info btn-lg check_update"><i class="fa fa-play-circle"></i> {{ tr.get('check_for_updates') }}</button>
-    </p>
+  <div class="row">
+    <div class="col-sm-5">
+      <p class="lead">{{ tr.sget('you_are_running_v', curr_v) }}</p>
+      <p>
+        <button class="btn btn-info btn-lg check_update"><i class="fa fa-play-circle"></i> {{ tr.get('check_for_updates') }}</button>
+      </p>
+    </div>
+
+    <div class="col-sm-7 check_result"></div>
   </div>
-
-  <div class="col-sm-7 check_result">
-  </div>
-
-</div>
 
 </div>
 

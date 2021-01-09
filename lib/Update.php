@@ -1,11 +1,12 @@
 <?php
-
 /**
- * @author      Julian Bogdani <jbogdani@gmail.com>
- * @copyright    BraDyUS. Communicating Cultural Heritage, http://bradypus.net 2007-2013
- * @license      MIT, See LICENSE file
- * @since        Sep 26, 2013
- * @example     try
+ * Updates system, using the official Github repository
+ * 
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
+ * @since      Sep 26, 2013
+ * @example    try
  *              {
  *                $update = new Update();
  *                $res = $update->checkUpdate(version::current(), 'https://raw.github.com/jbogdani/BraDyCMS/master/version');

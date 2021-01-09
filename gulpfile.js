@@ -1,5 +1,12 @@
 /*jshint esversion: 6 */
 
+/**
+ * 
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
+ */
+
 const gulp  = require('gulp'),
   uglify  = require('gulp-uglify'),
   less = require('gulp-less'),

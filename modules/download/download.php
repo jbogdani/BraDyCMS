@@ -1,4 +1,10 @@
 <?php
+/**
+ * 
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
+ */
 // TODO:
 //  1. admin ui: button to set to: int | 0
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * 
+ * @author     Julian Bogdani <jbogdani@gmail.com>
+ * @copyright  2007-2021 Julian Bogdani
+ * @license    AGPL-3.0; see LICENSE file
+ */
 $_lang['articles'] = "Artikuj";
 $_lang['add_new_article'] = "Shto një artikull";
 $_lang['show_all_articles'] = "Shfaq të gjithë artikujt";

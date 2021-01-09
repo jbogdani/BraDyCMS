@@ -19,7 +19,7 @@ var admin = {
         plugins: [
          "advlist autolink link image lists charmap preview hr anchor",
          "searchreplace wordcount visualblocks visualchars code fullscreen media nonbreaking",
-         "save table contextmenu directionality paste textcolor template imagetools importcss"
+         "save table directionality paste template imagetools importcss"
         ],
         importcss_append: true,
         importcss_groups: [{title: 'Other styles'}],

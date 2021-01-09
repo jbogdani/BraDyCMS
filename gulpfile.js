@@ -57,11 +57,10 @@ const libs = {
   ],
   'tinymce': [
     "plugins/*/plugin.min.js",
-    "plugins/*/plugin.js",
     "skins/**/*",
     "themes/**/*",
-    "tinymce.min*",
-    "tinymce.js"
+    "icons/**/*.min.js",
+    "tinymce.min*"
   ],
   'fine-uploader': [
     "fine-uploader/*.gif",

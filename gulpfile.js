@@ -74,9 +74,9 @@ const libs = {
   "jquery-mousewheel": [
     "jquery.mousewheel.js"
   ],
-  "pnotify": [
-    'dist/pnotify.js',
-    'dist/pnotify.css'
+  "izitoast": [
+    "dist/js/iziToast.min.js",
+    "dist/css/iziToast.min.css"
   ],
   "select2": [
     "dist/css/select2.min.css",

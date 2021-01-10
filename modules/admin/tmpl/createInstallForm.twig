@@ -96,7 +96,7 @@
         $('#register').fadeOut();
         $('#message').fadeIn();
       } else {
-        admin.message(data.text, data.status, false, true);
+        admin.message(data.text, data.status);
       }
     }, 'json');
   });

@@ -436,17 +436,19 @@ var admin = {
 		 *
 		 * @param text
 		 * @param title
-		 * @param type : false, info, success, error
-		 * @param sticky
 		 */
-		message: function(text, type, title, sticky){
-      new PNotify({
-        title: title ?  title : false,
-        text: text,
-        type: type ? type : false,
-        hide: sticky ? false : true,
-        styling: 'bootstrap3'
-      });
+		message: function(text, type){
+      if (!type){
+        type = 'info';
+      }
+      if (type === 'info' || type === 'success' || type === 'warning' || type === 'error'){
+        iziToast[type]({
+          message: text,
+          maxWidth: '400px'
+        });
+      } else {
+        alert(text);
+      }
 		},
 
 	tabs : {

@@ -28,16 +28,16 @@ var admin = {
         image_advtab: true,
         removed_menuitems: 'newdocument',
         templates: [
-          {title: 'download file', content: '[[dwnl file=""]]text[[/dwnl]]'},
-          {title: 'fig', content: '[[fig path="./sites/default/images/"]]caption[[/fig]]'},
-          {title: 'link', content: '[[link]]editme[[/link]]'},
-          {title: 'download-node', content: '[[download]]editme[[/download]]'},
+          {title: 'download file', description: "Short code to download file", content: '[[dwnl file=""]]text[[/dwnl]]'},
+          {title: 'fig', description: "Short code to show an image with captio", content: '[[fig path="./sites/default/images/"]]caption[[/fig]]'},
+          {title: 'link', description: "Short code to create an internal link", content: '[[link]]editme[[/link]]'},
+          {title: 'download-node', description: "Short code to show a download node", content: '[[download]]editme[[/download]]'},
           {title: 'gallery', content: '[[gallery]]editme[[/gallery]]'},
-          {title: 'map', content: '[[map]]editme[[/map]]'},
-          {title: 'userform', content: '[[userform]]editme[[/userform]]'},
-          {title: 'vimeo', content: '[[vimeo]]editme[[/vimeo]]'},
-          {title: 'youtube', content: '[[youtube]]editme[[/youtube]]'},
-          {title: 'gcalendar', content: '[[gcalendar]]editme[[/gcalendar]]'}
+          {title: 'map', description: "Short code to add a map", content: '[[map]]editme[[/map]]'},
+          {title: 'userform', description: "Short code to show a custom form", content: '[[userform]]editme[[/userform]]'},
+          {title: 'vimeo', description: "Short code to show a Vimeo video", content: '[[vimeo]]editme[[/vimeo]]'},
+          {title: 'youtube', description: "Short code to show a YouTube", content: '[[youtube]]editme[[/youtube]]'},
+          {title: 'gcalendar', description: "Short code to show a Google calendar", content: '[[gcalendar]]editme[[/gcalendar]]'}
         ]
       };
       $.extend(default_opts, opts);

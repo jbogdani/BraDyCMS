@@ -78,17 +78,17 @@
           <div class="col-sm-5">
             <div class="form-group">
               <label>{{ tr.get('title') }}</label>
-              <input type="text" name="title" value="{{ art.title}}" />
+              <input type="text" class="form-control" name="title" value="{{ art.title}}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('textid') }}</label>
-              <input type="text" name="textid" value="{{ art.textid }}" />
+              <input type="text" class="form-control" name="textid" value="{{ art.textid }}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('sorting') }}</label>
-              <input type="text" name="sort" value="{%
+              <input type="text" class="form-control" name="sort" value="{%
                 if art.sort %}{{
                   art.sort }}{%
                 else
@@ -98,17 +98,17 @@
 
             <div class="form-group">
               <label>{{ tr.get('keywords') }}</label>
-              <input type="text" name="keywords" value="{{ art.keywords }}" />
+              <input type="text" class="form-control" name="keywords" value="{{ art.keywords }}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('author') }}</label>
-              <input type="text" name="author" value="{{ art.author }}" />
+              <input type="text" class="form-control" name="author" value="{{ art.author }}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('status') }}</label>
-              <select name="status">
+              <select name="status" class="form-control">
                 <option value="0" {% if art.status == false %} selected="true" {% endif %}>{{ tr.get('draft') }}</option>
                 <option value="1" {% if art.status %} selected="true" {% endif %}>{{ tr.get('published') }}</option>
               </select>
@@ -116,21 +116,21 @@
 
             <div class="form-group">
               <label>{{ tr.get('creation_date') }}</label>
-              <input class="datepicker col-md-12" type="text" name="created"
+              <input class="datepicker col-md-12 form-control" type="text" name="created"
                   value="{% if art.created %}{{ art.created }}{% else %}{{ date }}{% endif %}" />
             </div>
 
             <div class="form-group">
               <label>{{ tr.get('pubblication_date') }}</label>
               <br>
-              <input class="datepicker" type="text" name="publish"
+              <input class="datepicker form-control" type="text" name="publish"
                   value="{% if art.publish %}{{ art.publish }}{% else %}{{ date }}{% endif %}" />
             </div>
 
             <div class="form-group">
               <div class="expiration_date_block" {% if art.expires == '0000-00-00' or art.expires == art.publish %} style="display:none"{% endif %}>
                 <label>{{ tr.get('expiration_date') }}</label>
-                <input class="datepicker col-md-12" type="text" name="expires"
+                <input class="datepicker col-md-12 form-control" type="text" name="expires"
                     value="{% if art.expires and art.expires != art.publish %}{{ art.expires }}{% else %}0000-00-00{% endif %}" />
               </div>
               <button type="button" class="btn btn-info btn-block expiration_date_toggle">
@@ -190,14 +190,14 @@
                     {% if fld.type == 'longtext' %}
                     <textarea name="{{ fld.name }}" style="height:100px">{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}</textarea>
                     {% elseif fld.type == 'select' and fld.values %}
-                      <select name="{{ fld.name }}">
+                      <select name="{{ fld.name }}" class="form-control">
                         <option></option>
                         {% for opt in fld.values %}
                           <option{% if opt == art[fld.name] %} selected="selected" {% endif %}>{{ opt }}</option>
                         {% endfor %}
                       </select>
                     {% else %}
-                    <input name="{{ fld.name }}" type="text" value="{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}" />
+                    <input name="{{ fld.name }}" type="text" class="form-control" value="{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}" />
                     {% endif %}
                   </div>
                 </div>
@@ -255,7 +255,7 @@
                 <p class="text-danger">{{ tr.get('no_art_media') }}</p>
               {% else %}
                 {% for file in art_media %}
-                  <p>{{file}}<br /><input type="text" value="sites/default/images/articles/media/{{ art.id }}/{{ file }}" /></p>
+                  <p>{{file}}<br /><input type="text" class="form-control" value="sites/default/images/articles/media/{{ art.id }}/{{ file }}" /></p>
                 {% endfor %}
                 <hr />
                 <a class="btn btn-info btn-block" href="#media/all/articles/media/{{ art.id }}"><i class="fa fa-share-alt"></i> {{ tr.get('open') }}</a>

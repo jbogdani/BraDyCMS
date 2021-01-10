@@ -48,7 +48,7 @@
   
   $('#{{ uid }} .add_new').on('click', function(){
     admin.dialog({
-      html: '<input type="text" class="tag" style="margin: 30px 0;" placeholder="' + admin.tr('add_new_tag') + '">',
+      html: '<input type="text" class="tag form-control" style="margin: 30px 0;" placeholder="' + admin.tr('add_new_tag') + '">',
       
       loaded: function(modal){
         modal.find('input.tag').focus();
@@ -92,7 +92,7 @@
     
     admin.dialog({
       title: admin.tr('rename'),
-      html: '<input type="text" class="tag" style="margin: 30px 0;" value="' + title + '">',
+      html: '<input type="text" class="tag form-control" style="margin: 30px 0;" value="' + title + '">',
       
       loaded: function(modal){
         modal.find('input.tag').focus();

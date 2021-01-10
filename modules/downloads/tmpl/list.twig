@@ -18,7 +18,7 @@
       </a>
     </div>
       <div class="pull-right col-sm-2">
-        <input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
+        <input class="form-control" type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
       </div>
   </div>
   
@@ -48,7 +48,7 @@
   
   $('#{{ uid }} a.add_new').on('click', function(event){
     admin.dialog({
-      html: '<input type="text" class="download" placeholder="' + admin.tr('download_node_name') + '" />',
+      html: '<input type="text" class="download form-control" placeholder="' + admin.tr('download_node_name') + '" />',
       title: admin.tr('new_download_node'),
       loaded: function(modal){
         modal.find('input.download').focus();

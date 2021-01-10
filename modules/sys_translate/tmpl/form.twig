@@ -38,6 +38,7 @@
         <td>{{ v|nl2br }}</td>
         <td><br />
           <textarea
+            class="subject form-control"
             style="width:90%;
             {% if edit_lang[k] == false %} border:1px solid #ff0000; {% endif %}"
             name="{{ k }}" >{{ edit_lang[k] }}</textarea>
@@ -88,10 +89,10 @@
       title: '{{ tr.get('add_new_tr_string', true) }}',
       html: '<div class="row">' +
         '<div class="col-sm-4">' +
-          '<input type="text" class="key" placeholder="{{ tr.get('tr_key') }}" />' +
+          '<input type="text" class="key form-control" placeholder="{{ tr.get('tr_key') }}" />' +
         '</div>' +
         '<div class="col-sm-8">' +
-          '<textarea class="value" style="height: 100px;" placeholder="{{ tr.get('tr_value') }}"></textarea>' +
+          '<textarea class="value form-control" style="height: 100px;" placeholder="{{ tr.get('tr_value') }}"></textarea>' +
         '</div>',
 
       buttons:[

@@ -57,12 +57,14 @@
             <div class="col-xs-7">
               <div class="form-group">
                 <textarea style="height:70px"
+                    class="form-control"
                     name="{{ file.safe_name }}[caption][{{ sys_lang[0] }}]">{{ file.caption[sys_lang[0]] }}</textarea>
               </div>
               {% for lng in langs %}
               <div class="form-group">
                 <label>{{ lng.string|capitalize }}</label>
                 <textarea style="height:70px"
+                    class="form-control"
                     name="{{ file.safe_name }}[caption][{{ lng.id }}]">{{ file.caption[lng.id] }}</textarea>
               </div>
               {% endfor %}
@@ -72,7 +74,7 @@
                     <label>{{ tr.get('sorting') }}</label>
                   </div>
                   <div class="col-sm-8">
-                    <input type="text" name="{{ file.safe_name }}[sort]" value="{{ file.sort }}" />
+                    <input type="text" class="form-control" name="{{ file.safe_name }}[sort]" value="{{ file.sort }}" />
                   </div>
                 </div>
               </div>
@@ -82,7 +84,7 @@
                     <label>{{ tr.get('link') }}</label>
                   </div>
                   <div class="col-sm-10">
-                    <input type="text" name="{{ file.safe_name }}[href]" value="{{ file.href }}" />
+                    <input type="text" class="form-control" name="{{ file.safe_name }}[href]" value="{{ file.href }}" />
                   </div>
                 </div>
               </div>
@@ -147,7 +149,7 @@
 
   $('#{{ uid }} .rename').on('click', function(){
     admin.dialog({
-      html: '<input type="text" class="gal" placeholder="' + admin.tr('gallery_name') + '" />'
+      html: '<input type="text" class="gal form-control" placeholder="' + admin.tr('gallery_name') + '" />'
         + '<p class="text-danger">' + admin.tr('gal_name_formatting') + '</p>',
       title: admin.tr('rename_gallery') + ': {{ gallery }}',
       loaded: function(modal){

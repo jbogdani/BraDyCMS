@@ -111,7 +111,7 @@
     <tr>
       <th>{{ p }}</th>
       <th>
-        <select class="mode">
+        <select class="mode" class="form-control">
           <option value="confirm"{% if autoregister[p]['mode'] != 'confirm' %} selected="selected"{% endif %}>
             {{ tr.get('confirm') }}
           </option>
@@ -122,16 +122,16 @@
       </td>
       <td>
         <input type="email"
-        class="from"
+        class="from form-control"
         value="{{ autoregister[p]['from'] }}" />
       </td>
       <td>
         <input type="text"
-        class="subject"
+        class="subject form-control"
         value="{{ autoregister[p]['subject'] }}" />
       </td>
       <td>
-        <textarea class="text"
+        <textarea class="text form-control"
           style="height:100px">{{ autoregister[p]['text'] }}</textarea>
       </td>
       <td>
@@ -151,7 +151,7 @@
 
 {{ tr.get('captcha_protection') }}
 
-<select class="disable_captcha">
+<select class="disable_captcha form-control">
   <option value="0">{{ tr.get('enabled') }}</option>
   <option value="1" {% if disable_captcha %} selected="selected"{% endif %}>{{ tr.get('disabled') }}</option>
 </select>

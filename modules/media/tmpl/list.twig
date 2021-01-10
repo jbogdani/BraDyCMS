@@ -74,7 +74,7 @@
 
     <div class="col-xs-6 col-sm-3">
       {% if files|length > 0 %}
-        <input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
+        <input class="form-control" type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
       {% endif %}
     </div>
   </div>
@@ -154,7 +154,7 @@
 
       return $('<div />').append(
           'File URL:',
-          '<input type="text" value="./sites/default/images/' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
+          '<input  class="form-control" type="text" value="./sites/default/images/' + file + '" onfocus="this.select()" style="width:90%; font-size:0.6em" /><br />',
           $('<div />').addClass('input-append'),
           $('<div class="btn-group"></div>').append(
             '<a class="btn btn-default" target="_blank" href="{{ path }}/' + name + '" title="{{ tr.get('open_download') }}"><i class="big fa fa-download"></i></a>',
@@ -243,9 +243,9 @@
           '</div>' +
         '</div>' +
         '<hr />' +
-        '<label><input type="checkbox" class="overwrite" /> {{ tr.get('overwrite') }}</label>' +
+        '<label><input type="checkbox" class="overwrite form-control" /> {{ tr.get('overwrite') }}</label>' +
         '<br />' +
-        '<label><input type="checkbox" class="recursive" /> {{ tr.get('recursive_subfolders') }}</label>' +
+        '<label><input type="checkbox" class="recursive form-control" /> {{ tr.get('recursive_subfolders') }}</label>' +
       '</div>',
       loaded: function(){
         $('#modal .maxDim').on('keyup', function(){

@@ -23,7 +23,7 @@
       name="name"
       placeholder="{{ tr.get('name_surname') }}"
       required="true"
-      class="{{ css.name_input }}">
+      class="{{ css.name_input }} form-control">
   </div>
 
   <div class="email {{ css.email_cont }}">
@@ -32,7 +32,7 @@
       name="email"
       placeholder="{{ tr.get('email_address') }}"
       required="true"
-      class="{{ css.email_input }}">
+      class="{{ css.email_input }} form-control">
   </div>
 
   <div class="password {{ css.password_cont }}">
@@ -41,13 +41,13 @@
       name="password"
       placeholder="{{ tr.get('password') }}"
       required="true"
-      class="{{ css.password_input }}">
+      class="{{ css.password_input }} form-control">
   </div>
 
   {% if mode != 'dont_confirm' %}
     <div class="select {{ css.select_cont }}">
       <select
-        class="select {{ css.select_input }}">
+        class="select {{ css.select_input }} form-control">
         <option value="new">{{ tr.get('new_user') }}</option>
         <option value="confirm">{{ tr.get('confirm_user') }}</option>
       </select>
@@ -61,7 +61,7 @@
       type="text"
       name="confirmationcode"
       placeholder="{{ tr.get('confirmationcode') }}"
-      class="{{ css.confirmationcode_input }}">
+      class="{{ css.confirmationcode_input }} form-control">
   </div>
 
   <div class="repeatpassword {{ css.password_cont }}">
@@ -69,7 +69,7 @@
       type="password"
       name="repeatpassword"
       placeholder="{{ tr.get('repeatpassword') }}"
-      class="{{ css.password_input }}">
+      class="{{ css.password_input }} form-control">
   </div>
 
 

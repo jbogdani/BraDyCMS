@@ -49,6 +49,7 @@ class admin_ctrl extends Controller
   {
     $b = './frontLibs/';
     foreach ([
+      "{$b}bootstrap3/dist/css/bootstrap.min.css",
       "{$b}font-awesome/css/font-awesome.min.css",
       "{$b}select2/dist/css/select2.min.css",
       "{$b}select2-bootstrap-theme/dist/select2-bootstrap.min.css",

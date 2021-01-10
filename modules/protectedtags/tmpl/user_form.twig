@@ -8,6 +8,7 @@
   <form action="javascript:void(0)" class="new_protectd_pages_user">
     <div class="form-group">
       <input
+        class="form-control"
         type="text"
         name="name"
         placeholder="{{ tr.get('name') }}"
@@ -16,6 +17,7 @@
     </div>
     <div class="form-group">
       <input
+        class="form-control"
         type="email"
         name="email"
         placeholder="{{ tr.get('email_address') }}"
@@ -25,6 +27,7 @@
     <div class="form-group">
       <div class="input-group">
         <input
+          class="form-control"
           type="text"
           name="password"
           required="required"
@@ -42,6 +45,7 @@
 
     <div class="form-group">
       <select class="tags" name="tags[]"
+        class="form-control"
         multiple="multiple"
         style="width:100%"
         placeholder="{{ tr.get('tags') }}"
@@ -54,6 +58,7 @@
 
     <div class="form-group">
       <input type="text" name="confirmationcode"
+        class="form-control"
         style="width:100%"
         placeholder="{{ tr.get('confirmationcode') }}"
         value="{{ user.confirmationcode }}">

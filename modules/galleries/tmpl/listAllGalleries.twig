@@ -14,7 +14,7 @@
       <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="fa fa-refresh"></i> {{ tr.get('reload') }}</a>
     </div>
       <div class="pull-right col-sm-2">
-        <input type="text" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
+        <input type="text" class="form-control" placeholder="{{ tr.get('search') }}" id="input_{{ uid }}" />
       </div>
   </div>
 
@@ -44,7 +44,7 @@
 
   $('#{{ uid }} a.add_new').on('click', function(event){
     admin.dialog({
-      html: '<input type="text" class="gal" placeholder="' + admin.tr('gallery_name') + '" />'
+      html: '<input type="text" class="gal form-control" placeholder="' + admin.tr('gallery_name') + '" />'
         + '<p class="text-danger">' + admin.tr('gal_name_formatting') + '</p>',
       title: admin.tr('new_gallery'),
       loaded: function(modal){

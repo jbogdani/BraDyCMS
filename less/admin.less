@@ -4,13 +4,29 @@
  * @license    AGPL-3.0; see LICENSE file
  */
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,700,700italic);
+.transition(@transition) {
+  -webkit-transition: @transition;
+       -o-transition: @transition;
+          transition: @transition;
+}
 
-@import '../frontLibs/bootstrap3/less/bootstrap.less';
+.translate3d(@x; @y; @z) {
+  -webkit-transform: translate3d(@x, @y, @z);
+          transform: translate3d(@x, @y, @z);
+}
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
 
-@icon-font-path: "../frontLibs/bootstrap3/dist/fonts/";
 
-@font-family-sans-serif: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 
 .icon, .fa{
   display: inline-block;
@@ -21,16 +37,10 @@
   }
 }
 
-
-@grid-float-breakpoint: @screen-md-min;
-
-
 html{
   overflow-x: hidden;
 }
 
-#wrapper{
-}
 .data_table{
   td{
     word-wrap: break-word;
@@ -39,25 +49,6 @@ html{
   }
 }
 
-.topbar{
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  right:0;
-  background: @navbar-inverse-bg;
-  padding: 0;
-  margin: 0;
-  color: @navbar-inverse-color;
-  height: @navbar-height;
-  z-index:1000;
-
-
-}
-.navbar{
-  a{
-    color: @navbar-inverse-link-color;
-  }
-}
 .shorthands{
   margin: 14px 10px 10px 10px;
   padding:0;
@@ -82,7 +73,7 @@ html{
 
   &:hover{
     text-decoration: none;
-    background: lighten(@navbar-inverse-bg, 10%);
+    background: lighten(#000, 20%);
   }
 
   i{
@@ -94,7 +85,7 @@ html{
 
 #menu{
   position: fixed !important;
-  top: @navbar-height;
+  top: 50px;
   left: -260px;
   width: 250px;
   height: 100%;
@@ -197,13 +188,6 @@ body.login{
       margin: 10px 0;
     }
 	}
-}
-
-// All inputs excepts checkboxes, tinymce inputs and select2 inputs
-input:not([type="checkbox"]):not(.mce-textbox):not(.select2-input):not(.select2-search__field),
-textarea:not(.mce-textbox),
-select:not(.mce-textbox){
-	.form-control();
 }
 
 body{

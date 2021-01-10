@@ -32,8 +32,7 @@ const libs = {
     'dist/css/bootstrap.min.css',
     'dist/css/bootstrap.css.map',
     'dist/fonts/*',
-    'dist/js/bootstrap.min.js',
-    'less/**/*'
+    'dist/js/bootstrap.min.js'
   ],
   'bootstrap-datepicker':  [
     'dist/css/bootstrap-datepicker3.min.css',

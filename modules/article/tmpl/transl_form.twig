@@ -13,7 +13,7 @@
   <div class="row form-group">
     <div class="col-sm-1"><label>Status</label></div>
     <div class="col-sm-2 col-sm-offset-5">
-      <select name="status">
+      <select name="status" class="form-control">
         <option{% if transl.status == false %} selected="selected"{% endif %} value="0">{{ tr.get('not_translated') }}</option>
         <option{% if transl.status %} selected="selected"{% endif %} value="1">{{ tr.get('translated') }}</option>
       </select>
@@ -28,7 +28,7 @@
     </div>
     <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
     <div class="col-sm-6 transl">
-      <input type="text" name="title" value="{{ transl.title }}" />
+      <input type="text" class="form-control" name="title" value="{{ transl.title }}" />
     </div>
   </div>
 
@@ -40,7 +40,7 @@
     </div>
     <div class="col-sm-1"><button type="button" class="btn btn-default copy"> &gt;&gt; </button></div>
     <div class="col-sm-6 transl">
-      <textarea name="keywords" style="width:100%; height: 100px;">{{ transl.keywords }}</textarea>
+      <textarea name="keywords" style="width:100%; height: 100px;" class="form-control">{{ transl.keywords }}</textarea>
     </div>
   </div>
 

@@ -12,7 +12,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-name') }}</label>
     <div class="col-sm-5">
-      <input type="text" value="{{ data.name }}" name="name">
+      <input type="text" class="form-control" value="{{ data.name }}" name="name">
     </div>
     <div class="col-sm-5">
        <span class="text-muted">Site's short name.</span>
@@ -24,7 +24,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-mission') }}</label>
     <div class="col-sm-5">
-      <textarea name="mission">{{ data.mission }}</textarea>
+      <textarea name="mission" class="form-control">{{ data.mission }}</textarea>
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Site's mission.</span>
@@ -36,7 +36,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-title') }}</label>
     <div class="col-sm-5">
-      <textarea name="title">{{ data.title }}</textarea>
+      <textarea name="title" class="form-control">{{ data.title }}</textarea>
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Site's pages default title</span>
@@ -47,7 +47,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-description') }}</label>
     <div class="col-sm-5">
-      <textarea name="description">{{ data.description }}</textarea>
+      <textarea name="description" class="form-control">{{ data.description }}</textarea>
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Site's pages default description</span>
@@ -59,7 +59,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-keywords') }}</label>
     <div class="col-sm-5">
-      <textarea name="keywords">{{ data.keywords }}</textarea>
+      <textarea name="keywords" class="form-control">{{ data.keywords }}</textarea>
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Site's pages default comma separated keywords</span>
@@ -70,7 +70,7 @@
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-sys_lang') }}</label>
     <div class="col-sm-2">
-      <input type="text" value="{{ data.sys_lang }}" name="sys_lang" maxlength="2">
+      <input type="text" class="form-control" value="{{ data.sys_lang }}" name="sys_lang" maxlength="2">
     </div>
     <div class="col-sm-8">
       <span class="text-muted">Two digits main language id, eg. en. Actually the
@@ -84,7 +84,7 @@
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-sys_lang_string') }}</label>
     <div class="col-sm-5">
-      <input type="text" value="{{ data.sys_lang_string }}" name="sys_lang_string">
+      <input type="text" class="form-control" value="{{ data.sys_lang_string }}" name="sys_lang_string">
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Main language name. Please enter only lower case digits.</span>
@@ -100,7 +100,7 @@
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-robots') }}</label>
     <div class="col-sm-3">
-      <select name="robots">
+      <select name="robots" class="form-control">
         <option></option>
         {% for val in ['index, follow', 'noindex, follow', 'index, nofollow', 'noindex, nofollow'] %}
           <option value="{{ val }}" {% if val == data.robots %}selected="selected"{% endif %}>{{ val }}</option>
@@ -117,7 +117,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-timezone') }}</label>
     <div class="col-sm-5">
-      <input type="text" value="{{ data.timezone }}" name="timezone">
+      <input type="text" class="form-control" value="{{ data.timezone }}" name="timezone">
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Please enter a  valid timezone. Supported timezones:
@@ -129,7 +129,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-enableWWW') }}</label>
     <div class="col-sm-5">
-      <select name="enableWWW">
+      <select name="enableWWW" class="form-control">
         <option value="1" {% if data.enableWWW %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
         <option value="0" {% if data.enableWWW == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
       </select>
@@ -146,7 +146,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-moreHtaccessDirectives') }}</label>
     <div class="col-sm-5">
-      <textarea name="moreHtaccessDirectives" style="height:70px">{% if data.moreHtaccessDirectives %}{{ data.moreHtaccessDirectives }}{% endif %}</textarea>
+      <textarea name="moreHtaccessDirectives" class="form-control" style="height:70px">{% if data.moreHtaccessDirectives %}{{ data.moreHtaccessDirectives }}{% endif %}</textarea>
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Enter here additional htaccess directives. These directives
@@ -162,7 +162,7 @@
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-db_connection') }}</label>
     <div class="col-sm-5">
-      <input type="text" value="{{ data.db_connection }}" name="db_connection">
+      <input type="text" class="form-control" value="{{ data.db_connection }}" name="db_connection">
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Database full DNS (eg.:
@@ -175,7 +175,7 @@
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-db_user') }}</label>
     <div class="col-sm-5">
-      <input type="text" value="{{ data.db_user }}" name="db_user">
+      <input type="text" class="form-control" value="{{ data.db_user }}" name="db_user">
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Database username. Leave blank if you are using
@@ -187,22 +187,13 @@
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-db_pass') }}</label>
     <div class="col-sm-5">
-      <input type="text" value="{{ data.db_pass }}" name="db_pass">
+      <input type="text" class="form-control" value="{{ data.db_pass }}" name="db_pass">
     </div>
     <div class="col-sm-5">
       <span class="text-muted">Database password. Leave blank if you are using
         the default SQLITE database. </span>
     </div>
   </div>
-
-  <!-- PREFIX
-  <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
-    <label class="control-label col-md-2">{{ tr.get('cfg-prefix') }}</label>
-    <div class="col-md-8">
-      <input type="text" value="{{ data.prefix }}" name="prefix">
-    </div>
-  </div>
-  -->
 
   <hr>
   <p class="lead">{{ tr.get('cfg-dev_settings') }}</p>
@@ -211,7 +202,7 @@
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-debug') }}</label>
     <div class="col-sm-2">
-      <select name="debug">
+      <select name="debug" class="form-control">
         <option value="1" {% if data.debug %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
         <option value="0" {% if data.debug == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
       </select>
@@ -225,7 +216,7 @@
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-update_channel') }}</label>
     <div class="col-sm-6">
-      <select name="updatechannel">
+      <select name="updatechannel" class="form-control">
         <option value="master" {% if data.updatechannel == 'master' or data.updatechannel ==false %} selected="selected"{% endif %}>
           MASTER (https://github.com/jbogdani/BraDyCMS)
         </option>
@@ -242,8 +233,8 @@
   <!-- CDN -->
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>
     <label class="control-label col-sm-2">{{ tr.get('cfg-cdn') }}</label>
-    <div class="col-sm-2">
-      <select name="cdn">
+    <div class="col-sm-2" class="form-control">
+      <select name="cdn" class="form-control">
         <option value="1" {% if data.cdn %} selected="selected"{% endif %}>{{ tr.get('on') }}</option>
         <option value="0" {% if data.cdn == false %} selected="selected"{% endif %}>{{ tr.get('off') }}</option>
       </select>
@@ -262,7 +253,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-constraint_img_dimensions') }}</label>
     <div class="col-sm-2">
-      <input type ="text" name="max_img_size" value="{{ data.max_img_size }}">
+      <input type ="text" class="form-control" name="max_img_size" value="{{ data.max_img_size }}">
     </div>
     <div class="col-sm-8">
       <span class="text-muted">If set all uploaded images will be (down-) scaled to fit this dimension</span>
@@ -275,7 +266,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-art_img_dimensions') }}</label>
     <div class="col-sm-2">
-      <input type="text" value="{{ art_img }}" name="art_img[]">
+      <input type="text" class="form-control" value="{{ art_img }}" name="art_img[]">
     </div>
     <div class="col-sm-8">
       <span class="text-muted">Check <a href="#docs/read/general">General concepts</a> to
@@ -289,7 +280,7 @@
       <div class="form-group">
         <label class="control-label col-sm-2">{{ tr.get('cfg-art_img_dimensions') }}</label>
         <div class="col-sm-2">
-          <input type="text"  value="{{ art_img }}" name="art_img[]">
+          <input type="text" class="form-control" value="{{ art_img }}" name="art_img[]">
         </div>
       </div>
     {% endfor %}
@@ -299,7 +290,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-img_manager') }}</label>
     <div class="col-sm-3">
-      <select name="img_manager">
+      <select name="img_manager" class="form-control">
         {% for o in ['gd', 'imagick'] %}
         <option value="{{ o }}"{% if o == data.img_manager %} selected{% endif %}>{{ o }}</option>
         {% endfor %}
@@ -323,7 +314,7 @@
 
   <div class="form-group">
     <div class="col-sm-2 col-sm-offset-2">
-      <input type ="text" name="pagination" value="{{ data.pagination }}">
+      <input type ="text" class="form-control" name="pagination" value="{{ data.pagination }}">
     </div>
     <div class="col-sm-8">
       <span class="text-muted">Enter here the maximum number of articles you
@@ -340,7 +331,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-grc-sitekey') }}</label>
     <div class="col-sm-4">
-      <input type="text" value="{{ data.grc_sitekey }}" name="grc_sitekey">
+      <input type="text" class="form-control" value="{{ data.grc_sitekey }}" name="grc_sitekey">
     </div>
     <div class="col-sm-6">
       <span class="text-muted">Your Google reCAPTCHA Site (public) key</span>
@@ -351,7 +342,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-grc-secretkey') }}</label>
     <div class="col-sm-4">
-      <input type="text" value="{{ data.grc_secretkey }}" name="grc_secretkey">
+      <input type="text" class="form-control" value="{{ data.grc_secretkey }}" name="grc_secretkey">
     </div>
     <div class="col-sm-6">
       <span class="text-muted">Your Google reCAPTCHA Secret (private) key</span>
@@ -365,7 +356,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-ga_id') }}</label>
     <div class="col-sm-4">
-      <input type="text" value="{{ data.ga_id }}" name="ga_id">
+      <input type="text" class="form-control" value="{{ data.ga_id }}" name="ga_id">
     </div>
     <div class="col-sm-6">
       <span class="text-muted">Your Google Analytics CODE ID</span>
@@ -376,7 +367,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">{{ tr.get('cfg-ga_domain') }}</label>
     <div class="col-sm-4">
-      <input type="text" value="{{ data.ga_domain }}" name="ga_domain">
+      <input type="text" class="form-control" value="{{ data.ga_domain }}" name="ga_domain">
     </div>
     <div class="col-sm-6">
       <span class="text-muted">If you enter here a domain (yourdomain.ext) the Google analytics code will be shown only if domain matches. This is very usefull if you have a localhost copy of your website and you do not want to update your analytics from localhost domain.</span>
@@ -397,15 +388,15 @@
   {% for lang in data.languages %}
   <div class="form-group">
       <div class="col-sm-2 col-sm-offset-2">
-        <input type="text" value="{{ lang.id }}" maxlength="2" name="languages[{{ loop.index0 }}][id]">
+        <input type="text" class="form-control" value="{{ lang.id }}" maxlength="2" name="languages[{{ loop.index0 }}][id]">
       </div>
 
       <div class="col-sm-4">
-        <input type="text" value="{{ lang.string }}" name="languages[{{ loop.index0 }}][string]">
+        <input type="text" class="form-control" value="{{ lang.string }}" name="languages[{{ loop.index0 }}][string]">
       </div>
 
       <div class="col-sm-2">
-        <select name="languages[{{ loop.index0 }}][published]">
+        <select name="languages[{{ loop.index0 }}][published]" class="form-control">
           <option></option>
           <option{% if lang.published %} selected="selected "{% endif %}>1</option>
         </select>
@@ -415,15 +406,15 @@
 
   <div class="form-group">
     <div class="col-sm-2 col-sm-offset-2">
-      <input type="text" maxlength="2" name="languages[{{ data.languages|length }}][id]">
+      <input type="text" class="form-control" maxlength="2" name="languages[{{ data.languages|length }}][id]">
     </div>
 
     <div class="col-sm-4">
-      <input type="text" name="languages[{{ data.languages|length }}][string]">
+      <input type="text" class="form-control" name="languages[{{ data.languages|length }}][string]">
     </div>
 
     <div class="col-sm-2">
-      <select name="languages[{{ data.languages|length }}][published]">
+      <select class="form-control" name="languages[{{ data.languages|length }}][published]">
         <option></option>
         <option>1</option>
       </select>
@@ -463,12 +454,12 @@
     {% for fld in data.custom_fields %}
     <div class="form-group">
       <div class="col-sm-2">
-        <input type="text" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]">
+        <input type="text" class="form-control" value="{{ fld.name }}" name="custom_fields[{{ loop.index0 }}][name]">
       </div>
 
       <div class="col-sm-2">
-        <select name="custom_fields[{{ loop.index0 }}][type]">
-          <option></option>
+        <select class="form-control" name="custom_fields[{{ loop.index0 }}][type]">
+          <option>aaa</option>
           <option{% if fld.type == 'input' or fdl.type == false %} selected="selected"{% endif %}>input</option>
           <option{% if fld.type == 'longtext'%} selected="selected"{% endif %}>longtext</option>
           <option{% if fld.type == 'select'%} selected="selected"{% endif %}>select</option>
@@ -476,22 +467,22 @@
       </div>
 
       <div class="col-sm-2">
-        <input type="text" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]">
+        <input type="text" class="form-control" value="{{ fld.label }}" name="custom_fields[{{ loop.index0 }}][label]">
       </div>
 
       <div class="col-sm-4">
-        <input type="text" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]">
+        <input type="text" class="form-control" value="{{ fld.values }}" name="custom_fields[{{ loop.index0 }}][values]">
       </div>
 
       <div class="col-sm-1">
-        <select value="{{ fld.translate }}" name="custom_fields[{{ loop.index0 }}][translate]">
+        <select value="{{ fld.translate }}" name="custom_fields[{{ loop.index0 }}][translate]" class="form-control">
           <option value=""></option>
           <option value="1"{% if fld.translate %} selected="selected" {% endif %}>1</option>
         </select>
       </div>
 
       <div class="col-sm-1">
-        <select value="{{ fld.richtext }}" name="custom_fields[{{ loop.index0 }}][richtext]">
+        <select value="{{ fld.richtext }}" name="custom_fields[{{ loop.index0 }}][richtext]" class="form-control">
           <option value=""></option>
           <option value="1"{% if fld.richtext %} selected="selected" {% endif %}>1</option>
         </select>
@@ -503,11 +494,11 @@
     <div class="form-group">
       <div class="controls">
         <div class="col-sm-2">
-          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][name]">
+          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][name]" class="form-control">
         </div>
 
         <div class="col-sm-2">
-          <select name="custom_fields[{{ data.custom_fields|length }}][type]">
+          <select name="custom_fields[{{ data.custom_fields|length }}][type]" class="form-control">
             <option></option>
             <option>input</option>
             <option>longtext</option>
@@ -516,22 +507,22 @@
         </div>
 
         <div class="col-sm-2">
-          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][label]">
+          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][label]" class="form-control">
         </div>
 
         <div class="col-sm-4">
-          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]">
+          <input type="text" name="custom_fields[{{ data.custom_fields|length }}][values]" class="form-control">
         </div>
 
         <div class="col-sm-1">
-          <select value="{{ fld.translate }}" name="custom_fields[{{ data.custom_fields|length }}][translate]">
+          <select value="{{ fld.translate }}" name="custom_fields[{{ data.custom_fields|length }}][translate]" class="form-control">
             <option value=""></option>
             <option value="1">1</option>
           </select>
         </div>
 
         <div class="col-sm-1">
-          <select value="{{ fld.richtext }}" name="custom_fields[{{ data.custom_fields|length }}][richtext]">
+          <select value="{{ fld.richtext }}" name="custom_fields[{{ data.custom_fields|length }}][richtext]" class="form-control">
             <option value=""></option>
             <option value="1">1</option>
           </select>
@@ -576,14 +567,14 @@
   {% for user in data.users %}
   <div class="form-group">
     <div class="col-sm-5 col-sm-offset-2">
-      <input type="email" value="{{ user.name }}" name="users[{{ loop.index0 }}][name]" {% if user.admin and is_admin == false %} readonly="true" {% endif %}>
+      <input type="email" value="{{ user.name }}" name="users[{{ loop.index0 }}][name]" {% if user.admin and is_admin == false %} readonly="true" {% endif %} class="form-control">
     </div>
     <div class="col-sm-3">
-      <input type="text" name="users[{{ loop.index0 }}][pwd]" value="{{ user.pwd }}" {% if user.admin and is_admin == false %} readonly="true" {% endif %}>
+      <input type="text" name="users[{{ loop.index0 }}][pwd]" value="{{ user.pwd }}" {% if user.admin and is_admin == false %} readonly="true" {% endif %} class="form-control">
     </div>
 
     <div class="col-sm-2" {% if is_admin == false %}style="display:none"{% endif %}>
-      <select name="users[{{ loop.index0 }}][admin]">
+      <select name="users[{{ loop.index0 }}][admin]" class="form-control">
         <option></option>
         <option{% if user.admin %} selected="selected"{% endif %}>admin</option>
       </select>
@@ -593,11 +584,11 @@
 
   <div class="form-group">
     <div class="col-sm-5 col-sm-offset-2">
-      <input type="email" name="users[{{ data.users|length }}][name]">
+      <input type="email" name="users[{{ data.users|length }}][name]"  class="form-control">
     </div>
     <div class="col-sm-3">
       <div class="input-group">
-        <input type="text" class="pwd" name="users[{{ data.users|length }}][pwd]">
+        <input type="text" class="pwd form-control" name="users[{{ data.users|length }}][pwd]">
         <span class="input-group-addon">
           <a title="Strong password example"
           target="_blank"

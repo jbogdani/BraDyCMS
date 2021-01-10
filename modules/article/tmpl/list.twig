@@ -21,7 +21,7 @@
       <i class="fa fa-tags" style="font-size:2em;"></i>
     </div>
     <div class="col-xs-11 col-sm-9">
-      <select name="tags[]" class="tags" style="width:100%" multiple="true">
+      <select name="tags[]" class="tags form-control" style="width:100%" multiple="true">
         {% for t in all_tags %}
         <option {% if t != '' and t in active_tags %} selected="selected"{% endif %}>{{ t }}</option>
         {% endfor %}

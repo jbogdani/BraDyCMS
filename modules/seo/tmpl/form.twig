@@ -11,29 +11,29 @@
 
     <div class="form-group">
       <label>{{ tr.get('url') }}</label>
-      <input type="text" name="url" {% if data.url %} readonly="readonly" {% endif %} value="{{ data.url }}" />
+        <input type="text" name="url" {% if data.url %} readonly="readonly" {% endif %} value="{{ data.url }}" class="subject form-control">
     </div>
 
     {% if lng %}
     <div class="form-group">
       <label>{{ tr.get('language') }}</label>
-      <input type="text" name="lang" readonly="readonly" value="{{ lng }}" />
+      <input type="text" name="lang" readonly="readonly" value="{{ lng }}" class="subject form-control">
     </div>
     {% endif %}
 
     <div class="form-group">
       <label>{{ tr.get('title') }}</label>
-      <input type="text" name="title" value="{{ data.title }}" />
+      <input type="text" name="title" value="{{ data.title }}" class="subject form-control">
     </div>
 
     <div class="form-group">
       <label>{{ tr.get('description') }}</label>
-      <textarea name="description">{{ data.description }}</textarea>
+      <textarea name="description" class="subject form-control">{{ data.description }}</textarea>
     </div>
 
     <div class="form-group">
       <label>{{ tr.get('keywords') }}</label>
-      <input type="text" name="keywords" value="{{ data.keywords }}" />
+      <input type="text" name="keywords" value="{{ data.keywords }}" class="subject form-control">
     </div>
 
     <button type="submit" style="display: none;"></button>

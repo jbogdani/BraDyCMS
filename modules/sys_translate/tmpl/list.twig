@@ -37,7 +37,7 @@
   $('#but_{{ uid }} button.add-locale').on('click', function(){
     admin.dialog({
       title: '{{ tr.get('enter_locale') }}',
-      html: '<input type="text" placeholder="{{ tr.get('enter_locale') }}" maxlength="2" class="new_locale" />',
+      html: '<input type="text" placeholder="{{ tr.get('enter_locale') }}" maxlength="2" class="new_locale form-control" />',
       buttons:[{
           text: '{{ tr.get('save')}}',
           click: function(){

@@ -1,3 +1,4 @@
+5.5.0[] = "Update::downloadZip renamed to Update::downloadFile"
 5.5.0[] = "Dropped support for *.inc plugins"
 5.4.2[] = "Fixed bug with Router opetional parameter"
 5.4.1[] = "Bootstrap is loaded as indipendent library: no dependencies from Bootstrap less anymore"

@@ -13,7 +13,7 @@
  *                if ($res['status'] == 'updateable_warning' || $res['status'] == 'updateable')
  *                {
  *                  $zipPath = TMP_DIR . uniqid() . '.zip' ;
- *                  $zip = $update->downloadZip('https://github.com/jbogdani/BraDyCMS/archive/master.zip', $zipPath);
+ *                  $zip = $update->downloadFile('https://github.com/jbogdani/BraDyCMS/archive/master.zip', $zipPath);
  *                  $update->unzip($zipPath, false, false, true);
  *                  $update->install(TMP_DIR . 'BraDyCMS-master', './ciao');
  *                }
@@ -100,7 +100,7 @@ class Update
     }
 
     /**
-     * Recursively copies files and forlders from $path to $dest
+     * Recursively copies files and folders from $path to $dest
      * @param string $path  full path to root main path
      * @param string $dest  full path to destination root dir
      * @return boolean
@@ -119,15 +119,14 @@ class Update
 
             if (count($objects) > 0) {
                 foreach ($objects as $file) {
-                    if ($file == "." || $file == "..") {
+                    if ($file === "." || $file === "..") {
                         continue;
                     }
                     // go on
                     if (is_dir($path . '/' . $file)) {
                         $this->install($path . '/' . $file, $dest . '/' . $file);
                     } else {
-                        $newfile = ($file === '.htaccess' && $dontOvewriteHtacess) ?
-              '.htaccess-new' : $file;
+                        $newfile = ($file === '.htaccess' && $dontOvewriteHtacess) ? '.htaccess-new' : $file;
 
                         @copy($path . '/' . $file, $dest . '/' . $newfile);
                         if (!file_exists($dest . '/' . $file)) {
@@ -151,23 +150,25 @@ class Update
     }
 
     /**
-     * Download ZIP file from  remore to localpath
-     * @param string $gitZip  full path to remote ZIP archive
-     * @param string $localZipPath  full path to local archive where to save the ZIP file
+     * Downloads remote file $remoteFile to local file $localFile
+     * Returns true on success
+     * Throws Exception on Error
+     *
+     * @param string $remoteFile
+     * @param string $localFile
      * @return boolean
-     * @throws Exception
      */
-    public function downloadZip($gitZip, $localZipPath)
+    public function downloadFile( string $remoteFile, string $localFile) : bool
     {
-        $update = @file_get_contents($gitZip);
+        $update = @file_get_contents($remoteFile);
 
         if (!$update) {
-            throw new Exception('Can not download zip file: ' . $gitZip);
+            throw new Exception('Can not download zip file: ' . $remoteFile);
         }
 
-        @file_put_contents($localZipPath, $update);
+        @file_put_contents($localFile, $update);
 
-        if (!file_exists($localZipPath)) {
+        if (!file_exists($localFile)) {
             throw new Exception('Can not write to temporary file');
         }
 

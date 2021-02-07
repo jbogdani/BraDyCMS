@@ -119,8 +119,6 @@ class Router
             }, 'search');
 
             $router->map('GET', "/[lng:lng]?/[**:requestedUrl]", function ($lng = false, $requestedUrl) {
-                var_dump('ciao');
-
                 return [
                   'lang' => $lng,
                   'art_title' => $requestedUrl,

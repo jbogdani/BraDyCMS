@@ -92,9 +92,6 @@ class Autoloader
         } elseif (file_exists('./sites/default/modules/' . $className . '/' . $className . '.php')) {
             require_once './sites/default/modules/' . $className . '/' . $className . '.php';
             return true;
-        } elseif (file_exists('./sites/default/modules/' . $className . '/' . $className . '.inc')) {
-            require_once './sites/default/modules/' . $className . '/' . $className . '.inc';
-            return true;
         } else {
             return false;
         }

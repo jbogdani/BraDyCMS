@@ -1,10 +1,4 @@
 <?php
-/**
- * 
- * @author     Julian Bogdani <jbogdani@gmail.com>
- * @copyright  2007-2021 Julian Bogdani
- * @license    AGPL-3.0; see LICENSE file
- */
 $_lang['articles'] = "Articoli";
 $_lang['add_new_article'] = "Aggiungi nuovo articolo";
 $_lang['show_all_articles'] = "Mostra tutti gli articoli";
@@ -127,7 +121,6 @@ $_lang['image'] = "Immagine";
 $_lang['description'] = "Descrizione";
 $_lang['thumbnail'] = "Anteprima";
 $_lang['re_create_thumb'] = "(Ri) crea anteprima";
-$_lang['thumb_dimensions'] = "Dimensioni anteprime";
 $_lang['max_img_size_warning'] = "Attenzione: a causa di una configurazione del sistema tutte le immagini con larghezza o altezza maggiore si %spx e risoluzione più grande di 72dpi verranno scalate.";
 $_lang['img_dimensions'] = "Dimensioni immagine";
 $_lang['invalid_thumbnail_dimension'] = "Dimensione di anteprime non valida. Si prega di inserire la larghezza e l'altezza dell'anteprima separati da x, p.es.: 300x200";
@@ -141,7 +134,6 @@ $_lang['delete_gal'] = "Cancella galleria";
 $_lang['gallery_deleted'] = "La galleria è stata cancellata";
 $_lang['gallery_not_deleted'] = "Errore. La gallerina non è stata cancellata. Maggiori informazioni nel log degli errori";
 $_lang['gal_name_formatting'] = "Attenzione. Il nome della galleria non deve contenere spazi o caratteri speciali e deve essere tutto in caratteri minuscoli. I seguenti carateri: <code> ,''</code> verranno sostituiti con _ e le maiuscole verrano convertite in minuscole";
-$_lang['thumbnail_created'] = "L'anteprima è stata creata";
 $_lang['thumbnail_not_created'] = "Errore. L'anteprima non è stata creata";
 $_lang['gallery_not_well_formatted'] = "Errore. La galleria %s non è formattata bene";
 $_lang['gallery_updated'] = "La galleria è stata aggiornata";
@@ -472,3 +464,14 @@ $_lang['ok_setting_updated'] = "Configurazione salvata";
 $_lang['error_setting_not_updated'] = "Errore. Configurazione non salvata";
 $_lang['make_art_images'] = "(Ri)Crea immagini degli articoli";
 $_lang['make_art_images_descr'] = "Questa procedura (re)crea le immagini di articolo a partire dai file originali. I file giàpresenti saranno sovrascritti.";
+$_lang['mng_plg'] = "Gestione plugin";
+$_lang['do_confirm'] = "Conferma";
+$_lang['confirm_install_plugin'] = "Confermi di volere installare il plugin?";
+$_lang['confirm_uninstall_plugin'] = "Confermi di volere disinstallare il plugin?";
+$_lang['missing_plugin_name'] = "Manca il nome del plugin da installare";
+$_lang['plugin_not_installed'] = "Il plugin %s non è installato. Non c'è nulla da rimuovere";
+$_lang['error_uninstall_plugin'] = "Errore: non è stato possibile disinstallare il plugin %s";
+$_lang['success_uninstall_plugin'] = "Il plugin %s è stato disinstallato con successo";
+$_lang['plugin_not_available'] = "Il plugin %s non è disponibile nel repository remoto";
+$_lang['error_install_plugin'] = "Errore: non è stato possibile installare il plugin %s";
+$_lang['success_install_plugin'] = "Il plugin %s è stato installato con successo";

@@ -1,0 +1,60 @@
+<h2>Manage plugins</h2>
+
+<table class="table" id="id{{ uid }}">
+
+{% for p in plugins %}
+    <tr class="{% if p.installed %}success{% endif %}">
+        <td class="col-sm-6">
+            <h4>{{ p.id }} <small>v.{{ p.version }}</small></h4>
+            <p>
+                {{ p.description }}
+                {% if p.url %}
+                    [<a href="{{ p.url }}" target="_blank">Info</a>]
+                {% endif %}
+            </p>
+        </td>
+        <td class="col-sm-3">
+            {% if p.installed and p.url %}
+            <button data-plugin="{{ p.id }}" class="action btn btn-danger" data-action="uninstall">  Uninstall</button>
+            {% elseif p.installed %}
+            {% else %}
+            <button data-plugin="{{ p.id }}" class="action btn btn-success" data-action="install"> Install</button>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+</table>
+
+<script>
+$('#id{{ uid }} button.action').on('click', e => {
+    const plugin = $(e.target).data('plugin');
+    const action = $(e.target).data('action');
+    if (action === 'install' || action === 'uninstall'){
+        const url = `controller.php?obj=plugins_ctrl&method=${action}&plugin=${plugin}`;
+
+        admin.dialog({
+            title: admin.tr('pay_attention_please'),
+            html: admin.tr(`confirm_${action}_plugin`),
+            buttons:[
+                {
+                    text: admin.tr('do_confirm'),
+                    addclass: 'btn-danger',
+                    action: 'close',
+                    click: function(){
+                        $.get(url, function(data){
+                            admin.message(data.text, data.status);
+                            if (data.status === 'success'){
+                                admin.tabs.reloadActive();
+                            }
+                        }, 'json');
+                    }
+                },
+                {
+                    text: admin.tr('close'),
+                    action: 'close'
+                },
+            ]
+        });
+    }
+});
+</script>

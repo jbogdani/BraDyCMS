@@ -1,3 +1,4 @@
+5.5.0[] = "Added the possibility to install and remove plugins from GUI"
 5.5.0[] = "Update::downloadZip renamed to Update::downloadFile"
 5.5.0[] = "Dropped support for *.inc plugins"
 5.4.2[] = "Fixed bug with Router opetional parameter"

@@ -6,24 +6,18 @@
  * @copyright  2007-2021 Julian Bogdani
  * @license    AGPL-3.0; see LICENSE file
  * @since      Sep 26, 2013
- * @example    try
- *              {
+ * @example    try {
  *                $update = new Update();
  *                $res = $update->checkUpdate(version::current(), 'https://raw.github.com/jbogdani/BraDyCMS/master/version');
- *                if ($res['status'] == 'updateable_warning' || $res['status'] == 'updateable')
- *                {
+ *                if ($res['status'] == 'updateable_warning' || $res['status'] == 'updateable') {
  *                  $zipPath = TMP_DIR . uniqid() . '.zip' ;
  *                  $zip = $update->downloadFile('https://github.com/jbogdani/BraDyCMS/archive/master.zip', $zipPath);
  *                  $update->unzip($zipPath, false, false, true);
  *                  $update->install(TMP_DIR . 'BraDyCMS-master', './ciao');
- *                }
- *                else
- *                {
+ *                } else {
  *                  echo $res['text'];
  *                }
- *              }
- *              catch(Exception $e)
- *              {
+ *              } catch(Exception $e) {
  *                var_dump($e);
  *              }
  */
@@ -35,13 +29,13 @@ class Update
    * Parses remote version ini file and compares versions
    * @param type $localVersion  semver formatted local current version
    * @param type $iniPath       full path to remote ini version file
-   * @return array $respo       array with response:
+   * @return array $resp       array with response:
    *                              remote_vers: remote version
    *                              local_vers: local version
    *                              status: not_updateable, updateable_warning, already_updated, updateable
    * @throws Exception
    */
-    public function checkUpdate($localVersion, $iniPath)
+    public function checkUpdate(string $localVersion, string $iniPath) : array
     {
         $iniContent = @file_get_contents($iniPath);
 
@@ -103,10 +97,10 @@ class Update
      * Recursively copies files and folders from $path to $dest
      * @param string $path  full path to root main path
      * @param string $dest  full path to destination root dir
-     * @return boolean
+     * @return bool
      * @throws Exception
      */
-    public function install($path, $dest, $dontOvewriteHtacess = false)
+    public function install(string $path, string $dest, bool $dontOvewriteHtacess = false) : bool
     {
         if (is_dir($path)) {
             @mkdir($dest);
@@ -183,7 +177,7 @@ class Update
      * @param boolean $overwrite Overwrite existing files (true) or not (false)
      * @return boolean Successfull or not
      */
-    public function unzip($src_file, $dest_dir = false, $create_zip_name_dir = true, $overwrite = true)
+    public function unzip(string $src_file, string $dest_dir = null, bool $create_zip_name_dir = true, bool $overwrite = true) : bool
     {
         if ($zip = zip_open($src_file)) {
             if ($zip) {

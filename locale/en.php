@@ -480,10 +480,19 @@ $_lang['error_setting_not_updated'] = "Error. Setting not updated";
 
 $_lang['make_art_images'] = "(Re)Create article images";
 $_lang['make_art_images_descr'] = "This procedure (re)creates article images starting from original files. Already available files will be overwritten.";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
-$_lang[''] = "";
+
+$_lang['mng_plg'] = "Manage plugins";
+$_lang['do_confirm'] = "Confirm";
+$_lang['confirm_install_plugin'] = "Do you confirm you want to install the plugin?";
+$_lang['confirm_uninstall_plugin'] = "Do you confirm you want to uninstall the plugin?";
+$_lang['missing_plugin_name'] = "Missing plugin name to install";
+$_lang['plugin_not_installed'] = "Plugin % is not installed! Nothing to remove";
+$_lang['error_uninstall_plugin'] = "Error: cannot uninstall plugin %s";
+$_lang['success_uninstall_plugin'] = "Plugin %s sucessfully uninstalled";
+$_lang['plugin_not_available'] = "Plugin %s is not available in remote repository";
+$_lang['error_install_plugin'] = "Error: cannot install plugin %s";
+$_lang['success_install_plugin'] = "Plugin %s sucessfully installed";
+
 $_lang[''] = "";
 $_lang[''] = "";
 $_lang[''] = "";

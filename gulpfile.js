@@ -21,8 +21,8 @@ const libs = {
   'bootstrap':  [
     'dist/css/bootstrap.min.css',
     'dist/css/bootstrap.min.css.map',
-    'dist/js/bootstrap.min.js',
-    'dist/js/bootstrap.min.js.map'
+    'dist/js/bootstrap.bundle.min.js',
+    'dist/js/bootstrap.bundle.min.js.map'
   ],
   'popper.js': [
     'dist/popper.min.js',

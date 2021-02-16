@@ -44,14 +44,14 @@ class Assets
           ],
 
           'bootstrap' => [
-            'version' => '4.5.3',
+            'version' => '4.6.0',
             'js' => [
-              'local' => $path . 'frontLibs/bootstrap/dist/js/bootstrap.min.js',
-              'cdn' => 'https://stackpath.bootstrapcdn.com/bootstrap/--version--/js/bootstrap.min.js'
+              'local' => $path . 'frontLibs/bootstrap/dist/js/bootstrap.bundle.min.js',
+              'cdn' => 'https://cdn.jsdelivr.net/npm/bootstrap@--version--/dist/js/bootstrap.min.js'
             ],
             'css' => [
               'local' => $path . 'frontLibs/bootstrap/dist/css/bootstrap.min.css',
-              'cdn' => 'https://stackpath.bootstrapcdn.com/bootstrap/--version--/css/bootstrap.min.css'
+              'cdn' => 'https://cdn.jsdelivr.net/npm/bootstrap@--version--/dist/css/bootstrap.min.css'
             ]
           ],
 

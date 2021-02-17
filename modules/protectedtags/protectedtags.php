@@ -187,7 +187,7 @@ class protectedtags_ctrl extends Controller
   public function logout()
   {
     protectedTags::logUser();
-    echo $this->responseJson('success');
+    echo $this->responseJson('success', '');
   }
 
   /**

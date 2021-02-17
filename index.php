@@ -20,30 +20,31 @@ try {
       "itemDetailedDate" => false
     ]));
 
-    $InstanceCache = \Phpfastcache\CacheManager::getInstance('files');
-    $key = md5($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
-    $CachedString = $InstanceCache->getItem($key);
-    
-    if ( $_SESSION['debug']
-      || preg_match('/\.map/', $_SERVER['REQUEST_URI'])
-      || preg_match('/\.json/', $_SERVER['REQUEST_URI'])
-      || preg_match('/controller\.php/', $_SERVER['REQUEST_URI'])
-      || $_SERVER['REQUEST_URI'] === '/admin'
-      || preg_match('/\.draft$/', $_SERVER['REQUEST_URI'])
-      || is_null($CachedString->get())
-    ) {
+    if ( !$_SESSION['debug']
+      && !$_SESSION['user_email']
+      && !preg_match('/\.map$/', $_SERVER['REQUEST_URI'])
+      && !preg_match('/\.json$/', $_SERVER['REQUEST_URI'])
+      && !preg_match('/controller\.php/', $_SERVER['REQUEST_URI'])
+      && $_SERVER['REQUEST_URI'] !== '/admin'
+      && !preg_match('/\.draft$/', $_SERVER['REQUEST_URI'])
+    ){
+      $InstanceCache = \Phpfastcache\CacheManager::getInstance('files');
+      $key = md5($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
+      $CachedString = $InstanceCache->getItem($key);
+      $html = $CachedString->get();
+    }
+
+    if ( !$html ) {
 
       Router::run();
 
       $html = ob_get_contents();
       ob_end_clean();
 
-      $CachedString->set($html)->expiresAfter(60);
-      $InstanceCache->save($CachedString);
-
-    } else {
-
-      $html = $CachedString->get();
+      if ($CachedString){
+        $CachedString->set($html)->expiresAfter(60);
+        $InstanceCache->save($CachedString);
+      }
     }
 
     echo $html;

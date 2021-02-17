@@ -80,7 +80,7 @@ $('#loginform').on('submit', function(){
   }
   $.post('controller.php?obj=protectedtags_ctrl&method=login', form.serialize(), function(data){
     if (data.status === 'success'){
-        location.reload();
+        window.location.reload(false);
         window.scrollTo(0,0);
         return true;
       } else {

@@ -339,7 +339,7 @@ class protectedTags
      * @param  string $name     Users's anme
      * @return [type]           [description]
      */
-    public function registerUser($email, $password, $tag, $name)
+    public static function registerUser($email, $password, $tag, $name)
     {
         $users = self::getData('users');
 

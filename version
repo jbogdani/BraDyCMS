@@ -1,3 +1,4 @@
+5.5.4[] = "TinyMCE toolbar_mode set to wrap"
 5.5.3[] = "Cache is disabled when protected tags is active"
 5.5.2[] = "Fixed bug with protectedtags::registerUser missing static keyword"
 5.5.1[] = "Updated bootstrap from 4.5.3 to 4.6.0"

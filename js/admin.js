@@ -25,6 +25,7 @@ var admin = {
         importcss_groups: [{title: 'Other styles'}],
         paste_as_text: true,
         toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image anchor | print preview media fullpage | forecolor backcolor | code",
+        toolbar_mode: 'wrap',
         image_advtab: true,
         removed_menuitems: 'newdocument',
         templates: [

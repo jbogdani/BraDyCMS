@@ -191,7 +191,7 @@
                     {% if fld.type == 'longtext' %}
                     <textarea name="{{ fld.name }}" 
                               style="height:100px"
-                              class="fomr-control">{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}</textarea>
+                              class="form-control">{% if art[fld.name] %}{{ art[fld.name] }}{% else %}{{ fld.values|join(',') }}{% endif %}</textarea>
                     {% elseif fld.type == 'select' and fld.values %}
                       <select name="{{ fld.name }}" class="form-control">
                         <option></option>

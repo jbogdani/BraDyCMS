@@ -21,7 +21,7 @@ class DownloadAndCount
      * @param  string $file relative or absolute filename
      * @return string|false absolute path to  existing file or false
      */
-    private function resolvePath($file)
+    private static function resolvePath($file)
     {
         $full_file = false;
         $pre_paths = [

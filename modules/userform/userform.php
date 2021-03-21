@@ -467,8 +467,8 @@ EOD;
       array_push($js, "userform.whatchForm('" . $uid . "');");
 
       if (is_array($upload)) {
-        $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="./bower_components/fine-uploader/dist/fine-uploader.min.css" />', true);
-        $out->setQueue('modules', "\n" . '<script src="./bower_components/fine-uploader/dist/fine-uploader.min.js"></script>', true);
+        $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="./frontLibs/fine-uploader/fine-uploader.min.css" />', true);
+        $out->setQueue('modules', "\n" . '<script src="./frontLibs/fine-uploader/fine-uploader.min.js"></script>', true);
 
         foreach($upload as $el=>$opts) {
           array_push($js, "userform.upload_file('" . $param['content']. "', 'upl_" . $el . "', " . json_encode($opts). ");");

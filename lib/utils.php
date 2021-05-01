@@ -52,7 +52,7 @@ class utils
      * Recursively empties/deletes directory
      * @param string $dir directory to empty/delete
      * @param boolean $dont_delete_self if true the directory will be emptied but not deleted
-     * @return string Error text
+     * @return array Array of error texts
      */
     public static function recursive_delete($dir, $dont_delete_self = false)
     {
@@ -115,12 +115,12 @@ class utils
      * Returns array with list of files in directory
      * @param string $dir path to directory
      * @param boolean $dont_ignore_sys if true also system files will be returned
-     * @return boolean
+     * @return array
      */
-    public static function dirContent($dir, $dont_ignore_sys = false)
+    public static function dirContent($dir, $dont_ignore_sys = false) : array
     {
         if (!is_dir($dir)) {
-            return false;
+            return [];
         }
 
         $dont_consider_array = array('.', '..');
@@ -138,8 +138,6 @@ class utils
                 }
             }
         }
-        $handle = @opendir($dir);
-
         return $files;
     }
 
@@ -150,104 +148,108 @@ class utils
      */
     public static function checkMimeExt($file)
     {
-        $mimeTypes = array(
-        "Simple text" => array(
-            "mime"=>array("text/plain"),
-            "ext"=>array("txt"),
-            "icon"=>"text-plain.png"),
+        $mimeTypes = [
+            "Simple text" => [
+                "mime"  => [ "text/plain" ] ,
+                "ext"   => [ "txt" ],
+                "icon"  => "text-plain.png"
+            ],
 
-        "HTML"=>array(
-            "mime"=>array("text/html"),
-            "ext"=>array("html", "xhtml"),
-            "icon"=>"text-html.png"),
+            "HTML"=> [
+                "mime"  => [ "text/html" ],
+                "ext"   => [ "html", "xhtml" ],
+                "icon"  => "text-html.png"
+            ],
 
-        "CSS"=>array(
-            "mime"=>array("text/css"),
-            "ext"=>array("css"),
-            "icon"=>"text-css.png"),
+            "CSS"=> [
+                "mime"  => [ "text/css"],
+                "ext"   => [ "css" ],
+                "icon"  => "text-css.png"
+            ],
 
-        "JavaScript"=>array(
-            "mime"=>array("application/javascript", "application/json"),
-            "ext"=>array("js", "json"),
-            "icon"=>"application-javascript.png"),
+            "JavaScript"=>array(
+                "mime"=>array("application/javascript", "application/json"),
+                "ext"=>array("js", "json"),
+                "icon"=>"application-javascript.png"),
 
-        "XML"=>array(
-            "mime"=>array("application/xml"),
-            "ext"=>array("xml"),
-            "icon"=>"application-xml.png"),
+            "XML"=>array(
+                "mime"=>array("application/xml"),
+                "ext"=>array("xml"),
+                "icon"=>"application-xml.png"),
 
-        "Video"=>array(
-            "mime"=>array("application/x-shockwave-flash", "video/x-flv", "video/quicktime", "video/x-generic", "video/x-mng"),
-            "ext"=>array("swf", "flv", "qt", "mov"),
-            "icon"=>"video.png"),
+            "Video"=>array(
+                "mime"=>array("application/x-shockwave-flash", "video/x-flv", "video/quicktime", "video/x-generic", "video/x-mng"),
+                "ext"=>array("swf", "flv", "qt", "mov"),
+                "icon"=>"video.png"),
 
-        "Vector"=>array(
-            "mime"=>array("image/svg+xml", "application/postscript"),
-            "ext"=>array("svg", "ai", "eps", "ps"),
-            "icon"=>"vector.png"),
+            "Vector"=>array(
+                "mime"=>array("image/svg+xml", "application/postscript"),
+                "ext"=>array("svg", "ai", "eps", "ps"),
+                "icon"=>"vector.png"),
 
-        "Archive"=>array(
-            "mime"=>array("application/zip",
-                "application/x-rar-compressed", "application/vnd.ms-cab-compressed"),
-            "ext"=>array("zip", "rar", "cab"), "icon"=>"archive.png"),
+            "Archive"=>array(
+                "mime"=>array("application/zip",
+                    "application/x-rar-compressed", "application/vnd.ms-cab-compressed"),
+                "ext"=>array("zip", "rar", "cab"), "icon"=>"archive.png"),
 
-        "EXE"=>array(
-            "mime"=>array("application/x-msdownload"),
-            "ext"=>array("exe", "msi"),
-            "icon"=>"executable.png"),
+            "EXE"=>array(
+                "mime"=>array("application/x-msdownload"),
+                "ext"=>array("exe", "msi"),
+                "icon"=>"executable.png"),
 
-        "Audio"=>array(
-            "mime"=>array("audio/mpeg", "audio/aac", "audio/ac3", "audio/basic", "audio/midi", "audio/mp4", "audio/mpeg", "audio/prs.sid", "audio/vn.rn-realmedia", "audio/vn.rn-realvideo", "audio/vnd.rn-realaudio", "audio/vnd.rn-realvideo", "audio/x-adpcm", "audio/x-aiff", "audio/x-flac", "audio/x-flac+ogg", "audio/x-generic", "audio/x-matroska", "audio/x-mod", "audio/x-monkey", "audio/x-mp2", "audio/x-mpegurl", "audio/x-ms-asx", "audio/x-ms-wma", "audio/x-musepack", "audio/x-pn-realaudio-plugin", "audio/x-scpls", "audio/x-speex+ogg", "audio/x-vorbis+ogg", "audio/x-wav"),
-            "ext"=>array("mp3", "mp4", "wma", "wav", "ogg"),
-            "icon"=>"audio.png"),
+            "Audio"=>array(
+                "mime"=>array("audio/mpeg", "audio/aac", "audio/ac3", "audio/basic", "audio/midi", "audio/mp4", "audio/mpeg", "audio/prs.sid", "audio/vn.rn-realmedia", "audio/vn.rn-realvideo", "audio/vnd.rn-realaudio", "audio/vnd.rn-realvideo", "audio/x-adpcm", "audio/x-aiff", "audio/x-flac", "audio/x-flac+ogg", "audio/x-generic", "audio/x-matroska", "audio/x-mod", "audio/x-monkey", "audio/x-mp2", "audio/x-mpegurl", "audio/x-ms-asx", "audio/x-ms-wma", "audio/x-musepack", "audio/x-pn-realaudio-plugin", "audio/x-scpls", "audio/x-speex+ogg", "audio/x-vorbis+ogg", "audio/x-wav"),
+                "ext"=>array("mp3", "mp4", "wma", "wav", "ogg"),
+                "icon"=>"audio.png"),
 
-        "PDF"=>array(
-            "mime"=>array("application/pdf"),
-            "ext"=>array("pdf"),
-            "icon"=>"application-pdf.png"),
+            "PDF"=>array(
+                "mime"=>array("application/pdf"),
+                "ext"=>array("pdf"),
+                "icon"=>"application-pdf.png"),
 
-        "Image Manipulation"=>array(
-            "mime"=>array("image/vnd.adobe.photoshop"),
-            "ext"=>array("psd", "xcf"),
-            "icon"=>"image-x-generic.png"),
+            "Image Manipulation"=>array(
+                "mime"=>array("image/vnd.adobe.photoshop"),
+                "ext"=>array("psd", "xcf"),
+                "icon"=>"image-x-generic.png"),
 
-        "Document"=>array(
-            "mime"=>array("application/msword", "application/rtf", "application/vnd.oasis.opendocument.text", "x-office/document"),
-            "ext"=>array("doc", "rtf", "odt"),
-            "icon"=>"application-msword.png"),
+            "Document"=>array(
+                "mime"=>array("application/msword", "application/rtf", "application/vnd.oasis.opendocument.text", "x-office/document"),
+                "ext"=>array("doc", "rtf", "odt"),
+                "icon"=>"application-msword.png"),
 
-        "Spreadsheet"=>array(
-            "mime"=>array("application/vnd.ms-excel", "application/vnd.oasis.opendocument.spreadsheet", "x-office/spreadsheet"),
-            "ext"=>array("xls", "ods"),
-            "icon"=>"application-vnd.ms-excel.png"),
+            "Spreadsheet"=>array(
+                "mime"=>array("application/vnd.ms-excel", "application/vnd.oasis.opendocument.spreadsheet", "x-office/spreadsheet"),
+                "ext"=>array("xls", "ods"),
+                "icon"=>"application-vnd.ms-excel.png"),
 
-        "Presentation"=>array(
-            "mime"=>array("application/vnd.ms-powerpoint", "vnd.oasis.opendocument.presentation"),
-            "ext"=>array("ppt", "odp"),
-            "icon"=>"application-vnd.ms-powerpoint.png"),
+            "Presentation"=>array(
+                "mime"=>array("application/vnd.ms-powerpoint", "vnd.oasis.opendocument.presentation"),
+                "ext"=>array("ppt", "odp"),
+                "icon"=>"application-vnd.ms-powerpoint.png"),
 
-        "image"=>array(
-            "mime"=>array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/vnd.microsoft.icon", "image/tiff"),
-            "ext"=>array("png", "jpeg", "jpg", "bmp", "ico", "tif", "tiff", "gif"),
-            "icon"=>"image-x-generic.png"),
-        "EPUB"=>array(
-            "mime"=>array("application/epub+zip"),
-            "ext"=>array("epub"),
-            "icon"=>"epub.png"),
-        "MOBIPOCKET"=>array(
-            "mime"=>array("application/x-mobipocket-ebook"),
-            "ext"=>array("mobi"),
-            "icon"=>"mobi.png"),
-    );
+            "image"=>array(
+                "mime"=>array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/vnd.microsoft.icon", "image/tiff"),
+                "ext"=>array("png", "jpeg", "jpg", "bmp", "ico", "tif", "tiff", "gif"),
+                "icon"=>"image-x-generic.png"),
+            "EPUB"=>array(
+                "mime"=>array("application/epub+zip"),
+                "ext"=>array("epub"),
+                "icon"=>"epub.png"),
+            "MOBIPOCKET"=>array(
+                "mime"=>array("application/x-mobipocket-ebook"),
+                "ext"=>array("mobi"),
+                "icon"=>"mobi.png"),
+        ];
 
         $trova_punto = explode(".", $file);
         $ext = strtolower($trova_punto[count($trova_punto) - 1]);
+        $mime = mime_content_type($file);
 
-        if (!$ext and !$mime) {
+        if (!$ext && !$mime ) {
             return false;
         }
 
-        foreach ($mimeTypes as $name=>$arr_values) {
+        foreach ($mimeTypes as $name => $arr_values) {
             if ($mime) {
                 if (in_array($mime, $arr_values['mime'])) {
                     return array($name, $arr_values['icon']);
@@ -284,7 +286,7 @@ class utils
         $result["uploadName"] = $uploader->getUploadName();
         $result['path'] = $upload_dir . '/';
         $result['ext'] = pathinfo($result['uploadName'], PATHINFO_EXTENSION);
-        $result['filename'] = str_replace('.' . $result['ext'], null, pathinfo($result['uploadName'], PATHINFO_BASENAME));
+        $result['filename'] = str_replace('.' . $result['ext'], '', pathinfo($result['uploadName'], PATHINFO_BASENAME));
 
         $oPath = $result['path'] . $result['filename'] . '.' . $result['ext'];
 
@@ -383,7 +385,7 @@ class utils
         $rewriteBase = self::getBase();
 
 
-        $cleaned_request_uri = str_replace($rewriteBase, null, $_SERVER['REQUEST_URI']);
+        $cleaned_request_uri = str_replace($rewriteBase, '', $_SERVER['REQUEST_URI']);
 
 
         foreach ($lang_arr as &$langThis) {
@@ -500,7 +502,7 @@ class utils
           trim($row) == '#RewriteRule ^(.*)$ http://%1/$1 [R=301,L]'
         )
         ) {
-                $row = str_replace('#', null, $row);
+                $row = str_replace('#', '', $row);
             }
 
             if (strpos($row, '# Additional directives') === 0) {
@@ -574,10 +576,14 @@ class utils
 
         if (file_exists($logfile)) {
             $lastAttempt = file($logfile);
-            $lastIP = trim(str_replace(array("\n", "\r\n"), null, $lastAttempt[0]));
-            $lastTime = floatval(trim(str_replace(array("\n", "\r\n"), null, $lastAttempt[1])));
+            $lastIP = trim(str_replace(array("\n", "\r\n"), '', $lastAttempt[0]));
+            $lastTime = floatval(
+                trim(
+                    str_replace(["\n", "\r\n"], '', $lastAttempt[1])
+                )
+            );
 
-            if ($lastIP === $id) {
+            if ($lastIP === $ip) {
                 return ($now >= ($lastTime + $time));
             }
         }

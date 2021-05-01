@@ -42,8 +42,8 @@ class cfg
             $data['sys_lang_string'] = strtolower($data['sys_lang_string']);
         }
 
-        // sys lang shoiuld be no longer then 2 characters
-        if ($data['sys_lang'] && strlen($sys_lang) > 2) {
+        // sys lang should be no longer then 2 characters
+        if ($data['sys_lang'] && strlen($data['sys_lang']) > 2) {
             $data['sys_lang'] = strtolower(substr($data['sys_lang'], 0, 2));
         }
 

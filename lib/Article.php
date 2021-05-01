@@ -72,7 +72,7 @@ class Article
      * @param object|array $article
      * @param string $lang
      * @param boolean $return_bean if true beans will be converted to arrays
-     * @return bean object or array of bean objects
+     * @return array|bean object or array of bean objects
      */
     private static function parseArt($article, $lang = false, $return_bean = false)
     {
@@ -304,7 +304,7 @@ class Article
      * @param string $textid
      * @param string $lang
      * @param boolean $admin
-     * @return beam object or false
+     * @return array
      */
     public static function getByTextid($textid, $lang = false, $admin = false)
     {
@@ -436,7 +436,7 @@ class Article
             return false;
         }
 
-        $art_list = self::parseArt($articles, $lang);
+        $art_list = self::parseArt($articles, $lang, false);
         if ($start !== false && $max) {
             return $art_list;
         }
@@ -488,11 +488,11 @@ class Article
             return false;
         }
 
-        $sql_part = false;
+        $sql_part = [];
         $values = array();
 
         foreach ($searcheableFields as $fld) {
-            $sql_micro_part = false;
+            $sql_micro_part = [];
 
             foreach ($string_arr as $str) {
                 $sql_micro_part[] = "`" . $fld . "` LIKE ?";

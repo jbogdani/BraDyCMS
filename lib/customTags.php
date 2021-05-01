@@ -227,6 +227,8 @@ class customTags
 
         $rel = $data['rel'] ? $data['rel'] : $gal;
 
+        $html = '';
+
         try {
             $gal_data = Gallery::get($gal, $thumb_dim);
 
@@ -815,11 +817,11 @@ EOD;
         $text = $data['content'] ? $data['content'] : $file;
 
         foreach ([
-      './sites/default/images/articles/media/' . $out->getArticle()['id'] . '/',
-      './sites/default/images/articles/',
-      './sites/default/images/',
-      ''
-      ] as $path_to_file) {
+            './sites/default/images/articles/media/' . $out->getArticle()['id'] . '/',
+            './sites/default/images/articles/',
+            './sites/default/images/',
+            ''
+            ] as $path_to_file) {
             if (file_exists($path_to_file . $file)) {
                 $file = $path_to_file . $file;
                 break;
@@ -833,7 +835,7 @@ EOD;
         $tot    = DownloadAndCount::getCount($file);
         $text   = str_replace('{tot}', $tot, $text);
 
-        $html = '<a ' . $title . $rel . $class;
+        $html = '<a ';
 
         foreach ($data as $k => $v) {
             if (!in_array(strtolower($k), ['content', 'file'])) {

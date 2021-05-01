@@ -71,7 +71,7 @@ class Autoloader
         }
 
         if (preg_match('/_ctrl/', $className)) {
-            $mod = str_replace('_ctrl', null, $className);
+            $mod = str_replace('_ctrl', '', $className);
             if (file_exists(MOD_DIR . $mod . '/' . $mod . '.php')) {
                 require_once MOD_DIR . $mod . '/' . $mod . '.php';
                 return true;

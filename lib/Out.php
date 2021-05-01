@@ -278,7 +278,7 @@ class Out
                 return false;
             }
 
-            $this->data['article'][$article]['tags'] =  R::tag($art);
+            $this->data['article'][$article]['tags'] = R::tag($art);
         }
 
         return $this->data['article'][$article]['tags'];
@@ -310,7 +310,7 @@ class Out
     /**
    * Returns array with article data. If $article is not provided current article's data will be returned
    * @param string $article article's textid
-   * @return array
+   * @return array|false
    */
     public function getArticle($article = false, $draft = false)
     {

@@ -88,7 +88,7 @@ class OutHtml extends Out
             array_push($part, '<meta property="og:description" content="' . html_entity_decode($this->getPageData('description', true)) . '" />');
             array_push($part, '<meta property="og:url" content="' . $this->getPageData('url', true) . '" />');
             if ($this->getPageData('image')) {
-                $rel_path = str_replace(utils::getBaseUrl(), null, $this->getPageData('image', true));
+                $rel_path = str_replace(utils::getBaseUrl(), '', $this->getPageData('image', true));
                 $image_size = getimagesize($rel_path);
                 array_push($part, '<meta property="og:image" content="' . $this->getPageData('image', true) . '" />');
 

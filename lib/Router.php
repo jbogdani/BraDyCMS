@@ -82,7 +82,7 @@ class Router
               $exploded = explode('/', $art);
               $p = end($exploded);
               if (preg_match('/^p[0-9]{1,3}$/', $p)){
-                $page = str_replace('p', null, $p);
+                $page = str_replace('p', '', $p);
                 array_pop($exploded);
                 $art = implode('/', $exploded) . '/';
               }
@@ -175,7 +175,7 @@ class Router
         });
         $twig->addFunction($fn_file_exists);
 
-        $filter = new \Twig\TwigFilter('parseTags', function ($string) {
+        $filter = new \Twig\TwigFilter('parseTags', function ($string) use ($outHtml) {
             return customTags::parseContent($string, $outHtml);
         });
 

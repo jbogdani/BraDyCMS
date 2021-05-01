@@ -54,7 +54,7 @@ class reCAPTCHA
              * missing-input-response  The response parameter is missing.
              * invalid-input-response  The response parameter is invalid or malformed.
              */
-            throw new Exception(implode(',', $data->error-codes));
+            throw new Exception(implode(',', $data->error->codes));
         }
 
         return true;

@@ -54,7 +54,7 @@ class Controller
         } elseif (file_exists(SITE_DIR . 'modules/' . $module . '/tmpl')) {
             $dir = SITE_DIR . 'modules/' . $module . '/tmpl';
         } else {
-            throw new Exception("Template folder for module {$modeule} not found");
+            throw new Exception("Template folder for module {$module} not found");
         }
 
         $twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader($dir), unserialize(CACHE));

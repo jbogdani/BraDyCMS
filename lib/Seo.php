@@ -68,8 +68,8 @@ class Seo
 
             R::store($seo);
             return true;
-        } catch (RedException\SQL $e) {
-            error_log($e->getMessage());
+        } catch (\RedBeanPHP\RedException\SQL $e) {
+            error_log($e->__toString());
             return false;
         } catch (Exception $e) {
             error_log($e->getMessage());
@@ -98,8 +98,8 @@ class Seo
             }
             R::trash($seo);
             return true;
-        } catch (RedException\SQL $e) {
-            error_log($e->getMessage);
+        } catch (\RedBeanPHP\RedException\SQL $e) {
+            error_log($e->__toString());
             return false;
         }
     }
@@ -120,8 +120,8 @@ class Seo
                 return false;
             }
             return $seo->export();
-        } catch (RedException\SQL $e) {
-            error_log($e->getMessage);
+        } catch (\RedBeanPHP\RedException\SQL $e) {
+            error_log($e->__toString());
             return false;
         }
     }
@@ -153,8 +153,8 @@ class Seo
             } else {
                 return $seo->export();
             }
-        } catch (RedException\SQL $e) {
-            error_log($e->getMessage);
+        } catch (\RedBeanPHP\RedException\SQL $e) {
+            error_log($e->__toString());
             return false;
         }
     }

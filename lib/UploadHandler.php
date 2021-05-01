@@ -37,9 +37,13 @@ class UploadHandler {
         $initialFiles = array();
 
         for ($i = 0; $i < 5000; $i++) {
-            array_push($initialFiles, array("name" => "name" + $i, uuid => "uuid" + $i, thumbnailUrl => "/test/dev/handlers/vendor/fineuploader/php-traditional-server/fu.png"));
+            array_push($initialFiles, [
+                "name" => "name" + $i, 
+                "uuid" => "uuid" + $i, 
+                "thumbnailUrl" => "/test/dev/handlers/vendor/fineuploader/php-traditional-server/fu.png"
+                ]
+            );
         }
-
         return $initialFiles;
     }
 
@@ -344,15 +348,15 @@ class UploadHandler {
      * Converts a given size with units to bytes.
      * @param string $str
      */
-    protected function toBytes($str){
-	$str = trim($str);
+    protected function toBytes($str)
+    {
+        $str = trim($str);
         $last = strtolower($str[strlen($str)-1]);
-	$val;
-	if(is_numeric($last)) {
-		$val = (int) $str;
-	} else {
-		$val = (int) substr($str, 0, -1);
-	}
+        if(is_numeric($last)) {
+            $val = (int) $str;
+        } else {
+            $val = (int) substr($str, 0, -1);
+        }
         switch($last) {
             case 'g': case 'G': $val *= 1024;
             case 'm': case 'M': $val *= 1024;

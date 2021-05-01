@@ -52,7 +52,7 @@ class Out
 
     // Set page
         if ($get['page']) {
-            $this->cfg['page'] = (int)str_replace('/', null, $get['page']);
+            $this->cfg['page'] = (int)str_replace('/', '', $get['page']);
         }
 
         if ($get['art_title']) {
@@ -274,7 +274,7 @@ class Out
         if (!$this->data['article'][$article]['tags']) {
             $art = $this->getArticle();
 
-            if (!$art->id) {
+            if (!$art['id']) {
                 return false;
             }
 
@@ -529,7 +529,7 @@ class Out
         $this->data['page']['mission'] = cfg::get('mission');
 
         // IMAGE
-        $path2img = str_replace(utils::getBaseUrl(), null, $this->data['article'][$this->getTextId()]['art_img']['orig']);
+        $path2img = str_replace(utils::getBaseUrl(), '', $this->data['article'][$this->getTextId()]['art_img']['orig']);
 
         if (file_exists($path2img)) {
             // 1. check first for article image
@@ -830,7 +830,7 @@ class Out
                 require_once(SITE_DIR . 'modules/tmpldata/preProcess.php');
 
                 if (class_exists('preProcess')) {
-                    $pp = new preProcess;
+                    $pp = new preProcess();
                     $this->data['tmpl_data'] = $pp($this->data['tmpl_data'], $this);
                 }
             }

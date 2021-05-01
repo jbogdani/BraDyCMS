@@ -57,8 +57,7 @@ if (typeof recaptchaCallback !== 'function') {
     if (called) return;
     $('.g-recaptcha').each(function(i, el){
       grecaptcha.render(el, {
-        'sitekey' : $(el).data('sitekey'),
-        {% if lang %} 'hl':'{{ lang }}',{% endif %}
+        {% if lang %}'hl':'{{ lang }}',{% endif %} 
         'callback': function(response) {
           if (response.length > 0){
             $('#login-button').prop('disabled', false);

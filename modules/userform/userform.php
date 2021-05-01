@@ -175,6 +175,7 @@ class userform_ctrl extends Controller
 
       // Placeholders & values array
       $replacables = [];
+      $text = '';
 
       /**
       * Check for error in POST data
@@ -332,6 +333,10 @@ class userform_ctrl extends Controller
   {
     $uid = uniqid( 'form' );
     $this->loadForm($param['content']);
+    $label_class = $param['label_class'];
+    $input_class = $param['input_class'];
+    $buttons_class = $param['buttons_class'];
+    $nojs = $param['nojs'];
 
     if ($param['inline'] || $this->data['inline']) {
       $form_class = 'form-inline';
@@ -427,13 +432,12 @@ class userform_ctrl extends Controller
     if ($sitekey) {
 
       if ($_SESSION['adm_lang']) {
-        $captcha_lang = "'hl': '" . $_SESSION['adm_lang'] . "',";
+        $captcha_lang = "'hl': '" . $_SESSION['adm_lang'] . "'";
       }
+      
+      $captcha_script = <<<EOD
 
-      $html .= <<<EOD
-<div class="g-recaptcha" data-sitekey="{$sitekey}"></div>
-<script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit"></script>
-<script>
+  <script type="text/javascript">
 if (typeof recaptchaCallback !== 'function') {
   var called = false;
   function recaptchaCallback(){
@@ -441,7 +445,6 @@ if (typeof recaptchaCallback !== 'function') {
     $('.g-recaptcha').each(function(i, el){
       grecaptcha.render(el, {
         {$captcha_lang}
-        'sitekey' : $(el).data('sitekey')
       });
     });
     called = true;
@@ -449,6 +452,11 @@ if (typeof recaptchaCallback !== 'function') {
 }
 </script>
 EOD;
+      $html .= '<div class="g-recaptcha" data-sitekey="' . $sitekey. '"></div>';
+      $out->setQueue('modules', '<script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit" async defer></script>', true);
+      $out->setQueue('modules', $captcha_script, true);
+      
+
 
     }
     $html .= '<div class="' . $input_class . ' ' . $buttons_class . '">' .
@@ -460,10 +468,11 @@ EOD;
   '</form>' .
   '</div>';
 
-    if (!$data['nojs']) {
+    if (!$nojs) {
       $js = [];
 
-      $out->setQueue('modules', "\n" . '<script src="' . $out->link2() .  MOD_DIR . 'userform/userform.js'. '"></script>', true);
+      $out->setQueue('modules', "\n" . '<script src="' . $out->link2() 
+        . MOD_DIR . 'userform/userform.js'. '"></script>', true);
       array_push($js, "userform.whatchForm('" . $uid . "');");
 
       if (is_array($upload)) {

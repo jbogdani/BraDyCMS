@@ -1,3 +1,4 @@
+5.5.9[] = "Changes in userform"
 5.5.9[] = "Minor code fixes"
 5.5.8[] = "Removed support for bower in userform_ctrl"
 5.5.8[] = "DownloadAndCount::resolvePath is static method"

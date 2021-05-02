@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -10,34 +11,32 @@ class migrate_ctrl extends Controller
 {
   public function tags()
   {
-    echo 'Security issue! Uncomment the return statement in /modules/migrate/migrate.php to continue'; return;
+    echo 'Security issue! Uncomment the return statement in /modules/migrate/migrate.php to continue';
+    return;
     $art_list = R::findAll('articles');
-    
-    foreach($art_list as $art)
-    {
+
+    foreach ($art_list as $art) {
       $tags = utils::csv_explode($art->tags);
-      
-      if ($art->section && $art->section != '' && !in_array($art->section, $tags))
-      {
+
+      if ($art->section && $art->section != '' && !in_array($art->section, $tags)) {
         $tags[] = $art->section;
       }
-      
-      if (is_array($tags) && !empty($tags))
-      {
+
+      if (is_array($tags) && !empty($tags)) {
         R::tag($art, $tags);
       }
     }
   }
-  
+
   public function transArt()
   {
-    echo 'Security issue! Uncomment the return statement in /modules/migrate/migrate.php to continue'; return;
+    echo 'Security issue! Uncomment the return statement in /modules/migrate/migrate.php to continue';
+    return;
     $lang = $this->get['param'][0];
-    
+
     $trans = R::findAll('articles_' . $lang);
-    
-    foreach ($trans as $t)
-    {
+
+    foreach ($trans as $t) {
       $data['lang'] = $lang;
       $data['status'] = $t['translated'];
       $data['title'] = $t['title'];
@@ -47,16 +46,16 @@ class migrate_ctrl extends Controller
       Article::translate($t['id_art'], $data);
     }
   }
-  
+
   public function transMenu()
   {
-    echo 'Security issue! Uncomment the return statement in /modules/migrate/migrate.php to continue'; return;
+    echo 'Security issue! Uncomment the return statement in /modules/migrate/migrate.php to continue';
+    return;
     $lang = $this->get['param'][0];
-    
+
     $trans = R::findAll('menu_' . $lang);
-    
-    foreach ($trans as $t)
-    {
+
+    foreach ($trans as $t) {
       $data['lang'] = $lang;
       $data['status'] = $t['translated'];
       $data['item'] = $t['item'];
@@ -65,5 +64,3 @@ class migrate_ctrl extends Controller
     }
   }
 }
-?>
-

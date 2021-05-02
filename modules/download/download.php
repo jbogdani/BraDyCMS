@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * @author     Julian Bogdani <jbogdani@gmail.com>
@@ -26,34 +27,29 @@ class download_ctrl extends Controller
    */
   public function sql2json()
   {
-    $aColumns = [ 'id', 'file', 'tot' ];
+    $aColumns = ['id', 'file', 'tot'];
 
     // Paging
     $sLimit = '';
-    if ( isset( $this->request['iDisplayStart'] ) && $this->request['iDisplayLength'] != '-1' )
-    {
-      $sLimit = "LIMIT " . $this->request['iDisplayStart'] .", "
+    if (isset($this->request['iDisplayStart']) && $this->request['iDisplayLength'] != '-1') {
+      $sLimit = "LIMIT " . $this->request['iDisplayStart'] . ", "
         . $this->request['iDisplayLength'];
     }
 
     // Ordering
-    if ( isset( $this->request['iSortCol_0'] ) )
-    {
+    if (isset($this->request['iSortCol_0'])) {
       $sOrder = "ORDER BY  ";
 
-      for ( $i=0 ; $i<intval( $this->request['iSortingCols'] ) ; $i++ )
-      {
-        if ( $this->request[ 'bSortable_' . intval($this->request['iSortCol_' . $i]) ] == "true" )
-        {
-          $sOrder .= $aColumns[ intval( $this->request['iSortCol_'.$i] ) ] . "
-            " . $this->request['sSortDir_'.$i] . ", ";
+      for ($i = 0; $i < intval($this->request['iSortingCols']); $i++) {
+        if ($this->request['bSortable_' . intval($this->request['iSortCol_' . $i])] == "true") {
+          $sOrder .= $aColumns[intval($this->request['iSortCol_' . $i])] . "
+            " . $this->request['sSortDir_' . $i] . ", ";
         }
       }
 
-      $sOrder = substr_replace( $sOrder, "", -2 );
+      $sOrder = substr_replace($sOrder, "", -2);
 
-      if ( $sOrder == "ORDER BY" )
-      {
+      if ($sOrder == "ORDER BY") {
         $sOrder = "";
       }
     }
@@ -62,38 +58,31 @@ class download_ctrl extends Controller
 
 
     // Filtering
-    if ( $this->request['sSearch'] != "" )
-    {
+    if ($this->request['sSearch'] != "") {
       $sWhere .= ($sWhere == "" ? "WHERE (" : "AND (");
-      for ( $i=0 ; $i<count($aColumns) ; $i++ )
-      {
-        $sWhere .= $aColumns[$i]." LIKE '%". $this->request['sSearch'] ."%' OR ";
+      for ($i = 0; $i < count($aColumns); $i++) {
+        $sWhere .= $aColumns[$i] . " LIKE '%" . $this->request['sSearch'] . "%' OR ";
       }
-      $sWhere = substr_replace( $sWhere, "", -3 );
+      $sWhere = substr_replace($sWhere, "", -3);
       $sWhere .= ')';
     }
 
     $totalRows = $this->request['iTotalRecords'] ? $this->request['iTotalRecords'] : R::getCell(" SELECT count(*) FROM `seo` " . $sWhere);
 
     /* Individual column filtering */
-    for ( $i=0 ; $i<count($aColumns) ; $i++ )
-    {
-      if ( $this->request['bSearchable_'.$i] == "true" && $this->request['sSearch_'.$i] != '' )
-      {
-        if ( $sWhere === "" )
-        {
+    for ($i = 0; $i < count($aColumns); $i++) {
+      if ($this->request['bSearchable_' . $i] == "true" && $this->request['sSearch_' . $i] != '') {
+        if ($sWhere === "") {
           $sWhere = "WHERE ";
-        }
-        else
-        {
+        } else {
           $sWhere .= " AND ";
         }
-        $sWhere .= $aColumns[$i]." LIKE '%" . $this->request['sSearch_'.$i] ."%' ";
+        $sWhere .= $aColumns[$i] . " LIKE '%" . $this->request['sSearch_' . $i] . "%' ";
       }
     }
 
     $sQuery = "
-      SELECT `" . implode('`, `', $aColumns ). "` FROM `downloads`
+      SELECT `" . implode('`, `', $aColumns) . "` FROM `downloads`
         $sWhere
         $sOrder
         $sLimit
@@ -106,7 +95,7 @@ class download_ctrl extends Controller
       "iTotalRecords" => count($result),
       "iTotalDisplayRecords" => $totalRows,
       "aaData" => $result
-      );
+    );
 
     header('Content-type: application/json');
     echo json_encode($output);
@@ -122,23 +111,17 @@ class download_ctrl extends Controller
    */
   public function go($file = false, $text = false, $name = false)
   {
-    try
-    {
+    try {
       $file = $file ? $file : $this->get['file'];
       $text = $text ? $text : $this->get['text'];
       $name = $name ? $name : $this->get['name'];
 
-      if ($file)
-      {
+      if ($file) {
         DownloadAndCount::file($file);
-      }
-      else if ($text && $name)
-      {
+      } else if ($text && $name) {
         DownloadAndCount::text(utils::safe_decode($text), $name);
       }
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       error_log($e->getMessage());
       echo 'Something went wrong... ' . $e->getMessage();
     }
@@ -150,6 +133,4 @@ class download_ctrl extends Controller
     DownloadAndCount::resetCount($this->get['id']);
     echo $this->responseJson('success', tr::get('ok_count_reset'));
   }
-
 }
-?>

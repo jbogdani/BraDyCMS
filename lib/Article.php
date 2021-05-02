@@ -253,7 +253,7 @@ class Article
      * @param int $id    article id
      * @param string $lang language
      * @param boolean $dontparse if true original bean will be returned
-     * @return boolean
+     * @return \RedBean\OODBBean|false
      */
     public static function getById($id, $lang = false, $dontparse = false)
     {

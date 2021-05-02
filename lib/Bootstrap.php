@@ -104,7 +104,7 @@ $writeables = array(
 if (!defined('MAIN_DIR')) {
     foreach ($writeables as $f) {
         if (!is_writable($f)) {
-            throw new Exception(tr::sget('permission_error', $f));
+            throw new Exception(tr::sget('permission_error', [$f]));
         }
     }
 }

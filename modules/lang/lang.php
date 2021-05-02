@@ -18,4 +18,3 @@ class lang_ctrl extends Controller
     
   }
 }
-?>

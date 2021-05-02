@@ -33,8 +33,7 @@
 
 class api_ctrl extends Controller
 {
-  public function run()
-  {
+  public function run() {
     $array = $this->process($this->get);
 
     header("Access-Control-Allow-Origin: *");
@@ -45,19 +44,14 @@ class api_ctrl extends Controller
   }
 
 
-  private function process($get)
-  {
+  private function process($get) {
     $response = array();
 
-    switch($get['action'])
-    {
+    switch($get['action']) {
       case 'read':
-        try
-        {
+        try {
           $response = $this->read($get);
-        }
-        catch(Exception $e)
-        {
+        } catch(Exception $e) {
           $response['status'] = 'success';
           $response['verbose'] = 'Unknown action: ' . $e->getMessage();
         }
@@ -85,21 +79,15 @@ class api_ctrl extends Controller
      * menu=menuID or
      * menu[]=firstMenuId&menu[]=secondMenuId...
      */
-    if ($get['menu'])
-    {
-      if (is_string($get['menu']))
-      {
+    if ($get['menu']) {
+      if (is_string($get['menu'])) {
         $menus[] = $get['menu'];
-      }
-      else if (is_array($get['menu']))
-      {
+      } else if (is_array($get['menu'])) {
         $menus = $get['menu'];
       }
 
-      if (is_array($menus))
-      {
-        foreach ($menus as $menu)
-        {
+      if (is_array($menus)) {
+        foreach ($menus as $menu) {
           $response['menu'][$menu] = $out->getMenu($menu);
         }
       }
@@ -111,34 +99,24 @@ class api_ctrl extends Controller
      * tag[]=firstTagId&tag[]=secondTagId...
      */
 
-    if ($get['tag'])
-    {
-      if (is_string($get['tag']))
-      {
+    if ($get['tag']) {
+      if (is_string($get['tag'])) {
         $tags[] = $get['tag'];
-      }
-      else if (is_array($get['tag']))
-      {
+      } else if (is_array($get['tag'])) {
         $tags = $get['tag'];
       }
-      if (is_array($tags))
-      {
+
+      if (is_array($tags)) {
         $arts = $out->getArticlesByTagArray($tags, false, false, 200);
-        if (is_array($arts) && !empty($arts))
-        {
+        if (is_array($arts) && !empty($arts)) {
           $response['tags'] = array_values($arts);
         }
 
-        if ($get['galleries'] && !empty($response['tags']))
-        {
-          foreach($response['tags'] as &$art)
-          {
-            try
-            {
+        if ($get['galleries'] && !empty($response['tags'])) {
+          foreach($response['tags'] as &$art) {
+            try {
               $art['gallery'] = $out->getGallery($art['textid']);
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
               error_log($e->getMessage());
             }
           }
@@ -150,57 +128,41 @@ class api_ctrl extends Controller
     /**
      * Page metadata
      */
-    if ($get['metadata'])
-    {
+    if ($get['metadata']) {
       $response['metadata'] = $out->getPageData();
     }
 
     /**
      * Article
      */
-    if ($get['artid'])
-    {
-      if (is_string($get['artid']))
-      {
+    if ($get['artid']) {
+      if (is_string($get['artid'])) {
         $artids[] = $get['artid'];
-      }
-      else if (is_array($get['artid']))
-      {
+      } else if (is_array($get['artid'])) {
         $artids = $get['artid'];
       }
 
-      if (is_array($artids))
-      {
-        foreach($artids as $artid)
-        {
+      if (is_array($artids)) {
+        foreach($artids as $artid) {
           $art = false;
           $art = $out->getArticle($artid);
 
-          if($art instanceof RedBean_OODBBean)
-          {
+          if($art instanceof \RedBeanPHP\OODBBean) {
             $art = $art->export();
           }
 
           $response['article'][$artid] = $art;
 
-          if ($get['galleries'])
-          {
-            try
-            {
+          if ($get['galleries']) {
+            try {
               $response['article'][$artid]['gallery'] = $out->getGallery($artid);
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
               error_log($e->getMessage());
             }
-
           }
         }
       }
     }
-
     return $response;
   }
 }
-
-?>

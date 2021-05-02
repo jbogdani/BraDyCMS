@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -26,9 +27,9 @@ class galleries_ctrl extends Controller
   public function edit()
   {
     $data = [
-      'gallery'=> $this->get['param'][0],
+      'gallery' => $this->get['param'][0],
       'files'  => Gallery::getAllContent($this->get['param'][0], $this->get['param'][1]),
-      'upload_dir'=> $this->path . $this->get['param'][0],
+      'upload_dir' => $this->path . $this->get['param'][0],
       'sys_lang' => array(cfg::get('sys_lang'), cfg::get('sys_lang_string')),
       'langs' => cfg::get('languages'),
       'max_img_size' => cfg::get('max_img_size')
@@ -44,13 +45,10 @@ class galleries_ctrl extends Controller
    */
   public function saveData()
   {
-    try
-    {
+    try {
       Gallery::save($this->get['param'][0], $this->post);
       echo $this->responseJson('success', tr::get('gallery_updated'));
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       echo $this->responseJson('error', tr::get('gallery_not_updated'));
     }
   }
@@ -68,7 +66,7 @@ class galleries_ctrl extends Controller
     } catch (Exception $e) {
       error_log($e->getMessage());
 
-      switch($e->getCode()) {
+      switch ($e->getCode()) {
         case '1':
           $msg = tr::get('gallery_exists');
           break;
@@ -93,7 +91,6 @@ class galleries_ctrl extends Controller
 
       Gallery::deleteItem($this->get['param'][0], $this->get['param'][1]);
       echo $this->responseJson('success', tr::get('img_data_deleted'));
-
     } catch (Exception $e) {
 
       error_log($e->getMessage());
@@ -118,33 +115,27 @@ class galleries_ctrl extends Controller
    */
   public function deleteGallery()
   {
-    try
-    {
+    try {
       Gallery::deleteGallery($this->get['param'][0]);
       echo $this->responseJson('success', tr::get('gallery_deleted'));
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       error_log($e->getMessage());
       echo $this->responseJson('error', tr::get('gallery_not_deleted'));
     }
   }
 
-  public function renameGallery(){
+  public function renameGallery()
+  {
 
     $old_name = $this->get['param'][0];
     $new_name = $this->get['param'][1];
 
-    try
-    {
+    try {
       Gallery::rename($old_name, $new_name);
       echo $this->responseJson('success', tr::get('ok_gallery_renamed'));
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       error_log($e->getMessage());
-      switch($e->getCode())
-      {
+      switch ($e->getCode()) {
         case '1':
           $msg = tr::get('error_gallery_does_not_exist');
           break;
@@ -158,5 +149,4 @@ class galleries_ctrl extends Controller
       echo $this->responseJson('error', $msg);
     }
   }
-
 }

@@ -244,7 +244,7 @@ EOD;
         }
         $xml .= "\n" . '<url>'
           . "\n\t" . '<loc>'
-            . htmlspecialchars(utils::getBaseUrl() . str_replace('./', null, link::to_article($art['textid'])))
+            . htmlspecialchars(utils::getBaseUrl() . str_replace('./', '', link::to_article($art['textid'])))
           . '</loc>'
           . (
               file_exists('./sites/default/images/articles/' . $artimgs[0] . '/' . $art['id'] . '.jpg') ?
@@ -265,4 +265,3 @@ EOD;
 
     }
 }
-?>

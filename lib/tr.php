@@ -62,10 +62,10 @@ class tr
      *
      * Returns formatted string
      * @param string $string  input string
-     * @param mixed $args    array of arguments for formatting
+     * @param array $args    array of arguments for formatting
      * @param boolean $escape  boolean escape
      */
-    public static function sget($string, $args, $escape = false)
+    public static function sget(string $string, array $args, bool $escape = false)
     {
         if (!is_array($args)) {
             $args = array($args);

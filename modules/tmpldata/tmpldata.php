@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -22,7 +23,6 @@ class tmpldata_ctrl extends Controller
         if (file_exists($this->data_file)) {
           throw new Exception();
         }
-
       } else {
 
         if (!is_dir(dirname($this->data_file))) {
@@ -34,23 +34,16 @@ class tmpldata_ctrl extends Controller
         }
       }
 
-      echo json_encode( ['status' => 'success', 'text' => tr::get('ok_setting_updated') ] );
-
+      echo json_encode(['status' => 'success', 'text' => tr::get('ok_setting_updated')]);
     } catch (Exception $e) {
-      echo json_encode( ['status' => 'error', 'text' => tr::get('error_setting_not_updated') ] );
+      echo json_encode(['status' => 'error', 'text' => tr::get('error_setting_not_updated')]);
     }
-
-
   }
 
   public function view()
   {
     $this->render('tmpldata', 'edit', array(
-        'data' => (file_exists($this->data_file) ? file_get_contents($this->data_file) : '{}')
+      'data' => (file_exists($this->data_file) ? file_get_contents($this->data_file) : '{}')
     ));
   }
-
-
 }
-
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * @author     Julian Bogdani <jbogdani@gmail.com>
@@ -10,26 +11,23 @@
 
 class usermap_ctrl extends Controller
 {
-    private $data;
-
-
     public function createNew()
     {
         $name = $this->get['param'][0] . '.map';
 
         $text = array(
-      'elId'=>'map',
-      'scrollWheelZoom'=>false,
-      'attribution'=>'<a href="http://bradypus.net" title="BraDypUS. Communicating Cultural Heritage">BraDypUS</a>',
-      'zoom'=>'7',
-      'center'=>array(44.51618, 11.34238),
-      'zoomToBounds'=>false,
-      'markers'=>[[
-        "coord" =>  array(44.51618,  11.34238),
-        "name" => "<big><strong>BraDypUS</strong></big>.<br />Via A. Fioravanti, 72.<br />40129 Bologna Italy"
-        ]]
+            'elId' => 'map',
+            'scrollWheelZoom' => false,
+            'attribution' => '<a href="http://bradypus.net" title="BraDypUS. Communicating Cultural Heritage">BraDypUS</a>',
+            'zoom' => '7',
+            'center' => array(44.51618, 11.34238),
+            'zoomToBounds' => false,
+            'markers' => [[
+                "coord" =>  array(44.51618,  11.34238),
+                "name" => "<big><strong>BraDypUS</strong></big>.<br />Via A. Fioravanti, 72.<br />40129 Bologna Italy"
+            ]]
 
-      );
+        );
 
 
         if (!is_dir('./sites/default/modules/usermaps')) {
@@ -37,27 +35,27 @@ class usermap_ctrl extends Controller
         }
 
         if (utils::write_in_file('./sites/default/modules/usermaps/' . $name, $text, 'json')) {
-            echo json_encode(array('status' => 'success', 'text' => tr::get('ok_map_config_saved') ));
+            echo json_encode(array('status' => 'success', 'text' => tr::get('ok_map_config_saved')));
         } else {
-            echo json_encode(array('status' => 'error', 'text' => tr::get('error_map_config_not_saved') ));
+            echo json_encode(array('status' => 'error', 'text' => tr::get('error_map_config_not_saved')));
         }
     }
 
     public function save()
     {
         if (utils::write_in_file('./sites/default/modules/usermaps/' . $this->get['param'][0], $this->post['data'], 'json')) {
-            echo json_encode(array('status' => 'success', 'text' => tr::get('ok_map_config_saved') ));
+            echo json_encode(array('status' => 'success', 'text' => tr::get('ok_map_config_saved')));
         } else {
-            echo json_encode(array('status' => 'error', 'text' => tr::get('error_map_config_not_saved') ));
+            echo json_encode(array('status' => 'error', 'text' => tr::get('error_map_config_not_saved')));
         }
     }
 
     public function erase()
     {
         if (unlink('./sites/default/modules/usermaps/' . $this->get['param'][0])) {
-            echo json_encode(array('status' => 'success', 'text' => tr::get('ok_map_deleted') ));
+            echo json_encode(array('status' => 'success', 'text' => tr::get('ok_map_deleted')));
         } else {
-            echo json_encode(array('status' => 'error', 'text' => tr::get('error_map_not_deleted') ));
+            echo json_encode(array('status' => 'error', 'text' => tr::get('error_map_not_deleted')));
         }
     }
 
@@ -67,17 +65,17 @@ class usermap_ctrl extends Controller
 
         $content = file_get_contents('./sites/default/modules/usermaps/' . $map);
         $this->render('usermap', 'edit_map', array(
-        'map' => $map,
-        'content'=> $content
-    ));
+            'map' => $map,
+            'content' => $content
+        ));
     }
 
 
     public function view()
     {
         $this->render('usermap', 'list', array(
-        'maps' => utils::dirContent('./sites/default/modules/usermaps')
-    ));
+            'maps' => utils::dirContent('./sites/default/modules/usermaps')
+        ));
     }
 
     /**
@@ -92,17 +90,17 @@ class usermap_ctrl extends Controller
     {
         //data-cfg="lavori" style="width: 100%; height: 400px;"
         $html = '<div'
-      . ' id="' . uniqid() . '"'
-      . ' class="usermap"'
-      . ($param['marker'] ? ' data-marker="' . $param['marker'] . '"' : '')
-      . ($param['zoom'] ? ' data-zoom="' . $param['zoom'] . '"' : '')
-      . ($param['platform'] ? ' data-platform="' . $param['platform'] . '"' : '')
-      . ($param['type'] ? ' data-type="' . $param['type'] . '"' : '')
-      . ' data-cfg="' . $param['content'] . '"'
-      . ' style="'
-        . 'width: ' . ($param['width'] ? $param['width'] : '100%') . ';'
-        . 'height:' . ($param['height'] ? $param['height'] : '400px') . ';"'
-      . '></div>';
+            . ' id="' . uniqid() . '"'
+            . ' class="usermap"'
+            . ($param['marker'] ? ' data-marker="' . $param['marker'] . '"' : '')
+            . ($param['zoom'] ? ' data-zoom="' . $param['zoom'] . '"' : '')
+            . ($param['platform'] ? ' data-platform="' . $param['platform'] . '"' : '')
+            . ($param['type'] ? ' data-type="' . $param['type'] . '"' : '')
+            . ' data-cfg="' . $param['content'] . '"'
+            . ' style="'
+            . 'width: ' . ($param['width'] ? $param['width'] : '100%') . ';'
+            . 'height:' . ($param['height'] ? $param['height'] : '400px') . ';"'
+            . '></div>';
         $out->setQueue('modules', '<script>window.usermap || document.write(\'<script src="./modules/usermap/usermap.js"><\/script>\');</script>');
         return $html;
     }

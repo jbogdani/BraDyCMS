@@ -23,14 +23,11 @@ class tags_ctrl extends Controller
    */
   public function addTag($title = false)
   {
-    if(!$title) $title = $this->get['param'][0];
+    if (!$title) $title = $this->get['param'][0];
 
-    if (R::count( 'tag', ' title = ? ', [ $title ] ) > 0)
-    {
+    if (R::count('tag', ' title = ? ', [$title]) > 0) {
       echo $this->responseJson('error', tr::sget('tag_already_used', $title));
-    }
-    else
-    {
+    } else {
       echo Tag::add($title) ?
         $this->responseJson('success', tr::get('tag_added')) :
         $this->responseJson('error', tr::get('tag_not_added'));
@@ -43,12 +40,12 @@ class tags_ctrl extends Controller
    */
   public function removeTag($tagId = false)
   {
-    if(!$tagId) $tagId = $this->get['param'][0];
+    if (!$tagId) $tagId = $this->get['param'][0];
 
 
     echo Tag::delete($tagId) ?
-        $this->responseJson('success', tr::get('tag_deleted')) :
-        $this->responseJson('error', $e->getMessage());
+      $this->responseJson('success', tr::get('tag_deleted')) :
+      $this->responseJson('error', tr::get('tag_not_deleted'));
   }
 
   /**
@@ -58,19 +55,15 @@ class tags_ctrl extends Controller
    */
   public function renameTag($tagId = false, $title = false)
   {
-    if(!$tagId) $tagId = $this->get['param'][0];
-    if(!$title) $title = $this->get['param'][1];
+    if (!$tagId) $tagId = $this->get['param'][0];
+    if (!$title) $title = $this->get['param'][1];
 
-    if (R::count( 'tag', ' title = ? ', [ $title ] ) > 0)
-    {
-      echo $this->responseJson('error', tr::sget('tag_already_used', $title));
-    }
-    else
-    {
+    if (R::count('tag', ' title = ? ', [$title]) > 0) {
+      echo $this->responseJson('error', tr::sget('tag_already_used', [$title]));
+    } else {
       echo Tag::rename($title, $tagId) ?
-        $this->responseJson('success', tr::get('tag_renamed')):
+        $this->responseJson('success', tr::get('tag_renamed')) :
         $this->responseJson('error', tr::get('tag_not_renamed'));
     }
   }
 }
-?>

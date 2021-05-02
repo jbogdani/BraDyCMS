@@ -167,7 +167,7 @@ class sys_translate_ctrl extends Controller
     {
       echo json_encode(array(
         'status' => 'error',
-        'message' => tr::sget('key_exists', $key)
+        'message' => tr::sget('key_exists', [$key])
         ));
       return;
     }

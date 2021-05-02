@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -29,8 +30,8 @@ class log_ctrl extends Controller
       . ' from IP: ' . $_SERVER['REMOTE_ADDR']
       . "\n";
 
-      error_log($log_str, 3, $users_log);
-      return true;
+    error_log($log_str, 3, $users_log);
+    return true;
   }
 
   public function out()
@@ -55,7 +56,7 @@ class log_ctrl extends Controller
 
     $password = sha1($password);
 
-    if($echo) {
+    if ($echo) {
       echo $password;
     } else {
       return $password;
@@ -67,7 +68,7 @@ class log_ctrl extends Controller
     try {
 
       if (!filter_var($this->post['username'], FILTER_VALIDATE_EMAIL)) {
-        throw new Exception(tr::sget('invalid_email', tr::get('email_address')));
+        throw new Exception(tr::sget('invalid_email', [tr::get('email_address')]));
       }
 
       $username = $this->post['username'];
@@ -103,7 +104,7 @@ class log_ctrl extends Controller
 
       foreach ($cfg_users as $user) {
 
-        if($username === $user['name'] && $this->encodePwd($password) === $user['pwd']) {
+        if ($username === $user['name'] && $this->encodePwd($password) === $user['pwd']) {
 
           session_regenerate_id(true);
           $_SESSION['user_confirmed'] = $username;
@@ -115,15 +116,13 @@ class log_ctrl extends Controller
 
           echo json_encode(array('status' => 'success'));
           return;
-
         } else {
           continue;
         }
       }
 
       throw new Exception(tr::get('access_denied'));
-
-    } catch(Exception $e) {
+    } catch (Exception $e) {
       echo json_encode(array('status' => 'error', 'text' => $e->getMessage()));
       return;
     }

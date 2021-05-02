@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -66,8 +67,8 @@ class downloads_ctrl extends Controller
                 // file is not - yet - present in index file. Add it
                 if (!$data[$formattedName]) {
                     $data[$formattedName] = [
-                      'title' => $file,
-                      'sort' => $biggerSort
+                        'title' => $file,
+                        'sort' => $biggerSort
                     ];
                     $changed = true;
                 }
@@ -98,10 +99,9 @@ class downloads_ctrl extends Controller
         });
 
         $this->render('downloads', 'editNode', [
-            'node'=> $this->get['param'][0],
+            'node' => $this->get['param'][0],
             'files'  => $files,
-            'thumbs'=> $thumbs,
-            'upload_dir'=> $this->path . $this->get['param'][0],
+            'upload_dir' => $this->path . $this->get['param'][0],
             'langs' => cfg::get('languages'),
             'translation' => $lang,
             'tmp_path' => TMP_DIR,
@@ -182,7 +182,7 @@ class downloads_ctrl extends Controller
 
             if (is_array(cfg::get('languages'))) {
                 foreach (cfg::get('languages') as $lng) {
-                    $data_file[] = $this->get['param'][0] . '/data_' . $lng['id']. '.json';
+                    $data_file[] = $this->get['param'][0] . '/data_' . $lng['id'] . '.json';
                 }
             }
 

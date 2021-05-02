@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -20,16 +21,16 @@ class userform_ctrl extends Controller
 
       if (file_exists('./sites/default/modules/userforms/' . $name)) {
 
-        throw new Exception(tr::get('error_formid_exixts') );
+        throw new Exception(tr::get('error_formid_exixts'));
       }
 
       $text = [
-        'to'=>'',
-        'from_email'=>'',
-        'from_name'=>'',
-        'subject'=>'',
-        'success_text'=>'',
-        'error_text'=>'',
+        'to' => '',
+        'from_email' => '',
+        'from_name' => '',
+        'subject' => '',
+        'success_text' => '',
+        'error_text' => '',
         'to_user' => '',
         'confirm_text' => '',
         'inline' => 'true|false',
@@ -38,9 +39,9 @@ class userform_ctrl extends Controller
         'smtp_username' => 'username here',
         'smtp_password' => 'password here',
         'smtp_secure' => 'tls|ssl',
-        'smtp_port' =>'587 or other',
+        'smtp_port' => '587 or other',
 
-        'elements'=> [
+        'elements' => [
           [
             'name' => '',
             'label' => '',
@@ -60,15 +61,14 @@ class userform_ctrl extends Controller
 
       if (utils::write_in_file('./sites/default/modules/userforms/' . $name, $text, 'json')) {
 
-        $resp = ['status' => 'success', 'text' => tr::get('ok_form_config_saved') ];
-
+        $resp = ['status' => 'success', 'text' => tr::get('ok_form_config_saved')];
       } else {
 
-        throw new Exception(tr::get('error_form_config_not_saved') );
+        throw new Exception(tr::get('error_form_config_not_saved'));
       }
     } catch (Exception $e) {
 
-      $resp = ['status' => 'error', 'text' => $e->getMessage() ];
+      $resp = ['status' => 'error', 'text' => $e->getMessage()];
     }
 
     echo json_encode($resp);
@@ -78,12 +78,10 @@ class userform_ctrl extends Controller
   {
     if (utils::write_in_file('./sites/default/modules/userforms/' . $this->get['param'][0], $this->post['data'], 'json')) {
 
-      echo json_encode( ['status' => 'success', 'text' => tr::get('ok_form_config_saved') ] );
-
+      echo json_encode(['status' => 'success', 'text' => tr::get('ok_form_config_saved')]);
     } else {
 
-      echo json_encode( ['status' => 'error', 'text' => tr::get('error_form_config_not_saved') ] );
-
+      echo json_encode(['status' => 'error', 'text' => tr::get('error_form_config_not_saved')]);
     }
   }
 
@@ -91,11 +89,10 @@ class userform_ctrl extends Controller
   {
     if (unlink('./sites/default/modules/userforms/' . $this->get['param'][0])) {
 
-      echo json_encode([ 'status' => 'success', 'text' => tr::get('ok_form_deleted')] );
-
+      echo json_encode(['status' => 'success', 'text' => tr::get('ok_form_deleted')]);
     } else {
 
-      echo json_encode( ['status' => 'error', 'text' => tr::get('error_form_ot_deleted') ] );
+      echo json_encode(['status' => 'error', 'text' => tr::get('error_form_ot_deleted')]);
     }
   }
 
@@ -106,19 +103,19 @@ class userform_ctrl extends Controller
     $content = file_get_contents('./sites/default/modules/userforms/' . $form);
     $this->render('userform', 'edit_form', [
       'form' => $form,
-      'content'=> $content
+      'content' => $content
     ]);
   }
 
 
   public function view()
   {
-    $this->render('userform', 'list', ['forms' => utils::dirContent('./sites/default/modules/userforms') ] );
+    $this->render('userform', 'list', ['forms' => utils::dirContent('./sites/default/modules/userforms')]);
   }
 
   /**
-  * Loads json file with form data in $this->data
-  */
+   * Loads json file with form data in $this->data
+   */
   private function loadForm($form)
   {
     if (!$this->data) {
@@ -133,9 +130,9 @@ class userform_ctrl extends Controller
   }
 
   /**
-  * Processes post data and echoes json with status: error|success and verbous text
-  * @throws Exception
-  */
+   * Processes post data and echoes json with status: error|success and verbous text
+   * @throws Exception
+   */
   public function process()
   {
 
@@ -165,11 +162,9 @@ class userform_ctrl extends Controller
         try {
 
           reCAPTCHA::validate($this->post['g-recaptcha-response']);
-
-        } catch(Exception $e) {
+        } catch (Exception $e) {
 
           array_push($error, tr::get('captcha_error'));
-
         }
       }
 
@@ -178,12 +173,12 @@ class userform_ctrl extends Controller
       $text = '';
 
       /**
-      * Check for error in POST data
-      */
+       * Check for error in POST data
+       */
       foreach ($this->data['elements'] as $el) {
 
         // Overwrite default subject using field with name subject
-        if ($el['name'] === 'subject' && !empty($data[$el['name']]) ) {
+        if ($el['name'] === 'subject' && !empty($data[$el['name']])) {
           $data['subject'] = $data[$el['name']];
         }
 
@@ -192,11 +187,11 @@ class userform_ctrl extends Controller
         // Check required element
         if ($el['is_required'] && !$data[$el['name']]) {
 
-          array_push($error, tr::sget('missing_required', $el['name']));
+          array_push($error, tr::sget('missing_required', [$el['name']]));
         }
 
         if ($el['email'] && $el['email'] !== 'false' && !filter_var($data[$el['name']], FILTER_VALIDATE_EMAIL)) {
-          array_push($error, tr::sget('invalid_email', $el['name']));
+          array_push($error, tr::sget('invalid_email', [$el['name']]));
           continue;
         }
 
@@ -205,14 +200,12 @@ class userform_ctrl extends Controller
           if (file_exists($data[$el['name']])) {
 
             $attach[] = $data[$el['name']];
-
           }
-
         } else {
 
           $text .= "\n"
-          . ($el['label'] ? $el['label'] . ': ' : ($el['placeholder'] ? $el['placeholder'] . ': ' : ''))
-          . htmlentities($data[$el['name']]);
+            . ($el['label'] ? $el['label'] . ': ' : ($el['placeholder'] ? $el['placeholder'] . ': ' : ''))
+            . htmlentities($data[$el['name']]);
         }
       }
 
@@ -222,7 +215,7 @@ class userform_ctrl extends Controller
       }
 
       // check if a copy to user should be send, identical or with a custom text
-      if ($this->data['to_user'] && $data[$this->data['to_user']] && filter_var($data[$this->data['to_user']], FILTER_VALIDATE_EMAIL) ) {
+      if ($this->data['to_user'] && $data[$this->data['to_user']] && filter_var($data[$this->data['to_user']], FILTER_VALIDATE_EMAIL)) {
 
         $to_user = $data[$this->data['to_user']];
 
@@ -254,7 +247,7 @@ class userform_ctrl extends Controller
         $message->addAddress($this->data['to']);
 
         // Send a copy to the user (no custom text):
-        if ( $to_user && !$confirm_text) {
+        if ($to_user && !$confirm_text) {
           $message->addAddress($to_user);
         }
         $message->Subject = $this->data['subject'];
@@ -299,39 +292,36 @@ class userform_ctrl extends Controller
           }
         }
 
-        echo json_encode( ['status' => 'success', 'text' => $this->data['success_text'] ] );
-
+        echo json_encode(['status' => 'success', 'text' => $this->data['success_text']]);
       } catch (phpmailerException $e) {
 
         error_log($e->getTraceAsString());
 
         throw new Exception($this->data['error_text']);
-
       } catch (Exception $e) {
 
         error_log($e->getTraceAsString());
 
         throw new Exception($this->data['error_text']);
       }
-
     } catch (Exception $e) {
 
-      echo json_encode( ['status'=>'error', 'text' => $e->getMessage() ] );
+      echo json_encode(['status' => 'error', 'text' => $e->getMessage()]);
     }
   }
 
 
   /**
-  * Formats and return HTML with form data
-  * @param array $param general parameters.
-  *  Mandatory value: $param['content']: the form to show
-  *  Optional value: subject, overrites the config subject
-  * @param object Instance of the main Out object
-  * @return string
-  */
+   * Formats and return HTML with form data
+   * @param array $param general parameters.
+   *  Mandatory value: $param['content']: the form to show
+   *  Optional value: subject, overrites the config subject
+   * @param object Instance of the main Out object
+   * @return string
+   */
   public function showForm($param, Out $out)
   {
-    $uid = uniqid( 'form' );
+    $uid = uniqid('form');
     $this->loadForm($param['content']);
     $label_class = $param['label_class'];
     $input_class = $param['input_class'];
@@ -348,9 +338,9 @@ class userform_ctrl extends Controller
 
     $html = '<div class="userform ' . $param['content'] . '">' .
       '<form action="javascript:void(0)" '
-        . 'data-name="' . $param['content'] . '"'
-        . ($form_class ? 'class="' . $form_class . '"' : '')
-        . ' id="' . $uid . '">';
+      . 'data-name="' . $param['content'] . '"'
+      . ($form_class ? 'class="' . $form_class . '"' : '')
+      . ' id="' . $uid . '">';
 
     if ($param['subject']) {
       $html .= '<input type="hidden" name="customsubject" value="' . $param['subject'] . '" />';
@@ -367,7 +357,7 @@ class userform_ctrl extends Controller
         $html .= '<label class="' . $label_class . ' control-label">'
           . $el['label']
           . ($el['is_required'] ? '<span style="color:red"> *</span> ' : '')
-        . '</label>';
+          . '</label>';
       }
 
       $html .= '<div class="' . $input_class . '">';
@@ -377,30 +367,30 @@ class userform_ctrl extends Controller
         case 'text':
         default:
           $html .= '<input type="text" '
-            . ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' )
+            . ($el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '')
             . ' name="' . $el['name'] . '" '
             . 'data-label="' . $el['label'] . '" class="form-control' . $checkClass
             . ($el['type'] === 'date' ? ' datepicker' : '') . '" />';
-            if($el['type'] === 'date') {
-              $load_date = true;
-            }
-        break;
+          if ($el['type'] === 'date') {
+            $load_date = true;
+          }
+          break;
 
         case 'longtext';
           $html .= '<textarea ' .
-          ( $el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '' ) .
-          'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
-        break;
+            ($el['placeholder'] ? ' placeholder="' . $el['placeholder'] . '"' : '') .
+            'name="' . $el['name'] . '" data-label="' . $el['label'] . '" rows="10" class="form-control' . $checkClass . '"></textarea>';
+          break;
 
         case 'select':
           $html .= '<select name="' . $el['name'] . '" data-label="' . $el['label'] . '" class="form-control' . $checkClass . '">' .
-          '<option></option>';
+            '<option></option>';
           foreach ($el['options'] as $opt) {
             $html .= '<option>' . $opt . '</option>';
           }
 
           $html .= '</select>';
-        break;
+          break;
 
         case 'upload':
           $upload[$el['name']] = [];
@@ -414,15 +404,15 @@ class userform_ctrl extends Controller
           }
 
           $html .= '<div class="upload_content">' .
-              '<div class="upl_' . $el['name'] . '"></div>' .
-              '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
-              '<div class="preview"></div>' .
+            '<div class="upl_' . $el['name'] . '"></div>' .
+            '<input type="hidden" class="filepath" name="' . $el['name'] . '" />' .
+            '<div class="preview"></div>' .
             '</div>';
-        break;
+          break;
       }
 
       $html .= '</div>' .
-      '</div>';
+        '</div>';
     }
     $html .= '<div class="clearfix">';
 
@@ -434,7 +424,7 @@ class userform_ctrl extends Controller
       if ($_SESSION['adm_lang']) {
         $captcha_lang = "'hl': '" . $_SESSION['adm_lang'] . "'";
       }
-      
+
       $captcha_script = <<<EOD
 
   <script type="text/javascript">
@@ -452,35 +442,32 @@ if (typeof recaptchaCallback !== 'function') {
 }
 </script>
 EOD;
-      $html .= '<div class="g-recaptcha" data-sitekey="' . $sitekey. '"></div>';
+      $html .= '<div class="g-recaptcha" data-sitekey="' . $sitekey . '"></div>';
       $out->setQueue('modules', '<script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit" async defer></script>', true);
       $out->setQueue('modules', $captcha_script, true);
-      
-
-
     }
     $html .= '<div class="' . $input_class . ' ' . $buttons_class . '">' .
-        '<div class="message"></div>' .
-        '<input class="btn btn-success" type="submit" /> ' .
-        '<input class="btn btn-default" type="reset" />' .
+      '<div class="message"></div>' .
+      '<input class="btn btn-success" type="submit" /> ' .
+      '<input class="btn btn-default" type="reset" />' .
       '</div>' .
-    '</div>' .
-  '</form>' .
-  '</div>';
+      '</div>' .
+      '</form>' .
+      '</div>';
 
     if (!$nojs) {
       $js = [];
 
-      $out->setQueue('modules', "\n" . '<script src="' . $out->link2() 
-        . MOD_DIR . 'userform/userform.js'. '"></script>', true);
+      $out->setQueue('modules', "\n" . '<script src="' . $out->link2()
+        . MOD_DIR . 'userform/userform.js' . '"></script>', true);
       array_push($js, "userform.whatchForm('" . $uid . "');");
 
       if (is_array($upload)) {
         $out->setQueue('modules', "\n" . '<link type="text/css" rel="stylesheet" href="./frontLibs/fine-uploader/fine-uploader.min.css" />', true);
         $out->setQueue('modules', "\n" . '<script src="./frontLibs/fine-uploader/fine-uploader.min.js"></script>', true);
 
-        foreach($upload as $el=>$opts) {
-          array_push($js, "userform.upload_file('" . $param['content']. "', 'upl_" . $el . "', " . json_encode($opts). ");");
+        foreach ($upload as $el => $opts) {
+          array_push($js, "userform.upload_file('" . $param['content'] . "', 'upl_" . $el . "', " . json_encode($opts) . ");");
         }
       }
 
@@ -497,5 +484,3 @@ EOD;
     return $html;
   }
 }
-
-?>

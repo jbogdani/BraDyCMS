@@ -115,9 +115,7 @@ class admin_ctrl extends Controller
       'css' => $css,
       'js' => $js,
       'user_confirmed' => $_SESSION['user_confirmed'],
-      'content' => $content,
       'recaptcha' => defined('CREATE_SITE') ? false : cfg::get('grc_sitekey')
     ], $add_param));
   }
 }
-?>

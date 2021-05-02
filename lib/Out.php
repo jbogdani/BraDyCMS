@@ -201,7 +201,7 @@ class Out
      * @param boolean $escape  if true the single quotes will be escaped (usefull for usage in javascript scripts)
      * @return string
      */
-    public function tr($string, $args = false, $escape = false)
+    public function tr($string, $args = null, $escape = false)
     {
         return $args ? tr::sget($string, $args, $escape) : tr::get($string, $escape);
     }

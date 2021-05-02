@@ -167,7 +167,7 @@ class Menu
      * Returns array of menu item's data
      * @param int $id
      * @param boolean $dontexport if true bean will be returned, otherwise array
-     * @return array|false
+     * @return \RedBeanPHP\OODBBean|array|false
      */
     public static function getItem($id, $dontexport = false)
     {

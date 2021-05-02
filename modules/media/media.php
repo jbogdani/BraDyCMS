@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -10,22 +11,22 @@ class media_ctrl extends Controller
 {
   public function makeArtImages($force = false)
   {
-    if($this->get['param'][0] === 'force'){
+    if ($this->get['param'][0] === 'force') {
       $force = true;
     }
     try {
       $dir = IMG_DIR . 'articles/';
-      if (!is_dir($dir) || !is_readable($dir)){
+      if (!is_dir($dir) || !is_readable($dir)) {
         throw new \Exception("Problem with directory " . $dir);
       }
       $origs = utils::dirContent($dir . 'orig');
 
-      if (!is_array($origs)){
+      if (!is_array($origs)) {
         throw new \Exception("No original file found!");
       }
 
       $sizes = cfg::get('art_img');
-      if (!is_array($sizes)){
+      if (!is_array($sizes)) {
         throw new \Exception("Sizes found in config!");
       }
 
@@ -33,17 +34,17 @@ class media_ctrl extends Controller
         $offull = $dir . 'orig/' . $of;
         foreach ($sizes as $s) {
           $dd = $dir . $s . '/';
-          if(!is_dir($dd)){
+          if (!is_dir($dd)) {
             @mkdir($dd, 0777, true);
           }
-          if(!is_dir($dd) || !is_writable($dd)){
+          if (!is_dir($dd) || !is_writable($dd)) {
             throw new \Exception("Can not create directory $dd or $dd is not writeable");
           }
 
           $df = $dd . $of;
 
           list($w, $h) = explode('x', $s);
-          if (file_exists($df) && !$force){
+          if (file_exists($df) && !$force) {
             continue;
           }
           imgMng::thumb($offull, $df, $w, $h);
@@ -51,7 +52,6 @@ class media_ctrl extends Controller
       }
 
       $out['status'] = 'success';
-
     } catch (Exception $e) {
       error_log($e->getMessage);
       $out['status'] = 'error';
@@ -66,8 +66,8 @@ class media_ctrl extends Controller
     $path = IMG_DIR . $rel_path;
 
     if (!is_dir($path)) {
-      if ( !mkdir($path, 0777, 1) ) {
-        $error_create = tr::sget('create_dir_error', $path);
+      if (!mkdir($path, 0777, 1)) {
+        $error_create = tr::sget('create_dir_error', [$path]);
         $path = IMG_DIR;
       }
     }
@@ -83,7 +83,7 @@ class media_ctrl extends Controller
         $file_obj[$file]['href'] = ($rel_path ? $rel_path . '/' : '') . $file;
         $file_obj[$file]['name'] = $file;
 
-        if ( is_file($path . '/'. $file ) ) {
+        if (is_file($path . '/' . $file)) {
           $file_obj[$file]['type'] = 'file';
 
           $ftype = utils::checkMimeExt($path . '' . $file);
@@ -100,7 +100,7 @@ class media_ctrl extends Controller
       }
     }
 
-    if(!empty($this->request['param'][0])) {
+    if (!empty($this->request['param'][0])) {
       $path_arr = $this->request['param'];
       array_unshift($path_arr, '.');
     } else {
@@ -108,11 +108,11 @@ class media_ctrl extends Controller
     }
 
     $this->render('media', 'list', array(
-        'error_create' => $error_create,
-        'path_arr'=> $path_arr,
-        'path' => $path,
-        'rel_path' => $rel_path,
-        'files' => $file_obj
+      'error_create' => $error_create,
+      'path_arr' => $path_arr,
+      'path' => $path,
+      'rel_path' => $rel_path,
+      'files' => $file_obj
     ));
   }
 
@@ -121,19 +121,18 @@ class media_ctrl extends Controller
     $file = IMG_DIR . implode('/', $this->get['param']);
 
     $this->render('media', 'edit_form', array(
-        'file' => $file,
-        'uid' => uniqid(),
-        'finfo' => getimagesize($file),
-        'pathinfo' =>pathinfo($file),
-        'tr' => new tr()
+      'file' => $file,
+      'uid' => uniqid(),
+      'finfo' => getimagesize($file),
+      'pathinfo' => pathinfo($file),
+      'tr' => new tr()
     ));
   }
 
   public function copy()
   {
     $this->request['param'][3] = true;
-    self::rename();
-
+    $this->rename();
   }
 
   public function rename()
@@ -145,25 +144,23 @@ class media_ctrl extends Controller
 
     $dir .= '/';
 
-    try
-    {
+    try {
       if (!file_exists($dir . $ofile)) {
-        throw new Exception(tr::sget('original_file_not_found', $dir . $ofile));
+        throw new Exception(tr::sget('original_file_not_found', [$dir . $ofile]));
       }
 
       if (file_exists($dir . $nfile)) {
-        throw new Exception(tr::sget('file_exists', $dir . $nfile));
+        throw new Exception(tr::sget('file_exists', [$dir . $nfile]));
       }
 
       $copy ? @copy($dir . $ofile, $dir . $nfile) : @rename($dir . $ofile, $dir . $nfile);
 
       if (!file_exists($dir . $nfile)) {
-        throw new Exception(tr::sget($copy ? 'copying_file_error' : 'moving_file_error', $dir . $nfile));
+        throw new Exception(tr::sget($copy ? 'copying_file_error' : 'moving_file_error', [$dir . $nfile]));
       }
 
       $out['status'] = 'success';
       $out['text'] = tr::get($copy ? 'copying_file_ok' : 'moving_file_ok');
-
     } catch (Exception $e) {
       $out['status'] = 'error';
       $out['text'] = $e->getMessage();
@@ -176,7 +173,7 @@ class media_ctrl extends Controller
   {
     $ofile = IMG_DIR . $this->request['param'][0];
 
-    if(preg_match('/\//', $this->request['param'][0])) {
+    if (preg_match('/\//', $this->request['param'][0])) {
       $path_arr = explode('/', $this->request['param'][0]);
 
       array_pop($path_arr);
@@ -189,15 +186,15 @@ class media_ctrl extends Controller
     }
 
     try {
-      if ( is_dir ( $ofile ) ) {
+      if (is_dir($ofile)) {
         @unlink($ofile . '/.DS_Store');
         @unlink($ofile . '/.Thumb.db');
 
-        if ( !@rmdir($ofile) ) {
+        if (!@rmdir($ofile)) {
           throw new Exception(tr::get('delete_dir_error'));
         }
-      } else if ( is_file ( $ofile ) ) {
-        if ( !@unlink($ofile) ) {
+      } else if (is_file($ofile)) {
+        if (!@unlink($ofile)) {
           throw new Exception(tr::get('delete_file_error'));
         }
       }
@@ -206,8 +203,7 @@ class media_ctrl extends Controller
       $out['text'] = tr::get('deletion_ok');
 
       $out['file'] = $ofile;
-
-    } catch(Exception $e) {
+    } catch (Exception $e) {
       $out['status'] = 'error';
       $out['text'] = $e->getMessage();
     }
@@ -226,13 +222,12 @@ class media_ctrl extends Controller
         $this->request['param']['height'],
         $this->request['param']['offset_x'],
         $this->request['param']['offset_y']
-        );
+      );
       echo $this->responseJson('success', tr::get('ok_cropping_file'));
     } catch (Exception $e) {
       error_log($e->getMessage());
       echo $this->responseJson('error', tr::get('error_cropping_file'));
     }
-
   }
 
 
@@ -242,7 +237,7 @@ class media_ctrl extends Controller
       imgMng::resize(
         $this->request['param']['file'],
         $this->request['param']['width']
-        );
+      );
       echo $this->responseJson('success', tr::get('ok_resizing_file'));
     } catch (Exception $e) {
       error_log($e->getMessage());
@@ -258,7 +253,7 @@ class media_ctrl extends Controller
       imgMng::convert(
         $this->request['param']['oFile'],
         $this->request['param']['nFile']
-        );
+      );
       echo $this->responseJson('success', tr::get('ok_converting_file'));
     } catch (Exception $e) {
       error_log($e->getMessage());
@@ -301,9 +296,8 @@ class media_ctrl extends Controller
         $file !== 'downloads'
         &&
         $recursive
-        ) {
+      ) {
         $this->makeThumbs($dir . '/' . $file, $max, $fixed, $overwrite, $recursive);
-
       } else if (is_file($dir . '/' . $file)) {
 
         $ext = pathinfo($file, PATHINFO_EXTENSION);
@@ -321,9 +315,9 @@ class media_ctrl extends Controller
 
           if ($w > $h) {
             $width = $max;
-            $height = ( $h / ( $w/$max ) );
+            $height = ($h / ($w / $max));
           } else {
-            $width = ( $w / ( $h/$max ) );
+            $width = ($w / ($h / $max));
             $height = $max;
           }
         } else {
@@ -353,5 +347,4 @@ class media_ctrl extends Controller
       echo 'error_in_creating_some_thumbails';
     }
   }
-
 }

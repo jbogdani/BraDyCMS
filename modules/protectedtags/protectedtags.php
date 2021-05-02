@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -33,7 +34,7 @@ class protectedtags_ctrl extends Controller
 
       $intersect = array_intersect($tags, utils::csv_explode($user['tags']));
 
-      if(!empty($intersect)) {
+      if (!empty($intersect)) {
         $newtext = str_replace(
           array('%name%', '%email%'),
           array((string)$user['name'], (string)$user['email']),
@@ -105,32 +106,31 @@ class protectedtags_ctrl extends Controller
     }
 
     $this->render('protectedtags', 'users', array(
-        'users' => $data['users'],
-        'protected' => $data['tags'],
-        'autoregister' => $data['autoregister'],
-        'disable_captcha' => $data['disable_captcha']
+      'users' => $data['users'],
+      'protected' => $data['tags'],
+      'autoregister' => $data['autoregister'],
+      'disable_captcha' => $data['disable_captcha']
     ));
   }
 
   public function saveAutoregister()
   {
     if (protectedTags::saveAutoregister(
-          $this->post['mode'],
-          $this->post['tag'],
-          $this->post['from'],
-          $this->post['subject'],
-          $this->post['text']
-        )
-    ) {
+      $this->post['mode'],
+      $this->post['tag'],
+      $this->post['from'],
+      $this->post['subject'],
+      $this->post['text']
+    )) {
       echo $this->responseJson('success', tr::get('ok_data_saved'));
     } else {
       echo $this->responseJson('error', tr::get('error_data_not_saved'));
     }
   }
 
-/**
- * Shows single user add/edit form
- */
+  /**
+   * Shows single user add/edit form
+   */
   public function show_user_form()
   {
     $id = $this->get['param'][0];
@@ -167,13 +167,13 @@ class protectedtags_ctrl extends Controller
   {
 
     if (protectedTags::saveUser(
-        $this->post['email'],
-        $this->post['password'],
-        (is_array($this->post['tags']) ? implode(',', $this->post['tags']) : $this->post['tags']),
-        $this->post['name'],
-        $this->post['id'],
-        $this->post['confirmationcode'])
-    ) {
+      $this->post['email'],
+      $this->post['password'],
+      (is_array($this->post['tags']) ? implode(',', $this->post['tags']) : $this->post['tags']),
+      $this->post['name'],
+      $this->post['id'],
+      $this->post['confirmationcode']
+    )) {
       echo $this->responseJson('success', tr::get('ok_user_saved'));
     } else {
       echo $this->responseJson('error', tr::get('error_user_saved'));
@@ -237,11 +237,11 @@ class protectedtags_ctrl extends Controller
           throw new Exception('authentication_failed');
         }
         protectedTags::logUser($email);
-      } elseif(!empty($repeatpassword)) {
+      } elseif (!empty($repeatpassword)) {
 
         try {
           protectedTags::registerUser($email, $password, $tag, $name);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
           error_log($e->getMessage());
           throw new Exception('registration_failed');
         }
@@ -255,7 +255,6 @@ class protectedtags_ctrl extends Controller
       $resp = array(
         'status' => 'success'
       );
-
     } catch (Exception $e) {
       $resp = array(
         'status' => 'error',
@@ -299,7 +298,6 @@ class protectedtags_ctrl extends Controller
       'css' => $css,
       'mode' => is_array($ar) ? $ar[$tag]['mode'] : false
     ));
-
   }
 
   /**

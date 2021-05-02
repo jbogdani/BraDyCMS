@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * @author     Julian Bogdani <jbogdani@gmail.com>
@@ -12,38 +13,31 @@ class addsite_ctrl extends Controller
 
   public function preInstallErrors()
   {
-    if (!in_array('mod_rewrite', apache_get_modules()))
-    {
+    if (!in_array('mod_rewrite', apache_get_modules())) {
       $error[] = 'Apache mo_rewrite is not enabled!';
     }
 
-    if (!extension_loaded('PDO'))
-    {
+    if (!extension_loaded('PDO')) {
       $error[] = 'PDO extension not loaded!';
     }
 
-    if (!extension_loaded('pdo_sqlite'))
-    {
+    if (!extension_loaded('pdo_sqlite')) {
       $error[] = 'PDO SQLITE extension not loaded!';
     }
 
-    if (!extension_loaded('imagick') && !extension_loaded('gd'))
-    {
+    if (!extension_loaded('imagick') && !extension_loaded('gd')) {
       $error[] = 'Neither Imagick or GD extesions are loaded';
     }
 
-    if (!is_writable('./'))
-    {
+    if (!is_writable('./')) {
       $error[] = 'Main installation directory is not writeable';
     }
 
-    if (version_compare(PHP_VERSION, '5.3') < 0)
-    {
+    if (version_compare(PHP_VERSION, '5.3') < 0) {
       $error[] = 'At least php 5.3 is required';
     }
 
-    if(!ini_get('allow_url_fopen') )
-    {
+    if (!ini_get('allow_url_fopen')) {
       $error[] = 'PHP allow_url_fopen setting should be on for auto-update function to work';
     }
 
@@ -53,16 +47,13 @@ class addsite_ctrl extends Controller
 
   public function build()
   {
-    try
-    {
+    try {
 
-      if (!preg_match('/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/', $this->post['users'][0]['name']))
-      {
+      if (!preg_match('/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/', $this->post['users'][0]['name'])) {
         throw new Exception('Please enter a valid email address to continue');
       }
 
-      if (!$this->post['users'][0]['pwd'])
-      {
+      if (!$this->post['users'][0]['pwd']) {
         throw new Exception('Password field can not be empty');
       }
 
@@ -77,10 +68,7 @@ class addsite_ctrl extends Controller
       $this->fixMod();
 
       $ret = array('text' => 'Site built!!', 'status' => 'success');
-
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $ret = array('text' => 'Error building site: ' . $e->getMessage(), 'status' => 'error');
     }
 
@@ -100,8 +88,7 @@ class addsite_ctrl extends Controller
       './sites/default/users.log'
     );
 
-    foreach ($list as $l)
-    {
+    foreach ($list as $l) {
       @chmod($l, 0777);
     }
   }
@@ -123,8 +110,7 @@ class addsite_ctrl extends Controller
 
     $sql_arr = utils::csv_explode($sql, '--end');
 
-    foreach ($sql_arr as $q)
-    {
+    foreach ($sql_arr as $q) {
       R::exec($q);
     }
     return true;
@@ -151,10 +137,8 @@ class addsite_ctrl extends Controller
       './sites/default/js'
     );
 
-    foreach ($dirs as $d)
-    {
-      if (!$this->createDir($d))
-      {
+    foreach ($dirs as $d) {
+      if (!$this->createDir($d)) {
         throw new Exception('Can not create directory: ' . $d);
       }
     }
@@ -165,33 +149,25 @@ class addsite_ctrl extends Controller
 
   private function createDir($dir)
   {
-    if(is_dir($dir))
-    {
+    if (is_dir($dir)) {
       return true;
     }
 
     @mkdir($dir, 0777, true);
 
     return is_dir($dir);
-
   }
 
   private function write_file($file, $text = false, $type = false)
   {
-    if (!$text)
-    {
-      if (!touch($file))
-      {
+    if (!$text) {
+      if (!touch($file)) {
         throw new Exception('Can not create file: ' . $file);
       }
-    }
-    else
-    {
-      if (!utils::write_in_file($file, $text, $type))
-      {
+    } else {
+      if (!utils::write_in_file($file, $text, $type)) {
         throw new Exception('Can not create/write file: ' . $file);
       }
     }
   }
 }
-?>

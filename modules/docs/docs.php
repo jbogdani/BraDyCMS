@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -21,7 +22,7 @@ class docs_ctrl extends Controller
     if (file_exists('docs/' . $file . '.md')) {
 
       $contents = file_get_contents('docs/' . $file . '.md');
-      $contents = str_replace(['{% raw %}', '{% endraw %}'], null, $contents);
+      $contents = str_replace(['{% raw %}', '{% endraw %}'], '', $contents);
 
       $html = Parsedown::instance()->text($contents);
 
@@ -29,11 +30,10 @@ class docs_ctrl extends Controller
 
       echo '<hr>'
         . '<p class="text-muted"><big><i class="big fa fa-edit"></i></big> Enhance this documentation file: '
-        . '<a href="' . $remote . '/edit/dev/docs/' . $file . '.md" target="_blank">edit this page on Github (you must sign in to make or propose changes)</a>'
-        . ' or <a href="' . $remote . '/raw/dev/docs/' . $file . '.md" target="_blank">download the raw file</a>, edit it and send it by email to '
+        . '<a href="' . $this->remote . '/edit/dev/docs/' . $file . '.md" target="_blank">edit this page on Github (you must sign in to make or propose changes)</a>'
+        . ' or <a href="' . $this->remote . '/raw/dev/docs/' . $file . '.md" target="_blank">download the raw file</a>, edit it and send it by email to '
         . '<a href="mailto:developer@bradypus.net">developer@bradypus.net</a>'
-        . "<script>$('.active a').each(function(i, el){ if ($(el).attr('href').indexOf('http:') > -1 ){ $(el).attr('target', '_blank'); } });</script>"
-      ;
+        . "<script>$('.active a').each(function(i, el){ if ($(el).attr('href').indexOf('http:') > -1 ){ $(el).attr('target', '_blank'); } });</script>";
     }
   }
 }

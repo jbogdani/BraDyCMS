@@ -7,11 +7,11 @@
 <div id="{{ uid }}">
   {% if status == 'updateable_warning' or status == 'updateable' %}
     <div class="alert alert-info">
-      <p class="lead">{{ tr.sget('new_version_available', remote_vers) }}</p>
+      <p class="lead">{{ tr.sget('new_version_available', [remote_vers]) }}</p>
     </div>
     {% elseif branch == 'BraDyCMS-dev' %}
       <div class="alert alert-warning">
-        <p class="lead">{{ tr.sget('dev_update_available', remote_vers) }}</p>
+        <p class="lead">{{ tr.sget('dev_update_available', [remote_vers]) }}</p>
       </div>
       
   

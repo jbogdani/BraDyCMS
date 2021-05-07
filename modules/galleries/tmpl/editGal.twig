@@ -23,7 +23,7 @@
     <div class="pull-left form-inline">
       {% if max_img_size %}
         <div class="text-warning">
-          {{ tr.sget('max_img_size_warning', max_img_size) }}
+          {{ tr.sget('max_img_size_warning', [max_img_size]) }}
         </div>
       {% endif %}
       <div class="uploader"></div>

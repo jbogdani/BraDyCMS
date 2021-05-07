@@ -252,19 +252,19 @@ function openEditForm(id){
       var form = body.find('form.new_protectd_pages_user');
       form.on('submit', function(){
         if (!form.find('input[name="name"]').val()){
-          admin.message('{{ tr.sget('missing_required', tr.get('name')) }}', 'error');
+          admin.message('{{ tr.sget('missing_required', [tr.get('name')]) }}', 'error');
           return;
         }
         if (!form.find('input[name="email"]').val()){
-          admin.message('{{ tr.sget('missing_required', tr.get('email_address')) }}', 'error');
+          admin.message('{{ tr.sget('missing_required', [tr.get('email_address')]) }}', 'error');
           return;
         }
         if (!form.find('input[name="password"]').val()){
-          admin.message('{{ tr.sget('missing_required', tr.get('password')) }}', 'error');
+          admin.message('{{ tr.sget('missing_required', [tr.get('password')]) }}', 'error');
           return;
         }
         if (form.find('select[name="tags[]"]').val() === []){
-          admin.message('{{ tr.sget('missing_required', tr.get('tags')) }}', 'error');
+          admin.message('{{ tr.sget('missing_required', [tr.get('tags')]) }}', 'error');
           return;
         }
         $.post(

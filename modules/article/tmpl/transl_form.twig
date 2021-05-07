@@ -4,7 +4,7 @@
  * @license    AGPL-3.0; see LICENSE file
 #}
 
-<h3>{{ tr.sget('translate_article_in', lang_arr.string|upper) }}</h3>
+<h3>{{ tr.sget('translate_article_in', [lang_arr.string|upper]) }}</h3>
 <form action="javascript:void(0)" id ="form{{ uid }}">
 
   <input type="hidden" name="id" value="{{ transl.id }}" />

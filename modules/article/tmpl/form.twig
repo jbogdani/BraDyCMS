@@ -18,7 +18,7 @@
       {% for lang in cfg_langs %}
         <a href="#article/translate/{{ lang.id }}/{{ art.id }}"
            class="btn btn-default"
-           title="{{ tr.sget('translate_article_in', lang.string) }}">
+           title="{{ tr.sget('translate_article_in', [lang.string]) }}">
           <i class="fa fa-random"></i>
           {{ lang.id|upper }}
         </a>

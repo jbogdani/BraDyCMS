@@ -38,7 +38,7 @@
   <div class="well well-sm clearfix delete-tag-container" style="margin: 10px 0 20px 0; display: none;">
     <span class="text-danger">
       <i style="font-size:1.5em;" class="fa fa-exclamation-triangle"></i>
-      {{ tr.sget('confirm_delete_tag_not_used', active_tags[0]) }}</span>
+      {{ tr.sget('confirm_delete_tag_not_used', [active_tags[0]]) }}</span>
       <button class="btn btn-danger deleteTag"><i class="fa fa-trash"></i> {{ tr.get('delete') }}</button>
       <button class="btn btn-danger deleteAllTags"><i class="fa fa-trash"></i> {{ tr.get('delete_unused_tags') }}</button>
   </div>

@@ -1,3 +1,4 @@
+5.5.11[] = "Fixed issues with tr.sget in templates"
 5.5.10[] = "Intellisense suggestions fixed"
 5.5.9[] = "Changes in userform"
 5.5.9[] = "Minor code fixes"

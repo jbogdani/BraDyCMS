@@ -69,19 +69,19 @@ $('#{{ uid }} select[name="tags[]"]').select2({ tags: true });
 var form = $('#{{ uid }} form');
 form.on('submit', function(){
   if (!form.find('input[name="from"]').val()){
-    admin.message('{{ tr.sget('missing_required', tr.get('from')) }}', 'error');
+    admin.message('{{ tr.sget('missing_required', [tr.get('from')]) }}', 'error');
     return;
   }
   if (form.find('select[name="tags[]"]').val() === []){
-    admin.message('{{ tr.sget('missing_required', tr.get('tags')) }}', 'error');
+    admin.message('{{ tr.sget('missing_required', [tr.get('tags')]) }}', 'error');
     return;
   }
   if (!form.find('input[name="subject"]').val()){
-    admin.message('{{ tr.sget('missing_required', tr.get('subject')) }}', 'error');
+    admin.message('{{ tr.sget('missing_required', [tr.get('subject')]) }}', 'error');
     return;
   }
   if (!form.find('textarea[name="text"]').val()){
-    admin.message('{{ tr.sget('missing_required', tr.get('text')) }}', 'error');
+    admin.message('{{ tr.sget('missing_required', [tr.get('text')]) }}', 'error');
     return;
   }
   form.hide();

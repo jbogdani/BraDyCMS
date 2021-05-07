@@ -13,7 +13,7 @@
     {% endif %}
     <a class="btn btn-default reload" onclick="admin.tabs.reloadThis(this);" title="{{ tr.get('reload') }}"><i class="fa fa-refresh"></i> {{ tr.get('reload') }}</a>
     {% for lng in langs %}
-    <a class="btn btn-default" href="#downloads/edit/{{ node }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', lng.string|capitalize) }}"><i class="fa fa-random"></i> {{ tr.sget('translation_in_lang', lng.string|capitalize) }}</a>
+    <a class="btn btn-default" href="#downloads/edit/{{ node }}/{{ lng.id }}" title="{{ tr.sget('translation_in_lang', [lng.string|capitalize]) }}"><i class="fa fa-random"></i> {{ tr.sget('translation_in_lang', [lng.string|capitalize]) }}</a>
     {% endfor %}
   </div>
 

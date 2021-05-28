@@ -86,7 +86,7 @@ class Out
 
       // 2. search
             $this->cfg['context'] = 'search';
-            $this->cfg['searchString'] = $get['search'];
+            $this->cfg['searchString'] = urldecode($get['search']);
         } elseif ($get['tags'] || $last === '') {
 
       // 3. tags

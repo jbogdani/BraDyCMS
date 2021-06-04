@@ -17,7 +17,7 @@ if (!window.jQuery){
   return;
 }
 $('#logoutbutton').on('click', function(){
-  $.get('controller.php?obj=protectedtags_ctrl&method=logout', function(data){
+  $.get('{{ link2home }}controller.php?obj=protectedtags_ctrl&method=logout', function(data){
     if (data.status === 'success'){
         location.reload();
       }

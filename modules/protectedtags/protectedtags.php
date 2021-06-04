@@ -16,7 +16,8 @@ class protectedtags_ctrl extends Controller
   public function sendemail_form()
   {
     $this->render('protectedtags', 'email_form', array(
-      'all_tags' => protectedTags::getData('tags')
+      'all_tags' => protectedTags::getData('tags'),
+      "link2home" => link::format('home')
     ));
   }
 
@@ -275,11 +276,12 @@ class protectedtags_ctrl extends Controller
     if (!$_SESSION['token']) {
       $_SESSION['token'] = md5(uniqid(rand(), true));
     }
-
+    
     $this->render('protectedtags', 'login_form', array(
       'token' => $_SESSION['token'],
       'grc_sitekey' => protectedTags::isCaptchaEnabled() ? cfg::get('grc_sitekey') : false,
-      'css' => $css
+      'css' => $css,
+      "link2home" => link::format('home')
     ));
   }
 
@@ -296,7 +298,8 @@ class protectedtags_ctrl extends Controller
       'grc_sitekey' => protectedTags::isCaptchaEnabled() ? cfg::get('grc_sitekey') : false,
       'tag' => $tag,
       'css' => $css,
-      'mode' => is_array($ar) ? $ar[$tag]['mode'] : false
+      'mode' => is_array($ar) ? $ar[$tag]['mode'] : false,
+      "link2home" => link::format('home')
     ));
   }
 
@@ -311,7 +314,8 @@ class protectedtags_ctrl extends Controller
   {
     if ($_SESSION['user_email']) {
       $this->render('protectedtags', 'logout_button', array(
-        'css' => $css
+        'css' => $css,
+        "link2home" => link::format('home')
       ));
     }
   }

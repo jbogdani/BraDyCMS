@@ -1,3 +1,4 @@
+5.5.13[] = "Fixed bug with link to controller in protected tags public forms"
 5.5.12[] = "Fixed issue with serach string not being url_decoded"
 5.5.11[] = "Fixed issue with tr.sget in templates"
 5.5.10[] = "Intellisense suggestions fixed"

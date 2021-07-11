@@ -921,7 +921,7 @@ Returns well-formatted html with unordered list (ul) of pagination data when ava
 depending on context. Current page will have css class `active`
 - **cssClass** string, optional, default false. Css class to apply to main `ul`
 
-E.g.: `{{ pagination('pagination') }}`
+E.g.: `{{ html.pagination('pagination') }}`
 
 ```html
 <ul class="pagination">

@@ -138,20 +138,22 @@ class Assets
             $type = 'css';
           }
 
-          if ($type === 'js' && file_exists('sites/default/js/' . $name)) {
+          $path = $name;
 
-            $path = $basePath . 'sites/default/js/' . $name;
-
-          } else if ($type === 'css' && file_exists('sites/default/css/' . $name)){
-
-            $path = $basePath . 'sites/default/css/' . $name;
-
-          } else {
-
-            $path = $name;
-
+          // If type is js or css, look for file in local filestsyem, with and without basePath.
+          if ($type === 'js' || $type === 'css') {
+            foreach ([
+              "{$basePath}sites/default/{$type}/{$name}",
+              "sites/default/{$type}/{$name}",
+              "{$basePath}{$type}/{$name}",
+              "{$type}/{$name}",
+              "{$name}",
+            ] as $p) {
+              if (file_exists($p)){
+                $path = $basePath . $p;
+              }
+            }
           }
-
         }
 
         return [

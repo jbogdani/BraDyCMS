@@ -568,8 +568,6 @@ class utils
             $logfile = MAIN_DIR . 'logs/logAttempts.log';
         }
 
-        $logfile = MAIN_DIR . 'logs/logAttempts.log';
-
         $ip = $_SERVER['REMOTE_ADDR'];
 
         $now = microtime(true);

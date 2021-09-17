@@ -210,8 +210,6 @@ class template_ctrl extends Controller
     $file = $this->get['param'][0];
     $text = $this->post['text'];
 
-    error_log(var_export($this->post, true));
-
     if ($file) {
       try {
         if (!utils::write_in_file($file, $text)) {

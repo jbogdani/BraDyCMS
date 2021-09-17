@@ -1,3 +1,4 @@
+5.7.1[] = "Removed debugging error_log in template_ctrl"
 5.7.0[] = "Changed format of logAttempts, and rised time buffer to 2 seconds"
 5.6.2[] = "Optimized calculation of path of assets"
 5.6.1[] = "Updated Twig to v. 3.3.2"

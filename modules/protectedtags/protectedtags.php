@@ -217,7 +217,7 @@ class protectedtags_ctrl extends Controller
       }
 
       // Prevent serial attempts
-      if (!utils::checkAttemptTime(MAIN_DIR . 'logs/protectedTagsAttempts.log', 2000)) {
+      if (!utils::checkAttemptTime(MAIN_DIR . 'logs/protectedTagsAttempts.log')) {
         throw new Exception('too_much_attempts');
       }
 

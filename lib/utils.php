@@ -559,33 +559,34 @@ class utils
      * if any record is found for present IP address. Returns true is attempt is valid
      * (no log available, or max time is greater than $time) or false if atempts is not valid
      * @param  string|false  $logfile full path to log file, if false default (admin) log file wil be used
-     * @param  integer $time Minimum time in millisecond between two attemps; default 1000 (1sec)
+     * @param  integer $time Minimum time in seconds between two attemps; default 1000 (1sec)
      * @return boolean       true if is a valid attempt, false if attemmpt is not allowed
      */
-    public static function checkAttemptTime($logfile = false, $time = 1000)
+    public static function checkAttemptTime($logfile = false, $time = 2)
     {
+        $separator= '::::';
         if (!$logfile) {
             $logfile = MAIN_DIR . 'logs/logAttempts.log';
         }
 
         $ip = $_SERVER['REMOTE_ADDR'];
 
-        $now = microtime(true);
+        $now = round(microtime(true));
 
         if (file_exists($logfile)) {
-            $lastAttempt = file($logfile);
-            $lastIP = trim(str_replace(array("\n", "\r\n"), '', $lastAttempt[0]));
-            $lastTime = floatval(
-                trim(
-                    str_replace(["\n", "\r\n"], '', $lastAttempt[1])
-                )
-            );
+            list ($lastIP, $lastTime) = explode($separator, file_get_contents($logfile));
+            // Old format vs. new format
+            if ($lastIP && $lastTime){
+                $lastTime = (int) trim($lastTime);
+                $lastIP = trim($lastIP);
 
-            if ($lastIP === $ip) {
-                return ($now >= ($lastTime + $time));
+                if ($lastIP === $ip) {
+                    return ($now >= ($lastTime + $time));
+                }
             }
+            
         }
-        return utils::write_in_file($logfile, $ip . "\n" . $now);
+        return utils::write_in_file($logfile, $ip . $separator . $now);
     }
 
     /**

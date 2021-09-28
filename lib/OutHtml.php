@@ -616,6 +616,32 @@ EOD;
         return $html;
     }
 
+    /**
+     * Returns html containing Google Global Tag (gtag.js)
+     * @return string
+     */
+    public function gtag()
+    {
+        $id = cfg::get('ga_id');
+
+        $restrict_domain = cfg::get('ga_domain');
+
+
+        if ($id && (!$restrict_domain || (preg_match('/' . $restrict_domain . '/', $_SERVER['HTTP_HOST']))) && !$this->cfg['isDraft']) {
+            $html = '<!-- Global site tag (gtag.js) - Google Analytics -->' .
+            '<script async src="https://www.googletagmanager.com/gtag/js?id=' . $id . '"></script>' .
+            '<script>' .
+              'window.dataLayer = window.dataLayer || [];' .
+              'function gtag(){dataLayer.push(arguments);}' .
+              "gtag('js', new Date());" .
+            
+              "gtag('config', '" . $id . "');".
+            '</script>';
+        }
+
+        return $html;
+    }
+
 
     /**
      * Returns html with image gallery. Alias for customTags:gallery()

@@ -1,3 +1,4 @@
+5.8.0[] = "Added support for Google gtag.js via html.gtag"
 5.7.1[] = "Removed debugging error_log in template_ctrl"
 5.7.0[] = "Changed format of logAttempts, and rised time buffer to 2 seconds"
 5.6.2[] = "Optimized calculation of path of assets"

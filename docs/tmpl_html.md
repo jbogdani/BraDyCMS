@@ -675,22 +675,6 @@ E.g.: `{{ html.getVersion }}`
 ```
 ---
 
-#### gtag()
-Returns javascript code for Google Global Tag (gtag.js). Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
-
-E.g.: `{{ html.gtag }}`
-
-```javascript
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA-ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'GA-ID');
-</script>
-```
----
 #### GUA()
 Returns javascript code for Google Universal Analytics Tracking. Google Analytics id must be provided in the site configuration file. A domain is provided in the configuration file; the code will be shown only if current domain matches the provided domain. This is very useful in test installations.
 

@@ -86,7 +86,8 @@ class Out
 
       // 2. search
             $this->cfg['context'] = 'search';
-            $this->cfg['searchString'] = urldecode($get['search']);
+            $this->cfg['searchString'] = $get['search'];
+            $this->cfg['searchParams'] = $get['searchParams'];
         } elseif ($get['tags'] || $last === '') {
 
       // 3. tags
@@ -641,14 +642,23 @@ class Out
      */
     public function getSearchResults($string = false, $page = false, $max = false)
     {
-        $string = $string ? $string : $this->getSearchString();
-        $string = preg_replace('/^"(.+)"$/', '$1', $string, -1, $tot);
-
-        $this->totalArticles = Article::search($string, false, false, false, false, true);
-
+        $string = $string ?: $this->cfg['searchString'];
         list($start, $max) = $this->page2limit($page, $max);
 
-        return Article::search($string, ($tot > 0), $this->getLang('input'), $start, $max);
+        if ( $string === 'adv' ) {
+            if (!$this->cfg['searchParams']){
+                error_log("Invalid search parameters.");
+                return false;
+            }
+            $this->totalArticles = Article::advSearch($this->cfg['searchParams'], null, null, false, false, true);
+            return Article::advSearch($this->cfg['searchParams'], null, $this->getLang('input'), $start, $max, false);
+        } else {
+            $string = preg_replace('/^"(.+)"$/', '$1', $string, -1, $tot);
+
+            $this->totalArticles = Article::search($string, false, false, false, false, true);
+            return Article::search($string, $this->getLang('input'), false, $start, $max);
+        }
+        
     }
 
     /**

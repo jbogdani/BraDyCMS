@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -461,6 +462,63 @@ class Article
         });
 
         return $art_list;
+    }
+
+    /**
+     * Performs an advanced search
+     *
+     * @param array $search
+     * @param string $conn
+     * @param string|null $lang
+     * @param integer $start
+     * @param integer $max
+     * @param boolean $returnCount
+     * @return void
+     */
+    public static function advSearch(
+        array $search,
+        string $conn = null,
+        string $lang = null,
+        int $start = 0,
+        int $max = 30,
+        bool $returnCount = false
+    ) {
+
+        $values = [];
+        $sql_part = [];
+        if(!in_array($conn, ['AND', 'OR'])){
+            $conn = 'OR';
+        }
+
+        foreach ($search as $fld => $str) {
+            // Fieldname must be a string, not a number index
+            if (!is_string($fld)){
+                throw new Exception("Invalid search array: keys must be strings and must contain field names");
+            }
+            // Searched string must not be empty
+            if ($str !== ''){
+                array_push($sql_part, "`" . $fld . "` LIKE ? ");
+                array_push($values, "%" . $str . "%");
+            }
+        }
+
+        $sql = implode(" {$conn} ", $sql_part);
+        
+        if ($returnCount) {
+            return R::count(self::art_tb(), $sql, $values);
+        }
+
+        $sql .= " LIMIT ?, ?";
+
+        array_push($values, $start, $max);
+
+        $articles = R::find(
+            self::art_tb(),
+            $sql,
+            $values
+        );
+
+        return self::parseArt($articles, $lang);
     }
 
 

@@ -114,7 +114,8 @@ class Router
                 return [
                   'lang' => $lng,
                   'search' => $string,
-                  'page' => $pg
+                  'page' => $pg,
+                  'searchParams' => $_GET
                 ];
             }, 'search');
 

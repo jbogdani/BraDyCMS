@@ -113,7 +113,7 @@ class Article
 
             // add FULL URL
             $article->full_url = str_replace('/./', '/', utils::getBaseUrl() .
-              (is_array(self::$parts) ? implode('/', self::$parts) : $article->url));
+                (is_array(self::$parts) ? implode('/', self::$parts) : $article->url));
 
             // add article image link
             $image_steps = cfg::get('art_img');
@@ -126,7 +126,7 @@ class Article
 
                     if (file_exists('./sites/default/images/articles/' . $step . '/' . $article->id . '.jpg')) {
                         $art_img[$step] = utils::getBaseUrl() . 'sites/default/images/articles/' . $step . '/' . $article->id . '.jpg';
-                        $art_img[$x+1] = utils::getBaseUrl() . 'sites/default/images/articles/' . $step . '/' . $article->id . '.jpg';
+                        $art_img[$x + 1] = utils::getBaseUrl() . 'sites/default/images/articles/' . $step . '/' . $article->id . '.jpg';
                     }
                 }
             }
@@ -192,9 +192,9 @@ class Article
     public static function getAllValid($lang = false, $dontparse = false, $limit = false)
     {
         $articles = R::find(
-      self::art_tb(),
-      ' ' . self::$valid_art . ' ORDER BY `sort` DESC ' . ($limit ? ' LIMIT ' . $limit : '')
-      );
+            self::art_tb(),
+            ' ' . self::$valid_art . ' ORDER BY `sort` DESC ' . ($limit ? ' LIMIT ' . $limit : '')
+        );
 
         if ($dontparse) {
             return $articles;
@@ -239,10 +239,10 @@ class Article
     public static function deleteUnusedTags()
     {
         $one = R::exec('DELETE FROM `' . PREFIX . 'articles_tag` WHERE ' .
-      '`articles_id` NOT IN( SELECT `id` FROM `' . PREFIX . 'articles`)');
+            '`articles_id` NOT IN( SELECT `id` FROM `' . PREFIX . 'articles`)');
 
         $two = R::exec('DELETE FROM `' . PREFIX . 'tag` WHERE ' .
-      '`id` NOT IN( SELECT `tag_id` FROM `' . PREFIX . 'articles_tag`)');
+            '`id` NOT IN( SELECT `tag_id` FROM `' . PREFIX . 'articles_tag`)');
 
         return ($one || $two);
     }
@@ -360,15 +360,15 @@ class Article
 
         if ($start !== false && $max) {
             $sql .= " ORDER BY `articles`.publish DESC "
-      . " LIMIT " . (int)$start . ", " . (int)$max;
+                . " LIMIT " . (int)$start . ", " . (int)$max;
         }
 
 
         $articles = R::find(
-      self::art_tb(),
-      $sql,
-      $values
-    );
+            self::art_tb(),
+            $sql,
+            $values
+        );
 
         if (!is_array($articles)) {
             return false;
@@ -392,22 +392,22 @@ class Article
     public static function getByTag($tags, $lang = false, $lax = false, $admin = false, $start = false, $max = false, $returnCount = false)
     {
         $sql = "SELECT `articles`." . ($returnCount ? 'id' : '*') . " FROM `articles` "
-        . "INNER JOIN `articles_tag` ON `articles_id` = `articles`.`id` "
-        . "INNER JOIN `tag` ON `articles_tag`.`tag_id` = `tag`.`id` "
-        . "WHERE `tag`.`title` IN ('" . implode("', '", $tags). "') ";
+            . "INNER JOIN `articles_tag` ON `articles_id` = `articles`.`id` "
+            . "INNER JOIN `tag` ON `articles_tag`.`tag_id` = `tag`.`id` "
+            . "WHERE `tag`.`title` IN ('" . implode("', '", $tags) . "') ";
         if (!$admin) {
             $sql .= " AND `articles`.status = 1 AND "
-        . "`articles`.`publish` <= DATE('now') AND "
-        . "("
-        . "`articles`.`expires` = '0000-00-00 00:00:00' OR "
-        . "`articles`.`expires` = '0000-00-00' OR "
-        . "`articles`.`expires` = '0000-00-00' OR "
-        . "`articles`.`expires` = `articles`.`publish` OR "
-        . "`articles`.`expires` > '" . date("Y-m-d H:i:s") . "' "
-        . ") ";
+                . "`articles`.`publish` <= DATE('now') AND "
+                . "("
+                . "`articles`.`expires` = '0000-00-00 00:00:00' OR "
+                . "`articles`.`expires` = '0000-00-00' OR "
+                . "`articles`.`expires` = '0000-00-00' OR "
+                . "`articles`.`expires` = `articles`.`publish` OR "
+                . "`articles`.`expires` > '" . date("Y-m-d H:i:s") . "' "
+                . ") ";
         }
         $sql .= "GROUP BY `articles`.`id` "
-        . "HAVING count(`articles`.`id`) >= " . ($lax ? 1 : count($tags));
+            . "HAVING count(`articles`.`id`) >= " . ($lax ? 1 : count($tags));
 
         if ($returnCount) {
             return count(R::getAll($sql));
@@ -474,8 +474,14 @@ class Article
      * @param boolean $returnCount If true te total records will be returned
      * @return boolean
      */
-    public static function search($string, $lang = false, $dontseparate = false, $start = false, $max = false, $returnCount = false)
-    {
+    public static function search(
+        $string,
+        $lang = false,
+        $dontseparate = false,
+        $start = false,
+        $max = false,
+        $returnCount = false
+    ) {
         $searcheableFields = array('title', 'textid', 'author', 'summary', 'text', 'keywords');
 
         if ($dontseparate) {
@@ -495,8 +501,10 @@ class Article
             $sql_micro_part = [];
 
             foreach ($string_arr as $str) {
-                $sql_micro_part[] = "`" . $fld . "` LIKE ?";
-                array_push($values, "%" . $str . "%");
+                if ($str && $str !== '') {
+                    $sql_micro_part[] = "`" . $fld . "` LIKE ?";
+                    array_push($values, "%" . $str . "%");
+                }
             }
             $sql_part[] = ' (' . implode(' AND ', $sql_micro_part) . ') ';
         }
@@ -513,10 +521,10 @@ class Article
         }
 
         $articles = R::find(
-        self::art_tb(),
-      $sql,
-      $values
-    );
+            self::art_tb(),
+            $sql,
+            $values
+        );
 
         if (!is_array($articles)) {
             return false;

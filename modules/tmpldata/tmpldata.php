@@ -29,7 +29,7 @@ class tmpldata_ctrl extends Controller
           mkdir(dirname($this->data_file), 0755, true);
         }
 
-        if (!utils::write_in_file($this->data_file, $this->post['data'], 'json')) {
+        if (!utils::write_in_file( json_encode($this->data_file, $this->post['data'], JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|JSON_FORCE_OBJECT) )) {
           throw new Exception();
         }
       }

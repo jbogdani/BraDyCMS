@@ -12,11 +12,11 @@ try {
   require_once 'lib/Bootstrap.php';
 
   // with PHP higher or equal 7 run Phpfastcache
-  if (version_compare(phpversion(), '7.0.0') > -1){
+  if (version_compare(phpversion(), '9.0.0') > -1){
     require_once 'lib/vendor/phpfastcache/lib/Phpfastcache/Autoload/Autoload.php';
 
     \Phpfastcache\CacheManager::setDefaultConfig(new \Phpfastcache\Config\Config([
-      "path" => sys_get_temp_dir(),
+      "path" => TMP_DIR,
       "itemDetailedDate" => false
     ]));
 

@@ -90,7 +90,7 @@ form.on('submit', function(){
   $('#{{ uid }} .loading').show();
 
   $.post(
-    '{{ link2home }}controller.php?obj=protectedtags_ctrl&method=send_email',
+    '{{ link2home }}controller/?obj=protectedtags_ctrl&method=send_email',
     form.serialize(), function(data){
       $('#{{ uid }} .loading').hide();
       $('#{{ uid }} .results').html(

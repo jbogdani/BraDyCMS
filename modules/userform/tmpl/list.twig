@@ -45,7 +45,7 @@
 
   // Open edit form
   $('#{{ uid }} .openedit').on('click', function(){
-    $('#{{ uid }} .edit_area').load('controller.php?obj=userform_ctrl&method=edit_form&param[]=' + $(this).text() + '.json');
+    $('#{{ uid }} .edit_area').load('controller/?obj=userform_ctrl&method=edit_form&param[]=' + $(this).text() + '.json');
   });
 
   // Add new
@@ -62,7 +62,7 @@
           text: admin.tr('save'),
           addclass: 'btn-success',
           click: function(){
-            $.get('controller.php?obj=userform_ctrl&method=createNew&param[]=' + $('#new_form_name').val(), function(data){
+            $.get('controller/?obj=userform_ctrl&method=createNew&param[]=' + $('#new_form_name').val(), function(data){
               admin.message(data.text, data.status);
               if (data.status == 'success'){
                 $('#modal').modal('hide');

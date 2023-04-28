@@ -76,7 +76,7 @@
     }
     $('#{{ uid }} .loading').html('<i class="fa fa-circle-o-notch fa-spin"></i> ' + waitingMsg);
     
-    $.get('controller.php?obj=update_ctrl&method=stepByStepInstall&step=' + step + 
+    $.get('controller/?obj=update_ctrl&method=stepByStepInstall&step=' + step + 
       '&remoteVersion=' + remoteVersion,
       
     function(data){

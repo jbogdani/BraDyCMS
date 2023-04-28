@@ -42,7 +42,7 @@
 
     $(el).nestable().on('change', function(){
       var obj = $(this).nestable('serialize');
-      $.post('controller.php?obj=menu_ctrl&method=updateNestSort', {'data':obj}, function(data){
+      $.post('controller/?obj=menu_ctrl&method=updateNestSort', {'data':obj}, function(data){
         if(data){
           admin.message(data, 'error');
         }

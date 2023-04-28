@@ -365,7 +365,7 @@
   $('#edit_form{{ uid }} input[name="textid"]').on('change', function(){
     $this = $(this);
     if ($this.val() != '{{ art.textid }}'){
-      $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val() + '&param[]={{ art.id }}', function(data){
+      $.get('controller/?obj=article_ctrl&method=check_duplicates&param[]=' + $(this).val() + '&param[]={{ art.id }}', function(data){
         if (data){
           $this.focus();
           admin.message(data, 'error');
@@ -389,13 +389,13 @@
     }
 
     // Textid can not contain duplicate values
-    $.get('controller.php?obj=article_ctrl&method=check_duplicates&param[]=' + $('#edit_form{{ uid }} input[name="textid"]').val() + '&param[]={{ art.id }}', function(data){
+    $.get('controller/?obj=article_ctrl&method=check_duplicates&param[]=' + $('#edit_form{{ uid }} input[name="textid"]').val() + '&param[]={{ art.id }}', function(data){
       if (data){
         $('#edit_form{{ uid }} input[name="textid"]').focus();
         admin.message(data, 'error');
         $('#edit_form{{ uid }}').find('button[type="submit"]').button('reset');
       } else {
-        var url = 'controller.php?obj=article_ctrl&method=save&param[]={{ art.id }}';
+        var url = 'controller/?obj=article_ctrl&method=save&param[]={{ art.id }}';
 
         admin.wysiwyg.preSave();
 
@@ -429,12 +429,12 @@
   {# article image upload #}
   admin.upload(
       $('#file_uploader_{{ uid }}')[0],
-      'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}&param[]=sanitize&param[]=resize',
+      'controller/?obj=utils&method=upload&param[]={{ tmp_path }}&param[]=sanitize&param[]=resize',
       {
         one: true,
         allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
         loaded: function(id, filename, responseJSON){
-          $.get('controller.php?obj=article_ctrl' +
+          $.get('controller/?obj=article_ctrl' +
             '&method=attachImage' +
             '&param[]={{ art.id }}' +
             '&param[]=' + responseJSON.filename + '.' + responseJSON.ext,
@@ -452,10 +452,10 @@
   {# article media upload #}
   admin.upload(
     $('#{{ uid }} .media_uploader')[0],
-    'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}',
+    'controller/?obj=utils&method=upload&param[]={{ tmp_path }}',
     {
       loaded: function(id, filename, responseJSON){
-        $.get('controller.php?obj=article_ctrl' +
+        $.get('controller/?obj=article_ctrl' +
             '&method=attachMedia' +
             '&param[]={{ art.id }}' +
             '&param[]=' +responseJSON.filename + '.' + responseJSON.ext,
@@ -472,7 +472,7 @@
 
 
   $('a.delete_attach_img').on('click', function(){
-    $.get('controller.php?obj=article_ctrl&method=delete_art_img&param[]={{ art.id }}', function(data){
+    $.get('controller/?obj=article_ctrl&method=delete_art_img&param[]={{ art.id }}', function(data){
       admin.message(data.text, data.status);
       $('#edit_form{{ uid }}').submit();
       admin.tabs.reloadThis('#{{ uid }}');
@@ -482,7 +482,7 @@
   $('#{{ uid }} .create_gallery').on('click', function(){
     var name = $(this).data('name');
     var $this = this;
-    $.getJSON('controller.php?obj=galleries_ctrl&method=addGallery&param[]=' + name, function(data){
+    $.getJSON('controller/?obj=galleries_ctrl&method=addGallery&param[]=' + name, function(data){
       admin.message(data.text, data.status);
       if (data.status === 'success'){
         $('#edit_form{{ uid }}').submit();

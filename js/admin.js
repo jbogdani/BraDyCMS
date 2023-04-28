@@ -369,7 +369,7 @@ var admin = {
 			}
 
 			var body = $('<div />').addClass('modal-body').appendTo(dialog.find('div.modal-content')),
-				URLstring = 'controller.php?';
+				URLstring = 'controller/?';
 
 			if (opts.buttons && typeof opts.buttons == 'object'){
 
@@ -419,7 +419,7 @@ var admin = {
 				dialog.find('.modal-body').html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom" style="font-size: 3em;"></i>');
 				$.ajax({
 	        		'type': opts.post ? 'POST' : 'GET',
-	        		'url': 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
+	        		'url': 'controller/?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
 	        		'data': opts.post
 	        	})
 	        	.done(function(data){
@@ -510,7 +510,7 @@ var admin = {
 						this.tab.find('li:last').data('opts', opts);
 	        	$.ajax({
 	        		'type': opts.post ? 'POST' : 'GET',
-	        		'url': 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
+	        		'url': 'controller/?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' ),
 	        		'data': opts.post
 	        	})
 	        	.done(function(data){
@@ -554,7 +554,7 @@ var admin = {
           opts = $(tab.find('li').get(index)).data('opts');
         }
 
-	    	var url = 'controller.php?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' );
+	    	var url = 'controller/?obj=' + opts.obj + '&method=' + opts.method + (opts.param ? '&param[]=' + opts.param.join('&param[]=') : '' );
 
 	    	pane.html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom" style="font-size: 3em;"></i>');
 
@@ -647,7 +647,7 @@ var admin = {
 		},
 
 		deleteDir: function(path){
-			$.get('controller.php?obj=media_ctrl&method=delete&param[]=' + path, function(data){
+			$.get('controller/?obj=media_ctrl&method=delete&param[]=' + path, function(data){
 				admin.message(data.text, data.status);
 				if(data.status == 'success'){
 					admin.media.go2dir(data.new_path);
@@ -666,7 +666,7 @@ var admin = {
             addclass: 'btn-danger',
             action: 'close',
             click: function(){
-              $.get('controller.php?obj=media_ctrl&method=delete&param[]=' + full_path, function(data){
+              $.get('controller/?obj=media_ctrl&method=delete&param[]=' + full_path, function(data){
                 admin.message(data.text, data.status);
                 if (data.status == 'success'){
                   admin.tabs.closeActive('media/all/' + data.new_path);

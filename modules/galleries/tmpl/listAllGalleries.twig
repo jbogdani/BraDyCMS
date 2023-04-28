@@ -64,7 +64,7 @@
                    if (!gal){
                      admin.message(admin.tr('gallery_name_cannot_be_empty'), 'error');
                    } else {
-                     $.get('controller.php?obj=galleries_ctrl&method=addGallery&param[]=' + gal, function(data){
+                     $.get('controller/?obj=galleries_ctrl&method=addGallery&param[]=' + gal, function(data){
                        admin.message(data.text, data.status);
 
                        if (data.status == 'success'){

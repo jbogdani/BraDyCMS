@@ -47,7 +47,7 @@
   });
 
   $('#{{ uid }} .save-button').on('click', function(){
-    $.post('controller.php?obj=tmpldata_ctrl&method=save', {data: $.parseJSON( $('#{{ uid }} .code').text())}, function(data){
+    $.post('controller/?obj=tmpldata_ctrl&method=save', {data: $.parseJSON( $('#{{ uid }} .code').text())}, function(data){
       admin.message(data.text, data.status);
     }, 'json');
   });

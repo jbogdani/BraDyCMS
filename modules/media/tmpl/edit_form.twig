@@ -184,7 +184,7 @@ $('#resize-{{ uid}}').submit(function(){
   } else if (width == '{{ finfo.0 }}'){
     alert('Nessin cambiamento da eseguire');
   } else {
-    $.get('controller.php?obj=media_ctrl&method=resize&param[file]={{ file }}&param[width]=' + width, function(data){
+    $.get('controller/?obj=media_ctrl&method=resize&param[file]={{ file }}&param[width]=' + width, function(data){
       admin.message(data.text, data.status);
       if(data.status == 'success'){
         admin.tabs.reloadThis('#resize-{{ uid }}');
@@ -208,7 +208,7 @@ $('#crop-{{ uid }}').submit(function(){
   if (!width || width <= 0 || !height || height <= 0){
     alert('Valori di larghezza e lunghezza non validi');
   } else{
-    $.get('controller.php?obj=media_ctrl&method=crop&param[file]={{ file }}' + querystring, function(data){
+    $.get('controller/?obj=media_ctrl&method=crop&param[file]={{ file }}' + querystring, function(data){
       admin.message(data.text, data.status);
       if(data.status == 'success'){
         admin.tabs.reloadThis('#crop-{{ uid }}');
@@ -222,7 +222,7 @@ $('#convert-{{ uid}}').submit(function(){
   if (format === '{{ pathinfo.extension }}'){
     admin.message('{{ tr.get('no_change_to_save') }}', 'error');
   } else {
-    $.get('controller.php?obj=media_ctrl&method=convert&param[oFile]={{ file }}&param[nFile]={{ pathinfo.dirname }}/{{ pathinfo.filename }}.' + format, function(data){
+    $.get('controller/?obj=media_ctrl&method=convert&param[oFile]={{ file }}&param[nFile]={{ pathinfo.dirname }}/{{ pathinfo.filename }}.' + format, function(data){
       admin.message(data.text, data.status);
       if (data.status === 'success'){
         admin.tabs.closeActive();
@@ -239,7 +239,7 @@ $('#rename-{{ uid}}').submit(function(){
   } else if (!filename){
     admin.message('{{ tr.get('invalid_name') }}', 'error');
   } else {
-    $.get('controller.php?obj=media_ctrl&method=rename&param[]={{ pathinfo.dirname }}&param[]={{ pathinfo.filename }}.{{ pathinfo.extension }}&param[]=' + filename + '.{{ pathinfo.extension }}', function(data){
+    $.get('controller/?obj=media_ctrl&method=rename&param[]={{ pathinfo.dirname }}&param[]={{ pathinfo.filename }}.{{ pathinfo.extension }}&param[]=' + filename + '.{{ pathinfo.extension }}', function(data){
       admin.message(data.text, data.status);
       if (data.status == 'success'){
         admin.tabs.closeActive();
@@ -256,7 +256,7 @@ $('#copy-{{ uid}}').submit(function(){
   } else if (!filename){
     admin.message('{{ tr.get('invalid_name') }}', 'error');
   } else {
-    $.get('controller.php?obj=media_ctrl&method=copy&param[]={{ pathinfo.dirname }}&param[]={{ pathinfo.filename }}.{{ pathinfo.extension }}&param[]=' + filename + '.{{ pathinfo.extension }}', function(data){
+    $.get('controller/?obj=media_ctrl&method=copy&param[]={{ pathinfo.dirname }}&param[]={{ pathinfo.filename }}.{{ pathinfo.extension }}&param[]=' + filename + '.{{ pathinfo.extension }}', function(data){
       admin.message(data.text, data.status);
     }, 'json');
   }

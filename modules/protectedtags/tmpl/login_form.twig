@@ -78,7 +78,7 @@ $('#loginform').on('submit', function(){
     form.find('.form_err').text('{{ tr.get('password_required') }}');
     return false;
   }
-  $.post('{{ link2home }}controller.php?obj=protectedtags_ctrl&method=login', form.serialize(), function(data){
+  $.post('{{ link2home }}controller/?obj=protectedtags_ctrl&method=login', form.serialize(), function(data){
     if (data.status === 'success'){
         window.location.reload(false);
         window.scrollTo(0,0);

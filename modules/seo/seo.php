@@ -199,7 +199,7 @@ Disallow: /locale/
 Disallow: /modules/
 Disallow: /tmp/
 Disallow: /xsl/
-Disallow: /controller.php
+Disallow: /controller/
 Disallow: /admin.php
 Disallow: /admin
 Disallow: /sites/default/cfg/

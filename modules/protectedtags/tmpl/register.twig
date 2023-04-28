@@ -169,7 +169,7 @@ if (typeof recaptchaCallback !== 'function') {
     } else {
       return false;
     }
-    $.post('{{ link2home }}controller.php?obj=protectedtags_ctrl&method=login', $(this).serialize(), function(data){
+    $.post('{{ link2home }}controller/?obj=protectedtags_ctrl&method=login', $(this).serialize(), function(data){
       if (data.status === 'success'){
         {% if mode == 'dont_confirm' %}
         window.location.reload();

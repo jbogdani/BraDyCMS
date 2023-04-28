@@ -13,8 +13,8 @@ class addsite_ctrl extends Controller
 
   public function preInstallErrors()
   {
-    if (!in_array('mod_rewrite', apache_get_modules())) {
-      $error[] = 'Apache mo_rewrite is not enabled!';
+    if (!function_exists('apache_get_modules') || !in_array('mod_rewrite', apache_get_modules())) {
+      $error[] = 'Apache mod_rewrite is not enabled!';
     }
 
     if (!extension_loaded('PDO')) {

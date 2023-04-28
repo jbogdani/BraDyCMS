@@ -63,7 +63,7 @@
                    if (!download){
                      admin.message(admin.tr('download_node_name_cannot_be_empty'), 'error');
                    } else {
-                     $.get('controller.php?obj=downloads_ctrl&method=add&param[]=' + download, function(data){
+                     $.get('controller/?obj=downloads_ctrl&method=add&param[]=' + download, function(data){
                        admin.message(data.text, data.status);
                        
                        if (data.status == 'success'){

@@ -73,7 +73,7 @@ if (typeof recaptchaCallback !== 'function') {
 <script>
   $('#signin').on('submit', function(){
     $('#logerror').hide();
-    $.post('controller.php?obj=log_ctrl&method=in', $(this).serialize(), function(data){
+    $.post('controller/?obj=log_ctrl&method=in', $(this).serialize(), function(data){
     if (data.status === 'success'){
         location.reload();
         $(window).trigger('hashchange');

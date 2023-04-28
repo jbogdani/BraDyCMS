@@ -55,7 +55,7 @@
 <script>
   $('#{{ uid }} .create_backup').on('click', function(){
     var $this = this;
-    $.getJSON('controller.php?obj=backup_ctrl&method=createNew', function(data){
+    $.getJSON('controller/?obj=backup_ctrl&method=createNew', function(data){
       if (data.status === 'success'){
         admin.tabs.reloadThis('#{{ uid }}');
       }
@@ -78,7 +78,7 @@
           'addclass': 'btn-danger',
           'glyphicon': 'trash',
           'click': function(){
-            $.getJSON('controller.php?obj=backup_ctrl&method=deleteBackup&param[]=' + file, function(data){
+            $.getJSON('controller/?obj=backup_ctrl&method=deleteBackup&param[]=' + file, function(data){
               if (data.status === 'success'){
                 admin.tabs.reloadThis('#{{ uid }}');
               }
@@ -111,7 +111,7 @@
           'glyphicon': 'share-alt',
           'click': function(){
 
-            $.getJSON('controller.php?obj=backup_ctrl&method=restoreBackup&param[]=' + file, function(data){
+            $.getJSON('controller/?obj=backup_ctrl&method=restoreBackup&param[]=' + file, function(data){
               if (data.status === 'success'){
                 admin.tabs.reloadThis('#{{ uid }}');
               }

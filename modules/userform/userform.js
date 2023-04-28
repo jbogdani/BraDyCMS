@@ -40,7 +40,7 @@ var userform = {
       });
 
       if (!stop){
-        $.post('controller.php?obj=userform_ctrl&method=process&param[]=' + name, $(this).serialize(), function(data){
+        $.post('controller/?obj=userform_ctrl&method=process&param[]=' + name, $(this).serialize(), function(data){
           if (data.status == 'success'){
             messageContainer.removeClass('text-danger').addClass('text-success').html('<i class="fa fa-check"></i>');
             $('#' + formId + ' :input:not(.btn)').val('');
@@ -125,7 +125,7 @@ var userform = {
 
     new qq.FineUploader({
       request: {
-        endpoint: 'controller.php?obj=utils&method=upload&param[]=./tmp'
+        endpoint: 'controller/?obj=utils&method=upload&param[]=./tmp'
       },
       element: el.get(0),
       validation:{

@@ -112,7 +112,7 @@
     admin.wysiwyg.preSave();
 
     $.post(
-        'controller.php?obj=article_ctrl&method=saveTransl&param[]={{ art.id }}',
+        'controller/?obj=article_ctrl&method=saveTransl&param[]={{ art.id }}',
         $('#form{{ uid }}').serialize(),
         function(data){
           admin.message(data.text, data.status);

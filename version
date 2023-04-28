@@ -1,3 +1,4 @@
+5.10.0[] = "Legacy controller.php route replaced by controller/"
 5.9.2[] = "Phpfastcache uses TMP_DIR instead of system tmp dir"
 5.9.1[] = "Template data are encoded to JSON forcedly as object to prevent unintended array resorting"
 5.9.0[] = "sites/default links in database are automatically prefixed with html.link2('home')"

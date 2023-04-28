@@ -89,27 +89,27 @@
 
   {% if file and type %}
     $('#{{ uid }} .editor').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...')
-      .load('controller.php?obj=template_ctrl&method=edit&param[]={{ file }}&param[]={{ type }}');
+      .load('controller/?obj=template_ctrl&method=edit&param[]={{ file }}&param[]={{ type }}');
   {% elseif file == 'delete' %}
     $('#{{ uid }} .editor').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...')
-        .load('controller.php?obj=template_ctrl&method=delete_file');
+        .load('controller/?obj=template_ctrl&method=delete_file');
   {% elseif file == 'create' %}
     $('#{{ uid }} .editor').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...')
-        .load('controller.php?obj=template_ctrl&method=new_file');
+        .load('controller/?obj=template_ctrl&method=new_file');
   {% endif %}
 
   $('#{{ uid }} .create').on('click', function(){
     _ignorehash = true;
     location.hash = '#template/dashboard/create';
     $('#{{ uid }} .editor').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...')
-      .load('controller.php?obj=template_ctrl&method=new_file');
+      .load('controller/?obj=template_ctrl&method=new_file');
   });
 
   $('#{{ uid }} .delete').on('click', function(){
     _ignorehash = true;
     location.hash = '#template/dashboard/delete';
     $('#{{ uid }} .editor').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...')
-      .load('controller.php?obj=template_ctrl&method=delete_file');
+      .load('controller/?obj=template_ctrl&method=delete_file');
   });
 
   $('#{{ uid }} .editfile').on('click', function(){
@@ -118,7 +118,7 @@
     var type = $('#{{ uid }} select.fileselect').find('option:selected').data('type');
     location.hash = '#template/dashboard/' + $(this).data('file');
     $('#{{ uid }} .editor').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...')
-      .load('controller.php?obj=template_ctrl&method=edit&param[]=' + file + '&param[]=' + type);
+      .load('controller/?obj=template_ctrl&method=edit&param[]=' + file + '&param[]=' + type);
   });
 
 
@@ -153,7 +153,7 @@ $('#{{ uid }} .download').on('click', function(){
   $('#{{ uid }} .compile').on('click', function(){
     var self =  $(this);
     self.button('loading');
-    $.get('controller.php?obj=template_ctrl&method=compile', function(data){
+    $.get('controller/?obj=template_ctrl&method=compile', function(data){
       admin.message(data.text, data.status);
       self.button('reset');
     }, 'json');
@@ -162,7 +162,7 @@ $('#{{ uid }} .download').on('click', function(){
   $('#{{ uid }} .empty_cache').on('click', function(){
     var self =  $(this);
     self.button('loading');
-    $.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
+    $.get('controller/?obj=cfg_ctrl&method=empty_cache', function(data){
       admin.message(data.text, data.status);
       self.button('reset');
     }, 'json');

@@ -77,7 +77,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
   "bDestroy": true,
   "bProcessing": true,
   "bServerSide": true,
-  "sAjaxSource": "./controller.php?obj=article_ctrl&method=sql2json{{ imploded_active_tags|raw }}",
+  "sAjaxSource": "./controller/?obj=article_ctrl&method=sql2json{{ imploded_active_tags|raw }}",
   "order": [[ 0, "desc" ]],
   "aoColumns": [
     { "mData":"id"},
@@ -133,7 +133,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
                     addclass: 'btn-danger',
                     action: 'close',
                     click: function(){
-                      $.get('controller.php?obj=article_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
+                      $.get('controller/?obj=article_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
                         admin.message(data.text, data.type);
                         if (data.type === 'success'){
                           admin.tabs.reloadThis('#{{ uid }}');
@@ -155,7 +155,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
 
 $('#{{ uid }} .deleteTag').on('click', function(){
 
-  $.get('controller.php?obj=article_ctrl&method=deleteTag&tag={{ active_tags[0] }}', function(data){
+  $.get('controller/?obj=article_ctrl&method=deleteTag&tag={{ active_tags[0] }}', function(data){
     if (!data){
       admin.tabs.closeActive('article/all');
     } else {
@@ -166,7 +166,7 @@ $('#{{ uid }} .deleteTag').on('click', function(){
 
 
 $('#{{ uid }} .deleteAllTags').on('click', function(){
-  $.get('controller.php?obj=article_ctrl&method=deleteAllTags', function(data){
+  $.get('controller/?obj=article_ctrl&method=deleteAllTags', function(data){
     if (!data){
       admin.tabs.closeActive('article/all');
     } else {

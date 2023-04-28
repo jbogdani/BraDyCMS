@@ -34,7 +34,7 @@ class error_log_ctrl
         admin.tabs.reloadThis(this);
       });
       $('.log-delete').click(function() {
-        $.get('controller.php?obj=error_log_ctrl&method=delete', function(data) {
+        $.get('controller/?obj=error_log_ctrl&method=delete', function(data) {
           admin.message(data.text, data.status);
           if (data.status === 'success') {
             admin.tabs.closeActive('error_log/show');

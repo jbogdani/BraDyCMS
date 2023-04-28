@@ -45,7 +45,7 @@
 
   // Open edit map
   $('#{{ uid }} .openedit').on('click', function(){
-    $('#{{ uid }} .edit_area').load('controller.php?obj=usermap_ctrl&method=edit_map&param[]=' + $(this).text() + '.map');
+    $('#{{ uid }} .edit_area').load('controller/?obj=usermap_ctrl&method=edit_map&param[]=' + $(this).text() + '.map');
   });
 
   // Add new
@@ -62,7 +62,7 @@
           text: admin.tr('save'),
           addclass: 'btn-success',
           click: function(){
-            $.get('controller.php?obj=usermap_ctrl&method=createNew&param[]=' + $('#new_map_name').val(), function(data){
+            $.get('controller/?obj=usermap_ctrl&method=createNew&param[]=' + $('#new_map_name').val(), function(data){
               admin.message(data.text, data.status);
               if (data.status == 'success'){
                 $('#modal').modal('hide');

@@ -292,7 +292,7 @@
 
     var subof = $('#menu_edit{{ uid }}').find('select[name="subof"]');
     if (menu){
-      $.get('controller.php?obj=menu_ctrl&method=getMenuItems&param[]=' + menu, function(data){
+      $.get('controller/?obj=menu_ctrl&method=getMenuItems&param[]=' + menu, function(data){
         subof.html('<option></option>');
         $.each(data, function(i, el){
           subof.append('<option value="' + el.id + '"{% if menu.subof %}' + (el.id == {{ menu.subof }} ? ' selected="true" ' : '') + '{% endif %}>' + el.item + '</option>');
@@ -318,7 +318,7 @@
 
   $('#{{ uid }} form.menuTranslation').on('submit', function(){
 
-    $.post('controller.php?obj=menu_ctrl&method=saveTransl&param[]={{ menu.id }}', $(this).serialize(), function(data){
+    $.post('controller/?obj=menu_ctrl&method=saveTransl&param[]={{ menu.id }}', $(this).serialize(), function(data){
       admin.message(data.text, data.status);
 
       if (data.status == 'success'){
@@ -342,7 +342,7 @@
              addclass: 'btn-danger',
              action: 'close',
              click: function(){
-               $.get('controller.php?obj=menu_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
+               $.get('controller/?obj=menu_ctrl&method=delete&param[]=' + $this.data('id'), function(data){
                  admin.message(data.text, data.type);
                  if (data.type == 'success'){
                    admin.tabs.closeActive();
@@ -357,7 +357,7 @@
 
   $('#menu_edit{{ uid }}').submit( function(){
 
-    var url = 'controller.php?obj=menu_ctrl&method=save';
+    var url = 'controller/?obj=menu_ctrl&method=save';
 
     $.post(
       url,

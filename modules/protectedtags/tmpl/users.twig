@@ -40,7 +40,7 @@
 
 <h3>{{ tr.get('users') }}</h3>
 <a
-  href="controller.php?obj=protectedtags_ctrl&method=downloadUsers"
+  href="controller/?obj=protectedtags_ctrl&method=downloadUsers"
   target="_blank"
   class="btn btn-default download-csv">
   <i class="fa fa-cloud-download"></i>
@@ -162,7 +162,7 @@
 
   $('#{{ uid }} select.disable_captcha').on('change', function(){
     $.get(
-      'controller.php?obj=protectedtags_ctrl&method=toggleCaptcha&param[]=' + $(this).val(),
+      'controller/?obj=protectedtags_ctrl&method=toggleCaptcha&param[]=' + $(this).val(),
       function(data){
         admin.message(data.text, data.status);
       }, 'json');
@@ -176,7 +176,7 @@
 
       $(nRow).find('.delete').on('click', function(){
         $.get(
-          'controller.php?obj=protectedtags_ctrl&method=deleteUser&param[]=' + $(this).data('item'),
+          'controller/?obj=protectedtags_ctrl&method=deleteUser&param[]=' + $(this).data('item'),
           function(data){
             admin.message(data.text, data.status);
             if(data.status === 'success'){
@@ -194,7 +194,7 @@ $('#{{ uid }} .save_row').on('click', function(){
     text = $(this).parents('tr').find('textarea.text').val(),
     mode = $(this).parents('tr').find('select.mode').val();
   $.post(
-    'controller.php?obj=protectedtags_ctrl&method=saveAutoregister',
+    'controller/?obj=protectedtags_ctrl&method=saveAutoregister',
     {
       "mode": mode,
       "tag": tag,
@@ -268,7 +268,7 @@ function openEditForm(id){
           return;
         }
         $.post(
-          'controller.php?obj=protectedtags_ctrl&method=save',
+          'controller/?obj=protectedtags_ctrl&method=save',
           form.serialize(), function(data){
             admin.message(data.text, data.status);
             if(data.status === 'success'){

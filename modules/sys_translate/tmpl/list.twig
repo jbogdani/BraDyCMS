@@ -24,13 +24,13 @@
 
 <script>
   {% if lang %}
-    $('#cont_{{ uid }}').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lang }}');
+    $('#cont_{{ uid }}').load('controller/?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lang }}');
   {% endif %}
 
   $('#but_{{ uid }} button.lang').on('click', function(){
     _ignorehash = true;
     location.hash = '#sys_translate/showList/{{ context }}/' + $(this).data('lang');
-    $('#cont_{{ uid }}').load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]=' + $(this).data('lang'));
+    $('#cont_{{ uid }}').load('controller/?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]=' + $(this).data('lang'));
   });
 
   {% if add_lang %}
@@ -47,7 +47,7 @@
               $('.modal input.new_locale').focus();
             } else {
               $('div.modal').modal('hide').remove();
-              $.get('controller.php?obj=sys_translate_ctrl&method=add_locale&param[]=' + new_locale, function(data){
+              $.get('controller/?obj=sys_translate_ctrl&method=add_locale&param[]=' + new_locale, function(data){
                 admin.message(data.text, data.status);
                 if (data.status == 'success'){
                   admin.tabs.reloadThis('#but_{{ uid }}');
@@ -65,6 +65,6 @@
   {% endif %}
 
   {% if opened_lang %}
-    $('#cont_{{ uid }}').load('controller.php?obj=sys_translate_ctrl&method=showForm&&param[]={{ context }}param[]={{ opened_lang }}');
+    $('#cont_{{ uid }}').load('controller/?obj=sys_translate_ctrl&method=showForm&&param[]={{ context }}param[]={{ opened_lang }}');
   {% endif %}
 </script>

@@ -39,7 +39,7 @@ $('#{{ uid }} a.reload').on('click', function(){
 
 var dwn = {
   delete: function(id){
-    $.get('controller.php?obj=download_ctrl&method=resetCount&id=' + id, function(data){
+    $.get('controller/?obj=download_ctrl&method=resetCount&id=' + id, function(data){
       admin.message(data.text, data.status);
       $('#{{ uid }} table.data_table').DataTable().ajax.reload();
     }, 'json');
@@ -51,7 +51,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
   "bDestroy": true,
   "bProcessing": true,
   "bServerSide": true,
-  "sAjaxSource": "./controller.php?obj=download_ctrl&method=sql2json",
+  "sAjaxSource": "./controller/?obj=download_ctrl&method=sql2json",
   "aoColumns": [
     { "mData":"id"},
     { "mData":"file" },

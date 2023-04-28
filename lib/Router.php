@@ -18,7 +18,7 @@ class Router
 
             $controller = new Controller($_GET, $_POST, $_REQUEST);
 
-            $router->map('GET|POST', "/controller.php", function () use ($controller) {
+            $router->map('GET|POST', "/controller/", function () use ($controller) {
                 $controller->route();
                 return false;
             }, 'controller');

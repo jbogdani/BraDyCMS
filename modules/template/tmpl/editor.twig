@@ -46,7 +46,7 @@
     
     var tmpdiv = $('<div></div>').html(html);
     
-    $.post('controller.php?obj=template_ctrl&method=save&param[]={{ filename }}', { text: tmpdiv.text() }, function(data){
+    $.post('controller/?obj=template_ctrl&method=save&param[]={{ filename }}', { text: tmpdiv.text() }, function(data){
       admin.message(data.text, data.status);
       self.button('reset');
     }, 'json');

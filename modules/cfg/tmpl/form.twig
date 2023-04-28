@@ -662,7 +662,7 @@
 <script>
 $('#form-{{ uid }}').on('submit', function(){
   $('#submit-{{ uid }}').button('loading');
-  $.post('controller.php?obj=cfg_ctrl&method=save', $(this).serialize(), function(data){
+  $.post('controller/?obj=cfg_ctrl&method=save', $(this).serialize(), function(data){
     admin.message(data.text, data.status);
     if(data.status === 'success'){
       admin.tabs.reloadThis('#form-{{ uid }}');
@@ -680,7 +680,7 @@ $('#form-{{ uid }} button.encrypt').on('click', function(){
     admin.message('Please enter a password to encrypt!', 'error');
     pwd.focus();
   } else {
-    $.post('controller.php?obj=log_ctrl&method=encodePwd&echo=true', {'password': pwd.val()}, function(data){
+    $.post('controller/?obj=log_ctrl&method=encodePwd&echo=true', {'password': pwd.val()}, function(data){
       button.button('reset');
       pwd.val(data);
     });
@@ -690,7 +690,7 @@ $('#form-{{ uid }} button.encrypt').on('click', function(){
 $('#cache-{{ uid }}').on('click', function(){
   var btn = $(this);
   btn.button('loading');
-  $.get('controller.php?obj=cfg_ctrl&method=empty_cache', function(data){
+  $.get('controller/?obj=cfg_ctrl&method=empty_cache', function(data){
     admin.message(data.text, data.status);
     btn.button('reset');
   }, 'json');
@@ -699,7 +699,7 @@ $('#cache-{{ uid }}').on('click', function(){
 $('#trash-{{ uid }}').on('click', function(){
   var btn = $(this);
   btn.button('loading');
-  $.get('controller.php?obj=cfg_ctrl&method=empty_trash', function(data){
+  $.get('controller/?obj=cfg_ctrl&method=empty_trash', function(data){
     admin.message(data.text, data.status);
     btn.button('reset');
   }, 'json');
@@ -708,7 +708,7 @@ $('#trash-{{ uid }}').on('click', function(){
 $('#htaccess-{{ uid }}').on('click', function(){
   var btn = $(this);
   btn.button('loading');
-  $.get('controller.php?obj=cfg_ctrl&method=update_htaccess', function(data){
+  $.get('controller/?obj=cfg_ctrl&method=update_htaccess', function(data){
     admin.message(data.text, data.status);
     btn.button('reset');
   }, 'json');

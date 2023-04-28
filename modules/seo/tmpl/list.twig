@@ -61,7 +61,7 @@ var Seo = {
                   addclass: 'btn-danger',
                   action: 'close',
                   click: function(){
-                    $.get('controller.php?obj=seo_ctrl&method=action&action=delete&id=' + id, function(data){
+                    $.get('controller/?obj=seo_ctrl&method=action&action=delete&id=' + id, function(data){
                       admin.message(data.text, data.status);
                       if (data.status === 'success'){
                         // $('#modal').modal('hide');
@@ -107,7 +107,7 @@ var Seo = {
   },
   saveData: function(){
     var formData = $('#modal form.seo').serialize();
-    $.post('controller.php?obj=seo_ctrl&method=action&action=edit', formData, function(data){
+    $.post('controller/?obj=seo_ctrl&method=action&action=edit', formData, function(data){
       admin.message(data.text, data.status);
       if (data.status === 'success'){
         $('#modal').modal('hide');
@@ -122,7 +122,7 @@ var tb = $('#{{ uid }} table.data_table').dataTable({
   "bDestroy": true,
   "bProcessing": true,
   "bServerSide": true,
-  "sAjaxSource": "./controller.php?obj=seo_ctrl&method=sql2json",
+  "sAjaxSource": "./controller/?obj=seo_ctrl&method=sql2json",
   "aoColumns": [
     { "mData":"id"},
     {

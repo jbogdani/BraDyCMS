@@ -52,7 +52,7 @@
   $('#{{ uid }} .delete').on('click', function(){
     var file = $('#{{ uid }} .filename').val();
     
-    $.get('controller.php?obj=template_ctrl&method=confirm_delete_file&param[]=' + file, function(data){
+    $.get('controller/?obj=template_ctrl&method=confirm_delete_file&param[]=' + file, function(data){
       admin.message(data.text, data.status);
       
       if (data.status === 'success'){

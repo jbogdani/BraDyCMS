@@ -67,7 +67,7 @@
                    if (!tag){
                      admin.message(admin.tr('tag_cannot_be_empty'), 'error');
                    } else {
-                     $.get('controller.php?obj=tags_ctrl&method=addTag&param[]=' + tag, function(data){
+                     $.get('controller/?obj=tags_ctrl&method=addTag&param[]=' + tag, function(data){
                        admin.message(data.text, data.status);
                        
                        if (data.status == 'success'){
@@ -111,7 +111,7 @@
             if (!tag){
               admin.message(admin.tr('tag_cannot_be_empty'), 'error');
             } else {
-              $.get('controller.php?obj=tags_ctrl&method=renameTag&param[]=' + id + '&param[]=' + tag, function(data){
+              $.get('controller/?obj=tags_ctrl&method=renameTag&param[]=' + id + '&param[]=' + tag, function(data){
                 admin.message(data.text, data.status);
 
                 if (data.status == 'success'){
@@ -139,7 +139,7 @@
           text: admin.tr('delete'),
           addclass: 'btn-danger',
           click: function(){
-            $.get('controller.php?obj=tags_ctrl&method=removeTag&param[]=' + id, function(data){
+            $.get('controller/?obj=tags_ctrl&method=removeTag&param[]=' + id, function(data){
               admin.message(data.text, data.status);
 
              if (data.status == 'success'){

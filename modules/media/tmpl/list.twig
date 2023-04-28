@@ -137,7 +137,7 @@
 
   admin.upload(
     $('#file-uploader_{{ uid }}')[0],
-    'controller.php?obj=utils&method=upload&param[]={{ path }}',
+    'controller/?obj=utils&method=upload&param[]={{ path }}',
     {
       allLoaded: function(){
         admin.tabs.reloadThis('#file-uploader_{{ uid }}');
@@ -201,7 +201,7 @@
 
             $('#modal .modal-body').html('<i class="fa fa-circle-o-notch fa-spin" style="font-size: 3em;"></i> {{ tr.get('please_wait', true) }}');
 
-            var url = 'controller.php?' +
+            var url = 'controller/?' +
               'obj=media_ctrl&' +
               'method=makeArtImages&' +
               'force=force';
@@ -289,7 +289,7 @@
 
             $('#modal .modal-body').html('<i class="fa fa-circle-o-notch fa-spin" style="font-size: 3em;"></i> {{ tr.get('please_wait', true) }}');
 
-            var url = 'controller.php?' +
+            var url = 'controller/?' +
               'obj=media_ctrl&' +
               'method=makeThumbs&' +
               'dir={{ path }}' +

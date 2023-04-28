@@ -105,7 +105,7 @@
 
   admin.upload(
     $('#{{ uid }} div.uploader')[0],
-    'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize&param[]=resize',
+    'controller/?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize&param[]=resize',
     {
       allLoaded: function(){
         admin.tabs.reloadThis('#{{ uid }}');
@@ -114,7 +114,7 @@
   );
 
   $('#{{ uid }} button.save').on('click', function(){
-    $.post('controller.php?obj=galleries_ctrl&method=saveData&param[]={{ gallery }}', $('#{{ uid }} form').serializeArray(), function(data){
+    $.post('controller/?obj=galleries_ctrl&method=saveData&param[]={{ gallery }}', $('#{{ uid }} form').serializeArray(), function(data){
       admin.message(data.text, data.status);
     }, 'json');
   });
@@ -122,7 +122,7 @@
 
   $('#{{ uid }} button.delete-item').on('click', function(){
     $this = $(this);
-    $.get('controller.php?obj=galleries_ctrl&method=deleteImg&param[]={{ gallery }}&param[]=' + $(this).data('file'), function(data){
+    $.get('controller/?obj=galleries_ctrl&method=deleteImg&param[]={{ gallery }}&param[]=' + $(this).data('file'), function(data){
       admin.message(data.text, data.status);
 
       if (data.status !== 'error'){
@@ -137,7 +137,7 @@
 
 
   $('#{{ uid }} .delete-gal').on('click', function(){
-    $.get('controller.php?obj=galleries_ctrl&method=deleteGallery&param[]={{ upload_dir }}', function(data){
+    $.get('controller/?obj=galleries_ctrl&method=deleteGallery&param[]={{ upload_dir }}', function(data){
       admin.message(data.text, data.status);
 
       if (data.status == 'success'){
@@ -166,7 +166,7 @@
                  addclass: 'btn-success',
                  click: function(){
                    var gal = $('.modal input.gal').val();
-                   $.get('controller.php?obj=galleries_ctrl&method=renameGallery&param[]={{ gallery }}&param[]=' + gal, function(data){
+                   $.get('controller/?obj=galleries_ctrl&method=renameGallery&param[]={{ gallery }}&param[]=' + gal, function(data){
                      admin.message(data.text, data.status);
 
                      if (data.status === 'success'){

@@ -59,14 +59,14 @@
 
 <script>
   $('#form-{{ uid }}').submit(function(){
-    $.post('controller.php?obj=sys_translate_ctrl&method=save&param[]={{ context }}',
+    $.post('controller/?obj=sys_translate_ctrl&method=save&param[]={{ context }}',
       $(this).serialize(),
       function(data){
       admin.message(data.text, data.status);
       if (data.status === 'success'){
         $('#{{ uid }}')
           .parents('div.transl-content')
-          .load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lng }}');
+          .load('controller/?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lng }}');
       }
     }, 'json');
   });
@@ -112,13 +112,13 @@
               return;
             }
 
-            $.get('controller.php?obj=sys_translate_ctrl&method=addLine' +
+            $.get('controller/?obj=sys_translate_ctrl&method=addLine' +
               '&param[]={{ context }}&param[]={{ lng }}&param[]=' + key + '&param[]=' + val,
             function(data){
               if (data.status == 'success'){
                 $('#{{ uid }}')
                   .parents('div.transl-content')
-                  .load('controller.php?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lng }}');
+                  .load('controller/?obj=sys_translate_ctrl&method=showForm&param[]={{ context }}&param[]={{ lng }}');
                 $('#modal').modal('hide');
               } else {
                 admin.message(data.text, data.status);

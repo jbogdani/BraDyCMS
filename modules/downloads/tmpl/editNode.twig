@@ -129,7 +129,7 @@
     var file = $(this).data('file'),
       form = $(this).parents('form');
 
-    $.get('controller.php?obj=downloads_ctrl' +
+    $.get('controller/?obj=downloads_ctrl' +
             '&method=deleteCover' +
             '&param[file]=' + file,
             function(data){
@@ -145,11 +145,11 @@
       form = $(el).parents('form');
 
     admin.upload(el,
-      'controller.php?obj=utils&method=upload&param[]={{ tmp_path }}&param[]=sanitize',
+      'controller/?obj=utils&method=upload&param[]={{ tmp_path }}&param[]=sanitize',
       {
         allowedExtensions: ['jpg'],
         loaded: function(id, filename, responseJSON){
-          $.get('controller.php?obj=downloads_ctrl' +
+          $.get('controller/?obj=downloads_ctrl' +
             '&method=addCover' +
             '&param[path]={{ upload_dir }}' +
             '&param[refFile]=' + file +
@@ -166,7 +166,7 @@
 
   admin.upload(
     $('#{{ uid }} div.uploader')[0],
-      'controller.php?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize',
+      'controller/?obj=utils&method=upload&param[]={{ upload_dir }}&param[]=sanitize',
       {
         allLoaded: function(){
           admin.tabs.reloadThis('#{{ uid }}');
@@ -177,7 +177,7 @@
 
   $('#form{{ uid }}').on('submit', function(){
     $.post(
-      'controller.php?obj=downloads_ctrl&method=saveData&param[]={{ upload_dir }}{% if translation %}&param[]={{ translation }}{% endif %}',
+      'controller/?obj=downloads_ctrl&method=saveData&param[]={{ upload_dir }}{% if translation %}&param[]={{ translation }}{% endif %}',
       $('#form{{ uid }}').serializeArray(), function(data){
         admin.message(data.text, data.status);
       },
@@ -186,7 +186,7 @@
 
   $('#{{ uid }} button.delete').on('click', function(){
     $this = $(this);
-    $.get('controller.php?obj=downloads_ctrl&method=deleteFile&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
+    $.get('controller/?obj=downloads_ctrl&method=deleteFile&param[]={{ upload_dir }}&param[]=' + $(this).data('file'), function(data){
       admin.message(data.text, data.status);
 
       if (data.status !== 'error'){
@@ -201,7 +201,7 @@
 
 
   $('#{{ uid }} .delete-node').on('click', function(){
-    $.get('controller.php?obj=downloads_ctrl&method=deleteNode&param[]={{ upload_dir }}', function(data){
+    $.get('controller/?obj=downloads_ctrl&method=deleteNode&param[]={{ upload_dir }}', function(data){
       admin.message(data.text, data.status);
 
       if (data.status == 'success'){

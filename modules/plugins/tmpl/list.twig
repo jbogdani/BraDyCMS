@@ -30,7 +30,7 @@ $('#id{{ uid }} button.action').on('click', e => {
     const plugin = $(e.target).data('plugin');
     const action = $(e.target).data('action');
     if (action === 'install' || action === 'uninstall'){
-        const url = `controller.php?obj=plugins_ctrl&method=${action}&plugin=${plugin}`;
+        const url = `controller/?obj=plugins_ctrl&method=${action}&plugin=${plugin}`;
 
         admin.dialog({
             title: admin.tr('pay_attention_please'),

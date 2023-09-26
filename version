@@ -1,3 +1,4 @@
+5.11.0[] = "Added cfg.base_url variable for sites served through proxies"
 5.10.0[] = "Legacy controller.php route replaced by controller/"
 5.9.2[] = "Phpfastcache uses TMP_DIR instead of system tmp dir"
 5.9.1[] = "Template data are encoded to JSON forcedly as object to prevent unintended array resorting"

@@ -42,9 +42,15 @@ class utils
    */
     public static function getBaseUrl()
     {
-        // http://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https
-        $protocol = utils::is_ssl() ? "https://" : "http://";
-        $url = $protocol . $_SERVER['HTTP_HOST'] . self::getBase();
+        $config_base_url = cfg::get('base_url');
+        if ($config_base_url){
+            $url = $config_base_url;
+        } else {
+            // http://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https
+            $protocol = utils::is_ssl() ? "https://" : "http://";
+            $url = $protocol . $_SERVER['HTTP_HOST'] . self::getBase();
+        }
+        
         return (substr($url, -1) ===  '/' ? $url : $url . '/');
     }
 

@@ -248,6 +248,7 @@ $_lang['cfg-mission'] = "Web site's mission";
 $_lang['cfg-title'] = "Default title for site pages";
 $_lang['cfg-description'] = "Site description";
 $_lang['cfg-keywords'] = "Keywords";
+$_lang['cfg-base_url'] = "Base URL";
 $_lang['cfg-sys_lang'] = "System language id";
 $_lang['cfg-sys_lang_string'] = "System language name";
 $_lang['cfg-db_connection'] = "Database connection string";

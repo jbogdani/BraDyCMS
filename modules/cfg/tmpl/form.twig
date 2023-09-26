@@ -65,6 +65,17 @@
       <span class="text-muted">Site's pages default comma separated keywords</span>
     </div>
   </div>
+  
+  <!-- BASE_URL -->
+  <div class="form-group">
+    <label class="control-label col-sm-2">{{ tr.get('cfg-base_url') }}</label>
+    <div class="col-sm-5">
+      <input name="base_url" class="form-control">{{ data.base_url }}</textarea>
+    </div>
+    <div class="col-sm-5">
+      <span class="text-muted">The base URL of the site; if not provided will be inferred from the site URL</span>
+    </div>
+  </div>
 
     <!-- SYS_LANG -->
   <div class="form-group" {% if is_admin == false %}style="display:none"{% endif %}>

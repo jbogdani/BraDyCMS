@@ -1,0 +1,5 @@
+.DS_Store
+cache/*
+logs/*
+sites/*
+tmp/*

@@ -1,3 +1,4 @@
+5.12.1[] = "Fixed bug with cfg.base_url UI"
 5.12.0[] = "Added .gitignore file"
 5.11.0[] = "Added cfg.base_url variable for sites served through proxies"
 5.10.0[] = "Legacy controller.php route replaced by controller/"

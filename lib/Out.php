@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Julian Bogdani <jbogdani@gmail.com>
  * @copyright  2007-2021 Julian Bogdani
@@ -50,18 +51,18 @@ class Out
     private function loadSettings($get, $lang = false)
     {
 
-    // Set page
+        // Set page
         if ($get['page']) {
             $this->cfg['page'] = (int)str_replace('/', '', $get['page']);
         }
 
         if ($get['art_title']) {
-          $exploded = explode('/', $get['art_title']);
-          $last = end($exploded);
-          if ($last === '') {
-            array_pop($exploded);
-            $get['tags'] = implode('-', $exploded);
-          }
+            $exploded = explode('/', $get['art_title']);
+            $last = end($exploded);
+            if ($last === '') {
+                array_pop($exploded);
+                $get['tags'] = implode('-', $exploded);
+            }
         }
 
         // Languages: there used to be 3 public language related variables:
@@ -75,7 +76,7 @@ class Out
         // Set context and context related data
         if ($get['art_title'] && $last !== '') {
 
-      // 1. article
+            // 1. article
             $this->cfg['context'] = 'article';
 
             $exploded = explode('/', $get['art_title']);
@@ -84,13 +85,13 @@ class Out
             $this->cfg['isDraft'] = (!is_null($get['draft']) && $get['draft'] !== false);
         } elseif ($get['search']) {
 
-      // 2. search
+            // 2. search
             $this->cfg['context'] = 'search';
             $this->cfg['searchString'] = $get['search'];
             $this->cfg['searchParams'] = $get['searchParams'];
         } elseif ($get['tags'] || $last === '') {
 
-      // 3. tags
+            // 3. tags
             $this->cfg['context'] = 'tags';
             $this->cfg['parts'] = $exploded;
 
@@ -231,19 +232,19 @@ class Out
         $url = '';
 
         switch ($tags) {
-          case 'search':
-            $url = link::to_search($art, $this->getLang('input'), $page);
-            break;
-          case true:
-            $url = link::to_tags($art, $this->getLang('input'), $page);
-            break;
-          default:
-            $url = link::to_article($art, $this->getLang('input'), $page, $parts);
-            break;
+            case 'search':
+                $url = link::to_search($art, $this->getLang('input'), $page);
+                break;
+            case true:
+                $url = link::to_tags($art, $this->getLang('input'), $page);
+                break;
+            default:
+                $url = link::to_article($art, $this->getLang('input'), $page, $parts);
+                break;
         }
 
         if ($absl_link) {
-            $url = utils::getBaseUrl() . $url;
+            $url = utils::getBaseUrl() . ltrim($url, '/');
         }
 
         return $url;
@@ -309,10 +310,10 @@ class Out
     }
 
     /**
-   * Returns array with article data. If $article is not provided current article's data will be returned
-   * @param string $article article's textid
-   * @return array|false
-   */
+     * Returns array with article data. If $article is not provided current article's data will be returned
+     * @param string $article article's textid
+     * @return array|false
+     */
     public function getArticle($article = false, $draft = false)
     {
         $article = $article ? $article : $this->getTextId();
@@ -361,7 +362,7 @@ class Out
             return false;
         }
 
-        foreach ($tags as $x=>&$t) {
+        foreach ($tags as $x => &$t) {
             if (is_array($t)) {
                 list($page, $max) = $t;
                 unset($tags[$x]);
@@ -434,7 +435,7 @@ class Out
         }
 
         $path_arr = explode('/', $_SERVER['REQUEST_URI']);
-        $path = $path_arr[count($path_arr)-1];
+        $path = $path_arr[count($path_arr) - 1];
 
         $seo = Seo::get($path, $this->getLang('input'));
 
@@ -448,18 +449,18 @@ class Out
             $this->data['page']['robots'] = $this->data['article'][$this->getTextId()]['robots'];
         } elseif (cfg::get('robots')) {
 
-      // 2. get value from main site configuration (robots)
+            // 2. get value from main site configuration (robots)
             $this->data['page']['robots'] = cfg::get('robots');
         } else {
 
-      // 3. default value: "index, follow"
+            // 3. default value: "index, follow"
             $this->data['page']['robots'] = 'index, follow';
         }
 
         // TITLE
         if ($this->data['article'][$this->getTextId()]['customtitle']) {
 
-      // 1. get value from the custom field named customtitle
+            // 1. get value from the custom field named customtitle
             $this->data['page']['custom_title'] = str_replace('"', '&quot;', $this->data['article'][$this->getTextId()]['customtitle']);
         }
 
@@ -523,8 +524,7 @@ class Out
         $this->data['page']['lang'] = $this->getLang('current', true);
 
         // URL
-        // http://stackoverflow.com/a/23717829/586449
-        $this->data['page']['url']  = utils::getBaseUrl() . ($_SERVER["REQUEST_URI"] !=='/' ?  $_SERVER["REQUEST_URI"] : '');
+        $this->data['page']['url']  = utils::getBaseUrl() . ltrim($_SERVER["REQUEST_URI"], '/');
 
         // MISSION
         $this->data['page']['mission'] = cfg::get('mission');
@@ -534,7 +534,7 @@ class Out
 
         if (file_exists($path2img)) {
             // 1. check first for article image
-            $this->data['page']['image'] = utils::getBaseUrl() . $path2img;
+            $this->data['page']['image'] = utils::getBaseUrl() . ltrim($path2img, '/');
         } elseif ($this->data['article'][$this->getTextId()]['text']) {
             // 2. get first image available in the article body
             $doc = new DOMDocument();
@@ -542,22 +542,23 @@ class Out
             $xpath = new DOMXPath($doc);
             $src = $xpath->evaluate("string(//img/@src)");
 
-            $this->data['page']['image'] = (!preg_match('/http/', $src) ? utils::getBaseUrl() . '/' : '') . $src;
+            $this->data['page']['image'] = (!preg_match('/http/', $src) ? utils::getBaseUrl() : '') . $src;
         }
 
         // AUTHOR
         if (
-      $this->data['article'][$this->getTextId()]['author']
-      &&
-      trim($this->data['article'][$this->getTextId()]['author']) != ''
-    ) {
+            $this->data['article'][$this->getTextId()]['author']
+            &&
+            trim($this->data['article'][$this->getTextId()]['author']) != ''
+        ) {
             $this->data['page']['author'] = $this->data['article'][$this->getTextId()]['author'];
         }
 
         // DATE
         if (
-      $this->data['article'][$this->getTextId()]['publish'] &&
-      $this->data['article'][$this->getTextId()]['publish'] !== '0000-00-00') {
+            $this->data['article'][$this->getTextId()]['publish'] &&
+            $this->data['article'][$this->getTextId()]['publish'] !== '0000-00-00'
+        ) {
             $this->data['page']['date'] = $this->data['article'][$this->getTextId()]['publish'];
         }
     }
@@ -588,28 +589,28 @@ class Out
         }
 
         foreach ($menu as &$item) {
-          $clean_href = trim(str_replace(['../'], ['', ''], $item['href']), '/');
-          // Article
-          if ($this->cfg['context'] === 'home' && ($clean_href === '' || $clean_href === '.' || $clean_href === 'home')){
-            $item['current'] = true;
-          // Article, level 0
-          } elseif($this->getTextId() === $item['href']){
-            $item['current'] = true;
-          // Article, more levels
-          } elseif (is_array($this->getParts()) && $item['href'] === implode('/', $this->getParts())) {
-            $item['current'] = true;
-          // href is part of url
-          } elseif (is_array($this->getParts()) && in_array($clean_href, $this->getParts()) ) {
-            $item['current'] = true;
-          } elseif ($this->cfg['context'] === 'tags' && (
+            $clean_href = trim(str_replace(['../'], ['', ''], $item['href']), '/');
+            // Article
+            if ($this->cfg['context'] === 'home' && ($clean_href === '' || $clean_href === '.' || $clean_href === 'home')) {
+                $item['current'] = true;
+                // Article, level 0
+            } elseif ($this->getTextId() === $item['href']) {
+                $item['current'] = true;
+                // Article, more levels
+            } elseif (is_array($this->getParts()) && $item['href'] === implode('/', $this->getParts())) {
+                $item['current'] = true;
+                // href is part of url
+            } elseif (is_array($this->getParts()) && in_array($clean_href, $this->getParts())) {
+                $item['current'] = true;
+            } elseif ($this->cfg['context'] === 'tags' && (
                 $item['href'] === implode('-', $this->getFilterTags()) . '.all' ||
                 $item['href'] === implode('~', $this->getFilterTags()) . '.all' ||
                 $item['href'] === implode('-', $this->getFilterTags()) . '/' ||
                 $item['href'] === implode('~', $this->getFilterTags()) . '/' ||
                 $item['href'] === './' . implode('-', $this->getFilterTags()) . '.all' ||
                 $item['href'] === './' . implode('~', $this->getFilterTags()) . '.all'
-                )) {
-              $item['current'] = true;
+            )) {
+                $item['current'] = true;
             }
 
             $item['href'] = link::format($item['href'], $this->getLang('input'));
@@ -645,8 +646,8 @@ class Out
         $string = $string ?: $this->cfg['searchString'];
         list($start, $max) = $this->page2limit($page, $max);
 
-        if ( $string === 'adv' ) {
-            if (!$this->cfg['searchParams']){
+        if ($string === 'adv') {
+            if (!$this->cfg['searchParams']) {
                 error_log("Invalid search parameters.");
                 return false;
             }
@@ -658,7 +659,6 @@ class Out
             $this->totalArticles = Article::search($string, false, false, false, false, true);
             return Article::search($string, $this->getLang('input'), false, $start, $max);
         }
-        
     }
 
     /**
@@ -697,9 +697,9 @@ class Out
     public function getDownloadNode($node)
     {
         return customTags::download([
-      'content' => $node,
-      'getObject' => true
-    ]);
+            'content' => $node,
+            'getObject' => true
+        ]);
     }
 
     /**
@@ -749,7 +749,7 @@ class Out
 
         $max = $max ? $max : ($max_cfg ? $max_cfg : 20);
 
-        $start = (($page -1) * $max);
+        $start = (($page - 1) * $max);
 
         return [$start, $max];
     }
@@ -768,7 +768,7 @@ class Out
 
         if ($tot && $max && $tot > $max) {
             $return['start'] = '1';
-            $return['end'] = ceil($tot/$max);
+            $return['end'] = ceil($tot / $max);
         }
 
         return $return;

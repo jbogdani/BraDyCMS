@@ -393,8 +393,8 @@ class Gallery
 
 
             array_push($data, [
-              'img' => utils::getBaseUrl() . $image_file,
-              'thumb' =>utils::getBaseUrl() . $thumb,
+              'img' => utils::getBaseUrl() . ltrim($image_file, '/'),
+              'thumb' =>utils::getBaseUrl() . ltrim($thumb, '/'),
               'caption' => $caption,
               'href' => $el['href']
             ]);

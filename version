@@ -1,3 +1,4 @@
+5.12.3[] = "Fixed issue with double slash when using utils::getBaseUrl"
 5.12.2[] = "out::setPageData uses uses utils::getBaseUrl"
 5.12.1[] = "Fixed bug with cfg.base_url UI"
 5.12.0[] = "Added .gitignore file"

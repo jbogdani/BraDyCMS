@@ -37,7 +37,7 @@ class utils
   }
 
   /**
-   * Returns base URL of current site with correct protocol (http|https), host and rewrite base
+   * Returns base URL of current site with correct protocol (http|https), host and rewrite base and always adds a final slash, if not present.
    * @return string
    */
     public static function getBaseUrl()

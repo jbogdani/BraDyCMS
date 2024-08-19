@@ -59,8 +59,7 @@ class OutHtml extends Out
         array_push($part, '<meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">');
         array_push($part, '<meta name="generator" content="BraDyCMS ' . $this->getVersion() . '">');
 
-        // http://stackoverflow.com/a/23717829/586449
-        $url = (utils::is_ssl() ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $url = utils::getBaseUrl() . ltrim($_SERVER["REQUEST_URI"], '/');
 
         // Current page in current language
         array_push($part, '<link rel="alternate" href="' . $url . '" hreflang="' . $this->getLang('current', true) . '" />');

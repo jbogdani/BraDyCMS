@@ -25,7 +25,7 @@
     "bootstrap-datepicker": "^1.8.0",
     "bootstrap3": "^3.3.5",
     "datatables": "^1.10.18",
-    "datatables.net-bs": "^1.10.21",
+    "datatables.net-bs": "^1.13.11",
     "fine-uploader": "^5.16.2",
     "font-awesome": "^4.7.0",
     "google-code-prettify": "^1.0.5",
